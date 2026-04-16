@@ -16,4 +16,4 @@
 - Vercel + GitHub Actions
 
 ## 설계 문서
-APPROVED (2026-04-16). ai-study ~95% 복제 기반.
+APPROVED (2026-04-16).

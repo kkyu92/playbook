@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { href: "/harness-journal", label: "Journal" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/timeline", label: "Timeline" },
-  { href: "/projects", label: "Vibe Coding" },
+  { href: "/projects", label: "Projects" },
 ];
 
 export function Header({ fixed = false }: { fixed?: boolean }) {

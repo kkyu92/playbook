@@ -4,15 +4,15 @@ import { NextRequest } from "next/server";
 export const runtime = "edge";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "prompt-engineering": "#f59e0b",
-  "context-engineering": "#eab308",
-  "harness-engineering": "#84cc16",
-  agents: "#8b5cf6",
-  evaluation: "#06b6d4",
-  infrastructure: "#f97316",
-  "frontend-ai": "#a855f7",
-  "project-ops": "#10b981",
-  "data-engineering": "#3b82f6",
+  "prompt-engineering": "#ffd700",
+  "context-engineering": "#00bfff",
+  "harness-engineering": "#ff4757",
+  agents: "#00ff88",
+  evaluation: "#ccff00",
+  infrastructure: "#708090",
+  "frontend-ai": "#ffa07a",
+  "project-ops": "#ff6348",
+  "data-engineering": "#ff69b4",
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("title") || "Playbook Hub";
   const category = searchParams.get("category") || "";
-  const accentColor = CATEGORY_COLORS[category] || "#3b82f6";
+  const accentColor = CATEGORY_COLORS[category] || "#06b6d4";
   const categoryLabel = CATEGORY_LABELS[category] || "";
 
   let font: ArrayBuffer | undefined;
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "60px",
-          background: "#0a0a0f",
+          background: "#0a0f1a",
           fontFamily: font ? "Noto Sans KR" : "sans-serif",
         }}
       >
@@ -109,7 +109,7 @@ export async function GET(req: NextRequest) {
           style={{
             fontSize: title.length > 30 ? "42px" : "52px",
             fontWeight: 700,
-            color: "#e8e8ed",
+            color: "#d0dbe8",
             lineHeight: 1.3,
             maxWidth: "900px",
           }}
@@ -125,10 +125,10 @@ export async function GET(req: NextRequest) {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ color: "#6b6b80", fontSize: "22px", fontWeight: 700 }}>
+          <div style={{ color: "#8899aa", fontSize: "22px", fontWeight: 700 }}>
             Playbook Hub
           </div>
-          <div style={{ color: "#6b6b80", fontSize: "18px" }}>
+          <div style={{ color: "#8899aa", fontSize: "18px" }}>
             ai-study-wheat.vercel.app
           </div>
         </div>

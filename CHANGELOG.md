@@ -3,7 +3,7 @@
 ## [0.1.0] - 2026-04-15
 
 ### Added
-- Initial bootstrap from ai-study ~95% clone
+- Initial bootstrap
 - Core infrastructure: Next.js 16, MDX, Tailwind CSS 4
 - HMAC cookie authentication
 - Content pipeline scripts

@@ -1,6 +1,6 @@
 # Playbook Hub
 
-개인 비공개 지식 허브 + 프로젝트 관제탑. ai-study 복제 기반.
+개인 비공개 지식 허브 + 프로젝트 관제탑.
 
 ## 프로젝트 구조
 - Next.js 16 (App Router, MDX)

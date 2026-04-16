@@ -33,15 +33,15 @@ export const SERIES_LABELS: Record<string, { label: string; icon: string }> = {
 };
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  "prompt-engineering": "#f59e0b",
-  "context-engineering": "#eab308",
-  "harness-engineering": "#84cc16",
-  agents: "#8b5cf6",
-  evaluation: "#06b6d4",
-  infrastructure: "#f97316",
-  "frontend-ai": "#a855f7",
-  "project-ops": "#10b981",
-  "data-engineering": "#3b82f6",
+  "prompt-engineering": "#ffd700",
+  "context-engineering": "#00bfff",
+  "harness-engineering": "#ff4757",
+  agents: "#00ff88",
+  evaluation: "#ccff00",
+  infrastructure: "#708090",
+  "frontend-ai": "#ffa07a",
+  "project-ops": "#ff6348",
+  "data-engineering": "#ff69b4",
 };
 
 // 사이드바용 카테고리 그룹. 엔트리 수가 늘어나면서 10 카테고리가 한꺼번에 펼쳐지면
