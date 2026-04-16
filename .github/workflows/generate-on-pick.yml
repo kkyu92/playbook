@@ -90,8 +90,8 @@ jobs:
           SHORT_ID=$(date +%H%M%S)
           BRANCH="lesson/${DATE}-${SHORT_ID}"
 
-          git config user.name "Mino777"
-          git config user.email "jomino7777@gmail.com"
+          git config user.name "kkyu92"
+          git config user.email "kyusikkyu@gmail.com"
 
           git checkout -b "$BRANCH"
           git add content/

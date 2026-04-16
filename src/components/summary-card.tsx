@@ -37,7 +37,7 @@ export function SummaryCard({ frontmatter, slug, readingTime }: SummaryCardProps
         )}
         {slug && (
           <a
-            href={`https://github.com/Mino777/ai-study/edit/main/content/${slug}.mdx`}
+            href={`https://github.com/kkyu92/playbook/edit/main/content/${slug}.mdx`}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-auto text-xs text-muted hover:text-accent transition-colors font-code"

@@ -1,17 +1,16 @@
 # /projects-sync — 허브 세션의 워커 프로젝트 read-only 진단
 
-이 ai-study 세션은 *허브*로서 mino-moneyflow, mino-tarosaju 두 *워커* 프로젝트를 분석/연구한다.
-두 프로젝트는 각자 별도 Claude 세션이 동시에 작업할 수 있다.
+이 playbook 세션은 *허브*로서 moneyball-ecosystem *워커* 프로젝트를 분석/연구한다.
+워커 프로젝트는 별도 Claude 세션이 동시에 작업할 수 있다.
 
 이 커맨드는 **쓰기 0, 읽기만** 수행하는 안전한 진단 도구다.
-호출하면 양쪽 워커 프로젝트의 현재 상태를 한 번에 리포트한다.
+호출하면 워커 프로젝트의 현재 상태를 한 번에 리포트한다.
 
 ## 호출 방식
 
 ```
 /projects-sync
-/projects-sync moneyflow        # 한 쪽만
-/projects-sync tarosaju         # 한 쪽만
+/projects-sync moneyball        # moneyball-ecosystem
 ```
 
 ## 왜 이 커맨드가 필요한가
@@ -21,19 +20,17 @@
 
 이전 세션의 NEXT.md는 다음 리듬을 권장한다:
 ```bash
-rtk git -C /Users/jominho/Develop/mino-moneyflow fetch origin
-rtk git -C /Users/jominho/Develop/mino-tarosaju fetch origin
-rtk git -C /Users/jominho/Develop/mino-moneyflow log origin/main --oneline -5
-rtk git -C /Users/jominho/Develop/mino-tarosaju log origin/main --oneline -5
+rtk git -C ~/projects/moneyball-ecosystem fetch origin
+rtk git -C ~/projects/moneyball-ecosystem log origin/main --oneline -5
 ```
 
-이 4개의 명령을 *한 커맨드*로 묶고, 추가로 *내가 모르는 변화*(다른 세션 흔적)를 감지한다.
+이 명령을 *한 커맨드*로 묶고, 추가로 *내가 모르는 변화*(다른 세션 흔적)를 감지한다.
 
 ## 커맨드 범위
 
 ### 1. Fetch + 상태 스냅샷
 
-양쪽 프로젝트 각각:
+워커 프로젝트:
 
 ```bash
 rtk git -C <project-root> fetch origin
@@ -44,7 +41,7 @@ rtk git -C <project-root> log origin/main --oneline -10
 * `status -sb`는 branch 상태(ahead/behind) + 간단한 변경 목록을 한 화면에 담는다.
 * `log --oneline -10`은 origin/main의 최근 10개 commit을 본다.
 
-### 2. Local main ↔ origin/main 차이
+### 2. Local main <-> origin/main 차이
 
 ```bash
 rtk git -C <project-root> rev-list --left-right --count main...origin/main
@@ -65,11 +62,10 @@ rtk git -C <project-root> worktree list
 ### 4. 최근 PR 상태
 
 ```bash
-rtk gh pr list -R Mino777/mino-moneyflow --state all --limit 5
-rtk gh pr list -R Mino777/mino-tarosaju --state all --limit 5
+rtk gh pr list -R kkyu92/moneyball-ecosystem --state all --limit 5
 ```
 
-* 양쪽 최근 5개 PR — open/merged/closed 전체. 다른 세션이 PR을 올렸는지 감지.
+* 최근 5개 PR — open/merged/closed 전체. 다른 세션이 PR을 올렸는지 감지.
 
 ### 5. 다른 세션 작업 흔적 감지
 
@@ -87,25 +83,16 @@ rtk gh pr list -R Mino777/mino-tarosaju --state all --limit 5
 ```
 📸 프로젝트 스냅샷 — 2026-MM-DD HH:MM
 
-mino-moneyflow (✅ | ⚠️)
+moneyball-ecosystem (✅ | ⚠️)
 ──────────────────────
-  origin 최신:       f3ed55c feat(ai): AI API 비용 추적 인프라 — Harness Journal 008 (#95)
+  origin 최신:       f3ed55c feat(ai): AI API 비용 추적 인프라 (#95)
   local main:        f3ed55c (동기화 완료)
   ahead/behind:      0 / 0
   worktree 잔여물:   없음
   최근 open PR:      없음
   다른 세션 흔적:    없음
 
-mino-tarosaju (⚠️ 주의)
-──────────────────────
-  origin 최신:       34d8213 feat(ai): text output guards — Harness Journal 009 (#5)
-  local main:        34d8213
-  ahead/behind:      0 / 0
-  worktree 잔여물:   /tmp/mino-tarosaju-ai-ops/feature-x (다른 세션 작업 중 가능성)
-  최근 open PR:      #6 WIP fix: something (2시간 전 push)
-  다른 세션 흔적:    ⚠️ open PR + worktree 잔여물 감지
-
-요약: moneyflow는 안전. tarosaju는 다른 세션 작업 가능성 높음 — 만지기 전 확인.
+요약: moneyball-ecosystem은 안전.
 ```
 
 ## 금지 사항
@@ -119,9 +106,9 @@ mino-tarosaju (⚠️ 주의)
 
 ## 성공 조건
 
-* 양쪽 프로젝트 상태를 한 화면에 보여줌
+* 워커 프로젝트 상태를 한 화면에 보여줌
 * 다른 세션 작업 흔적이 있으면 경고
-* 쓰기 0 — 이 커맨드 실행 후 양쪽 프로젝트의 git 상태는 *fetch한 것 외에는* 변화 없음
+* 쓰기 0 — 이 커맨드 실행 후 프로젝트의 git 상태는 *fetch한 것 외에는* 변화 없음
 
 ## 부작용 검토
 
@@ -129,8 +116,8 @@ mino-tarosaju (⚠️ 주의)
 * `gh pr list`는 GitHub API 호출 — rate limit 안에서 안전.
 * 이 커맨드 자체는 여러 번 빠르게 돌려도 안전.
 
-## 양쪽 워커 프로젝트 관점
+## 워커 프로젝트 관점
 
-이 커맨드는 *ai-study 전용*이다. 워커 프로젝트에는 이식하지 않는다.
+이 커맨드는 *playbook 전용*이다. 워커 프로젝트에는 이식하지 않는다.
 워커들은 각자의 `/wt-branch`로 작업을 시작하고, 허브는 `/projects-sync`로 그들의 상태를 관찰한다.
 두 역할은 분리되어 있다.

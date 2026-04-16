@@ -35,7 +35,7 @@ function StatBadge({ label, value }: { label: string; value: string | number }) 
 export function ProjectsPageClient({
   projects,
 }: ProjectsPageClientProps) {
-  const categories: ProjectCategory[] = ["moneyflow", "tarosaju", "ai-study-wiki", "aidy"];
+  const categories: ProjectCategory[] = ["moneyball"];
   const [currentCategory, setCurrentCategory] = useState<ProjectCategory>(categories[0]);
 
   const filteredProjects = projects.filter((p) => p.category === currentCategory);

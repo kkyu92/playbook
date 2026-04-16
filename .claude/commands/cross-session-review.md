@@ -45,7 +45,7 @@ git log --since="today 00:00" --stat
 ```bash
 git worktree list                    # stale worktree 검출
 git status                            # 미커밋 변경 검출
-ls -la .claude/worktrees/ 2>/dev/null # ai-study 패턴 worktree
+ls -la .claude/worktrees/ 2>/dev/null # playbook 패턴 worktree
 cat vitest.config.ts | grep -A 5 exclude  # worktree exclude 누락 검출
 ```
 
@@ -109,7 +109,7 @@ git diff <hash> | grep '^+.*import' | sort -u
 # 각 import에 대해 패키지 존재 검증 (package.json grep)
 ```
 
-**Journal 019 사례 (ai-study iOS Journal)**: 가상 `IntelligenceKit`, 가짜 `swift-pre-write.sh` PreToolUse 훅, 실재하지 않는 `/ios-compound` 등.
+**Journal 019 사례 (playbook iOS Journal)**: 가상 `IntelligenceKit`, 가짜 `swift-pre-write.sh` PreToolUse 훅, 실재하지 않는 `/ios-compound` 등.
 
 ### 함정 6: 자동 수정 도구 silent 손상
 

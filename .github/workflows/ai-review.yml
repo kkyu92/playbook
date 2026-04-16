@@ -253,7 +253,7 @@ jobs:
                 '',
                 '`/curate-inbound`가 6 카테고리(reject / tips / solution / journal / pattern-entry / needs-review) 중 하나로 분류 → curation → 새 `curate/<slug>` 브랜치 + PR → 그 PR은 자동 머지됩니다. 이 원본 `patterns/` PR은 그때 닫힙니다.',
                 '',
-                '상세: [`/curate-inbound` 슬래시 커맨드](https://github.com/Mino777/ai-study/blob/main/.claude/commands/curate-inbound.md) / [Harness Journal 020](https://github.com/Mino777/ai-study/blob/main/content/harness-engineering/harness-journal-020-promise-timeout-wrapper.mdx)',
+                '상세: [`/curate-inbound` 슬래시 커맨드](https://github.com/kkyu92/playbook/blob/main/.claude/commands/curate-inbound.md) / [Harness Journal 020](https://github.com/kkyu92/playbook/blob/main/content/harness-engineering/harness-journal-020-promise-timeout-wrapper.mdx)',  // [원본 참조] Mino777/ai-study
               ].join('\n'),
             });
             core.info('patterns/ 브랜치 — auto-merge skipped');

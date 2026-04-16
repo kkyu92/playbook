@@ -1,5 +1,5 @@
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN!;
-const GITHUB_REPO = process.env.GITHUB_REPO || "Mino777/ai-study";
+const GITHUB_REPO = process.env.GITHUB_REPO || "kkyu92/playbook";
 
 const API_BASE = `https://api.github.com/repos/${GITHUB_REPO}/contents`;
 
