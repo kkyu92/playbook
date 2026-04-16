@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
 export interface JournalEntry {
   slug: string;
@@ -15,25 +14,16 @@ export interface JournalEntry {
 }
 
 interface HarnessJournalClientProps {
-  webEpisodes: JournalEntry[];
-  iosEpisodes: JournalEntry[];
-  maoEpisodes: JournalEntry[];
+  episodes: JournalEntry[];
   firstDate?: string;
   lastDate?: string;
 }
 
 export function HarnessJournalClient({
-  webEpisodes,
-  iosEpisodes,
-  maoEpisodes,
+  episodes,
   firstDate,
   lastDate,
 }: HarnessJournalClientProps) {
-  const [activeTab, setActiveTab] = useState<"web" | "ios" | "mao">("web");
-
-  const episodes = activeTab === "web" ? webEpisodes : activeTab === "ios" ? iosEpisodes : maoEpisodes;
-  const totalEpisodes = webEpisodes.length + iosEpisodes.length + maoEpisodes.length;
-
   return (
     <>
       {/* Stats */}
@@ -41,19 +31,7 @@ export function HarnessJournalClient({
         <div className="flex flex-wrap items-start gap-6 text-sm">
           <div>
             <div className="text-xs text-muted">총 에피소드</div>
-            <div className="font-data text-2xl font-semibold text-text">{totalEpisodes}</div>
-          </div>
-          <div>
-            <div className="text-xs text-muted">Web + Backend</div>
-            <div className="font-data text-2xl font-semibold text-text">{webEpisodes.length}</div>
-          </div>
-          <div>
-            <div className="text-xs text-muted">iOS</div>
-            <div className="font-data text-2xl font-semibold text-text">{iosEpisodes.length}</div>
-          </div>
-          <div>
-            <div className="text-xs text-muted">MAO</div>
-            <div className="font-data text-2xl font-semibold text-text">{maoEpisodes.length}</div>
+            <div className="font-data text-2xl font-semibold text-text">{episodes.length}</div>
           </div>
           {firstDate && (
             <div>
@@ -74,40 +52,6 @@ export function HarnessJournalClient({
             </span>
           </div>
         </div>
-      </div>
-
-      {/* 🌐 Web | 📱 iOS 탭 */}
-      <div className="flex gap-2 mb-8">
-        <button
-          onClick={() => setActiveTab("web")}
-          className={`px-5 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
-            activeTab === "web"
-              ? "bg-accent text-bg font-semibold"
-              : "bg-surface border border-border text-text hover:border-accent hover:text-accent"
-          }`}
-        >
-          🌐 Web + Backend
-        </button>
-        <button
-          onClick={() => setActiveTab("ios")}
-          className={`px-5 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
-            activeTab === "ios"
-              ? "bg-accent text-bg font-semibold"
-              : "bg-surface border border-border text-text hover:border-accent hover:text-accent"
-          }`}
-        >
-          📱 iOS
-        </button>
-        <button
-          onClick={() => setActiveTab("mao")}
-          className={`px-5 py-2 rounded-[var(--radius-sm)] text-sm font-medium transition-colors ${
-            activeTab === "mao"
-              ? "bg-accent text-bg font-semibold"
-              : "bg-surface border border-border text-text hover:border-accent hover:text-accent"
-          }`}
-        >
-          🤖 Multi-Agent Orchestration
-        </button>
       </div>
 
       {/* Episode timeline */}

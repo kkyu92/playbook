@@ -1,0 +1,47 @@
+---
+title: "Playbook Journal 003 — 머지됐지만 죽어있는 코드 드리프트"
+category: harness-engineering
+date: "2026-04-16"
+tags: [playbook-journal, drift, moneyball, silent-failure, production-verification, ci]
+confidence: 5
+connections: [journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield, journal/playbook-journal-002-drift-existing-setup]
+status: complete
+description: "main에 머지된 Phase C/D가 사전 버그 3건으로 완전히 죽어있었음. feat 커밋 존재와 실제 작동은 다르다."
+type: entry
+series: playbook-journal
+---
+
+## 갭 (Before)
+
+Phase C(에이전트 토론 통합)와 Phase D(Compound 루프)는 main 브랜치에 머지된 상태였다. git log에 `feat:` 커밋이 찍혀 있었고, 코드가 존재했으므로 "통합 완료"로 간주했다.
+
+그러나 **"통합됐다"와 "돌아간다"는 다른 말**이었다.
+
+## 발견 (Discovery)
+
+v4-2 프로덕션 검증 과정에서 사전 버그 3건이 드러났다:
+
+1. **CI pnpm 버전 충돌**: `pnpm/action-setup`의 `version: 9` vs `packageManager: pnpm@10.33.0` 불일치 → 모든 daily-pipeline cron이 실패하고 있었음.
+
+2. **`predictions.model_version VARCHAR(10)` overflow**: `'v2.0-debate'`(11자)를 저장 시도 → PostgreSQL ERROR 22001 → `daily.ts` upsert에 `.error` 체크가 없어서 silent하게 무시 → 새 prediction row가 0건 생성.
+
+3. **Sonnet 모델 ID 오타**: `'claude-sonnet-4-6-20250514'`(구 Sonnet 4.0 날짜) → 404 → Sonnet 심판 영구 실패 → blog reasoning이 fallback 한 줄만 저장.
+
+세 버그 모두 git log의 debug 커밋 3건이 추적을 시도했다가 원인을 못 찾고 멈춘 흔적이 있었다:
+- `25d9107 debug: 환경변수 확인용 임시 로그`
+- `f60ccd1 debug: 에이전트 토론 에러를 errors 배열에 노출`
+- `df282ba debug: 토론 결과 디버그 로그 추가`
+
+## 교훈 (Lesson)
+
+1. **`feat:` 커밋이 있고 main에 머지됐다고 해서 실제로 동작한다는 뜻이 아니다.** 프로덕션 검증 없는 feat 커밋은 잠재적으로 죽어 있는 코드일 수 있다.
+2. **Silent failure는 가장 위험한 버그 유형**이다. 에러가 throw되지 않고, 로그에도 안 찍히고, 단지 "아무것도 안 한다". `.error` 체크 누락, VARCHAR 오버플로, 모델 ID 오타 같은 것들이 조합되면 기능이 **존재하지만 완전히 죽어있는 상태**가 된다.
+3. git log에 `debug:` 커밋이 연속으로 있으면 **해결되지 않은 문제가 남아있을 가능성**이 높다.
+
+## 적용 (How to Apply)
+
+- feat 커밋 머지 후 **프로덕션 환경에서의 실제 동작 확인**을 필수 단계로 추가.
+- DB upsert/insert 결과에 **반드시 `.error` 체크** 포함. silent 실패를 구조적으로 차단.
+- VARCHAR 컬럼의 길이 제한은 **예상 값의 최대 길이보다 넉넉하게** 설정 (10 → 20 이상).
+- 모델 ID 같은 외부 의존 문자열은 **상수로 관리**하고, 가능하면 시작 시점에 validation.
+- git log에서 `debug:` 커밋이 보이면 **해당 이슈가 해결됐는지 추적**. 미해결 debug 커밋은 잠재적 dead code의 신호.

@@ -49,7 +49,7 @@ export interface SidebarEntry {
 export interface SidebarCategory {
   // series가 없는 일반 엔트리
   entries: SidebarEntry[];
-  // frontmatter `series` 값으로 그룹화된 엔트리들 (예: "harness-journal", "ios-ai-journal")
+  // frontmatter `series` 값으로 그룹화된 엔트리들 (예: "playbook-journal")
   // sidebar.tsx가 SERIES_LABELS와 매칭해서 sub-group으로 렌더
   subGroups: Record<string, SidebarEntry[]>;
 }

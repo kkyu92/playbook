@@ -14,13 +14,12 @@
   --cat-prompt: #f59e0b;
   --cat-context: #eab308;
   --cat-harness: #84cc16;
-  --cat-rag: #10b981;
   --cat-agents: #8b5cf6;
-  --cat-finetune: #ec4899;
   --cat-eval: #06b6d4;
   --cat-infra: #f97316;
-  --cat-ios-ai: #3b82f6;
   --cat-frontend-ai: #a855f7;
+  --cat-project-ops: #10b981;
+  --cat-data-eng: #3b82f6;
 
   /* Semantic */
   --success: #10b981;
@@ -61,11 +60,12 @@
   --color-cat-prompt: var(--cat-prompt);
   --color-cat-context: var(--cat-context);
   --color-cat-harness: var(--cat-harness);
-  --color-cat-rag: var(--cat-rag);
   --color-cat-agents: var(--cat-agents);
-  --color-cat-finetune: var(--cat-finetune);
   --color-cat-eval: var(--cat-eval);
   --color-cat-infra: var(--cat-infra);
+  --color-cat-frontend-ai: var(--cat-frontend-ai);
+  --color-cat-project-ops: var(--cat-project-ops);
+  --color-cat-data-eng: var(--cat-data-eng);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);

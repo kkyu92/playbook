@@ -1,0 +1,40 @@
+---
+title: "Playbook Journal 001 — 구현된 코드를 그린필드로 간주한 드리프트"
+category: harness-engineering
+date: "2026-04-16"
+tags: [playbook-journal, drift, moneyball, greenfield, memory-staleness, context-engineering]
+confidence: 5
+connections: [journal/playbook-journal-000-bootstrap]
+status: complete
+description: "메모리에만 의존해 5시간 그린필드 플래닝 후 787줄 기존 코드 발견. 세션 시작 시 git log 필수 스캔의 근거."
+type: entry
+series: playbook-journal
+---
+
+## 갭 (Before)
+
+메모리/체크포인트에 "Phase 2 완료, Phase 3 예정"이라고만 적혀 있었다. AI 에이전트는 이 정보를 신뢰하고 Phase 3을 **완전한 신규 기능**으로 간주해 그린필드 플래닝을 시작했다.
+
+문제: 메모리는 stale할 수 있다. 다른 세션, 다른 에이전트, 또는 사용자가 직접 작업한 결과가 반영되지 않는다.
+
+## 발견 (Discovery)
+
+5시간 동안 그린필드 플래닝을 진행한 **끝에** git log를 확인했더니 Phase C(에이전트 토론 통합)와 Phase D(Compound 루프)가 이미 구현되어 있었다. 787줄짜리 기존 코드가 존재했고, 플랜 전면 재조정이 필요해졌다.
+
+핵심 타임라인:
+- 메모리 기반으로 "이건 없다"고 가정
+- 5시간 플래닝 수행
+- 마지막에 git log로 실제 확인 → 이미 존재
+- 플랜 전량 폐기
+
+## 교훈 (Lesson)
+
+1. **메모리/체크포인트는 현실의 스냅샷이 아니라 "마지막으로 본 시점"의 기록**이다. 세션 사이에 현실은 변한다.
+2. **플래닝 전에 git log/git status를 기계적으로 실행**해야 한다. "아마 안 바뀌었겠지"라는 가정은 5시간짜리 낭비를 만든다.
+3. 에이전트가 "그린필드"라고 판단할 때가 가장 위험하다. 실제로는 이미 구현된 위에 리팩터/보강으로 접근해야 할 때가 많다.
+
+## 적용 (How to Apply)
+
+- **세션 시작 시 필수 스캔 프로토콜** 도입: `git log --oneline -20`, `git status`, 주요 디렉터리 `ls` 결과를 메모리/체크포인트와 기계적으로 대조.
+- 드리프트 발견 시 **플래닝 전 사용자에게 먼저 보고**. 조용히 진행하지 않는다.
+- CLAUDE.md에 "세션 시작 시 필수 스캔" 섹션을 명시해서, 어떤 에이전트가 세션을 열어도 같은 프로토콜을 따르게 강제.

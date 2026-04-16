@@ -1,0 +1,47 @@
+---
+title: "Playbook Journal 004 — 반쪽짜리 작동 드리프트"
+category: harness-engineering
+date: "2026-04-16"
+tags: [playbook-journal, drift, moneyball, half-working, eng-review, code-review]
+confidence: 5
+connections: [journal/playbook-journal-000-bootstrap, journal/playbook-journal-003-drift-silent-bugs]
+status: complete
+description: "retro.ts가 homeCode만 insert하고 awayCode를 무시. Phase D Compound 루프가 50%만 작동하고 있었음."
+type: entry
+series: playbook-journal
+---
+
+## 갭 (Before)
+
+Phase C/D가 머지된 후, Compound 루프(에이전트 메모리 축적 → 다음 예측에 활용)가 정상 작동한다고 가정했다. 사례 3의 버그 3건을 수정한 이후에는 "이제 다 고쳤다"는 심리적 안정감도 있었다.
+
+하지만 **또 다른 종류의 숨은 버그**가 남아 있었다.
+
+## 발견 (Discovery)
+
+v4-3 플래닝 중 `/plan-eng-review`가 코드를 읽다가 발견했다.
+
+`retro.ts:121`이 `team_code: homeCode`만 insert하고 `awayCode`를 완전히 무시하고 있었다. 결과:
+- **Phase D Compound 루프가 실질적으로 50%만 작동** — 홈팀의 agent_memory만 생성
+- Phase C/D가 머지된 2026-04-14 이후 **away 팀 agent_memory는 단 한 건도 생성된 적 없음**
+- 에러도 없고, 로그도 정상. 단지 away 팀 데이터가 **존재하지 않는** 것뿐
+
+사례 3과의 차이:
+- **사례 3**: 코드가 아예 안 돌았음 (silent failure)
+- **사례 4**: 코드가 **반만 돌고 있었음** (partial execution)
+
+이 버그는 git log, 체크포인트, 메모리, 드리프트 스캔 어디에서도 잡히지 않았다. **코드를 실제로 읽어야만** 발견할 수 있는 종류였다.
+
+## 교훈 (Lesson)
+
+1. **세 번째 종류의 버그가 있다**: (a) 완전히 죽은 코드(사례 3), (b) 반쪽만 도는 코드(사례 4), (c) 정상 작동. git log/메모리/드리프트 스캔은 (a)와 (b)를 구분하지 못한다.
+2. **`/plan-eng-review`의 "read through the code" 단계**가 체크포인트, 메모리, 드리프트 스캔으로 잡히지 않는 반쪽 작동 버그를 잡을 수 있다.
+3. 하드코딩된 변수(`homeCode`만 사용, `awayCode` 누락)는 **리뷰어가 의도적인지 실수인지 판단해야 하는** 전형적인 코드 리뷰 포인트다.
+4. "버그를 고쳤으니 이제 됐다"는 위험한 가정. **하나의 카테고리(silent failure)를 고쳤다고 다른 카테고리(partial execution)까지 고쳐진 건 아니다.**
+
+## 적용 (How to Apply)
+
+- 머지 전 **`/plan-eng-review` 필수**. 특히 양쪽(home/away, source/target, request/response 등) 대칭이 필요한 로직에서.
+- 대칭 로직 체크리스트: 양쪽 데이터를 다루는 코드에서 **한쪽만 처리하는 버그**는 테스트로도 잡기 어려우므로, 코드 리뷰에서 "양쪽 다 처리하나?" 질문을 기계적으로 수행.
+- DB에서 **양쪽 데이터의 row count를 비교**하는 간단한 검증 쿼리를 프로덕션 모니터링에 포함. 한쪽이 0이면 alert.
+- 드리프트 사례의 세 가지 레벨을 구분해서 대응: (1) 존재 드리프트 → git log/ls, (2) 작동 드리프트 → 프로덕션 검증, (3) 완전성 드리프트 → eng-review 코드 독해.

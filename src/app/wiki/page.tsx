@@ -11,8 +11,9 @@ export const metadata: Metadata = {
 const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"];
 
 const COMING_SOON_TOPICS: Record<string, string[]> = {
-  "fine-tuning": ["LoRA / QLoRA", "RLHF & DPO", "데이터셋 준비"],
-  "frontend-ai": ["React + AI 패턴", "On-device Inference", "AI UX 설계"],
+  "project-ops": ["Vercel 배포 전략", "GitHub Actions cron 운영", "드리프트 감지"],
+  "data-engineering": ["웹 스크래핑 패턴", "Supabase RLS 설계", "데이터 파이프라인"],
+  "frontend-ai": ["스트리밍 UI", "에러 바운더리", "AI SDK 통합"],
 };
 
 export default function WikiIndexPage() {

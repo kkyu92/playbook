@@ -1,0 +1,39 @@
+---
+title: "Playbook Journal 002 — 이미 설치된 것을 신규로 간주한 드리프트"
+category: harness-engineering
+date: "2026-04-16"
+tags: [playbook-journal, drift, moneyball, dependency, vitest, assumption]
+confidence: 5
+connections: [journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield]
+status: complete
+description: "이미 설치된 Vitest를 신규 설치 태스크로 계획. 파일/패키지 존재 여부를 만들기 직전에 확인하는 습관의 근거."
+type: entry
+series: playbook-journal
+---
+
+## 갭 (Before)
+
+Phase v4-2 Task #5로 "Vitest 설치"를 계획했다. 플랜에 "테스트 프레임워크를 새로 세팅한다"고 적었고, 에이전트는 이를 신규 작업으로 가정하고 접근했다.
+
+사례 1(그린필드 드리프트)과 같은 패턴의 반복이지만, 이번에는 전체 Phase가 아니라 **단일 태스크 레벨**에서 발생.
+
+## 발견 (Discovery)
+
+실제 작업 직전에 확인했더니 이미 설치되어 있었다:
+- 루트 `package.json`에 `vitest ^4.1.4` 존재
+- `packages/kbo-data/vitest.config.ts` 존재
+- 기존 테스트 파일 2개 존재
+
+사례 1에서 교훈을 얻었기에 이번에는 실제 작업 **직전에** 발견해서 시간 낭비는 최소화했지만, 플랜 단계에서 이미 잘못된 가정이 포함되어 있었다는 점은 동일.
+
+## 교훈 (Lesson)
+
+1. **"어떤 신규 파일/패키지/설정도 실제로 만들기 직전에 `ls`/`find`로 존재 여부 확인"**해야 한다.
+2. 체크포인트/플랜은 존재 여부 확인을 **보장하지 않는다**. 플랜에 "새로 설치"라고 적혀 있어도, 실행 시점에 확인이 필요하다.
+3. 사례 1이 "Phase 레벨 드리프트"라면 이것은 "태스크 레벨 드리프트"다. 스케일은 다르지만 원인은 동일: **현실 확인 없는 가정**.
+
+## 적용 (How to Apply)
+
+- 신규 파일/패키지/설정을 만들기 전에 **반드시** `ls`, `find`, `cat package.json | grep` 등으로 존재 여부를 확인하는 것을 표준 절차로.
+- 플랜에 "신규 설치" 또는 "새로 생성" 태스크가 있을 때, 실행 단계에서 "이미 있는지 확인" 스텝을 자동으로 앞에 삽입.
+- 이 패턴은 moneyball뿐 아니라 **모든 프로젝트**에 적용 가능. CLAUDE.md의 필수 스캔 프로토콜에 파일/패키지 레벨 확인도 포함.

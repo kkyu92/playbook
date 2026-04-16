@@ -4,16 +4,12 @@ export const CATEGORIES = [
   "prompt-engineering",
   "context-engineering",
   "harness-engineering",
-  "tokenomics",
-  "rag",
   "agents",
-  "fine-tuning",
   "evaluation",
   "infrastructure",
-  "ios-ai",
   "frontend-ai",
-  "android-ai",
-  "backend-ai",
+  "project-ops",
+  "data-engineering",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -22,40 +18,30 @@ export const CATEGORY_LABELS: Record<string, string> = {
   "prompt-engineering": "Prompt Engineering",
   "context-engineering": "Context Engineering",
   "harness-engineering": "Harness Engineering",
-  tokenomics: "Tokenomics",
-  rag: "RAG",
   agents: "Agents",
-  "fine-tuning": "Fine-tuning",
   evaluation: "Evaluation",
   infrastructure: "Infrastructure",
-  "ios-ai": "iOS + AI",
   "frontend-ai": "Frontend + AI",
-  "android-ai": "Android + AI",
-  "backend-ai": "Backend + AI",
+  "project-ops": "Project Ops",
+  "data-engineering": "Data Engineering",
 };
 
 // 시리즈(frontmatter `series` 필드) 라벨/아이콘. 사이드바 sub-group 헤더에 사용.
 // 새 시리즈 추가 시 여기에 한 줄 추가하면 사이드바가 자동으로 그룹화한다.
 export const SERIES_LABELS: Record<string, { label: string; icon: string }> = {
-  "harness-journal": { label: "Harness Journal", icon: "📓" },
-  "ios-ai-journal": { label: "iOS Journal", icon: "📱" },
-  "aidy-journal": { label: "Multi-Agent Orchestration Journal", icon: "🤖" },
+  "playbook-journal": { label: "Playbook Journal", icon: "📓" },
 };
 
 export const CATEGORY_COLORS: Record<string, string> = {
   "prompt-engineering": "#f59e0b",
   "context-engineering": "#eab308",
   "harness-engineering": "#84cc16",
-  tokenomics: "#14b8a6", // teal — 토큰 경제학, 지속 연구/디벨롭 영역
-  rag: "#10b981",
   agents: "#8b5cf6",
-  "fine-tuning": "#ec4899",
   evaluation: "#06b6d4",
   infrastructure: "#f97316",
-  "ios-ai": "#3b82f6",
   "frontend-ai": "#a855f7",
-  "android-ai": "#34d399",
-  "backend-ai": "#f472b6",
+  "project-ops": "#10b981",
+  "data-engineering": "#3b82f6",
 };
 
 // 사이드바용 카테고리 그룹. 엔트리 수가 늘어나면서 10 카테고리가 한꺼번에 펼쳐지면
@@ -68,22 +54,22 @@ export const CATEGORY_GROUPS: Array<{
   {
     key: "methodology",
     label: "AI 엔지니어링 방법론",
-    categories: ["prompt-engineering", "context-engineering", "harness-engineering", "tokenomics"],
+    categories: ["prompt-engineering", "context-engineering", "harness-engineering"],
   },
   {
     key: "system",
-    label: "시스템 설계",
-    categories: ["rag", "agents", "fine-tuning"],
+    label: "시스템 & 에이전트",
+    categories: ["agents", "evaluation"],
   },
   {
     key: "ops",
-    label: "평가 & 인프라",
-    categories: ["evaluation", "infrastructure"],
+    label: "운영 & 인프라",
+    categories: ["project-ops", "infrastructure", "data-engineering"],
   },
   {
     key: "applications",
     label: "응용",
-    categories: ["ios-ai", "frontend-ai", "android-ai", "backend-ai"],
+    categories: ["frontend-ai"],
   },
 ];
 
