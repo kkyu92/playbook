@@ -196,9 +196,9 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       const showLabel =
         isHovered ||
         isHighlighted ||
-        (globalScale >= 2.2 && isRoadmap) ||
-        (globalScale >= 1.8 && !isDangling && !isRoadmap) ||
-        (globalScale >= 1.2 && isImportant);
+        (globalScale >= 4.0 && isRoadmap) ||
+        (globalScale >= 3.0 && !isDangling && !isRoadmap) ||
+        (globalScale >= 2.0 && isImportant);
 
       if (showLabel) {
         const fontSize = (isHovered || isHighlighted ? 13 : 11) / Math.max(globalScale, 1);
@@ -282,7 +282,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
           const isRoadmapEdge =
             (srcId && srcId.startsWith("roadmap/")) ||
             (tgtId && tgtId.startsWith("roadmap/"));
-          return isRoadmapEdge ? "rgba(107, 107, 128, 0.10)" : "rgba(107, 107, 128, 0.25)";
+          return isRoadmapEdge ? "rgba(107, 107, 128, 0.25)" : "rgba(107, 107, 128, 0.5)";
         }) as never}
         linkLineDash={((link: Record<string, unknown>) => {
           const src = link.source;
@@ -296,9 +296,9 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         }) as never}
         linkWidth={0.8}
         // @ts-expect-error -- linkDistance not in types but works at runtime
-        linkDistance={90}
+        linkDistance={50}
         d3Force="charge"
-        d3ForceStrength={-1200}
+        d3ForceStrength={-300}
         onNodeClick={handleNodeClick as never}
         onNodeHover={handleNodeHover as never}
         cooldownTicks={150}
