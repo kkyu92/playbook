@@ -26,6 +26,7 @@ function GraphSkeleton() {
 export default function Home() {
   const manifest = getManifest();
   const entryCount = manifest.entries.length;
+  const roadmapCount = manifest.stats?.roadmapCount ?? 0;
   const avgConfidence =
     entryCount > 0
       ? (
@@ -73,8 +74,17 @@ export default function Home() {
           <div className="text-center">
             <div className="font-data text-lg font-semibold text-text">
               {entryCount}
+              <span className="text-sm text-muted font-normal">
+                /{entryCount + roadmapCount}
+              </span>
             </div>
-            <div className="text-xs text-muted">엔트리</div>
+            <div className="text-xs text-muted">작성 / 전체</div>
+          </div>
+          <div className="text-center">
+            <div className="font-data text-lg font-semibold text-text">
+              {roadmapCount}
+            </div>
+            <div className="text-xs text-muted">예정</div>
           </div>
           <div className="text-center">
             <div className="font-data text-lg font-semibold text-text">

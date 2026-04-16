@@ -29,6 +29,29 @@
 - GITHUB_REPO — kkyu92/playbook
 - GEMINI_API_KEY — Gemini API
 
+## 위키 관리 규칙 (Karpathy LLM Wiki 패턴)
+
+### 3-Layer 구조
+- raw-sources/: 원천 자료 (불변)
+- content/: 위키 엔트리 (LLM이 생성/관리하는 마크다운)
+- CLAUDE.md + INDEX.md: 스키마 (위키 관리 방법)
+
+### 핵심 명령어
+- /ingest: 새 자료 추가 → 위키 엔트리 자동 변환
+- /lint: 일관성 검사 → orphan, 고립, stale, 중복 감지
+- /lint --fix: 자동 수정 가능한 것만 수정
+
+### 엔트리 생성 규칙
+- 새 엔트리는 반드시 connections 1개 이상
+- Journal은 append-only (수정 금지)
+- confidence 초기값: 2 (실전 검증 전), 검증 후 상향
+- INDEX.md는 manifest 생성 시 자동 업데이트
+
+### 운영 루프
+- 매일: /ingest로 새 자료 추가
+- 매주: /lint로 위키 건강도 점검
+- 패턴 3회 반복 시: Journal → Wiki 승격 검토
+
 ## Skill routing
 
 When the user's request matches an available skill, suggest it before acting.

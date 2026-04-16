@@ -18,6 +18,7 @@ interface GraphNode {
   category: string;
   confidence: number;
   description: string;
+  type?: "roadmap";
   x?: number;
   y?: number;
 }
@@ -104,7 +105,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
 
   const handleNodeClick = useCallback(
     (node: GraphNode) => {
-      if (node.confidence === 0) return;
+      if (node.confidence === 0 || node.type === "roadmap") return;
       trackEvent("graph_node_click", { nodeId: node.id, category: node.category });
       selectNode(node.id);
       router.push(`/wiki/${node.id}`);
@@ -133,17 +134,18 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       const isHovered = hovered?.id === node.id;
       const isHighlighted = highlightedRef.current.size > 0 && highlightedRef.current.has(node.id);
       const isDimmed = highlightedRef.current.size > 0 && !isHighlighted && !isHovered;
-      const isDangling = node.confidence === 0;
-      const rawBase = isDangling ? 3 : 4 + (node.confidence || 0) * 1.2;
+      const isRoadmap = node.type === "roadmap";
+      const isDangling = !isRoadmap && node.confidence === 0;
+      const rawBase = isRoadmap ? 3.5 : isDangling ? 3 : 4 + (node.confidence || 0) * 1.2;
       const baseSize = Number.isFinite(rawBase) && rawBase > 0 ? rawBase : 4;
       const size = isHovered || isHighlighted ? baseSize * 1.5 : baseSize;
 
-      const opacity = isDimmed ? 0.15 : 1;
+      const opacity = isDimmed ? 0.15 : isRoadmap ? 0.55 : 1;
 
       ctx.globalAlpha = opacity;
 
       // Glow effect
-      if (!isDangling) {
+      if (!isDangling && !isRoadmap) {
         const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, size + 6);
         grad.addColorStop(0, `${color}${isHovered || isHighlighted ? "80" : "30"}`);
         grad.addColorStop(1, `${color}00`);
@@ -154,7 +156,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       }
 
       // Highlight ring
-      if (isHighlighted && !isDangling) {
+      if (isHighlighted && !isDangling && !isRoadmap) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, size + 4, 0, Math.PI * 2);
         ctx.strokeStyle = color;
@@ -165,7 +167,17 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       // Node circle
       ctx.beginPath();
       ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
-      if (isDangling) {
+      if (isRoadmap) {
+        // Hollow circle with category color (roadmap node)
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([3, 2]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // Semi-transparent fill
+        ctx.fillStyle = `${color}15`;
+        ctx.fill();
+      } else if (isDangling) {
         ctx.strokeStyle = "#6b6b80";
         ctx.lineWidth = 1;
         ctx.setLineDash([2, 2]);
@@ -177,14 +189,15 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       }
 
       // Label — 줌 레벨 + 호버/하이라이트 기반으로만 표시
-      // - 줌 인 (globalScale ≥ 1.8): 모든 라벨 표시
+      // - 줌 인 (globalScale ≥ 1.8): 모든 라벨 표시 (roadmap은 2.2부터)
       // - 줌 아웃 (< 1.8): 호버 / 하이라이트 / 큰 노드(confidence ≥ 4) 만 표시
       // - dangling은 호버 시만
-      const isImportant = !isDangling && node.confidence >= 4;
+      const isImportant = !isDangling && !isRoadmap && node.confidence >= 4;
       const showLabel =
         isHovered ||
         isHighlighted ||
-        (globalScale >= 1.8 && !isDangling) ||
+        (globalScale >= 2.2 && isRoadmap) ||
+        (globalScale >= 1.8 && !isDangling && !isRoadmap) ||
         (globalScale >= 1.2 && isImportant);
 
       if (showLabel) {
@@ -216,6 +229,8 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
           ? "rgba(232,232,237,0.25)"
           : isHovered || isHighlighted
           ? "#ffffff"
+          : isRoadmap
+          ? "rgba(232,232,237,0.4)"
           : "rgba(232,232,237,0.75)";
         ctx.fillText(labelText, node.x, node.y + size + 6);
       }
@@ -259,7 +274,26 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         backgroundColor="#0a0a0f"
         nodeCanvasObject={nodeCanvasObject as never}
         nodePointerAreaPaint={nodePointerAreaPaint as never}
-        linkColor={() => "rgba(107, 107, 128, 0.25)"}
+        linkColor={((link: Record<string, unknown>) => {
+          const src = link.source;
+          const tgt = link.target;
+          const srcId = typeof src === "string" ? src : (src as { id?: string })?.id;
+          const tgtId = typeof tgt === "string" ? tgt : (tgt as { id?: string })?.id;
+          const isRoadmapEdge =
+            (srcId && srcId.startsWith("roadmap/")) ||
+            (tgtId && tgtId.startsWith("roadmap/"));
+          return isRoadmapEdge ? "rgba(107, 107, 128, 0.10)" : "rgba(107, 107, 128, 0.25)";
+        }) as never}
+        linkLineDash={((link: Record<string, unknown>) => {
+          const src = link.source;
+          const tgt = link.target;
+          const srcId = typeof src === "string" ? src : (src as { id?: string })?.id;
+          const tgtId = typeof tgt === "string" ? tgt : (tgt as { id?: string })?.id;
+          const isRoadmapEdge =
+            (srcId && srcId.startsWith("roadmap/")) ||
+            (tgtId && tgtId.startsWith("roadmap/"));
+          return isRoadmapEdge ? [4, 4] : null;
+        }) as never}
         linkWidth={0.8}
         // @ts-expect-error -- linkDistance not in types but works at runtime
         linkDistance={90}
@@ -276,7 +310,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       />
 
       {/* Hover tooltip */}
-      {tooltipNode && tooltipNode.confidence > 0 && (
+      {tooltipNode && (tooltipNode.confidence > 0 || tooltipNode.type === "roadmap") && (
         <div className="pointer-events-none absolute bottom-6 left-6 max-w-xs rounded-[var(--radius-md)] border border-border bg-surface/95 p-4 backdrop-blur-sm">
           <div className="flex items-center gap-2 mb-1">
             <span

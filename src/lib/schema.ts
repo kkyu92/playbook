@@ -113,9 +113,10 @@ export interface ContentManifest {
     nodes: Array<{
       id: string;
       label: string;
-      category: Category;
+      category: string;
       confidence: number;
       description: string;
+      type?: "roadmap";
     }>;
     edges: Array<{
       source: string;
@@ -135,5 +136,6 @@ export interface ContentManifest {
     categoryStats: Record<string, { count: number; avgConfidence: number; complete: number }>;
     weeklyStats: Array<{ week: string; count: number; startDate: string; endDate: string }>;
     recentEntries: Array<{ slug: string; title: string; date: string; category: string }>;
+    roadmapCount: number;
   };
 }
