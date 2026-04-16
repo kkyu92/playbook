@@ -28,7 +28,7 @@ export function Header({ fixed = false }: { fixed?: boolean }) {
           href="/"
           className="font-display text-lg font-bold tracking-tight text-text hover:text-accent transition-colors shrink-0"
         >
-          <span className="hidden sm:inline">Mino&apos;s AI Study Wiki</span>
+          <span className="hidden sm:inline">Playbook Hub</span>
           <span className="sm:hidden">AI Study</span>
         </Link>
 
