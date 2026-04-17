@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       source_repo:
-        description: "워커 레포 (예: kkyu92/moneyball-ecosystem)"
+        description: "워커 레포 (예: kkyu92/moneyballscore)"
         required: true
       error_title:
         description: "에러/교훈 제목"

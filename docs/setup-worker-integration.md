@@ -25,14 +25,14 @@ playbook의 auto-ingest 워크플로우와 워커 레포(moneyball 등)를 연�
    - **Permissions**: Contents (Read and write) 필수
 4. "Generate token" 클릭 후 토큰 값 복사
 
-### 2. moneyball-ecosystem 레포에 시크릿 추가
+### 2. moneyballscore 레포에 시크릿 추가
 
-1. moneyball-ecosystem 레포 > Settings > Secrets and variables > Actions
+1. moneyballscore 레포 > Settings > Secrets and variables > Actions
 2. "New repository secret" 클릭
 3. **Name**: `PLAYBOOK_PAT`
 4. **Value**: 위에서 복사한 토큰
 
-## moneyball-ecosystem 워크플로우 수정
+## moneyballscore 워크플로우 수정
 
 ### daily-pipeline.yml
 
@@ -46,7 +46,7 @@ playbook의 auto-ingest 워크플로우와 워커 레포(moneyball 등)를 연�
         run: |
           gh api repos/kkyu92/playbook/dispatches \
             -f event_type=worker-error \
-            -f 'client_payload[source_repo]=kkyu92/moneyball-ecosystem' \
+            -f 'client_payload[source_repo]=kkyu92/moneyballscore' \
             -f 'client_payload[title]=daily-pipeline 실패: ${{ github.workflow }}' \
             -f "client_payload[body]=Workflow: ${{ github.workflow }}\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nBranch: ${{ github.ref_name }}\nCommit: ${{ github.sha }}" \
             -f 'client_payload[type]=error-log'
@@ -64,7 +64,7 @@ playbook의 auto-ingest 워크플로우와 워커 레포(moneyball 등)를 연�
         run: |
           gh api repos/kkyu92/playbook/dispatches \
             -f event_type=worker-error \
-            -f 'client_payload[source_repo]=kkyu92/moneyball-ecosystem' \
+            -f 'client_payload[source_repo]=kkyu92/moneyballscore' \
             -f 'client_payload[title]=live-update 실패: ${{ github.workflow }}' \
             -f "client_payload[body]=Workflow: ${{ github.workflow }}\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nBranch: ${{ github.ref_name }}\nCommit: ${{ github.sha }}" \
             -f 'client_payload[type]=error-log'
@@ -77,7 +77,7 @@ playbook 쪽 auto-ingest 워크플로우를 `workflow_dispatch`로 수동 테스
 ```bash
 gh workflow run auto-ingest.yml \
   --repo kkyu92/playbook \
-  -f source_repo=kkyu92/moneyball-ecosystem \
+  -f source_repo=kkyu92/moneyballscore \
   -f error_title="테스트: 수동 트리거" \
   -f error_body="수동 테스트 내용입니다." \
   -f error_type=error-log
@@ -88,7 +88,7 @@ gh workflow run auto-ingest.yml \
 ```bash
 gh api repos/kkyu92/playbook/dispatches \
   -f event_type=worker-error \
-  -f 'client_payload[source_repo]=kkyu92/moneyball-ecosystem' \
+  -f 'client_payload[source_repo]=kkyu92/moneyballscore' \
   -f 'client_payload[title]=테스트: repository_dispatch' \
   -f 'client_payload[body]=테스트 본문' \
   -f 'client_payload[type]=error-log'

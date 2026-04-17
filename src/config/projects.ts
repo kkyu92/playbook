@@ -8,7 +8,7 @@ export interface ProjectConfig {
 export const PROJECTS: ProjectConfig[] = [
   {
     name: "MoneyBall",
-    repo: "kkyu92/moneyball-ecosystem",
+    repo: "kkyu92/moneyballscore",
     url: "https://moneyballscore.vercel.app",
     description: "KBO 세이버메트릭스 승부예측 엔진",
   },

@@ -1,6 +1,6 @@
 # /curate-inbound — 워커 프로젝트 inbound PR 분류 + 하네스 박제 파이프라인
 
-워커 프로젝트(moneyball-ecosystem / (미래 프로젝트))가 playbook에 `patterns:` prefix로 PR을 쏘면, 이 커맨드가 그 raw 콘텐츠를 **분류 + 커레이트 + 재포맷**해서 playbook wiki의 적절한 위치에 박제한다.
+워커 프로젝트(moneyballscore / (미래 프로젝트))가 playbook에 `patterns:` prefix로 PR을 쏘면, 이 커맨드가 그 raw 콘텐츠를 **분류 + 커레이트 + 재포맷**해서 playbook wiki의 적절한 위치에 박제한다.
 
 [Journal 014의 tips/ 흐름](/wiki/harness-engineering/harness-journal-014-hub-auto-merge-inbound-tips)을 *하네스 박제 수준까지 확장*한 파이프라인.
 
@@ -127,7 +127,7 @@ dev-setup-tips-log.mdx의 `# 로그` 섹션 *하단*에 append. **기존 섹션 
 
 **카테고리**: <ai-pipeline | workflow | mdx | github-actions | ...>
 **날짜**: YYYY-MM-DD
-**프로젝트**: 익명 (또는 moneyball-ecosystem / playbook)
+**프로젝트**: 익명 (또는 moneyballscore / playbook)
 **관련 파일**: <추상화된 경로>
 
 ## 문제

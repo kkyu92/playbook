@@ -1,6 +1,6 @@
 # /projects-sync — 허브 세션의 워커 프로젝트 read-only 진단
 
-이 playbook 세션은 *허브*로서 moneyball-ecosystem *워커* 프로젝트를 분석/연구한다.
+이 playbook 세션은 *허브*로서 moneyballscore *워커* 프로젝트를 분석/연구한다.
 워커 프로젝트는 별도 Claude 세션이 동시에 작업할 수 있다.
 
 이 커맨드는 **쓰기 0, 읽기만** 수행하는 안전한 진단 도구다.
@@ -10,7 +10,7 @@
 
 ```
 /projects-sync
-/projects-sync moneyball        # moneyball-ecosystem
+/projects-sync moneyball        # moneyballscore
 ```
 
 ## 왜 이 커맨드가 필요한가
@@ -20,8 +20,8 @@
 
 이전 세션의 NEXT.md는 다음 리듬을 권장한다:
 ```bash
-rtk git -C ~/projects/moneyball-ecosystem fetch origin
-rtk git -C ~/projects/moneyball-ecosystem log origin/main --oneline -5
+rtk git -C ~/projects/moneyballscore fetch origin
+rtk git -C ~/projects/moneyballscore log origin/main --oneline -5
 ```
 
 이 명령을 *한 커맨드*로 묶고, 추가로 *내가 모르는 변화*(다른 세션 흔적)를 감지한다.
@@ -62,7 +62,7 @@ rtk git -C <project-root> worktree list
 ### 4. 최근 PR 상태
 
 ```bash
-rtk gh pr list -R kkyu92/moneyball-ecosystem --state all --limit 5
+rtk gh pr list -R kkyu92/moneyballscore --state all --limit 5
 ```
 
 * 최근 5개 PR — open/merged/closed 전체. 다른 세션이 PR을 올렸는지 감지.
@@ -83,7 +83,7 @@ rtk gh pr list -R kkyu92/moneyball-ecosystem --state all --limit 5
 ```
 📸 프로젝트 스냅샷 — 2026-MM-DD HH:MM
 
-moneyball-ecosystem (✅ | ⚠️)
+moneyballscore (✅ | ⚠️)
 ──────────────────────
   origin 최신:       f3ed55c feat(ai): AI API 비용 추적 인프라 (#95)
   local main:        f3ed55c (동기화 완료)
@@ -92,7 +92,7 @@ moneyball-ecosystem (✅ | ⚠️)
   최근 open PR:      없음
   다른 세션 흔적:    없음
 
-요약: moneyball-ecosystem은 안전.
+요약: moneyballscore은 안전.
 ```
 
 ## 금지 사항
