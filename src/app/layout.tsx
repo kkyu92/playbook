@@ -3,7 +3,7 @@ import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { MobileNav } from "@/components/mobile-nav";
-import { MagneticMode } from "@/components/magnetic-mode";
+// import { MagneticMode } from "@/components/magnetic-mode";
 import { SearchDialog } from "@/components/search-dialog";
 import { GraphSearchProvider } from "@/contexts/graph-search-context";
 import { getManifest } from "@/lib/content";
@@ -78,7 +78,7 @@ export default function RootLayout({
           <GraphSearchProvider>
             {children}
             <MobileNav />
-            <MagneticMode />
+            {/* <MagneticMode /> */}
             <SearchDialog entries={searchEntries} />
           </GraphSearchProvider>
         </ThemeProvider>
