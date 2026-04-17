@@ -33,6 +33,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=/tmp/playbook-vercel-reminder.flag; [ -f \"$f\" ] && [ \"$(cat \"$f\")\" = \"$(date +%Y-%m-%d)\" ] && [ \"$(date +%H%M)\" -ge 1800 ] && echo \"🔔 리마인더: Playbook Vercel env 업데이트 남음 — GITHUB_TOKEN + GEMINI_API_KEY를 Production에 추가하고 재배포 필요. Passkey 기기 접근 가능한지 확인.\" || true",
+            "timeout": 3000
+          }
+        ]
+      }
     ]
   }
 }
