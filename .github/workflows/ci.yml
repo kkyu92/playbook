@@ -20,6 +20,6 @@ jobs:
           node-version: "20"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - run: npm audit --audit-level=high
+      - run: pnpm audit --audit-level high
       - run: pnpm test
       - run: pnpm build
