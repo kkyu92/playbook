@@ -94,6 +94,7 @@ export const frontmatterSchema = z.object({
   type: z.enum(["entry", "til"]).default("entry"),
   series: z.string().optional(),
   quiz: z.array(quizQuestionSchema).optional(),
+  workers: z.array(z.string()).default([]),
 });
 
 export type Frontmatter = z.infer<typeof frontmatterSchema>;

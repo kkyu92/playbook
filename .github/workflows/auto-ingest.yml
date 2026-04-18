@@ -14,13 +14,18 @@ on:
       error_body:
         description: "에러 로그 또는 교훈 내용"
         required: true
-      error_type:
-        description: "타입 (error-log, lesson, pattern)"
-        default: "error-log"
+      event_type:
+        description: "이벤트 타입"
+        type: choice
+        default: "worker-error"
+        options:
+          - worker-error
+          - worker-lesson
 
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 jobs:
   auto-ingest:
@@ -43,110 +48,221 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Determine inputs
-        id: inputs
+      - name: Auto-ingest — route by event type
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_EVENT: ${{ github.event.action }}
+          CP_SOURCE: ${{ github.event.client_payload.source_repo }}
+          CP_TITLE: ${{ github.event.client_payload.title }}
+          CP_BODY: ${{ github.event.client_payload.body }}
+          WD_SOURCE: ${{ inputs.source_repo }}
+          WD_TITLE: ${{ inputs.error_title }}
+          WD_BODY: ${{ inputs.error_body }}
+          WD_EVENT: ${{ inputs.event_type }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            echo "source_repo=${{ github.event.client_payload.source_repo }}" >> $GITHUB_OUTPUT
-            echo "title=${{ github.event.client_payload.title }}" >> $GITHUB_OUTPUT
-            echo "body=${{ github.event.client_payload.body }}" >> $GITHUB_OUTPUT
-            echo "type=${{ github.event.client_payload.type }}" >> $GITHUB_OUTPUT
+          set -euo pipefail
+
+          # 1. 입력 normalize
+          if [ "$EVENT_NAME" = "repository_dispatch" ]; then
+            SOURCE_REPO="${CP_SOURCE:-}"
+            TITLE="${CP_TITLE:-}"
+            BODY="${CP_BODY:-}"
+            EVENT_TYPE="${DISPATCH_EVENT:-worker-error}"
           else
-            echo "source_repo=${{ inputs.source_repo }}" >> $GITHUB_OUTPUT
-            echo "title=${{ inputs.error_title }}" >> $GITHUB_OUTPUT
-            echo "body=${{ inputs.error_body }}" >> $GITHUB_OUTPUT
-            echo "type=${{ inputs.error_type }}" >> $GITHUB_OUTPUT
+            SOURCE_REPO="${WD_SOURCE:-}"
+            TITLE="${WD_TITLE:-}"
+            BODY="${WD_BODY:-}"
+            EVENT_TYPE="${WD_EVENT:-worker-error}"
           fi
 
-      - name: Generate Journal entry
-        id: generate
-        run: |
+          if [ -z "$SOURCE_REPO" ] || [ -z "$TITLE" ]; then
+            echo "❌ source_repo 또는 title 누락" >&2
+            exit 1
+          fi
+
+          # 2. slug — ASCII only (locale-independent)
+          SLUG=$(printf '%s' "$TITLE" \
+            | tr '[:upper:]' '[:lower:]' \
+            | LC_ALL=C tr -c 'a-z0-9' '-' \
+            | sed 's/--*/-/g; s/^-//; s/-$//' \
+            | cut -c1-50)
+          if [ -z "$SLUG" ]; then
+            SLUG="untitled-$(date +%s)"
+          fi
+
           DATE=$(date +%Y-%m-%d)
           SLUG_DATE=$(date +%Y%m%d)
+          SOURCE_SHORT=$(basename "$SOURCE_REPO")
 
-          # 다음 Journal 번호 계산
-          LAST_NUM=$(ls content/journal/playbook-journal-*.mdx 2>/dev/null | sed 's/.*journal-\([0-9]*\).*/\1/' | sort -n | tail -1)
-          NEXT_NUM=$(printf "%03d" $((10#${LAST_NUM:-0} + 1)))
+          echo "event_type: $EVENT_TYPE"
+          echo "source_repo: $SOURCE_REPO"
+          echo "title: $TITLE"
+          echo "slug: $SLUG"
 
-          # slug 생성 (title에서)
-          TITLE="${{ steps.inputs.outputs.title }}"
-          SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9가-힣]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//' | cut -c1-50)
-
-          FILENAME="content/journal/playbook-journal-${NEXT_NUM}-${SLUG}.mdx"
-
-          # raw source 저장
+          # 3. raw-sources 저장 (공통)
           mkdir -p raw-sources
-          cat > "raw-sources/${SLUG_DATE}-${SLUG}.md" << 'RAWEOF'
-          ---
-          date: "${{ steps.inputs.outputs.title }}"
-          source: "${{ steps.inputs.outputs.source_repo }}"
-          type: "${{ steps.inputs.outputs.type }}"
-          ---
+          RAW_FILE="raw-sources/${SLUG_DATE}-${SLUG}.md"
 
-          ${{ steps.inputs.outputs.body }}
-          RAWEOF
+          # frontmatter 안전 escape
+          ESC_TITLE=$(printf '%s' "$TITLE" | sed 's/"/\\"/g; s/\\/\\\\/g')
+          ESC_SOURCE=$(printf '%s' "$SOURCE_REPO" | sed 's/"/\\"/g')
 
-          # Journal MDX 생성
-          cat > "$FILENAME" << MDXEOF
-          ---
-          title: "Playbook Journal ${NEXT_NUM} — ${TITLE}"
-          category: harness-engineering
-          date: "${DATE}"
-          tags: [playbook-journal, auto-ingest, ${{ steps.inputs.outputs.type }}, $(echo "${{ steps.inputs.outputs.source_repo }}" | sed 's/.*\///' )]
-          confidence: 3
-          connections: []
-          status: in-progress
-          description: "자동 수집: ${TITLE} (from ${{ steps.inputs.outputs.source_repo }})"
-          type: entry
-          series: playbook-journal
-          ---
+          {
+            echo "---"
+            echo "date: \"$DATE\""
+            echo "source: \"$ESC_SOURCE\""
+            echo "type: \"$EVENT_TYPE\""
+            echo "---"
+            echo ""
+            printf '%s\n' "$BODY"
+          } > "$RAW_FILE"
+          echo "✅ raw 저장: $RAW_FILE"
 
-          > 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
-          > Source: ${{ steps.inputs.outputs.source_repo }}
-          > Type: ${{ steps.inputs.outputs.type }}
+          # git config — 모든 경로 공통
+          git config user.name "kkyu92"
+          git config user.email "kyusikkyu@gmail.com"
+
+          # 4. event_type 분기
+          if [ "$EVENT_TYPE" = "worker-error" ]; then
+            echo "=== ERROR 경로: raw + Issue (dedup) ==="
+
+            # 4a. 최근 24h dedup 검색 (inbound 라벨 + 동일 title 포함)
+            # gh search 는 Title 특수문자에 취약 → 앞 30자만 contains 매칭
+            TITLE_KEY=$(printf '%s' "$TITLE" | head -c 30)
+            EXISTING_ISSUE=$(gh issue list \
+              --state open \
+              --label "inbound" \
+              --limit 30 \
+              --json number,title,createdAt \
+              | jq -r --arg key "$TITLE_KEY" '
+                  [.[] | select(.title | contains($key))]
+                  | sort_by(.createdAt) | reverse | .[0].number // empty
+                ')
+
+            ISSUE_TITLE="🟡 Inbound raw: ${TITLE} (from ${SOURCE_SHORT})"
+
+            if [ -n "$EXISTING_ISSUE" ]; then
+              # 기존 Issue 에 재발 코멘트
+              COMMENT_BODY=$(cat <<COMMENTEND
+          🔁 재발 감지 (${DATE})
+
+          - Source: \`${SOURCE_REPO}\`
+          - Raw: \`${RAW_FILE}\`
+          - Title: ${TITLE}
+          COMMENTEND
+          )
+              gh issue comment "$EXISTING_ISSUE" --body "$COMMENT_BODY"
+              echo "✅ 기존 Issue #${EXISTING_ISSUE} 에 재발 코멘트"
+            else
+              # 신규 Issue
+              ISSUE_BODY=$(cat <<ISSUEEND
+          **Source:** \`${SOURCE_REPO}\`
+          **Type:** \`${EVENT_TYPE}\`
+          **Raw:** \`${RAW_FILE}\`
+
+          허브 세션에서 \`/ingest\` 로 검토 후 처리하세요. 관련 엔트리가 있으면 \`connections\` 만 추가, 재발 패턴이면 \`docs/solutions/\` 로 정리해도 됩니다.
+
+          ---
 
           ## 원본
 
-          ${{ steps.inputs.outputs.body }}
+          ~~~
+          ${BODY}
+          ~~~
+          ISSUEEND
+          )
+              gh issue create \
+                --title "$ISSUE_TITLE" \
+                --body "$ISSUE_BODY" \
+                --label "inbound,raw"
+              echo "✅ 신규 Issue 생성"
+            fi
 
-          ## 분석
+            # raw-sources/ commit
+            git add raw-sources/
+            if git diff --cached --quiet; then
+              echo "raw-sources 변경 없음, push 생략"
+            else
+              git commit -m "data: auto-ingest raw from ${SOURCE_SHORT} — ${TITLE}"
+              git push origin main
+            fi
 
-          _TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest로 보강_
+          else
+            echo "=== LESSON 경로: raw + Journal draft + PR ==="
 
-          ## 교훈
+            # 다음 Journal 번호
+            LAST_NUM=$(ls content/journal/playbook-journal-*.mdx 2>/dev/null \
+              | sed 's/.*journal-\([0-9]*\).*/\1/' \
+              | sort -n | tail -1)
+            NEXT_NUM=$(printf "%03d" $((10#${LAST_NUM:-0} + 1)))
 
-          _TODO: 교훈 정리_
+            JOURNAL_FILE="content/journal/playbook-journal-${NEXT_NUM}-${SLUG}.mdx"
 
-          ## 적용
+            # MDX frontmatter escape + body 는 fenced code block 안에 넣어 안전화
+            {
+              echo "---"
+              echo "title: \"Playbook Journal ${NEXT_NUM} — ${ESC_TITLE}\""
+              echo "category: harness-engineering"
+              echo "date: \"${DATE}\""
+              echo "tags: [playbook-journal, auto-ingest, lesson, ${SOURCE_SHORT}]"
+              echo "confidence: 3"
+              echo "connections: []"
+              echo "status: in-progress"
+              echo "description: \"자동 수집: ${ESC_TITLE} (from ${SOURCE_REPO})\""
+              echo "type: entry"
+              echo "series: playbook-journal"
+              echo "---"
+              echo ""
+              echo "> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다."
+              echo "> Source: \`${SOURCE_REPO}\`"
+              echo "> Type: \`${EVENT_TYPE}\`"
+              echo ""
+              echo "## 원본"
+              echo ""
+              echo "~~~"
+              printf '%s\n' "$BODY"
+              echo "~~~"
+              echo ""
+              echo "## 분석"
+              echo ""
+              echo "_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_"
+              echo ""
+              echo "## 교훈"
+              echo ""
+              echo "_TODO: 교훈 정리_"
+              echo ""
+              echo "## 적용"
+              echo ""
+              echo "_TODO: 다음 액션_"
+            } > "$JOURNAL_FILE"
+            echo "✅ Journal draft: $JOURNAL_FILE"
 
-          _TODO: 다음 액션_
-          MDXEOF
+            # manifest 재생성
+            node scripts/generate-content-manifest.mjs
 
-          echo "filename=${FILENAME}" >> $GITHUB_OUTPUT
-          echo "next_num=${NEXT_NUM}" >> $GITHUB_OUTPUT
+            # Branch + commit + PR
+            BRANCH="auto-ingest/journal-${NEXT_NUM}"
+            git checkout -b "$BRANCH"
+            git add -A
+            git commit -m "feat(auto-ingest): Journal ${NEXT_NUM} — ${TITLE}"
+            git push origin "$BRANCH"
 
-      - name: Regenerate manifest
-        run: node scripts/generate-content-manifest.mjs
+            PR_BODY=$(cat <<PREND
+          워커 프로젝트(\`${SOURCE_REPO}\`)에서 자동 수집된 Journal 엔트리입니다.
 
-      - name: Create PR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          BRANCH="auto-ingest/journal-${{ steps.generate.outputs.next_num }}"
-          git config user.name "kkyu92"
-          git config user.email "kyusikkyu@gmail.com"
-          git checkout -b "$BRANCH"
-          git add -A
-          git commit -m "feat(auto-ingest): Journal ${{ steps.generate.outputs.next_num }} — ${{ steps.inputs.outputs.title }}"
-          git push origin "$BRANCH"
-          gh pr create \
-            --title "📓 Auto-Ingest: Journal ${{ steps.generate.outputs.next_num }} — ${{ steps.inputs.outputs.title }}" \
-            --body "워커 프로젝트(${{ steps.inputs.outputs.source_repo }})에서 자동 수집된 Journal 엔트리입니다.
+          **Type:** \`${EVENT_TYPE}\`
+          **Source:** \`${SOURCE_REPO}\`
+          **Raw:** \`${RAW_FILE}\`
 
-          **Type:** ${{ steps.inputs.outputs.type }}
-          **Source:** ${{ steps.inputs.outputs.source_repo }}
-
-          > 이 PR은 auto-ingest 워크플로우에 의해 자동 생성되었습니다.
-          > 내용을 확인하고 분석/교훈/적용 섹션을 보강한 후 머지해주세요." \
-            --base main \
-            --head "$BRANCH"
+          > 이 PR 은 auto-ingest 워크플로우에 의해 자동 생성되었습니다.
+          > 분석/교훈/적용 섹션을 보강하고 \`connections\` 을 채운 후 머지해주세요.
+          PREND
+          )
+            gh pr create \
+              --title "📓 Auto-Ingest: Journal ${NEXT_NUM} — ${TITLE}" \
+              --body "$PR_BODY" \
+              --base main \
+              --head "$BRANCH"
+            echo "✅ PR 생성"
+          fi

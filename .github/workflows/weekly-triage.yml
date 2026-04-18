@@ -1,0 +1,123 @@
+name: "📊 Weekly Triage — 미처리 raw 리포트"
+
+# raw-sources/ 에 쌓였지만 아직 content/ 에 연결 안 된 raw 파일을
+# 매주 월요일 리포트로 Issue 생성. GitHub 이 Issue 생성 시 이메일 자동 발송.
+# 사용자가 허브 세션을 한 주 안 열어도 망각 구조적 차단.
+#
+# 복리 누수 방어 장치. Phase 1 — Pull (b) delight #6.
+
+on:
+  schedule:
+    # 매주 월 00:05 UTC = 09:05 KST (5분 오프셋 → GitHub scheduler 재등록 유도)
+    - cron: "5 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan raw-sources and build report
+        id: scan
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          DATE=$(date +%Y-%m-%d)
+
+          # raw-sources/ 없으면 종료
+          if [ ! -d raw-sources ]; then
+            echo "raw-sources/ 없음. 종료."
+            echo "count=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # 연결 안 된 raw 수집 (기준: 파일명의 slug 가 content/ 안에서 참조되는지)
+          UNPROCESSED=""
+          COUNT=0
+
+          # find + while 로 공백 포함 안전 처리
+          while IFS= read -r raw_path; do
+            [ -z "$raw_path" ] && continue
+
+            # 파일명에서 slug 추출: raw-sources/YYYYMMDD-<slug>.md → <slug>
+            fname=$(basename "$raw_path" .md)
+            slug="${fname#*-}"   # 첫 '-' 이전 (날짜) 제거
+
+            # content/ 에서 slug 참조 검색
+            if ! grep -r -l -F "$slug" content/ >/dev/null 2>&1; then
+              # raw 첫 줄에서 제목 추정 (frontmatter date/source/type 다음 본문 첫 줄)
+              # frontmatter 건너뛴 후 첫 non-empty 라인 추출
+              title=$(awk '
+                /^---$/ { block++; next }
+                block == 2 && NF > 0 { print; exit }
+              ' "$raw_path" | head -c 80)
+              [ -z "$title" ] && title="(제목 추출 실패)"
+
+              UNPROCESSED="${UNPROCESSED}- [ ] \`${raw_path}\` — ${title}"$'\n'
+              COUNT=$((COUNT + 1))
+            fi
+          done < <(find raw-sources -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort)
+
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "date=$DATE" >> $GITHUB_OUTPUT
+
+          if [ "$COUNT" -eq 0 ]; then
+            echo "✅ 미처리 raw 없음. Issue 생성 skip."
+            exit 0
+          fi
+
+          # Issue body 생성
+          BODY=$(cat <<BODYEND
+          ## 📥 미처리 raw ${COUNT}건
+
+          아래 raw 는 \`content/\` 에 아직 반영되지 않았습니다.
+
+          ${UNPROCESSED}
+
+          ## 조치
+
+          허브 세션에서 하나씩 처리하세요:
+
+          \`\`\`
+          /ingest raw-sources/<파일명>
+          \`\`\`
+
+          \`/ingest\` 는 신규 엔트리 생성 + 관련 기존 엔트리 5~15개 cross-update 까지 수행합니다. 복리 계수 최대화 루틴.
+
+          ---
+
+          *자동 생성: \`.github/workflows/weekly-triage.yml\` — 매주 월 09:05 KST*
+          BODYEND
+          )
+
+          # Issue 제목
+          ISSUE_TITLE="📊 Weekly Triage — 미처리 raw ${COUNT}건 (${DATE})"
+
+          # 기존 triage Issue open 상태 있으면 close 후 신규 생성 (갱신 방식)
+          OLD_ISSUE=$(gh issue list \
+            --state open \
+            --label "triage" \
+            --limit 5 \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -n "$OLD_ISSUE" ]; then
+            gh issue close "$OLD_ISSUE" --comment "🔄 주간 리포트 갱신: 새 Issue 로 교체"
+            echo "✅ 기존 Issue #${OLD_ISSUE} close"
+          fi
+
+          # 신규 Issue 생성
+          gh issue create \
+            --title "$ISSUE_TITLE" \
+            --body "$BODY" \
+            --label "triage,weekly"
+
+          echo "✅ 신규 Weekly Triage Issue 생성"
