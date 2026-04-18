@@ -127,6 +127,10 @@ jobs:
           if [ "$EVENT_TYPE" = "worker-error" ]; then
             echo "=== ERROR 경로: raw + Issue (dedup) ==="
 
+            # 라벨 self-bootstrap (없으면 생성, 있으면 무시)
+            gh label create inbound --color "f9c74f" --description "워커에서 자동 수집" 2>/dev/null || true
+            gh label create raw --color "e0e1dd" --description "raw-sources 미처리" 2>/dev/null || true
+
             # 4a. 최근 24h dedup 검색 (inbound 라벨 + 동일 title 포함)
             # gh search 는 Title 특수문자에 취약 → 앞 30자만 contains 매칭
             TITLE_KEY=$(printf '%s' "$TITLE" | head -c 30)

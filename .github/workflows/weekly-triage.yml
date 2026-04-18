@@ -98,6 +98,10 @@ jobs:
           BODYEND
           )
 
+          # 라벨 self-bootstrap
+          gh label create triage --color "90be6d" --description "주간 triage 리포트" 2>/dev/null || true
+          gh label create weekly --color "577590" --description "주간 자동 생성" 2>/dev/null || true
+
           # Issue 제목
           ISSUE_TITLE="📊 Weekly Triage — 미처리 raw ${COUNT}건 (${DATE})"
 
