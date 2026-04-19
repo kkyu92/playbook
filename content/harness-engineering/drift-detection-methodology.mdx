@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [drift, methodology, harness-engineering, eng-review, production-verification, memory-staleness]
 workers: [all]
 confidence: 4
-connections: [journal/playbook-journal-001-drift-greenfield, journal/playbook-journal-002-drift-existing-setup, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, journal/playbook-journal-005-moneyballscore-playbook-e2e, harness-engineering/hub-worker-compounding-pattern, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-pii-scrubbing-beforesend]
+connections: [journal/playbook-journal-001-drift-greenfield, journal/playbook-journal-002-drift-existing-setup, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, journal/playbook-journal-005-moneyballscore-playbook-e2e, harness-engineering/hub-worker-compounding-pattern, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, harness-engineering/guard-test-pattern]
 status: complete
 description: "AI 에이전트의 메모리/체크포인트와 실제 리포 사이 4종 괴리(존재/작동/완전성/메모리). Journal 001~004 4건 사례 누적 후 패턴 압축."
 type: entry
@@ -127,4 +127,6 @@ Claude Code harness 외부 (git hook / shell rc) 도 가능. 사용자 워크플
 - E2E 검증 사례: [Journal 005](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 작동 드리프트 #3 방어 (lesson dispatch 가 실제로 동작하나 검증)
 - 프레임워크 컨벤션 silent 실패: [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — Level 2 작동 드리프트 새 변형
 - 관측 인프라 silent 실패: [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 가드 테스트가 두 근본 버그 동시 폭로
+- 서버리스 lifecycle silent: [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — captureException 후 flush 누락 trap
+- Level 2 감지 메타 패턴: [Guard Test Pattern](/wiki/harness-engineering/guard-test-pattern) — 의도적 검증 테스트가 N건 silent 동시 폭로
 - 도구: `/plan-eng-review` (#4), `/lint` (자체 wiki 메타 드리프트 감지)

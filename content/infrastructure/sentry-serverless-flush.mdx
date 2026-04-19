@@ -1,0 +1,110 @@
+---
+title: "Sentry on Vercel Serverless — captureException 후 flush() await 필수"
+category: infrastructure
+date: "2026-04-19"
+tags: [sentry, vercel, serverless, observability, flush, trap, silent-failure]
+workers: [all]
+confidence: 3
+connections: [infrastructure/sentry-pii-scrubbing-beforesend, harness-engineering/drift-detection-methodology, context-engineering/nextjs-instrumentation-location, harness-engineering/hub-worker-compounding-pattern, harness-engineering/guard-test-pattern]
+status: complete
+description: "Vercel 서버리스 환경에서 Sentry.captureException() 호출 후 Response 반환 즉시 function 종료 → 백그라운드 send 중이던 이벤트 유실. await Sentry.flush(2000) 으로 강제 flush 후 응답해야 안전. 기본 중 기본이지만 Sentry Next.js SDK 가이드에 잘 부각 안 됨."
+type: entry
+raw_source: "raw-sources/20260419-worker-sentry-pii-followup.md"
+---
+
+## 문제
+
+Vercel 서버리스 (Functions / Edge) 에서 Next.js API 라우트가 에러를 잡아 Sentry 에 보고 후 응답을 반환:
+
+```ts
+// ❌ 위험 — flush 누락
+export async function POST(req: Request) {
+  try {
+    await doWork();
+    return Response.json({ ok: true });
+  } catch (err) {
+    Sentry.captureException(err);
+    return Response.json({ ok: false }, { status: 500 });
+  }
+}
+```
+
+서버리스는 응답 반환 직후 function instance 가 종료될 수 있다. `Sentry.captureException()` 은 동기 호출처럼 보이지만 실제 HTTP send 는 백그라운드로 큐잉. 큐가 비기 전에 instance 가 죽으면 이벤트는 유실.
+
+워커 (moneyballscore) 가 가드 B 테스트 중 발견: 의도적 에러 발사 → Sentry 에 안 옴 → 코드는 정확히 captureException 호출 중. 원인은 flush 미호출.
+
+## 근본 원인
+
+| 환경 | Sentry send 동작 |
+|------|------------------|
+| 전통 서버 (long-running) | 백그라운드 큐 → 이벤트 결국 전송 |
+| 서버리스 (단발) | 응답 반환 → instance freeze/terminate → 큐 안 비어도 끝 |
+
+Sentry SDK 자체는 이 차이를 알고 `Sentry.flush(timeoutMs)` 를 제공하지만, **Next.js SDK 가이드 문서에 잘 부각 안 됨**. SDK 설치 → `Sentry.init` 만 하면 동작한다는 인상을 줌.
+
+## 해결
+
+응답 반환 직전에 `await Sentry.flush()`:
+
+```ts
+// ✅ 안전
+export async function POST(req: Request) {
+  try {
+    await doWork();
+    return Response.json({ ok: true });
+  } catch (err) {
+    Sentry.captureException(err);
+    await Sentry.flush(2000); // 2~3초 timeout 권장
+    return Response.json({ ok: false }, { status: 500 });
+  }
+}
+```
+
+`flush(timeoutMs)` 는 큐가 빌 때까지 기다리되 timeoutMs 초과 시 강제 반환 (응답 지연 방지). 보통 2000~3000ms.
+
+### 헬퍼 패턴
+
+여러 라우트에 반복되면 헬퍼화:
+
+```ts
+// src/lib/safe-capture.ts
+export async function safeCapture(err: unknown) {
+  Sentry.captureException(err);
+  await Sentry.flush(2500);
+}
+
+// 라우트
+catch (err) {
+  await safeCapture(err);
+  return Response.json({ ok: false }, { status: 500 });
+}
+```
+
+## 일반화 — 서버리스 관측 trap 가족
+
+이 trap 은 [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 한 변형. captureException 호출은 있지만 (코드 정상) 실제 도착은 안 됨 (silent). 같은 가족:
+
+- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 프레임워크 컨벤션 미준수 silent
+- [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 대시보드 가드 부정확 silent
+- 본 entry — 서버리스 lifecycle 미인식 silent
+
+세 trap 의 공통 패턴: **관측 인프라가 "설정만 하면 작동" 인 인상을 주지만 실제론 환경별 미세 조정 필요**. → [guard-test-pattern](/wiki/harness-engineering/guard-test-pattern) 적용으로 검증.
+
+## 가드 체크리스트
+
+새 Vercel + Sentry 프로젝트 부트스트랩 시:
+1. `Sentry.captureException` 모든 호출 후 `await Sentry.flush()` 따르는지
+2. 의도적 에러 발사 → Sentry 대시보드 도착 시간 측정 (3초 이내?)
+3. captureException 직후 즉시 응답 반환하는 코드 grep → flush 없는 케이스 모두 fix
+
+## Phase 3 관점
+
+`safeCapture` 패턴 자체가 다른 워커에 재사용 가치. `workers: [all]` 로 [ambient symlink 배포](/wiki/context-engineering/ambient-knowledge-injection) → 새 워커 Sentry 배선 시 자동 reference.
+
+## Related
+
+- [Sentry PII Scrubbing — beforeSend vs 대시보드](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 형제 Sentry trap
+- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 형제 Sentry trap
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 작동 드리프트 가족
+- [Guard Test Pattern — 의도적 검증 테스트의 N건 폭로](/wiki/harness-engineering/guard-test-pattern) — 본 trap 을 발견시킨 메타 패턴
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 사례

@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [sentry, pii, observability, security, beforeSend, scrubbing, guard-design]
 workers: [all]
 confidence: 3
-connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, context-engineering/ambient-knowledge-injection, journal/playbook-journal-003-drift-silent-bugs, context-engineering/nextjs-instrumentation-location]
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, context-engineering/ambient-knowledge-injection, journal/playbook-journal-003-drift-silent-bugs, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-serverless-flush, harness-engineering/guard-test-pattern]
 status: complete
 description: "Sentry 대시보드의 Additional Sensitive Fields 는 user/contexts/tags/extras 의 깊이 매칭이 부정확. 디폴트 @password/@ip/@bearer 규칙이 이름에 'auth'/'ip'/'bearer' 포함된 케이스만 우연히 커버. 신뢰할 수 있는 PII 가드는 beforeSend 훅 + 재귀 walk + 코드화된 SENSITIVE_KEYS."
 type: entry
@@ -84,6 +84,32 @@ export function sentryBeforeSend(event: Sentry.Event): Sentry.Event {
 2. **대시보드 raw JSON 직접 확인** — 필드별 실제 매칭 여부. 자동화된 alert 만 믿지 말 것
 3. **PII 가드는 코드 + 테스트 fixture** 로 회귀 방어. 대시보드 설정은 보조
 
+## 운영 함정 (가드 B 테스트 중 동시 발견)
+
+### 함정 1 — 그룹핑 묶임으로 새 이벤트 찾기 어려움
+
+Sentry 그룹핑이 `type` + `stacktrace` 기준 → beforeSend 배선 전/후 이벤트가 한 이슈에 묶임. 사용자가 새 이벤트 찾기 어려움.
+
+**해결**: 가드 테스트 이벤트는 버전별 fingerprint 강제 → 별개 이슈 착륙.
+
+```ts
+Sentry.captureException(err, {
+  fingerprint: ['pii-guard-b-v2-beforeSend'],
+});
+```
+
+상세는 [guard-test-pattern](/wiki/harness-engineering/guard-test-pattern) 의 "가드 설계 원칙 #2" 참조.
+
+### 함정 2 — sourcemap 미업로드
+
+`SENTRY_AUTH_TOKEN` env 미설정 → 빌드 sourcemap 업로드 skip → 이벤트마다 "Processing Error" 배지. 기능 영향 없지만 스택트레이스가 minified 이름만 노출.
+
+**해결**: Vercel env 에 `SENTRY_AUTH_TOKEN` 설정 + `next.config.js` sentry plugin 에 token 전달.
+
+### 함정 3 — 서버리스 flush 누락
+
+`Sentry.captureException()` 후 `await Sentry.flush()` 없으면 Vercel 서버리스에서 이벤트 유실. 별도 entry: [sentry-serverless-flush](/wiki/infrastructure/sentry-serverless-flush).
+
 ## Phase 3 — Ambient 배포 후보
 
 beforeSend 패턴 자체가 다른 워커에도 재사용 가치 있음. 본 entry 의 `workers: [all]` 로 모든 워커 memory 에 [ambient symlink 배포](/wiki/context-engineering/ambient-knowledge-injection) → 새 워커가 Sentry 배선 시 자동 reference. Phase 3 에서 Claude Agent 가 새 워커 부트스트랩 시 자동 적용 후보.
@@ -95,3 +121,5 @@ beforeSend 패턴 자체가 다른 워커에도 재사용 가치 있음. 본 ent
 - [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — Cycle 1 dispatch 첫 자연 inbound
 - [Ambient Knowledge Injection](/wiki/context-engineering/ambient-knowledge-injection) — beforeSend 패턴 ambient 배포 메커니즘
 - [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)
+- [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 형제 Sentry trap (가드 B 가 동시 폭로한 부수 3)
+- [Guard Test Pattern](/wiki/harness-engineering/guard-test-pattern) — 본 가드 B 가 모범 사례인 메타 패턴

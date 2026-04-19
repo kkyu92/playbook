@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [nextjs, instrumentation, sentry, observability, framework-convention, silent-failure, drift]
 workers: [all]
 confidence: 3
-connections: [harness-engineering/drift-detection-methodology, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend]
+connections: [harness-engineering/drift-detection-methodology, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, harness-engineering/guard-test-pattern]
 status: complete
 description: "Next.js 16 + src/app 구조에서 instrumentation.ts 는 src/instrumentation.ts 여야 자동 감지된다. 프로젝트 루트에 두면 Next 가 파일 존재조차 인식 못함 → Sentry.init 모듈스코프도 register() 도 둘 다 no-op. CI 통과 + 빌드 무에러 + 클라이언트 정상으로 silent."
 type: entry
@@ -72,3 +72,5 @@ apps/moneyball/src/instrumentation-client.ts
 - [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)
 - [Journal 004 — 반쪽 작동](/wiki/journal/playbook-journal-004-drift-half-working)
 - [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 첫 자연 사례
+- [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 같은 가드 B 가 동시 폭로한 형제 trap
+- [Guard Test Pattern](/wiki/harness-engineering/guard-test-pattern) — 본 사례를 폭로한 메타 패턴

@@ -1,0 +1,105 @@
+---
+title: "Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로"
+category: harness-engineering
+date: "2026-04-19"
+tags: [guard, test-pattern, observability, silent-failure, methodology, fingerprint]
+workers: [all]
+confidence: 3
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-003-drift-silent-bugs]
+status: complete
+description: "관측 인프라 / 보안 가드 / 데이터 파이프라인은 '설정만 하면 작동' 인상을 주지만 silent 실패가 누적되기 쉽다. 의도적 검증 테스트 1회가 sub-system 의 silent 실패를 N건 다발로 드러낸다는 메타 패턴. 워커 가드 B 테스트가 5건 (근본 2 + 부수 3) 동시 폭로한 모범 사례."
+type: entry
+raw_source: "raw-sources/20260419-worker-sentry-pii-followup.md"
+---
+
+## 문제
+
+관측 인프라 (Sentry / Datadog), 보안 가드 (PII 스크러빙 / rate-limit), 데이터 파이프라인 — 이 카테고리들은 공통적으로 "설정만 하면 작동" 인상을 준다. 실제론 환경별 미세 조정이 필요해서 silent 실패가 누적되기 쉽다. CI 통과 / 빌드 무에러 / 클라이언트 정상이라 신호가 없다.
+
+[drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 가 정확히 이 카테고리. 메모리·존재·완전성 드리프트와 달리 코드 자체는 정상이라 read-only 검토로 안 잡힘. **의도적 테스트 이벤트 발사 + 외부 관측점 검증** 만이 유일한 감지 수단.
+
+## 패턴
+
+```
+1. 의도적 테스트 케이스 설계 — 확인 가능한 결과 (예: fake PII 가 [Filtered] 인지)
+2. 실 체인 동작 검증 — 외부 관측점 (Sentry 대시보드 raw JSON 등) 에서 확인
+3. 기대와 다르면 진단 정보 한 단계씩 노출 → 근본 원인 도달
+```
+
+이 구조의 핵심: **하나의 가드 테스트가 보통 N건 (3~5+) 의 silent 버그를 동시 폭로**. 이유는 silent 실패가 같은 sub-system 안에 누적되기 때문 — 하나가 silent 면 그 옆의 다른 하나도 silent.
+
+## 모범 사례 — 워커 가드 B (PII 스크러빙 검증)
+
+워커 (moneyballscore) 가 Sentry P3 배선 중 1회 가드 B 테스트가 폭로한 5건:
+
+| # | 종류 | 발견 |
+|---|------|------|
+| 1 | 근본 | [Next.js 16 instrumentation.ts 위치 silent 실패](/wiki/context-engineering/nextjs-instrumentation-location) — 서버 Sentry 완전 사망 |
+| 2 | 근본 | [Sentry 대시보드 깊이 매칭 부정확](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — PII RAW 누출 |
+| 3 | 부수 | sourcemap 미업로드 ("Processing Error" 배지) — pre-existing |
+| 4 | 부수 | Sentry 그룹핑 묶임 → 새 이벤트 찾기 어려움 |
+| 5 | 부수 | [Vercel 서버리스 flush 누락](/wiki/infrastructure/sentry-serverless-flush) — captureException 후 flush 없으면 이벤트 유실 |
+
+가드 B 가 없었다면 5건 모두 영구 silent. **단일 검증 테스트의 ROI 가 N건 fix** 라는 게 패턴의 본질.
+
+## 가드 설계 원칙
+
+### 1. 의도적 테스트 케이스는 외부 관측점에서 확인 가능해야
+
+브라우저 console / 서버 로그 같은 내부 신호로는 부족. **외부 관측점 (Sentry 대시보드 raw JSON, 외부 API 응답, DB 행 직접 query) 에서 결과 확인**. 그래야 가드 자체의 silent 실패도 잡힌다.
+
+### 2. 테스트 이벤트는 버전 별 fingerprint 강제
+
+```ts
+// Sentry 예
+event.fingerprint = ['pii-guard-b-v2-beforeSend']
+```
+
+가드 v1 / v2 이벤트가 같은 이슈 그룹에 묶이면 비교 검증 어려움. 각 버전마다 별도 fingerprint 로 별개 이슈 착륙.
+
+### 3. 진단 endpoint 노출
+
+신규 배선 검증 전용 라우트 1개. 프로덕션에서 호출 가능하되 결과만 노출 (원본 페이로드 X). 예:
+
+```ts
+// /api/_diag/sentry
+GET → { clientInitialized: !!Sentry.getClient(), flushed: await Sentry.flush(1000) }
+```
+
+근본 원인 도달까지 한 단계씩 정보 노출 — 가설 → 검증 → 다음 가설.
+
+### 4. 가드는 코드 + 테스트 fixture 로 회귀 방어
+
+대시보드 / 환경변수 의존 가드는 silent 실패 가능. 가드 본체를 코드로 옮기고 vitest 같은 테스트로 회귀 방어. (beforeSend 훅 + SENSITIVE_KEYS 가 정확히 이 패턴)
+
+### 5. 가드 테스트는 부트스트랩의 일부
+
+새 sub-system 배선 직후 가드 테스트 1회는 의무. 한 번 더 사고:
+- 새 워커 부트스트랩 시 가드 테스트 매트릭스 체크리스트 필수
+- 마이그레이션 (Next.js 버전업, SDK 메이저 업그레이드) 후 가드 테스트 재실행
+
+## 일반화 — 다른 카테고리 적용
+
+| 카테고리 | 가드 테스트 예 |
+|----------|----------------|
+| Sentry / 관측 | fake PII 이벤트 → 대시보드 raw JSON 확인 |
+| Rate-limit | 6번 연속 로그인 시도 → 6번째 429 + Retry-After 응답 |
+| PII 스크러빙 | 이메일/IP/JWT 패턴 fixture → DB / 로그 grep 검증 |
+| 데이터 파이프라인 | 가짜 row insert → downstream sink 도착 확인 |
+| 백업 / 복구 | 백업 → 별 환경 restore → 데이터 동등성 검증 |
+| Auth / 권한 | 권한 없는 user 로 보호 라우트 호출 → 403 응답 |
+
+각 카테고리 모두 **silent 실패 가능성 + 외부 관측점 존재** 조건 만족. 가드 테스트 패턴 적용 가치.
+
+## Phase 3 관점
+
+가드 테스트 패턴 자체가 새 워커 부트스트랩 ambient context. `workers: [all]` 로 [ambient symlink 배포](/wiki/context-engineering/ambient-knowledge-injection) → 신규 워커가 sub-system 배선 시 자동 reference. Phase 3 (Claude Agent CI 자동) 에서 "가드 테스트 매트릭스" 자동 생성 후보.
+
+## Related
+
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — 본 패턴이 방어하는 Level 2 작동 드리프트
+- [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 가드 B 의 본체
+- [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 가드 B 가 폭로한 부수 trap
+- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 가드 B 가 폭로한 근본 silent
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 가드 발견 → 허브 학습 메커니즘
+- [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)
