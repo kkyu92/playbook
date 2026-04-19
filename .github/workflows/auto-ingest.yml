@@ -179,7 +179,8 @@ jobs:
               gh issue create \
                 --title "$ISSUE_TITLE" \
                 --body "$ISSUE_BODY" \
-                --label "inbound,raw"
+                --label "inbound,raw" \
+                --assignee kkyu92
               echo "✅ 신규 Issue 생성"
             fi
 
@@ -267,6 +268,7 @@ jobs:
               --title "📓 Auto-Ingest: Journal ${NEXT_NUM} — ${TITLE}" \
               --body "$PR_BODY" \
               --base main \
-              --head "$BRANCH"
+              --head "$BRANCH" \
+              --assignee kkyu92
             echo "✅ PR 생성"
           fi

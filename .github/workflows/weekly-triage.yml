@@ -122,6 +122,7 @@ jobs:
           gh issue create \
             --title "$ISSUE_TITLE" \
             --body "$BODY" \
-            --label "triage,weekly"
+            --label "triage,weekly" \
+            --assignee kkyu92
 
           echo "✅ 신규 Weekly Triage Issue 생성"

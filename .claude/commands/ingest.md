@@ -9,8 +9,46 @@
 ## 사용법
 
 ```
+/ingest                                                  # 자동 스캔 모드 (raw-sources/ 미처리 자동 감지)
 /ingest <URL | 텍스트 | 에러 로그 | raw-sources/<파일> 경로>
 ```
+
+## 자동 스캔 모드 (인자 생략 시)
+
+`/ingest` 를 인자 없이 호출하면 **`raw-sources/` 미처리 raw 자동 감지** 후 처리한다. 워커 dispatch 빈도(주 5~10회)를 고려하면 인자 타이핑이 큰 마찰이라 도입.
+
+### 스캔 절차
+
+1. `raw-sources/*.md` 전체 나열
+2. 각 파일에서 slug 추출 (파일명 `YYYYMMDD-<slug>.md` → `<slug>`)
+3. `content/**/*.mdx` 에서 해당 slug 참조 grep
+4. 참조 0건인 raw 만 **미처리 후보** 로 분류
+5. 분기:
+   - **0건**: "✅ 미처리 raw 0건. 모든 dispatch 가 cross-update 완료 상태" 알림 후 종료
+   - **1건**: 사용자 확인 없이 즉시 Step 1-6 실행 (가장 흔한 케이스 — 머지 직후)
+   - **N건 (≥2)**: 후보 리스트 제시 후 사용자 선택 대기:
+     - `all` — 전부 순차 처리
+     - `1` 또는 `1,3` — 번호 선택
+     - `skip` — 종료
+
+### 예시
+
+```
+$ /ingest
+미처리 raw 3건 발견:
+  1. 20260419-moneyballscore-playbook-e2e.md (E2E 테스트 연동)
+  2. 20260420-cron-failure.md (daily-pipeline 실패)
+  3. 20260421-pnpm-audit-fix.md (lesson: pnpm audit 마이그레이션)
+
+선택: all / 1 / 1,3 / skip
+```
+
+### 트리거 패턴
+
+자동 스캔 모드는 다음 상황에서 호출:
+- 사용자가 PR 머지 직후 "머지" / "머지했어" / "pull 해" 같은 신호 → `git pull` + `/ingest` 자동 연결
+- 세션 시작 시 hub-start 가 "미처리 N건" 알리면 → `/ingest` 로 일괄 처리
+- Weekly Triage Issue 받고 일괄 소화
 
 ## 프로세스
 
