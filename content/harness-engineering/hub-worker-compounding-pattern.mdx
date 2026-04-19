@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [hub-worker, automation, compounding, knowledge-graph, github-actions, repository-dispatch]
 workers: [all]
 confidence: 3
-connections: [context-engineering/ambient-knowledge-injection, journal/playbook-journal-005-moneyballscore-playbook-e2e, journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield, harness-engineering/drift-detection-methodology]
+connections: [context-engineering/ambient-knowledge-injection, journal/playbook-journal-005-moneyballscore-playbook-e2e, journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield, harness-engineering/drift-detection-methodology, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-pii-scrubbing-beforesend]
 status: complete
 description: "워커 프로젝트가 발견한 교훈/에러를 허브로 자동 흘려보내고, 허브가 정제한 지식을 워커 ambient context 로 다시 흘려보내는 양방향 복리 패턴."
 type: entry
@@ -115,6 +115,7 @@ ai-study 또는 일반 LLM Wiki 와 비교:
 ## 관련
 
 - 사례: [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 첫 실 사이클 닫힘
+- 첫 자연 inbound: [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) + [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 워커 가드 B 가 두 근본 버그 동시 폭로 → 허브 ingest
 - 시작점: [Playbook Journal 000 — 부트스트랩](/wiki/journal/playbook-journal-000-bootstrap)
 - 메타 (가정과 현실 검증): [Playbook Journal 001 — 그린필드 드리프트](/wiki/journal/playbook-journal-001-drift-greenfield)
 - 하위 메커니즘: [Ambient Knowledge Injection via Symlink](/wiki/context-engineering/ambient-knowledge-injection)

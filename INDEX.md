@@ -1,10 +1,11 @@
 # Playbook Wiki Index
-Updated: 2026-04-19T13:37:00.116Z
+Updated: 2026-04-19T13:55:45.788Z
 
-## 엔트리 (9개)
+## 엔트리 (11개)
 
 ### Context Engineering
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
+- [Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패](wiki/context-engineering/nextjs-instrumentation-location) — confidence: 3, status: complete
 
 ### Harness Engineering
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
@@ -16,18 +17,31 @@ Updated: 2026-04-19T13:37:00.116Z
 - [Playbook Journal 004 — 반쪽짜리 작동 드리프트](wiki/journal/playbook-journal-004-drift-half-working) — confidence: 5, status: complete
 - [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — confidence: 4, status: complete
 
+### Infrastructure
+- [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
+
 ## 교차 참조 (connections 기반)
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/ambient-knowledge-injection ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
+- context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-pii-scrubbing-beforesend
+- context-engineering/ambient-knowledge-injection ↔ context-engineering/nextjs-instrumentation-location
+- context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
+- context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
+- context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
+- context-engineering/nextjs-instrumentation-location ↔ harness-engineering/hub-worker-compounding-pattern
+- context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-001-drift-greenfield
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-002-drift-existing-setup
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-003-drift-silent-bugs
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-004-drift-half-working
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
+- harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
+- infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-000-bootstrap

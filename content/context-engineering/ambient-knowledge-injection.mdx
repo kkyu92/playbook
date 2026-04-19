@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [context-engineering, symlink, claude-memory, hub-worker, ambient-context]
 workers: [all]
 confidence: 3
-connections: [harness-engineering/hub-worker-compounding-pattern, journal/playbook-journal-005-moneyballscore-playbook-e2e]
+connections: [harness-engineering/hub-worker-compounding-pattern, journal/playbook-journal-005-moneyballscore-playbook-e2e, infrastructure/sentry-pii-scrubbing-beforesend, context-engineering/nextjs-instrumentation-location]
 status: complete
 description: "허브 wiki entry 를 워커 Claude memory/ 디렉토리에 symlink 로 자동 배포 — 워커가 명시적 lookup 없이 ambient context 로 인식하는 메커니즘."
 type: entry
@@ -104,6 +104,8 @@ projects.conf 에 허브 자체 (playbook) 도 등록돼 있으면 `workers: [al
 
 - 상위 패턴: [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern)
 - 사례: [Playbook Journal 005](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 첫 symlink 배포
+- Ambient 배포 후보: [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — beforeSend 패턴 자체가 신규 워커 부트스트랩 시 reference 가치
+- Framework 컨벤션 ambient 사례: [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location)
 - 도구: `~/bin/hub-sync-rules`
 - 검증 로직: `scripts/generate-content-manifest.mjs` (workers 이름 검증)
 - 설정: `~/.config/claude-hub/projects.conf`

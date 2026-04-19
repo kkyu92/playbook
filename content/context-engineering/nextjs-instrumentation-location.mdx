@@ -1,0 +1,74 @@
+---
+title: "Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패"
+category: context-engineering
+date: "2026-04-19"
+tags: [nextjs, instrumentation, sentry, observability, framework-convention, silent-failure, drift]
+workers: [all]
+confidence: 3
+connections: [harness-engineering/drift-detection-methodology, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend]
+status: complete
+description: "Next.js 16 + src/app 구조에서 instrumentation.ts 는 src/instrumentation.ts 여야 자동 감지된다. 프로젝트 루트에 두면 Next 가 파일 존재조차 인식 못함 → Sentry.init 모듈스코프도 register() 도 둘 다 no-op. CI 통과 + 빌드 무에러 + 클라이언트 정상으로 silent."
+type: entry
+raw_source: "raw-sources/20260419-worker-sentry-instrumentation-pii.md"
+---
+
+## 문제
+
+워커 (moneyballscore) 가 Next.js 16 + Turborepo + `src/app` 구조에서 Sentry 를 배선했다. `apps/moneyball/instrumentation.ts` 에 `Sentry.init` 작성, 빌드 통과, 클라이언트 측 에러는 정상 포착. 그런데 서버 측 (API 라우트 / SSR / RSC) 에러는 한 건도 들어오지 않았다.
+
+새벽 마이그레이션 (`9a9df54`) 이후 **프로덕션 서버 에러 포착률 0%**. CI 도 통과, 빌드도 무에러, 클라이언트 기능도 정상 → 알 수 있는 신호가 없다. 1인 pre-런칭 프로젝트라 실 에러 발생률이 낮았기에 더 위험 — "포착 못 함 = 알 수 없음".
+
+## 근본 원인
+
+Next.js 16 의 `src/app` 디렉토리 컨벤션:
+
+- `instrumentation.ts` 는 **`src/instrumentation.ts`** 위치에 있어야 Next 가 자동 감지·로드
+- 프로젝트 루트 (`apps/<name>/instrumentation.ts`) 는 Next 가 **파일 존재 자체를 인식하지 못함**
+- 따라서 `Sentry.init()` 모듈스코프 호출도, `register()` export 도 둘 다 no-op
+
+이건 Next.js 공식 문서에 명시되어 있지만, "보통 프로젝트 루트에 둔다" 는 일반 패턴 + monorepo 구조의 모호함 + IDE 가 파일 존재를 인식하므로 코드 자체는 정상으로 보임 — 세 요소가 합쳐서 silent.
+
+## 탐지 경로
+
+가드 B (PII 스크러빙 검증) 테스트 이벤트를 의도적으로 발사 → Sentry 대시보드에 안 뜸 → 진단 라우트에 `Sentry.getClient()` 반환값 노출 → `undefined` 확인 → 라우트 모듈스코프에서 직접 `Sentry.init` 호출 시 작동 → 영구 수정은 **파일 이동**.
+
+## 해결
+
+```bash
+# Before (Next 가 인식 못함)
+apps/moneyball/instrumentation.ts
+apps/moneyball/instrumentation-client.ts
+
+# After (Next 16 컨벤션)
+apps/moneyball/src/instrumentation.ts
+apps/moneyball/src/instrumentation-client.ts
+```
+
+부수적으로 `Sentry.init` 을 모듈스코프에서 직접 호출 (register 보완) — `register()` 가 lazy 라 첫 요청 전에는 init 안 되는 race condition 방어.
+
+복구 후 진단 response 에서 `clientInitialized: true`, `flushed: true` 확인.
+
+## 일반화 — 프레임워크 컨벤션 드리프트
+
+이 사고는 [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 의 한 변형. "feat 커밋 머지 + CI 통과 + 빌드 무에러" 셋 다 통과해도 서버 observability 가 silent 죽음 가능. 동일 패턴:
+
+- [Journal 003 — 머지됐지만 죽어있는 코드](/wiki/journal/playbook-journal-003-drift-silent-bugs): 사전 버그 silent failure
+- [Journal 004 — 반쪽짜리 작동](/wiki/journal/playbook-journal-004-drift-half-working): 한쪽만 작동
+- 본 사례: 프레임워크 컨벤션 미준수 silent
+
+방어 원칙:
+1. **프레임워크 마이그레이션 후 의도적 테스트 이벤트 수신 확인** — 자동 dispatch 가 아닌 수동 트리거로 한 번
+2. **diagnostic endpoint 노출** — 프로덕션에서 `Sentry.getClient()` / 동등 진단 정보 호출 가능한 라우트 1개. 신규 배선 검증 전용
+3. **모듈스코프 + register() 이중 init** — Next 의 lazy 호출 보완
+
+## Phase 3 관점
+
+이 사례는 워커 → 허브 첫 자연 inbound 의 일부 (가드 B 패턴 자체가 두 근본 버그를 동시에 폭로). [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 Cycle 1 dispatch 가 의도된 대로 작동한 첫 케이스. 추후 Phase 3 (Claude Agent CI 자동 cross-update) 도래 시 "프레임워크 컨벤션 silent 실패" 카테고리의 reference 로 활용.
+
+## Related
+
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 작동 드리프트의 직접 사례
+- [Sentry PII Scrubbing — beforeSend vs 대시보드](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 같은 보고서에서 발견된 형제 lesson
+- [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)
+- [Journal 004 — 반쪽 작동](/wiki/journal/playbook-journal-004-drift-half-working)
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 첫 자연 사례
