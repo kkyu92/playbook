@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { href: "/harness-journal", label: "저널", icon: "📓" },
   { href: "/wiki", label: "Wiki", icon: "📚" },
   { href: "/dashboard", label: "대시보드", icon: "📊" },
-  { href: "/projects", label: "Vibe", icon: "🚀" },
+  { href: "/projects", label: "Projects", icon: "🚀" },
 ];
 
 export function MobileNav() {

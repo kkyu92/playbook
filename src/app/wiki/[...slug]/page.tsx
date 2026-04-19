@@ -43,7 +43,7 @@ export async function generateMetadata({
   const entry = getEntry(slug);
   if (!entry) return { title: "Not Found" };
 
-  const ogUrl = new URL("/api/og", "https://ai-study-wheat.vercel.app");
+  const ogUrl = new URL("/api/og", process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app");
   ogUrl.searchParams.set("title", entry.frontmatter.title);
   ogUrl.searchParams.set("category", entry.frontmatter.category);
 
@@ -172,7 +172,7 @@ export default async function WikiEntryPage({
     datePublished: entry.frontmatter.date,
     author: { "@type": "Person", name: "Jominho" },
     publisher: { "@type": "Organization", name: "Playbook Hub" },
-    url: `https://ai-study-wheat.vercel.app/wiki/${slug}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app"}/wiki/${slug}`,
     keywords: entry.frontmatter.tags.join(", "),
   };
 

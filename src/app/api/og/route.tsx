@@ -129,7 +129,7 @@ export async function GET(req: NextRequest) {
             Playbook Hub
           </div>
           <div style={{ color: "#8899aa", fontSize: "18px" }}>
-            ai-study-wheat.vercel.app
+            playbook-virid-xi.vercel.app
           </div>
         </div>
       </div>

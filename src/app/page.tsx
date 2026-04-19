@@ -59,10 +59,10 @@ export default function Home() {
       <div className="lg:hidden pt-14">
         <div className="px-4 py-6">
           <h2 className="font-display text-3xl font-black tracking-tight mb-2">
-            AI Harness Engineering
+            Playbook Hub
           </h2>
           <p className="text-muted mb-6">
-            프롬프트 엔지니어링, RAG, 에이전트, 파인튜닝을 체계적으로 학습
+            개인 지식 허브 + 프로젝트 관제탑 — AI 에이전트 활용 패턴을 엔트리로 누적
           </p>
         </div>
         <MobileCategories manifest={manifest} />

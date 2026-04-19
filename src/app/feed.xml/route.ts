@@ -1,6 +1,6 @@
 import { getManifest } from "@/lib/content";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ai-study-wheat.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app";
 
 export async function GET() {
   const manifest = getManifest();

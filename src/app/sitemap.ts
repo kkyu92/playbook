@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getManifest } from "@/lib/content";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ai-study.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const manifest = getManifest();

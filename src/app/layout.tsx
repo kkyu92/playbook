@@ -3,18 +3,17 @@ import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { MobileNav } from "@/components/mobile-nav";
-// import { MagneticMode } from "@/components/magnetic-mode";
 import { SearchDialog } from "@/components/search-dialog";
 import { GraphSearchProvider } from "@/contexts/graph-search-context";
 import { getManifest } from "@/lib/content";
 import "./globals.css";
 
-const SITE_URL = "https://ai-study-wheat.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app";
 
 export const metadata: Metadata = {
   title: { default: "Playbook Hub", template: "%s — Playbook Hub" },
   description:
-    "AI 하네스 엔지니어링 학습 위키 — 프롬프트 엔지니어링, RAG, 에이전트, 파인튜닝",
+    "개인 지식 허브 + 프로젝트 관제탑 — AI 에이전트 활용 패턴을 엔트리로 누적",
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
   openGraph: {
@@ -78,7 +77,6 @@ export default function RootLayout({
           <GraphSearchProvider>
             {children}
             <MobileNav />
-            {/* <MagneticMode /> */}
             <SearchDialog entries={searchEntries} />
           </GraphSearchProvider>
         </ThemeProvider>

@@ -29,7 +29,7 @@ export function Header({ fixed = false }: { fixed?: boolean }) {
           className="font-display text-lg font-bold tracking-tight text-text hover:text-accent transition-colors shrink-0"
         >
           <span className="hidden sm:inline">Playbook Hub</span>
-          <span className="sm:hidden">AI Study</span>
+          <span className="sm:hidden">Playbook</span>
         </Link>
 
         {/* Center: Search (flex-1 to absorb remaining space, bounded width) */}
