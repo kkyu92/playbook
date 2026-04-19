@@ -154,6 +154,61 @@ Lesson 접두사 없는 일반 커밋은 무시됨 (job `if` 조건). 작은 노
 
 ---
 
+## 모드 3 (계획): Sentry First Seen webhook — PII Scrubbing 필수
+
+워커 production 사고를 Sentry "First Seen" 이벤트로 자동 inbound 화하는 경로. 외부 시스템 (Sentry) 페이로드를 그대로 raw 에 저장하면 사용자 IP / 이메일 / 요청 쿠키 등 PII 가 위키에 영구 박제되므로, **배선 전 가드 1+2+3 모두 적용 후** 활성화.
+
+### 가드 1 — payload 화이트리스트
+
+Sentry webhook payload 중 raw 에 보존할 필드만 명시. 화이트리스트에 없는 필드는 폐기.
+
+| 보존 OK            | 폐기 대상                              |
+|--------------------|----------------------------------------|
+| `event.title`      | `event.user.email`, `user.id`          |
+| `event.message`    | `user.ip_address`, `geo.*`             |
+| `event.exception`  | `request.cookies`, `request.headers.*` |
+| `event.level`      | `request.data` (POST body 전체)        |
+| `event.environment`| `breadcrumbs[*].data` (raw)            |
+| `event.release`    | `tags.user_*`                          |
+| `project.slug`     | `contexts.device.*`                    |
+| `url` (issue link) |                                        |
+
+구현: dispatch 직전 `pick(payload, ALLOWLIST)` 함수로 명시적 선택. blacklist 방식 X (필드 추가될 때 누락 위험).
+
+### 가드 2 — 정규식 sanitization
+
+화이트리스트 통과 후에도 free-text (message, exception value) 안에 PII 가 끼어들 수 있음. 저장 직전 redact:
+
+| 패턴                                     | 치환            |
+|------------------------------------------|-----------------|
+| 이메일 `\S+@\S+\.\S+`                   | `[EMAIL]`       |
+| IPv4 `\d{1,3}(\.\d{1,3}){3}`            | `[IP]`          |
+| JWT `eyJ[\w-]+\.[\w-]+\.[\w-]+`         | `[JWT]`         |
+| Bearer 토큰 `Bearer [\w-]{20,}`         | `Bearer [REDACTED]` |
+| API key 류 `[A-Za-z0-9]{32,}` (옵션)    | `[KEY]`         |
+| 한국 휴대폰 `01\d-?\d{3,4}-?\d{4}`      | `[PHONE]`       |
+
+구현: `scripts/sanitize-pii.mjs` 단일 모듈로 분리. 테스트로 회귀 방어 (현실 페이로드 fixture 5종+).
+
+### 가드 3 — raw 저장 정책
+
+- **위치**: `raw-sources/sentry/{YYYY-MM}/{event_id}.json` — 분리 디렉토리 (auto-ingest 일반 경로와 분리)
+- **TTL**: 30일 후 자동 archive (`raw-sources/_archive/sentry/`) — 공개 wiki 화 안 된 raw 는 영구 보존 의미 없음
+- **lint 가드**: `lint-content.mjs` 에 "raw-sources/sentry 안의 텍스트는 wiki entry frontmatter 의 description / body 에 그대로 쓰지 말 것" 룰 (휴리스틱: stack trace 패턴 감지)
+- **PR 자동 생성 X**: lesson 경로와 달리 Sentry 는 raw 저장 + Issue 알림까지만. wiki 화는 사용자가 의도적으로 `/ingest` 호출 시에만.
+
+### 활성화 체크리스트
+
+P3 배선 PR 머지 전 확인:
+- [ ] `sanitize-pii.mjs` 모듈 + vitest 5건+ 통과
+- [ ] auto-ingest 워크플로에 `event_type: sentry-first-seen` 분기 추가
+- [ ] 화이트리스트 함수 단위 테스트 (필드 누락 시 명시적 fail)
+- [ ] `raw-sources/sentry/` `.gitignore` 검토 (보존 vs 즉시 삭제 결정)
+- [ ] Sentry 측 webhook URL 등록 (`Settings > Integrations > Webhooks`)
+- [ ] Webhook secret HMAC 검증 (워커 PAT 와 별도, Sentry 가 자체 서명)
+
+---
+
 ## 운영 메커니즘 (허브 측)
 
 ### Dedup (24h, error 경로 한정)
