@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-18T16:22:42.607Z
+Updated: 2026-04-19T02:14:53.710Z
 
-## 엔트리 (5개)
+## 엔트리 (6개)
 
 ### Harness Engineering
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
@@ -9,6 +9,7 @@ Updated: 2026-04-18T16:22:42.607Z
 - [Playbook Journal 002 — 이미 설치된 것을 신규로 간주한 드리프트](wiki/journal/playbook-journal-002-drift-existing-setup) — confidence: 5, status: complete
 - [Playbook Journal 003 — 머지됐지만 죽어있는 코드 드리프트](wiki/journal/playbook-journal-003-drift-silent-bugs) — confidence: 5, status: complete
 - [Playbook Journal 004 — 반쪽짜리 작동 드리프트](wiki/journal/playbook-journal-004-drift-half-working) — confidence: 5, status: complete
+- [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — confidence: 3, status: in-progress
 
 ## 교차 참조 (connections 기반)
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-000-bootstrap
