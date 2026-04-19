@@ -2,11 +2,12 @@
 title: "Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트"
 category: harness-engineering
 date: "2026-04-19"
-tags: [playbook-journal, auto-ingest, lesson, moneyballscore]
-confidence: 3
-connections: []
-status: in-progress
-description: "자동 수집: moneyballscore ↔ playbook 연동 E2E 테스트 (from kkyu92/moneyballscore)"
+tags: [playbook-journal, auto-ingest, lesson, moneyballscore, repository-dispatch, e2e]
+workers: [moneyballscore]
+confidence: 4
+connections: [journal/playbook-journal-000-bootstrap]
+status: complete
+description: "lesson dispatch E2E 검증 — 양방향 복리 엔진 첫 실 사이클 닫힘 (workflow run #24618866284)"
 type: entry
 series: playbook-journal
 ---
@@ -33,12 +34,37 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+### 검증 결과 (3/3 통과)
+
+- **submit-lesson workflow**: run #24618866284 → success (8s)
+- **playbook auto-ingest**: run #24618867773 → success (20s)
+- **draft PR 생성**: PR #6 (branch `auto-ingest/journal-005`)
+- **payload 정확도**: `source_repo`, `title`, `body` 모두 손실 없이 전달
+
+### 작동한 체인
+
+1. moneyballscore 에서 `lesson:` 접두사 commit (`8349581`) → `submit-lesson.yml` 트리거
+2. `PLAYBOOK_PAT` 으로 `repos/kkyu92/playbook/dispatches` 호출 → `worker-lesson` event 전송
+3. playbook 의 `auto-ingest.yml` 이 dispatch 수신 → lesson 분기 진입
+4. raw-sources/ + content/journal/ + INDEX.md 자동 생성 → branch + PR
+5. 사용자 머지 → 이 엔트리 자체가 main 에 들어옴 = **양방향 루프 닫힘**
 
 ## 교훈
 
-_TODO: 교훈 정리_
+1. **E2E 테스트는 단위 테스트로 대체 불가**. `workflow_dispatch` (수동 트리거) 와 `repository_dispatch` (실 dispatch) 는 다른 경로. 후자만이 PAT 인증 + dispatch 권한 + 분기 로직 + 커밋/PR 자동화 전체 체인을 검증한다.
+
+2. **양방향 연동은 한쪽 검증으로 충분치 않다**. 워커→허브 (dispatch) 작동 ≠ 허브→워커 (hub-sync-rules symlink) 작동. 각 방향이 독립 경로이므로 각각 별도 E2E 필요.
+
+3. **`lesson:` 접두사의 의도성이 핵심**. "의도적 교훈만 자동화" 라는 명시적 opt-in 컨벤션이 없었다면 모든 커밋이 자동 dispatch → draft PR 무덤. ai-study 가 막혔던 지점을 정확히 회피하는 설계.
+
+4. **lesson commit 본문 = raw 본문 (trailing trailers 포함)**. 자동 dispatch 시 git commit message 전체가 BODY 로 들어옴. `Co-Authored-By` 같은 trailers 까지 raw 에 보존됨. 정리 단계 도입 여부는 raw-sources 불변 원칙과의 트레이드오프.
 
 ## 적용
 
-_TODO: 다음 액션_
+1. **error 경로 (worker-error) E2E 는 자연 발생 시점에 검증**. 인공 실패 (workflow 강제 fail) 는 Sentry 가짜 알림 등 부수효과 큼. cron 3개 (`daily-pipeline`, `live-update`, `sync-batter-stats`) 중 하나가 실제로 실패할 때 첫 실데이터 확보.
+
+2. **새 워커 추가 시 동일 3단계 가이드**. (a) `PLAYBOOK_PAT` 등록 (b) workflow 마지막 step 으로 `if: failure()` Notify (c) `submit-lesson.yml` 신규. `docs/setup-worker-integration.md` 가 가이드 — 단 lesson 경로 추가 후 outdated 라 보강 필요.
+
+3. **`workers` 태그 정책 명문화 시점**. 첫 워커 (moneyballscore) 운영 1~2주 후 실제 참조 패턴 보고: 인프라 회고 / 패턴 룰 / 도메인 지식 중 어느 카테고리가 어느 워커로 가야 의미 있는지 결정.
+
+4. **이 엔트리 자체가 dogfood**. PR #6 머지 → `/ingest` cross-update → connections 보강 → 005 가 wiki 그래프의 노드가 됨. 복리 엔진 **첫 실 사이클**.
