@@ -1,0 +1,122 @@
+---
+title: "Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름"
+category: harness-engineering
+date: "2026-04-19"
+tags: [hub-worker, automation, compounding, knowledge-graph, github-actions, repository-dispatch]
+workers: [all]
+confidence: 3
+connections: [context-engineering/ambient-knowledge-injection, journal/playbook-journal-005-moneyballscore-playbook-e2e, journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield]
+status: complete
+description: "워커 프로젝트가 발견한 교훈/에러를 허브로 자동 흘려보내고, 허브가 정제한 지식을 워커 ambient context 로 다시 흘려보내는 양방향 복리 패턴."
+type: entry
+---
+
+## 문제
+
+여러 프로젝트(워커)에서 같은 종류 실수가 반복된다. 한 프로젝트에서 배운 교훈이 다른 프로젝트에 자동 전파되지 않는다. 사람이 매번 "이거 우리 다른 프로젝트에서도 봤지?" 를 떠올려야 한다.
+
+기존 LLM Wiki 모델 (Karpathy 패턴) 도 한계가 있다: ai-study 의 자기 SWOT 분석이 "cross-update ingestion 이 단일 엔트리 범위에 머물러 있음" 을 최대 약점으로 명시. 새 자료를 ingest 할 때마다 1개 엔트리만 생성되고 기존 그래프가 자동으로 보강되지 않으면 wiki 가 노드의 더미가 된다.
+
+## 패턴
+
+세 개 사이클로 구성:
+
+### Cycle 1 — Dispatch (워커 → 허브)
+
+워커 CI/CD 가 자체 실패 또는 의도적 교훈을 GitHub `repository_dispatch` 로 허브에 자동 전송:
+
+- `worker-error`: cron workflow `if: failure()` step 이 실패 시 dispatch
+- `worker-lesson`: `lesson:` 접두사 commit 감지 → submit-lesson workflow 가 dispatch
+
+허브 측 auto-ingest 가 dispatch 수신 → raw-sources/ 저장 + 분기:
+- error 경로: Issue 알림 (Journal draft 자동 생성 X — draft 무덤 방지)
+- lesson 경로: raw + Journal draft PR (의도적 opt-in 만 wiki 화)
+
+24h 내 동일 title dedup → 동일 cron 반복 실패 시 새 Issue 대신 기존 Issue 에 재발 코멘트.
+
+### Cycle 2 — Cross-Update Ingestion (허브 내부)
+
+`/ingest` 슬래시 커맨드가 raw 1건당 **N개 엔트리 보강**:
+
+- 새 엔트리 1개 생성 + connections 5~15개 양방향 추가
+- 관련 기존 엔트리들의 connections 에도 신규 slug 양방향 보강
+- 한 PR 안에 다중 파일 수정
+
+이게 ai-study 약점을 정면 돌파하는 부분. **/ingest 1회 = 1+N 파일 수정** 이 정상. N=5~15 가 KPI. wiki 가 작을 때 (entries < 10) N 이 1~2 까지 떨어지는 건 자연스럽고, 그래프 성장과 함께 회복.
+
+Journal entry 는 append-only 원칙 — connections frontmatter 갱신만 허용, 본문 수정 금지.
+
+### Cycle 3 — Ambient Injection (허브 → 워커)
+
+`hub-sync-rules` 가 content frontmatter `workers:` 필드를 읽어 매칭 워커의 Claude memory/ 디렉토리에 symlink 배포. 자세한 메커니즘은 [Ambient Knowledge Injection via Symlink](/wiki/context-engineering/ambient-knowledge-injection) 참조.
+
+워커 Claude 세션 시작 시 그 memory/ 가 자동 로드 → 워커는 허브 지식을 ambient context 로 인식. 사용자가 "이거 봤어?" 알릴 필요 없음.
+
+## 5개 차별 축
+
+ai-study 또는 일반 LLM Wiki 와 비교:
+
+| 축 | 일반 모델 | Compounding Pattern |
+|---|---|---|
+| Raw 보존 | 모델별 상이 | `raw-sources/` 불변 ✓ |
+| Cross-update Ingestion | 단일 엔트리 | **1+N 파일 동시 갱신** (10배 복리) |
+| Knowledge Injection | 검색 의존 (retrieval) | **Symlink ambient context** (compilation) |
+| 트리거 | 사람 수동 | **Event-driven** (워커 CI 자동) |
+| Multi-Worker Fan-out | 워커별 복사 (선형 비용) | **Symlink** (상수 비용) |
+
+핵심 철학: Karpathy 의 "compilation over retrieval" 을 **공간 차원 (워커 ↔ 허브) 으로 확장**.
+
+## 구성 요소
+
+```
+워커 레포                       허브 레포 (playbook)             워커 memory/
+─────────                       ─────────────────────             ────────────
+[cron 실패]   ─dispatch─→  [auto-ingest.yml]   →  raw-sources/    
+                                  ↓
+[lesson:커밋] ─dispatch─→  분기 (error/lesson)  →  Journal draft PR
+                                  ↓
+                           사용자 머지
+                                  ↓
+                           /ingest cross-update  →  N개 entry 갱신
+                                  ↓
+                           hub-sync-rules        →  symlink 배포    →  ambient
+                                                                          context
+```
+
+## 사용 시점
+
+**적합**:
+- 1인 개발자 + 다중 프로젝트 (워커 N개) 환경
+- 같은 종류 실수 / 패턴 반복 가능성 있는 영역 (인프라, 패턴 룰, 도메인 지식)
+- LLM 코딩 에이전트 (Claude Code 등) 가 워커 세션의 주 사용자
+
+**부적합**:
+- 단일 프로젝트 (워커 1개) — Wiki 만으로 충분, hub-worker 분리는 오버엔지니어링
+- 팀 협업 환경 (Claude Code 메모리 공유 안 됨, 사람 간 공유 도구 따로 필요)
+- 매우 다양한 도메인 (cross-update 가 의미 있으려면 도메인 군집 필요)
+
+## 트레이드오프
+
+- **자동화 vs LLM 판단 경계**: cross-update 는 LLM 판단 (어떤 기존 엔트리가 관련 있나) 필수. cron 자동 ingestion 은 ai-study 가 막혔던 draft PR 무덤 만듦. **수동 `/ingest` (사용자 트리거 + Claude 실행)** 가 현 단계 최적해. 완전 무인은 Claude Agent CI 통합 (Phase 3) 필요.
+
+- **Workers 태그 보수적 기본값**: `workers: []` (배포 안 함) 이 기본. 명시적 opt-in 만 워커에 흘러감. ambient context 노이즈 차단.
+
+- **Lesson 접두사 의도성**: 모든 commit 자동 dispatch 하면 무덤. `lesson:` 접두사 컨벤션이 노이즈/시그널 분리 장치.
+
+- **Symlink 머신 의존성**: hub-sync-rules 는 같은 머신에서만 작동. 클라우드 멀티-디바이스 동기화는 별 메커니즘 필요 (현재 미해결).
+
+## 측정 지표
+
+- **세션당 평균 참조 수**: 워커 세션이 허브 content/ 엔트리를 참조한 횟수. Phase 1 완료 기준 = 평균 ≥ 2.
+- **Cross-update 평균 N**: `/ingest` 1회당 보강된 기존 엔트리 수. 목표 5~15.
+- **Dispatch 처리 latency**: 워커 dispatch → 허브 raw 저장까지. < 30초 목표.
+- **재발 차단율**: dedup 코멘트 / 총 inbound Issue. 높을수록 같은 cron 실패 알림 누적 차단 잘 됨.
+
+## 관련
+
+- 사례: [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 첫 실 사이클 닫힘
+- 시작점: [Playbook Journal 000 — 부트스트랩](/wiki/journal/playbook-journal-000-bootstrap)
+- 메타 (가정과 현실 검증): [Playbook Journal 001 — 그린필드 드리프트](/wiki/journal/playbook-journal-001-drift-greenfield)
+- 하위 메커니즘: [Ambient Knowledge Injection via Symlink](/wiki/context-engineering/ambient-knowledge-injection)
+- 운영 가이드: `docs/setup-worker-integration.md`
+- 슬래시 커맨드: `.claude/commands/ingest.md`

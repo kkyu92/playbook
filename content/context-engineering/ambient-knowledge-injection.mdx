@@ -1,0 +1,109 @@
+---
+title: "Ambient Knowledge Injection via Symlink"
+category: context-engineering
+date: "2026-04-19"
+tags: [context-engineering, symlink, claude-memory, hub-worker, ambient-context]
+workers: [all]
+confidence: 3
+connections: [harness-engineering/hub-worker-compounding-pattern, journal/playbook-journal-005-moneyballscore-playbook-e2e]
+status: complete
+description: "허브 wiki entry 를 워커 Claude memory/ 디렉토리에 symlink 로 자동 배포 — 워커가 명시적 lookup 없이 ambient context 로 인식하는 메커니즘."
+type: entry
+---
+
+## 문제
+
+LLM 코딩 에이전트가 다른 프로젝트에서 배운 지식을 활용하려면 보통:
+1. 사용자가 "이거 우리 X 프로젝트에서 봤지?" 떠올려야 함
+2. 또는 검색 (RAG) — 매번 retrieval 비용 + 관련성 판단 부담
+
+문제: 사람의 기억력에 의존 + retrieval 도 매번 trigger 필요. 지식이 "이미 거기 있는데 안 보이는" 상태.
+
+## 해결
+
+허브의 정제된 지식을 워커 Claude memory/ 디렉토리에 **symlink** 로 미리 배포. 워커 Claude 세션이 시작될 때 그 memory/ 가 자동 로드되므로, 지식이 **검색 없이 항상 ambient context** 로 존재.
+
+Karpathy 의 *compilation over retrieval* 원칙을 공간 차원으로 확장 — 검색 시점이 아닌 **배포 시점에 지식을 미리 워커에 컴파일**.
+
+## 메커니즘
+
+### 1. Frontmatter 태그
+
+허브 wiki entry 의 frontmatter `workers:` 필드로 배포 대상 지정:
+
+```yaml
+workers: []                  # 배포 안 함 (보수적 기본값)
+workers: [moneyball]         # 특정 워커 1개
+workers: [moneyball, foo]    # 여러 워커 명시
+workers: [all]               # 등록된 모든 워커
+```
+
+기본값을 `[]` 로 잡은 이유: 모든 entry 가 모든 워커에 배포되면 ambient context 노이즈가 너무 큼. 명시적 opt-in 만 흘려보냄.
+
+### 2. 워커 등록 (projects.conf)
+
+`~/.config/claude-hub/projects.conf` 에 워커 등록:
+
+```
+moneyball:/Users/kyusikkim/projects/moneyballscore
+```
+
+좌측 (`moneyball`) 이 **워커 이름** = `workers:` 태그 매칭에 쓰는 식별자. 우측은 path. **둘은 다를 수 있음** — 흔한 함정.
+
+### 3. Sync 도구 (hub-sync-rules)
+
+`~/bin/hub-sync-rules` 한 번 실행하면:
+
+1. `projects.conf` 의 모든 워커 순회
+2. 각 워커마다 content 엔트리 스캔, `workers:` 태그 매칭 확인
+3. 매칭되면 `~/.claude/projects/-{slug}/memory/content-{category}-{slug}.md` 위치에 symlink 생성
+4. dangling symlink 자동 정리, 동명 실제 파일 있으면 .bak 백업 후 대체
+
+cron 이 아닌 **수동 트리거** — frontmatter 갱신 후 의식적으로 한 번 돌리는 것. 자동화하면 워커 memory 가 시도 때도 없이 변해서 불안정.
+
+### 4. 워커 인식
+
+Claude Code 가 워커 세션 시작 시 그 프로젝트의 memory/ 디렉토리를 자동 로드. symlink 파일도 일반 파일처럼 읽힘. 워커는 자기 memory 에 들어 있으니 별도 lookup 없이 자연스럽게 활용.
+
+## 트레이드오프
+
+- **Compilation cost up-front**: 배포 시점에 결정 ("이 entry 가 이 워커에 갈만한가?") 필요. 잘못 배포하면 노이즈, 안 배포하면 사일런트 손실. workers 태그 정책 명문화가 wiki 운영의 중요 결정.
+
+- **Symlink 머신 종속**: 같은 머신에서만 작동. 클라우드 동기화 환경 (예: Codespaces) 은 별 메커니즘 필요. 노트북-데스크탑 같은 멀티 디바이스도 각각 sync 필요.
+
+- **Multi-Worker Fan-out 비용 상수**: 워커 N 개라도 symlink 생성 비용 같음. 파일 복사 모델은 N 비례 — symlink 압승.
+
+- **Workers 태그 정책 부담**: entry 추가할 때마다 "어느 워커?" 결정. 자동화 가능하지만 (예: 카테고리 → 워커 자동 매핑) 의도적 결정 가치 있음.
+
+## 일반적 함정
+
+### 함정 1 — Path basename ≠ Worker name
+
+projects.conf 에 `moneyball:/path/to/moneyballscore` 로 등록했는데 entry 에 `workers: [moneyballscore]` (path 의 디렉토리명) 적으면 매칭 실패. hub-sync-rules 가 0건 배포하고 silent.
+
+방어: `generate-content-manifest.mjs` 에서 projects.conf 읽어 workers 이름 검증, 미등록이면 빌드 fail (exit 1).
+
+### 함정 2 — 빈 [] 와 [all] 혼동
+
+`workers: []` = 배포 안 함, `workers: [all]` = 모든 워커. 둘 다 "특정하지 않음" 으로 보일 수 있어 헷갈림. 기본값은 `[]` (보수).
+
+### 함정 3 — Symlink 누적
+
+frontmatter 에서 워커 제거해도 hub-sync-rules 다시 안 돌리면 구 symlink 남음. dangling symlink 정리 로직 있지만 정기 실행 필요.
+
+### 함정 4 — Self-symlink
+
+projects.conf 에 허브 자체 (playbook) 도 등록돼 있으면 `workers: [all]` 시 허브 자기 자신에도 symlink. 해롭지 않지만 redundant. 신경 안 써도 됨.
+
+## 측정
+
+- **Symlink 수 / 워커**: 너무 적으면 ambient context 부족, 너무 많으면 노이즈. 워커마다 5~20 정도가 적정 추정 (실데이터로 조정).
+- **세션당 ambient 참조 수**: 워커 Claude 가 자기 memory 의 symlink entry 를 실제로 활용한 횟수. KPI = 평균 ≥ 2.
+
+## 관련
+
+- 상위 패턴: [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern)
+- 사례: [Playbook Journal 005](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 첫 symlink 배포
+- 도구: `~/bin/hub-sync-rules`
+- 검증 로직: `scripts/generate-content-manifest.mjs` (workers 이름 검증)
+- 설정: `~/.config/claude-hub/projects.conf`
