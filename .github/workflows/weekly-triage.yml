@@ -51,8 +51,10 @@ jobs:
             fname=$(basename "$raw_path" .md)
             slug="${fname#*-}"   # 첫 '-' 이전 (날짜) 제거
 
-            # content/ 에서 slug 참조 검색
-            if ! grep -r -l -F "$slug" content/ >/dev/null 2>&1; then
+            # content/ 에서 slug 참조 검색 — 본문 OR 파일명 (둘 중 하나라도 매칭되면 처리됨)
+            # auto-ingest 의 lesson 경로는 파일명에만 slug 가 들어가서 본문 grep 으로 놓치는 케이스 방어.
+            if ! ( grep -r -l -F "$slug" content/ >/dev/null 2>&1 \
+                || find content -name "*${slug}*" -type f 2>/dev/null | grep -q . ); then
               # raw 첫 줄에서 제목 추정 (frontmatter date/source/type 다음 본문 첫 줄)
               # frontmatter 건너뛴 후 첫 non-empty 라인 추출
               title=$(awk '

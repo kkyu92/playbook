@@ -27,6 +27,27 @@ const CATEGORIES = [
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
 
+// hub-sync-rules 와 동일한 projects.conf 를 읽어 등록된 워커 이름 집합 구성.
+// workers frontmatter 에 "all" 외 등록 안 된 이름을 적으면 매니페스트 생성 실패 (오타 방어).
+const PROJECTS_CONF_PATH =
+  process.env.HUB_PROJECTS_CONF ||
+  path.join(process.env.HOME || "", ".config", "claude-hub", "projects.conf");
+
+function loadRegisteredWorkers() {
+  if (!fs.existsSync(PROJECTS_CONF_PATH)) return null;
+  const lines = fs.readFileSync(PROJECTS_CONF_PATH, "utf-8").split("\n");
+  const names = new Set();
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const [name] = trimmed.split(":");
+    if (name) names.add(name.trim());
+  }
+  return names;
+}
+
+const REGISTERED_WORKERS = loadRegisteredWorkers();
+
 function findMdxFiles(dir) {
   const results = [];
   if (!fs.existsSync(dir)) return results;
@@ -63,6 +84,18 @@ function validateFrontmatter(data, filePath) {
     (typeof data.confidence !== "number" || data.confidence < 1 || data.confidence > 5)
   ) {
     errors.push(`Confidence must be a number between 1 and 5, got: ${data.confidence}`);
+  }
+
+  // workers 필드 검증: projects.conf 등록 이름 또는 "all" 만 허용 (오타 방어)
+  if (REGISTERED_WORKERS && Array.isArray(data.workers) && data.workers.length > 0) {
+    const valid = new Set(["all", ...REGISTERED_WORKERS]);
+    for (const w of data.workers) {
+      if (!valid.has(w)) {
+        errors.push(
+          `Invalid worker name "${w}". Must be "all" or one of: ${[...REGISTERED_WORKERS].sort().join(", ")} (registered in ${PROJECTS_CONF_PATH})`
+        );
+      }
+    }
   }
 
   if (errors.length > 0) {
