@@ -52,6 +52,47 @@
 - 매주: /lint로 위키 건강도 점검
 - 패턴 3회 반복 시: Journal → Wiki 승격 검토
 
+## 드리프트 감지 프로토콜 (필수)
+
+가정과 실 리포 사이 4종 괴리를 계층적으로 차단. 상세: [drift-detection-methodology](content/harness-engineering/drift-detection-methodology.mdx).
+
+### Level 0 — 세션 시작 시 (메모리 드리프트 #1)
+
+```bash
+git log --oneline -20
+git status
+ls <주요 디렉토리>
+```
+
+체크포인트/메모리와 기계적 대조. 다르면 사용자에게 먼저 보고. `/handoff load` 가 자동 수행 (fingerprint 비교).
+
+### Level 1 — 신규 작업 직전 (존재 드리프트 #2)
+
+신규 파일/패키지/설정 만들기 전에:
+```bash
+ls path/to/file
+find . -name "*pattern*"
+cat package.json | grep <name>
+```
+
+플랜에 "신규 설치" 라고 적혀 있어도 실행 시점에 재확인. 플랜은 보장 X.
+
+### Level 2 — 머지 후 (작동 드리프트 #3)
+
+`feat:` 커밋 머지 직후:
+- `gh run list` 로 CI 결과 확인 (cron 포함 — 사일런트 cron 실패가 가장 위험)
+- 프로덕션 환경 실 결과 확인
+- DB upsert/insert 결과 `.error` 체크 코드 존재 확인
+- VARCHAR 길이, 외부 의존 문자열 (모델 ID 등) validation
+- `git log` 에 `debug:` 커밋 연속이면 미해결 사고 의심
+
+### Level 3 — 머지 전 (완전성 드리프트 #4)
+
+`/plan-eng-review` 의 "코드 읽기" 단계:
+- 대칭 로직 체크리스트: home/away, source/target, request/response 양쪽 다 처리?
+- 한쪽만 사용하는 변수 의심
+- DB 양쪽 row count 비교 쿼리 추가 (한쪽 0 이면 alert)
+
 ## Skill routing
 
 When the user's request matches an available skill, suggest it before acting.
