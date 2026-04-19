@@ -74,6 +74,7 @@ function checkStale(entries) {
 function checkPatterns(entries) {
   // journal 시리즈 안에서 메타 태그 제외하고 빈도 카운트
   const journals = entries.filter((e) => e.frontmatter.series === "playbook-journal");
+  const nonJournals = entries.filter((e) => e.frontmatter.series !== "playbook-journal");
   const tagCount = {};
   for (const e of journals) {
     for (const tag of e.frontmatter.tags || []) {
@@ -83,7 +84,11 @@ function checkPatterns(entries) {
   }
   return Object.entries(tagCount)
     .filter(([_, n]) => n >= PATTERN_MIN_COUNT)
-    .map(([tag, count]) => ({ tag, count }))
+    .map(([tag, count]) => {
+      // 이미 비-journal wiki entry 의 tags 에 포함된 tag 면 "승격됨" 으로 표시
+      const promoted = nonJournals.find((e) => (e.frontmatter.tags || []).includes(tag));
+      return { tag, count, promoted: promoted?.slug || null };
+    })
     .sort((a, b) => b.count - a.count);
 }
 
@@ -113,7 +118,8 @@ function main() {
   console.log(`${sym(isolated.length)} Isolated Nodes:      ${isolated.length}건`);
   console.log(`${sym(stale.length)} Stale:               ${stale.length}건 (confidence<3, ${STALE_DAYS}일+)`);
   console.log(`${sym(inProgress.length)} Long In-Progress:    ${inProgress.length}건 (${STALE_DAYS}일+)`);
-  console.log(`${patterns.length === 0 ? "  " : "💡"} Pattern Candidates:  ${patterns.length}건 (Journal 태그 ${PATTERN_MIN_COUNT}회+)`);
+  const newPatterns = patterns.filter((p) => !p.promoted);
+  console.log(`${newPatterns.length === 0 ? "  " : "💡"} Pattern Candidates:  ${newPatterns.length}건 신규 / ${patterns.length}건 전체 (Journal 태그 ${PATTERN_MIN_COUNT}회+)`);
   console.log("");
 
   if (orphans.length > 0) {
@@ -137,8 +143,14 @@ function main() {
     console.log("");
   }
   if (patterns.length > 0) {
-    console.log("=== Pattern Promotion Candidates (Wiki 승격 후보) ===");
-    for (const p of patterns) console.log(`  '${p.tag}' 태그 → Journal ${p.count}건. Wiki 엔트리화 검토`);
+    console.log("=== Pattern Promotion Candidates ===");
+    for (const p of patterns) {
+      if (p.promoted) {
+        console.log(`  ✓ '${p.tag}' (Journal ${p.count}건) — 이미 승격: ${p.promoted}`);
+      } else {
+        console.log(`  💡 '${p.tag}' (Journal ${p.count}건) — Wiki 엔트리화 검토`);
+      }
+    }
     console.log("");
   }
 

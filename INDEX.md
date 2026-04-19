@@ -1,12 +1,13 @@
 # Playbook Wiki Index
-Updated: 2026-04-19T03:47:28.180Z
+Updated: 2026-04-19T10:50:52.330Z
 
-## 엔트리 (8개)
+## 엔트리 (9개)
 
 ### Context Engineering
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 
 ### Harness Engineering
+- [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
 - [Playbook Journal 001 — 구현된 코드를 그린필드로 간주한 드리프트](wiki/journal/playbook-journal-001-drift-greenfield) — confidence: 5, status: complete
@@ -18,6 +19,12 @@ Updated: 2026-04-19T03:47:28.180Z
 ## 교차 참조 (connections 기반)
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/ambient-knowledge-injection ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-001-drift-greenfield
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-002-drift-existing-setup
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-003-drift-silent-bugs
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-004-drift-half-working
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
+- harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield

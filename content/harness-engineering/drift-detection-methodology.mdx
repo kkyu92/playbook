@@ -1,0 +1,128 @@
+---
+title: "Drift Detection Methodology — 가정과 현실 사이 4종 괴리"
+category: harness-engineering
+date: "2026-04-19"
+tags: [drift, methodology, harness-engineering, eng-review, production-verification, memory-staleness]
+workers: [all]
+confidence: 4
+connections: [journal/playbook-journal-001-drift-greenfield, journal/playbook-journal-002-drift-existing-setup, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, journal/playbook-journal-005-moneyballscore-playbook-e2e, harness-engineering/hub-worker-compounding-pattern]
+status: complete
+description: "AI 에이전트의 메모리/체크포인트와 실제 리포 사이 4종 괴리(존재/작동/완전성/메모리). Journal 001~004 4건 사례 누적 후 패턴 압축."
+type: entry
+---
+
+## 문제
+
+AI 코딩 에이전트의 가장 비싼 실수는 **"가정한 상태"와 "실제 상태"가 다른 채로 작업** 하는 것. 5시간 그린필드 플래닝 후 787줄 기존 코드 발견 (사례 1) 같은 시간 낭비, 또는 silent failure 가 누적된 채로 추가 기능 쌓아 올리는 (사례 3) 더 비싼 사고.
+
+이 패턴이 Playbook Journal 시리즈에 4번 반복 등장 → `/lint` 가 wiki 승격 후보로 자동 감지 → 통합 메타 패턴으로 압축.
+
+## 4종 드리프트 분류
+
+| 종류 | 가정 | 현실 | 감지 도구 | 사례 |
+|---|---|---|---|---|
+| 1. **메모리 드리프트** | "체크포인트/메모리에 적힌 게 현실" | 다른 세션·다른 사용자가 변경 후 미반영 | `git log` + `git status` 기계적 실행 | [Journal 001](/wiki/journal/playbook-journal-001-drift-greenfield) |
+| 2. **존재 드리프트** | "이 파일/패키지/설정 새로 만들어야" | 이미 존재 | 만들기 직전 `ls` / `find` / `grep package.json` | [Journal 002](/wiki/journal/playbook-journal-002-drift-existing-setup) |
+| 3. **작동 드리프트** | "feat 커밋 머지됐으니 돌아간다" | 사전 버그로 silent failure | 프로덕션 환경에서 실 결과 검증 | [Journal 003](/wiki/journal/playbook-journal-003-drift-silent-bugs) |
+| 4. **완전성 드리프트** | "기능 구현됐다" | 대칭 누락 (home만 / source만 / request만) | `/plan-eng-review` 코드 독해 | [Journal 004](/wiki/journal/playbook-journal-004-drift-half-working) |
+
+각 종류는 **이전 종류의 도구로 잡히지 않음**:
+- git log 는 #2 잡지만 #3 못 잡음 (커밋 있어도 죽어있음)
+- 프로덕션 결과 확인은 #3 잡지만 #4 못 잡음 (반은 돌아가므로 결과 보임)
+- eng-review 만이 #4 잡음 (대칭 누락은 코드 읽어야 보임)
+
+## 감지 프로토콜 (계층적)
+
+### Level 0 — 세션 시작 시 필수 (메모리 드리프트 #1 방어)
+
+```bash
+git log --oneline -20
+git status
+ls <주요 디렉토리>
+```
+
+체크포인트/메모리와 기계적으로 대조. 다르면 사용자에게 보고 후 plan 갱신. CLAUDE.md "필수 스캔 프로토콜" 로 명문화.
+
+### Level 1 — 신규 작업 직전 (존재 드리프트 #2 방어)
+
+신규 파일/패키지/설정 만들기 직전:
+```bash
+ls path/to/file        # 파일 레벨
+find . -name "*pattern*" # 패턴 검색
+cat package.json | grep <name>  # 패키지 레벨
+```
+
+플랜에 "신규 설치" 라고 적혀 있어도 **실행 시점에 재확인**. 플랜은 보장 X.
+
+### Level 2 — 머지 후 (작동 드리프트 #3 방어)
+
+`feat:` 커밋이 main 에 들어간 직후:
+- 프로덕션 환경에서 실 작동 결과 확인
+- DB upsert/insert 결과 `.error` 체크 코드 존재 확인 (silent failure 차단)
+- VARCHAR 길이, 외부 의존 문자열 (모델 ID 등) validation
+- git log 에 `debug:` 커밋 연속이면 미해결 사고 의심
+
+### Level 3 — 머지 전 (완전성 드리프트 #4 방어)
+
+`/plan-eng-review` 의 "코드 읽기" 단계:
+- 대칭 로직 체크리스트: home/away, source/target, request/response 양쪽 다 처리하나?
+- 반복문 변수 하드코딩 (한쪽만 사용) 의심
+- DB 측 검증 쿼리 추가 — 양쪽 row count 비교, 한쪽 0 이면 alert
+
+이 3종은 머지 전 이라기보다 머지 직전 PR 리뷰 단계.
+
+## Wiki 자체에서의 메타 드리프트
+
+지식 시스템 자체도 드리프트한다. 메모리/체크포인트 ↔ 실 리포 사이 괴리를 우리는 [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 **fingerprint + handoff** 로 구조화 방어. `/handoff save` 가 git HEAD/branch/commit 목록을 박제, `/handoff load` 가 자동 대조 → minor/moderate/major 드리프트 분류해서 사용자에게 보고.
+
+이건 4종 드리프트 분류의 **메타 적용** — 위키 운영 자체가 메모리 드리프트 (#1) 의 가장 본격적 사례.
+
+## 적용 — CLAUDE.md 와 hooks 통합
+
+### 프로젝트 CLAUDE.md 에 박제할 항목
+
+```
+## 세션 시작 시 필수 스캔
+- git log --oneline -20
+- git status
+- 주요 디렉토리 ls
+- 메모리/체크포인트와 비교, 차이 있으면 사용자에게 먼저 보고
+
+## 신규 생성 직전 확인
+- 어떤 파일/패키지/설정이든 만들기 전에 ls/find/grep 으로 존재 확인
+
+## 머지 후 검증
+- feat 커밋 머지 후 프로덕션 실 작동 확인
+- DB 작업은 .error 체크 필수
+- debug: 커밋 연속이면 미해결 추적
+```
+
+### Hooks 자동화 (선택)
+
+- SessionStart hook: `git log --oneline -10` 자동 출력 → 메모리 드리프트 #1 즉시 가시화
+- PreCommit hook: 신규 파일 추가 시 비슷한 이름 검색 알림 → 존재 드리프트 #2 방어
+- PostMerge hook: `npm run test:e2e` 자동 — 작동 드리프트 #3 방어
+
+Claude Code harness 외부 (git hook / shell rc) 도 가능. 사용자 워크플로우에 맞게 선택.
+
+## 측정
+
+각 드리프트 종류별 **발생 빈도** 와 **감지 latency** 추적:
+
+| 종류 | 측정 | 건강한 값 |
+|---|---|---|
+| #1 메모리 | 세션 시작 후 N분 안에 git log 안 본 횟수 | 0 (필수 스캔 100%) |
+| #2 존재 | "이미 있었음" 발견까지 걸린 시간 | < 1분 (실행 직전 확인) |
+| #3 작동 | feat 머지 ~ silent failure 발견 days | < 1일 (CI 통합 시 < 1시간) |
+| #4 완전성 | 코드 라인 N 마다 대칭 누락 1건 | < 1건 / 1000 라인 |
+
+## 안티 패턴 — "버그 한 종류 고쳤으니 됐다" 위험
+
+사례 3 → 사례 4 의 패턴: silent failure (`.error` 체크 누락) 3건 fix 한 직후 안도. 그런데 다른 종류 버그 (대칭 누락) 가 남아 있었음. **하나의 카테고리 fix ≠ 모든 카테고리 fix**. 4종 드리프트는 각자 독립이므로 각자 별도 점검 필요.
+
+## 관련
+
+- 사례 (Journal series): [001](/wiki/journal/playbook-journal-001-drift-greenfield) · [002](/wiki/journal/playbook-journal-002-drift-existing-setup) · [003](/wiki/journal/playbook-journal-003-drift-silent-bugs) · [004](/wiki/journal/playbook-journal-004-drift-half-working)
+- 메타 적용 (Wiki 자체 드리프트 방어): [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern), `/handoff save` / `/handoff load`
+- E2E 검증 사례: [Journal 005](/wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — 작동 드리프트 #3 방어 (lesson dispatch 가 실제로 동작하나 검증)
+- 도구: `/plan-eng-review` (#4), `/lint` (자체 wiki 메타 드리프트 감지)
