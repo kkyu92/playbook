@@ -39,24 +39,24 @@ jobs:
             exit 0
           fi
 
-          # 연결 안 된 raw 수집 (기준: 파일명의 slug 가 content/ 안에서 참조되는지)
+          # 연결 안 된 raw 수집
+          # 매칭 기준: raw 파일의 unique ID (date+slug, 확장자 제외) 가 content/ 의 어떤 파일에 등장하는지
+          # auto-ingest 가 journal frontmatter 에 raw_source 필드로 raw path 박제 → 정확 매칭
+          # 같은 slug 의 raw 가 여러 날 들어와도 각자 unique ID 라 false positive 차단
           UNPROCESSED=""
           COUNT=0
 
-          # find + while 로 공백 포함 안전 처리
           while IFS= read -r raw_path; do
             [ -z "$raw_path" ] && continue
 
-            # 파일명에서 slug 추출: raw-sources/YYYYMMDD-<slug>.md → <slug>
-            fname=$(basename "$raw_path" .md)
-            slug="${fname#*-}"   # 첫 '-' 이전 (날짜) 제거
+            # raw_id = 파일명 (확장자 제외, 경로 제외) — date 포함
+            # 예: raw-sources/20260419-foo.md → 20260419-foo
+            raw_id=$(basename "$raw_path" .md)
+            [ -z "$raw_id" ] && continue
 
-            # content/ 에서 slug 참조 검색 — 본문 OR 파일명 (둘 중 하나라도 매칭되면 처리됨)
-            # auto-ingest 의 lesson 경로는 파일명에만 slug 가 들어가서 본문 grep 으로 놓치는 케이스 방어.
-            if ! ( grep -r -l -F "$slug" content/ >/dev/null 2>&1 \
-                || find content -name "*${slug}*" -type f 2>/dev/null | grep -q . ); then
-              # raw 첫 줄에서 제목 추정 (frontmatter date/source/type 다음 본문 첫 줄)
-              # frontmatter 건너뛴 후 첫 non-empty 라인 추출
+            # content/ 에서 raw_id 참조 검색 (frontmatter raw_source 또는 본문)
+            if ! grep -r -l -F "$raw_id" content/ >/dev/null 2>&1; then
+              # raw 첫 줄에서 제목 추정 (frontmatter 다음 본문 첫 라인)
               title=$(awk '
                 /^---$/ { block++; next }
                 block == 2 && NF > 0 { print; exit }

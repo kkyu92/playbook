@@ -217,6 +217,7 @@ jobs:
               echo "description: \"자동 수집: ${ESC_TITLE} (from ${SOURCE_REPO})\""
               echo "type: entry"
               echo "series: playbook-journal"
+              echo "raw_source: \"${RAW_FILE}\""
               echo "---"
               echo ""
               echo "> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다."

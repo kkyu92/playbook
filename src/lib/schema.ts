@@ -95,6 +95,7 @@ export const frontmatterSchema = z.object({
   series: z.string().optional(),
   quiz: z.array(quizQuestionSchema).optional(),
   workers: z.array(z.string()).default([]),
+  raw_source: z.string().optional(), // auto-ingest 가 박은 raw 파일 경로 — weekly-triage 가 grep 기준으로 사용
 });
 
 export type Frontmatter = z.infer<typeof frontmatterSchema>;
