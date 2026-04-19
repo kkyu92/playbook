@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-19T14:16:08.259Z
+Updated: 2026-04-19T14:54:26.749Z
 
-## 엔트리 (13개)
+## 엔트리 (14개)
 
 ### Context Engineering
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
@@ -17,6 +17,7 @@ Updated: 2026-04-19T14:16:08.259Z
 - [Playbook Journal 003 — 머지됐지만 죽어있는 코드 드리프트](wiki/journal/playbook-journal-003-drift-silent-bugs) — confidence: 5, status: complete
 - [Playbook Journal 004 — 반쪽짜리 작동 드리프트](wiki/journal/playbook-journal-004-drift-half-working) — confidence: 5, status: complete
 - [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — confidence: 4, status: complete
+- [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
 
 ### Infrastructure
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
