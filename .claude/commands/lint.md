@@ -1,58 +1,61 @@
 # /lint — 위키 일관성 및 품질 검사
 
 ## 사용법
-/lint
 
-## 검사 항목
-
-### 1. Orphan Links
-- connections 배열에 참조된 slug가 실제로 존재하는지
-- 없으면: "⚠ ORPHAN: {slug} 참조하지만 엔트리 없음. 생성 필요?"
-
-### 2. 고립 노드
-- connections이 빈 배열([])인 엔트리
-- "⚠ ISOLATED: {slug}에 연결이 없음. 관련 엔트리 제안?"
-
-### 3. Stale 엔트리
-- confidence < 3이고 30일 이상 된 엔트리
-- "⚠ STALE: {slug} confidence {n}, {days}일 전. 보강 또는 아카이브?"
-
-### 4. Frontmatter 검증
-- schema.ts의 필수 필드 누락
-- category가 CATEGORIES enum에 없음
-- confidence 범위 (1-5) 벗어남
-- date 형식 불일치
-
-### 5. 중복 감지
-- 제목이 80% 이상 유사한 엔트리 쌍
-- "⚠ DUPLICATE?: {slug1} ↔ {slug2} 유사도 높음. 병합?"
-
-### 6. INDEX.md 동기화
-- INDEX.md와 실제 content/ 파일 비교
-- 누락된 엔트리, 삭제된 엔트리
-
-### 7. 패턴 반복 감지
-- 같은 태그가 Journal에 3회 이상 등장
-- "💡 PATTERN: '{tag}' 태그가 Journal {n}건에 등장. Wiki 엔트리로 승격?"
-
-## 출력 형식
 ```
-LINT REPORT — {date}
-═══════════════════
-✓ Frontmatter: 전체 통과
-⚠ Orphan Links: 2건
-⚠ Isolated Nodes: 1건
-⚠ Stale: 0건
-⚠ Duplicates: 0건
-✓ INDEX.md: 동기화 완료
-💡 Patterns: 1건 (승격 후보)
-
-상세:
-  [ORPHAN] journal-001 → "project-ops/vercel-deploy" (미존재)
-  [ISOLATED] project-ops/supabase-pool (connections 없음)
-  [PATTERN] 'supabase' 태그 → Journal 003, 005, 006. Wiki 승격?
+/lint              # 결정론적 검사 + Claude 의미 판단
+/lint --fix        # 자동 수정 (manifest 재생성, INDEX 동기화)
 ```
 
-## 자동 수정 옵션
-- /lint --fix: 자동 수정 가능한 것만 수정 (INDEX.md 동기화, frontmatter 기본값)
-- /lint --report: 리포트만 출력 (수정 안 함)
+## 두 단계
+
+### Step 1 — 결정론적 검사 (스크립트)
+
+`pnpm lint:wiki` (= `node scripts/lint-content.mjs`) 가 다음 항목 검사:
+
+| 항목 | 기준 | 출력 |
+|---|---|---|
+| Orphan Links | connections 의 target 이 실제 entry 아님 | `from → to` |
+| Isolated Nodes | connections 가 빈 배열 | slug 목록 |
+| Stale | confidence < 3 + 30일+ 경과 | `slug — confidence N, M일 전` |
+| Long In-Progress | status: in-progress + 30일+ | `slug — N일 전` |
+| Pattern Candidates | journal 시리즈 내 동일 태그 3회+ | `'태그' → Journal N건. Wiki 승격?` |
+
+각 항목 0건이면 ✓, 1건+ 이면 ⚠ (또는 💡 for patterns).
+
+**Exit code 항상 0** — 정보성 보고. 하드 검증 (빌드 실패 트리거) 은 `generate-content-manifest.mjs` 가 담당 (frontmatter / category / workers 이름 / dangling connections).
+
+### Step 2 — Claude 의미 판단 (스크립트 후 추가)
+
+스크립트 결과 받은 후 Claude 가 다음 항목 추가 분석:
+
+1. **중복 감지**: 제목 / description / 본문 키워드 유사도 80%+ 인 entry 쌍 — 병합 후보 제안
+2. **Pattern → Wiki 승격 결정**: Step 1 의 pattern candidate 가 진짜 wiki entry 가치 있는가? journal 4회 등장이 우연일 수도 있음 — 의미 검토 후 승격 권장 / 보류
+3. **Isolated 노드 연결 제안**: 고립된 entry 의 본문 읽고 기존 entry 와 의미 매핑 후 connections 추가 제안
+4. **Stale entry 처리 권장**: 보강 / 아카이브 / status 변경 중 어느 게 적절한가
+
+이 4개는 deterministic 으로 안 풀림 — Claude 가 본문 읽고 판단.
+
+## --fix 모드 (자동 수정)
+
+자동 수정 가능한 것만:
+- INDEX.md 와 실제 content 비교 후 동기화 → `node scripts/generate-content-manifest.mjs`
+- frontmatter 기본값 채우기 (예: confidence 미지정 → 1) → manifest gen 이 처리
+
+수동 수정만 가능 (Claude 판단 필요):
+- Orphan target 이 미작성 entry 면 → 작성? 또는 connections 에서 제거?
+- Isolated 의 connections 후보는? → Claude 가 본문 읽고 결정
+
+## 운영 권장
+
+- **매주 월** (weekly-triage 와 같은 주기): `/lint` 실행 → 리포트 검토
+- **새 entry 작성 후**: 자동으로 `/ingest` 가 cross-update 까지 처리. `/lint` 별도 호출 불필요
+- **wiki 30+ entries 도달 시**: pattern candidate 빈도 ↑ → 승격 의사결정 자주 발생
+
+## 관련
+
+- `scripts/lint-content.mjs` — Step 1 결정론적 검사
+- `scripts/generate-content-manifest.mjs` — frontmatter / workers / orphan 하드 검증 + INDEX 자동 동기화
+- `scripts/validate-content.mjs` — MDX JSX / Mermaid syntax 검증 (별 concern)
+- `.claude/commands/ingest.md` — 새 entry 추가 시 자동 cross-update
+- `CLAUDE.md` "운영 루프" — 매주 lint 권장

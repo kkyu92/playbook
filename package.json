@@ -15,6 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:wiki": "node scripts/lint-content.mjs",
     "new-entry": "node scripts/new-entry.mjs",
     "generate-lesson": "node scripts/generate-lesson.mjs",
     "test": "vitest run",
