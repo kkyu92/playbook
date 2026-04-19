@@ -6,10 +6,21 @@ import matter from "gray-matter";
 // 의미 판단 (중복 감지, 패턴 → wiki 승격 권장) 은 Claude 가 /lint 호출 시 추가로 수행.
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
+const WORKERS_CONFIG = path.join(process.cwd(), "workers.config.json");
 const STALE_DAYS = 30;
 const PATTERN_MIN_COUNT = 3;
 // 모든 journal 에 공통으로 들어가는 메타 태그 — 패턴 감지에서 제외
-const NOISE_TAGS = new Set(["playbook-journal", "auto-ingest", "lesson"]);
+// + workers.config.json 의 registered 워커 이름 (도메인-only 태그) 도 제외
+function loadNoiseTags() {
+  const base = ["playbook-journal", "auto-ingest", "lesson"];
+  try {
+    const cfg = JSON.parse(fs.readFileSync(WORKERS_CONFIG, "utf-8"));
+    return new Set([...base, ...(cfg.registered || []), ...(cfg.special || [])]);
+  } catch {
+    return new Set(base);
+  }
+}
+const NOISE_TAGS = loadNoiseTags();
 
 function findMdxFiles(dir) {
   const results = [];
