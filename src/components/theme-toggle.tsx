@@ -8,6 +8,8 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // hydration 이후에만 client-only 테마 아이콘 노출 (SSR mismatch 회피)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
   if (!mounted) return <div className="h-8 w-8" />;
 

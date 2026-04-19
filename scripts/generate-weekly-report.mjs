@@ -1,12 +1,12 @@
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
 function main() {
   // Regenerate manifest first
-  const { execSync } = require("child_process");
   try {
     execSync("node scripts/generate-content-manifest.mjs", { stdio: "inherit" });
   } catch {}

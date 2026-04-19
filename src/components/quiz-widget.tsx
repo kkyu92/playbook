@@ -27,10 +27,13 @@ export function QuizWidget({ quizableEntries }: QuizWidgetProps) {
   const [stats, setStats] = useState<QuizStats | null>(null);
   const [dueReviews, setDueReviews] = useState<DueReview[]>([]);
 
+  // localStorage hydration — browser API 라 effect 필수
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setStats(computeQuizStats(loadAttempts()));
     setDueReviews(getDueReviews());
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   if (quizableEntries.length === 0) return null;
 

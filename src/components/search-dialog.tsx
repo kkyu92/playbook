@@ -50,7 +50,8 @@ export function SearchDialog({ entries }: SearchDialogProps) {
       .slice(0, 8);
   }, [query, searchIndex, entries]);
 
-  // Reset selected index and sync graph highlights when results change
+  // results 변경 시 selection reset + graph 외부 시스템 sync
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setSelectedIndex(0);
     if (query.trim() && results.length > 0) {
@@ -59,6 +60,7 @@ export function SearchDialog({ entries }: SearchDialogProps) {
       clearHighlights();
     }
   }, [results, query, highlightNodes, clearHighlights]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Cmd+K to open
   useEffect(() => {
@@ -76,13 +78,15 @@ export function SearchDialog({ entries }: SearchDialogProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Focus input when opening
+  // open 트리거 시 query 초기화 + input focus
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (open) {
       setQuery("");
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [open]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const navigate = useCallback(
     (slug: string) => {

@@ -24,7 +24,8 @@ export function Quiz({ slug, category, questions }: QuizProps) {
   const [showExplanations, setShowExplanations] = useState<Record<number, boolean>>({});
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate previous state from localStorage
+  // Hydrate previous state from localStorage (browser API → effect 필수)
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const state = loadQuizState(slug);
     if (state) {
@@ -33,6 +34,7 @@ export function Quiz({ slug, category, questions }: QuizProps) {
     }
     setHydrated(true);
   }, [slug]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const allAnswered = useMemo(
     () => questions.every((_, i) => selections[i] !== null && selections[i] !== undefined),

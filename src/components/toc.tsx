@@ -29,6 +29,8 @@ export function TableOfContents() {
       });
     });
 
+    // DOM 에서 읽은 heading 목록을 mount 시 한 번 setState — effect 외부에서 못 함
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(items);
 
     const observer = new IntersectionObserver(

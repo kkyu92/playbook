@@ -13,7 +13,7 @@ export interface Project {
   version: string;
   tagline: string;
   stack: string[];
-  metrics: Record<string, any>;
+  metrics: Record<string, string | number>;
   environment: Array<{ title: string; detail: string }>;
   cycles: Array<{ title: string; detail: string }>;
   retrospective: string;
