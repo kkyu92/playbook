@@ -7,17 +7,41 @@
 ## 양방향 모델
 
 ```
-[Push 축]  shared-rules/common/*.md  ─symlink─▶  각 워커 memory/
-[Pull 축]  2개+ 워커의 공통 feedback  ─승격──▶  shared-rules/common/
+[Push 축]  shared-rules/common/*.md           ─symlink─▶  각 워커 memory/
+           content/**/*.mdx (workers 태그)    ─symlink─▶  매칭 워커 memory/
+[Pull 축]  2개+ 워커의 공통 feedback           ─승격──▶  shared-rules/common/
 ```
 
-두 축 모두 자동화되어야 Karpathy LLM Wiki 의 복리 성장 모델이 완성된다.
+두 축 모두 자동화되어야 Karpathy LLM Wiki 의 복리 성장 모델이 완성된다. content/ 의 workers 태그 배포는 [Ambient Knowledge Injection](/wiki/context-engineering/ambient-knowledge-injection) 참조.
 
-## 스크립트 3종
+## 스크립트 4종
+
+### `hub-start` — 세션 런처 + 시스템 상태 스냅샷
+
+**역할**: iTerm2 새 창 생성, projects.conf 항목마다 split 세션 + 자동 `claude '/handoff load'` 실행. 매 실행 시 hub-sync-rules / hub-scan-promotions 자동 호출 + 시스템 상태 출력.
+
+**시스템 상태 출력 (Phase 2 측정 인프라)**:
+
+```
+hub-start: 📊 시스템 상태
+  📥 미처리 raw: N건                       # raw-sources/ 에서 content 어디에도 참조 안 된 파일
+  📦 7일 신규 entry: N건                  # find content -mtime -7
+  🔗 워커 ambient context:
+    └ playbook: N개 entry                  # 각 워커 memory/ 의 content-* symlink 수
+    └ moneyball: N개 entry
+```
+
+데이터 의존성 X — 0건이라도 표시. Phase 2 진입 결정의 input 데이터로 활용.
+
+**호출 시점**: 사용자 수동 실행. 기존 hub 창 있으면 activate 후 종료 (메트릭은 매번 출력).
 
 ### `hub-sync-rules` — Push
 
-**역할**: `shared-rules/common/*.md` 을 모든 워커 `memory/` 에 심볼릭 링크로 배포. `shared-rules/{worker}/*.md` 는 해당 워커에만.
+**역할 (rules)**: `shared-rules/common/*.md` 을 모든 워커 `memory/` 에 심볼릭 링크로 배포. `shared-rules/{worker}/*.md` 는 해당 워커에만.
+
+**역할 (content, Phase 1 확장)**: `content/**/*.mdx` 중 frontmatter `workers:` 필드 매칭 엔트리를 해당 워커 `memory/content-{category}-{slug}.md` 로 symlink. `workers: [all]` 이면 모든 워커, `workers: [moneyball]` 이면 등록 이름 매칭, `workers: []` 이면 배포 안 함 (보수적 기본값).
+
+**워커 이름 매칭 함정**: projects.conf 의 좌측 (name) 이 식별자. path 디렉토리명과 다를 수 있음 (예: `moneyball:/path/to/moneyballscore`). `generate-content-manifest.mjs` 가 매니페스트 생성 시 검증 — 등록 안 된 이름 사용 시 빌드 fail.
 
 **호출 시점**:
 - `hub-start` 실행 시 자동 (세션 시작마다 동기화)
@@ -62,8 +86,9 @@ hub-promote <파일명> --force   # 첫 워커 기준 강제 승격
 
 ```
 매 세션 시작 (hub-start)
-  ├─ hub-sync-rules   (Push — 허브 최신 → 모든 워커)
-  └─ hub-scan-promotions   (Pull 탐지 — 승격 후보 1개+ 이면 알림)
+  ├─ hub-sync-rules         (Push — rules + workers 태그된 content)
+  ├─ hub-scan-promotions    (Pull 탐지 — 승격 후보 1개+ 이면 알림)
+  └─ 시스템 상태 출력       (미처리 raw / 7일 신규 / 워커별 symlink 수)
 
 주기적 (승격 후보 있을 때)
   └─ hub-promote <파일명>   (Pull 실행 — common/ 승격)
@@ -71,6 +96,9 @@ hub-promote <파일명> --force   # 첫 워커 기준 강제 승격
 공통 규칙 수정 시
   ├─ shared-rules/common/*.md 직접 편집
   └─ /sync-rules   (수동 전파)
+
+content 변경 시 (workers 태그 추가/제거)
+  └─ hub-sync-rules         (수동 — symlink 재계산)
 ```
 
 ## 관련 자원
