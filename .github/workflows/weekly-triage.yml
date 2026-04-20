@@ -43,8 +43,10 @@ jobs:
           # 매칭 기준: raw 파일의 unique ID (date+slug, 확장자 제외) 가 content/ 의 어떤 파일에 등장하는지
           # auto-ingest 가 journal frontmatter 에 raw_source 필드로 raw path 박제 → 정확 매칭
           # 같은 slug 의 raw 가 여러 날 들어와도 각자 unique ID 라 false positive 차단
+          # A0-5 terminal state: raw frontmatter 의 intent=test/debug 면 unprocessed 제외 (가드 테스트 자동 skip)
           UNPROCESSED=""
           COUNT=0
+          SUPPRESSED=0
 
           while IFS= read -r raw_path; do
             [ -z "$raw_path" ] && continue
@@ -53,6 +55,23 @@ jobs:
             # 예: raw-sources/20260419-foo.md → 20260419-foo
             raw_id=$(basename "$raw_path" .md)
             [ -z "$raw_id" ] && continue
+
+            # A0-5 — frontmatter intent 추출 (test/debug → terminal state, scan 제외)
+            intent=$(awk '
+              /^---$/ { block++; next }
+              block == 1 && /^intent:/ {
+                sub(/^intent:[[:space:]]*/, "");
+                gsub(/"/, "");
+                gsub(/^[[:space:]]+|[[:space:]]+$/, "");
+                print;
+                exit
+              }
+            ' "$raw_path")
+            if [ "$intent" = "test" ] || [ "$intent" = "debug" ]; then
+              SUPPRESSED=$((SUPPRESSED + 1))
+              echo "skip (intent=$intent): $raw_path"
+              continue
+            fi
 
             # content/ 에서 raw_id 참조 검색 (frontmatter raw_source 또는 본문)
             if ! grep -r -l -F "$raw_id" content/ >/dev/null 2>&1; then
@@ -67,6 +86,8 @@ jobs:
               COUNT=$((COUNT + 1))
             fi
           done < <(find raw-sources -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort)
+
+          echo "📊 scan 완료: unprocessed=$COUNT, suppressed (intent=test/debug)=$SUPPRESSED"
 
           echo "count=$COUNT" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
