@@ -77,6 +77,21 @@ GET → { clientInitialized: !!Sentry.getClient(), flushed: await Sentry.flush(1
 새 sub-system 배선 직후 가드 테스트 1회는 의무. 한 번 더 사고:
 - 새 워커 부트스트랩 시 가드 테스트 매트릭스 체크리스트 필수
 - 마이그레이션 (Next.js 버전업, SDK 메이저 업그레이드) 후 가드 테스트 재실행
+- **CI/CD 자동화 워크플로 신규 추가 시도 동시 실행 가드 테스트** — 단발 동작은 통과해도 동시성 race 가 silent
+
+## 자기 적용 사례 — auto-ingest race fix
+
+본 패턴은 wiki 자체 인프라 (`auto-ingest.yml`) 에도 자기 적용됨.
+
+**상황**: 워커가 Step 5 가드 D (E2E sentry-dispatch trigger) 진행 중 lesson 2건을 거의 동시 push. 단발 dispatch 는 정상 작동했으므로 silent 통과 가능했지만, 동시성이 race 폭로:
+
+- 두 dispatch 모두 `journal-006` 번호 할당 (auto-ingest 가 머지된 entry 만 보고 번호 계산)
+- 같은 브랜치명 → 두 번째 push reject
+- workflow runs `24631885158`, `24631910465` 둘 다 failure
+
+**탐지 경로**: 워커가 외부 관측점 (PR #8 OPEN + workflow log) 에서 직접 확인 → 근본 원인 도달 (NEXT_NUM 계산이 머지 기준만 봄) → fix (`git ls-remote refs/heads/auto-ingest/journal-*` 추가).
+
+**메타 교훈**: CI/CD 자동화 워크플로 자체가 가드 테스트 대상. "단발 dispatch 통과 = 작동" 은 false negative. 동시 실행 가드 1회가 race condition 단발 폭로.
 
 ## 일반화 — 다른 카테고리 적용
 
@@ -88,8 +103,22 @@ GET → { clientInitialized: !!Sentry.getClient(), flushed: await Sentry.flush(1
 | 데이터 파이프라인 | 가짜 row insert → downstream sink 도착 확인 |
 | 백업 / 복구 | 백업 → 별 환경 restore → 데이터 동등성 검증 |
 | Auth / 권한 | 권한 없는 user 로 보호 라우트 호출 → 403 응답 |
+| **CI/CD 자동화 워크플로** | **동일 이벤트 2건 동시 발사 → race condition 노출 (auto-ingest race fix 사례)** |
 
 각 카테고리 모두 **silent 실패 가능성 + 외부 관측점 존재** 조건 만족. 가드 테스트 패턴 적용 가치.
+
+## 새 워커 부트스트랩 가드 체크리스트
+
+신규 워커 추가 시 다음 가드 테스트 매트릭스 1회 실행 의무:
+
+- [ ] **Sentry 배선**: fake PII 이벤트 발사 → 대시보드 raw JSON 도착 확인 + [Filtered] 검증
+- [ ] **rate-limit**: 임계 + 1 시도 → 429 응답 + Retry-After 헤더 확인
+- [ ] **PII 스크러빙**: 이메일/IP/JWT/Bearer 패턴 fixture → 로그 / DB grep
+- [ ] **auth 미들웨어**: 권한 없는 user 호출 → 403 응답
+- [ ] **lesson dispatch**: lesson 1건 push → 허브 PR 자동 생성 확인
+- [ ] **lesson dispatch 동시성**: lesson 2건 1초 간격 push → 둘 다 별 journal 번호 안착 (race fix 검증)
+- [ ] **error dispatch**: 인위적 cron failure → 허브 inbound issue 생성 확인
+- [ ] **(Vercel 환경 한정) Sentry flush**: captureException 직후 응답 → flush 누락 시 이벤트 유실 확인 후 fix
 
 ## Phase 3 관점
 
