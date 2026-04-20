@@ -79,7 +79,7 @@ pnpm search "<질문>" 3 --inject   # 관련 청크만 inject 모드로 출력
 
 ### 운영 루프
 - 매일: /ingest로 새 자료 추가
-- 매주: /lint로 위키 건강도 점검 + `scripts/scan-promotions.mjs` (Phase 3 — 예정) 로 solution 승격 후보 감지
+- 매주: /lint로 위키 건강도 점검 + `scripts/scan-promotions.mjs` 로 solution 승격 후보 감지 (월요일 09:00 KST cron)
 - 패턴 3회 반복 시: Journal → Wiki 승격 검토, 또는 Solution → command/lib 승격 검토
 
 ## 드리프트 감지 프로토콜 (필수)
