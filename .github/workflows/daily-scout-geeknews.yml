@@ -1,0 +1,52 @@
+name: "🔭 Daily Scout — GeekNews"
+
+# 매일 22:00 KST (13:00 UTC) — 긱뉴스 전체 스캔 → 프로젝트별 이식 계획
+# moneyballscore 레포에 Issue 생성하려면 GH_PAT secret 필요 (repo scope).
+# GH_PAT 미설정 시 GITHUB_TOKEN 으로 폴백 (playbook 레포만 가능).
+#
+# 이식: Mino777/ai-study (2026-04-20).
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Scout GeekNews
+        id: scout
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: node scripts/scout-geeknews.mjs
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### 🔭 Scout Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Matches: ${{ steps.scout.outputs.match_count || '0' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Projects: ${{ steps.scout.outputs.matched_projects || 'none' }}" >> $GITHUB_STEP_SUMMARY
