@@ -2,7 +2,7 @@ name: "🔄 Auto-Ingest from Worker"
 
 on:
   repository_dispatch:
-    types: [worker-error, worker-lesson]
+    types: [worker-error, worker-incident, worker-lesson]
   workflow_dispatch:
     inputs:
       source_repo:
@@ -20,7 +20,17 @@ on:
         default: "worker-error"
         options:
           - worker-error
+          - worker-incident
           - worker-lesson
+      severity:
+        description: "(incident 만) warning / error / critical"
+        required: false
+      fingerprint:
+        description: "(incident 권장) 안정 식별자"
+        required: false
+      intent:
+        description: "(가드 테스트) test 면 raw 만 저장 후 종료"
+        required: false
 
 permissions:
   contents: write
@@ -55,31 +65,92 @@ jobs:
           CP_SOURCE: ${{ github.event.client_payload.source_repo }}
           CP_TITLE: ${{ github.event.client_payload.title }}
           CP_BODY: ${{ github.event.client_payload.body }}
+          CP_TYPE: ${{ github.event.client_payload.type }}
+          CP_SEVERITY: ${{ github.event.client_payload.severity }}
+          CP_FINGERPRINT: ${{ github.event.client_payload.fingerprint }}
+          CP_FIRST_SEEN: ${{ github.event.client_payload.first_seen }}
+          CP_ENVIRONMENT: ${{ github.event.client_payload.environment }}
+          CP_RUN_URL: ${{ github.event.client_payload.run_url }}
+          CP_INTENT: ${{ github.event.client_payload.intent }}
           WD_SOURCE: ${{ inputs.source_repo }}
           WD_TITLE: ${{ inputs.error_title }}
           WD_BODY: ${{ inputs.error_body }}
           WD_EVENT: ${{ inputs.event_type }}
+          WD_SEVERITY: ${{ inputs.severity }}
+          WD_FINGERPRINT: ${{ inputs.fingerprint }}
+          WD_INTENT: ${{ inputs.intent }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          # 1. 입력 normalize
+          # 1. 입력 normalize (repository_dispatch | workflow_dispatch)
           if [ "$EVENT_NAME" = "repository_dispatch" ]; then
             SOURCE_REPO="${CP_SOURCE:-}"
             TITLE="${CP_TITLE:-}"
             BODY="${CP_BODY:-}"
             EVENT_TYPE="${DISPATCH_EVENT:-worker-error}"
+            PAYLOAD_TYPE="${CP_TYPE:-}"
+            SEVERITY="${CP_SEVERITY:-}"
+            FINGERPRINT="${CP_FINGERPRINT:-}"
+            FIRST_SEEN="${CP_FIRST_SEEN:-}"
+            ENVIRONMENT="${CP_ENVIRONMENT:-}"
+            RUN_URL="${CP_RUN_URL:-}"
+            INTENT="${CP_INTENT:-}"
           else
             SOURCE_REPO="${WD_SOURCE:-}"
             TITLE="${WD_TITLE:-}"
             BODY="${WD_BODY:-}"
             EVENT_TYPE="${WD_EVENT:-worker-error}"
+            PAYLOAD_TYPE=""
+            SEVERITY="${WD_SEVERITY:-}"
+            FINGERPRINT="${WD_FINGERPRINT:-}"
+            FIRST_SEEN=""
+            ENVIRONMENT=""
+            RUN_URL=""
+            INTENT="${WD_INTENT:-}"
           fi
 
-          if [ -z "$SOURCE_REPO" ] || [ -z "$TITLE" ]; then
-            echo "❌ source_repo 또는 title 누락" >&2
+          # 2. Schema 검증 (A0-2) — fail-loud, visible fallback
+          # 2a. 필수 field
+          if [ -z "$SOURCE_REPO" ] || [ -z "$TITLE" ] || [ -z "$BODY" ]; then
+            echo "::error::필수 필드 누락 (source_repo / title / body)"
             exit 1
           fi
+
+          # 2b. event_type 화이트리스트
+          case "$EVENT_TYPE" in
+            worker-error|worker-incident|worker-lesson) ;;
+            *)
+              echo "::warning::알 수 없는 event_type '$EVENT_TYPE' → worker-error fallback"
+              EVENT_TYPE="worker-error"
+              ;;
+          esac
+
+          # 2c. type field 화이트리스트 (incident/lesson 만 검증, error-log 는 default)
+          if [ -n "$PAYLOAD_TYPE" ]; then
+            case "$PAYLOAD_TYPE" in
+              error-log|incident|lesson) ;;
+              *)
+                echo "::warning::알 수 없는 type '$PAYLOAD_TYPE' → error-log fallback + worker-error 처리"
+                PAYLOAD_TYPE="error-log"
+                EVENT_TYPE="worker-error"
+                ;;
+            esac
+          fi
+
+          # 2d. severity 화이트리스트 (incident 만)
+          if [ "$EVENT_TYPE" = "worker-incident" ] && [ -n "$SEVERITY" ]; then
+            case "$SEVERITY" in
+              warning|error|critical) ;;
+              *)
+                echo "::warning::알 수 없는 severity '$SEVERITY' → warning fallback"
+                SEVERITY="warning"
+                ;;
+            esac
+          fi
+
+          # 2e. intent=test → raw 만 저장 후 종료 (가드 테스트)
+          # (raw 저장 부분에서 처리, 검증 후 다음 단계로)
 
           # 2. slug — ASCII only (locale-independent)
           SLUG=$(printf '%s' "$TITLE" \
@@ -103,10 +174,21 @@ jobs:
           echo "source_repo: $SOURCE_REPO"
           echo "title: $TITLE"
           echo "slug: $SLUG"
+          echo "fingerprint: ${FINGERPRINT:-<none>}"
+          echo "severity: ${SEVERITY:-<none>}"
+          echo "intent: ${INTENT:-normal}"
 
-          # 3. raw-sources 저장 (공통)
+          # 3. raw-sources 저장 (공통) + fingerprint suffix (A0-3)
           mkdir -p raw-sources
-          RAW_FILE="raw-sources/${SLUG_DATE}-${SLUG}.md"
+
+          # raw 파일명 — fingerprint 가 있으면 그대로, 없으면 sha256(source+title+body) 첫 8자
+          # (idempotent — 같은 fingerprint = 같은 파일 = 덮어쓰기 안전)
+          if [ -n "$FINGERPRINT" ]; then
+            FP_SHORT=$(printf '%s' "$FINGERPRINT" | LC_ALL=C tr -c 'a-z0-9-' '-' | sed 's/--*/-/g; s/^-//; s/-$//' | cut -c1-30)
+          else
+            FP_SHORT=$(printf '%s%s%s' "$SOURCE_REPO" "$TITLE" "$BODY" | shasum -a 256 | cut -c1-8)
+          fi
+          RAW_FILE="raw-sources/${SLUG_DATE}-${SLUG}-${FP_SHORT}.md"
 
           # frontmatter 안전 escape
           ESC_TITLE=$(printf '%s' "$TITLE" | sed 's/"/\\"/g; s/\\/\\\\/g')
@@ -117,6 +199,13 @@ jobs:
             echo "date: \"$DATE\""
             echo "source: \"$ESC_SOURCE\""
             echo "type: \"$EVENT_TYPE\""
+            [ -n "$PAYLOAD_TYPE" ] && echo "payload_type: \"$PAYLOAD_TYPE\""
+            [ -n "$SEVERITY" ] && echo "severity: \"$SEVERITY\""
+            [ -n "$FINGERPRINT" ] && echo "fingerprint: \"$FINGERPRINT\""
+            [ -n "$FIRST_SEEN" ] && echo "first_seen: \"$FIRST_SEEN\""
+            [ -n "$ENVIRONMENT" ] && echo "environment: \"$ENVIRONMENT\""
+            [ -n "$RUN_URL" ] && echo "run_url: \"$RUN_URL\""
+            [ -n "$INTENT" ] && echo "intent: \"$INTENT\""
             echo "---"
             echo ""
             printf '%s\n' "$BODY"
@@ -127,28 +216,53 @@ jobs:
           git config user.name "kkyu92"
           git config user.email "kyusikkyu@gmail.com"
 
-          # 4. event_type 분기
-          if [ "$EVENT_TYPE" = "worker-error" ]; then
-            echo "=== ERROR 경로: raw + Issue (dedup) ==="
+          # 3a. intent=test 가드 — raw 만 저장 후 종료 (Issue/Journal 없음)
+          if [ "$INTENT" = "test" ]; then
+            echo "🧪 intent=test 감지 → raw 만 저장, Issue/Journal skip (가드 테스트)"
+            git add raw-sources/
+            if ! git diff --cached --quiet; then
+              git commit -m "data: auto-ingest test raw from ${SOURCE_SHORT} — ${TITLE}"
+              git push origin main
+            fi
+            exit 0
+          fi
 
-            # 라벨 self-bootstrap (없으면 생성, 있으면 무시)
+          # 4. event_type 분기 — error / incident / lesson
+          if [ "$EVENT_TYPE" = "worker-error" ] || [ "$EVENT_TYPE" = "worker-incident" ]; then
+            # 라벨 self-bootstrap
             gh label create inbound --color "f9c74f" --description "워커에서 자동 수집" 2>/dev/null || true
             gh label create raw --color "e0e1dd" --description "raw-sources 미처리" 2>/dev/null || true
+            gh label create incident --color "d73a4a" --description "워커 자연 발생 사고" 2>/dev/null || true
 
-            # 4a. 최근 24h dedup 검색 (inbound 라벨 + 동일 title 포함)
-            # gh search 는 Title 특수문자에 취약 → 앞 30자만 contains 매칭
-            TITLE_KEY=$(printf '%s' "$TITLE" | head -c 30)
+            # 분기별 메타
+            if [ "$EVENT_TYPE" = "worker-incident" ]; then
+              echo "=== INCIDENT 경로: raw + Issue (Journal X — promotion 은 LLM 단계 보류) ==="
+              ISSUE_PREFIX="🟠 Inbound incident"
+              EXTRA_LABEL="incident"
+            else
+              echo "=== ERROR 경로: raw + Issue ==="
+              ISSUE_PREFIX="🟡 Inbound raw"
+              EXTRA_LABEL=""
+            fi
+
+            # 4a. 진짜 24h dedup (GNU date — Ubuntu runner) + fingerprint 우선 매칭
+            CUTOFF=$(date -u -d '24 hours ago' +%Y-%m-%dT%H:%M:%SZ)
+
+            # Issue title 에 [fp:xxxx] 박아 검색 가능하게
+            FP_TAG="[fp:${FP_SHORT}]"
+            ISSUE_TITLE="${ISSUE_PREFIX}: ${TITLE} (from ${SOURCE_SHORT}) ${FP_TAG}"
+
+            # dedup 검색: fingerprint 우선, fallback 으로 title prefix
+            DEDUP_KEY="$FP_TAG"
             EXISTING_ISSUE=$(gh issue list \
               --state open \
               --label "inbound" \
-              --limit 30 \
+              --limit 50 \
               --json number,title,createdAt \
-              | jq -r --arg key "$TITLE_KEY" '
-                  [.[] | select(.title | contains($key))]
+              | jq -r --arg key "$DEDUP_KEY" --arg cutoff "$CUTOFF" '
+                  [.[] | select(.title | contains($key)) | select(.createdAt > $cutoff)]
                   | sort_by(.createdAt) | reverse | .[0].number // empty
                 ')
-
-            ISSUE_TITLE="🟡 Inbound raw: ${TITLE} (from ${SOURCE_SHORT})"
 
             if [ -n "$EXISTING_ISSUE" ]; then
               # 기존 Issue 에 재발 코멘트
@@ -157,16 +271,23 @@ jobs:
 
           - Source: \`${SOURCE_REPO}\`
           - Raw: \`${RAW_FILE}\`
-          - Title: ${TITLE}
+          - Fingerprint: \`${FINGERPRINT:-(generated)}\`
+          - Severity: \`${SEVERITY:-(none)}\`
+          ${RUN_URL:+- Run: ${RUN_URL}}
           COMMENTEND
           )
               gh issue comment "$EXISTING_ISSUE" --body "$COMMENT_BODY"
-              echo "✅ 기존 Issue #${EXISTING_ISSUE} 에 재발 코멘트"
+              echo "✅ 기존 Issue #${EXISTING_ISSUE} 에 재발 코멘트 (fingerprint 매칭)"
             else
               # 신규 Issue
               ISSUE_BODY=$(cat <<ISSUEEND
           **Source:** \`${SOURCE_REPO}\`
-          **Type:** \`${EVENT_TYPE}\`
+          **Type:** \`${EVENT_TYPE}\` (\`${PAYLOAD_TYPE:-error-log}\`)
+          **Severity:** \`${SEVERITY:-(none)}\`
+          **Fingerprint:** \`${FINGERPRINT:-(auto: ${FP_SHORT})}\`
+          **Environment:** \`${ENVIRONMENT:-(none)}\`
+          **First seen:** \`${FIRST_SEEN:-(none)}\`
+          **Run URL:** ${RUN_URL:-(none)}
           **Raw:** \`${RAW_FILE}\`
 
           허브 세션에서 \`/ingest\` 로 검토 후 처리하세요. 관련 엔트리가 있으면 \`connections\` 만 추가, 재발 패턴이면 \`docs/solutions/\` 로 정리해도 됩니다.
@@ -180,18 +301,20 @@ jobs:
           ~~~
           ISSUEEND
           )
+              LABELS="inbound,raw"
+              [ -n "$EXTRA_LABEL" ] && LABELS="${LABELS},${EXTRA_LABEL}"
               gh issue create \
                 --title "$ISSUE_TITLE" \
                 --body "$ISSUE_BODY" \
-                --label "inbound,raw" \
+                --label "$LABELS" \
                 --assignee kkyu92
-              echo "✅ 신규 Issue 생성"
+              echo "✅ 신규 Issue 생성 (labels: $LABELS)"
             fi
 
             # raw-sources/ commit
             git add raw-sources/
             if git diff --cached --quiet; then
-              echo "raw-sources 변경 없음, push 생략"
+              echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
             else
               git commit -m "data: auto-ingest raw from ${SOURCE_SHORT} — ${TITLE}"
               git push origin main
