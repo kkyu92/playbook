@@ -169,7 +169,9 @@ ${articleList}
 - 억지로 매칭하지 말 것 — 3 조건 AND 를 엄격히 적용
 - relevance: high = 즉시 착수 권장, medium = 다음 스프린트 고려`;
 
-  for (let attempt = 0; attempt < 3; attempt++) {
+  // 5 attempts, backoff: 10s, 30s, 60s, 120s (총 ~3.5분). Gemini 고부하 대응.
+  const BACKOFFS = [10, 30, 60, 120];
+  for (let attempt = 0; attempt < 5; attempt++) {
     try {
       const result = await model.generateContent(prompt);
       let text = result.response.text().trim();
@@ -190,12 +192,13 @@ ${articleList}
       return valid;
     } catch (err) {
       console.warn(`⚠️  Attempt ${attempt + 1} failed: ${err.message}`);
-      if (attempt === 2) {
-        console.error("❌ All Flash retries failed");
+      if (attempt === 4) {
+        console.error("❌ All 5 Flash retries failed (총 ~3.5분 대기 후)");
         process.exit(1);
       }
-      // Exponential backoff: 3s, 9s, 27s — 503 transient 대응
-      await new Promise((r) => setTimeout(r, Math.pow(3, attempt + 1) * 1000));
+      const wait = BACKOFFS[attempt];
+      console.log(`   ⏳ ${wait}s 대기 후 재시도...`);
+      await new Promise((r) => setTimeout(r, wait * 1000));
     }
   }
 }
