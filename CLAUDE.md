@@ -41,6 +41,29 @@
 - /ingest: 새 자료 추가 → 위키 엔트리 자동 변환
 - /lint: 일관성 검사 → orphan, 고립, stale, 중복 감지
 - /lint --fix: 자동 수정 가능한 것만 수정
+- /search: JIT 의미 검색 (embeddings.json 기반) → Top-K 청크 반환
+
+### JIT 검색 먼저 계약 (에이전트 필수)
+
+위키 지식이 필요할 때 **MDX 파일을 직접 읽지 말고** 검색을 먼저 실행:
+
+```bash
+pnpm search "<질문>" 3 --inject   # 관련 청크만 inject 모드로 출력
+```
+
+청크만 반환되므로 context 절감 (전체 위키 → 관련 2~3 청크).
+
+**언제 사용**:
+- 특정 패턴/방법론 적용 시 (예: "드리프트 감지 프로토콜")
+- 에러/버그 수사 시 기존 solution 존재 확인 ("Mermaid 렌더 에러")
+- 엔트리 작성 시 관련 기존 entry 탐색 ("prompt 버전 관리")
+
+**언제 skip**:
+- 이미 읽은 엔트리에 대한 질문
+- 단순 구조 탐색 (ls / git log 로 충분)
+- 5자 이하 쿼리 (쿼리 라우터가 자동 skip)
+
+인덱스 최신화: `pnpm embed-content` (content/ 또는 docs/solutions/ 변경 시).
 
 ### 엔트리 생성 규칙
 - 새 엔트리는 반드시 connections 1개 이상

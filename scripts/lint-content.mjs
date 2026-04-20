@@ -7,8 +7,11 @@ import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const WORKERS_CONFIG = path.join(process.cwd(), "workers.config.json");
+const HITS_FILE = path.join(process.cwd(), "data", "search-hits.json");
 const STALE_DAYS = 30;
 const PATTERN_MIN_COUNT = 3;
+const UNUSED_WARN_DAYS = 30;   // hit=0 + 이 일수 경과 → 미사용 경고
+const UNUSED_WARN_MIN_TOTAL = 10;  // totalQueries 가 이 이상일 때만 의미 있는 신호
 // 모든 journal 에 공통으로 들어가는 메타 태그 — 패턴 감지에서 제외
 // + workers.config.json 의 registered 워커 이름 (도메인-only 태그) 도 제외
 function loadNoiseTags() {
@@ -110,12 +113,35 @@ function checkInProgressOldEntries(entries) {
     .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date) }));
 }
 
+function checkUnusedEntries(entries) {
+  // JIT 검색 hit=0 + UNUSED_WARN_DAYS 경과 → "검색 안 되는" 사각지대 의심
+  // totalQueries 가 충분히 쌓였을 때만 (n<10 이면 통계 무의미)
+  if (!fs.existsSync(HITS_FILE)) return [];
+  let hitsData;
+  try {
+    hitsData = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
+  } catch {
+    return [];
+  }
+  if ((hitsData.totalQueries || 0) < UNUSED_WARN_MIN_TOTAL) return [];
+
+  const hits = hitsData.hits || {};
+  return entries
+    .filter((e) => {
+      if (daysSince(e.frontmatter.date) < UNUSED_WARN_DAYS) return false;
+      const count = hits[e.slug] || 0;
+      return count === 0;
+    })
+    .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date) }));
+}
+
 function main() {
   const entries = loadEntries();
   const orphans = checkOrphans(entries);
   const isolated = checkIsolated(entries);
   const stale = checkStale(entries);
   const inProgress = checkInProgressOldEntries(entries);
+  const unused = checkUnusedEntries(entries);
   const patterns = checkPatterns(entries);
   const date = new Date().toISOString().slice(0, 10);
 
@@ -129,6 +155,7 @@ function main() {
   console.log(`${sym(isolated.length)} Isolated Nodes:      ${isolated.length}건`);
   console.log(`${sym(stale.length)} Stale:               ${stale.length}건 (confidence<3, ${STALE_DAYS}일+)`);
   console.log(`${sym(inProgress.length)} Long In-Progress:    ${inProgress.length}건 (${STALE_DAYS}일+)`);
+  console.log(`${sym(unused.length)} JIT Unused:          ${unused.length}건 (hit=0, ${UNUSED_WARN_DAYS}일+) — search-hits.json 기반`);
   const newPatterns = patterns.filter((p) => !p.promoted);
   console.log(`${newPatterns.length === 0 ? "  " : "💡"} Pattern Candidates:  ${newPatterns.length}건 신규 / ${patterns.length}건 전체 (Journal 태그 ${PATTERN_MIN_COUNT}회+)`);
   console.log("");
@@ -151,6 +178,12 @@ function main() {
   if (inProgress.length > 0) {
     console.log("=== Long In-Progress (status 변경 또는 보강) ===");
     for (const s of inProgress) console.log(`  ${s.slug} — ${s.days}일 전 작성, 여전히 in-progress`);
+    console.log("");
+  }
+  if (unused.length > 0) {
+    console.log("=== JIT Unused (검색 hit 0, 사각지대 의심) ===");
+    for (const s of unused) console.log(`  ${s.slug} — ${s.days}일 전 작성, JIT 검색 한 번도 안 걸림`);
+    console.log("  💡 실 활용 없으면 wiki 에서 archive 또는 connections 재검토 권장");
     console.log("");
   }
   if (patterns.length > 0) {
