@@ -246,12 +246,14 @@ async function main() {
   }
 
   console.log("3️⃣ 엔트리 생성 중...");
-  const { execSync } = await import("child_process");
+  const { execFileSync } = await import("child_process");
   const topicWithSource = `${topic} (출처: 긱뉴스 — ${article.title})`;
 
   try {
-    execSync(
-      `node scripts/generate-lesson.mjs generate-custom "${topicWithSource.replace(/"/g, '\\"')}"`,
+    // execFileSync (args 배열) — title 에 백틱 / shell metachar 있어도 안전
+    execFileSync(
+      "node",
+      ["scripts/generate-lesson.mjs", "generate-custom", topicWithSource],
       { stdio: "inherit", env: { ...process.env } },
     );
   } catch (err) {
