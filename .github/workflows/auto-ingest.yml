@@ -93,7 +93,11 @@ jobs:
 
           DATE=$(date +%Y-%m-%d)
           SLUG_DATE=$(date +%Y%m%d)
-          SOURCE_SHORT=$(basename "$SOURCE_REPO")
+          # workers.config.json 의 registered 이름과 매핑 (moneyballscore → moneyball)
+          # basename 이 registered 이름의 prefix 면 그 이름 사용. 매칭 없으면 basename
+          SOURCE_BASE=$(basename "$SOURCE_REPO")
+          SOURCE_SHORT=$(jq -r --arg src "$SOURCE_BASE" '.registered[] | select(. as $n | $src | startswith($n))' workers.config.json 2>/dev/null | head -1)
+          SOURCE_SHORT=${SOURCE_SHORT:-$SOURCE_BASE}
 
           echo "event_type: $EVENT_TYPE"
           echo "source_repo: $SOURCE_REPO"
@@ -196,11 +200,16 @@ jobs:
           else
             echo "=== LESSON 경로: raw + Journal draft + PR ==="
 
-            # 다음 Journal 번호
-            LAST_NUM=$(ls content/journal/playbook-journal-*.mdx 2>/dev/null \
+            # 다음 Journal 번호 — 머지된 entry + 열린 PR 브랜치 둘 다 고려 (race fix)
+            # ls-remote 로 auto-ingest/journal-NNN 브랜치 추가 스캔. 동시 dispatch 시 같은 번호 충돌 차단
+            LAST_FILE_NUM=$(ls content/journal/playbook-journal-*.mdx 2>/dev/null \
               | sed 's/.*journal-\([0-9]*\).*/\1/' \
               | sort -n | tail -1)
-            NEXT_NUM=$(printf "%03d" $((10#${LAST_NUM:-0} + 1)))
+            LAST_BRANCH_NUM=$(git ls-remote origin 'refs/heads/auto-ingest/journal-*' 2>/dev/null \
+              | sed 's|.*refs/heads/auto-ingest/journal-\([0-9]*\)|\1|' \
+              | sort -n | tail -1)
+            LAST_NUM=$(printf '%s\n%s\n' "${LAST_FILE_NUM:-0}" "${LAST_BRANCH_NUM:-0}" | sort -n | tail -1)
+            NEXT_NUM=$(printf "%03d" $((10#${LAST_NUM} + 1)))
 
             JOURNAL_FILE="content/journal/playbook-journal-${NEXT_NUM}-${SLUG}.mdx"
 
