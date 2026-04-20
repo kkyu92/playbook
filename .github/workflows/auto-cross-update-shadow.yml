@@ -67,16 +67,16 @@ jobs:
           echo "skip=false" >> $GITHUB_OUTPUT
           echo "✅ merged file: $MERGED_FILE"
 
-      - name: Run shadow cross-update agent
+      - name: Run shadow cross-update agent (Gemini)
         if: steps.extract.outputs.skip == 'false'
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           MERGED_FILE: ${{ steps.extract.outputs.merged_file }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "::warning::ANTHROPIC_API_KEY secret 미설정 — A2 Shadow mode skip"
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::warning::GEMINI_API_KEY secret 미설정 — A2 Shadow mode skip"
             exit 0
           fi
           node scripts/cross-update-shadow.mjs

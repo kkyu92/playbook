@@ -22,7 +22,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.90.0",
     "@google/generative-ai": "^0.24.1",
     "@shikijs/rehype": "^4.0.2",
     "@uiw/react-md-editor": "^4.1.0",
