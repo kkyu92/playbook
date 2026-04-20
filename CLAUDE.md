@@ -31,9 +31,10 @@
 
 ## 위키 관리 규칙 (Karpathy LLM Wiki 패턴)
 
-### 3-Layer 구조
+### 4-Layer 구조
 - raw-sources/: 원천 자료 (불변)
-- content/: 위키 엔트리 (LLM이 생성/관리하는 마크다운)
+- docs/solutions/: **재발 패턴 기록소** (N회 재발 시 필수 기록 — 승격 축)
+- content/: 위키 엔트리 (LLM이 생성/관리하는 마크다운 — 정제된 방법론)
 - CLAUDE.md + INDEX.md: 스키마 (위키 관리 방법)
 
 ### 핵심 명령어
@@ -47,10 +48,16 @@
 - confidence 초기값: 2 (실전 검증 전), 검증 후 상향
 - INDEX.md는 manifest 생성 시 자동 업데이트
 
+### Solution 기록 규칙 (docs/solutions/)
+- **2회+ 재발 시 기록 의무**. 단발은 journal/ 로 충분
+- 카테고리별 디렉토리 (`mdx/`, `llm-generation/`, `ci-github-actions/` 등)
+- 스키마: `docs/solutions/README.md` 참조
+- 카테고리 **3건 누적** 시 `_compiled-truth.md` 작성 + 승격 검토 (→ command/hook/lib)
+
 ### 운영 루프
 - 매일: /ingest로 새 자료 추가
-- 매주: /lint로 위키 건강도 점검
-- 패턴 3회 반복 시: Journal → Wiki 승격 검토
+- 매주: /lint로 위키 건강도 점검 + `scripts/scan-promotions.mjs` (Phase 3 — 예정) 로 solution 승격 후보 감지
+- 패턴 3회 반복 시: Journal → Wiki 승격 검토, 또는 Solution → command/lib 승격 검토
 
 ## 드리프트 감지 프로토콜 (필수)
 
