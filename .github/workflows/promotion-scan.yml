@@ -1,0 +1,100 @@
+name: "🚀 Solution Promotion Scan"
+
+# docs/solutions/ 카테고리 N≥3 누적 → 승격 후보 Issue 자동 생성/갱신.
+# 이식: Mino777/ai-study 의 같은 워크플로 (2026-04-20).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/solutions/**"
+  schedule:
+    # 매주 월요일 09:00 KST (UTC 0시)
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run promotion scan
+        id: scan
+        run: |
+          set -euo pipefail
+          RESULT=$(node scripts/scan-promotions.mjs --json)
+          echo "$RESULT" > /tmp/scan-result.json
+
+          PROMOTABLE=$(echo "$RESULT" | jq '.promotable | length')
+          TOTAL=$(echo "$RESULT" | jq '[.categories[].count] | add // 0')
+          echo "promotable=$PROMOTABLE" >> $GITHUB_OUTPUT
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+
+      - name: Create or update issue
+        if: steps.scan.outputs.promotable != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          # 라벨 self-bootstrap
+          gh label create promotion-scan --color "8b5cf6" --description "솔루션 승격 후보 자동 감지" 2>/dev/null || true
+
+          DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          RESULT=$(cat /tmp/scan-result.json)
+          PROMOTABLE=${{ steps.scan.outputs.promotable }}
+          TOTAL=${{ steps.scan.outputs.total }}
+
+          TABLE="| 카테고리 | 솔루션 수 | 승격 형태 | 위치 |\n|---|---|---|---|"
+          while IFS= read -r line; do
+            CAT=$(echo "$line" | jq -r '.category')
+            COUNT=$(echo "$line" | jq -r '.count')
+            TYPE=$(echo "$line" | jq -r '.type')
+            LOC=$(echo "$line" | jq -r '.location')
+            TABLE="$TABLE\n| $CAT | $COUNT | $TYPE | \`$LOC\` |"
+          done < <(echo "$RESULT" | jq -c '.promotable[]')
+
+          EXISTING=$(gh issue list --label "promotion-scan" --state open --json number --jq '.[0].number // empty')
+
+          BODY=$(cat <<EOF
+          ## 🚀 솔루션 승격 스캔 보고 ($DATE)
+
+          **총 솔루션**: ${TOTAL}건 | **승격 후보**: ${PROMOTABLE} 카테고리 (N≥3)
+
+          ### 승격 후보
+
+          $(echo -e "$TABLE")
+
+          ### 전체 카테고리 현황
+
+          $(echo "$RESULT" | jq -r '.categories[] | "- **\(.name)**: \(.count)건\(if .promotable then " ✅" else "" end)"')
+
+          ---
+
+          > 승격 작업: 해당 카테고리를 hook/command/lib 로 올릴 수 있는지 검토.
+          > 자동 스캔: docs/solutions/ 변경 시 + 매주 월요일 09:00 KST
+          > 참조: \`docs/solutions/README.md\` 스키마
+          EOF
+          )
+
+          if [ -n "$EXISTING" ]; then
+            gh issue edit "$EXISTING" --title "🚀 솔루션 승격 후보 ${PROMOTABLE}건 ($DATE)" --body "$BODY"
+            echo "✅ Issue #$EXISTING 업데이트"
+          else
+            gh issue create \
+              --title "🚀 솔루션 승격 후보 ${PROMOTABLE}건 ($DATE)" \
+              --body "$BODY" \
+              --label "promotion-scan"
+          fi
+
+      - name: No promotable categories
+        if: steps.scan.outputs.promotable == '0'
+        run: echo "✅ 승격 후보 없음 (모든 카테고리 N < 3)"
