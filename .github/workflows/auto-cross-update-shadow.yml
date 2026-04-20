@@ -8,6 +8,11 @@ name: "🔬 A2 Shadow — LLM Cross-Update (observe-only)"
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "검증용 — 기존 머지 PR 번호 (auto-ingest/journal-* 머지된 PR)"
+        required: true
 
 permissions:
   contents: read
@@ -16,8 +21,9 @@ permissions:
 jobs:
   shadow-cross-update:
     if: |
-      github.event.pull_request.merged == true &&
-      startsWith(github.event.pull_request.head.ref, 'auto-ingest/journal-')
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       startsWith(github.event.pull_request.head.ref, 'auto-ingest/journal-'))
     runs-on: ubuntu-latest
     concurrency:
       group: a2-shadow-cross-update
@@ -46,7 +52,7 @@ jobs:
         id: extract
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
         run: |
           set -euo pipefail
           # PR diff 의 added file (content/journal/playbook-journal-NNN-*.mdx) 추출
@@ -71,7 +77,7 @@ jobs:
         if: steps.extract.outputs.skip == 'false'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
           MERGED_FILE: ${{ steps.extract.outputs.merged_file }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
