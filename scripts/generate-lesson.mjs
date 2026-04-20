@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { validateMdxContent } from "./lib/mdx-validate.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
@@ -232,36 +233,79 @@ MDX 문법 제약 (반드시 준수 — 위반 시 빌드 실패):
 3. 본문 텍스트에서 <숫자 (예: <3)는 JSX 태그로 파싱됨 — 공백 추가(< 3) 또는 인라인 코드 사용
 4. Mermaid subgraph 이름에 공백은 반드시 id ["Label"] 형식: subgraph rag_std ["Standard RAG"]`;
 
-  console.log("🤖 Calling Gemini 2.5 Flash...");
+  console.log("🤖 Calling Gemini...");
 
+  // MDX validation + retry 루프
+  // - 각 attempt: API 호출 3-retry → content validation (compile + JSX traps + quality)
+  // - 실패 시 구체적 에러를 prompt 에 주입하여 재생성 (최대 2회)
+  // - 3회 모두 실패 시 fail-loud
+  const MAX_VALIDATION_ATTEMPTS = 3;
   let content;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      const result = await model.generateContent(prompt);
-      content = result.response.text();
-      break;
-    } catch (err) {
-      console.warn(`⚠️  Attempt ${attempt + 1} failed: ${err.message}`);
-      if (attempt === 2) {
-        console.error("❌ All retries failed");
-        process.exit(1);
+  let currentPrompt = prompt;
+  let lastIssues = [];
+
+  for (let vAttempt = 0; vAttempt < MAX_VALIDATION_ATTEMPTS; vAttempt++) {
+    // Gemini API 호출 (자체 3-retry for transient errors)
+    for (let apiAttempt = 0; apiAttempt < 3; apiAttempt++) {
+      try {
+        const result = await model.generateContent(currentPrompt);
+        content = result.response.text();
+        break;
+      } catch (err) {
+        console.warn(`⚠️  API attempt ${apiAttempt + 1} failed: ${err.message}`);
+        if (apiAttempt === 2) {
+          console.error("❌ All API retries failed");
+          process.exit(1);
+        }
+        await new Promise((r) => setTimeout(r, Math.pow(2, apiAttempt) * 2000));
       }
-      await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 2000));
     }
-  }
 
-  // Quality validation
-  const hasH2 = content.includes("## ");
-  const hasCodeBlock = content.includes("```");
-  const hasSelfCheck = content.includes("자기 점검") || content.includes("자기점검");
-  const minLength = content.length >= 500;
+    // Validation: MDX compile + JSX traps + quality floor
+    const validation = await validateMdxContent(content);
+    const issues = [];
 
-  if (!hasH2 || !hasCodeBlock || !minLength) {
-    console.warn("⚠️  Quality check failed. Regenerating...");
-    const retryResult = await model.generateContent(
-      prompt + "\n\n중요: 반드시 ## 헤딩, 코드 블록(```), 자기 점검 섹션을 포함하세요."
-    );
-    content = retryResult.response.text();
+    if (!validation.valid) {
+      issues.push(`MDX 컴파일 에러: ${validation.compileError}`);
+    }
+    for (const w of validation.jsxWarnings) {
+      issues.push(`Line ~${w.line}: ${w.message}`);
+    }
+    if (!content.includes("## ")) issues.push("## 헤딩 누락");
+    if (!content.includes("```")) issues.push("코드 블록(\`\`\`) 누락");
+    if (content.length < 500) issues.push(`본문 길이 부족 (${content.length}자, 최소 500)`);
+
+    if (issues.length === 0) {
+      if (vAttempt > 0) {
+        console.log(`✅ Validation 통과 (재생성 ${vAttempt}회 후)`);
+      }
+      break;
+    }
+
+    lastIssues = issues;
+    console.warn(`⚠️  Validation 실패 (attempt ${vAttempt + 1}/${MAX_VALIDATION_ATTEMPTS}):`);
+    issues.forEach((i) => console.warn(`   - ${i}`));
+
+    if (vAttempt === MAX_VALIDATION_ATTEMPTS - 1) {
+      console.error(`❌ Validation ${MAX_VALIDATION_ATTEMPTS}회 재생성 후에도 실패 — fail-loud 종료`);
+      console.error("최종 issues:");
+      lastIssues.forEach((i) => console.error(`  - ${i}`));
+      process.exit(1);
+    }
+
+    // 구체적 에러를 prompt 에 주입하여 재생성 유도
+    currentPrompt = `${prompt}
+
+---
+
+중요: 이전 생성물에서 다음 문제가 발견됨. 반드시 전부 수정하여 재생성:
+
+${issues.map((i) => `- ${i}`).join("\n")}
+
+특히:
+- {중괄호} 로 감싸진 본문 텍스트는 MDX 가 JSX expression 으로 파싱하여 컴파일 실패함. 반드시 인라인 코드(\`) 로 감싸거나 괄호()로 교체.
+- <숫자 (예: <3) 는 JSX 태그로 파싱됨. 공백 추가 (< 3) 또는 인라인 코드 사용.
+- <br>, <hr>, <img> 는 반드시 self-closing (<br />, <hr />, <img />).`;
   }
 
   // Extract TITLE, DESC, TAGS from generated content
