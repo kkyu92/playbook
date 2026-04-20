@@ -3,6 +3,7 @@ import path from "path";
 import yaml from "js-yaml";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { validateMdxContent } from "./lib/mdx-validate.mjs";
+import { computeGraphSignals } from "./lib/graph-signals.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
@@ -75,6 +76,9 @@ function recommendTopics(manifest, topicPool, count = 3) {
         : 0;
   }
 
+  // Graph signals: weak hub 감지 (confidence≤2 + 연결 15+ 인 카테고리)
+  const { weakHubCategories, categoryConnectivity } = computeGraphSignals(manifest);
+
   // Collect dangling connections
   const danglingConnections = [];
   for (const entry of manifest.entries) {
@@ -115,6 +119,15 @@ function recommendTopics(manifest, topicPool, count = 3) {
       let score = 0;
       if (categoryEntries[category]?.length === 0) score += 3;
       if (categoryConfidence[category] < 3) score += 1.5;
+
+      // Weak hub boost: 이 카테고리 안에 weak hub (confidence≤2 + 연결 15+) 있으면
+      // 그 카테고리 보강이 가장 ROI 높음 — 가중치 추가
+      if (weakHubCategories.has(category)) score += 2;
+
+      // 저연결 카테고리 (평균 연결 < 5) 보강 — cold-start 방어
+      if ((categoryConnectivity[category] || 0) < 5 && categoryEntries[category]?.length > 0) {
+        score += 1;
+      }
 
       // Staleness: days since last entry in this category
       const catDates = (categoryEntries[category] || []).map((e) =>

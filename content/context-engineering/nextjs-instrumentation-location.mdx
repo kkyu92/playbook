@@ -5,6 +5,7 @@ date: "2026-04-19"
 tags: [nextjs, instrumentation, sentry, observability, framework-convention, silent-failure, drift]
 workers: [all]
 confidence: 3
+last_verified: "2026-04-19"
 connections: [harness-engineering/drift-detection-methodology, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, harness-engineering/guard-test-pattern, journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr]
 status: complete
 description: "Next.js 16 + src/app 구조에서 instrumentation.ts 는 src/instrumentation.ts 여야 자동 감지된다. 프로젝트 루트에 두면 Next 가 파일 존재조차 인식 못함 → Sentry.init 모듈스코프도 register() 도 둘 다 no-op. CI 통과 + 빌드 무에러 + 클라이언트 정상으로 silent."
