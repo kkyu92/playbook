@@ -1,0 +1,82 @@
+name: "🔬 A2 Shadow — LLM Cross-Update (observe-only)"
+
+# Phase 0: PR merged 시 LLM 가 cross-update 제안 → PR comment (NO commit/push).
+# 2주 observe-only → critical/high finding fix → Phase 1 → Phase 2 auto-merge.
+#
+# 위험 0 — 적용 안 함, 데이터 누적만.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  shadow-cross-update:
+    if: |
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'auto-ingest/journal-')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: a2-shadow-cross-update
+      cancel-in-progress: false
+    steps:
+      - name: Checkout (after merge)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Extract merged journal file from PR diff
+        id: extract
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          # PR diff 의 added file (content/journal/playbook-journal-NNN-*.mdx) 추출
+          MERGED_FILE=$(gh pr diff "$PR_NUMBER" --name-only \
+            | grep -E '^content/journal/playbook-journal-[0-9]+-.*\.mdx$' \
+            | head -1)
+          if [ -z "$MERGED_FILE" ]; then
+            echo "::warning::Journal entry 추출 실패 (PR diff 에 매칭 파일 없음)"
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          if [ ! -f "$MERGED_FILE" ]; then
+            echo "::warning::Merged file 존재 X: $MERGED_FILE"
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          echo "merged_file=$MERGED_FILE" >> $GITHUB_OUTPUT
+          echo "skip=false" >> $GITHUB_OUTPUT
+          echo "✅ merged file: $MERGED_FILE"
+
+      - name: Run shadow cross-update agent
+        if: steps.extract.outputs.skip == 'false'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          MERGED_FILE: ${{ steps.extract.outputs.merged_file }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::warning::ANTHROPIC_API_KEY secret 미설정 — A2 Shadow mode skip"
+            exit 0
+          fi
+          node scripts/cross-update-shadow.mjs
