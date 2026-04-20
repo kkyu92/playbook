@@ -23,7 +23,7 @@
 
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const FEED_URL = "https://news.hada.io/rss/news";
@@ -237,19 +237,33 @@ ${match.action_plan}
     return;
   }
 
+  // body 를 temp 파일에 써서 --body-file 로 전달. shell injection / 백틱 해석 방지.
+  const tmpFile = path.join(fs.mkdtempSync(path.join(process.env.RUNNER_TEMP || "/tmp", "scout-")), "body.md");
+  fs.writeFileSync(tmpFile, body);
+
   try {
-    // 라벨 self-bootstrap — 해당 레포에 hub-dispatch 라벨 없으면 생성 (silent fail OK)
+    // 라벨 self-bootstrap (silent fail OK)
     try {
-      execSync(`gh label create hub-dispatch --repo "${project.repo}" --color "1d76db" --description "Scout 이 자동 감지한 이식 후보"`, { encoding: "utf-8", timeout: 15000, stdio: "pipe" });
+      execFileSync("gh", [
+        "label", "create", "hub-dispatch",
+        "--repo", project.repo,
+        "--color", "1d76db",
+        "--description", "Scout 이 자동 감지한 이식 후보",
+      ], { encoding: "utf-8", timeout: 15000, stdio: "pipe" });
     } catch { /* 이미 있으면 OK */ }
 
-    const result = execSync(
-      `gh issue create --repo "${project.repo}" --title "${title.replace(/"/g, '\\"')}" --body "${body.replace(/"/g, '\\"').replace(/\n/g, "\\n")}" --label "hub-dispatch"`,
-      { encoding: "utf-8", timeout: 30000 },
-    );
+    const result = execFileSync("gh", [
+      "issue", "create",
+      "--repo", project.repo,
+      "--title", title,
+      "--body-file", tmpFile,
+      "--label", "hub-dispatch",
+    ], { encoding: "utf-8", timeout: 30000 });
     console.log(`   ✅ Issue created in ${project.repo}: ${result.trim()}`);
   } catch (err) {
     console.error(`   ❌ Issue creation failed for ${project.repo}: ${err.message}`);
+  } finally {
+    try { fs.unlinkSync(tmpFile); fs.rmdirSync(path.dirname(tmpFile)); } catch {}
   }
 }
 
