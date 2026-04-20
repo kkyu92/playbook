@@ -5,7 +5,7 @@ date: "2026-04-19"
 tags: [guard, test-pattern, observability, silent-failure, methodology, fingerprint]
 workers: [all]
 confidence: 3
-connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-003-drift-silent-bugs]
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr, journal/playbook-journal-007-sentry-sensitive-fields-beforesend]
 status: complete
 description: "관측 인프라 / 보안 가드 / 데이터 파이프라인은 '설정만 하면 작동' 인상을 주지만 silent 실패가 누적되기 쉽다. 의도적 검증 테스트 1회가 sub-system 의 silent 실패를 N건 다발로 드러낸다는 메타 패턴. 워커 가드 B 테스트가 5건 (근본 2 + 부수 3) 동시 폭로한 모범 사례."
 type: entry

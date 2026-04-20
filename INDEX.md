@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-04-19T23:48:54.776Z
+Updated: 2026-04-20T00:20:44.563Z
 
 ## 엔트리 (15개)
 
@@ -38,6 +38,7 @@ Updated: 2026-04-19T23:48:54.776Z
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-serverless-flush
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/guard-test-pattern
+- context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-001-drift-greenfield
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-002-drift-existing-setup
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-003-drift-silent-bugs
@@ -47,17 +48,25 @@ Updated: 2026-04-19T23:48:54.776Z
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/guard-test-pattern
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
+- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-003-drift-silent-bugs
+- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
+- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
 - harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-serverless-flush
+- harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
+- harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
+- infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-000-bootstrap
@@ -68,6 +77,7 @@ Updated: 2026-04-19T23:48:54.776Z
 - journal/playbook-journal-003-drift-silent-bugs ↔ infrastructure/sentry-serverless-flush
 - journal/playbook-journal-004-drift-half-working ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-004-drift-half-working ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 
 ## 미작성 주제 (topic-pool 기반, 72개)
 - [prompt-engineering] System Prompt Design Patterns
