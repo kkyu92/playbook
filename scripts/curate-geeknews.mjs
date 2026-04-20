@@ -74,8 +74,8 @@ async function selectBestArticle(articles, existingTitles) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const MODELS = ["gemini-2.5-flash", "gemini-2.5-pro"];
-  let model = genAI.getGenerativeModel({ model: MODELS[0] });
+  // Pro 는 free tier quota 0 이라 fallback 대상 안 됨 — Flash 만 사용 + exponential backoff
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const articleList = articles
     .slice(0, 30)
@@ -134,15 +134,12 @@ ${articleList}
       };
     } catch (err) {
       console.warn(`⚠️  Attempt ${attempt + 1} failed: ${err.message}`);
-      if (attempt === 0) {
-        model = genAI.getGenerativeModel({ model: MODELS[1] });
-        console.log(`🔄 Switching to: ${MODELS[1]}`);
-      }
       if (attempt === 2) {
-        console.error("❌ All retries failed");
+        console.error("❌ All Flash retries failed");
         process.exit(1);
       }
-      await new Promise((r) => setTimeout(r, 2000));
+      // Exponential backoff: 3s, 9s, 27s — 503 transient 대응
+      await new Promise((r) => setTimeout(r, Math.pow(3, attempt + 1) * 1000));
     }
   }
 }
