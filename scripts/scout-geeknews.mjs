@@ -114,8 +114,11 @@ async function scoutArticles(articles) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  // Pro 는 free tier quota 0 이라 fallback 대상 안 됨 — Flash 만 사용 + exponential backoff
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  // 2.5 Pro 는 free tier quota 0. 2.5 Flash 우선, 전역 장애 시 2.0 Flash 폴백.
+  // 5회 시도 내에서 모델도 순차 교체.
+  const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  let modelIdx = 0;
+  let model = genAI.getGenerativeModel({ model: MODELS[modelIdx] });
 
   const articleList = articles
     .slice(0, 30)
@@ -191,9 +194,15 @@ ${articleList}
 
       return valid;
     } catch (err) {
-      console.warn(`⚠️  Attempt ${attempt + 1} failed: ${err.message}`);
+      console.warn(`⚠️  Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${err.message}`);
+      // attempt 2 (3번째) 부터 2.0 Flash 로 전환 — 2.5 전역 장애 대응
+      if (attempt === 1 && modelIdx < MODELS.length - 1) {
+        modelIdx++;
+        model = genAI.getGenerativeModel({ model: MODELS[modelIdx] });
+        console.log(`   🔄 모델 전환: ${MODELS[modelIdx]}`);
+      }
       if (attempt === 4) {
-        console.error("❌ All 5 Flash retries failed (총 ~3.5분 대기 후)");
+        console.error(`❌ All 5 retries failed across models: ${MODELS.join(", ")} (총 ~3.5분)`);
         process.exit(1);
       }
       const wait = BACKOFFS[attempt];
