@@ -2,21 +2,77 @@
 
 playbook 허브의 auto-ingest 시스템에 워커 레포(moneyballscore 등)를 연결하는 가이드.
 
-## 개요 (Hybrid 2 경로)
+## 개요 (Hybrid 3 경로)
 
-워커 → 허브 자동 dispatch 는 두 경로로 분기된다:
+워커 → 허브 자동 dispatch 는 세 경로로 분기된다:
 
 | 경로 | 트리거 | 허브 처리 | 용도 |
 |---|---|---|---|
-| **Error** (`worker-error`) | cron workflow `if: failure()` | raw 저장 + Issue 알림 (Journal 자동 생성 X) | 실패 회수 + 미래 회고 가능성 |
-| **Lesson** (`worker-lesson`) | `lesson:` 접두사 commit | raw 저장 + Journal draft PR 자동 생성 | 의도적 교훈만 wiki 화 |
+| **Error** (`worker-error`) | cron workflow `if: failure()` | raw 저장 + Issue 알림 (Journal 자동 X) | 실패 회수 + 미래 회고 |
+| **Incident** (`worker-incident`) | 워커 명시적 dispatch (Sentry first new issue, deploy fail 등) | raw 저장 + Issue 알림. Journal 승격은 hub 측 LLM 의미 판단 (A2 자동화 후) | 자연 발생 사고 누적 |
+| **Lesson** (`worker-lesson`) | `lesson:` 접두사 commit | raw + Journal draft PR 자동 생성 | 의도적 교훈만 wiki 화 |
 
 ```
-[워커 cron 실패]    → repository_dispatch (worker-error)  → [auto-ingest] → raw + Issue
-[워커 lesson:커밋] → repository_dispatch (worker-lesson) → [auto-ingest] → raw + Journal PR
+[워커 cron 실패]      → repository_dispatch (worker-error)   → [auto-ingest] → raw + Issue
+[워커 사고 dispatch]  → repository_dispatch (worker-incident) → [auto-ingest] → raw + Issue (LLM 승격 대기)
+[워커 lesson: 커밋]   → repository_dispatch (worker-lesson)  → [auto-ingest] → raw + Journal PR
 ```
 
-분기 이유: 모든 dispatch 가 Journal draft 생성하면 draft PR 무덤이 됨. 의도적 opt-in (lesson 접두사) 만 자동 wiki 화.
+분기 이유: error 와 incident 의 차이 — incident 는 워커가 "분석 가치 있음" 명시. lesson 은 워커가 wiki 본문까지 작성. heuristic promotion (severity / persistence / keyword) 은 모두 노이즈 또는 critical 같이 필터하므로 사용 X. Journal 승격은 LLM 의미 판단 (Phase A2) 으로 위임.
+
+## Client Payload Schema
+
+모든 dispatch 의 `client_payload` 표준 schema. hub auto-ingest workflow 가 검증.
+
+| Field | Type | Required | 의미 |
+|-------|------|----------|------|
+| `source_repo` | string | ✓ | `owner/repo` (예: `kkyu92/moneyballscore`) |
+| `title` | string | ✓ | 한 줄 제목 (~80자) |
+| `body` | string | ✓ | 본문 (markdown 권장) |
+| `type` | enum | ✓ | `error-log` / `incident` / `lesson` (event_type 과 매칭) |
+| `severity` | enum | incident 권장 | `warning` / `error` / `critical` (alert taxonomy, promotion gate 아님) |
+| `fingerprint` | string | incident 권장 | 안정 식별자 (Sentry issue ID, deploy SHA 등). raw 파일 idempotent key. **dedup 의 진짜 기준** |
+| `first_seen` | ISO8601 | optional | 첫 발생 시각 (예: `2026-04-19T14:43:13Z`) |
+| `environment` | string | optional | `production` / `preview` / `development` |
+| `run_url` | URL | optional | workflow run URL / Sentry issue URL — 디버깅 진입점 |
+| `intent` | enum | optional | `normal` (default) / `test` / `debug` — 가드 테스트는 `test` 명시 (자동 Journal skip) |
+
+### 검증 동작 (hub 측)
+
+- 필수 field 누락 → workflow fail (visible — silent X)
+- enum 값 위반 → fallback to `worker-error` + GitHub Actions annotation (visible counter)
+- `intent=test` → raw 저장 only, Issue/Journal X (가드 테스트 무시)
+- 중복 dispatch (같은 fingerprint, 24h 이내) → 기존 Issue 코멘트만, raw 덮어쓰기 (idempotent)
+
+### 워커 dispatch code 예시 — incident
+
+```bash
+gh api repos/kkyu92/playbook/dispatches \
+  -f event_type=worker-incident \
+  -f "client_payload[source_repo]=${GITHUB_REPOSITORY}" \
+  -f "client_payload[title]=Sentry: Database connection timeout" \
+  -f "client_payload[body]=$(cat error-context.md)" \
+  -f "client_payload[type]=incident" \
+  -f "client_payload[severity]=error" \
+  -f "client_payload[fingerprint]=sentry-issue-12345" \
+  -f "client_payload[first_seen]=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+  -f "client_payload[environment]=production" \
+  -f "client_payload[run_url]=https://sentry.io/issues/12345"
+```
+
+### 워커 dispatch code 예시 — guard test (Journal skip)
+
+```bash
+gh api repos/kkyu92/playbook/dispatches \
+  -f event_type=worker-incident \
+  -f "client_payload[type]=incident" \
+  -f "client_payload[fingerprint]=guard-b-test-$(date +%s)" \
+  -f "client_payload[intent]=test" \
+  -f "client_payload[title]=Guard B test event" \
+  -f "client_payload[body]=Test payload — verifying chain"
+```
+
+`intent=test` → hub 가 raw 만 저장. Issue/Journal 안 생성. 체인 검증용.
 
 ---
 
