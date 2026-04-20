@@ -169,7 +169,16 @@ function main() {
   console.log("의미 판단 (제목 유사도 / 중복 / 패턴→entry 결정) 은 Claude 가 /lint 호출 시 추가 분석.");
   console.log(`Frontmatter 검증 + INDEX 동기화 + Workers 이름 검증은 generate-content-manifest.mjs 에서 처리.`);
 
-  // CI 친화: 빌드 실패 안 시킴 (정보성). manifest gen 이 hard-fail 담당.
+  // --strict 모드 — orphan/isolated > 0 이면 exit 1 (회귀 가드)
+  // A2 Phase 1 진입 base. subagent finding #4 (lint:wiki 통과 강제) 의 진짜 fix.
+  // CI/workflow 에서 strict 모드 사용 → LLM hallucination (잘못된 connections) 자동 차단
+  const strict = process.argv.includes("--strict");
+  if (strict && (orphans.length > 0 || isolated.length > 0)) {
+    console.error("");
+    console.error(`❌ STRICT MODE FAIL — orphans=${orphans.length}, isolated=${isolated.length}`);
+    console.error("   회귀 가드: connections 변경 후 재검증 필요. orphan/isolated 0 이어야 통과.");
+    process.exit(1);
+  }
   process.exit(0);
 }
 
