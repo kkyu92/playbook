@@ -1,7 +1,10 @@
 # Playbook Wiki Index
-Updated: 2026-04-20T00:20:44.563Z
+Updated: 2026-04-20T07:59:19.326Z
 
-## 엔트리 (15개)
+## 엔트리 (16개)
+
+### Prompt Engineering
+- [Prompt Engineering을 위한 견고한 프롬프트 버전 관리 및 테스트 전략](wiki/prompt-engineering/prompt-versioning-and-testing) — confidence: 1, status: draft
 
 ### Context Engineering
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
@@ -31,6 +34,7 @@ Updated: 2026-04-20T00:20:44.563Z
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/nextjs-instrumentation-location
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-serverless-flush
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/guard-test-pattern
+- context-engineering/ambient-knowledge-injection ↔ prompt-engineering/prompt-versioning-and-testing
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
@@ -50,12 +54,14 @@ Updated: 2026-04-20T00:20:44.563Z
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/guard-test-pattern
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-003-drift-silent-bugs
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
@@ -63,6 +69,7 @@ Updated: 2026-04-20T00:20:44.563Z
 - harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
@@ -79,14 +86,13 @@ Updated: 2026-04-20T00:20:44.563Z
 - journal/playbook-journal-004-drift-half-working ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 
-## 미작성 주제 (topic-pool 기반, 72개)
+## 미작성 주제 (topic-pool 기반, 71개)
 - [prompt-engineering] System Prompt Design Patterns
 - [prompt-engineering] Few Shot Optimization
 - [prompt-engineering] Chain Of Thought Strategies
 - [prompt-engineering] Prompt Chaining Pipelines
 - [prompt-engineering] Output Format Control
 - [prompt-engineering] Prompt Injection Defense
-- [prompt-engineering] Prompt Versioning And Testing
 - [prompt-engineering] Multimodal Prompting Patterns
 - [context-engineering] Claude Md Structure Design
 - [context-engineering] Context Window Management
