@@ -22,7 +22,7 @@ const securityHeaders = [
       // (admin/login form 죽는 root cause). 폰트 도메인 명시 허용.
       "style-src 'self' 'unsafe-inline' https://api.fontshare.com https://cdn.jsdelivr.net https://fonts.googleapis.com",
       "img-src 'self' data: blob:",
-      "font-src 'self' data: https://api.fontshare.com https://cdn.jsdelivr.net https://fonts.gstatic.com",
+      "font-src 'self' data: https://api.fontshare.com https://cdn.fontshare.com https://cdn.jsdelivr.net https://fonts.gstatic.com",
       "connect-src 'self' https://api.github.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
