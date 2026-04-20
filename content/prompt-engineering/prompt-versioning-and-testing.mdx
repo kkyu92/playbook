@@ -222,7 +222,7 @@ def test_summarization_prompt_with_golden_dataset(chat_assistant_prompt, test_ca
 graph TD
     A[개발자가 프롬프트 변경] --> B(Git Push / Pull Request 생성);
     B --> C{CI/CD 파이프라인 트리거};
-    C --> D[프롬프트 테스트 실행 (Python, promptfoo 등)];
+    C --> D["프롬프트 테스트 실행 (Python, promptfoo 등)"];
     D -- 테스트 성공 --> E[프롬프트 저장소 업데이트];
     E --> F{AI 서비스 재배포?};
     F -- 예 (필요시) --> G[새 프롬프트 버전 적용된 AI 서비스 배포];
@@ -243,8 +243,8 @@ graph TD
 ```mermaid
 graph TD
     A[모든 사용자 트래픽] --> B{트래픽 분배기};
-    B -- 90% --> C[기존 프롬프트 (v1)];
-    B -- 10% --> D[새 프롬프트 (v2)];
+    B -- 90% --> C["기존 프롬프트 (v1)"];
+    B -- 10% --> D["새 프롬프트 (v2)"];
     C --> E[사용자 경험 데이터 수집];
     D --> E;
     E --> F{성과 지표 분석};
