@@ -40,7 +40,7 @@ export default function WikiIndexPage() {
       {CATEGORIES.filter((cat) => grouped[cat] && grouped[cat].length > 0).map((category) => {
         const entries = grouped[category];
         return (
-        <section key={category} className="mb-10">
+        <section key={category} id={`category-${category}`} className="mb-10 scroll-mt-20">
           <div className="flex items-center gap-2 mb-4">
             <span
               className="h-3 w-3 rounded-full"
