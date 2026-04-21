@@ -19,17 +19,10 @@
  *   tiebreak: 카테고리 알파벳 ASC
  */
 
+import { CATEGORIES as ALL_CATEGORIES } from "./lib/categories.mjs";
+
 const TARGET_FLOOR = 8;
 const STALE_MONTHS = 6;
-
-const ALL_CATEGORIES = [
-  "prompt-engineering",
-  "context-engineering",
-  "harness-engineering",
-  "agents",
-  "evaluation",
-  "infrastructure",
-];
 
 /**
  * @param {object} manifest — { entries: Array<{ slug, frontmatter: { category, confidence, last_verified, date, source } }> }

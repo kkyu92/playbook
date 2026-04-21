@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// ⚠️ SYNC WITH scripts/lib/categories.mjs — vitest (Task 7) 가 배열 일치 검증.
+// 양쪽 유지 이유: TS type narrowing (Category union) 보존 + JS scripts 의
+// 단일 원천 참조 동시에 달성. 추가/삭제 시 두 파일 같이 수정.
 export const CATEGORIES = [
   "prompt-engineering",
   "context-engineering",
