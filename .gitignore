@@ -45,3 +45,4 @@ next-env.d.ts
 
 # JIT 검색 인덱스 (생성물, 매 빌드 재생성)
 /public/embeddings.json
+.env*.local
