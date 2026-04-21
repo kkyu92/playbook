@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-04-21T04:55:46.373Z
+Updated: 2026-04-21T06:22:56.241Z
 
 ## 엔트리 (17개)
 
@@ -78,16 +78,16 @@ Updated: 2026-04-21T04:55:46.373Z
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
-- journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-001-drift-greenfield
-- journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-001-drift-greenfield
-- journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-002-drift-existing-setup
-- journal/playbook-journal-003-drift-silent-bugs ↔ infrastructure/sentry-serverless-flush
-- journal/playbook-journal-004-drift-half-working ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-004-drift-half-working ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-001-drift-greenfield
+- journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-002-drift-existing-setup
+- journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-004-drift-half-working
+- journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-002-drift-existing-setup
+- journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-004-drift-half-working
 - journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 
 ## 미작성 주제 (topic-pool 기반, 71개)
