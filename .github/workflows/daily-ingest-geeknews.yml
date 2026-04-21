@@ -1,0 +1,167 @@
+name: "🔭 Daily Ingest — GeekNews"
+
+# 매일 09:00 KST (UTC 0시) — 통합 파이프라인.
+# Step 1: scout (긱뉴스 → playbook entries via scout / moneyballscore dispatch)
+# Step 2: daily gap-pull (coverage-analyzer → gap-pull 2개 entry, if:always)
+# Step 3: manifest regen + PR 생성 (변경 있을 때만)
+#
+# 설계 근거: CEO plan 2026-04-21-geeknews-pipeline-pivot (Task 5)
+# - 단일 프로세스 순차 실행 → manifest staleness 차단
+# - scout 실패해도 gap-pull 독립 실행 (if:always)
+# - Gemini 쿼터: normal 10/day, peak 15/day (free tier 20 의 50-75%)
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ─── Step 1: Scout ─────────────────────────────────────────
+      # playbook 매칭 high 2개 → generateCustomEntry (source="scout")
+      # moneyballscore 매칭 → Issue dispatch (허브→워커 Push 축)
+      - name: Scout — GeekNews
+        id: scout
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: node scripts/scout-geeknews.mjs
+
+      # ─── Step 2: Daily gap-pull ────────────────────────────────
+      # coverage-analyzer 기반 갭 → Gemini 추천 → 2개 entry 자동 생성 (source="gap-pull")
+      # scout 실패해도 독립 실행 (if:always)
+      - name: Daily gap-pull
+        id: gappull
+        if: always()
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/generate-lesson.mjs auto
+
+      # ─── Step 3: 변경 감지 + manifest regen + PR ────────────────
+      - name: Detect changes
+        id: changes
+        if: always()
+        run: |
+          if git status --porcelain content/ | grep -q .; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            NEW_FILES=$(git status --porcelain content/ | awk '/^\?\?/ {print $2}' | wc -l | tr -d ' ')
+            MODIFIED=$(git status --porcelain content/ | awk '/^ M|^M/ {print $2}' | wc -l | tr -d ' ')
+            echo "new_files=$NEW_FILES" >> $GITHUB_OUTPUT
+            echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerate manifest
+        if: always() && steps.changes.outputs.has_changes == 'true'
+        run: node scripts/generate-content-manifest.mjs
+
+      - name: Create PR
+        if: always() && steps.changes.outputs.has_changes == 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 시간대 suffix 로 같은 날 재실행 충돌 방지
+          DATE=$(TZ=Asia/Seoul date +%Y%m%d-%H%M)
+          BRANCH="auto-ingest/geeknews-${DATE}"
+
+          git config user.name "kkyu92"
+          git config user.email "kyusikkyu@gmail.com"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "feat(auto-ingest): daily geeknews ingest ${DATE}"
+          git push origin "$BRANCH"
+
+          ENTRIES_CREATED="${{ steps.scout.outputs.entries_created || '0' }}"
+          DISPATCH_COUNT="${{ steps.scout.outputs.dispatch_count || '0' }}"
+          NEW_FILES="${{ steps.changes.outputs.new_files }}"
+          MODIFIED="${{ steps.changes.outputs.modified }}"
+
+          PR_BODY=$(cat <<BODY
+          ## 🔭 Daily Ingest — ${DATE}
+
+          ### Scout (Step 1)
+          - playbook entries 생성: **${ENTRIES_CREATED}**
+          - moneyballscore Issue dispatch: **${DISPATCH_COUNT}**
+
+          ### Daily gap-pull (Step 2)
+          - coverage-analyzer 기반 갭 충전 (source=\`gap-pull\`)
+
+          ### Changes
+          - 신규 파일: ${NEW_FILES}
+          - 수정된 파일 (역방향 connections): ${MODIFIED}
+
+          ---
+          > 이 PR 은 \`daily-ingest-geeknews.yml\` 워크플로우가 자동 생성했습니다.
+          > 리뷰 후 머지하면 위키에 반영됩니다.
+          BODY
+          )
+
+          PR_URL=$(gh pr create \
+            --title "🔭 Daily Ingest — ${DATE}" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH" \
+            --assignee kkyu92)
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+
+      # ─── Summary ───────────────────────────────────────────────
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## 🔭 Daily Ingest 결과"
+            echo ""
+            echo "| 단계 | 결과 |"
+            echo "|---|---|"
+            echo "| Scout (playbook entries) | ${{ steps.scout.outputs.entries_created || '0' }} |"
+            echo "| Scout (moneyballscore dispatch) | ${{ steps.scout.outputs.dispatch_count || '0' }} |"
+            echo "| Gap-pull entries | (auto mode) |"
+            echo "| 변경 감지 | ${{ steps.changes.outputs.has_changes }} |"
+            if [ "${{ steps.pr.outputs.pr_url }}" != "" ]; then
+              echo "| PR | ${{ steps.pr.outputs.pr_url }} |"
+            fi
+          } >> $GITHUB_STEP_SUMMARY
+
+      # ─── 실패 시 fail-loud Issue ─────────────────────────────
+      - name: Fail-loud Issue on full failure
+        if: always() && steps.changes.outputs.has_changes == 'false' && steps.scout.outcome == 'failure' && steps.gappull.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          gh issue create \
+            --title "⚠️ Daily ingest 완전 실패 — ${DATE}" \
+            --body "scout + gap-pull 둘 다 실패 (변경 없음). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --label "inbound" \
+            --assignee kkyu92
