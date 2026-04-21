@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// ⚠️ SYNC WITH scripts/lib/categories.mjs — vitest (Task 7) 가 배열 일치 검증.
+// 양쪽 유지 이유: TS type narrowing (Category union) 보존 + JS scripts 의
+// 단일 원천 참조 동시에 달성. 추가/삭제 시 두 파일 같이 수정.
 export const CATEGORIES = [
   "prompt-engineering",
   "context-engineering",
@@ -97,6 +100,7 @@ export const frontmatterSchema = z.object({
   workers: z.array(z.string()).default([]),
   raw_source: z.string().optional(), // auto-ingest 가 박은 raw 파일 경로 — weekly-triage 가 grep 기준으로 사용
   last_verified: z.string().optional(), // 마지막 실전 검증 날짜. 없으면 date 로 fallback. lint stale 기준.
+  source: z.enum(["scout", "gap-pull", "manual"]).default("manual"), // entry 생성 기원. scout=긱뉴스 외부 주입, gap-pull=커버리지 갭 채움, manual=수동 작성
 });
 
 export type Frontmatter = z.infer<typeof frontmatterSchema>;

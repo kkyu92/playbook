@@ -43,6 +43,15 @@ function main() {
   const allCats = [...new Set(manifest.entries.map((e) => e.frontmatter.category))];
   const weakCats = allCats.filter((c) => !catCounts[c]);
 
+  // Source mix (이번 주) — pipeline 건강도 지표. scout/gap-pull/manual 분포.
+  const sourceCounts = { scout: 0, "gap-pull": 0, manual: 0 };
+  for (const e of weekEntries) {
+    const src = e.frontmatter.source || "manual";
+    if (src in sourceCounts) sourceCounts[src]++;
+  }
+  const sourceTotal = weekEntries.length;
+  const pct = (n) => (sourceTotal === 0 ? 0 : Math.round((n / sourceTotal) * 100));
+
   const slug = `reports/week-${year}-${String(weekNum).padStart(2, "0")}`;
   const title = `${year}년 ${weekNum}주차 학습 리포트`;
 
@@ -70,6 +79,14 @@ type: entry
 ${Object.entries(catCounts).length > 0
   ? Object.entries(catCounts).map(([cat, count]) => `- **${cat}**: ${count}개`).join("\n")
   : "- (이번 주 학습 없음)"}
+
+## Source Mix (파이프라인 건강도)
+
+${sourceTotal > 0
+  ? `- **scout** (긱뉴스 외부): ${sourceCounts.scout}개 (${pct(sourceCounts.scout)}%)
+- **gap-pull** (커버리지 갭 자동): ${sourceCounts["gap-pull"]}개 (${pct(sourceCounts["gap-pull"])}%)
+- **manual** (수동): ${sourceCounts.manual}개 (${pct(sourceCounts.manual)}%)`
+  : "- (이번 주 엔트리 없음 — 파이프라인 점검 필요)"}
 
 ## 이번 주 학습한 엔트리
 
