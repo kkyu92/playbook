@@ -123,6 +123,19 @@ cat package.json | grep <name>
 - 한쪽만 사용하는 변수 의심
 - DB 양쪽 row count 비교 쿼리 추가 (한쪽 0 이면 alert)
 
+## Question Own Defaults 프로토콜 (필수)
+
+설계/리뷰 중 **자기 제안 값과 상속 값 자가 의심**. 상세: [question-own-defaults](content/harness-engineering/question-own-defaults.mdx).
+
+AI 가 plan 에 하드코딩 상수, 마법수, 임계값, "기존 구조 유지" 제안 시 출력 직전 3초 자가 감사:
+1. **출처 추적** — 이 값의 근거가 뭔가? 상속 유산이면 플래그
+2. **Zero-base 재검토** — 지금 처음 설계한다면 같은 선택?
+3. **최종 목표 lens** — 성장 ceiling 박는 상수면 dynamic 대안 자가 제안
+
+사용자가 "왜 이 값인데?" 묻기 전에 AI 가 먼저 flag 해야 함. 사용자 질문 받아 재검토 = 프로토콜 실패.
+
+드리프트 감지는 "구현 vs 현실" 감지, 이 프로토콜은 "설계 근거 vs 관습" 감지. 짝.
+
 ## Skill routing
 
 When the user's request matches an available skill, suggest it before acting.

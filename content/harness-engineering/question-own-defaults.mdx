@@ -1,0 +1,115 @@
+---
+title: "Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기"
+category: harness-engineering
+date: "2026-04-21"
+tags: [meta-cognition, harness-engineering, plan-review, ai-judgment, self-correction]
+workers: [all]
+confidence: 2
+last_verified: "2026-04-21"
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, harness-engineering/hub-worker-compounding-pattern]
+status: complete
+description: "AI 가 리뷰/설계 중 자기 초기 제안이나 기존 관습 값을 자동 default 로 받아들이지 않고 근거 재검증하는 메타인지 프로토콜. 사용자가 묻기 전에 먼저 flag."
+type: entry
+---
+
+## 문제
+
+AI 코딩 에이전트가 설계 리뷰 중 하는 가장 흔한 실수: **자기가 방금 제안한 값**이나 **기존 코드에서 상속된 값**을 "이미 있으니까" 라는 이유로 자동 default 로 받아들임. 근거를 재검증하지 않음.
+
+이건 드리프트 감지 레벨 3~4 (작동/완전성) 로는 잡히지 않는 **판단 드리프트**. 코드는 돌아가지만 설계 기반이 관습/유산에 불과.
+
+## 2026-04-21 발견 사례
+
+CEO 리뷰에서 topic-pool.json (수작업 관리 40 slot) 을 폐기하기로 결정. 그런데 eng review 에서 `coverage-analyzer.mjs` 인터페이스 설계 시:
+
+- AI 추천: `TARGET_SLOTS_PER_CATEGORY = 8` 하드코딩
+- 근거: "explicit > clever 원칙, YAGNI"
+- **실제 근거**: 폐기하기로 한 topic-pool.json 의 카테고리별 8 topic 구조 **무비판 상속**
+
+사용자 개입:
+> "왜 8로 고정? 동적으로 하면 별로야?"
+
+이 질문 받고서야 AI 가 재검토:
+- 8 의 진짜 근거 = 폐기 대상 파일의 유산. 새 구조에선 지지대 없음
+- 위키가 성숙해도 target=8 이면 **영원히 8 까지만 성장** 목표처럼 작동 → 최종 목표 "무한성장" 과 상충
+- 동적 하이브리드 `max(8, median(entryCounts))` 가 훨씬 우아. 복잡도 증가는 1줄
+
+**사용자가 먼저 묻지 않았으면 약한 설계가 그대로 plan 에 박혔을 것.**
+
+## 프로토콜
+
+설계/리뷰 출력 직전 **3초 자가 감사**:
+
+### Q1. 이 값의 출처는 무엇인가?
+
+- 상속 값이면 "왜 과거에 이 값이었는지" 추적
+- 관습이면 "그 관습이 지금 맥락에서도 유효한지" 체크
+- 새로 제안한 값이면 "왜 다른 값이 아닌지" 근거 명시
+
+### Q2. 지금 zero-base 로 다시 설계한다면?
+
+매 하드코딩 상수, 마법수, 임계값에 대해:
+> "만약 이게 처음 설계하는 코드라면 같은 선택을 할까?"
+
+같은 선택이면 근거 명시. 다른 선택이면 **사용자가 묻기 전에 먼저 flag**.
+
+### Q3. 사용자 최종 목표 lens 로 재검토
+
+값/구조가 short-term 편의인지, 최종 목표 방향으로 가는지 확인. 이 프로젝트 기준: 허브↔워커 양방향 복리성장 + 무한성장 자동화.
+
+성장 ceiling 박는 상수가 있으면 dynamic 대안 자가 제안.
+
+## 적용 범위
+
+### 적용
+
+- CEO / eng / design plan 리뷰 중 하드코딩 값 제안할 때
+- "기존 패턴 유지" / "현재 구조 따름" 제안할 때
+- 매직 넘버, 임계값, 한도, TTL, cap 류의 상수
+- schema 필드 필수/선택, default 값
+- workflow 빈도 (매일? 매시간? 조건부?)
+
+### 미적용
+
+- 단순 bug fix (출처 재검토 불필요)
+- 외부 라이브러리 기본값 사용 (그게 관습인 게 맞음)
+- 이미 사용자와 명시적으로 합의된 값 (재검토는 소음)
+
+## 드리프트 프로토콜과의 관계
+
+[드리프트 감지](/wiki/harness-engineering/drift-detection-methodology) 는 **구현 vs 현실** 차이 감지. Question Own Defaults 는 **설계 근거 vs 관습** 차이 감지.
+
+```
+드리프트 감지 Level 1~4 : 코드 기반 현실과 가정 대조 (git, ls, grep)
+Question Own Defaults  : 추상 결정의 상속성 대조 (AI 자가 감사)
+```
+
+둘 다 "AI 의 가정이 틀릴 수 있다" 는 전제. 감지 대상만 다름.
+
+## 사용자 쪽 신호
+
+사용자가 이런 질문 던지면 = AI 의 이 프로토콜 실패 징후:
+- "왜 이 값인데?"
+- "꼭 이렇게 해야 해?"
+- "동적으로 하면 안 돼?"
+- "이전 구조 유산 아니야?"
+
+이 질문들 받은 후 재검토하면 이미 **비용 발생** (사용자 집중 소모). 목표는 AI 가 먼저 flag.
+
+## 허브↔워커 복리성장 기여
+
+이 프로토콜은 워커 프로젝트에도 전파 가치 있음:
+- moneyballscore 등 워커의 claude 세션이 자기 ESLint/Prettier/CI 설정 상수를 자가 의심
+- 허브 `/plan-ceo-review` / `/plan-eng-review` 결과 품질 상향
+- 워커에서 이 프로토콜로 잡힌 나쁜 default 사례 → Journal 로 수집 → 허브 통합
+
+ambient-knowledge-injection 패턴으로 워커 `claude memory/` 에 symlink 배포 예정.
+
+## 측정
+
+이 프로토콜이 작동하는지 확인하는 지표:
+1. AI 가 사용자 질문 전에 자가 flag 한 default 개수 (긍정 지표, 월간 집계)
+2. 사용자가 "왜 이 값?" 질문한 빈도 (부정 지표, 낮아져야 함)
+3. CEO/eng review 후 2회차 adversarial pass 에서 같은 이슈 재발 여부
+
+confidence=2 (실전 검증 1회, 2026-04-21 TARGET_SLOTS 사례). 3회 누적 후 confidence 상향 + 프로세스 개선 검토.

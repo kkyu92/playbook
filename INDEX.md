@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-20T07:59:19.326Z
+Updated: 2026-04-21T04:55:46.373Z
 
-## 엔트리 (16개)
+## 엔트리 (17개)
 
 ### Prompt Engineering
 - [Prompt Engineering을 위한 견고한 프롬프트 버전 관리 및 테스트 전략](wiki/prompt-engineering/prompt-versioning-and-testing) — confidence: 1, status: draft
@@ -14,6 +14,7 @@ Updated: 2026-04-20T07:59:19.326Z
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
+- [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
 - [Playbook Journal 001 — 구현된 코드를 그린필드로 간주한 드리프트](wiki/journal/playbook-journal-001-drift-greenfield) — confidence: 5, status: complete
 - [Playbook Journal 002 — 이미 설치된 것을 신규로 간주한 드리프트](wiki/journal/playbook-journal-002-drift-existing-setup) — confidence: 5, status: complete
@@ -55,6 +56,7 @@ Updated: 2026-04-20T07:59:19.326Z
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/drift-detection-methodology ↔ harness-engineering/question-own-defaults
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
@@ -62,6 +64,7 @@ Updated: 2026-04-20T07:59:19.326Z
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/guard-test-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
@@ -70,6 +73,7 @@ Updated: 2026-04-20T07:59:19.326Z
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
