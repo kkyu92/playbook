@@ -426,7 +426,10 @@ jobs:
           ORIG_TITLE="${CP_TITLE:-${WD_TITLE:-(no title)}}"
           NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
-          # 라벨 self-bootstrap
+          # 라벨 self-bootstrap — self-report 는 메인 step bootstrap (line 233-235) 도달 전에도 발사됨
+          # → 필요한 모든 라벨 (inbound / incident / hub-self-report) 여기서 직접 보장
+          gh label create inbound --color "f9c74f" --description "워커에서 자동 수집" 2>/dev/null || true
+          gh label create incident --color "d73a4a" --description "워커 자연 발생 사고" 2>/dev/null || true
           gh label create hub-self-report --color "b60205" --description "허브 auto-ingest 자체 실패" 2>/dev/null || true
 
           # 기존 open self-report Issue 검색 (열려 있으면 코멘트로 통합)
