@@ -52,6 +52,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: node scripts/scout-geeknews.mjs
 
@@ -64,6 +65,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
         run: node scripts/generate-lesson.mjs auto
 
       # ─── Step 3: 변경 감지 + manifest regen + PR ────────────────
@@ -153,7 +155,8 @@ jobs:
             fi
           } >> $GITHUB_STEP_SUMMARY
 
-      # ─── 실패 시 fail-loud Issue ─────────────────────────────
+      # ─── 실패 시 Issue 자동 (CEO plan E6) ──────────────────────
+      # 완전 실패: 둘 다 failure + 변경 없음 → PR 없음, Issue 필수
       - name: Fail-loud Issue on full failure
         if: always() && steps.changes.outputs.has_changes == 'false' && steps.scout.outcome == 'failure' && steps.gappull.outcome == 'failure'
         env:
@@ -163,5 +166,35 @@ jobs:
           gh issue create \
             --title "⚠️ Daily ingest 완전 실패 — ${DATE}" \
             --body "scout + gap-pull 둘 다 실패 (변경 없음). Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --label "inbound" \
+            --assignee kkyu92
+
+      # 부분 실패: 한쪽 step 실패 but PR 은 생성됨 → silent failure 방지
+      - name: Partial failure Issue (E6)
+        if: always() && steps.changes.outputs.has_changes == 'true' && (steps.scout.outcome == 'failure' || steps.gappull.outcome == 'failure')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          SCOUT_OUT="${{ steps.scout.outcome }}"
+          GAP_OUT="${{ steps.gappull.outcome }}"
+          PR_URL="${{ steps.pr.outputs.pr_url }}"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          BODY=$(cat <<ISSUEBODY
+          일부 step 실패 (PR 은 부분 성공 entries 로 생성됨).
+
+          - Scout outcome: \`${SCOUT_OUT}\`
+          - Gap-pull outcome: \`${GAP_OUT}\`
+          - PR: ${PR_URL}
+          - Run log: ${RUN_URL}
+
+          실패 step 로그에서 원인 확인 (quota / validation / MDX error 등).
+          이어서 처리: 쿼터 소진이면 fallback key 등록 확인, validation 실패면 수동 generate-custom 재시도.
+          ISSUEBODY
+          )
+          gh issue create \
+            --title "⚠️ Daily ingest 부분 실패 — ${DATE}" \
+            --body "$BODY" \
             --label "inbound" \
             --assignee kkyu92

@@ -584,8 +584,16 @@ async function auto() {
     }
   }
   console.log(`\n✅ auto 완료: ${results.length}/${topics.length} 생성`);
-  if (results.length === 0 && topics.length > 0) {
-    process.exit(1); // 전부 실패는 fail-loud
+
+  if (process.env.GITHUB_OUTPUT) {
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `entries_created=${results.length}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `topics_targeted=${topics.length}\n`);
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `failed_count=${topics.length - results.length}\n`);
+  }
+
+  // 부분/전체 실패 모두 exit 1 → workflow step outcome=failure → E6 Partial failure Issue 트리거
+  if (results.length < topics.length && topics.length > 0) {
+    process.exit(1);
   }
 }
 
