@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-22T00:51:43.879Z
+Updated: 2026-04-22T01:07:46.071Z
 
-## 엔트리 (20개)
+## 엔트리 (22개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -26,6 +26,10 @@ Updated: 2026-04-22T00:51:43.879Z
 - [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
 - [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
 
+### Agents
+- [Kimi K2.6: 오픈소스 에이전트형 코딩 모델 실전 통합 전략](wiki/agents/kimi-k2-6-open-source-agentic-coding-exploration) — confidence: 1, status: draft
+- [Qwen3.6-Max-Preview LLM — 에이전틱 코딩 및 지시 이행 성능 평가](wiki/agents/qwen3-6-max-preview-llm-agentic-coding-evaluation) — confidence: 1, status: draft
+
 ### Evaluation
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 
@@ -34,6 +38,20 @@ Updated: 2026-04-22T00:51:43.879Z
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 
 ## 교차 참조 (connections 기반)
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ evaluation/llm-output-validation-quality-metrics-design
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/drift-detection-methodology
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/guard-test-pattern
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/hub-worker-compounding-pattern
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/prompt-versioning-and-testing
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ evaluation/llm-output-validation-quality-metrics-design
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/drift-detection-methodology
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/guard-test-pattern
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/hub-worker-compounding-pattern
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/prompt-versioning-and-testing
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/ambient-knowledge-injection ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -59,8 +77,6 @@ Updated: 2026-04-22T00:51:43.879Z
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/prompt-versioning-and-testing
 - evaluation/llm-output-validation-quality-metrics-design ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-001-drift-greenfield
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-002-drift-existing-setup
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -75,7 +91,6 @@ Updated: 2026-04-22T00:51:43.879Z
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-003-drift-silent-bugs
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
