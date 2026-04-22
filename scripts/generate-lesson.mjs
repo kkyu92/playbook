@@ -28,6 +28,7 @@ import { validateConnections, MAX_CONNECTIONS } from "./lib/bidirectional-sync.m
 import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
 import { validateMdxContent } from "./lib/mdx-validate.mjs";
+import { fixAndValidateMermaid } from "./lib/mermaid-fix.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
@@ -220,6 +221,24 @@ function inferCategoryFromText(topicText) {
   return best;
 }
 
+/**
+ * slug 에서 category prefix 제거 (붙어있든 대시로 분리됐든).
+ * Gemini 가 프롬프트 무시하고 slug 에 category 넣은 경우 방어.
+ * 예: cat="harness-engineering"
+ *   "harness-engineering-foo" → "foo"
+ *   "harness-engineeringfoo"  → "foo"  (붙은 케이스)
+ *   "foo"                      → "foo"  (정상, no-op)
+ */
+export function stripCategoryPrefix(slug, cat) {
+  if (!slug || !cat) return slug;
+  if (!slug.startsWith(cat)) return slug;
+  // dash 분리든 붙어있든 cat 길이 만큼 자른 후 앞 dash 제거
+  const stripped = slug.slice(cat.length).replace(/^-+/, "");
+  // 너무 짧아지면 (의도적 포함일 수도) 원본 유지
+  if (stripped.length < 3) return slug;
+  return stripped;
+}
+
 function slugifyTitle(title) {
   // ASCII kebab. 한글 제거 후 fallback. Gemini 가 "slug" 필드를 생성하지만 validation + fallback.
   return title
@@ -301,7 +320,7 @@ ${slugList || "(없음)"}
 2. title: 구어체/요청문 제거, "핵심 키워드 — 부제" 형식
 3. description: 한 줄 요약
 4. tags: 영문 키워드 3-6개 (카테고리 자동 추가되므로 생략), 한국어 금지
-5. slug: kebab-case 영문 60자 이내
+5. slug: kebab-case 영문 60자 이내. **카테고리명 (${category}) 은 slug 에 절대 포함 금지** — 파일 경로는 자동으로 \`${category}/slug\` 로 구성됨. 예: category=harness-engineering 인데 주제가 "Claude Harness 책임감 있는 코딩" 이면 slug 는 "responsible-coding-with-claude" (o), "harness-engineering-responsible-coding" (x)
 6. connections: 위 existing slugs 리스트에서 관련성 높은 것 **5~7개 선택**. 정확한 형식 (category/topic-slug). 리스트에 없는 slug 는 절대 생성하지 말 것. 최소 3개 필수.`;
 
   // MDX validation + retry (최대 3회)
@@ -336,6 +355,20 @@ ${slugList || "(없음)"}
     if (!payload.body.includes("## ")) issues.push("## 헤딩 누락");
     if (!payload.body.includes("```")) issues.push("코드 블록 누락");
     if (payload.body.length < 500) issues.push(`본문 길이 부족 (${payload.body.length}자)`);
+
+    // Mermaid 블록 autoFix + validation — validate-content.mjs 의 체크를 생성 루프에 당김
+    // (어제 mermaid subgraph 공백 2건이 CI 에서만 잡혀 수동 수정 필요했던 드리프트 차단)
+    const mermaidMatches = [...payload.body.matchAll(/```mermaid\n([\s\S]*?)```/g)];
+    for (const m of mermaidMatches) {
+      const mermaidResult = fixAndValidateMermaid(m[1]);
+      if (mermaidResult.autoFixed) {
+        payload.body = payload.body.replace(m[0], `\`\`\`mermaid\n${mermaidResult.fixed}\`\`\``);
+        console.log(`   🔧 Mermaid 자동 수정 적용`);
+      }
+      for (const e of mermaidResult.errors) {
+        issues.push(`Mermaid line ~${e.line}: ${e.message}`);
+      }
+    }
 
     if (issues.length === 0) {
       if (vAttempt > 0) console.log(`✅ Validation 통과 (재생성 ${vAttempt}회 후)`);
@@ -404,6 +437,9 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
 
   // Slug: Gemini payload.slug 우선, 실패/충돌 시 fallback
   let topicSlug = (payload.slug || "").toLowerCase().replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  // Category prefix 중복 방지 — Gemini 가 프롬프트 무시하고 slug 에 category 포함한 경우 strip.
+  // 관찰된 오염: "harness-engineeringresponsible-vibe-coding-with-claude-harne" (붙어서 prefix, 60자 truncate 로 뒤 잘림)
+  topicSlug = stripCategoryPrefix(topicSlug, cat);
   if (!topicSlug || topicSlug.length < 3) topicSlug = slugifyTitle(payload.title);
   if (topicSlug.length > 60) topicSlug = topicSlug.slice(0, 60).replace(/-$/, "");
   const fullSlug = `${cat}/${topicSlug}`;
