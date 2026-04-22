@@ -259,7 +259,7 @@ async function generateEntryPayload({ topicText, category, existingSlugs, extraC
       },
       body: {
         type: "string",
-        description: "마크다운 본문 2000-3000자, ## / ### 헤딩, 코드 블록, Mermaid 1개 이상, ## 자기 점검 섹션 포함",
+        description: "마크다운 본문 2000-3000자, ## / ### 헤딩, 코드 블록, Mermaid 1개 이상, ## 트레이드오프 + ## 실전 체크리스트 섹션 포함",
       },
     },
     required: ["title", "description", "tags", "slug", "connections", "body"],
@@ -286,7 +286,9 @@ ${slugList || "(없음)"}
    - 실제 동작하는 코드 예제 (카테고리에 맞는 언어)
    - Mermaid 다이어그램 1개 이상 (\`\`\`mermaid 코드 블록)
    - 2026년 최신 트렌드 반영
-   - 마지막에 "## 자기 점검" 섹션: 이해도 질문 3-5개 + "동료에게 설명한다면?" 열린 질문 + 실습 과제 1개
+   - 중간에 "## 트레이드오프" 섹션: 이 패턴/접근의 장단점 3~5개. 각 항목에 "언제 좋고/언제 나쁜지" 명시 (다른 엔트리가 이 문서를 참조할 때 판단 근거)
+   - 마지막에 "## 실전 체크리스트" 섹션: 이 지식을 프로젝트에 적용할 때 검증할 항목 5~7개 (구체적 / 측정 가능 / 체크박스 형식 "- [ ] ...")
+   - 1인칭 학습 관점 금지 — "이해했는가?" "공부해보라" 같은 표현 금지. 프로젝트 지식 그래프의 노드 관점으로 작성.
    - 한국어 + 영어 기술 용어 원문
    - 2000-3000자
    - h2(##), h3(###) 적절히 사용
@@ -348,55 +350,10 @@ ${slugList || "(없음)"}
   throw new Error(`Validation ${MAX_VALIDATION}회 실패: ${lastIssues.join(", ")}`);
 }
 
-async function generateQuiz(title, body) {
-  const schema = {
-    type: "array",
-    items: {
-      type: "object",
-      properties: {
-        question: { type: "string" },
-        choices: { type: "array", items: { type: "string" }, minItems: 4, maxItems: 4 },
-        answer: { type: "integer", minimum: 0, maximum: 3 },
-        explanation: { type: "string" },
-      },
-      required: ["question", "choices", "answer", "explanation"],
-    },
-    minItems: 3,
-    maxItems: 3,
-  };
-
-  const prompt = `다음 기술 블로그 본문을 바탕으로 자가 점검용 객관식 퀴즈 3문항을 만드세요.
-
-제목: ${title}
-
-본문:
-${body.slice(0, 6000)}
-
-요구사항:
-- 정확히 3문항
-- 각 문항 객관식 4지선다
-- 본문에서 직접 추론 가능한 핵심 개념
-- 단순 암기가 아닌 이해도
-- 오답도 그럴듯하게
-- 각 문항 정답 해설 (왜 정답인지, 왜 다른 선택지가 틀린지)
-- 한국어`;
-
-  try {
-    return await generateStructured({
-      prompt,
-      responseSchema: schema,
-      validate: (p) => Array.isArray(p) && p.length === 3 || "need 3 items",
-    });
-  } catch (err) {
-    console.warn(`⚠️  Quiz 생성 실패: ${err.message}. Skip.`);
-    return [];
-  }
-}
-
-function buildFrontmatter({ payload, category, connections, source, quiz }) {
+function buildFrontmatter({ payload, category, connections, source }) {
   const today = new Date().toISOString().split("T")[0];
   const tags = [...new Set([...(payload.tags || []), category])];
-  const fm = {
+  return {
     title: payload.title,
     category,
     date: today,
@@ -408,8 +365,6 @@ function buildFrontmatter({ payload, category, connections, source, quiz }) {
     type: "entry",
     source,
   };
-  if (quiz && quiz.length > 0) fm.quiz = quiz;
-  return fm;
 }
 
 // ─── 공용 entry 생성 흐름 (export) ────────────────────────────
@@ -459,15 +414,14 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
   }
   const newSlug = `${cat}/${topicSlug}`;
 
-  // Quiz (별도 call)
-  const quiz = await generateQuiz(payload.title, payload.body);
+  // Quiz 생성 제거 — 1인칭 학습 관점 유산. 프로젝트 지식 그래프 목표와 불일치.
+  // 본문 자체가 트레이드오프 + 실전 체크리스트 섹션을 포함.
 
   const frontmatter = buildFrontmatter({
     payload,
     category: cat,
     connections: validConnections,
     source,
-    quiz,
   });
 
   const newEntry = {

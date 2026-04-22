@@ -1,5 +1,33 @@
 import { describe, it, expect } from "vitest";
-import { wrapExternalContent } from "../lib/gemini-client.mjs";
+import { wrapExternalContent, isDailyQuotaError } from "../lib/gemini-client.mjs";
+
+describe("isDailyQuotaError — daily vs transient 분기", () => {
+  it("'limit: 0' 포함 → daily quota", () => {
+    const err = new Error("Quota exceeded for metric: generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash");
+    expect(isDailyQuotaError(err)).toBe(true);
+  });
+
+  it("'PerDayPerProjectPerModel' 포함 → daily quota", () => {
+    const err = new Error('quotaId: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"');
+    expect(isDailyQuotaError(err)).toBe(true);
+  });
+
+  it("일반 503 → daily 아님", () => {
+    expect(isDailyQuotaError(new Error("503 Service Unavailable"))).toBe(false);
+  });
+
+  it("per-minute rate limit → daily 아님 (backoff 로 복구)", () => {
+    expect(isDailyQuotaError(new Error("Please retry in 4s"))).toBe(false);
+  });
+
+  it("일반 429 단독 → daily 아님 (limit/PerDay 없음)", () => {
+    expect(isDailyQuotaError(new Error("429 Too Many Requests"))).toBe(false);
+  });
+
+  it("string err 지원", () => {
+    expect(isDailyQuotaError("limit: 0 model: gemini")).toBe(true);
+  });
+});
 
 describe("wrapExternalContent — prompt injection 방어", () => {
   it("delimiter 를 정확한 순서로 감쌈", () => {

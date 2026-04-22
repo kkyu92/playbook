@@ -1,88 +1,144 @@
 /**
  * Gemini client helper.
- * - 2.5-flash → 2.0-flash fallback (quota 0 인 경우도 있지만 실제 503 대응)
+ * - Multi-key support: GEMINI_API_KEY (primary) + GEMINI_API_KEY_FALLBACK (secondary)
+ * - 2.5-flash → 2.0-flash 모델 fallback (503/global outage 대응)
  * - 5회 retry, exponential backoff (10s → 30s → 60s → 120s)
- * - responseSchema 기반 JSON 강제 지원 (Zod retry loop 대체)
+ * - responseSchema 기반 JSON 강제 (Zod retry loop 대체)
+ * - Daily quota 감지 시 즉시 fallback key 전환 (backoff 낭비 차단)
  *
  * prompt injection 방어: callers 가 RSS/external body 포함 시
- * <<<BEGIN_EXTERNAL>>>...<<<END_EXTERNAL>>> delimiter + system role 명시 할 것.
+ * <<<BEGIN_EXTERNAL>>>...<<<END_EXTERNAL>>> delimiter + system role 명시.
  */
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"];
 const BACKOFFS = [10, 30, 60, 120];
 
-export function getClient() {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY not set");
+/**
+ * 등록된 key 순서대로 client 객체 배열 생성.
+ * Primary 없으면 throw. Fallback 없으면 [primary] 만 반환.
+ * Primary === Fallback (중복 등록) 은 한 번만 사용.
+ */
+function buildClients() {
+  const primary = process.env.GEMINI_API_KEY;
+  if (!primary) throw new Error("GEMINI_API_KEY not set");
+  const clients = [{ label: "primary", client: new GoogleGenerativeAI(primary) }];
+  const fallback = process.env.GEMINI_API_KEY_FALLBACK;
+  if (fallback && fallback !== primary) {
+    clients.push({ label: "fallback", client: new GoogleGenerativeAI(fallback) });
   }
-  return new GoogleGenerativeAI(apiKey);
+  return clients;
+}
+
+export function getClient() {
+  // backward compat — primary client 만 반환
+  return buildClients()[0].client;
 }
 
 /**
- * Gemini 호출 + retry + JSON parse.
+ * Daily quota 소진 여부 감지.
+ * Per-minute quota (backoff 후 복구) 와 구분 — 전자만 즉시 fallback 전환.
+ *
+ * 힌트:
+ *   - `limit: 0` 리터럴 (Google 이 daily cap 소진 시 이 형태로 응답)
+ *   - `PerDay` (quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier)
+ */
+export function isDailyQuotaError(err) {
+  const msg = String(err?.message || err);
+  return /limit:\s*0/.test(msg) || /PerDay/i.test(msg);
+}
+
+/**
+ * Gemini 호출 + retry + JSON parse. Key/Model fallback 내장.
+ *
+ * 전환 우선순위:
+ *   1. Daily quota 감지 → 즉시 다음 key 전환 (backoff skip)
+ *   2. Attempt 1 실패 → 모델 전환 (2.5 → 2.0, 전역 장애 대응)
+ *   3. Attempt 4 (마지막) 실패 → 다음 key 전환, 없으면 throw
+ *   4. 그 외 → backoff 후 재시도
  *
  * @param {object} opts
  * @param {string} opts.prompt
  * @param {object} [opts.responseSchema] — Gemini responseSchema (JSON 강제)
- * @param {(text: string) => any} [opts.parse] — responseSchema 없을 때 파싱 함수. default = JSON.parse (마크다운 펜스 제거).
- * @param {(parsed: any) => boolean | string} [opts.validate] — 파싱 후 추가 검증. false 또는 string 리턴 시 retry.
+ * @param {(text: string) => any} [opts.parse] — responseSchema 없을 때 파싱 함수
+ * @param {(parsed: any) => boolean | string} [opts.validate] — 파싱 후 추가 검증
  * @returns {Promise<any>}
  */
 export async function generateStructured({ prompt, responseSchema, parse, validate }) {
-  const client = getClient();
-  let modelIdx = 0;
+  const clients = buildClients();
+  let lastErr;
 
-  const makeModel = (idx) => {
-    const config = { model: MODELS[idx] };
-    if (responseSchema) {
-      config.generationConfig = {
-        responseMimeType: "application/json",
-        responseSchema,
-      };
-    }
-    return client.getGenerativeModel(config);
-  };
+  for (let keyIdx = 0; keyIdx < clients.length; keyIdx++) {
+    const { client, label } = clients[keyIdx];
+    const hasMoreKeys = keyIdx < clients.length - 1;
+    let modelIdx = 0;
 
-  let model = makeModel(modelIdx);
-
-  for (let attempt = 0; attempt < 5; attempt++) {
-    try {
-      const result = await model.generateContent(prompt);
-      let text = result.response.text().trim();
-
-      if (!responseSchema) {
-        // Strip markdown fences
-        text = text.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "").trim();
+    const makeModel = (idx) => {
+      const config = { model: MODELS[idx] };
+      if (responseSchema) {
+        config.generationConfig = {
+          responseMimeType: "application/json",
+          responseSchema,
+        };
       }
+      return client.getGenerativeModel(config);
+    };
 
-      const parsed = parse ? parse(text) : JSON.parse(text);
+    let model = makeModel(modelIdx);
 
-      if (validate) {
-        const v = validate(parsed);
-        if (v !== true) {
-          throw new Error(`Validation failed: ${typeof v === "string" ? v : "invalid"}`);
+    for (let attempt = 0; attempt < 5; attempt++) {
+      try {
+        const result = await model.generateContent(prompt);
+        let text = result.response.text().trim();
+
+        if (!responseSchema) {
+          text = text.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "").trim();
         }
-      }
 
-      return parsed;
-    } catch (err) {
-      console.warn(`⚠️  Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${err.message}`);
-      // 2번째 실패부터 모델 전환 (2.5 전역 장애 대응)
-      if (attempt === 1 && modelIdx < MODELS.length - 1) {
-        modelIdx++;
-        model = makeModel(modelIdx);
-        console.log(`   🔄 모델 전환: ${MODELS[modelIdx]}`);
+        const parsed = parse ? parse(text) : JSON.parse(text);
+
+        if (validate) {
+          const v = validate(parsed);
+          if (v !== true) {
+            throw new Error(`Validation failed: ${typeof v === "string" ? v : "invalid"}`);
+          }
+        }
+
+        return parsed;
+      } catch (err) {
+        lastErr = err;
+        console.warn(`⚠️  [${label}] Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${(err.message || "").slice(0, 120)}`);
+
+        // Daily quota 감지 → 즉시 다음 key 전환 (backoff 무의미)
+        if (hasMoreKeys && isDailyQuotaError(err)) {
+          console.log(`   🔑 [${label}] daily quota 소진 → fallback key 로 전환`);
+          break;
+        }
+
+        // 2번째 실패부터 모델 전환 (2.5 전역 장애 대응)
+        if (attempt === 1 && modelIdx < MODELS.length - 1) {
+          modelIdx++;
+          model = makeModel(modelIdx);
+          console.log(`   🔄 모델 전환: ${MODELS[modelIdx]}`);
+        }
+
+        // 마지막 attempt 처리
+        if (attempt === 4) {
+          if (hasMoreKeys) {
+            console.log(`   🔑 [${label}] 5 attempts 소진 → fallback key 로 전환`);
+            break;
+          }
+          throw new Error(`All ${clients.length} keys × ${MODELS.length} models exhausted — ${err.message}`);
+        }
+
+        const wait = BACKOFFS[attempt];
+        console.log(`   ⏳ ${wait}s 대기 후 재시도...`);
+        await new Promise((r) => setTimeout(r, wait * 1000));
       }
-      if (attempt === 4) {
-        throw new Error(`All 5 retries failed across models: ${MODELS.join(", ")} — ${err.message}`);
-      }
-      const wait = BACKOFFS[attempt];
-      console.log(`   ⏳ ${wait}s 대기 후 재시도...`);
-      await new Promise((r) => setTimeout(r, wait * 1000));
     }
   }
+
+  throw new Error(`All keys exhausted — ${lastErr?.message || "unknown"}`);
 }
 
 /**
