@@ -142,3 +142,4 @@ Qwen3.6-Max-Preview 모델을 프로젝트에 성공적으로 통합하기 위�
 *   [ ] **프롬프트 엔지니어링 최적화**: Qwen3.6-Max-Preview의 특성을 고려한 프롬프트 엔지니어링 전략을 수립하고, 다양한 프롬프트 버전(prompt versioning)을 테스트하여 최적의 성능을 도출한다.
 *   [ ] **보안 및 데이터 프라이버시 준수**: 모델 API를 통해 전달되는 데이터가 조직의 보안 정책 및 규제(GDPR, CCPA 등)를 준수하는지, 특히 민감 정보 처리 방안을 검토하고 구현한다.
 *   [ ] **장애 조치 및 재시도 로직 구현**: Qwen API 호출 실패 시의 장애 조치(fallback) 메커니즘과 재시도(retry) 로직을 `harness-engineering/guard-test-pattern`을 참고하여 견고하게 구현한다.
+*   [ ] **multi-agent 오케스트레이션 역할 평가**: Qwen3.6-Max-Preview를 단독 호출만이 아닌 multi-agent 시스템 (planner / executor / critic) 의 특정 역할로 배치할 때, 역할별 성능을 별도 측정한다. `preserve_thinking` 출력은 critic 역할에서 reflection 신호로 활용 가능 — 단독 평가 점수와 multi-agent 노드 평가 점수가 일치하지 않을 수 있음.
