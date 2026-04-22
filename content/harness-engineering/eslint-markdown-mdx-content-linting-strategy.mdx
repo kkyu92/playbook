@@ -1,0 +1,162 @@
+---
+title: ESLint Markdown Integration - MDX 콘텐츠 린팅 전략
+category: harness-engineering
+date: "2026-04-22"
+tags:
+  - ESLint
+  - Markdown
+  - MDX
+  - Linting
+  - CodeQuality
+  - DeveloperExperience
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/guard-test-pattern, harness-engineering/drift-detection-methodology, journal/playbook-journal-000-bootstrap, journal/playbook-journal-001-drift-greenfield, journal/playbook-journal-002-drift-existing-setup, journal/playbook-journal-005-moneyballscore-playbook-e2e, evaluation/llm-output-validation-quality-metrics-design]
+status: draft
+description: MDX 파일에 eslint-plugin-markdown을 적용하여 마크다운과 JSX 콘텐츠의 일관성과 품질을 자동으로 검증하는 방법을 다룹니다.
+type: entry
+source: scout
+---
+
+MDX는 마크다운의 유연성과 JSX의 표현력을 결합하여 기술 문서, 블로그 포스트, 인터랙티브 가이드를 제작하는 데 널리 활용되고 있습니다. 그러나 이러한 강력한 결합은 코드 블록과 JSX 컴포넌트의 문법적 일관성 및 스타일 유지에 새로운 도전을 제시합니다. 일반 JavaScript/TypeScript 코드와 마찬가지로, MDX 콘텐츠도 자동화된 린팅을 통해 품질을 보증하는 것이 중요합니다. `eslint-plugin-markdown`은 ESLint의 공식 마크다운 지원을 기반으로, MDX 파일 내의 코드 블록과 JSX 콘텐츠를 린팅하여 이러한 문제를 해결합니다.
+
+## MDX 콘텐츠 린팅의 중요성
+MDX 파일은 단순 텍스트를 넘어 실행 가능한 코드 조각과 리액트 컴포넌트를 포함할 수 있습니다. 이는 다음과 같은 이유로 린팅이 필수적입니다:
+
+1.  **일관성 유지**: 다양한 기여자가 작성하는 콘텐츠에서 코드 스타일, 들여쓰기, 네이밍 컨벤션 등을 통일합니다.
+2.  **오류 사전 방지**: 문서 내 잘못된 코드 예제, 오타, 구문 오류, 또는 잘못된 JSX 사용으로 인한 런타임 에러나 빌드 실패를 사전에 감지합니다.
+3.  **개발자 경험 향상**: PR 리뷰 시 스타일 관련 피드백을 줄여 핵심 내용 검토에 집중할 수 있게 하며, 작성자가 즉각적인 피드백을 받을 수 있도록 돕습니다.
+4.  **자동화된 품질 보증**: CI/CD 파이프라인에 통합하여 모든 변경 사항이 배포 전에 최소한의 품질 기준을 충족하도록 보장합니다.
+
+## `eslint-plugin-markdown` 설치 및 기본 설정
+`eslint-plugin-markdown`은 ESLint가 마크다운 파일을 파싱하고, 그 안의 코드 블록에 대한 린팅을 수행할 수 있도록 돕는 플러그인입니다. 2024년 ESLint의 공식 마크다운 지원 발표 이후, 그 방향성에 맞춰 설계되었습니다.
+
+먼저, 필요한 패키지를 설치합니다.
+
+```bash
+npm install --save-dev eslint eslint-plugin-markdown
+# 또는 yarn add --dev eslint eslint-plugin-markdown
+```
+
+그 다음, 프로젝트의 `.eslintrc.js` 또는 `.eslintrc.json` 파일에 `eslint-plugin-markdown`을 구성합니다. MDX 파일은 `.md` 확장자뿐만 아니라 `.mdx` 확장자도 포함하므로, `overrides` 설정을 통해 명시적으로 지정할 수 있습니다.
+
+```javascript
+// .eslintrc.js
+module.exports = {
+  root: true,
+  // 기본 린팅 환경 및 규칙 설정 (ex: JavaScript, TypeScript)
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'next/core-web-vitals'
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  rules: {
+    // 프로젝트 공통 규칙
+  },
+  overrides: [
+    {
+      // Markdown 파일 내의 코드 블록 린팅
+      files: ['**/*.md', '**/*.mdx'],
+      processor: 'markdown/markdown',
+    },
+    {
+      // Markdown 파일 내의 JavaScript 코드 블록에 대한 추가 규칙
+      // `markdown/markdown` 프로세서는 코드 블록을 추출한 후 해당 블록에 대한 ESLint 규칙을 적용합니다.
+      // 'js', 'jsx', 'ts', 'tsx' 등 언어 지시자에 따라 적절한 파서 및 규칙 적용이 중요합니다.
+      files: ['**/*.md/*.js', '**/*.mdx/*.js'],
+      parserOptions: {
+        ecmaFeatures: {
+          impliedStrict: true,
+        },
+      },
+      rules: {
+        'no-unused-vars': 'warn',
+        'no-console': 'off',
+      },
+    },
+    {
+      // MDX 파일 내의 JSX (React) 코드 블록에 대한 규칙 (예: Next.js + React)
+      files: ['**/*.mdx/*.jsx', '**/*.mdx/*.tsx'],
+      extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
+      rules: {
+        'react/react-in-jsx-scope': 'off', // Next.js 16+ requires no explicit React import
+        'react/prop-types': 'off' // PropTypes might not be used with TypeScript
+      },
+      settings: {
+        react: {
+          version: 'detect'
+        }
+      }
+    }
+  ],
+};
+```
+
+## CI/CD 워크플로우 통합
+린팅은 개발 단계뿐만 아니라 CI/CD 파이프라인에서도 핵심적인 역할을 합니다. GitHub Actions를 사용하여 푸시 또는 PR 생성 시 MDX 린팅을 자동으로 실행하도록 설정할 수 있습니다.
+
+`package.json` 스크립트에 린팅 명령어를 추가합니다.
+
+```json
+// package.json
+{
+  "scripts": {
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
+    "lint:fix": "eslint \"**/*.{js,jsx,ts,tsx,md,mdx}\" --fix"
+  }
+}
+```
+
+다음은 GitHub Actions 워크플로우 예시입니다.
+
+```yaml
+# .github/workflows/lint.yml
+name: Lint MDX Content
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint on all files (including MDX)
+        run: npm run lint
+```
+
+## 린팅 워크플로우 다이어그램
+```mermaid
+graph TD
+    A[개발자 커밋 변경사항] --> B(Git Push / Pull Request)
+    B --> C{GitHub Actions 워크플로우 시작}
+    C --> D[환경 설정: Node.js, 의존성 설치]
+    D --> E[ESLint 실행: 'npm run lint']
+    E -- MDX 파일 감지 --> F[eslint-plugin-markdown 활성화]
+    F -- 코드 블록 및 JSX 추출 --> G[각 코드 블록에 ESLint 규칙 적용]
+    G -- 린팅 결과 --> H{오류/경고 발생?}
+    H -- Yes --> I[빌드 실패 / PR 피드백]
+    H -- No --> J[빌드 성공 / PR 병합 허용]
+    J --> K[배포]
+    subgraph [

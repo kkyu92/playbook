@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-21T13:19:03.974Z
+Updated: 2026-04-22T00:35:55.443Z
 
-## 엔트리 (20개)
+## 엔트리 (24개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -13,7 +13,9 @@ Updated: 2026-04-21T13:19:03.974Z
 
 ### Harness Engineering
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
+- [ESLint Markdown Integration - MDX 콘텐츠 린팅 전략](wiki/harness-engineering/eslint-markdown-mdx-content-linting-strategy) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
+- [Responsible Vibe Coding with Claude Code Harness: Enhancing LLM Code Generation Reliability](wiki/harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne) — confidence: 1, status: draft
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
@@ -26,6 +28,9 @@ Updated: 2026-04-21T13:19:03.974Z
 - [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
 - [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
 
+### Agents
+- [Multi-Agent System Design Patterns — Architecture for Complex Adaptive Systems](wiki/agents/multi-agent-system-design-patterns) — confidence: 1, status: draft
+
 ### Evaluation
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 
@@ -33,7 +38,18 @@ Updated: 2026-04-21T13:19:03.974Z
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 
+### Frontend + AI
+- [Frontend AI Model Optimization — Web-Based Deployment Strategies](wiki/frontend-ai/frontend-ai-model-optimization-web-deployment) — confidence: 1, status: draft
+
 ## 교차 참조 (connections 기반)
+- agents/multi-agent-system-design-patterns ↔ context-engineering/ambient-knowledge-injection
+- agents/multi-agent-system-design-patterns ↔ evaluation/llm-output-validation-quality-metrics-design
+- agents/multi-agent-system-design-patterns ↔ harness-engineering/drift-detection-methodology
+- agents/multi-agent-system-design-patterns ↔ harness-engineering/guard-test-pattern
+- agents/multi-agent-system-design-patterns ↔ harness-engineering/hub-worker-compounding-pattern
+- agents/multi-agent-system-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- agents/multi-agent-system-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
+- agents/multi-agent-system-design-patterns ↔ frontend-ai/frontend-ai-model-optimization-web-deployment
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/ambient-knowledge-injection ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -44,6 +60,7 @@ Updated: 2026-04-21T13:19:03.974Z
 - context-engineering/ambient-knowledge-injection ↔ evaluation/llm-output-validation-quality-metrics-design
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- context-engineering/ambient-knowledge-injection ↔ frontend-ai/frontend-ai-model-optimization-web-deployment
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
@@ -59,29 +76,40 @@ Updated: 2026-04-21T13:19:03.974Z
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/prompt-versioning-and-testing
 - evaluation/llm-output-validation-quality-metrics-design ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-001-drift-greenfield
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-002-drift-existing-setup
+- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/eslint-markdown-mdx-content-linting-strategy
+- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne
+- frontend-ai/frontend-ai-model-optimization-web-deployment ↔ harness-engineering/drift-detection-methodology
+- frontend-ai/frontend-ai-model-optimization-web-deployment ↔ harness-engineering/guard-test-pattern
+- frontend-ai/frontend-ai-model-optimization-web-deployment ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- frontend-ai/frontend-ai-model-optimization-web-deployment ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/guard-test-pattern
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/question-own-defaults
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/drift-detection-methodology ↔ harness-engineering/eslint-markdown-mdx-content-linting-strategy
+- harness-engineering/drift-detection-methodology ↔ harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne
+- harness-engineering/eslint-markdown-mdx-content-linting-strategy ↔ harness-engineering/guard-test-pattern
+- harness-engineering/eslint-markdown-mdx-content-linting-strategy ↔ journal/playbook-journal-000-bootstrap
+- harness-engineering/eslint-markdown-mdx-content-linting-strategy ↔ journal/playbook-journal-001-drift-greenfield
+- harness-engineering/eslint-markdown-mdx-content-linting-strategy ↔ journal/playbook-journal-002-drift-existing-setup
+- harness-engineering/eslint-markdown-mdx-content-linting-strategy ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-003-drift-silent-bugs
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/guard-test-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/guard-test-pattern ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/guard-test-pattern ↔ harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne
+- harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/harness-engineeringresponsible-vibe-coding-with-claude-harne ↔ journal/playbook-journal-003-drift-silent-bugs
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
