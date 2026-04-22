@@ -5,8 +5,8 @@ type: "worker-error"
 payload_type: "error-log"
 severity: "error"
 fingerprint: "sentry-typeerror-raven-js-62"
-first_seen: "2026-04-22T07:21:45.299Z"
-run_url: "https://sentry.io/organizations/kyu-au/issues/7432660841/events/06190e6d19fc4d2fb0ecb761662094d0/"
+first_seen: "2026-04-22T07:44:10.264Z"
+run_url: "https://sentry.io/organizations/kyu-au/issues/7432660841/events/5148b2917393439d96f920a08dd92b5b/"
 ---
 
 ## Error
@@ -25,7 +25,7 @@ run_url: "https://sentry.io/organizations/kyu-au/issues/7432660841/events/06190e
 - Release: `(none)`
 - URL: http://example.com/foo
 - Culprit: `../../sentry/scripts/views.js in poll`
-- Timestamp: 1776842505.299
+- Timestamp: 1776843850.264
 
 ## Tags
 - `browser`: `Chrome 65.0.3325`
