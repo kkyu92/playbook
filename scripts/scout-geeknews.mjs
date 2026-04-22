@@ -23,6 +23,7 @@ import { execFileSync } from "node:child_process";
 import { fetchGeekNews, parseAtomFeed } from "./lib/rss-fetch.mjs";
 import { generateStructured, wrapExternalContent } from "./lib/gemini-client.mjs";
 import { generateCustomEntry } from "./generate-lesson.mjs";
+import { CATEGORIES } from "./lib/categories.mjs";
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
@@ -85,6 +86,10 @@ async function scoutArticles(articles) {
         action_title: { type: "string" },
         action_plan: { type: "string" },
         reason: { type: "string" },
+        // playbook 매칭 시 9 카테고리 중 하나 명시 (moneyballscore 는 무시).
+        // 이 필드 없이 inferCategoryFromText 에 맡기면 "이식 액션" 문장이 harness-engineering
+        // 키워드와 우연 매칭되어 쏠림 (실 관찰: 2026-04-22 daily-ingest scout 2/2 harness).
+        category: { type: "string", enum: CATEGORIES },
       },
       required: ["article_index", "project_id", "relevance", "action_title", "action_plan", "reason"],
     },
@@ -113,7 +118,10 @@ ${wrappedArticles}
 - relevance: high (즉시 착수 권장) | medium (다음 스프린트 고려)
 - 한 기사가 여러 프로젝트 매칭 가능
 - 억지 매칭 금지 — 3 조건 AND 엄격 적용
-- 최대 6개, 임팩트 큰 순서`;
+- 최대 6개, 임팩트 큰 순서
+- **project_id=playbook** 매칭 시 \`category\` 필드에 아래 9개 중 하나 명시:
+  ${CATEGORIES.join(", ")}
+  (기사 내용이 어느 카테고리에 가장 적합한지 판단. 반복 매칭 시 한 카테고리에 쏠리지 않도록 주의 — 갭 있는 카테고리를 우선 고려)`;
 
   return await generateStructured({
     prompt,
@@ -273,8 +281,11 @@ async function main() {
 
 이식 계획 (scout 분석):
 ${m.action_plan}`;
+      // category: Gemini 가 제안한 값 우선 (responseSchema enum 으로 CATEGORIES 강제).
+      // 없으면 generateCustomEntry 내부의 inferCategoryFromText 로 fallback.
       const result = await generateCustomEntry({
         topicText: m.action_title,
+        category: m.category,
         extraContext,
         source: "scout",
       });
