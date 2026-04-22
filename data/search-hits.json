@@ -1,5 +1,13 @@
 {
-  "totalQueries": 0,
-  "lastUpdated": null,
-  "hits": {}
+  "totalQueries": 5,
+  "lastUpdated": "2026-04-22T02:22:16.911Z",
+  "hits": {
+    "harness-engineering/hub-worker-compounding-pattern": 1,
+    "context-engineering/ambient-knowledge-injection": 1,
+    "prompt-engineering/prompt-versioning-and-testing": 1,
+    "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 1,
+    "agents/qwen3-6-max-preview-llm-agentic-coding-evaluation": 1,
+    "evaluation/llm-output-validation-quality-metrics-design": 1,
+    "harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security": 1
+  }
 }

@@ -89,6 +89,25 @@ const TECH_KEYWORDS = [
   /journal/i,
   /솔루션/,
   /solution/i,
+  // 에이전트 / 멀티에이전트
+  /에이전트/,
+  /multi-?agent/i,
+  /agentic/i,
+  /오케스트레이션/,
+  /orchestration/i,
+  // 평가 / 검증 / 메트릭
+  /평가/,
+  /evaluation/i,
+  /검증/,
+  /validation/i,
+  /메트릭/,
+  /metric/i,
+  /grounding/i,
+  /근거/,
+  // 보안 / 공급망
+  /oauth/i,
+  /supply\s*chain/i,
+  /공급망/,
   // 질문 패턴 (how-to)
   /어떻게/,
   /방법/,
