@@ -405,3 +405,77 @@ jobs:
               --assignee kkyu92
             echo "✅ PR 생성"
           fi
+
+      # Critical Gap 1 방어 — auto-ingest 자체 실패 가시화 (silent drop 방지)
+      # 실패 시 open hub-self-report Issue 가 있으면 코멘트, 없으면 신규 Issue 생성.
+      - name: Self-report on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_EVENT: ${{ github.event.action }}
+          CP_SOURCE: ${{ github.event.client_payload.source_repo }}
+          CP_TITLE: ${{ github.event.client_payload.title }}
+          WD_SOURCE: ${{ inputs.source_repo }}
+          WD_TITLE: ${{ inputs.error_title }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -e
+
+          SOURCE="${CP_SOURCE:-${WD_SOURCE:-(unknown)}}"
+          ORIG_TITLE="${CP_TITLE:-${WD_TITLE:-(no title)}}"
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+          # 라벨 self-bootstrap
+          gh label create hub-self-report --color "b60205" --description "허브 auto-ingest 자체 실패" 2>/dev/null || true
+
+          # 기존 open self-report Issue 검색 (열려 있으면 코멘트로 통합)
+          EXISTING=$(gh issue list \
+            --state open \
+            --label "hub-self-report" \
+            --limit 1 \
+            --json number \
+            | jq -r '.[0].number // empty')
+
+          COMMENT_BODY=$(cat <<EOF
+          🚨 추가 실패 감지 (${NOW})
+
+          - **Run:** ${RUN_URL}
+          - **Event:** \`${EVENT_NAME}\` / \`${DISPATCH_EVENT:-(none)}\`
+          - **Source:** \`${SOURCE}\`
+          - **Original title:** ${ORIG_TITLE}
+          EOF
+          )
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$COMMENT_BODY"
+            echo "🚨 기존 self-report Issue #${EXISTING} 에 코멘트 추가"
+          else
+            ISSUE_BODY=$(cat <<EOF
+          ## 허브 self-report (Critical Gap 1)
+
+          \`auto-ingest.yml\` workflow 가 실패했습니다. 워커 dispatch 가 silent drop 되었을 가능성.
+
+          - **Run:** ${RUN_URL}
+          - **Event:** \`${EVENT_NAME}\` / \`${DISPATCH_EVENT:-(none)}\`
+          - **Source repo:** \`${SOURCE}\`
+          - **Original title:** ${ORIG_TITLE}
+          - **First detected:** ${NOW}
+
+          ## 조치
+
+          1. Run URL 에서 실패 step / 로그 확인
+          2. 워커 측 dispatch payload 검증 (필수 필드 누락, schema 불일치)
+          3. 필요 시 워커 dispatch 재발사 또는 이 워크플로우 \`workflow_dispatch\` 로 수동 재시도
+          4. 해결되면 Issue close — 다음 실패 시 새 Issue 가 생성됨
+
+          > 이 Issue 가 열려 있는 동안 추가 실패는 코멘트로 통합됩니다 (노이즈 방지).
+          EOF
+          )
+            gh issue create \
+              --title "🚨 허브 auto-ingest 실패 — silent drop 방어" \
+              --body "$ISSUE_BODY" \
+              --label "inbound,incident,hub-self-report" \
+              --assignee kkyu92
+            echo "🚨 신규 self-report Issue 생성"
+          fi
