@@ -1,10 +1,11 @@
 /**
  * Gemini client helper.
- * - Multi-key support: GEMINI_API_KEY (primary) + GEMINI_API_KEY_FALLBACK (secondary)
+ * - Multi-key support: GEMINI_API_KEY (primary) + GEMINI_API_KEY_FALLBACK
+ *   + GEMINI_API_KEY_FALLBACK_2 + GEMINI_API_KEY_FALLBACK_3 (최대 4개 계정)
  * - 2.5-flash → 2.0-flash 모델 fallback (503/global outage 대응)
  * - 5회 retry, exponential backoff (10s → 30s → 60s → 120s)
  * - responseSchema 기반 JSON 강제 (Zod retry loop 대체)
- * - Daily quota 감지 시 즉시 fallback key 전환 (backoff 낭비 차단)
+ * - Daily quota 감지 시 즉시 다음 key 전환 (backoff 낭비 차단)
  *
  * prompt injection 방어: callers 가 RSS/external body 포함 시
  * <<<BEGIN_EXTERNAL>>>...<<<END_EXTERNAL>>> delimiter + system role 명시.
@@ -16,16 +17,28 @@ const BACKOFFS = [10, 30, 60, 120];
 
 /**
  * 등록된 key 순서대로 client 객체 배열 생성.
- * Primary 없으면 throw. Fallback 없으면 [primary] 만 반환.
- * Primary === Fallback (중복 등록) 은 한 번만 사용.
+ * Primary 없으면 throw. Fallback key 들은 있는 만큼 로드.
+ * 중복 값 (복붙 실수 방어) 은 skip.
+ *
+ * 지원 env: GEMINI_API_KEY, GEMINI_API_KEY_FALLBACK, _FALLBACK_2, _FALLBACK_3
  */
 function buildClients() {
   const primary = process.env.GEMINI_API_KEY;
   if (!primary) throw new Error("GEMINI_API_KEY not set");
+
   const clients = [{ label: "primary", client: new GoogleGenerativeAI(primary) }];
-  const fallback = process.env.GEMINI_API_KEY_FALLBACK;
-  if (fallback && fallback !== primary) {
-    clients.push({ label: "fallback", client: new GoogleGenerativeAI(fallback) });
+  const seen = new Set([primary]);
+
+  const candidates = [
+    ["fallback", process.env.GEMINI_API_KEY_FALLBACK],
+    ["fallback_2", process.env.GEMINI_API_KEY_FALLBACK_2],
+    ["fallback_3", process.env.GEMINI_API_KEY_FALLBACK_3],
+  ];
+  for (const [label, value] of candidates) {
+    if (value && !seen.has(value)) {
+      clients.push({ label, client: new GoogleGenerativeAI(value) });
+      seen.add(value);
+    }
   }
   return clients;
 }

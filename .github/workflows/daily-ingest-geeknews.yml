@@ -53,6 +53,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          GEMINI_API_KEY_FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: node scripts/scout-geeknews.mjs
 
@@ -66,6 +67,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          GEMINI_API_KEY_FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: node scripts/generate-lesson.mjs auto
 
       # ─── Step 3: 변경 감지 + manifest regen + PR ────────────────

@@ -10,52 +10,63 @@ jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
-      - name: Check secrets non-empty + distinct
+      - name: Check all 3 secrets non-empty + distinct
         env:
           PRIMARY: ${{ secrets.GEMINI_API_KEY }}
           FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: |
-          if [ -z "$PRIMARY" ]; then
-            echo "::error::GEMINI_API_KEY is empty or unset"
-            exit 1
-          fi
-          if [ -z "$FALLBACK" ]; then
-            echo "::error::GEMINI_API_KEY_FALLBACK is empty or unset"
-            exit 1
-          fi
+          check_non_empty() {
+            if [ -z "$2" ]; then
+              echo "::error::$1 is empty or unset"
+              return 1
+            fi
+            return 0
+          }
+          check_non_empty "GEMINI_API_KEY" "$PRIMARY" || exit 1
+          check_non_empty "GEMINI_API_KEY_FALLBACK" "$FALLBACK" || exit 1
+          check_non_empty "GEMINI_API_KEY_FALLBACK_2" "$FALLBACK_2" || exit 1
 
           PRIMARY_HASH=$(printf '%s' "$PRIMARY" | sha256sum | cut -c1-16)
           FALLBACK_HASH=$(printf '%s' "$FALLBACK" | sha256sum | cut -c1-16)
+          FALLBACK_2_HASH=$(printf '%s' "$FALLBACK_2" | sha256sum | cut -c1-16)
 
-          echo "PRIMARY  length: ${#PRIMARY}, sha256[0:16]: $PRIMARY_HASH"
-          echo "FALLBACK length: ${#FALLBACK}, sha256[0:16]: $FALLBACK_HASH"
+          echo "PRIMARY     length: ${#PRIMARY}, sha256[0:16]: $PRIMARY_HASH"
+          echo "FALLBACK    length: ${#FALLBACK}, sha256[0:16]: $FALLBACK_HASH"
+          echo "FALLBACK_2  length: ${#FALLBACK_2}, sha256[0:16]: $FALLBACK_2_HASH"
 
+          dup_found=0
           if [ "$PRIMARY_HASH" = "$FALLBACK_HASH" ]; then
-            echo "::error::Primary와 Fallback이 동일한 값입니다 (복붙 의심)"
-            exit 1
-          else
-            echo "✅ Primary ≠ Fallback (서로 다른 값)"
+            echo "::error::PRIMARY == FALLBACK (복붙 의심)"
+            dup_found=1
           fi
+          if [ "$PRIMARY_HASH" = "$FALLBACK_2_HASH" ]; then
+            echo "::error::PRIMARY == FALLBACK_2 (복붙 의심)"
+            dup_found=1
+          fi
+          if [ "$FALLBACK_HASH" = "$FALLBACK_2_HASH" ]; then
+            echo "::error::FALLBACK == FALLBACK_2 (복붙 의심)"
+            dup_found=1
+          fi
+          [ "$dup_found" -eq 0 ] && echo "✅ 3개 키 모두 서로 다른 값"
+          exit $dup_found
 
       - name: Test PRIMARY key — ping Gemini API
         env:
           KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           CODE=$(curl -s -o /tmp/primary.json -w "%{http_code}" \
-            -X POST \
-            -H "Content-Type: application/json" \
+            -X POST -H "Content-Type: application/json" \
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
-            -d '{"contents":[{"parts":[{"text":"Reply with OK only."}]}]}')
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
           echo "HTTP: $CODE"
           if [ "$CODE" = "200" ]; then
-            echo "✅ PRIMARY key valid — API 호출 성공"
+            echo "✅ PRIMARY valid"
           elif [ "$CODE" = "429" ]; then
-            echo "⚠️  PRIMARY key quota 초과 (하지만 키 자체는 유효)"
-            head -c 300 /tmp/primary.json
+            echo "⚠️  PRIMARY quota 초과 (키 자체 유효)"
           else
-            echo "::error::PRIMARY key invalid (HTTP $CODE)"
-            head -c 500 /tmp/primary.json
-            exit 1
+            echo "::error::PRIMARY invalid (HTTP $CODE)"
+            head -c 500 /tmp/primary.json; exit 1
           fi
 
       - name: Test FALLBACK key — ping Gemini API
@@ -63,38 +74,73 @@ jobs:
           KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
         run: |
           CODE=$(curl -s -o /tmp/fallback.json -w "%{http_code}" \
-            -X POST \
-            -H "Content-Type: application/json" \
+            -X POST -H "Content-Type: application/json" \
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
-            -d '{"contents":[{"parts":[{"text":"Reply with OK only."}]}]}')
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
           echo "HTTP: $CODE"
           if [ "$CODE" = "200" ]; then
-            echo "✅ FALLBACK key valid — API 호출 성공"
+            echo "✅ FALLBACK valid"
           elif [ "$CODE" = "429" ]; then
-            echo "⚠️  FALLBACK key quota 초과 (하지만 키 자체는 유효)"
-            head -c 300 /tmp/fallback.json
+            echo "⚠️  FALLBACK quota 초과 (키 자체 유효)"
           else
-            echo "::error::FALLBACK key invalid (HTTP $CODE)"
-            head -c 500 /tmp/fallback.json
-            exit 1
+            echo "::error::FALLBACK invalid (HTTP $CODE)"
+            head -c 500 /tmp/fallback.json; exit 1
           fi
 
-      - name: buildClients simulation — gemini-client.mjs 로직 재현
+      - name: Test FALLBACK_2 key — ping Gemini API
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+        run: |
+          CODE=$(curl -s -o /tmp/fallback2.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "200" ]; then
+            echo "✅ FALLBACK_2 valid"
+          elif [ "$CODE" = "429" ]; then
+            echo "⚠️  FALLBACK_2 quota 초과 (키 자체 유효)"
+          else
+            echo "::error::FALLBACK_2 invalid (HTTP $CODE)"
+            head -c 500 /tmp/fallback2.json; exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: buildClients — gemini-client.mjs 실제 실행
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          GEMINI_API_KEY_FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: |
           node -e "
+            // 재현: scripts/lib/gemini-client.mjs buildClients 로직
             const primary = process.env.GEMINI_API_KEY;
-            const fallback = process.env.GEMINI_API_KEY_FALLBACK;
             const clients = ['primary'];
-            if (fallback && fallback !== primary) clients.push('fallback');
+            const seen = new Set([primary]);
+            const cand = [
+              ['fallback', process.env.GEMINI_API_KEY_FALLBACK],
+              ['fallback_2', process.env.GEMINI_API_KEY_FALLBACK_2],
+              ['fallback_3', process.env.GEMINI_API_KEY_FALLBACK_3],
+            ];
+            for (const [label, value] of cand) {
+              if (value && !seen.has(value)) {
+                clients.push(label);
+                seen.add(value);
+              }
+            }
             console.log('clients.length =', clients.length);
             console.log('clients:', clients.join(', '));
-            if (clients.length !== 2) {
-              console.error('::error::buildClients가 1개만 로드 — 워크플로 재현');
+            if (clients.length < 3) {
+              console.error('::error::3개 키 기대했는데 ' + clients.length + '개만 로드');
               process.exit(1);
             } else {
-              console.log('✅ buildClients가 2개 로드 — gemini-client 로직 정상');
+              console.log('✅ buildClients 가 ' + clients.length + '개 로드 — 로직 정상');
             }
           "
