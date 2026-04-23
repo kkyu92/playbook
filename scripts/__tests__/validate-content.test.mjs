@@ -165,6 +165,58 @@ describe("applyMermaidFixesToRaw — 슬라이싱 회귀 (Bug 1)", () => {
   });
 });
 
+describe("subgraph 공백 auto-quote (재발 3회 후 추가)", () => {
+  it("bare id 공백은 quoted 로 auto-fix", () => {
+    const code = `graph TD\n  A --> B\n  subgraph Data Flow\n    A\n    B\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(true);
+    expect(fixed).toContain('subgraph "Data Flow"');
+  });
+
+  it("auto-fix 후 idempotent — 5회 실행해도 따옴표 누적 없음", () => {
+    const code = `graph TD\n  subgraph Data Flow\n    A\n  end\n`;
+    let current = code;
+    current = fixAndValidateMermaid(current, "x").fixed; // 1st pass: fix
+    for (let i = 0; i < 5; i++) {
+      const { fixed, autoFixed } = fixAndValidateMermaid(current, "x");
+      expect(autoFixed).toBe(false);
+      expect(fixed).toBe(current);
+      current = fixed;
+    }
+    // 따옴표는 정확히 1쌍
+    expect(current.match(/subgraph\s+"/g)?.length).toBe(1);
+    expect(current).toContain('subgraph "Data Flow"');
+  });
+
+  it("공백 없는 id 는 변경 없음", () => {
+    const code = `graph TD\n  subgraph DataFlow\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(fixed).toBe(code);
+  });
+
+  it("이미 quoted subgraph 는 변경 없음", () => {
+    const code = `graph TD\n  subgraph "Data Flow"\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(fixed).toBe(code);
+  });
+
+  it("id + bracket label form 은 변경 없음", () => {
+    const code = `graph TD\n  subgraph DF ["Data Flow"]\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(fixed).toBe(code);
+  });
+
+  it("다중 단어 subgraph 도 auto-quote", () => {
+    const code = `graph TD\n  subgraph User Service Layer\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(true);
+    expect(fixed).toContain('subgraph "User Service Layer"');
+  });
+});
+
 describe("이미 손상된 파일 (Case 5 — 이전 세션의 자국)", () => {
   it("5쌍 누적된 따옴표 라벨은 정규식이 매치하지 않음 (추가 손상 X)", () => {
     // negative lookahead `(?!")` + 라벨에서 `"` 제외 덕분에 이미 `"` 로 시작하는
