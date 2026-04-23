@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-22T04:28:27.026Z
+Updated: 2026-04-23T02:17:55.184Z
 
-## 엔트리 (22개)
+## 엔트리 (25개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -36,6 +36,13 @@ Updated: 2026-04-22T04:28:27.026Z
 ### Infrastructure
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
+- [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
+
+### Frontend + AI
+- [AI 모델 추론 시각화 — 사용자 친화적 프론트엔드 디자인 패턴](wiki/frontend-ai/ai-inference-visualization-design-patterns) — confidence: 1, status: draft
+
+### Data Engineering
+- [LLM Fine-tuning — 고품질 데이터셋 전처리 및 정제 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement) — confidence: 1, status: draft
 
 ## 교차 참조 (connections 기반)
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
@@ -45,6 +52,7 @@ Updated: 2026-04-22T04:28:27.026Z
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/hub-worker-compounding-pattern
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/prompt-versioning-and-testing
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ frontend-ai/ai-inference-visualization-design-patterns
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/drift-detection-methodology
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/guard-test-pattern
@@ -62,6 +70,8 @@ Updated: 2026-04-22T04:28:27.026Z
 - context-engineering/ambient-knowledge-injection ↔ evaluation/llm-output-validation-quality-metrics-design
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- context-engineering/ambient-knowledge-injection ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
+- context-engineering/ambient-knowledge-injection ↔ frontend-ai/ai-inference-visualization-design-patterns
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
@@ -70,6 +80,12 @@ Updated: 2026-04-22T04:28:27.026Z
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-serverless-flush
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/guard-test-pattern
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
+- context-engineering/nextjs-instrumentation-location ↔ infrastructure/vercel-env-oauth-security-enhancement
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ evaluation/llm-output-validation-quality-metrics-design
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ prompt-engineering/prompt-versioning-and-testing
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ harness-engineering/drift-detection-methodology
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ harness-engineering/guard-test-pattern
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/drift-detection-methodology
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/guard-test-pattern
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/question-own-defaults
@@ -77,26 +93,26 @@ Updated: 2026-04-22T04:28:27.026Z
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/prompt-versioning-and-testing
 - evaluation/llm-output-validation-quality-metrics-design ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- evaluation/llm-output-validation-quality-metrics-design ↔ frontend-ai/ai-inference-visualization-design-patterns
+- frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- frontend-ai/ai-inference-visualization-design-patterns ↔ harness-engineering/guard-test-pattern
 - harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/guard-test-pattern
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/question-own-defaults
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/drift-detection-methodology ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
-- harness-engineering/guard-test-pattern ↔ infrastructure/sentry-serverless-flush
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
-- harness-engineering/guard-test-pattern ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/guard-test-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/guard-test-pattern ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/guard-test-pattern ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
@@ -107,14 +123,18 @@ Updated: 2026-04-22T04:28:27.026Z
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/question-own-defaults ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-003-drift-silent-bugs
+- infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-001-drift-greenfield
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-002-drift-existing-setup
