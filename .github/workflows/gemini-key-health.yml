@@ -1,0 +1,121 @@
+name: "🩺 Gemini Key Daily Health"
+
+# 매일 cron 으로 각 Gemini 키 × 주 모델 (gemini-2.5-flash) 1회 smoke.
+# 한 키라도 unhealthy (auth 실패 or limit:0) 시 Issue 생성.
+#
+# "사일런트 cron 실패" (drift Level 2) 방지 목적.
+# 포괄 검증은 workflow_dispatch 의 smoke-test-gemini-keys.yml 사용.
+
+on:
+  schedule:
+    # 매일 02:30 UTC (daily-ingest 02:00 직후 30분).
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 각 키 × gemini-2.5-flash 1회 smoke
+        id: smoke
+        env:
+          PRIMARY: ${{ secrets.GEMINI_API_KEY }}
+          FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+          FALLBACK_3: ${{ secrets.GEMINI_API_KEY_FALLBACK_3 }}
+        run: |
+          UNHEALTHY=""
+          REPORT=""
+
+          test_one() {
+            local name=$1 key=$2
+            [ -z "$key" ] && { REPORT="${REPORT}- ${name}: SKIP (unset)"$'\n'; return 0; }
+
+            local CODE
+            CODE=$(curl -s -o /tmp/r.json -w "%{http_code}" \
+              -X POST -H "Content-Type: application/json" \
+              "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$key" \
+              -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+
+            if [ "$CODE" = "200" ]; then
+              REPORT="${REPORT}- ${name}: ✅ HEALTHY"$'\n'
+              return 0
+            fi
+
+            if [ "$CODE" = "429" ]; then
+              local msg
+              msg=$(jq -r '.error.message' /tmp/r.json 2>/dev/null | head -c 200)
+              if echo "$msg" | grep -qi "limit: 0"; then
+                REPORT="${REPORT}- ${name}: ❌ limit:0 (quota 0 할당)"$'\n'
+                UNHEALTHY="${UNHEALTHY}${name} (limit:0) / "
+              else
+                REPORT="${REPORT}- ${name}: ⚠️ QUOTA_EXCEEDED (일일 한도 소진, 정상)"$'\n'
+              fi
+              return 0
+            fi
+
+            # 200 / 429 외 모두 unhealthy
+            local body
+            body=$(head -c 300 /tmp/r.json)
+            REPORT="${REPORT}- ${name}: ❌ HTTP ${CODE} — ${body}"$'\n'
+            UNHEALTHY="${UNHEALTHY}${name} (HTTP ${CODE}) / "
+          }
+
+          test_one PRIMARY "$PRIMARY"
+          test_one FALLBACK "$FALLBACK"
+          test_one FALLBACK_2 "$FALLBACK_2"
+          test_one FALLBACK_3 "$FALLBACK_3"
+
+          echo "===== Report ====="
+          echo "$REPORT"
+          echo "=================="
+
+          # GitHub Actions 출력용
+          {
+            echo "report<<REPORT_EOF"
+            echo "$REPORT"
+            echo "REPORT_EOF"
+            echo "unhealthy=${UNHEALTHY%/ }"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Unhealthy 시 Issue 생성 또는 갱신
+        if: steps.smoke.outputs.unhealthy != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UNHEALTHY: ${{ steps.smoke.outputs.unhealthy }}
+          REPORT: ${{ steps.smoke.outputs.report }}
+        run: |
+          TITLE="🩺 Gemini key unhealthy — ${UNHEALTHY}"
+          BODY=$(cat <<BODY_EOF
+          ## Health check 실패 (${GITHUB_WORKFLOW}, run #${GITHUB_RUN_NUMBER})
+
+          **Unhealthy 키**: \`${UNHEALTHY}\`
+
+          ### 전체 결과
+          ${REPORT}
+
+          ### 조치
+          1. [Actions run 로그](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) 확인
+          2. 의심되는 키 재검증: \`gh workflow run smoke-test-gemini-keys.yml\`
+          3. \`limit: 0\` 이면 → [해당 solution](../tree/main/docs/solutions/llm-generation/2026-04-23-model-tier-quota-per-account.md) 참조
+          4. 영구 복구 불가 시 해당 키 secret 제거 (코드는 자동으로 skip)
+
+          ---
+          자동 생성: \`gemini-key-health.yml\` · drift Level 2 감지 (사일런트 cron 실패 방지)
+          BODY_EOF
+          )
+
+          # 기존 open Issue 있으면 코멘트만 추가, 없으면 신규 생성
+          EXISTING=$(gh issue list --label gemini-health --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+          if [ -n "$EXISTING" ]; then
+            echo "기존 Issue #$EXISTING 에 코멘트 추가"
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            echo "신규 Issue 생성"
+            gh issue create --title "$TITLE" --body "$BODY" --label gemini-health || \
+              gh issue create --title "$TITLE" --body "$BODY"
+          fi

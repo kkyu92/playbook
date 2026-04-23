@@ -1,0 +1,144 @@
+name: "🧪 Smoke Test — Gemini Keys"
+
+# 신규 Gemini API 키 추가 또는 quota 정책 변경 의심 시 수동 실행.
+# 실행: Actions 탭 → Smoke Test — Gemini Keys → Run workflow
+#
+# 전파 이력: debug-gemini-keys.yml (2026-04-23, FALLBACK_2 limit:0 수사) → 영구 smoke test.
+# 정확한 진단 체크리스트: docs/solutions/llm-generation/2026-04-23-model-tier-quota-per-account.md
+#
+# 확인 항목:
+# 1. 각 키의 sha256 sanity (복붙 실수 방어)
+# 2. listModels (read-only, quota 무관) — auth / API enablement 검증
+# 3. 각 키 × [gemini-2.5-flash, gemini-2.0-flash] — 모델별 quota 할당 차이 감지
+#    (신규 계정은 legacy 모델 free tier quota 0 할당되는 경우 있음)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 키 sanity — non-empty + 서로 distinct
+        env:
+          PRIMARY: ${{ secrets.GEMINI_API_KEY }}
+          FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+          FALLBACK_3: ${{ secrets.GEMINI_API_KEY_FALLBACK_3 }}
+        run: |
+          HASHES=""
+
+          check() {
+            local name=$1 val=$2 required=$3
+            if [ -z "$val" ]; then
+              if [ "$required" = "yes" ]; then
+                echo "::error::$name is empty"
+                return 1
+              else
+                echo "ℹ️  $name: (unset — optional)"
+                return 0
+              fi
+            fi
+            local hash
+            hash=$(printf '%s' "$val" | sha256sum | cut -c1-16)
+            echo "$name  length: ${#val}, sha256[0:16]: $hash"
+            HASHES="$HASHES $hash"
+          }
+
+          check PRIMARY "$PRIMARY" yes || exit 1
+          check FALLBACK "$FALLBACK" no
+          check FALLBACK_2 "$FALLBACK_2" no
+          check FALLBACK_3 "$FALLBACK_3" no
+
+          total=$(echo "$HASHES" | tr ' ' '\n' | grep -v '^$' | wc -l | tr -d ' ')
+          uniq_count=$(echo "$HASHES" | tr ' ' '\n' | grep -v '^$' | sort -u | wc -l | tr -d ' ')
+          if [ "$uniq_count" != "$total" ]; then
+            echo "::error::중복 키 감지 ($total 중 unique $uniq_count)"
+            exit 1
+          fi
+          echo "✅ 등록된 $total 개 키 모두 서로 다른 값"
+
+      - name: Per-key — listModels + 모델별 호출
+        env:
+          PRIMARY: ${{ secrets.GEMINI_API_KEY }}
+          FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+          FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+          FALLBACK_3: ${{ secrets.GEMINI_API_KEY_FALLBACK_3 }}
+        run: |
+          test_model() {
+            local name=$1 key=$2 model=$3 is_primary=$4
+            local CODE
+            CODE=$(curl -s -o /tmp/r.json -w "%{http_code}" \
+              -X POST -H "Content-Type: application/json" \
+              "https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=$key" \
+              -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+            case "$CODE" in
+              200)
+                echo "  ✅ $model: HTTP 200"
+                ;;
+              429)
+                local qid
+                qid=$(jq -r '.error.details[]? | select(.["@type"] | contains("QuotaFailure")) | .violations[0].quotaId' /tmp/r.json 2>/dev/null | head -1)
+                local msg
+                msg=$(jq -r '.error.message' /tmp/r.json 2>/dev/null | head -c 120)
+                if echo "$msg" | grep -qi "limit: 0"; then
+                  if [ "$is_primary" = "true" ]; then
+                    echo "  ❌ $model: limit:0 (quotaId=$qid) — **주 모델 자격 없음**"
+                    echo "::error::[$name] 주 모델 ($model) quota 0 할당 — MODELS 재검토 필요"
+                  else
+                    echo "  ⚠️  $model: limit:0 — legacy/sunset 모델 정상 거부 (무관)"
+                  fi
+                else
+                  echo "  ⚠️  $model: 429 quota 소진 (quotaId=$qid) — 정상 일일 한도"
+                fi
+                ;;
+              404)
+                echo "  ℹ️  $model: 404 NOT_FOUND (deprecated)"
+                ;;
+              *)
+                echo "  ❌ $model: HTTP $CODE 예상 외"
+                head -c 300 /tmp/r.json
+                ;;
+            esac
+          }
+
+          test_key() {
+            local name=$1 key=$2
+            [ -z "$key" ] && { echo ""; echo "=== $name: SKIP (unset) ==="; return 0; }
+            echo ""
+            echo "=== $name ==="
+
+            local CODE
+            CODE=$(curl -s -o /tmp/m.json -w "%{http_code}" \
+              "https://generativelanguage.googleapis.com/v1beta/models?key=$key")
+            if [ "$CODE" != "200" ]; then
+              echo "::error::[$name] listModels 실패 (HTTP $CODE) — auth / API disabled 의심"
+              head -c 500 /tmp/m.json
+              return 1
+            fi
+            local models_count
+            models_count=$(jq '.models | length' /tmp/m.json 2>/dev/null || echo '?')
+            echo "  ✅ listModels: $models_count 모델 접근 가능"
+
+            test_model "$name" "$key" "gemini-2.5-flash" true
+            test_model "$name" "$key" "gemini-2.0-flash" false
+          }
+
+          test_key PRIMARY "$PRIMARY"
+          test_key FALLBACK "$FALLBACK"
+          test_key FALLBACK_2 "$FALLBACK_2"
+          test_key FALLBACK_3 "$FALLBACK_3"
+
+      - name: 해석 가이드
+        run: |
+          cat <<'EOF'
+
+          📖 해석:
+          - ✅ 주 모델 (gemini-2.5-flash) 200 — 키 정상 작동
+          - ⚠️  주 모델 429 quota 소진 — 오늘 이미 많이 씀, 내일 reset (정상)
+          - ❌ 주 모델 limit:0 — quota 0 할당 (billing/region 문제 or tier 박탈)
+          - ⚠️  legacy (gemini-2.0-flash) limit:0 — 신규 계정에서 정상 (코드에서 해당 모델 안 쓰면 무관)
+          - 404 — 모델 deprecated (1.5-flash 등)
+
+          신규 키 추가 시 주 모델 200 확인이 유일한 필수 조건.
+          EOF
