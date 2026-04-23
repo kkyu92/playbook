@@ -35,116 +35,142 @@ jobs:
           echo "FALLBACK    length: ${#FALLBACK}, sha256[0:16]: $FALLBACK_HASH"
           echo "FALLBACK_2  length: ${#FALLBACK_2}, sha256[0:16]: $FALLBACK_2_HASH"
 
-          dup_found=0
-          if [ "$PRIMARY_HASH" = "$FALLBACK_HASH" ]; then
-            echo "::error::PRIMARY == FALLBACK (복붙 의심)"
-            dup_found=1
-          fi
-          if [ "$PRIMARY_HASH" = "$FALLBACK_2_HASH" ]; then
-            echo "::error::PRIMARY == FALLBACK_2 (복붙 의심)"
-            dup_found=1
-          fi
-          if [ "$FALLBACK_HASH" = "$FALLBACK_2_HASH" ]; then
-            echo "::error::FALLBACK == FALLBACK_2 (복붙 의심)"
-            dup_found=1
-          fi
-          [ "$dup_found" -eq 0 ] && echo "✅ 3개 키 모두 서로 다른 값"
-          exit $dup_found
-
-      - name: Test PRIMARY key — ping Gemini API
-        env:
-          KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          CODE=$(curl -s -o /tmp/primary.json -w "%{http_code}" \
-            -X POST -H "Content-Type: application/json" \
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
-            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
-          echo "HTTP: $CODE"
-          if [ "$CODE" = "200" ]; then
-            echo "✅ PRIMARY valid"
-          elif [ "$CODE" = "429" ]; then
-            echo "⚠️  PRIMARY quota 초과 (키 자체 유효)"
-          else
-            echo "::error::PRIMARY invalid (HTTP $CODE)"
-            head -c 500 /tmp/primary.json; exit 1
-          fi
-
-      - name: Test FALLBACK key — ping Gemini API
-        env:
-          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
-        run: |
-          CODE=$(curl -s -o /tmp/fallback.json -w "%{http_code}" \
-            -X POST -H "Content-Type: application/json" \
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
-            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
-          echo "HTTP: $CODE"
-          if [ "$CODE" = "200" ]; then
-            echo "✅ FALLBACK valid"
-          elif [ "$CODE" = "429" ]; then
-            echo "⚠️  FALLBACK quota 초과 (키 자체 유효)"
-          else
-            echo "::error::FALLBACK invalid (HTTP $CODE)"
-            head -c 500 /tmp/fallback.json; exit 1
-          fi
-
-      - name: Test FALLBACK_2 key — ping Gemini API (deep)
+      - name: FALLBACK_2 — listModels (read-only, quota 무관 — auth 검증)
         env:
           KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: |
-          CODE=$(curl -s -o /tmp/fallback2.json -w "%{http_code}" \
+          echo "🔍 listModels — 키 자체 인증/API enablement 검증 (quota 소비 안 함)"
+          CODE=$(curl -s -o /tmp/models.json -w "%{http_code}" \
+            "https://generativelanguage.googleapis.com/v1beta/models?key=$KEY")
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "200" ]; then
+            echo "✅ 인증 성공 — API enable 됨, 키 유효"
+            echo "사용 가능 모델 수: $(jq '.models | length' /tmp/models.json 2>/dev/null || echo '?')"
+            echo "모델 이름 sample:"
+            jq -r '.models[0:5] | .[].name' /tmp/models.json 2>/dev/null || head -c 300 /tmp/models.json
+          else
+            echo "::error::listModels 실패 — 키 invalid 또는 API disabled"
+            head -c 1000 /tmp/models.json
+          fi
+
+      - name: FALLBACK_2 — gemini-1.5-flash (free tier 가장 관대)
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+        run: |
+          CODE=$(curl -s -o /tmp/f2_15flash.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "200" ]; then
+            echo "✅ gemini-1.5-flash 작동 → gemini-2.0-flash 만의 tier 제한"
+          else
+            echo "--- Response ---"
+            head -c 1500 /tmp/f2_15flash.json
+            echo ""
+          fi
+
+      - name: FALLBACK_2 — gemini-1.5-flash-8b
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+        run: |
+          CODE=$(curl -s -o /tmp/f2_8b.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "200" ]; then
+            echo "✅ gemini-1.5-flash-8b 작동"
+          else
+            head -c 1000 /tmp/f2_8b.json
+            echo ""
+          fi
+
+      - name: FALLBACK_2 — gemini-2.0-flash (전체 body 덤프)
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+        run: |
+          CODE=$(curl -s -o /tmp/f2_20flash.json -w "%{http_code}" \
             -X POST -H "Content-Type: application/json" \
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
             -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
           echo "HTTP: $CODE"
-          echo "--- Response body (first 800 chars) ---"
-          head -c 800 /tmp/fallback2.json
+          echo "--- Full body ---"
+          cat /tmp/f2_20flash.json
           echo ""
-          echo "--- end ---"
+          echo "--- Parsed quota details ---"
+          jq '.error.details[]? | select(.["@type"] | contains("QuotaFailure"))' /tmp/f2_20flash.json 2>/dev/null || echo "(no quota details)"
+          echo "--- Retry info ---"
+          jq '.error.details[]? | select(.["@type"] | contains("RetryInfo"))' /tmp/f2_20flash.json 2>/dev/null || echo "(no retry info)"
+
+      - name: FALLBACK_2 — gemini-2.5-flash
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+        run: |
+          CODE=$(curl -s -o /tmp/f2_25flash.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+          echo "HTTP: $CODE"
           if [ "$CODE" = "200" ]; then
-            echo "✅ FALLBACK_2 valid"
-          elif [ "$CODE" = "429" ]; then
-            echo "⚠️  FALLBACK_2 HTTP 429 — 위 body 의 quotaId / limit 확인"
+            echo "✅ gemini-2.5-flash 작동"
           else
-            echo "::error::FALLBACK_2 invalid (HTTP $CODE)"
-            exit 1
+            head -c 1000 /tmp/f2_25flash.json
+            echo ""
           fi
 
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: buildClients — gemini-client.mjs 실제 실행
+      - name: FALLBACK_2 — retry-after 패턴 확인 (2회 연속 호출)
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_API_KEY_FALLBACK: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
-          GEMINI_API_KEY_FALLBACK_2: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: |
-          node -e "
-            // 재현: scripts/lib/gemini-client.mjs buildClients 로직
-            const primary = process.env.GEMINI_API_KEY;
-            const clients = ['primary'];
-            const seen = new Set([primary]);
-            const cand = [
-              ['fallback', process.env.GEMINI_API_KEY_FALLBACK],
-              ['fallback_2', process.env.GEMINI_API_KEY_FALLBACK_2],
-              ['fallback_3', process.env.GEMINI_API_KEY_FALLBACK_3],
-            ];
-            for (const [label, value] of cand) {
-              if (value && !seen.has(value)) {
-                clients.push(label);
-                seen.add(value);
-              }
-            }
-            console.log('clients.length =', clients.length);
-            console.log('clients:', clients.join(', '));
-            if (clients.length < 3) {
-              console.error('::error::3개 키 기대했는데 ' + clients.length + '개만 로드');
-              process.exit(1);
-            } else {
-              console.log('✅ buildClients 가 ' + clients.length + '개 로드 — 로직 정상');
-            }
-          "
+          echo "=== 호출 1 ==="
+          curl -s -o /tmp/r1.json -w "HTTP: %{http_code}\n" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Hi"}]}]}'
+          R1=$(jq -r '.error.details[]? | select(.["@type"] | contains("RetryInfo")) | .retryDelay' /tmp/r1.json 2>/dev/null)
+          echo "retryDelay #1: $R1"
+
+          echo "=== 2초 대기 ==="
+          sleep 2
+
+          echo "=== 호출 2 ==="
+          curl -s -o /tmp/r2.json -w "HTTP: %{http_code}\n" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Hi"}]}]}'
+          R2=$(jq -r '.error.details[]? | select(.["@type"] | contains("RetryInfo")) | .retryDelay' /tmp/r2.json 2>/dev/null)
+          echo "retryDelay #2: $R2"
+
+          echo ""
+          echo "해석:"
+          echo "  동일값 반복 → quota 할당 자체가 0 (tier 문제)"
+          echo "  감소 → 정상 rate limit (시간 지나면 회복)"
+
+      - name: PRIMARY — gemini-2.0-flash (비교용)
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          CODE=$(curl -s -o /tmp/pri.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Hi"}]}]}')
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "429" ]; then
+            echo "--- quotaId (비교용) ---"
+            jq '.error.details[]? | select(.["@type"] | contains("QuotaFailure")) | .violations[]? | {quotaMetric, quotaId}' /tmp/pri.json 2>/dev/null
+          fi
+
+      - name: FALLBACK — gemini-2.0-flash (비교용)
+        env:
+          KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK }}
+        run: |
+          CODE=$(curl -s -o /tmp/fb.json -w "%{http_code}" \
+            -X POST -H "Content-Type: application/json" \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
+            -d '{"contents":[{"parts":[{"text":"Hi"}]}]}')
+          echo "HTTP: $CODE"
+          if [ "$CODE" = "429" ]; then
+            echo "--- quotaId (비교용) ---"
+            jq '.error.details[]? | select(.["@type"] | contains("QuotaFailure")) | .violations[]? | {quotaMetric, quotaId}' /tmp/fb.json 2>/dev/null
+          fi
