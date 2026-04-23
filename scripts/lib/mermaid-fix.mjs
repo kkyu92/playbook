@@ -29,7 +29,7 @@ export function fixAndValidateMermaid(code, filename) {
   let fixed = code;
   const errors = [];
 
-  // AUTO-FIX: 노드 라벨의 괄호를 따옴표로 감싸기
+  // AUTO-FIX #1: 노드 라벨의 괄호를 따옴표로 감싸기
   // 패턴: A[label (with parens)] → A["label (with parens)"]
   // ⚠️ 이미 따옴표가 있는 라벨은 건너뛰어야 함 (negative lookahead `(?!")`).
   //    안 그러면 매 실행마다 따옴표가 누적: D["x"] → D[""x""] → D["""x"""] ...
@@ -37,6 +37,26 @@ export function fixAndValidateMermaid(code, filename) {
     /([A-Z]\d*)\[(?!")([^\[\]"]*\([^\[\]"]*\)[^\[\]"]*)\]/g,
     '$1["$2"]',
   );
+
+  // AUTO-FIX #2: subgraph 공백 bare id → quoted
+  // 패턴: `subgraph Data Flow` → `subgraph "Data Flow"`
+  // Skip: 이미 quoted, id + bracket label, 공백 없는 id, bracket/brace 포함
+  fixed = fixed
+    .split("\n")
+    .map((line) => {
+      const m = line.match(/^(\s*)subgraph\s+(.+?)\s*$/);
+      if (!m) return line;
+      const indent = m[1];
+      const rest = m[2];
+      if (/^".+"$/.test(rest)) return line; // 이미 quoted
+      if (/^[\w-]+$/.test(rest)) return line; // id only (공백 없음)
+      if (/^\w+\s*\[".+"\]$/.test(rest)) return line; // id ["label"] form
+      if (/\s/.test(rest) && !/[\[\]{}]/.test(rest)) {
+        return `${indent}subgraph "${rest}"`;
+      }
+      return line;
+    })
+    .join("\n");
 
   const fixedLines = fixed.split("\n");
   const fixedContent = fixed;
