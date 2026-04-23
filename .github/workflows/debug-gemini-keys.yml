@@ -87,7 +87,7 @@ jobs:
             head -c 500 /tmp/fallback.json; exit 1
           fi
 
-      - name: Test FALLBACK_2 key — ping Gemini API
+      - name: Test FALLBACK_2 key — ping Gemini API (deep)
         env:
           KEY: ${{ secrets.GEMINI_API_KEY_FALLBACK_2 }}
         run: |
@@ -96,13 +96,17 @@ jobs:
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$KEY" \
             -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
           echo "HTTP: $CODE"
+          echo "--- Response body (first 800 chars) ---"
+          head -c 800 /tmp/fallback2.json
+          echo ""
+          echo "--- end ---"
           if [ "$CODE" = "200" ]; then
             echo "✅ FALLBACK_2 valid"
           elif [ "$CODE" = "429" ]; then
-            echo "⚠️  FALLBACK_2 quota 초과 (키 자체 유효)"
+            echo "⚠️  FALLBACK_2 HTTP 429 — 위 body 의 quotaId / limit 확인"
           else
             echo "::error::FALLBACK_2 invalid (HTTP $CODE)"
-            head -c 500 /tmp/fallback2.json; exit 1
+            exit 1
           fi
 
       - name: Checkout
