@@ -21,6 +21,7 @@
     "embed-content": "node scripts/embed-content.mjs",
     "search": "node scripts/search.mjs",
     "scan-promotions": "node scripts/scan-promotions.mjs",
+    "category-rebalance": "node scripts/category-rebalance.mjs",
     "scout-geeknews": "node scripts/scout-geeknews.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
