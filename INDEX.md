@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-23T02:17:55.184Z
+Updated: 2026-04-24T02:14:17.458Z
 
-## 엔트리 (25개)
+## 엔트리 (29개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -13,6 +13,7 @@ Updated: 2026-04-23T02:17:55.184Z
 
 ### Harness Engineering
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
+- [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
@@ -27,10 +28,12 @@ Updated: 2026-04-23T02:17:55.184Z
 - [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
 
 ### Agents
+- [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
 - [Kimi K2.6: 오픈소스 에이전트형 코딩 모델 실전 통합 전략](wiki/agents/kimi-k2-6-open-source-agentic-coding-exploration) — confidence: 1, status: draft
 - [Qwen3.6-Max-Preview LLM — 에이전틱 코딩 및 지시 이행 성능 평가](wiki/agents/qwen3-6-max-preview-llm-agentic-coding-evaluation) — confidence: 1, status: draft
 
 ### Evaluation
+- [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 
 ### Infrastructure
@@ -41,10 +44,20 @@ Updated: 2026-04-23T02:17:55.184Z
 ### Frontend + AI
 - [AI 모델 추론 시각화 — 사용자 친화적 프론트엔드 디자인 패턴](wiki/frontend-ai/ai-inference-visualization-design-patterns) — confidence: 1, status: draft
 
+### Project Ops
+- [AI 프로젝트 기획 및 로드맵 — 성공적인 초기 전략 수립](wiki/project-ops/ai-project-planning-roadmap-initial-strategy) — confidence: 1, status: draft
+
 ### Data Engineering
 - [LLM Fine-tuning — 고품질 데이터셋 전처리 및 정제 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement) — confidence: 1, status: draft
 
 ## 교차 참조 (connections 기반)
+- agents/google-agents-cli-agent-development-acceleration ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
+- agents/google-agents-cli-agent-development-acceleration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
+- agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/hub-worker-compounding-pattern
+- agents/google-agents-cli-agent-development-acceleration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- agents/google-agents-cli-agent-development-acceleration ↔ evaluation/llm-output-validation-quality-metrics-design
+- agents/google-agents-cli-agent-development-acceleration ↔ context-engineering/ambient-knowledge-injection
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/drift-detection-methodology
@@ -53,6 +66,8 @@ Updated: 2026-04-23T02:17:55.184Z
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/prompt-versioning-and-testing
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ frontend-ai/ai-inference-visualization-design-patterns
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/drift-detection-methodology
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/guard-test-pattern
@@ -60,6 +75,7 @@ Updated: 2026-04-23T02:17:55.184Z
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/prompt-versioning-and-testing
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ context-engineering/ambient-knowledge-injection
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/ambient-knowledge-injection ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -72,6 +88,7 @@ Updated: 2026-04-23T02:17:55.184Z
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - context-engineering/ambient-knowledge-injection ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/ai-inference-visualization-design-patterns
+- context-engineering/ambient-knowledge-injection ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
@@ -86,36 +103,43 @@ Updated: 2026-04-23T02:17:55.184Z
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ prompt-engineering/prompt-versioning-and-testing
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ harness-engineering/drift-detection-methodology
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ harness-engineering/guard-test-pattern
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ project-ops/ai-project-planning-roadmap-initial-strategy
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-output-validation-quality-metrics-design
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/guard-test-pattern
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/drift-detection-methodology
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/drift-detection-methodology
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/guard-test-pattern
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/question-own-defaults
-- evaluation/llm-output-validation-quality-metrics-design ↔ journal/playbook-journal-003-drift-silent-bugs
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/prompt-versioning-and-testing
 - evaluation/llm-output-validation-quality-metrics-design ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - evaluation/llm-output-validation-quality-metrics-design ↔ frontend-ai/ai-inference-visualization-design-patterns
+- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ harness-engineering/guard-test-pattern
-- harness-engineering/drift-detection-methodology ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
-- harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/guard-test-pattern
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/question-own-defaults
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/drift-detection-methodology ↔ infrastructure/vercel-env-oauth-security-enhancement
-- harness-engineering/guard-test-pattern ↔ harness-engineering/hub-worker-compounding-pattern
-- harness-engineering/guard-test-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
+- harness-engineering/drift-detection-methodology ↔ project-ops/ai-project-planning-roadmap-initial-strategy
+- harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ harness-engineering/guard-test-pattern
+- harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/guard-test-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/guard-test-pattern ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/guard-test-pattern ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
-- harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-000-bootstrap
-- harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-001-drift-greenfield
 - harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/hub-worker-compounding-pattern ↔ infrastructure/sentry-serverless-flush
 - harness-engineering/hub-worker-compounding-pattern ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
@@ -140,10 +164,12 @@ Updated: 2026-04-23T02:17:55.184Z
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-002-drift-existing-setup
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-004-drift-half-working
+- journal/playbook-journal-000-bootstrap ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-002-drift-existing-setup
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-004-drift-half-working
 - journal/playbook-journal-003-drift-silent-bugs ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - prompt-engineering/llm-prompt-optimization-role-definition-constraint-design ↔ prompt-engineering/prompt-versioning-and-testing
