@@ -62,6 +62,28 @@ jobs:
             TABLE="$TABLE\n| $CAT | $COUNT | $TYPE | \`$LOC\` |"
           done < <(echo "$RESULT" | jq -c '.promotable[]')
 
+          # 카테고리별 대응 체크리스트 생성 (A4)
+          CHECKLIST=""
+          while IFS= read -r line; do
+            CAT=$(echo "$line" | jq -r '.category')
+            COUNT=$(echo "$line" | jq -r '.count')
+            TYPE=$(echo "$line" | jq -r '.type')
+            LOC=$(echo "$line" | jq -r '.location')
+            REASON=$(echo "$line" | jq -r '.reason')
+            CT_PATH="docs/solutions/$CAT/_compiled-truth.md"
+            CT_EXISTS="작성/갱신"
+            [ -f "$CT_PATH" ] && CT_EXISTS="갱신" || CT_EXISTS="신규 작성"
+
+            CHECKLIST="$CHECKLIST\n\n**[${CAT}] — ${TYPE} 승격 후보 (${COUNT}건)**"
+            CHECKLIST="$CHECKLIST\n- [ ] \`$CT_PATH\` $CT_EXISTS"
+            CHECKLIST="$CHECKLIST\n  - [ ] 종합 header: N = $COUNT, 최종 갱신 = $DATE, 마지막 발생 날짜 업데이트"
+            CHECKLIST="$CHECKLIST\n  - [ ] 주요 교훈 요약 테이블 행 추가/갱신 (솔루션당 1행)"
+            CHECKLIST="$CHECKLIST\n  - [ ] 메타 패턴 추출 (2건+ 교차 관찰되는 상위 패턴만)"
+            CHECKLIST="$CHECKLIST\n  - [ ] 현재 최선 해결책 / 코드 게이트 상태 기술"
+            CHECKLIST="$CHECKLIST\n- [ ] 승격 검토: \`$LOC\`"
+            CHECKLIST="$CHECKLIST\n  - 근거: $REASON"
+          done < <(echo "$RESULT" | jq -c '.promotable[]')
+
           EXISTING=$(gh issue list --label "promotion-scan" --state open --json number --jq '.[0].number // empty')
 
           BODY=$(cat <<EOF
@@ -77,11 +99,16 @@ jobs:
 
           $(echo "$RESULT" | jq -r '.categories[] | "- **\(.name)**: \(.count)건\(if .promotable then " ✅" else "" end)"')
 
+          ### 📋 대응 체크리스트
+          $(echo -e "$CHECKLIST")
+
+          - [ ] 완료 후 이 Issue close
+
           ---
 
-          > 승격 작업: 해당 카테고리를 hook/command/lib 로 올릴 수 있는지 검토.
           > 자동 스캔: docs/solutions/ 변경 시 + 매주 월요일 09:00 KST
-          > 참조: \`docs/solutions/README.md\` 스키마
+          > 스키마: \`docs/solutions/README.md\`
+          > \`_compiled-truth.md\` 작성은 사람이 수행 (LLM 자동 생성은 품질 검증 실패로 폐기, 2026-04-24)
           EOF
           )
 

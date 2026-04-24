@@ -122,7 +122,7 @@ export async function generateStructured({ prompt, responseSchema, parse, valida
         return parsed;
       } catch (err) {
         lastErr = err;
-        console.warn(`⚠️  [${label}] Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${(err.message || "").slice(0, 120)}`);
+        console.warn(`⚠️  [${label}] Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${(err.message || "").slice(0, 300)}`);
 
         // Daily quota 감지 → 즉시 다음 key 전환 (backoff 무의미)
         if (hasMoreKeys && isDailyQuotaError(err)) {
