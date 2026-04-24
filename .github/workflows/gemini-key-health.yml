@@ -8,8 +8,10 @@ name: "🩺 Gemini Key Daily Health"
 
 on:
   schedule:
-    # 매일 02:30 UTC (daily-ingest 02:00 직후 30분).
-    - cron: "30 2 * * *"
+    # 매일 02:37 UTC (daily-ingest 02:00 직후).
+    # 37분 오프셋 — hour boundary (02:30/02:00) 과부하 skip 회피.
+    # 2026-04-24 02:30Z 실제 skip 관측 후 조정 (weekly-triage 의 5분 오프셋 선례).
+    - cron: "37 2 * * *"
   workflow_dispatch:
 
 permissions:
