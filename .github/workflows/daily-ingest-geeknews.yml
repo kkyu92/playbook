@@ -93,7 +93,10 @@ jobs:
         if: always() && steps.changes.outputs.has_changes == 'true'
         id: pr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GH_PAT 필수: GITHUB_TOKEN 으로 만든 PR 은 CI 를 트리거하지 않음
+          # (GitHub 무한루프 방지). fallback 으로 GITHUB_TOKEN 유지하지만
+          # 그 경우 action_required 상태로 차단됨.
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           # 시간대 suffix 로 같은 날 재실행 충돌 방지
           DATE=$(TZ=Asia/Seoul date +%Y%m%d-%H%M)

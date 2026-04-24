@@ -79,7 +79,9 @@ jobs:
           WD_SEVERITY: ${{ inputs.severity }}
           WD_FINGERPRINT: ${{ inputs.fingerprint }}
           WD_INTENT: ${{ inputs.intent }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GH_PAT 필수: 이 스텝 안에서 gh pr create 실행. GITHUB_TOKEN 으로
+          # 만든 PR 은 CI 가 트리거되지 않음 (action_required 로 차단).
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
