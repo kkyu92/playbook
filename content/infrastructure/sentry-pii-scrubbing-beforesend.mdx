@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, context-engineering/ambient-knowledge-injection, journal/playbook-journal-003-drift-silent-bugs, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-serverless-flush, harness-engineering/guard-test-pattern, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security, infrastructure/vercel-env-oauth-security-enhancement]
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, context-engineering/ambient-knowledge-injection, journal/playbook-journal-003-drift-silent-bugs, context-engineering/nextjs-instrumentation-location, infrastructure/sentry-serverless-flush, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security, infrastructure/vercel-env-oauth-security-enhancement]
 status: complete
 description: Sentry 대시보드의 Additional Sensitive Fields 는 user/contexts/tags/extras 의 깊이 매칭이 부정확. 디폴트 @password/@ip/@bearer 규칙이 이름에 'auth'/'ip'/'bearer' 포함된 케이스만 우연히 커버. 신뢰할 수 있는 PII 가드는 beforeSend 훅 + 재귀 walk + 코드화된 SENSITIVE_KEYS.
 type: entry
