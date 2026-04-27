@@ -1,5 +1,5 @@
 {
   "$schema": "본 파일은 content frontmatter 의 workers 필드 검증 기준. 레포 내 진실 소스라 머신 무관. hub-sync-rules 의 ~/.config/claude-hub/projects.conf 와는 별 (이쪽은 머신 로컬 path 정보).",
-  "registered": ["playbook", "moneyball"],
+  "registered": ["playbook", "moneyball", "blog-autopilot"],
   "special": ["all"]
 }

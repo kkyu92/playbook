@@ -29,7 +29,8 @@ bash ~/bin/hub-sync-rules
 playbook/shared-rules/
 ├── common/             # 모든 워커 공통 — Vercel 제한, 세션 전환 기준 등
 ├── playbook/           # playbook 전용 — MDX 파이프라인, 비공개 인증 등
-└── moneyball/          # moneyball 전용 — 스크래핑 제약, scoring 로직 등
+├── moneyball/          # moneyball 전용 — 스크래핑 제약, scoring 로직 등
+└── blog-autopilot/     # blog-autopilot 전용 — (워커 작업 진행 시 채워짐)
 ```
 
 디렉토리 이름은 `projects.conf` 의 `name:` 필드와 정확히 일치해야 함.

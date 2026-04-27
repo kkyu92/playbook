@@ -1,6 +1,6 @@
 # /projects-sync — 허브 세션의 워커 프로젝트 read-only 진단
 
-이 playbook 세션은 *허브*로서 moneyballscore *워커* 프로젝트를 분석/연구한다.
+이 playbook 세션은 *허브*로서 moneyballscore / blog-autopilot *워커* 프로젝트를 분석/연구한다.
 워커 프로젝트는 별도 Claude 세션이 동시에 작업할 수 있다.
 
 이 커맨드는 **쓰기 0, 읽기만** 수행하는 안전한 진단 도구다.
@@ -11,6 +11,7 @@
 ```
 /projects-sync
 /projects-sync moneyball        # moneyballscore
+/projects-sync blog-autopilot   # blog-autopilot
 ```
 
 ## 왜 이 커맨드가 필요한가
@@ -92,7 +93,11 @@ moneyballscore (✅ | ⚠️)
   최근 open PR:      없음
   다른 세션 흔적:    없음
 
-요약: moneyballscore은 안전.
+blog-autopilot (✅ | ⚠️)
+──────────────────────
+  (동일 형식)
+
+요약: 모든 워커 안전.
 ```
 
 ## 금지 사항

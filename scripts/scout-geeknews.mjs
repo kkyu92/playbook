@@ -55,6 +55,12 @@ const PROJECTS = [
 - 실 상용 워커 — playbook 에 lesson:/error dispatch 발생 소스
 관심: 데이터 파이프라인, 관측 / silent 실패 방어, CI race condition, LLM 기반 분석, 시계열 데이터`,
   },
+  {
+    id: "blog-autopilot",
+    repo: "kkyu92/blog-autopilot",
+    name: "blog-autopilot",
+    direction: `키워드 트렌드 기반 블로그 자동화 워커 (playbook 의 2번 워커).`,
+  },
 ];
 
 // ─── Gemini 매칭 (wrapExternalContent + responseSchema) ──────────
