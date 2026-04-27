@@ -1,0 +1,127 @@
+name: PAT Expiry Check
+
+on:
+  schedule:
+    # 매주 토요일 KST 09:00 의도 = UTC 토요일 00:00.
+    # GitHub scheduler 평균 +2~3h 지연 → -3h offset = UTC 금요일 21:00.
+    - cron: '0 21 * * 5'
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure pat-expiry label
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh label create pat-expiry \
+            --repo "$GITHUB_REPOSITORY" \
+            --description "GH_PAT 만료 알림" \
+            --color FFA500 \
+            2>/dev/null || true
+
+      - name: Inspect GH_PAT expiry
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          THRESHOLD_DAYS: 14
+        run: |
+          set -euo pipefail
+
+          # Fine-grained PAT 응답 헤더: github-authentication-token-expiration
+          # 포맷: "2027-04-27 10:30:00 UTC"
+          # Classic PAT (만료 무한정) 일 경우 헤더 없음 → fine-grained 전환 미완료 신호
+          EXPIRY=$(gh api /user -i 2>/dev/null \
+            | grep -i "^github-authentication-token-expiration:" \
+            | cut -d: -f2- \
+            | xargs || true)
+
+          if [ -z "$EXPIRY" ]; then
+            echo "::warning::응답 헤더에 만료 정보 없음 — Classic PAT 가능성 (T5 fine-grained 전환 미완료)"
+
+            EXISTING=$(gh issue list \
+              --repo "$GITHUB_REPOSITORY" \
+              --label pat-expiry \
+              --state open \
+              --search "Classic PAT" \
+              --json number \
+              --jq '.[0].number // empty')
+
+            if [ -z "$EXISTING" ]; then
+              gh issue create \
+                --repo "$GITHUB_REPOSITORY" \
+                --title "🔧 GH_PAT 가 Classic PAT 인 듯 — fine-grained 전환 필요 (T5)" \
+                --label pat-expiry \
+                --body "PAT expiry 워크플로가 \`github-authentication-token-expiration\` 응답 헤더를 못 찾음.
+
+## 원인 후보
+- Classic PAT 사용 중 (만료 무한정 가능 → 헤더 없음)
+- Fine-grained 발행 후 Secret 교체 누락
+
+## 조치
+1. https://github.com/settings/personal-access-tokens 에서 fine-grained PAT 발행
+2. 권한: Contents / Pull requests / Issues / Workflows = Write, Metadata = Read
+3. Selected repositories: \`kkyu92/playbook\`
+4. Repo Settings → Secrets → \`GH_PAT\` 값 교체
+5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → 헤더 정상 시 이 Issue auto-close 검토"
+            fi
+            exit 0
+          fi
+
+          echo "GH_PAT 만료일: $EXPIRY"
+
+          EXPIRY_TS=$(date -d "$EXPIRY" +%s)
+          NOW_TS=$(date +%s)
+          DAYS_LEFT=$(( (EXPIRY_TS - NOW_TS) / 86400 ))
+
+          echo "남은 일수: ${DAYS_LEFT}일 (임계값: ${THRESHOLD_DAYS}일)"
+
+          if [ "$DAYS_LEFT" -gt "$THRESHOLD_DAYS" ]; then
+            echo "OK — 임계값 초과, Issue 생성 안 함"
+            exit 0
+          fi
+
+          ISSUE_TITLE="⚠️ GH_PAT 만료까지 ${DAYS_LEFT}일 남음 (${EXPIRY})"
+
+          EXISTING=$(gh issue list \
+            --repo "$GITHUB_REPOSITORY" \
+            --label pat-expiry \
+            --state open \
+            --search "만료까지" \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" \
+              --repo "$GITHUB_REPOSITORY" \
+              --body "Re-check: ${DAYS_LEFT}일 남음 (만료 ${EXPIRY})"
+          else
+            gh issue create \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "$ISSUE_TITLE" \
+              --label pat-expiry \
+              --body "## GH_PAT 만료 알림
+
+- **만료일**: ${EXPIRY}
+- **남은 일수**: ${DAYS_LEFT}일
+- **임계값**: ${THRESHOLD_DAYS}일
+
+## 갱신 절차
+
+1. https://github.com/settings/personal-access-tokens 에서 새 fine-grained PAT 발행 (만료 1년)
+2. 권한:
+   - Contents = Read and write
+   - Pull requests = Read and write
+   - Issues = Read and write
+   - Workflows = Read and write
+   - Metadata = Read (자동)
+3. Selected repositories: \`kkyu92/playbook\`
+4. Repo Settings → Secrets → \`GH_PAT\` 값 교체
+5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → ${THRESHOLD_DAYS}일 초과 확인 후 이 Issue close
+
+매주 토요일 KST 09:00 재확인 (Issue 존재 시 comment 추가)."
+          fi
