@@ -5,7 +5,7 @@ on:
     # 매주 토요일 KST 09:00 의도 = UTC 토요일 00:00.
     # GitHub scheduler 평균 +2~3h 지연 → -3h offset = UTC 금요일 21:00.
     - cron: '0 21 * * 5'
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   issues: write
