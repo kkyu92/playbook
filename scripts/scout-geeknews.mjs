@@ -59,7 +59,14 @@ const PROJECTS = [
     id: "blog-autopilot",
     repo: "kkyu92/blog-autopilot",
     name: "blog-autopilot",
-    direction: `키워드 트렌드 기반 블로그 자동화 워커 (playbook 의 2번 워커).`,
+    direction: `키워드 트렌드 기반 블로그 자동화 워커 (playbook 의 2번 워커).
+- 트렌드 수집 파이프라인 (Google Trends + 4-source AS aggregator: 부동산뉴스 / 정책브리핑 / 청약Home)
+- Claude API 기반 콘텐츠 생성 (6 niches, 300+ 단어, 자연 SEO)
+- SQLite 발행 추적 + semantic dedup (Xenova multilingual-e5-small 로컬 임베딩)
+- Blogger API v3 자동 발행 (8 슬롯/일, OAuth 토큰 관리)
+- Next.js 15 + better-sqlite3 + GitHub Actions self-hosted runner (home-mbp)
+- 실 상용 워커 — Phase 1 운영 중 (2026-04-27 첫 풀 발행 9건 cover)
+관심: 키워드 트렌드 분석, semantic dedup, 자동 콘텐츠 파이프라인, self-hosted runner, OAuth 토큰 만료 관리, 4-source aggregation`,
   },
 ];
 
