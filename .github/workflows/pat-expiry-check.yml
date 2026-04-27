@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Ensure pat-expiry label
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           gh label create pat-expiry \
             --repo "$GITHUB_REPOSITORY" \
@@ -27,50 +27,86 @@ jobs:
 
       - name: Inspect GH_PAT expiry
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          # Fallback: GH_PAT 미설정/만료 시에도 워크플로 자체는 GITHUB_TOKEN 으로 진행
+          # (Issue 생성/comment 가능 → 사용자에게 가시화)
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GH_PAT_RAW: ${{ secrets.GH_PAT }}
           THRESHOLD_DAYS: 14
         run: |
           set -euo pipefail
 
+          # 진단 1: GH_PAT secret 자체 설정 여부
+          if [ -z "${GH_PAT_RAW:-}" ]; then
+            TOKEN_STATE="missing"
+            echo "::warning::GH_PAT secret 미설정 — GITHUB_TOKEN fallback 사용 중"
+          else
+            TOKEN_STATE="present"
+          fi
+
+          # 진단 2: 응답 헤더로 fine-grained 여부 확인
           # Fine-grained PAT 응답 헤더: github-authentication-token-expiration
           # 포맷: "2027-04-27 10:30:00 UTC"
-          # Classic PAT (만료 무한정) 일 경우 헤더 없음 → fine-grained 전환 미완료 신호
-          EXPIRY=$(gh api /user -i 2>/dev/null \
-            | grep -i "^github-authentication-token-expiration:" \
-            | cut -d: -f2- \
-            | xargs || true)
+          # Classic PAT 또는 GITHUB_TOKEN 사용 시 헤더 없음
+          EXPIRY=""
+          if [ "$TOKEN_STATE" = "present" ]; then
+            EXPIRY=$(GH_TOKEN="$GH_PAT_RAW" gh api /user -i 2>/dev/null \
+              | grep -i "^github-authentication-token-expiration:" \
+              | cut -d: -f2- \
+              | xargs || true)
+          fi
 
           if [ -z "$EXPIRY" ]; then
-            echo "::warning::응답 헤더에 만료 정보 없음 — Classic PAT 가능성 (T5 fine-grained 전환 미완료)"
+            case "$TOKEN_STATE" in
+              missing)
+                CAUSE="GH_PAT secret 미설정 또는 빈 값"
+                TITLE="🚨 GH_PAT secret 미설정 — fine-grained 전환 필요 (T5)"
+                ;;
+              present)
+                CAUSE="GH_PAT 가 Classic PAT 거나 만료/무효 (헤더 없음)"
+                TITLE="🔧 GH_PAT 가 Classic 또는 무효 — fine-grained 전환 필요 (T5)"
+                ;;
+            esac
+
+            echo "::warning::${CAUSE}"
 
             EXISTING=$(gh issue list \
               --repo "$GITHUB_REPOSITORY" \
               --label pat-expiry \
               --state open \
-              --search "Classic PAT" \
+              --search "fine-grained 전환 필요" \
               --json number \
               --jq '.[0].number // empty')
 
             if [ -z "$EXISTING" ]; then
-              cat > /tmp/pat-classic-body.md <<'BODY'
-          PAT expiry 워크플로가 `github-authentication-token-expiration` 응답 헤더를 못 찾음.
+              cat > /tmp/pat-issue-body.md <<BODY
+          PAT expiry 워크플로 진단:
 
-          ## 원인 후보
-          - Classic PAT 사용 중 (만료 무한정 가능 → 헤더 없음)
+          - **Token 상태**: ${TOKEN_STATE}
+          - **원인**: ${CAUSE}
+
+          ## 가능한 케이스
+          - GH_PAT secret 미설정/빈 값
+          - Classic PAT 사용 중 (만료 무한정 가능 → 응답 헤더 없음)
+          - 만료/revoke 된 토큰
           - Fine-grained 발행 후 Secret 교체 누락
 
           ## 조치
-          1. https://github.com/settings/personal-access-tokens 에서 fine-grained PAT 발행
-          2. 권한: Contents / Pull requests / Issues / Workflows = Write, Metadata = Read
-          3. Selected repositories: `kkyu92/playbook`
-          4. Repo Settings → Secrets → `GH_PAT` 값 교체
-          5. 본 워크플로 `workflow_dispatch` 수동 실행 → 헤더 정상 시 이 Issue auto-close 검토
+          1. https://github.com/settings/personal-access-tokens 에서 fine-grained PAT 발행 (만료 1년)
+          2. 권한:
+             - Contents = Read and write
+             - Pull requests = Read and write
+             - Issues = Read and write
+             - Workflows = Read and write
+             - Metadata = Read (자동)
+          3. Selected repositories: \`kkyu92/playbook\`
+          4. Repo Settings → Secrets → \`GH_PAT\` 값 설정/교체
+          5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → 헤더 정상 시 이 Issue close
           BODY
               gh issue create \
                 --repo "$GITHUB_REPOSITORY" \
-                --title "🔧 GH_PAT 가 Classic PAT 인 듯 — fine-grained 전환 필요 (T5)" \
+                --title "$TITLE" \
                 --label pat-expiry \
-                --body-file /tmp/pat-classic-body.md
+                --body-file /tmp/pat-issue-body.md
             fi
             exit 0
           fi
