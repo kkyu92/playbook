@@ -52,22 +52,25 @@ jobs:
               --jq '.[0].number // empty')
 
             if [ -z "$EXISTING" ]; then
+              cat > /tmp/pat-classic-body.md <<'BODY'
+          PAT expiry 워크플로가 `github-authentication-token-expiration` 응답 헤더를 못 찾음.
+
+          ## 원인 후보
+          - Classic PAT 사용 중 (만료 무한정 가능 → 헤더 없음)
+          - Fine-grained 발행 후 Secret 교체 누락
+
+          ## 조치
+          1. https://github.com/settings/personal-access-tokens 에서 fine-grained PAT 발행
+          2. 권한: Contents / Pull requests / Issues / Workflows = Write, Metadata = Read
+          3. Selected repositories: `kkyu92/playbook`
+          4. Repo Settings → Secrets → `GH_PAT` 값 교체
+          5. 본 워크플로 `workflow_dispatch` 수동 실행 → 헤더 정상 시 이 Issue auto-close 검토
+          BODY
               gh issue create \
                 --repo "$GITHUB_REPOSITORY" \
                 --title "🔧 GH_PAT 가 Classic PAT 인 듯 — fine-grained 전환 필요 (T5)" \
                 --label pat-expiry \
-                --body "PAT expiry 워크플로가 \`github-authentication-token-expiration\` 응답 헤더를 못 찾음.
-
-## 원인 후보
-- Classic PAT 사용 중 (만료 무한정 가능 → 헤더 없음)
-- Fine-grained 발행 후 Secret 교체 누락
-
-## 조치
-1. https://github.com/settings/personal-access-tokens 에서 fine-grained PAT 발행
-2. 권한: Contents / Pull requests / Issues / Workflows = Write, Metadata = Read
-3. Selected repositories: \`kkyu92/playbook\`
-4. Repo Settings → Secrets → \`GH_PAT\` 값 교체
-5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → 헤더 정상 시 이 Issue auto-close 검토"
+                --body-file /tmp/pat-classic-body.md
             fi
             exit 0
           fi
@@ -100,28 +103,31 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --body "Re-check: ${DAYS_LEFT}일 남음 (만료 ${EXPIRY})"
           else
+            cat > /tmp/pat-expiry-body.md <<BODY
+          ## GH_PAT 만료 알림
+
+          - **만료일**: ${EXPIRY}
+          - **남은 일수**: ${DAYS_LEFT}일
+          - **임계값**: ${THRESHOLD_DAYS}일
+
+          ## 갱신 절차
+
+          1. https://github.com/settings/personal-access-tokens 에서 새 fine-grained PAT 발행 (만료 1년)
+          2. 권한:
+             - Contents = Read and write
+             - Pull requests = Read and write
+             - Issues = Read and write
+             - Workflows = Read and write
+             - Metadata = Read (자동)
+          3. Selected repositories: \`kkyu92/playbook\`
+          4. Repo Settings → Secrets → \`GH_PAT\` 값 교체
+          5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → ${THRESHOLD_DAYS}일 초과 확인 후 이 Issue close
+
+          매주 토요일 KST 09:00 재확인 (Issue 존재 시 comment 추가).
+          BODY
             gh issue create \
               --repo "$GITHUB_REPOSITORY" \
               --title "$ISSUE_TITLE" \
               --label pat-expiry \
-              --body "## GH_PAT 만료 알림
-
-- **만료일**: ${EXPIRY}
-- **남은 일수**: ${DAYS_LEFT}일
-- **임계값**: ${THRESHOLD_DAYS}일
-
-## 갱신 절차
-
-1. https://github.com/settings/personal-access-tokens 에서 새 fine-grained PAT 발행 (만료 1년)
-2. 권한:
-   - Contents = Read and write
-   - Pull requests = Read and write
-   - Issues = Read and write
-   - Workflows = Read and write
-   - Metadata = Read (자동)
-3. Selected repositories: \`kkyu92/playbook\`
-4. Repo Settings → Secrets → \`GH_PAT\` 값 교체
-5. 본 워크플로 \`workflow_dispatch\` 수동 실행 → ${THRESHOLD_DAYS}일 초과 확인 후 이 Issue close
-
-매주 토요일 KST 09:00 재확인 (Issue 존재 시 comment 추가)."
+              --body-file /tmp/pat-expiry-body.md
           fi
