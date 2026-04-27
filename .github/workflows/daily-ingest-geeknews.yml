@@ -1,6 +1,8 @@
 name: "🔭 Daily Ingest — GeekNews"
 
-# 매일 09:00 KST (UTC 0시) — 통합 파이프라인.
+# 매일 09:00 KST 목표 — 통합 파이프라인.
+# cron 정의는 UTC 21시 (전날) — GitHub scheduler 가 평균 +2~3h 지연시키므로
+# 실제 실행은 익일 ~00:00 UTC = 09:00 KST 근처에 도달. (2026-04-25/26 관측 기반 보정)
 # Step 1: scout (긱뉴스 → playbook entries via scout / moneyballscore dispatch)
 # Step 2: daily gap-pull (coverage-analyzer → gap-pull 2개 entry, if:always)
 # Step 3: manifest regen + PR 생성 (변경 있을 때만)
@@ -12,7 +14,7 @@ name: "🔭 Daily Ingest — GeekNews"
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 21 * * *"
   workflow_dispatch:
 
 permissions:

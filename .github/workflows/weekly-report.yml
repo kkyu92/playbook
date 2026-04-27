@@ -2,8 +2,9 @@ name: "📊 Weekly Learning Report"
 
 on:
   schedule:
-    # 매주 일요일 21:00 KST (UTC 12:00)
-    - cron: "0 12 * * 0"
+    # 매주 일요일 21:00 KST 목표
+    # cron 정의는 UTC 09시 — GitHub scheduler 평균 +2~3h 지연 보정 (2026-04-26 관측)
+    - cron: "0 9 * * 0"
   workflow_dispatch:
 
 permissions:
