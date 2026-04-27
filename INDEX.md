@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-27T08:02:56.012Z
+Updated: 2026-04-27T21:57:35.009Z
 
-## 엔트리 (39개)
+## 엔트리 (43개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -13,6 +13,7 @@ Updated: 2026-04-27T08:02:56.012Z
 
 ### Harness Engineering
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
+- [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/harness-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
@@ -39,6 +40,7 @@ Updated: 2026-04-27T08:02:56.012Z
 ### Evaluation
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
+- [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 
 ### Infrastructure
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
@@ -54,11 +56,13 @@ Updated: 2026-04-27T08:02:56.012Z
 ### Project Ops
 - [AI 프로젝트 기획 및 로드맵 — 성공적인 초기 전략 수립](wiki/project-ops/ai-project-planning-roadmap-initial-strategy) — confidence: 1, status: draft
 - [Generative AI MLOps Pipelines — Advanced Design Patterns for Production Readiness](wiki/project-ops/generative-ai-mlops-pipeline-design-patterns) — confidence: 1, status: draft
+- [MLOps Pipeline Design — AI 모델 배포 및 모니터링 전략](wiki/project-ops/mlops-pipeline-design-ai-model-deployment-monitoring) — confidence: 1, status: draft
 
 ### Data Engineering
 - [LLM 데이터셋 구축: 고품질 학습 및 파인튜닝 전략](wiki/data-engineering/llm-data-acquisition-high-quality-datasets) — confidence: 1, status: draft
 - [LLM Fine-tuning 데이터셋 준비 – 고품질 데이터 구축 전략](wiki/data-engineering/llm-fine-tuning-dataset-preparation-strategies) — confidence: 1, status: draft
 - [LLM Fine-tuning — 고품질 데이터셋 전처리 및 정제 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement) — confidence: 1, status: draft
+- [Production Database 보안 강화 - AI 에이전트 가드레일 설계 및 구현](wiki/data-engineering/production-db-ai-agent-guardrails) — confidence: 1, status: draft
 
 ## 교차 참조 (connections 기반)
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
@@ -75,8 +79,8 @@ Updated: 2026-04-27T08:02:56.012Z
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
+- agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ data-engineering/production-db-ai-agent-guardrails
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/drift-detection-methodology
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/guard-test-pattern
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/hub-worker-compounding-pattern
@@ -86,7 +90,6 @@ Updated: 2026-04-27T08:02:56.012Z
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
-- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/drift-detection-methodology
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/guard-test-pattern
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/hub-worker-compounding-pattern
@@ -98,21 +101,17 @@ Updated: 2026-04-27T08:02:56.012Z
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/nextjs-instrumentation-location
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/sentry-serverless-flush
-- context-engineering/ambient-knowledge-injection ↔ harness-engineering/guard-test-pattern
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/prompt-versioning-and-testing
-- context-engineering/ambient-knowledge-injection ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - context-engineering/ambient-knowledge-injection ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/ai-inference-visualization-design-patterns
 - context-engineering/ambient-knowledge-injection ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - context-engineering/ambient-knowledge-injection ↔ data-engineering/llm-data-acquisition-high-quality-datasets
-- context-engineering/nextjs-instrumentation-location ↔ harness-engineering/drift-detection-methodology
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-serverless-flush
-- context-engineering/nextjs-instrumentation-location ↔ harness-engineering/guard-test-pattern
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/vercel-env-oauth-security-enhancement
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
@@ -121,6 +120,7 @@ Updated: 2026-04-27T08:02:56.012Z
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ harness-engineering/drift-detection-methodology
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ project-ops/ai-project-planning-roadmap-initial-strategy
+- data-engineering/llm-data-acquisition-high-quality-datasets ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ evaluation/llm-output-validation-quality-metrics-design
@@ -136,6 +136,14 @@ Updated: 2026-04-27T08:02:56.012Z
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
+- data-engineering/production-db-ai-agent-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/guard-test-pattern
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
+- data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/vercel-env-oauth-security-enhancement
+- data-engineering/production-db-ai-agent-guardrails ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/ephemeral-credentials-session-llm-harness
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/guard-test-pattern
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
@@ -144,10 +152,8 @@ Updated: 2026-04-27T08:02:56.012Z
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
-- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/question-own-defaults
-- evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/prompt-versioning-and-testing
-- evaluation/llm-output-validation-quality-metrics-design ↔ context-engineering/ambient-knowledge-injection
-- evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - evaluation/llm-output-validation-quality-metrics-design ↔ frontend-ai/ai-inference-visualization-design-patterns
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -155,6 +161,11 @@ Updated: 2026-04-27T08:02:56.012Z
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - evaluation/llm-output-validation-quality-metrics-design ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
 - evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- evaluation/llm-output-validation-quality-metrics-design ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/prompt-versioning-and-testing
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ harness-engineering/drift-detection-methodology
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ harness-engineering/guard-test-pattern
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
@@ -163,19 +174,23 @@ Updated: 2026-04-27T08:02:56.012Z
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ harness-engineering/hub-worker-compounding-pattern
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ project-ops/ai-project-planning-roadmap-initial-strategy
+- frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ harness-engineering/ephemeral-credentials-session-llm-harness
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ harness-engineering/guard-test-pattern
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ project-ops/ai-project-planning-roadmap-initial-strategy
-- harness-engineering/drift-detection-methodology ↔ harness-engineering/hub-worker-compounding-pattern
-- harness-engineering/drift-detection-methodology ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/drift-detection-methodology ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/question-own-defaults
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/drift-detection-methodology ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/drift-detection-methodology ↔ project-ops/ai-project-planning-roadmap-initial-strategy
-- harness-engineering/drift-detection-methodology ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/drift-detection-methodology ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- harness-engineering/drift-detection-methodology ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
+- harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- harness-engineering/ephemeral-credentials-session-llm-harness ↔ infrastructure/sentry-pii-scrubbing-beforesend
+- harness-engineering/ephemeral-credentials-session-llm-harness ↔ infrastructure/vercel-env-oauth-security-enhancement
+- harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ harness-engineering/guard-test-pattern
 - harness-engineering/gstack-framework-ai-agent-collaboration-architecture ↔ harness-engineering/hub-worker-compounding-pattern
@@ -201,7 +216,6 @@ Updated: 2026-04-27T08:02:56.012Z
 - harness-engineering/question-own-defaults ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
-- harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
@@ -223,7 +237,9 @@ Updated: 2026-04-27T08:02:56.012Z
 - journal/playbook-journal-000-bootstrap ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-002-drift-existing-setup
 - journal/playbook-journal-001-drift-greenfield ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-001-drift-greenfield ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - journal/playbook-journal-002-drift-existing-setup ↔ journal/playbook-journal-003-drift-silent-bugs
+- journal/playbook-journal-002-drift-existing-setup ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-004-drift-half-working
 - journal/playbook-journal-005-moneyballscore-playbook-e2e ↔ context-engineering/ambient-knowledge-injection
 - journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
@@ -233,5 +249,6 @@ Updated: 2026-04-27T08:02:56.012Z
 - journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ journal/playbook-journal-003-drift-silent-bugs
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
-- prompt-engineering/llm-prompt-optimization-role-definition-constraint-design ↔ prompt-engineering/prompt-versioning-and-testing
+- project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
