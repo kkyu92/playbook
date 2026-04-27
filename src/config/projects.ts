@@ -12,5 +12,10 @@ export const PROJECTS: ProjectConfig[] = [
     url: "https://moneyballscore.vercel.app",
     description: "KBO 세이버메트릭스 승부예측 엔진",
   },
-  // 새 프로젝트 추가 시 여기에 추가
+  {
+    name: "Blog Autopilot",
+    repo: "kkyu92/blog-autopilot",
+    url: "https://github.com/kkyu92/blog-autopilot",
+    description: "키워드 트렌드 기반 블로그 자동화 (6 niches, Claude API + Blogger v3)",
+  },
 ];
