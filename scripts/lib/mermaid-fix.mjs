@@ -50,7 +50,28 @@ export function fixAndValidateMermaid(code, filename) {
       const rest = m[2];
       if (/^".+"$/.test(rest)) return line; // 이미 quoted
       if (/^[\w-]+$/.test(rest)) return line; // id only (공백 없음)
-      if (/^\w+\s*\[".+"\]$/.test(rest)) return line; // id ["label"] form
+      if (/^[\w-]+\s*\[".+"\]$/.test(rest)) return line; // valid id ["label"] form
+
+      // AUTO-FIX #2b: invalid id (공백/특수문자) + bracket label
+      // 패턴: `subgraph Orchestration & Automation ["MLOps Platform"]`
+      // → `subgraph orchestration_automation ["Orchestration & Automation — MLOps Platform"]`
+      // Mermaid id 는 \w+ 만 허용 → invalid id 부분을 normalize 하고 label 에 양쪽 정보 결합.
+      // 5번째 재발 (2026-04-26 PR #39) 후 추가.
+      const bracketMatch = rest.match(/^(.+?)\s*\["([^"]+)"\]\s*$/);
+      if (bracketMatch) {
+        const idPart = bracketMatch[1].trim();
+        const labelPart = bracketMatch[2];
+        // valid id 형식이면 위 분기에서 이미 통과 — 여기 도달하면 invalid
+        if (idPart && !/^[\w-]+$/.test(idPart)) {
+          const normalizedId =
+            idPart
+              .toLowerCase()
+              .replace(/[^\w]+/g, "_")
+              .replace(/^_|_$/g, "") || "group";
+          return `${indent}subgraph ${normalizedId} ["${idPart} — ${labelPart}"]`;
+        }
+      }
+
       if (/\s/.test(rest) && !/[\[\]{}]/.test(rest)) {
         return `${indent}subgraph "${rest}"`;
       }

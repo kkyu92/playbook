@@ -217,6 +217,45 @@ describe("subgraph 공백 auto-quote (재발 3회 후 추가)", () => {
   });
 });
 
+describe("subgraph invalid id + bracket label (5번째 재발 후 추가)", () => {
+  it("공백+특수문자 id + ['label'] → normalized id + 결합 label", () => {
+    const code = `graph TD\n  subgraph Orchestration & Automation ["MLOps Platform"]\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(true);
+    expect(fixed).toContain(
+      'subgraph orchestration_automation ["Orchestration & Automation — MLOps Platform"]',
+    );
+  });
+
+  it("공백만 있는 id + ['label'] 도 normalize", () => {
+    const code = `graph TD\n  subgraph Data Pipelines ["Pipelines"]\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(true);
+    expect(fixed).toContain(
+      'subgraph data_pipelines ["Data Pipelines — Pipelines"]',
+    );
+  });
+
+  it("auto-fix 후 idempotent — 5회 실행해도 누적 없음", () => {
+    const code = `graph TD\n  subgraph Foo & Bar ["Label"]\n    A\n  end\n`;
+    let current = fixAndValidateMermaid(code, "x").fixed; // 1st pass
+    for (let i = 0; i < 5; i++) {
+      const { fixed, autoFixed } = fixAndValidateMermaid(current, "x");
+      expect(autoFixed).toBe(false);
+      expect(fixed).toBe(current);
+      current = fixed;
+    }
+    expect(current).toContain('subgraph foo_bar ["Foo & Bar — Label"]');
+  });
+
+  it("valid id + bracket label 은 변경 없음 (회귀 방지)", () => {
+    const code = `graph TD\n  subgraph orchestration ["MLOps Platform"]\n    A\n  end\n`;
+    const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(fixed).toBe(code);
+  });
+});
+
 describe("이미 손상된 파일 (Case 5 — 이전 세션의 자국)", () => {
   it("5쌍 누적된 따옴표 라벨은 정규식이 매치하지 않음 (추가 손상 X)", () => {
     // negative lookahead `(?!")` + 라벨에서 `"` 제외 덕분에 이미 `"` 로 시작하는
