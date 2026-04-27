@@ -1,0 +1,98 @@
+---
+title: "Playbook Journal 008 — GitHub repo rename 시 self-hosted runner 재설정 절차"
+category: harness-engineering
+date: "2026-04-27"
+tags: [playbook-journal, auto-ingest, lesson, blog-autopilot, self-hosted-runner, github-actions, drift-level-2]
+confidence: 3
+workers: [blog-autopilot]
+connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, journal/playbook-journal-003-drift-silent-bugs]
+status: stable
+description: "자동 수집: GitHub repo rename 시 self-hosted runner 재설정 절차 (from kkyu92/blog-autopilot)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/20260427-github-repo-rename-self-hosted-runner-6612902e.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/blog-autopilot`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+GitHub 레포 rename 후 self-hosted runner 가 옛 URL 로 계속 polling 하면 새 워크플로를 못 받음. 사후 재설정 필요.
+
+## 증상
+- gh repo rename 후 자연 cron 1회 miss 가능
+- runner status 는 "online" 이지만 새 dispatch 가 큐에 쌓이기만 함
+
+## 절차
+1. gh repo rename (또는 web UI)
+2. git remote set-url origin <새 URL>
+3. ~/actions-runner/.runner 파일의 gitHubUrl 직접 갱신
+   - **sed in-place 권장** (heredoc 재생성 시 첫 줄 BOM 손실 → runner crash)
+4. launchctl unload + load (PID 갱신)
+5. gh api repos/<owner>/<repo>/actions/runners 로 online 확인
+6. workflow_dispatch healthcheck 1회 → 새 repo 인식 검증
+
+## 발견 컨텍스트
+blog-autopilot (구 content-autopilot) rename (2026-04-27).
+cat > heredoc 패턴으로 .runner 재작성 시 UTF-8 BOM 손실 → runner 가 invalid config 로 인식해서 crash.
+sed in-place 로 specific 문자열만 치환하는 게 안전.
+
+## 적용 가치
+- self-hosted runner 쓰는 모든 워커 (현재 blog-autopilot, 추후 silverstory)
+- 별도 워커 구조에서 더 빈번
+~~~
+
+## 분석
+
+### 본질 — Self-hosted runner 의 hidden config
+
+GitHub Actions self-hosted runner 는 `~/actions-runner/.runner` 에 등록 시점의 `gitHubUrl` 을 hardcode. 이 파일은 register 시 한번 박히고 GitHub UI 에는 노출 안 됨. **Repo rename 은 GitHub 측에서 redirect 처리되지만, runner 의 polling URL 은 자동 갱신 안 됨** — 옛 URL 로 polling 지속 → 새 dispatch silent miss.
+
+### 드리프트 Level 2 — 작동 드리프트의 전형
+
+`runner status="online"` 이라 외부 관찰로는 정상. 실제로는 새 repo 의 dispatch 못 받음. CLAUDE.md 의 [드리프트 감지 프로토콜](/wiki/harness-engineering/drift-detection-methodology) Level 2 (작동 드리프트 — "보이는 상태 ≠ 실 작동") 의 명시적 사례. cron 1회 miss 후에야 발견 — silent failure.
+
+### BOM 트랩 — 왜 sed in-place 가 안전한가
+
+`.runner` 파일은 **UTF-8 BOM** (`\xEF\xBB\xBF`) 으로 시작. cat heredoc 으로 재작성 시 BOM 손실 → runner 가 invalid JSON config 로 인식 → crash. sed in-place (`sed -i 's/old/new/'`) 는 매칭 문자열만 치환, 다른 바이트 (BOM 포함) 보존.
+
+```bash
+# 위험 (BOM 손실)
+cat > .runner <<EOF
+{ "gitHubUrl": "https://github.com/kkyu92/blog-autopilot", ... }
+EOF
+
+# 안전 (BOM 보존)
+sed -i '' 's|content-autopilot|blog-autopilot|g' .runner
+```
+
+## 교훈
+
+1. **Repo rename 후 healthcheck 필수** — workflow_dispatch 1회 실행해서 새 repo 인식 검증. "online status = 작동" 가정 금지. Guard test pattern 의 또 다른 사례.
+
+2. **Config 파일 수정 시 sed > heredoc** — 바이너리 문자 (BOM, 특수 인코딩) 보존이 중요한 파일은 in-place 치환이 안전. heredoc 은 인코딩 정규화 / 줄바꿈 변환 발생 가능.
+
+3. **Self-hosted runner 의 외부 의존 sync** — GitHub-hosted runner 와 달리 self-hosted 는 register 시점 config 가 영속. external state 변경 (rename, org 이전 등) 시 수동 sync 필요. 자동화 후보.
+
+4. **워커 lesson dispatch 첫 실 사례** — blog-autopilot 워커가 hub 로 보낸 첫 lesson. [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 Pull (b) 채널 양방향 작동 검증 시점.
+
+## 적용
+
+### 즉시
+- self-hosted runner 쓰는 워커 (`blog-autopilot`) 의 rename 절차에 위 6단계 추가. 다른 워커는 GitHub-hosted runner 라 무관.
+
+### 잠재적 자동화 (다음 lesson 후보)
+- runner config drift 감지 스크립트 — `.runner` 의 gitHubUrl 과 `git remote get-url origin` 비교, 불일치 시 alert
+- rename 감지 webhook → runner config 자동 sync workflow
+
+### 일반화 — Hidden state 카탈로그
+self-hosted runner 외에도 비슷한 hidden state 후보:
+- launchd plist 의 hardcoded path
+- systemd unit 의 ExecStart
+- CI cache key 의 인코딩된 commit hash
+
+→ "boot 시 박힌 config 가 외부 state 변경에 sync 안 됨" 패턴. 다음 재발 시 [solution](/wiki/docs/solutions) 으로 박제 검토.

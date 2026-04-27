@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-26T23:38:22.285Z
+Updated: 2026-04-27T08:02:56.012Z
 
-## 엔트리 (38개)
+## 엔트리 (39개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -27,6 +27,7 @@ Updated: 2026-04-26T23:38:22.285Z
 - [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — confidence: 4, status: complete
 - [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
 - [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
+- [Playbook Journal 008 — GitHub repo rename 시 self-hosted runner 재설정 절차](wiki/journal/playbook-journal-008-github-repo-rename-self-hosted-runner) — confidence: 3, status: stable
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
 ### Agents
@@ -226,6 +227,10 @@ Updated: 2026-04-26T23:38:22.285Z
 - journal/playbook-journal-003-drift-silent-bugs ↔ journal/playbook-journal-004-drift-half-working
 - journal/playbook-journal-005-moneyballscore-playbook-e2e ↔ context-engineering/ambient-knowledge-injection
 - journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ harness-engineering/guard-test-pattern
+- journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ journal/playbook-journal-003-drift-silent-bugs
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
