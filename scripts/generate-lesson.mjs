@@ -29,6 +29,7 @@ import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
 import { validateMdxContent } from "./lib/mdx-validate.mjs";
 import { fixAndValidateMermaid } from "./lib/mermaid-fix.mjs";
+import { generateWithValidation } from "./lib/llm-gen-validate.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
@@ -323,64 +324,56 @@ ${slugList || "(없음)"}
 5. slug: kebab-case 영문 60자 이내. **카테고리명 (${category}) 은 slug 에 절대 포함 금지** — 파일 경로는 자동으로 \`${category}/slug\` 로 구성됨. 예: category=harness-engineering 인데 주제가 "Claude Harness 책임감 있는 코딩" 이면 slug 는 "responsible-coding-with-claude" (o), "harness-engineering-responsible-coding" (x)
 6. connections: 위 existing slugs 리스트에서 관련성 높은 것 **5~7개 선택**. 정확한 형식 (category/topic-slug). 리스트에 없는 slug 는 절대 생성하지 말 것. 최소 3개 필수.`;
 
-  // MDX validation + retry (최대 3회)
-  const MAX_VALIDATION = 3;
-  let lastIssues = [];
-  let payload;
-
-  for (let vAttempt = 0; vAttempt < MAX_VALIDATION; vAttempt++) {
-    const prompt = vAttempt === 0
-      ? basePrompt
-      : `${basePrompt}\n\n---\n\n이전 응답 문제. 반드시 수정:\n${lastIssues.map((i) => `- ${i}`).join("\n")}`;
-
-    payload = await generateStructured({
-      prompt,
-      responseSchema: schema,
-      validate: (p) => {
-        if (!p || typeof p !== "object") return "not object";
-        if (!p.body || typeof p.body !== "string") return "body missing";
-        if (!Array.isArray(p.connections)) return "connections not array";
-        if (!Array.isArray(p.tags)) return "tags not array";
-        return true;
+  return await generateWithValidation({
+    basePrompt,
+    generate: (prompt) =>
+      generateStructured({
+        prompt,
+        responseSchema: schema,
+        validate: (p) => {
+          if (!p || typeof p !== "object") return "not object";
+          if (!p.body || typeof p.body !== "string") return "body missing";
+          if (!Array.isArray(p.connections)) return "connections not array";
+          if (!Array.isArray(p.tags)) return "tags not array";
+          return true;
+        },
+      }),
+    autoFixers: [
+      // Mermaid 블록 autoFix — validate-content.mjs 의 체크를 생성 루프에 당김
+      // (mermaid subgraph 공백 2건이 CI 에서만 잡혀 수동 수정 필요했던 드리프트 차단)
+      (payload) => {
+        const issues = [];
+        let autoFixed = false;
+        const matches = [...payload.body.matchAll(/```mermaid\n([\s\S]*?)```/g)];
+        for (const m of matches) {
+          const result = fixAndValidateMermaid(m[1]);
+          if (result.autoFixed) {
+            payload.body = payload.body.replace(m[0], `\`\`\`mermaid\n${result.fixed}\`\`\``);
+            autoFixed = true;
+            console.log(`   🔧 Mermaid 자동 수정 적용`);
+          }
+          for (const e of result.errors) {
+            issues.push(`Mermaid line ~${e.line}: ${e.message}`);
+          }
+        }
+        return { autoFixed, issues };
       },
-    });
-
-    // MDX 본문 validation
-    const validation = await validateMdxContent(payload.body);
-    const issues = [];
-    if (!validation.valid) issues.push(`MDX 컴파일 에러: ${validation.compileError}`);
-    for (const w of validation.jsxWarnings) {
-      issues.push(`Line ~${w.line}: ${w.message}`);
-    }
-    if (!payload.body.includes("## ")) issues.push("## 헤딩 누락");
-    if (!payload.body.includes("```")) issues.push("코드 블록 누락");
-    if (payload.body.length < 500) issues.push(`본문 길이 부족 (${payload.body.length}자)`);
-
-    // Mermaid 블록 autoFix + validation — validate-content.mjs 의 체크를 생성 루프에 당김
-    // (어제 mermaid subgraph 공백 2건이 CI 에서만 잡혀 수동 수정 필요했던 드리프트 차단)
-    const mermaidMatches = [...payload.body.matchAll(/```mermaid\n([\s\S]*?)```/g)];
-    for (const m of mermaidMatches) {
-      const mermaidResult = fixAndValidateMermaid(m[1]);
-      if (mermaidResult.autoFixed) {
-        payload.body = payload.body.replace(m[0], `\`\`\`mermaid\n${mermaidResult.fixed}\`\`\``);
-        console.log(`   🔧 Mermaid 자동 수정 적용`);
-      }
-      for (const e of mermaidResult.errors) {
-        issues.push(`Mermaid line ~${e.line}: ${e.message}`);
-      }
-    }
-
-    if (issues.length === 0) {
-      if (vAttempt > 0) console.log(`✅ Validation 통과 (재생성 ${vAttempt}회 후)`);
-      return payload;
-    }
-
-    lastIssues = issues;
-    console.warn(`⚠️  Validation 실패 (${vAttempt + 1}/${MAX_VALIDATION}):`);
-    issues.forEach((i) => console.warn(`   - ${i}`));
-  }
-
-  throw new Error(`Validation ${MAX_VALIDATION}회 실패: ${lastIssues.join(", ")}`);
+    ],
+    validators: [
+      async (payload) => {
+        const issues = [];
+        const v = await validateMdxContent(payload.body);
+        if (!v.valid) issues.push(`MDX 컴파일 에러: ${v.compileError}`);
+        for (const w of v.jsxWarnings) {
+          issues.push(`Line ~${w.line}: ${w.message}`);
+        }
+        if (!payload.body.includes("## ")) issues.push("## 헤딩 누락");
+        if (!payload.body.includes("```")) issues.push("코드 블록 누락");
+        if (payload.body.length < 500) issues.push(`본문 길이 부족 (${payload.body.length}자)`);
+        return issues;
+      },
+    ],
+  });
 }
 
 function buildFrontmatter({ payload, category, connections, source }) {
