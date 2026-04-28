@@ -14,11 +14,7 @@ on:
       - "docs/solutions/**"
       - "scripts/embed-content.mjs"
       - "scripts/lib/query-router.mjs"
-  schedule:
-    # 매일 ~02:00 KST 다음날 목표 — drift 방어 backup
-    # cron 정의는 UTC 14시 — scheduler 평균 +2~3h 지연 보정 (2026-04-26 관측)
-    - cron: "0 14 * * *"
-  workflow_dispatch:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 23:00 dispatch
 
 permissions:
   contents: read

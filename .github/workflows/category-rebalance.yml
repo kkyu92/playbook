@@ -8,10 +8,7 @@ name: "🗂️ Category Rebalance Scan"
 # 참조: memory/feedback_snapshot_as_constraint_fallacy.md
 
 on:
-  schedule:
-    # 매월 1일 00:00 UTC (09:00 KST)
-    - cron: "0 0 1 * *"
-  workflow_dispatch:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매월1일 KST 06:00 dispatch
 
 permissions:
   contents: read

@@ -13,9 +13,7 @@ name: "🔭 Daily Ingest — GeekNews"
 # - Gemini 쿼터: normal 10/day, peak 15/day (free tier 20 의 50-75%)
 
 on:
-  schedule:
-    - cron: "0 21 * * *"
-  workflow_dispatch:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 06:00 dispatch
 
 permissions:
   contents: write
