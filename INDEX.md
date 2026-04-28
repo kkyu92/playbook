@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-28T04:31:59.309Z
+Updated: 2026-04-28T08:24:35.335Z
 
-## 엔트리 (45개)
+## 엔트리 (46개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -31,6 +31,7 @@ Updated: 2026-04-28T04:31:59.309Z
 - [Playbook Journal 008 — GitHub repo rename 시 self-hosted runner 재설정 절차](wiki/journal/playbook-journal-008-github-repo-rename-self-hosted-runner) — confidence: 3, status: stable
 - [Playbook Journal 009 — claude CLI hang 진단 + paperclip 안정성 복원 4-step 회수](wiki/journal/playbook-journal-009-claude-cli-hang-paperclip-4-step) — confidence: 3, status: in-progress
 - [Playbook Journal 010 — title outdated 연도 사고 + title 연도 정책 B 도입](wiki/journal/playbook-journal-010-title-outdated-title-b) — confidence: 3, status: in-progress
+- [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
 ### Agents
@@ -254,3 +255,6 @@ Updated: 2026-04-28T04:31:59.309Z
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- reports/mid-review-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
+- reports/mid-review-2026-04-28 ↔ harness-engineering/drift-detection-methodology
+- reports/mid-review-2026-04-28 ↔ harness-engineering/question-own-defaults

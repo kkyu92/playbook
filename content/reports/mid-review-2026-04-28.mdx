@@ -1,0 +1,188 @@
+---
+title: "Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입"
+category: harness-engineering
+date: "2026-04-28"
+tags: [mid-review, bidirectional-growth, closed-loop, karpathy-wiki]
+confidence: 4
+connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/drift-detection-methodology, harness-engineering/question-own-defaults]
+status: complete
+description: "허브-워커 양방향 무한성장 자동화 진척 첫 mid-review. infra ~50% / learning ~10%, trajectory 감속 우세. 12 EXPANSION 후보 → 5 채택 + 2 deferred + 4 absorbed."
+type: entry
+---
+
+## 컨텍스트
+
+**Trigger**: 2026-04-16 Karpathy LLM Wiki 도입 후 12일차 첫 mid-review.
+
+**최종 목표**: 허브 ↔ 워커 양방향 *무한성장* 자동화. Karpathy LLM Wiki 모델 실코드/인프라 구현. 닫힌 루프 (사고→교훈→정책 갱신→재배포) 자동 회전.
+
+## Phase 1 review (2026-04-19 plan)
+
+| Phase 1 platonic ideal 단계 | 4-28 상태 |
+|---|---|
+| 자동 dispatch (Pull 입력 채널 GA) | ✅ |
+| grep 자동 코멘트 (Phase 2 deferred) | ❌ 미진행 |
+| /ingest cross-update | ⚠️ 구현 ✅, 자동화 ❌ |
+| weekly-triage cron | ⚠️ 존재, 단 lesson 침묵 |
+| symlink 자동 재배포 | ✅ |
+
+**Phase 1 ~60% 완료**.
+
+## ★ Critical Discovery
+
+**4-19 Phase 1 CEO plan 자체에 *자기 개선 루프* (피드백 차원) 가 없음.**
+
+Phase 1, 2, 3 모두 *입력/처리/출력* 위주, *운영 데이터 → 정책 자동 조정* (Karpathy 닫힌 루프 4번째 단계) 미정의.
+
+→ codex 비판 *"성장 시스템 ≠ 운영 시스템"* = 시스템 결함이 아니라 **원본 plan 의 scope 한계**. mid-review 의 진짜 발견:
+
+> **"Phase 1 = success — 단 closed loop 자체가 plan scope 밖. Phase 4 (closed loop) 신규 plan 필요."**
+
+## D' baseline — 8 차원 vector (infrastructure lens)
+
+| 차원 | % | 측정 근거 |
+|---|---|---|
+| Push 입력 | 0% | shared-rules manual edit, 자동 감지 0 |
+| Push 처리 | 50% | moneyball symlink ✅, blog-autopilot 빈 dir |
+| Push 출력 | 50% | moneyball 적용 ≥3건, blog-autopilot 0건 |
+| Push 피드백 | 25% | moneyball 회귀 1 + 개선 3 검출 |
+| Pull 입력 | 50% | 1/2 워커 hub-dispatch GA |
+| Pull 처리 | 43% | auto-ingest PR 13 / 30일 PR 30 |
+| Pull 출력 | 70% | ai-review auto-merge 87.5% × 적용률 |
+| Pull 피드백 | 10% | 워커 자가 정책 갱신 9건, 허브 0 |
+
+평균 = 37.25%. **단 평균 % 자체 fake metric 위험** — codex 비판: symlink 존재 ≠ 소화 / auto-merge ≠ 학습 / PR ingest 비율 = activity ≠ learning.
+
+## 7 차원 vector (learning lens — codex 추가)
+
+| # | 차원 | 추정값 |
+|---|---|---|
+| 9 | 루프 폐쇄 시간 | 측정 가능, 추정 며칠 ~ 무한 |
+| 10 | 교훈 전환율 | moneyball 0% / blog ~30% |
+| 11 | 교훈 재사용률 | 0% — 워커 9 자가 갱신 vs 허브 0 |
+| 12 | 측정 가능성 KPI | 8/15 = 53% (Sentry / 도메인 성능 / 침묵 측정 도구 부재) |
+| 13 | 즉시성 채널 | 0% — 사용자 manual brokering |
+| 14 | 도메인 성능 보존율 | moneyball 100→38% (위험) / blog 33→100% (양호) |
+| 15 | 침묵 탐지율 | 0% — 워커는 일부, 허브 0 |
+
+## Velocity (12일 segments)
+
+| 측정 | 4/16-21 (6일) | 4/22-28 (7일) | velocity |
+|---|---|---|---|
+| Lesson commit (워커) | 4건 | 0건 | ↓↓ 감속 |
+| 자가 갱신 (워커 합) | 8건 | ~9건 | → 등속 |
+| 자가 갱신 (허브) | 0 | 0 | → 정체 |
+| Daily-ingest entry | 5 | 6 | ↑ 가속 |
+| Pull 입력 자연 fire | 5 (Scout) | 1 (CI dispatch) | ↓↓ 감속 |
+| moneyball 적중률 | 100% | 38% | ↓↓ 감속 + 회귀 |
+
+**→ 종합 trajectory = 감속 우세**. infra 가속 / learning 감속 = 위험.
+
+## 무한성장 산식 갱신
+
+기존: 정적 % baseline (4-24 vibes "30%")
+신규: **정적 + velocity + acceleration** (시간축 vector)
+
+```
+정적 (현재 시점)        ← 8+7 차원 baseline
+미분 (velocity, 1주)    ← 추세 (가속/감속/정체)
+2차 미분 (acceleration) ← 추세의 변화 (다음 주 가속할까)
+```
+
+진짜 무한성장 = velocity > 0 + acceleration ≥ 0 *지속*. 평균 % 폐기.
+
+## 워커 self-report 통합 (Issue #57, #58)
+
+**moneyballscore** (스포츠 베팅 + 모델 자가 회귀):
+- Push 받기 latency = 0ms (symlink 12개)
+- Push 회귀 = 1건 (VARCHAR 4/27 재발 — rule 도입 후 검출 못함)
+- Pull 보내기: Sentry 측정 불가 / CI dispatch 0/30 / Cron 6 / Lesson 0건 (4/22 이후 침묵)
+- Pull 자기 개선: 자가 발견 fix 4건 / refactor 0 / memory 자가 갱신 7 파일
+- 도메인: 적중률 100→38% (v1.6 회귀), H5 가설 자가 발견 (백테스트 vs prod 정반대)
+
+**blog-autopilot** (블로그 자동화):
+- Push 받기 = 측정 불가 (`shared-rules/blog-autopilot/` 빈 dir, sync 미가동)
+- Push 적용 = 0건
+- Pull 보내기: Sentry 0 / CI 1 dispatch / Cron 2 / Lesson 3
+- Pull 자기 개선: 자율 PR 5건 / memory 자가 갱신 2
+- 도메인: 자동 발행 100% (4/27 33% → 4/28), silent fail 자동 검출 + auto-discard 9건
+
+## 핵심 발견 4건
+
+1. **Push 출력 100% 환상** — 허브 단독 측정 self-deception. blog-autopilot 빈 dir 검출은 워커 통합 측정 후
+2. **Lesson 채널 4-22 이후 침묵** — moneyball 사고 5건, lesson 0건. 인프라 살아있음, 트리거 약함
+3. **자기 정책 조정 seed 가 워커에 존재** — 워커 9 vs 허브 0. *집단지능이 아니라 섬 2개*. 역수입 가능성
+4. **Sentry 차원 측정 불가** — MCP 인증 안 됨, 측정 도구 부재
+
+## 추가 발견 — D' 산식에 없는 차원
+
+**Push 즉시 트리거 채널 부재** — 허브가 워커에게 즉시 신호 보내려면 사용자 manual brokering. shared-rules sync = 영구 박제 채널, 즉시 신호 ✗.
+
+이번 mid-review 자체에서 검증: 사용자가 두 워커에 *"발행해"* 메시지 manual brokering = 즉시 트리거 채널 부재의 첫 자연 검증.
+
+## EXPANSION ceremony 결과
+
+12 후보 → cherry-pick 5 + deferred 2 + absorbed 4 + dropped 1.
+
+**Accepted (Phase 4 — 이번 사이클)**:
+- E1 — lesson 변환율 100% 자동 트리거
+- E2 — closed loop 자동 회전 (platonic hub)
+- E3 — hub-bootstrap CLI 5분 워커 부트
+- D4 — 워커 self-policy 자동 hub-dispatch
+- D5 — lesson 강제화 알림
+
+**Deferred (정합 시점)**:
+- E4 — Gemini 정책 자가 도출 (E1+D4 데이터 누적 후)
+- D7 — rule 본문 자가 강화 (N≥3 lesson 누적 후)
+
+**Absorbed (E2 부산물, effort 0)**:
+- D1 (자동 mid-review cron), D2 (대시보드), D3 (Phase N+1 plan auto), D8 (vector 시각화)
+
+**Dropped**: D6 (E3 와 중복)
+
+## 진화 path 핵심 인사이트
+
+*5 항목 진행 ≠ 12 - 7*. 시스템 진화 후 *재cherry-pick* 필요. 단순 합산 X.
+
+- 4 항목 (D1/D2/D3/D8) = E2 자연 흡수, effort 0
+- 2 항목 (E4/D7) = 정합 시점 도달 후 *지금보다 더 효과적*
+- 1 항목 (D6) = 중복 폐기
+
+→ 12 다 진행 ~11시간 vs 5 점진 ~6.5시간. **40% effort 절약 + 효과 ↑** + 진화 path 열림.
+
+## 다음 mid-review 트리거
+
+- E2 ✅ 후: **자동 회전** (자기 개선 루프 ✅)
+- 그 전: 4-29 KST 06:00+ 자연 cron 검증 (1주일 운영 데이터 누적 후)
+- 또는 deferred 항목 (E4/D7) 정합 시점 도달 시
+
+## Reviewer Concerns
+
+1. 5 항목 implementation = ~3시간 CC + 1.25시간 user. *이번 세션* vs *별도 세션* 분리 결정 필요
+2. E2 정확한 구현 spec 미정 — 별도 plan-eng-review 필요
+3. D7 정합 시점 판정 기준 (N≥3 lesson) 자체 박제 필요
+
+## 메타 — mid-review 자체가 closed loop 의 첫 인스턴스
+
+이 mid-review 진행 자체가 **자기 개선 루프 ❌ 의 첫 자연 시도**:
+- 측정 (5축 → 8 차원 → 8+7 차원 진화)
+- 진단 (codex framing critique)
+- 결정 (CEO EXPANSION cherry-pick)
+- 박제 (이 entry + shared-rules + memory)
+
+**E2 (closed loop 자동 회전) 가 ✅ 되면 이 mid-review 자체가 자동화 인스턴스 첫 prototype**. 즉 Phase 4 의 hub.
+
+## 박제
+
+- CEO plan: `~/.gstack/projects/kkyu92-playbook/ceo-plans/2026-04-28-mid-review-phase4-closed-loop.md`
+- shared-rules: `shared-rules/common/feedback_mid_review_protocol.md` (워커 다음 사이클 sync)
+- memory:
+  - `feedback_mid_review_velocity_lens.md` — 정적 + velocity + acceleration 산식
+  - `feedback_phase_plan_must_include_closed_loop.md` — 신규 phase plan 작성 시 피드백 차원 필수
+  - `project_phase4_closed_loop_scope.md` — 5 채택 + 2 deferred + 진화 재cherry-pick
+
+## 워커 self-report 채널
+
+- `mid-review` label 신설 (재사용)
+- moneyballscore Issue #57 / blog-autopilot Issue #58
+- 다음 사이클부터 동일 label 재사용
