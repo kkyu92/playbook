@@ -7,12 +7,7 @@ name: "🩺 Gemini Key Daily Health"
 # 포괄 검증은 workflow_dispatch 의 smoke-test-gemini-keys.yml 사용.
 
 on:
-  schedule:
-    # 매일 ~11:37 KST 목표 (daily-ingest 직후).
-    # 37분 오프셋 — hour boundary (02:30/02:00) 과부하 skip 회피.
-    # cron 정의는 UTC 전날 23:37 — scheduler 평균 +2~3h 지연 보정 (2026-04-25/26 관측: 02:37 정의 → 실제 05:00~05:25 실행).
-    - cron: "37 23 * * *"
-  workflow_dispatch:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 08:00 dispatch
 
 permissions:
   contents: read

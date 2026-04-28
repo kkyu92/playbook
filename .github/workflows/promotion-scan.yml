@@ -8,11 +8,7 @@ on:
     branches: [main]
     paths:
       - "docs/solutions/**"
-  schedule:
-    # 매주 월요일 ~09:00 KST 목표
-    # cron 정의는 UTC 일요일 21시 — scheduler 평균 +2~3h 지연 보정 (2026-04-26 관측)
-    - cron: "0 21 * * 0"
-  workflow_dispatch:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매주 월요일 KST 06:00 dispatch
 
 permissions:
   contents: read
