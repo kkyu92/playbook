@@ -1,14 +1,14 @@
 # [llm-generation] Compiled Truth
 
-## 종합 (4건, 최종 갱신 2026-04-26)
+## 종합 (4건, 최종 갱신 2026-04-28)
 
-- **재발 횟수**: 카테고리 내 4건. **승격 임계 재충족** — 후행 fix 의 누적 비용 재평가 필요.
+- **재발 횟수**: 카테고리 내 4건. 승격 임계 재충족 → **공통 lib (`llm-gen-validate.mjs`) 추출 완료** (Issue #41).
 - **현재 최선 해결책**:
-  - Layer 0 — 모델/키 구성: `gemini-client.mjs` 단일 모델 (`gemini-2.5-flash`) + 다중 계정 key rotation. Legacy 모델 fallback 제거 (신규 계정 quota 0 호환성).
-  - Layer 1 — `generate-lesson.mjs` 3회 validation 루프 + 구체적 에러 주입 재생성
-  - Layer 2 — `scripts/lib/mermaid-fix.mjs` auto-fix (노드 라벨 괄호 + **subgraph 공백 → quoted** + **invalid id + bracket label → normalize**)
+  - Layer 0 — 모델/키 구성: `gemini-client.mjs` 단일 모델 (`gemini-2.5-flash`) + 다중 계정 key rotation.
+  - Layer 1 — **`scripts/lib/llm-gen-validate.mjs` `generateWithValidation` 공용 retry 루프** (basePrompt + generate + validators[] + autoFixers[] + maxAttempts). 구체적 에러 주입 재생성. `generate-lesson.mjs` 가 첫 사용처, 향후 `auto-cross-update-shadow`, `auto-PR` 등 상속.
+  - Layer 2 — `scripts/lib/mermaid-fix.mjs` auto-fix (노드 라벨 괄호 + subgraph 공백 → quoted + invalid id + bracket label → normalize). 위 lib 의 autoFixer plugin 중 하나.
   - Layer 3 — `validate-content.mjs` 프리빌드 fail-loud (workflow exit 1)
-- **코드 게이트 승격**: 부분 — `mdx-validate.mjs` + `mermaid-fix.mjs` + `gemini-client.mjs` 추출. 더 일반화된 "LLM output validation" lib (모든 생성 파이프라인 공통) 은 아직 없음.
+- **코드 게이트 승격**: ✅ 완료 — `mdx-validate.mjs` + `mermaid-fix.mjs` + `gemini-client.mjs` + **`llm-gen-validate.mjs` (공용 validation 루프)** 4단 분리.
 - **마지막 발생**: 2026-04-26
 
 ### 주요 교훈 요약
@@ -31,11 +31,11 @@
 - **신규 vs 기존 계정 이중 정책 존재** — 기존 키만 테스트 → "작동" 결론이 신규 키 보장 안 함. Multi-account rotation 설계 시 **각 키에 대해 개별 smoke test** 필요 (건 #3).
 - **ai-study 대비 우리 앞선 부분** — ai-study 의 generate-lesson.mjs 는 아직 post-gen validation 없음 (prompt constraint + 수동 /validate-mdx command). 우리 자동 루프가 한 단계 상향.
 
-### 승격 검토 (4건 누적, 갱신 2026-04-26)
+### 승격 검토 (4건 누적, 갱신 2026-04-28)
 
 - ✅ **`/gemini-smoke-test`** 슬래시 커맨드 — `.claude/commands/gemini-smoke-test.md` 완료
-- ✅ **Cross-key daily health check cron** — `.github/workflows/gemini-key-health.yml` 완료 (이후 02:30Z hour boundary skip 관측 → 02:37 offset → +2~3h scheduler 지연 보정 위해 23:37 으로 재조정)
-- ⏸ **공통 LLM 파이프라인 validation lib** (`scripts/lib/llm-gen-validate.mjs`) — 미완성. post-gen loop + auto-fix + fail-loud 을 한 모듈로 통합. `generate-lesson.mjs`, 향후 `auto-cross-update-shadow.yml`, `auto-PR` 등 모두 상속. **4건 누적된 만큼 우선순위 상향 검토** — mermaid-fix 가 #2 → #2b 로 두꺼워지는 추세에서, 공통 lib 추출 시 mermaid-fix 도 그 안의 한 plugin 으로 정리 가능.
+- ✅ **Cross-key daily health check cron** — `.github/workflows/gemini-key-health.yml` 완료 (Cloudflare worker 이관 — T9, 2026-04-28)
+- ✅ **공통 LLM 파이프라인 validation lib** (`scripts/lib/llm-gen-validate.mjs`) — 완료 (Issue #41, 2026-04-28). `generateWithValidation({ basePrompt, generate, validators, autoFixers, maxAttempts })` 인터페이스. `generate-lesson.mjs` 마이그레이션 완료 (60줄 → 35줄, retry 루프 → plugin 구조). mermaid-fix 는 autoFixer plugin 으로 정리. 향후 `auto-cross-update-shadow.yml`, `auto-PR` 등 같은 인터페이스로 상속.
 
 ## 개별 솔루션 목록
 

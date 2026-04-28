@@ -1,0 +1,30 @@
+name = "playbook-cron"
+main = "src/worker.ts"
+compatibility_date = "2026-01-15"
+compatibility_flags = ["nodejs_compat"]
+
+# Cloudflare Workers Cron Triggers — 무료 tier 100k req/day, 분 단위 정확.
+# GH Actions schedule 의 cluster 충돌·high-load skip 문제를 회피하기 위해 도입.
+# 이 worker 는 timing 만 담당, 실제 작업은 GH Actions workflow_dispatch 로 trigger.
+[triggers]
+crons = [
+  "0 * * * *",   # 매시 정각 1개 cron — worker.ts 가 utcHour/utcDay/utcDate 분기로 매핑
+]
+# Cloudflare Workers Free 는 cron 5개/account. 머니볼 워커 4개 점유 → 우리 1개.
+# 매시 fire 24/day, 그중 4시각만 실제 dispatch, 나머지 20시각 즉시 return.
+# Free 100k req/day 대비 720 invocations/month = 0.024%. 비용 무관.
+#
+# 압축으로 인한 분 정밀도 손실: gemini-key-health KST 08:37 → 08:00 (37분, 무관).
+# 그 외 시각 변경 0.
+
+[vars]
+GH_REPO = "kkyu92/playbook"
+
+# Secret 등록 (대시보드 또는 CLI):
+#   wrangler secret put GH_DISPATCH_PAT
+#     → fine-grained PAT, Actions = Read and Write 만, repo: kkyu92/playbook
+#
+# 보안: 토큰 유출 시 workflow_dispatch trigger 만 가능. contents/PR/issues 권한 없음.
+
+[observability]
+enabled = true
