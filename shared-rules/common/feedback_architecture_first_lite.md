@@ -32,3 +32,10 @@ originSessionId: 1dece797-627e-46d6-8d78-3ea9d3c75294
 1. 이 프로젝트의 핵심 철학/운영 모델과 충돌 없나?
 2. 이미 있는 슬래시 커맨드·도구로 재조합 가능한가?
 3. 양방향/복리 성장 같은 기저 모델을 한쪽만 보고 있지 않나?
+
+**한계 (강화 사례, 2026-04-28)**:
+30초 훑기는 **프로젝트 내부 자료 (CLAUDE.md, .claude/commands, INDEX.md)** 만 다룸. **외부 platform 제약은 docs 별도 확인 필수**:
+- Cloudflare Workers Free: 5 cron/account (T9 이관 시 사전 인지 못 함, docs 봐야 알았음)
+- Vercel: 일 100회 deploy 한도, 함수 timeout, 메모리 등
+- GitHub Actions: silent cron drop, GITHUB_TOKEN cross-repo 권한 0
+신규 외부 platform 도입 결정 직전엔 architecture-first lite + **platform docs 한 번 더 훑기** 짝으로 적용.
