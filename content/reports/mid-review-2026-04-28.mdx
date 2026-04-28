@@ -162,6 +162,29 @@ Phase 1, 2, 3 모두 *입력/처리/출력* 위주, *운영 데이터 → 정책
 2. E2 정확한 구현 spec 미정 — 별도 plan-eng-review 필요
 3. D7 정합 시점 판정 기준 (N≥3 lesson) 자체 박제 필요
 
+## ★ 양방향 동작 자연 검증 (mid-review 진행 중 발견)
+
+push rebase 시점에 자연 발생 commit 발견:
+```
+fe2a48e — data: auto-ingest raw from blog-autopilot — CI 실패: main (71822ef)
+```
+
+타임라인:
+- 4-22 Pull(b) GA 박제
+- 4-22 ~ 4-28 mid-review 시점까지: hub-dispatch 자연 fire **0건** (codex 비판 근거)
+- **4-28 KST 14:48 (mid-review 진행 중) 첫 자연 fire** — blog-autopilot CI 실패 → 허브 자동 dispatch
+
+이게 의미하는 것:
+- codex 비판 *"채널 GA 라고 박제했지만 자연 fire 0"* 에 대한 부분 반박 — 채널은 *느리게라도* 동작
+- 워커 self-report (Issue #58) 의 *"CI 1 dispatch (4/28 05:48 UTC)"* 와 정확히 매칭 — 자연 동작 검증
+- 양방향 round-trip 첫 자연 인스턴스 = Pull 입력 (자연 발화) → 허브 처리 (auto-ingest) → 위키 박제 (raw-sources/)
+
+**여전히 codex 비판 유효한 부분**:
+- Lesson 변환 = 0건 (자연 fire → raw 박제만, lesson commit 자동 변환 ✗) → 정확히 E1+D5 가 fix 하는 영역
+- 허브 self-policy 자가 갱신 = 0건 → 정확히 D4 가 fix 하는 영역
+
+→ Phase 4 채택 5 항목이 *진짜 gap* 직격하는 것을 자연 동작이 검증.
+
 ## 메타 — mid-review 자체가 closed loop 의 첫 인스턴스
 
 이 mid-review 진행 자체가 **자기 개선 루프 ❌ 의 첫 자연 시도**:
