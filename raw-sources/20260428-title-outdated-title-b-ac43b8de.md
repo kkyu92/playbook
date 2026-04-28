@@ -1,0 +1,64 @@
+---
+date: "2026-04-28"
+source: "kkyu92/blog-autopilot"
+type: "worker-lesson"
+payload_type: "lesson"
+---
+
+
+4/28 새벽 cron 회수 작업 중 발견된 post 30 "서울 장기안심주택 ... 완벽 가이드 2025"
+사고 회고. 같은 4/28 통합 회수의 연장선이지만 별도 약점 — 회고 분리 박제.
+
+## 증상
+- AS post 30 발행 (회수 dispatch run 25026711571 슬롯 2): title 에 "2025" 박혀있음
+- Blogger URL slug 까지 ".../2025.html" 외부 노출
+- 9 슬롯 중 1건이 사실상 outdated 표기 → 신뢰성 손실
+- DB keyword 자체엔 연도 없음 ("서울 장기안심주택 보증금 지원 신청 방법") — title 생성 시점에 sonnet 이 "2025" 자체 추가
+
+## 근본 원인 (4 layer)
+1. **현재 날짜 동적 inject 부재** — writer/factcheck/editor 호출 시 system prompt 에 현재 시각 정보 0건. LLM 이 학습 데이터 cutoff 기준 또는 정책 발표 연도를 자체 판단.
+2. **prompts 에 hardcoded "2026"** — fact-checker.md 만 "2026 기준" 있고 약함. 시간 흐르면 outdated (2027 사고 재발 가능).
+3. **fact-checker 가 outdated 통과** — "2025년 발표 정책 → 2025 표기 정확" 정상 판단.
+4. **editor.ts soft-warn 정책** — factcheck verdict "needs_revision" 도 hard reject 안 함. outdated 같은 명백한 사고도 그대로 발행.
+
+## title 연도 표기 정책 결정 (B)
+
+사용자 결정: "제목에 꼭 연도를 표시해야하나?" 분석 후 정책 B 선택.
+
+- **default: title 연도 미표기** (evergreen 콘텐츠 — 건강 습관, 부작용, 가이드)
+- **예외: 시의성 강한 토픽만 현재 연도 명시** (시즌성·일정·정책 변경)
+- **금지: outdated 연도 표기** (current_year - 1 이전, 학습 데이터 cutoff/정책 발표 연도라도)
+
+A (완전 제거) vs B (선별) vs C (현재 표시 + 검증만) 중 SEO 균형 + 사고 차단 둘 다 만족하는 B 선택.
+
+## 근본해결 (commit fe151d3)
+
+- `src/lib/current-date.ts` (신규) — getCurrentDate(KST), buildCurrentDateHeader (LLM 호출 prepend), findOutdatedYearInTitle (regex 20\d{2} 매치, current 미만 반환)
+- `src/lib/factcheck.ts` — buildCurrentDateHeader prepend
+- `src/lib/editor.ts` — buildCurrentDateHeader prepend + Step 1b outdated year hard reject (issues.length > 0 → verdict revision_needed → writer 자동 retry max 2)
+- `scripts/auto-publish.ts` — writer 호출에 buildCurrentDateHeader prepend
+- `prompts/agents/content-writer.md` — "Title 연도 표기 규칙" (B 정책) 추가
+- `prompts/agents/fact-checker.md` — recency rule 강화: title 에 (현재 - 1) 이전 연도 시 issue type "recency"
+
+## 검증
+
+- post 30 cleanup (Blogger AS 30 postId 5129510633833788181 + DB row 삭제)
+- AS×1 재dispatch run 25030783400 → post 34 발행: "청약통장 부분 인출·해지 방법 완벽 가이드 2026"
+  - title 에 현재 연도 (2026) — outdated 검증 통과
+  - 청약통장 정책 (시의성 강한 토픽) → 정책 B 분류 일치
+  - 28/32 와 의미 중복 없음 (dedup 정상)
+- 9개 (3-3-3 균형) 회복
+- 회귀 테스트: current-date.test.ts (KST 변환 + outdated regex), editor.test.ts (outdated → revision_needed, future year → 통과). 421 tests pass (+14).
+
+## 적용 가치
+
+- **LLM 호출 시 현재 시각 동적 inject 패턴** — system prompt prepend. sustainable (시간 흘러도 자동 갱신). hardcoded prompt 보다 안전.
+- **post-validation hard reject** — soft-warn 정책의 예외. 외부 노출까지 영향 + 신뢰성 손실은 disclaimer 로 cover 안 됨. issues 배열 추가만으로 자동 retry 트리거 (writer max 2).
+- **title 연도 표기 정책 B** — SEO 가치 (시의성 토픽 현재 연도 명시) 와 outdated 차단 (default 미표기) 균형. evergreen long-term SEO 도 살림.
+- **regex (20\d{2})** — millennium 명시. outdated 없는 (1900s) 매치 회피, future year (2099) 통과 (예약·일정 토픽 허용).
+
+## 발견 컨텍스트
+
+4/28 통합 회수 작업 (claude CLI hang 진단 → 9개 발행 → 15 issue close → lesson #009 commit) 직후
+사용자가 "AS 게시물 - 서울 장기안심주택 ... 2025? 뭔짓을 한거야?" 지적으로 발견. 같은 회수 작업의
+연장선이지만 사고 메커니즘이 별도 (claude CLI hang vs LLM 학습 데이터 cutoff). 회고도 분리해서 박제.

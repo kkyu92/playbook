@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-27T21:57:35.009Z
+Updated: 2026-04-28T03:29:02.521Z
 
-## 엔트리 (43개)
+## 엔트리 (44개)
 
 ### Prompt Engineering
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
@@ -29,6 +29,7 @@ Updated: 2026-04-27T21:57:35.009Z
 - [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
 - [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
 - [Playbook Journal 008 — GitHub repo rename 시 self-hosted runner 재설정 절차](wiki/journal/playbook-journal-008-github-repo-rename-self-hosted-runner) — confidence: 3, status: stable
+- [Playbook Journal 010 — title outdated 연도 사고 + title 연도 정책 B 도입](wiki/journal/playbook-journal-010-title-outdated-title-b) — confidence: 3, status: in-progress
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
 ### Agents
