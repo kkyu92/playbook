@@ -1,0 +1,188 @@
+---
+title: "Journal 011 — 첫 mid-review dialectic + 진행 흐름 (2026-04-28)"
+category: harness-engineering
+date: "2026-04-28"
+tags: [journal, mid-review, dialectic, brainstorming, ceo-review]
+confidence: 4
+connections: [reports/mid-review-2026-04-28]
+status: complete
+description: "4-28 첫 mid-review 의 사용자-AI dialectic + Brainstorming/CEO-review skill 활용 흐름 + 자가 의심 라운드 보존"
+type: entry
+---
+
+## Why this entry
+
+mid-review entry (`content/reports/mid-review-2026-04-28.mdx`) 는 *결과 + 핵심 사유* 박제. 단 *대화 turn-by-turn dialectic* 은 압축됨. 이 journal = *진행 흐름 보존* — 다음 세션이 *왜 이 결정?* 깊게 추적 가능.
+
+memory `feedback_lazy_enrichment` 정합 — *완전 보존* 욕심 X, 단 *재의심* 발생 빈도 ↑ 시 dialectic 보존 가치 ≥ overhead.
+
+## Phase 흐름 요약
+
+### Phase 0 — archaeology
+
+- Trigger: 사용자 *"중간점검"* 요청 + *"양방향 무한성장 자동화 잘 가고 있나"*
+- AI: D' 산식 8 차원 vector 제안 → 사용자 *"제한 두지 마, 무한성장인데"* 직격
+- **자가 정정**: 8 차원 → 8+7 (codex 7 learning 차원 추가) → velocity vector
+- 발견: 30% (4-24 vibes) anchor 의 출처 = `project_bidirectional_compound_growth_goal.md` line 23-24, **명시 산정 공식 없음**, 정성 추정
+- Karpathy 도입 시점 = `f603f95` (4-16, 12일 전)
+
+### Phase 1 — 병렬 4 stream
+
+- Stream A (commit history): 134 commits / 12일 / kkyu92 100 + bot 19
+- Stream B (health): TS 2 errors + lint 11 warnings
+- Stream C (cron): 4-22 후 자연 fire 0건 (mid-review 시점)
+- Stream D (lint): 위키 clean (orphan 0, isolated 3 = lazy enrichment 정합)
+
+### Phase 2a — codex consult #1
+
+- AI: framing-free 으로 raw data → 문제 정의 의뢰
+- codex sharp framing:
+  - *"성장 시스템 ≠ 운영 시스템"*
+  - *"섬 2개"* (워커 9 vs 허브 0 자가 갱신)
+  - *"throughput 보다 침묵·회귀·미측정"*
+  - 7 learning 차원 추가 제안 (루프 폐쇄 시간, 교훈 전환율, 침묵 탐지율 등)
+
+### Phase 2b — 8 차원 + 워커 통합
+
+- 워커 self-report 도착 (Issue #57 moneyball / #58 blog-autopilot)
+- 통합 후 baseline 갱신: **45.4% → 37.25%** (워커 통합 후 ↓)
+- *Push 출력 100% 환상* 검출 — blog-autopilot 빈 dir 발견은 워커 통합 후
+- 4 핵심 발견 + Push 즉시 트리거 부재 추가 발견
+
+### Phase 3a — 사용자 align (이전 흐름)
+
+#### 사용자 의문 → AI 자가 정정 turn-by-turn
+
+**Turn 1**: AI 4 결정 제시 (산식/codex/gap/wins) → 사용자 *"이건 최선이 아닌거 같다, gstack/superpowers 더 나은 제안 없냐?"*
+
+**Turn 2**: AI 자가 정정 — *"4 결정 모두 원래 framing 안의 선택지"* 인식. `/plan-ceo-review` + superpowers `brainstorming` 추천 (premise critique).
+
+**Turn 3**: 사용자 *"B 진행"* (brainstorming 먼저 → CEO).
+
+**Turn 4**: AI brainstorming Q1 — *"이 mid-review 의 진짜 목표?"* 4 옵션 제시. 사용자 *"4 답변 통합 (현재/문제/도착/잔여)"* 정정.
+
+**Turn 5**: AI premise 갱신 — *"4 결정 = 도구일 뿐, 진짜 산출물 = 4 답변"* 인식. Q3 (도착 가능?) 가 핵심 질문 → *"닫힘 정량 정의?"* 옵션 제시.
+
+**Turn 6**: 사용자 *"무한성장인데 제한 두지 마, 더 나은 제안"* 직격 → AI 자가 정정 #2 — *"닫힘 = 종착점이 아닌 enabling condition"* 인식. velocity + acceleration 시간축 미적분 도입.
+
+**Turn 7**: AI 결론 (정적 + velocity + acceleration). 사용자 *"이 framing? 결론이 뭐야?"*
+
+**Turn 8**: AI 한 줄 framing + 5 줄 결론 + 4 답변 표.
+
+**Turn 9**: 사용자 *"진행해라, 최종 목표 다시 말하고"*. AI 최종 목표 vivid 재정리 → CEO review 호출.
+
+**Turn 10**: CEO skill premise critique — Phase 1 (4-19) plan 자체에 *피드백 차원 누락* critical discovery.
+
+### Phase 3a 후반 — EXPANSION ceremony
+
+#### Brainstorming 단계 흐름
+
+**Turn 11**: AI mode 추천 (SCOPE EXPANSION). 사용자 *"X 진행, B vs X 비교, platonic ideal 이 뭔데?"*
+
+**Turn 12**: AI platonic ideal 정의 (12개월 후 vivid 묘사) + B vs X 비교 표 + 자가 정정 *"B 는 SELECTIVE 정합, X 가 EXPANSION 정합"*.
+
+**Turn 13**: 사용자 *"X"* 선택.
+
+**Turn 14**: AI EXPANSION 자연 결과 도출:
+- platonic ideal vivid (2027-04 시점 12개월 후)
+- 10x check 4 차원 (lesson 100% / closed loop 자동 회전 / hub-bootstrap 5분 / Gemini 정책 자가 도출)
+- delight 8 항목 (자동 cron / 대시보드 / Phase N+1 plan / self-policy dispatch / lesson 강제화 / hub-bootstrap CLI / rule 본문 강화 / vector 시각화)
+- 12 후보 통합 표
+
+**Turn 15**: 사용자 *"다 진행할까?"* (12 모두 채택 의문).
+
+**Turn 16**: AI 자가 의심 — *"다 진행 = scope 폭주, EXPANSION ceremony 정신 위반"*. 추천 5 cherry-pick (E1+E2+E3+D4+D5).
+
+**Turn 17**: 사용자 *"5 진행 후 7 추가 진행 효과 좋음?"*
+
+**Turn 18**: AI **진화 path 발견** — *"5+7 ≠ 12. 시스템 진화 후 7의 의미 변화"*:
+- 4 자연 흡수 (E2 부산물): D1+D2+D3+D8
+- 2 정합 시점 도달 (지금 < 나중): E4+D7
+- 1 폐기 (중복): D6
+
+**Turn 19**: 사용자 *"진행"*. AI 5 채택 + 2 deferred + 4 absorbed + 1 dropped 결정 박제.
+
+### Phase 3b~3f — 박제 + commit + scheduled agent + handoff
+
+- 4 트랙 박제 (CEO plan + reports/ + shared-rules + memory ×3)
+- commit 5681ae9 + push (rebase 1회: fe2a48e blog-autopilot 자연 dispatch 도착)
+- **양방향 동작 자연 검증** — fe2a48e = 4-22 GA 후 첫 자연 fire (mid-review 진행 중 자연 발생)
+- mid-review entry update (fe2a48e 사례 추가) → commit 7483416 + push
+- /schedule routine 생성 (16h 후 Phase 4 readiness 자동 검증)
+- /handoff save (체크포인트 + fingerprint)
+
+## 자가 의심 라운드 (turn-by-turn)
+
+| 라운드 | 의심 대상 | 정정 결과 |
+|---|---|---|
+| 1 | 4 결정 (산식/codex/gap/wins) 자체 | *"도구일 뿐, 진짜 산출물 = 4 답변"* 인식 |
+| 2 | "닫힘 정량 정의" framing | *"닫힘 = 종착점이 아닌 enabling condition"* 인식 + velocity/acceleration 도입 |
+| 3 | mode 결정 추천 (B 분할 전략) | *"B 는 SELECTIVE 정합, X 가 EXPANSION 정합"* 자가 정정 |
+| 4 | "다 진행" 폭주 자가 의심 | scope 보호, 5 cherry-pick 추천 |
+| 5 | "5+7 = 12" 단순 합 자가 의심 | **진화 path 발견** — 자연 흡수 + 정합 시점 + 폐기 분류 |
+| 6 | quick win (blog 빈 dir) 추가 자가 의심 | EXPANSION 의 platonic 흡수, *"infra 강화 ≠ 학습 가속"* 인식 후 폐기 |
+
+## 산식 / 산출물 진화 흐름
+
+```
+초기:    8 차원 vector (D')
+   ↓ 사용자 의문 ("제한 두지 마")
+중간:    8 차원 + 7 차원 (codex learning 차원 추가)
+   ↓ 사용자 직격 ("닫힘 = 종착점 아님")
+최종:    8 차원 + 7 차원 + velocity + acceleration (시간축)
+```
+
+```
+초기:    4 결정 (산식/codex/gap/wins) 옵션 제시
+   ↓ 사용자 의문 ("최선이 아닌 거 같다")
+중간:    brainstorming + CEO review skill 활용
+   ↓ premise critique
+중간:    Phase 1 plan 자체에 closed loop 누락 발견
+   ↓ EXPANSION mode + ceremony
+최종:    12 후보 → 5 채택 + 2 deferred + 4 absorbed + 1 dropped
+```
+
+```
+초기:    "5 + 7 = 12 다 진행" 단순 가정
+   ↓ 사용자 의문 ("나중 7 효과 좋음?")
+최종:    진화 path — 자연 흡수 / 정합 시점 / 폐기 분류
+```
+
+## 사용자-AI 협업 패턴
+
+memory feedback 적용 검증:
+
+| feedback | 적용 사례 |
+|---|---|
+| `question_own_defaults` | B → X 자가 정정 / 5 cherry-pick (12 다 진행 X) |
+| `long_term_goal_lens` | 5 진행 vs 12 다 진행 비교 시 무한성장 lens 적용 |
+| `snapshot_as_constraint_fallacy` | "30%" anchor 정직 폐기 |
+| `no_self_censorship` | 모든 결정 사용자 confirm |
+| `automation_value_check` | /schedule agent ROI 검증 (시간 × 빈도 vs overhead) |
+
+## 메타 — 본 세션이 closed loop 의 manual prototype
+
+```
+이 mid-review 사이클 자체 = 자기 개선 루프 ❌ 의 manual prototype.
+
+측정 → 진단 → 결정 → 박제 → trigger
+   ↓        ↓        ↓        ↓        ↓
+Phase 1  Phase 2a  EXPANSION  Phase 3b  /schedule
+                                          + /handoff
+```
+
+다음 세션 = E1+E2+E3+D4+D5 implementation = 이 manual prototype 의 *자동화 spec*.
+E2 ✅ 후 = 이 흐름 자체가 *자동 회전*.
+
+즉:
+- 본 세션 = E2 의 manual prototype
+- 다음 세션 = E2 implementation
+- 그 후 = E2 자동 회전 (사용자 hands-on 매주 ~1시간 only)
+
+## 다음 세션이 *재의심* 시 참조 우선순위
+
+1. mid-review entry (`content/reports/mid-review-2026-04-28.mdx`) — 결과 + 핵심 사유
+2. 이 journal — 흐름 + dialectic + 자가 의심 라운드
+3. CEO plan (gstack 외부) — scope decisions 표 + reasoning
+4. memory 3 신규 — 자동 로드 (산식 lens, 교훈, scope)
+5. 본 세션 transcript — *마지막 source* (압축 안 됨, 단 검색성 ↓)
