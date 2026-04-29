@@ -1,23 +1,12 @@
 {
   "hooks": {
-    "PreToolUse": [
+    "SessionStart": [
       {
-        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE 'git commit' 2>/dev/null; then cd /Users/jominho/Develop/ai-study && npm run build 2>&1 | grep -E 'error|Error|✓|✅' | tail -5; if [ $? -ne 0 ]; then echo '❌ QA_GATE FAILED: 빌드 실패. 커밋 차단.'; exit 1; fi; echo '✅ QA_GATE PASSED'; fi",
-            "timeout": 300000
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash /Users/jominho/Develop/ai-study/.claude/hooks/no-company-names.sh",
-            "timeout": 5000
+            "command": "cd /Users/kyusikkim/projects/playbook 2>/dev/null && BRANCH=$(git branch --show-current) && if [ \"$BRANCH\" = \"main\" ]; then OUT=$(git pull --ff-only origin main 2>&1); ST=$?; if [ $ST -eq 0 ]; then echo \"$OUT\" | tail -1; else echo \"⚠️ playbook git pull 실패 (충돌, 수동 처리): $OUT\"; fi; else echo \"ℹ️ playbook on '$BRANCH' (main 아님 → pull skip)\"; fi",
+            "timeout": 30000
           }
         ]
       }
