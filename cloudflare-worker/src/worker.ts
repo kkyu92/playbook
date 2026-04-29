@@ -37,10 +37,12 @@ function decideWorkflows(scheduledTime: number): string[] {
     workflows.push('embed-on-push.yml');
   }
 
-  // UTC 21:00 매일 → daily-ingest (+일요일=promotion-scan+weekly-triage, +금요일=pat-expiry-check, +매월1일=category-rebalance)
+  // UTC 21:00 매일 → daily-ingest + incident-followup (Phase 4a D5)
+  //   (+일요일=promotion-scan+weekly-triage, +금요일=pat-expiry-check, +매월1일=category-rebalance)
   // KST 06:00. 무료 플랜 cron 1개 회피 위해 다중 분기 통합.
   if (utcHour === 21) {
     workflows.push('daily-ingest-geeknews.yml');
+    workflows.push('incident-followup.yml');
     if (utcDay === 0) {
       workflows.push('promotion-scan.yml');
       workflows.push('weekly-triage.yml');

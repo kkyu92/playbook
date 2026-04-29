@@ -16,7 +16,7 @@
 - **Next.js 16** (App Router, MDX, proxy.ts middleware)
 - **Tailwind CSS 4** + **TypeScript strict**
 - **Vercel** (호스팅, Edge, Analytics, Speed Insights)
-- **GitHub Actions** × 14 (auto-ingest, ai-review, daily-ingest-geeknews 등 — 상세 표는 `ARCHITECTURE.md` § 6)
+- **GitHub Actions** × 15 (auto-ingest, ai-review, daily-ingest-geeknews, incident-followup 등 — 상세 표는 `ARCHITECTURE.md` § 6)
 - **Vitest** (단위 테스트)
 
 ## Quick Start

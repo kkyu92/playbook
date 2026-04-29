@@ -28,6 +28,9 @@ on:
       fingerprint:
         description: "(incident/lesson 권장) 안정 식별자 — incident-lesson correlation key (Phase 4a D5)"
         required: false
+      subtype:
+        description: "(lesson 만, Phase 4a D4) self-policy = 워커 자가 정책 갱신. 미정의면 기존 lesson 처리"
+        required: false
       intent:
         description: "(가드 테스트) test 면 raw 만 저장 후 종료"
         required: false
@@ -72,6 +75,7 @@ jobs:
           CP_ENVIRONMENT: ${{ github.event.client_payload.environment }}
           CP_RUN_URL: ${{ github.event.client_payload.run_url }}
           CP_INTENT: ${{ github.event.client_payload.intent }}
+          CP_SUBTYPE: ${{ github.event.client_payload.subtype }}
           WD_SOURCE: ${{ inputs.source_repo }}
           WD_TITLE: ${{ inputs.error_title }}
           WD_BODY: ${{ inputs.error_body }}
@@ -79,6 +83,7 @@ jobs:
           WD_SEVERITY: ${{ inputs.severity }}
           WD_FINGERPRINT: ${{ inputs.fingerprint }}
           WD_INTENT: ${{ inputs.intent }}
+          WD_SUBTYPE: ${{ inputs.subtype }}
           # GH_PAT 필수: 이 스텝 안에서 gh pr create 실행. GITHUB_TOKEN 으로
           # 만든 PR 은 CI 가 트리거되지 않음 (action_required 로 차단).
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
@@ -98,6 +103,7 @@ jobs:
             ENVIRONMENT="${CP_ENVIRONMENT:-}"
             RUN_URL="${CP_RUN_URL:-}"
             INTENT="${CP_INTENT:-}"
+            SUBTYPE="${CP_SUBTYPE:-}"
           else
             SOURCE_REPO="${WD_SOURCE:-}"
             TITLE="${WD_TITLE:-}"
@@ -110,6 +116,7 @@ jobs:
             ENVIRONMENT=""
             RUN_URL=""
             INTENT="${WD_INTENT:-}"
+            SUBTYPE="${WD_SUBTYPE:-}"
           fi
 
           # 2. Schema 검증 (A0-2) — fail-loud, visible fallback
@@ -151,7 +158,25 @@ jobs:
             esac
           fi
 
-          # 2e. intent=test → raw 만 저장 후 종료 (가드 테스트)
+          # 2e. subtype 검증 (lesson 만, Phase 4a D4)
+          # payload-validator.mjs 가 화이트리스트 검사 + warning 수집. invalid 면 subtype 무시 (backward-compat)
+          if [ "$EVENT_TYPE" = "worker-lesson" ] && [ -n "$SUBTYPE" ]; then
+            if ! VALIDATION=$(node scripts/validate-lesson-payload.mjs "$SUBTYPE" "$FINGERPRINT" 2>&1); then
+              echo "::warning::subtype validation 실패 → subtype 무시, 기존 lesson 처리: $VALIDATION"
+              SUBTYPE=""
+            else
+              echo "subtype validated: $VALIDATION"
+              # warnings 추출 (예: self-policy 인데 fingerprint 누락)
+              WARNS=$(echo "$VALIDATION" | jq -r '.warnings[]?' 2>/dev/null || true)
+              if [ -n "$WARNS" ]; then
+                echo "$WARNS" | while IFS= read -r w; do
+                  [ -n "$w" ] && echo "::warning::$w"
+                done
+              fi
+            fi
+          fi
+
+          # 2f. intent=test → raw 만 저장 후 종료 (가드 테스트)
           # (raw 저장 부분에서 처리, 검증 후 다음 단계로)
 
           # 2. slug — ASCII only (locale-independent)
@@ -202,6 +227,7 @@ jobs:
             echo "source: \"$ESC_SOURCE\""
             echo "type: \"$EVENT_TYPE\""
             [ -n "$PAYLOAD_TYPE" ] && echo "payload_type: \"$PAYLOAD_TYPE\""
+            [ -n "$SUBTYPE" ] && echo "subtype: \"$SUBTYPE\""
             [ -n "$SEVERITY" ] && echo "severity: \"$SEVERITY\""
             [ -n "$FINGERPRINT" ] && echo "fingerprint: \"$FINGERPRINT\""
             [ -n "$FIRST_SEEN" ] && echo "first_seen: \"$FIRST_SEEN\""
@@ -319,6 +345,48 @@ jobs:
               echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
             else
               git commit -m "data: auto-ingest raw from ${SOURCE_SHORT} — ${TITLE}"
+              git push origin main
+            fi
+
+          elif [ "$SUBTYPE" = "self-policy" ]; then
+            echo "=== SELF-POLICY 경로: raw + Issue (label self-policy, Journal PR skip) ==="
+
+            # 라벨 self-bootstrap
+            gh label create inbound --color "f9c74f" --description "워커에서 자동 수집" 2>/dev/null || true
+            gh label create self-policy --color "0e8a16" --description "워커 자가 정책 갱신 (D4)" 2>/dev/null || true
+
+            FP_TAG="[fp:${FP_SHORT}]"
+            ISSUE_TITLE="🔧 Self-policy: ${TITLE} (from ${SOURCE_SHORT}) ${FP_TAG}"
+
+            ISSUE_BODY=$(cat <<SPEND
+          **Source:** \`${SOURCE_REPO}\`
+          **Type:** \`worker-lesson\` / subtype=\`self-policy\`
+          **Fingerprint:** \`${FINGERPRINT:-(auto: ${FP_SHORT})}\`
+          **Raw:** \`${RAW_FILE}\`
+
+          워커가 자기 정책을 갱신했습니다 (\`policy:\` / \`feedback:\` / \`memory:\` prefix commit). 허브에서 검토 후 필요 시 entry 박제.
+
+          ---
+
+          ## 원본
+
+          ~~~
+          ${BODY}
+          ~~~
+          SPEND
+          )
+            gh issue create \
+              --title "$ISSUE_TITLE" \
+              --body "$ISSUE_BODY" \
+              --label "inbound,self-policy" \
+              --assignee kkyu92
+            echo "✅ Self-policy Issue 생성"
+
+            git add raw-sources/
+            if git diff --cached --quiet; then
+              echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
+            else
+              git commit -m "data: auto-ingest self-policy from ${SOURCE_SHORT} — ${TITLE}"
               git push origin main
             fi
 

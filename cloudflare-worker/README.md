@@ -104,11 +104,11 @@ wrangler.toml 의 cron 표현식은 **매시 정각 1개** (`0 * * * *`). worker
 |---|---|---|
 | 09:00 sun | 일요일 18:00 | weekly-report |
 | 14:00 매일 | 매일 23:00 | embed-on-push |
-| **21:00 매일** | 매일 06:00 | daily-ingest-geeknews (+ 일요일 = promotion-scan + weekly-triage, + 금요일 = pat-expiry-check, + 매월1일 = category-rebalance) |
+| **21:00 매일** | 매일 06:00 | daily-ingest-geeknews + incident-followup (+ 일요일 = promotion-scan + weekly-triage, + 금요일 = pat-expiry-check, + 매월1일 = category-rebalance) |
 | 23:00 매일 | 매일 08:00 | gemini-key-health |
 | 그 외 20시각 | — | 0개 매핑 (즉시 return) |
 
-총 1 cron trigger → 8 workflow 분기 dispatch.
+총 1 cron trigger → 9 workflow 분기 dispatch.
 
 **Cloudflare Workers Free cron 5개/account 제한** (머니볼 워커 4개 점유 → 우리 1개):
 - 매시 fire 24/day × 30 = 720/월 invocation. Free 100k req/day 대비 0.024%, 비용 무관.

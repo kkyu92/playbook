@@ -116,7 +116,7 @@ flowchart TB
 
 ## 6. 자동화 인프라 — GitHub Actions
 
-`.github/workflows/` 14개 workflow. cron 은 GH Actions 가 silent drop 자주 → **Cloudflare Worker (`cloudflare-worker/`) 가 외부 트리거 (`workflow_dispatch`)** 로 이관 (T9, 2026-04-28).
+`.github/workflows/` 15개 workflow. cron 은 GH Actions 가 silent drop 자주 → **Cloudflare Worker (`cloudflare-worker/`) 가 외부 트리거 (`workflow_dispatch`)** 로 이관 (T9, 2026-04-28).
 
 | Workflow | 트리거 | 용도 |
 |---|---|---|
@@ -125,6 +125,7 @@ flowchart TB
 | `auto-ingest.yml` | repository_dispatch / workflow_dispatch | 워커 dispatch 수신 (worker-error / worker-incident / worker-lesson) + 분기 처리 |
 | `auto-cross-update-shadow.yml` | pull_request / workflow_dispatch | A2 Shadow — LLM Cross-Update observe-only (shadow 채널) |
 | `daily-ingest-geeknews.yml` | workflow_dispatch (CF cron 매일 06:00 KST) | GeekNews 자동 ingest |
+| `incident-followup.yml` | workflow_dispatch (CF cron 매일 06:00 KST) | Phase 4a D5 — 미해결 incident → lesson reminder |
 | `weekly-triage.yml` | workflow_dispatch (CF cron 매주 월 06:00 KST) | 미처리 raw 리마인더 Issue |
 | `weekly-report.yml` | workflow_dispatch (CF cron 매주 일 18:00 KST) | 주간 통계 리포트 |
 | `promotion-scan.yml` | push / workflow_dispatch (CF cron 매주 월 06:00 KST) | docs/solutions/ 승격 후보 감지 |
