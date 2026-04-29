@@ -7,7 +7,7 @@
 - **MDX 위키**: 지식 그래프, 검색, 카테고리, confidence / connections / workers 태그 기반
 - **학습 트래커**: 스트릭, 히트맵, Quiz SRS
 - **/projects 관제탑**: 워커 프로젝트 상태 원뷰
-- **Gemini 자동 콘텐츠**: daily-lesson cron → AI 주제 제안 → 사용자 선택 → 자동 생성
+- **GeekNews 일일 ingest**: Cloudflare cron (06:00 KST) → `daily-ingest-geeknews` → `raw-sources/` 자동 수집 → 사용자 `/ingest` 로 검토
 - **허브-워커 양방향 자동화**: 워커 에러/교훈 → 자동 dispatch → auto-ingest → cross-update → ambient symlink 배포
 - **HMAC 쿠키 인증**: 비공개 (admin 영역만 — 위키 열람은 공개)
 
@@ -16,7 +16,7 @@
 - **Next.js 16** (App Router, MDX, proxy.ts middleware)
 - **Tailwind CSS 4** + **TypeScript strict**
 - **Vercel** (호스팅, Edge, Analytics, Speed Insights)
-- **GitHub Actions** × 8 (auto-ingest, weekly-triage, daily-lesson, ai-review 등)
+- **GitHub Actions** × 14 (auto-ingest, ai-review, daily-ingest-geeknews 등 — 상세 표는 `ARCHITECTURE.md` § 6)
 - **Vitest** (단위 테스트)
 
 ## Quick Start

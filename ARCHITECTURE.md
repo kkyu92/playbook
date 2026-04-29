@@ -116,18 +116,28 @@ flowchart TB
 
 ## 6. 자동화 인프라 — GitHub Actions
 
+`.github/workflows/` 14개 workflow. cron 은 GH Actions 가 silent drop 자주 → **Cloudflare Worker (`cloudflare-worker/`) 가 외부 트리거 (`workflow_dispatch`)** 로 이관 (T9, 2026-04-28).
+
 | Workflow | 트리거 | 용도 |
 |---|---|---|
-| `ci.yml` | push / PR | test + build |
-| `auto-ingest.yml` | repository_dispatch | 워커 dispatch 수신 + 분기 처리 |
-| `weekly-triage.yml` | cron (월 09:05 KST) | 미처리 raw 리마인더 Issue |
-| `daily-lesson.yml` | cron (일 09:05 KST) | Gemini 주제 3개 제안 Issue |
-| `generate-on-pick.yml` | issue_comment | 사용자 1/2/3 선택 → 콘텐츠 자동 생성 PR |
-| `ai-review.yml` | PR opened | Gemini PR 리뷰 코멘트 |
-| `weekly-report.yml` | cron | 주간 통계 리포트 |
-| `vercel-retry.yml` | manual | Vercel 배포 실패 시 재시도 |
+| `ci.yml` | push / pull_request | test + build |
+| `ai-review.yml` | push (main 머지 후 auto-merge gate) | name: `🚀 Auto Merge to main` — PR 트리거 X (push 만), daily-ingest PR 등 PR-only 변경은 수동 머지 |
+| `auto-ingest.yml` | repository_dispatch / workflow_dispatch | 워커 dispatch 수신 (worker-error / worker-incident / worker-lesson) + 분기 처리 |
+| `auto-cross-update-shadow.yml` | pull_request / workflow_dispatch | A2 Shadow — LLM Cross-Update observe-only (shadow 채널) |
+| `daily-ingest-geeknews.yml` | workflow_dispatch (CF cron 매일 06:00 KST) | GeekNews 자동 ingest |
+| `weekly-triage.yml` | workflow_dispatch (CF cron 매주 월 06:00 KST) | 미처리 raw 리마인더 Issue |
+| `weekly-report.yml` | workflow_dispatch (CF cron 매주 일 18:00 KST) | 주간 통계 리포트 |
+| `promotion-scan.yml` | push / workflow_dispatch (CF cron 매주 월 06:00 KST) | docs/solutions/ 승격 후보 감지 |
+| `category-rebalance.yml` | workflow_dispatch (CF cron 매월 1일 06:00 KST) | 카테고리 재분류 후보 감지 |
+| `embed-on-push.yml` | push / workflow_dispatch (CF cron 매일 23:00 KST) | content/ embedding index 갱신 |
+| `gemini-key-health.yml` | workflow_dispatch (CF cron 매일 08:00 KST) | Gemini API key 1차 health probe |
+| `smoke-test-gemini-keys.yml` | workflow_dispatch | Gemini key 포괄 smoke (1차에서 의심 시 호출) |
+| `pat-expiry-check.yml` | workflow_dispatch (CF cron 매주 금 06:00 KST) | GH PAT 만료 예고 (T5, fine-grained) |
+| `vercel-retry.yml` | workflow_dispatch | Vercel 배포 실패 시 수동 재시도 |
 
-**SHA 핀**: `pnpm/action-setup@fc06bc1...` (v4.4.0) — 6개 workflow 모두 (moving tag hijack 방어)
+**SHA 핀**: `pnpm/action-setup@fc06bc1...` (v4.4.0) — 8개 workflow (`ai-review`, `auto-cross-update-shadow`, `auto-ingest`, `category-rebalance`, `ci`, `daily-ingest-geeknews`, `embed-on-push`, `weekly-report`) (moving tag hijack 방어).
+
+**Drift note (2026-04-29)**: 이전 표가 `daily-lesson.yml` / `generate-on-pick.yml` 박제했으나 **둘 다 미존재**. Gemini 주제 제안 → 사용자 1/2/3 pick → 자동 생성 메커니즘은 폐기 (codex finding #6).
 
 ---
 
