@@ -1,0 +1,56 @@
+---
+title: "Playbook Journal 012 — agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제)"
+category: harness-engineering
+date: "2026-04-29"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: []
+status: in-progress
+description: "자동 수집: agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/20260429-agent-loop-carry-over-6-cycles-main-push-drift-cas-b406eb90ca157fe081c3a85b72bc1a.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+## 현상
+Phase 5a self-develop 첫 ship 직후 6 cycles 디버그 발생. 각 cycle 의 fix 를
+main 직접 push 로 인위 chain. carry-over 메커니즘 부재 증거.
+
+## 원인
+1 fire = 1 try 만 가정한 첫 ship spec. 큰 task 자율 분해 + 다음 fire 인계
+누락. 결과 = 사용자 (또는 같은 세션) 가 main 직접 push 로 인위 chain.
+
+## 해결 (Phase 5 비전 1 보완, 같은 PR)
+1) namespace 분리 — agent-loop label + agent-loop/ branch prefix
+2) carry-over chain — 1 cycle = 10 fire, GH Issue 기반 인계
+3) 10/10 도달 시 횡단 lesson 박제 → cycle 종료
+
+## 예방
+- 새 자율 agent ship 시 단일 fire 가정 X. carry-over 함께 설계.
+- namespace 분리 = 자동 결과와 사용자 작업 추적 가능 토대.
+- cycle cap (10 fire) 명시 → 무한 chain 방지 + 메타 회고 기점.
+
+Fingerprint: agent-loop-cycle-zero
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
