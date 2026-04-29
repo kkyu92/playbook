@@ -30,8 +30,9 @@ playbook 허브의 auto-ingest 시스템에 워커 레포(moneyballscore 등)를
 | `title` | string | ✓ | 한 줄 제목 (~80자) |
 | `body` | string | ✓ | 본문 (markdown 권장) |
 | `type` | enum | ✓ | `error-log` / `incident` / `lesson` (event_type 과 매칭) |
+| `subtype` | string | optional (lesson) | lesson 의 subtype 메타. 예: `self-policy` (워커 memory/feedback 자가 갱신 commit), `general` (default). hub 측 routing/label 분기 — 새 event_type X (codex 2026-04-29 finding #2 정합) |
 | `severity` | enum | incident 권장 | `warning` / `error` / `critical` (alert taxonomy, promotion gate 아님) |
-| `fingerprint` | string | incident 권장 | 안정 식별자 (Sentry issue ID, deploy SHA 등). raw 파일 idempotent key. **dedup 의 진짜 기준** |
+| `fingerprint` | string | incident/lesson 권장 | 안정 식별자 (Sentry issue ID, deploy SHA, lesson commit SHA 등). raw 파일 idempotent key + **incident-lesson correlation key (Phase 4a D5)**. dedup 의 진짜 기준 |
 | `first_seen` | ISO8601 | optional | 첫 발생 시각 (예: `2026-04-19T14:43:13Z`) |
 | `environment` | string | optional | `production` / `preview` / `development` |
 | `run_url` | URL | optional | workflow run URL / Sentry issue URL — 디버깅 진입점 |
@@ -207,6 +208,31 @@ git push
 ```
 
 Lesson 접두사 없는 일반 커밋은 무시됨 (job `if` 조건). 작은 노이즈 부담 없음.
+
+### Self-policy variant — `subtype: self-policy` (Phase 4a 예정)
+
+워커 측 자가 정책 갱신 commit (메모리 `feedback_*.md` 추가, 워커 CLAUDE.md 규칙 update, `~/bin/` 스크립트 운영 변경 등 워커 *자체* 운영 변경) 도 lesson 채널 재사용 — `subtype: self-policy` 로 구분. **새 event_type 추가 X** (codex 2026-04-29 finding #2 정합).
+
+**워커 측 trigger**: commit 메시지 prefix `policy:` / `feedback:` / `memory:` (event_type 은 그대로 `worker-lesson`).
+
+**Dispatch 예시**:
+
+```bash
+gh api repos/kkyu92/playbook/dispatches \
+  -f event_type=worker-lesson \
+  -f "client_payload[source_repo]=${GITHUB_REPOSITORY}" \
+  -f "client_payload[title]=${TITLE}" \
+  -f "client_payload[body]=${BODY}" \
+  -f "client_payload[type]=lesson" \
+  -f "client_payload[subtype]=self-policy" \
+  -f "client_payload[fingerprint]=${GITHUB_SHA}"
+```
+
+**Hub 측 처리** (Phase 4a 구현 예정):
+- `subtype=self-policy` → label `self-policy` Issue 생성 + Journal PR draft 는 동일 패턴
+- 미지정 / `general` → 기존 Journal PR draft 그대로 (변경 없음)
+
+**의도**: 워커 자체 운영 갱신 (정책 / memory feedback) → 허브 가 인지 → 다른 워커 전파 후보 감지 (D4 self-policy → hub dispatch). 본 가이드는 schema 박제 only — 워커 측 workflow 와 허브 측 분기 routing 은 Phase 4a 구현.
 
 ---
 

@@ -26,7 +26,7 @@ on:
         description: "(incident 만) warning / error / critical"
         required: false
       fingerprint:
-        description: "(incident 권장) 안정 식별자"
+        description: "(incident/lesson 권장) 안정 식별자 — incident-lesson correlation key (Phase 4a D5)"
         required: false
       intent:
         description: "(가드 테스트) test 면 raw 만 저장 후 종료"
