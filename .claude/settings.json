@@ -5,8 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd /Users/kyusikkim/projects/playbook 2>/dev/null && BRANCH=$(git branch --show-current) && if [ \"$BRANCH\" = \"main\" ]; then OUT=$(git pull --ff-only origin main 2>&1); ST=$?; if [ $ST -eq 0 ]; then echo \"$OUT\" | tail -1; else echo \"⚠️ playbook git pull 실패 (충돌, 수동 처리): $OUT\"; fi; else echo \"ℹ️ playbook on '$BRANCH' (main 아님 → pull skip)\"; fi",
-            "timeout": 30000
+            "command": "cd /Users/kyusikkim/projects/playbook 2>/dev/null && BRANCH=$(git branch --show-current) && if [ \"$BRANCH\" = \"main\" ]; then OUT=$(git pull --ff-only origin main 2>&1); ST=$?; if [ $ST -eq 0 ]; then echo \"$OUT\" | tail -1; if echo \"$OUT\" | grep -qE 'content/.*\\.mdx|workers\\.config\\.json'; then if command -v hub-sync-rules >/dev/null 2>&1; then echo '🔄 content/workers 변경 감지 → hub-sync-rules 자동 실행 (Phase 5d)'; hub-sync-rules 2>&1 | tail -5; else echo 'ℹ️ hub-sync-rules 명령 없음 (skip)'; fi; fi; else echo \"⚠️ playbook git pull 실패 (충돌, 수동 처리): $OUT\"; fi; else echo \"ℹ️ playbook on '$BRANCH' (main 아님 → pull skip)\"; fi",
+            "timeout": 60000
           }
         ]
       }

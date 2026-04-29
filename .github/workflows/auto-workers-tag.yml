@@ -1,0 +1,164 @@
+name: "🏷️ Auto Workers Tag"
+
+# Phase 5d — 허브→워커 자동 전파.
+#
+# content/*.mdx 머지 시 LLM 이 frontmatter `workers:` 자동 분석/갱신.
+# 사용자가 PR 머지하면 SessionStart hook 이 hub-sync-rules 자동 실행 →
+# 워커 memory 에 symlink 배포 → 워커 SessionStart 시 자연 흡수.
+#
+# 참조 패턴: blog-autopilot/.github/workflows/issue-agent.yml (claude-code-action@v1).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**.mdx"
+  workflow_dispatch:
+    inputs:
+      base_sha:
+        description: "분석 base SHA (default = HEAD~1)"
+        required: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 5
+
+      - name: Self-loop guard
+        id: guard
+        run: |
+          set -euo pipefail
+          AUTHOR=$(git log -1 --format='%an' HEAD)
+          MSG=$(git log -1 --format='%s' HEAD)
+          if [ "$AUTHOR" = "github-actions[bot]" ] || [[ "$MSG" == *"auto-workers-tag"* ]]; then
+            echo "🛡️ self-loop guard — 본인이 만든 commit, skip"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changed entries
+        if: steps.guard.outputs.skip != 'true'
+        id: detect
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.before || github.event.inputs.base_sha || 'HEAD~1' }}"
+          # 추가/수정된 .mdx 만 (deleted 제외)
+          CHANGED=$(git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- 'content/**.mdx' 2>/dev/null || true)
+          if [ -z "$CHANGED" ]; then
+            echo "변경된 content/ entry 없음 — skip"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "$CHANGED" > /tmp/changed-entries.txt
+          COUNT=$(wc -l < /tmp/changed-entries.txt | tr -d ' ')
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "📝 변경된 entries ($COUNT):"
+          cat /tmp/changed-entries.txt
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        if: steps.detect.outputs.skip != 'true'
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.skip != 'true'
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - if: steps.detect.outputs.skip != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Claude Code workers analysis
+        if: steps.detect.outputs.skip != 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          prompt: |
+            너는 허브 워커 전파 agent. content/ entry 의 `workers:` frontmatter 를 자동 분석/갱신한다.
+
+            ## 컨텍스트
+            본 push 가 새/갱신한 mdx 파일 목록 = `/tmp/changed-entries.txt`.
+            등록된 워커 = `workers.config.json` 의 registered (현재: `playbook`, `moneyball`, `blog-autopilot`).
+            `workers:` frontmatter 의미:
+            - `[]` (default 보수적) — 어느 워커 memory 에도 배포 안 함
+            - `[moneyball]` — moneyball memory 에 symlink 배포
+            - `[moneyball, blog-autopilot]` — 양쪽 모두
+            - `[all]` — 모든 등록 워커
+
+            ## 작업
+
+            1. `cat /tmp/changed-entries.txt` 로 대상 파일 list 읽기
+            2. 각 entry 별:
+               - 파일 read (frontmatter + 본문 일부)
+               - 주제/패턴 분석 → 어느 워커에 가치 있는가?
+                 - `moneyball` (KBO 야구 데이터, Next.js, Supabase, Vercel)
+                 - `blog-autopilot` (블로그 자동화, multi-platform 발행, self-hosted runner, claude-code-action)
+                 - 양쪽 다 (harness/메타 패턴, 양방향 복리성장, 무한성장 자동화)
+                 - 어느 쪽도 X (허브-only, 너무 specific 한 wiki 메타)
+               - 현재 frontmatter `workers:` 와 비교
+                 - 변경 필요 없으면 skip
+                 - 변경 필요하면 frontmatter 수정 (workers: [...])
+            3. 변경 사항 있으면:
+               - 새 branch: `auto-workers-tag/$(date +%Y%m%d)-${{ github.run_id }}`
+               - commit: `feat(auto-workers-tag): N entries 갱신`
+               - push + PR
+               - PR title: `🏷️ auto-workers-tag: N entries 갱신`
+               - PR body: 각 entry 별 `[기존 → 새값] + 판단 근거 1줄`
+               - PR labels: `auto-workers-tag, automation`
+               - PR assignee: `kkyu92`
+            4. 변경 없을 때:
+               - 그냥 log 출력 + exit 0 (Issue 박제 X, noise 회피)
+
+            ## 정합 체크 (필수)
+            - **잘못된 워커 이름 추가 X** — `workers.config.json` 의 `registered` 만 사용
+            - **`workers: []` default 보수적** — 명확한 가치 있을 때만 추가. 애매하면 빈 배열 유지
+            - **재귀 방지** — 본인이 만든 PR 은 self-loop guard 가 차단 (본 step 도달하지 못함). 추가 방어로 본 step 안에서 `auto-workers-tag/` branch checkout 시도 X
+            - **기존 frontmatter 보존** — `workers:` 외 필드는 절대 변경 X
+            - **단일 PR** — 여러 entry 도 한 PR 에 묶음
+
+            ## 결과 보고
+            완료 시:
+            - 변경 있으면: PR URL + 갱신된 entry 수
+            - 변경 없으면: 분석한 entry 수 + "변경 불필요" 1줄
+
+      - name: Self-report on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -e
+          gh label create hub-self-report --color "b60205" --description "허브 workflow 자체 실패" 2>/dev/null || true
+
+          EXISTING=$(gh issue list \
+            --state open \
+            --label "hub-self-report" \
+            --limit 1 \
+            --json number \
+            | jq -r '.[0].number // empty')
+
+          BODY="🚨 auto-workers-tag.yml run #${GITHUB_RUN_NUMBER} 실패 — Phase 5d 자동 전파 차질.
+
+          Run: ${RUN_URL}"
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create \
+              --title "🚨 auto-workers-tag.yml 실패 (Phase 5d)" \
+              --body "$BODY" \
+              --label "hub-self-report"
+          fi
