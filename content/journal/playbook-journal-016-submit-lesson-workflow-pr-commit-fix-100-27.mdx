@@ -3,10 +3,13 @@ title: "Playbook Journal 016 — submit-lesson workflow PR 머지 commit 검출 
 category: harness-engineering
 date: "2026-04-30"
 tags: [playbook-journal, auto-ingest, lesson, moneyball]
-confidence: 3
-connections: []
-status: in-progress
-description: "자동 수집: submit-lesson workflow PR 머지 commit 검출 갭 fix — 양방향 흡수 100% (#27) (from kkyu92/moneyballscore)"
+confidence: 4
+connections:
+  - content/harness-engineering/hub-worker-compounding-pattern
+  - content/harness-engineering/drift-detection-methodology
+  - content/harness-engineering/question-own-defaults
+status: complete
+description: "submit-lesson workflow의 head_commit 단독 검사 한계 → PR 머지 commit silent skip → commits[] loop fix. 같은 세션 dogfood e2e 검증 완료."
 type: entry
 series: playbook-journal
 raw_source: "raw-sources/20260430-submit-lesson-workflow-pr-commit-fix-100-27-5e822ca267b17d82630bb594c18f2f.md"
@@ -35,12 +38,62 @@ Co-authored-by: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+### 갭 정체 — head_commit 단독 검사
+
+submit-lesson workflow의 `if:` 조건이 `github.event.head_commit.message` 만 4 prefix (`lesson:` / `policy:` / `feedback:` / `memory:`) 매칭 검사. push event 안의 `commits[*]` 배열은 보지 않음.
+
+PR 머지 패턴별 head_commit 결과:
+
+| 머지 방식 | head_commit 메시지 | 4 prefix 매칭 | dispatch |
+|---|---|---|---|
+| 직접 push | 원본 commit msg 그대로 | ✅ (lesson:/policy:/... 시작 시) | fire |
+| Squash merge | PR title 또는 합쳐진 메시지 | ✅ (PR title에 prefix 있을 시) | fire |
+| Merge commit (no squash) | `Merge pull request #N from ...` | ❌ (항상 미매칭) | **silent skip** |
+| Rebase merge | 원본 commit msg 그대로 | ✅ | fire |
+
+→ Merge commit 만 silent skip. 본 케이스는 R6 정책 박는 PR #26 (`170c059 Merge pull request #26 ...`) 머지에서 발견.
+
+### 발견 시퀀스 (같은 세션 내)
+
+1. PR #26 (R6 정책) merge commit 머지 → main `170c059`
+2. submit-lesson run 25161393739 **skipped (1s)** 관찰
+3. 비교 — 직전 직접 push lesson commit (`62ad494`) 은 run 25143854720 **success (7s)**, 허브 dispatch fire
+4. 갭 진단 + fix 결정 (양방향 흡수 100% 목표 정합)
+5. PR #27 작성 + squash merge → main `5e822ca`
+6. submit-lesson run 25161944646 **success (10s)** → 허브 worker-lesson run 25161950495 **success (24s)** → 허브 PR #85 자동 생성
+7. 같은 세션 e2e 자연 검증 완료
 
 ## 교훈
 
-_TODO: 교훈 정리_
+1. **Silent dispatch skip = silent drop 패턴 동족**. `feedback_gh_actions_cron_unreliable` 정신 — silent fail 진단 비용 큼. silent dispatch skip 도 양방향 흡수 회로 끊김 → 사용자 인지 못 하면 0 으로 수렴. **즉시 fix 정합**.
+
+2. **PR 머지 = 가장 자연스러운 워커→허브 흐름**. 직접 push 패턴은 사용자 직접 작업 또는 자동화 fire 결과. PR 머지는 표준 협업 흐름. 이게 silent skip 되면 100% 자동화 목표 거리. R6 (자율 수정 범위) 와 별개 차원의 인프라 갭.
+
+3. **Dogfood = PR 자체가 검증 회로**. 같은 세션 내 fix → squash merge → e2e 자연 검증. 별도 monitoring 인프라 / 의도적 검증 PR 필요 X. 본 PR 자체가 양방향 흡수 회로 — 머지하면 회로 닫힘.
+
+4. **R6 차단 영역 작업도 사용자 GO 시 진행 가능**. R6 의 자율 차단 의도는 **AI 자동 fire 시점**. 사용자 명시 GO 받은 manual 작업 (이번 세션 PR #27) 은 R6 와 모순 X. 사용자 review + manual squash merge 로 안전.
+
+5. **자가 의심 → 즉시 fix 패턴**. 첫 추천 (α: evidence 박제만 + 자연 운영) 이 100% 목표 거리 자가 의심 → γ (workflow 갱신 PR) 으로 정정. `feedback_question_own_defaults` 정신 — 사용자 묻기 전에 AI 가 먼저 flag.
 
 ## 적용
 
-_TODO: 다음 액션_
+### 즉시 활성화 (4-30)
+
+- ✅ 머니볼 PR #27 squash merge → main `5e822ca`
+- ✅ 미래 모든 lesson commit (직접 push / PR squash / merge commit / rebase) 모두 dispatch fire
+- ✅ 허브 #84 evidence #2 박제 — 사용자 manual 처리 사례 시간 측정 (~30분)
+
+### 미래 적용 (참조)
+
+- 📌 **blog-autopilot Phase 5 진입 시 submit-lesson.yml 신규 작성** — 머니볼 PR #27 패턴 (commits[*] loop) reference. 사용자 시퀀스 명시 ("머니볼 완료 후 블로그") 따라 미리 깔지 X
+- 📌 **제3 워커 추가 시** — submit-lesson.yml template 표준 (commits[] loop 포함)
+- 📌 **메모리 박제 후속** — `feedback_proven_worker_automation_pattern.md` 갱신 (PR 머지 검출 패턴 default 추가)
+
+### Trigger 박제 (허브 #84)
+
+evidence #2 본 사례. 처리 시간 ~30분, 자율 수정 가능 X (R6 차단 영역). PAT 활성화 결정 trigger 누적:
+- 사례 3건 누적 시 활성화 검토
+- 사례 5건+평균 15분 시 강하게 권장
+- silent drop 1건이라도 발생 시 보류 강화
+
+본 evidence 는 silent skip → 인프라 갭 fix 로 처리. 보류 결정 자체는 변하지 않음. 다만 미래 비용/효과 비교 baseline.
