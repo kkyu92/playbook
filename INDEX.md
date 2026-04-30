@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-29T08:09:48.244Z
+Updated: 2026-04-30T00:59:42.345Z
 
-## 엔트리 (52개)
+## 엔트리 (53개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -34,7 +34,8 @@ Updated: 2026-04-29T08:09:48.244Z
 - [Playbook Journal 009 — claude CLI hang 진단 + paperclip 안정성 복원 4-step 회수](wiki/journal/playbook-journal-009-claude-cli-hang-paperclip-4-step) — confidence: 3, status: in-progress
 - [Playbook Journal 010 — title outdated 연도 사고 + title 연도 정책 B 도입](wiki/journal/playbook-journal-010-title-outdated-title-b) — confidence: 3, status: in-progress
 - [Journal 011 — 첫 mid-review dialectic + 진행 흐름 (2026-04-28)](wiki/journal/playbook-journal-011-mid-review-dialectic-2026-04-28) — confidence: 4, status: complete
-- [Playbook Journal 012 — agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제)](wiki/journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas) — confidence: 3, status: in-progress
+- [Playbook Journal 012 — agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제)](wiki/journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas) — confidence: 4, status: complete
+- [Playbook Journal 014 — Sentry /webhook sub-path 3회 실패 → no-relay 태그 우회 (fp:vercel-deploy-1e80b78)](wiki/journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo) — confidence: 3, status: in-progress
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
@@ -275,6 +276,9 @@ Updated: 2026-04-29T08:09:48.244Z
 - journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-009-claude-cli-hang-paperclip-4-step ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - journal/playbook-journal-011-mid-review-dialectic-2026-04-28 ↔ reports/mid-review-2026-04-28
+- journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/question-own-defaults
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
