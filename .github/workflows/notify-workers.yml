@@ -1,0 +1,212 @@
+name: "📣 Notify Workers (hub-update channel)"
+
+# 양방향 무한성장 자동화 — 허브→워커 push channel.
+#
+# 허브 content/*.mdx 머지 시 변경 entries 의 frontmatter `workers:` 를 보고
+# 영향받는 워커 레포에 `hub-update` label issue 를 생성/누적.
+#
+# 워커 develop-cycle 첫 단계에서 open hub-update issue 를 확인 → 처리 →
+# close → 본 사이클 진입. 자율 cron 폐기 후 manual trigger 모델에서
+# Push 축 자동화의 채널.
+#
+# auto-workers-tag.yml (workers tag 자동 갱신) 와 책임 분리. 이쪽은 단순 알림.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**.mdx"
+  workflow_dispatch:
+    inputs:
+      base_sha:
+        description: "분석 base SHA (default = HEAD~1)"
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 5
+
+      - name: Self-loop guard
+        id: guard
+        run: |
+          set -euo pipefail
+          AUTHOR=$(git log -1 --format='%an' HEAD)
+          MSG=$(git log -1 --format='%s' HEAD)
+          if [ "$AUTHOR" = "github-actions[bot]" ] || [[ "$MSG" == *"notify-workers"* ]]; then
+            echo "🛡️ self-loop guard — skip"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changed entries
+        if: steps.guard.outputs.skip != 'true'
+        id: detect
+        run: |
+          set -euo pipefail
+          BASE_SHA="${{ github.event.before || github.event.inputs.base_sha || 'HEAD~1' }}"
+          CHANGED=$(git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- 'content/**.mdx' 2>/dev/null || true)
+          if [ -z "$CHANGED" ]; then
+            echo "변경된 content/ entry 없음 — skip"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "$CHANGED" > /tmp/changed-entries.txt
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "📝 변경된 entries:"
+          cat /tmp/changed-entries.txt
+
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        if: steps.detect.outputs.skip != 'true'
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.skip != 'true'
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - if: steps.detect.outputs.skip != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build worker buckets
+        if: steps.detect.outputs.skip != 'true'
+        id: buckets
+        run: |
+          set -euo pipefail
+          pnpm node scripts/notify-workers.mjs < /tmp/changed-entries.txt > /tmp/buckets.json
+          echo "📦 buckets:"
+          cat /tmp/buckets.json
+          # 비어있는 객체면 skip
+          if [ "$(jq 'keys | length' /tmp/buckets.json)" = "0" ]; then
+            echo "영향 워커 0건 — skip"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Notify worker repos
+        if: steps.detect.outputs.skip != 'true' && steps.buckets.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          HUB_REPO: ${{ github.repository }}
+          HUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          HUB_HEAD: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::GH_PAT secret 없음 — cross-repo issue 생성 불가"
+            exit 1
+          fi
+
+          # 워커 → 레포 매핑 (workers.config.json registered 와 sync)
+          declare -A WORKER_REPO=(
+            [moneyball]="kkyu92/moneyballscore"
+            [blog-autopilot]="kkyu92/blog-autopilot"
+          )
+
+          for worker in $(jq -r 'keys[]' /tmp/buckets.json); do
+            repo="${WORKER_REPO[$worker]:-}"
+            if [ -z "$repo" ]; then
+              echo "::warning::unknown worker '$worker' (mapping 누락) — skip"
+              continue
+            fi
+
+            ENTRIES_JSON=$(jq -c ".\"$worker\"" /tmp/buckets.json)
+            COUNT=$(echo "$ENTRIES_JSON" | jq 'length')
+            echo "🎯 $worker → $repo ($COUNT entries)"
+
+            # entries 본문 (markdown 표)
+            ENTRIES_MD=$(echo "$ENTRIES_JSON" | jq -r '
+              .[] | "- **\(.title)** (`\(.path)`)" +
+                    (if .description != "" then "\n  > \(.description)" else "" end)
+            ')
+
+            BODY=$(cat <<EOF
+허브 (\`${HUB_REPO}\`) content/ 에서 본 워커 (\`${worker}\`) 영향 변경 ${COUNT}건.
+
+## 변경 Entries
+
+${ENTRIES_MD}
+
+## 액션 (workers develop-cycle Step 0)
+
+1. 위 entries 를 read → 핵심 변경 파악
+2. 워커 측 적용 필요 여부 판단 (메모리 흡수 / CLAUDE.md edit / 정책 적용)
+3. 필요 시 commit (\`docs:\` / \`chore:\` / \`policy:\`)
+4. 처리 완료 후 본 issue close (또는 commit body 에 \`Closes #N\`)
+
+## 메타
+
+- Hub HEAD: \`${HUB_HEAD}\`
+- Hub run: ${HUB_RUN_URL}
+- 자동 생성: \`notify-workers.yml\` (양방향 무한성장 push channel)
+EOF
+)
+
+            # 기존 open hub-update issue 검색
+            EXISTING=$(gh issue list \
+              --repo "$repo" \
+              --state open \
+              --label "hub-update" \
+              --limit 1 \
+              --json number \
+              --jq '.[0].number // empty')
+
+            if [ -n "$EXISTING" ]; then
+              echo "  ↳ 기존 open issue #$EXISTING 에 comment append"
+              gh issue comment "$EXISTING" --repo "$repo" --body "$BODY"
+            else
+              echo "  ↳ 신규 issue 생성"
+              # hub-update label 없으면 생성
+              gh label create hub-update \
+                --repo "$repo" \
+                --color "0075ca" \
+                --description "허브에서 흡수 대상 변경" 2>/dev/null || true
+
+              gh issue create \
+                --repo "$repo" \
+                --title "📣 hub-update — ${COUNT} entries 흡수 대기 ($(date -u +%Y-%m-%d))" \
+                --label "hub-update" \
+                --body "$BODY"
+            fi
+          done
+
+      - name: Self-report on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -e
+          gh label create hub-self-report --color "b60205" --description "허브 workflow 자체 실패" 2>/dev/null || true
+
+          EXISTING=$(gh issue list \
+            --state open \
+            --label "hub-self-report" \
+            --limit 1 \
+            --json number \
+            --jq '.[0].number // empty')
+
+          BODY="🚨 notify-workers.yml run #${GITHUB_RUN_NUMBER} 실패 — Push channel 차질.
+
+          Run: ${RUN_URL}"
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create \
+              --title "🚨 notify-workers.yml 실패 (Push channel)" \
+              --body "$BODY" \
+              --label "hub-self-report"
+          fi

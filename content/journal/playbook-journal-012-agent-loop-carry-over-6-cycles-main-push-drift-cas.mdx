@@ -1,0 +1,75 @@
+---
+title: "Playbook Journal 012 — agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제)"
+category: harness-engineering
+date: "2026-04-29"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 4
+connections:
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/question-own-defaults
+workers: [moneyball, blog-autopilot]
+status: complete
+description: "자동 수집: agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/20260429-agent-loop-carry-over-6-cycles-main-push-drift-cas-b406eb90ca157fe081c3a85b72bc1a.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+## 현상
+Phase 5a self-develop 첫 ship 직후 6 cycles 디버그 발생. 각 cycle 의 fix 를
+main 직접 push 로 인위 chain. carry-over 메커니즘 부재 증거.
+
+## 원인
+1 fire = 1 try 만 가정한 첫 ship spec. 큰 task 자율 분해 + 다음 fire 인계
+누락. 결과 = 사용자 (또는 같은 세션) 가 main 직접 push 로 인위 chain.
+
+## 해결 (Phase 5 비전 1 보완, 같은 PR)
+1) namespace 분리 — agent-loop label + agent-loop/ branch prefix
+2) carry-over chain — 1 cycle = 10 fire, GH Issue 기반 인계
+3) 10/10 도달 시 횡단 lesson 박제 → cycle 종료
+
+## 예방
+- 새 자율 agent ship 시 단일 fire 가정 X. carry-over 함께 설계.
+- namespace 분리 = 자동 결과와 사용자 작업 추적 가능 토대.
+- cycle cap (10 fire) 명시 → 무한 chain 방지 + 메타 회고 기점.
+
+Fingerprint: agent-loop-cycle-zero
+
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+~~~
+
+## 분석
+
+Phase 5a self-develop 첫 ship spec = 1 fire = 1 try. 결과 = 6 cycles 모두 main 직접 push (사용자 인위 chain):
+
+| cycle | fix | 원인 |
+|---|---|---|
+| 1 | pnpm version 충돌 제거 | action-setup 의 lockfile 일치 강제 |
+| 2 | bypassPermissions settings | claude-code-action permission_denials 0 화 |
+| 3 | show_full_output 디버그 | Claude turn 흐름 가시화 부재 |
+| 4 | --dangerously-skip-permissions | 추가 permission 우회 layer |
+| 5 | repo settings toggle | workflow permissions write + PR 생성/승인 |
+| 6 | (post-ship 안정화) | 자연 동작 검증 |
+
+1 fire 가정이 큰 task 자율 분해 + 다음 fire 인계 메커니즘 누락 → fix 5건이 자율 chain 안에서 처리됐어야 함. 자율 진행 불가능 = 인위 main push.
+
+## 교훈
+
+1. **새 자율 agent ship 시 carry-over 필수** — 단일 fire 가정 X. token cap / 큰 task / 다음 step 명확 시 자율 인계 메커니즘 사전 설계 (Issue 기반 + label `*,handoff` + cycle 카운터).
+2. **namespace 분리는 자동 결과 추적 토대** — `agent-loop` label/branch/marker 3축. 사용자 직접 vs 자동 결과 명확 구분 → 검색 필터 / carry-over Issue 정합 / 잘못된 carry-over 회피 가능.
+3. **cycle cap = 무한 chain 방지 + 메타 회고 기점** — 10 fire = 1 cycle. 10/10 도달 시 횡단 lesson 박제 후 cycle 종료. 새 daily fire = 새 cycle 자연 시작.
+
+## 적용
+
+- ✅ **Phase 5 비전 1 보완 PR #19** (moneyballscore) 로 해소 — agent-loop namespace + carry-over chain (prompt step 0/N/10 fire 메타).
+- ✅ **carry-over smoke v1+v2 검증 (4-30)** — fire 1 새 cycle 진입 (PR #21) + fire 2 carry-over 직진 (PR #23) + fire 5 분기 통합 자율 재구현 (PR #25, 03a4867 정신 자율 보존).
+- 🔁 **blog-autopilot Phase 5 진입 시 사전 적용** — 본 entry connections + `feedback_proven_worker_automation_pattern` + `feedback_oauth_token_rotation_risk` + `feedback_claude_code_action_workflows_write_block` + `feedback_cloudflare_cron_slot_conservation` 모두 사전 박제 → 6 cycles 반복 회피.
