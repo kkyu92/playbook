@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-04-30T11:11:27.101Z
+Updated: 2026-05-01T11:03:24.482Z
 
-## 엔트리 (53개)
+## 엔트리 (58개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -35,7 +35,12 @@ Updated: 2026-04-30T11:11:27.101Z
 - [Playbook Journal 010 — title outdated 연도 사고 + title 연도 정책 B 도입](wiki/journal/playbook-journal-010-title-outdated-title-b) — confidence: 3, status: in-progress
 - [Journal 011 — 첫 mid-review dialectic + 진행 흐름 (2026-04-28)](wiki/journal/playbook-journal-011-mid-review-dialectic-2026-04-28) — confidence: 4, status: complete
 - [Playbook Journal 012 — agent-loop carry-over 부재 → 6 cycles main 직접 push (drift case 박제)](wiki/journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas) — confidence: 4, status: complete
+- [Playbook Journal 013 — Vercel 배포 실패 → webhook 통합 rapid iteration + revert cascade 박제](wiki/journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade) — confidence: 3, status: in-progress
+- [Playbook Journal 014 — Sentry /webhook sub-path 3회 실패 → no-relay 태그 우회 (fp:vercel-deploy-1e80b78)](wiki/journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo) — confidence: 3, status: in-progress
+- [Playbook Journal 015 — self-develop.yml push step 누락 → fire 1/10 (9035f22) 휘발 박제](wiki/journal/playbook-journal-015-self-develop-yml-push-step-fire-1-10-9035f22) — confidence: 3, status: in-progress
+- [Playbook Journal 016 — submit-lesson workflow PR 머지 commit 검출 갭 fix — 양방향 흡수 100% (#27)](wiki/journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27) — confidence: 4, status: complete
 - [Playbook Journal 017 — agent-loop 자율 cron 폐기 → develop-cycle skill 도입 (manual trigger)](wiki/journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger) — confidence: 3, status: in-progress
+- [Playbook Journal 018 — 5/1 자연 트리거 1차 검증 — N=47 표본 축적 결정 + H5 임계 도달 박제](wiki/journal/playbook-journal-018-5-1-1-n-47-h5) — confidence: 3, status: in-progress
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
@@ -287,3 +292,6 @@ Updated: 2026-04-30T11:11:27.101Z
 - reports/mid-review-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
 - reports/mid-review-2026-04-28 ↔ harness-engineering/drift-detection-methodology
 - reports/mid-review-2026-04-28 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/drift-detection-methodology
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/question-own-defaults
