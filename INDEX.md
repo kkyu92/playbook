@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-01T11:32:47.311Z
+Updated: 2026-05-01T14:59:14.360Z
 
-## 엔트리 (66개)
+## 엔트리 (67개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -42,6 +42,7 @@ Updated: 2026-05-01T11:32:47.311Z
 - [Playbook Journal 016 — submit-lesson workflow PR 머지 commit 검출 갭 fix — 양방향 흡수 100% (#27)](wiki/journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27) — confidence: 4, status: complete
 - [Playbook Journal 017 — agent-loop 자율 cron 폐기 → develop-cycle skill 도입 (manual trigger)](wiki/journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger) — confidence: 3, status: in-progress
 - [Playbook Journal 018 — 5/1 자연 트리거 1차 검증 — N=47 표본 축적 결정 + H5 임계 도달 박제](wiki/journal/playbook-journal-018-5-1-1-n-47-h5) — confidence: 3, status: in-progress
+- [Playbook Journal 019 — /develop-cycle Tier 2 (N=3) 통과 — 박제 신규 2건 / Candidate 5 작동 검증](wiki/journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5) — confidence: 3, status: in-progress
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
