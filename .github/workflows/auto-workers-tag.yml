@@ -9,7 +9,8 @@ name: "🏷️ Auto Workers Tag"
 # 참조 패턴: blog-autopilot/.github/workflows/issue-agent.yml (claude-code-action@v1).
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches: [main]
     paths:
       - "content/**.mdx"
@@ -28,6 +29,7 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,7 +53,7 @@ jobs:
         id: detect
         run: |
           set -euo pipefail
-          BASE_SHA="${{ github.event.before || github.event.inputs.base_sha || 'HEAD~1' }}"
+          BASE_SHA="${{ github.event.pull_request.base.sha || github.event.inputs.base_sha || 'HEAD~1' }}"
           # 추가/수정된 .mdx 만 (deleted 제외)
           CHANGED=$(git diff --name-only --diff-filter=AM "$BASE_SHA"...HEAD -- 'content/**.mdx' 2>/dev/null || true)
           if [ -z "$CHANGED" ]; then
