@@ -133,27 +133,27 @@ jobs:
                     (if .description != "" then "\n  > \(.description)" else "" end)
             ')
 
-            BODY=$(cat <<EOF
-허브 (\`${HUB_REPO}\`) content/ 에서 본 워커 (\`${worker}\`) 영향 변경 ${COUNT}건.
+            BODY=$(cat <<EOF | sed 's/^                //'
+                허브 (\`${HUB_REPO}\`) content/ 에서 본 워커 (\`${worker}\`) 영향 변경 ${COUNT}건.
 
-## 변경 Entries
+                ## 변경 Entries
 
-${ENTRIES_MD}
+                ${ENTRIES_MD}
 
-## 액션 (workers develop-cycle Step 0)
+                ## 액션 (workers develop-cycle Step 0)
 
-1. 위 entries 를 read → 핵심 변경 파악
-2. 워커 측 적용 필요 여부 판단 (메모리 흡수 / CLAUDE.md edit / 정책 적용)
-3. 필요 시 commit (\`docs:\` / \`chore:\` / \`policy:\`)
-4. 처리 완료 후 본 issue close (또는 commit body 에 \`Closes #N\`)
+                1. 위 entries 를 read → 핵심 변경 파악
+                2. 워커 측 적용 필요 여부 판단 (메모리 흡수 / CLAUDE.md edit / 정책 적용)
+                3. 필요 시 commit (\`docs:\` / \`chore:\` / \`policy:\`)
+                4. 처리 완료 후 본 issue close (또는 commit body 에 \`Closes #N\`)
 
-## 메타
+                ## 메타
 
-- Hub HEAD: \`${HUB_HEAD}\`
-- Hub run: ${HUB_RUN_URL}
-- 자동 생성: \`notify-workers.yml\` (양방향 무한성장 push channel)
-EOF
-)
+                - Hub HEAD: \`${HUB_HEAD}\`
+                - Hub run: ${HUB_RUN_URL}
+                - 자동 생성: \`notify-workers.yml\` (양방향 무한성장 push channel)
+            EOF
+            )
 
             # 기존 open hub-update issue 검색
             EXISTING=$(gh issue list \
