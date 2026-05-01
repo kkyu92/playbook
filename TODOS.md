@@ -34,17 +34,53 @@
 
 **Memory 갱신**: `project_phase4_closed_loop_scope.md` — 4a ship 결과 + codex 7 findings 정합 + 4b 진입 조건.
 
-## [P1] Phase 4b — E2 measurement + E3 CLI (~1h CC, 4a 안정화 후)
+## [DONE] Phase 5 — 워커 self-develop closed loop + 양방향 무한성장 자동화 완성
 
-**What**:
-- **E2** measurement helper (Gemini 진단 layer X) — weekly cron + 8+7 vector 산출 + retro entry 자동 박제
-- **E3** hub-bootstrap CLI — `~/bin/hub-bootstrap`, 새 워커 5분 부트
+**Shipped**: 2026-04-29~30 (사용자 결정으로 5/13 측정 게이트 폐기, 즉시 진입)
 
-**Trigger**: 4a ship (2026-04-29 ✅) + 1-2주 운영 데이터 누적 후 진입 조건 측정 — lesson commit ≥ 3건/week + self-policy dispatch ≥ 5건/week + incident-lesson correlation ≥ 50% 모두 충족 시. **다음 측정**: ~2026-05-13 (scheduled agent 박제 권장)
+**비전 1+2+3 모두 검증**:
+- ✅ **비전 1 (워커 자동성장)** — Cloudflare cron (KST 09:00) → claude-code-action OAuth → 자율 LLM 결정 → carry-over chain (10 fire/cycle) + 메타 회고
+- ✅ **비전 2 (양방향 흡수)** — submit-lesson run 25097914714 success → 허브 auto-ingest PR #76 자동 생성 e2e 검증
+- ✅ **비전 3 (전파 시점)** — 시작=SessionStart hook, 종료=cycle 10 fire (carry-over Issue close), 워커→허브=세션별 commit-driven
 
-**Effort**: ~1h CC
+**Ship PR list**:
+- **playbook PR #70** — auto-workers-tag.yml (5d) + SessionStart hook 강화 (hub-sync-rules 자동)
+- **moneyball PR #16** — Phase 4a D4 + 5a self-develop closed loop (daily cron + claude-code-action)
+- **moneyball PR #19** — agent-loop namespace 분리 (`self-dev` → `agent-loop`) + carry-over chain (label `agent-loop,handoff`) + 6 cycles 디버그 lesson 박제 (drift case)
+- **moneyball PR #14** (이미 ship, 4-29) — 4 prefix dispatch (재사용)
+- **moneyball commit b406eb9** — lesson commit (carry-over 부재 → 6 cycles main push) → 허브 PR #76 (Journal 012) 자동 생성 ⇒ **양방향 e2e 첫 성공**
 
-**Reference**: eng plan v2 동일
+**입증 패턴 (메모리 박제)**: `feedback_proven_worker_automation_pattern.md`
+- self-hosted [home] runner + claude-code-action + 워커 자체 Cloudflare cron
+- ANTHROPIC_API_KEY 직접 호출 default 금지
+
+**누적 비용**: 머니볼 6 cycles 디버그 cost 표시 ~$4.65 — 실제 청구 0 (구독 OAuth quota 안)
+
+**carry-over smoke v1+v2 검증 (4-30)**: 100% 자율 자동화 — 사용자 직접 작업 0건
+- v1: 머니볼 PR #21 (fire 1) sync-batter-stats Cloudflare 이관 OPEN
+- v1: 머니볼 PR #23 (fire 2 carry) pitcher-snapshot 이관 → cron 5/5 우려로 close
+- v2: handoff #24 → fire 5 = PR #25 분기 통합 재구현 (03a4867 정신 자율 보존, cron 4/5 유지) OPEN
+- 머니볼 Issue #15/#17/#20/#22 자동 close (lesson-pending 처리 + Self-report relabel + 토큰 회전 + handoff smoke)
+- 머니볼 cron 4→1 압축 (사용자 진행 중) — Cloudflare account cron 5/5 → 2/5 여유 회복
+
+**핵심 자율 학습 증거**: 사용자 (b) 결정 (PR #23 close + handoff #24 박제) → fire 5 가 분기 통합 패턴 자율 재구현. 의도/제약 자율 학습 + agent-loop 자율 commit 분리 (`feat:` + `lesson:` 분리 → submit-lesson trigger 보존)
+
+**4-30 발견 — OAuth 토큰 회전 risk**: 어제 (4-29) 박은 `CLAUDE_CODE_OAUTH_TOKEN` 이 오늘 401. 메모리 `feedback_oauth_token_rotation_risk.md` 박제. 향후 backlog (fine-grained PAT-style long-lived 또는 refresh token 자동 갱신).
+
+**잔여 (사용자 결정 / 자연 운영)**:
+- ✅ 허브 PR #76 머지 (`de40edb`, journal 012 보강 — 분석/교훈/적용 + connections 3건 + workers tag)
+- ✅ 머니볼 PR #18 close
+- ✅ 머니볼 PR #21 머지 + #25 close (분기 통합 직접 push)
+- ⏸ pat-expiry-check 처리 (사용자 결정 α/β/γ)
+- ⏸ fine-grained PAT (`workflows:write`) 발급 — OAuth 회전 + workflows 차단 동시 mitigation
+- ⏸ 5/13 routine 영구 삭제 (web UI: https://claude.ai/code/routines/trig_01RAZ2ADaGQoTXt1aXZEf6Se)
+- ⏸ 5-1 KST **09:17** 자연 fire 검증 (`9e9e97f` 시점 변경 반영, daily-pipeline announce 와 동시)
+
+**다음 head**: blog-autopilot (머니볼 완전 종료 후) — 같은 패턴 + OAuth 회전 risk 사전 mitigation
+
+## [P3 → 흡수] Phase 4b — E2 measurement + E3 CLI
+
+**4-30 결정**: Phase 5 ship으로 비전 완성 — Phase 4b 측정 게이트 자체가 의미 상실. E2 (vector 측정) + E3 (hub-bootstrap CLI) 는 운영 데이터 누적되면 자연 진행 또는 deferred.
 
 ## [P2] Phase 4c — Gemini 진단 + workflow test infra (deferred)
 
