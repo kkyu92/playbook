@@ -1,0 +1,55 @@
+---
+title: "Playbook Journal 015 — self-develop.yml push step 누락 → fire 1/10 (9035f22) 휘발 박제"
+category: harness-engineering
+date: "2026-04-30"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: []
+status: in-progress
+description: "자동 수집: self-develop.yml push step 누락 → fire 1/10 (9035f22) 휘발 박제 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/20260430-self-develop-yml-push-step-fire-1-10-9035f22-62ad4941138c3d3ec2afa2bd3d9b1d.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+본 fire 25143549379 (수동 trigger 검증) 결과:
+- Claude turn 정상 (auto 결정 + 9035f22 commit 작성)
+- 그러나 commit 후 git push step 부재 → self-hosted runner _work/ 에만 잔존
+- main worktree + origin/main 둘 다 9e9e97f 그대로 (silent drop)
+
+근본 원인: workflow 가 Claude 의 commit 후 push 를 강제 안 함.
+Claude prompt 의 Step 3 ("branch agent-loop/<slug> + PR") 패턴도
+실제로는 main 직접 patch 로 변용됨 (claude-code-action OAuth PR 권한 차단 carry-over).
+어느 패턴이든 push step 자체가 없으면 결과물 영구 손실.
+
+수정: Claude turn step 직후 push step 추가 (`if: success()`).
+- main 직접 patch + agent-loop/* branch 양쪽 모두 push (`git push origin --all`)
+- diff 가 없으면 skip (no-op)
+- failure 시는 self-report 가 작동 (push step 은 success 시만)
+
+복구: runner worktree (~/actions-runner-moneyball/_work/...) 에서 9035f22 살아있음.
+git format-patch + git am 으로 main worktree 에 1ec77f6 으로 적용 완료.
+
+drift 사례 박제: feat/lesson commit 이 main 에 있다고 해서 실제로 push 됐단 뜻 아님.
+self-hosted runner 작업은 항상 push step 명시 강제.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
