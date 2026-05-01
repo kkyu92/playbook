@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-01T11:05:42.548Z
+Updated: 2026-05-01T11:32:47.311Z
 
 ## 엔트리 (66개)
 
@@ -342,6 +342,9 @@ Updated: 2026-05-01T11:05:42.548Z
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/question-own-defaults
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
@@ -350,6 +353,3 @@ Updated: 2026-05-01T11:05:42.548Z
 - reports/mid-review-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
 - reports/mid-review-2026-04-28 ↔ harness-engineering/drift-detection-methodology
 - reports/mid-review-2026-04-28 ↔ harness-engineering/question-own-defaults
-- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/hub-worker-compounding-pattern
-- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/drift-detection-methodology
-- journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ content/harness-engineering/question-own-defaults
