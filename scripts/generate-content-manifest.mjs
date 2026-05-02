@@ -23,6 +23,7 @@ const CATEGORIES = [
   "frontend-ai",
   "project-ops",
   "data-engineering",
+  "reports",
 ];
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
@@ -230,6 +231,7 @@ function main() {
     "frontend-ai": "Frontend + AI",
     "project-ops": "Project Ops",
     "data-engineering": "Data Engineering",
+    reports: "Reports",
   };
   for (const cat of CATEGORIES) {
     if (!categoriesWithEntries.has(cat)) {
