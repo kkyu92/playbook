@@ -40,6 +40,13 @@ permissions:
   pull-requests: write
   issues: write
 
+# 동시 dispatch race condition 방어 — 같은 fingerprint 의 동시 fire 시 sequential
+# 처리. 두 번째 실행이 `--state open` dedup 검색 시 첫 번째 issue 잡힘 → 중복
+# 생성 차단. cancel-in-progress=false 로 둘 다 처리 보장 (상실 방지).
+concurrency:
+  group: auto-ingest-${{ github.event.client_payload.fingerprint || github.event.inputs.fingerprint || github.run_id }}
+  cancel-in-progress: false
+
 jobs:
   auto-ingest:
     runs-on: ubuntu-latest
@@ -375,19 +382,30 @@ jobs:
           ~~~
           SPEND
           )
-            gh issue create \
+            ISSUE_URL=$(gh issue create \
               --title "$ISSUE_TITLE" \
               --body "$ISSUE_BODY" \
               --label "inbound,self-policy" \
-              --assignee kkyu92
-            echo "✅ Self-policy Issue 생성"
+              --assignee kkyu92)
+            ISSUE_NUM=$(echo "$ISSUE_URL" | sed -n 's|.*/issues/\([0-9][0-9]*\)|\1|p')
+            echo "✅ Self-policy Issue 생성 (#${ISSUE_NUM})"
 
             git add raw-sources/
             if git diff --cached --quiet; then
               echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
+              POLICY_COMMIT=""
             else
               git commit -m "data: auto-ingest self-policy from ${SOURCE_SHORT} — ${TITLE}"
               git push origin main
+              POLICY_COMMIT=$(git rev-parse HEAD)
+            fi
+
+            # self-policy = data-only (no review needed). raw-sources commit 시점이
+            # 처리 완료 신호 → 동일 fp issue 자동 close (audit trail 보존).
+            if [ -n "$ISSUE_NUM" ]; then
+              CLOSE_BODY="✅ self-policy raw-sources/ 머지 완료 → 자동 close (audit trail 보존). commit: ${POLICY_COMMIT:-(no change — fingerprint idempotent)}, raw: ${RAW_FILE}"
+              gh issue close "$ISSUE_NUM" --comment "$CLOSE_BODY" --reason completed
+              echo "🤖 Self-policy Issue #${ISSUE_NUM} 자동 close"
             fi
 
           else
