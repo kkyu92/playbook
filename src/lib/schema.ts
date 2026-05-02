@@ -13,6 +13,7 @@ export const CATEGORIES = [
   "frontend-ai",
   "project-ops",
   "data-engineering",
+  "reports",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
@@ -27,6 +28,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   "frontend-ai": "Frontend + AI",
   "project-ops": "Project Ops",
   "data-engineering": "Data Engineering",
+  reports: "Reports",
 };
 
 // 시리즈(frontmatter `series` 필드) 라벨/아이콘. 사이드바 sub-group 헤더에 사용.
@@ -45,6 +47,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   "frontend-ai": "#ffa07a",
   "project-ops": "#ff6348",
   "data-engineering": "#ff69b4",
+  reports: "#9ca3af",
 };
 
 // 사이드바용 카테고리 그룹. 엔트리 수가 늘어나면서 10 카테고리가 한꺼번에 펼쳐지면
@@ -73,6 +76,11 @@ export const CATEGORY_GROUPS: Array<{
     key: "applications",
     label: "응용",
     categories: ["frontend-ai"],
+  },
+  {
+    key: "meta",
+    label: "회고 & 리포트",
+    categories: ["reports"],
   },
 ];
 

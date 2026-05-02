@@ -18,6 +18,7 @@ export const CATEGORIES = [
   "frontend-ai",
   "project-ops",
   "data-engineering",
+  "reports",
 ];
 
 export const CATEGORY_LABELS = {
@@ -30,4 +31,5 @@ export const CATEGORY_LABELS = {
   "frontend-ai": "Frontend + AI",
   "project-ops": "Project Ops",
   "data-engineering": "Data Engineering",
+  reports: "Reports",
 };
