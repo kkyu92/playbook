@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-02T00:28:32.785Z
+Updated: 2026-05-02T04:57:49.572Z
 
-## 엔트리 (71개)
+## 엔트리 (72개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -46,6 +46,7 @@ Updated: 2026-05-02T00:28:32.785Z
 - [Playbook Journal 017 — agent-loop 자율 cron 폐기 → develop-cycle skill 도입 (manual trigger)](wiki/journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger) — confidence: 3, status: in-progress
 - [Playbook Journal 018 — 5/1 자연 트리거 1차 검증 — N=47 표본 축적 결정 + H5 임계 도달 박제](wiki/journal/playbook-journal-018-5-1-1-n-47-h5) — confidence: 3, status: in-progress
 - [Playbook Journal 019 — /develop-cycle Tier 2 (N=3) 통과 — 박제 신규 2건 / Candidate 5 작동 검증](wiki/journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5) — confidence: 3, status: in-progress
+- [Playbook Journal 020 — /develop-cycle 6 chain pool 첫 fire 결과 박제 (4 prefix dispatch trigger)](wiki/journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch-) — confidence: 3, status: in-progress
 
 ### Agents
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
