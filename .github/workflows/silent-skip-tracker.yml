@@ -1,0 +1,105 @@
+name: "🔇 Silent Skip Tracker"
+
+# 추적 대상 워크플로의 직전 5건 result 조회 → skipped/failure 가 임계 (3건) 이상
+# 누적 시 issue 자동 생성. fp dedup (같은 workflow + head_sha 8자) 으로 중복 차단.
+#
+# 박제 trigger: 2026-05-04 ai-review-chain.yml 5건 연속 skipped 1주일 누적
+# (5-3 ca91aac fix 후 수정 0건). 사용자 명시 질문 받기 전 미발견.
+# `feedback_risk_evidence_impact_analysis` + `feedback_lazy_enrichment` 적용 범위
+# 정정의 인프라 layer 구현. 메모리 박제만으론 자가 호출 보장 X → 시스템 강제 visibility.
+#
+# cron 신뢰성: 기본 GH schedule + workflow_dispatch. 향후 cloudflare-worker 분기
+# 추가 가능 (`feedback_cloudflare_cron_slot_conservation` 정합 — 단일 expression
+# + decideMode 분기로 슬롯 보존).
+
+on:
+  schedule:
+    - cron: "0 21 * * *"  # 매일 06:00 KST (UTC 21:00)
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  issues: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan tracked workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # 추적 대상 — silent skip/fail 누적 위험이 있는 핵심 워크플로만 시작.
+          # 확장: 새 silent skip 사건 발견 시 추가.
+          WORKFLOWS=(
+            "ai-review-chain.yml"
+            "auto-workers-tag.yml"
+            "daily-ingest-geeknews.yml"
+          )
+
+          THRESHOLD=3
+          CREATED=0
+
+          for WF in "${WORKFLOWS[@]}"; do
+            RUNS_JSON=$(gh run list --repo "$REPO" --workflow="$WF" --limit 5 \
+              --json conclusion,createdAt,databaseId,headSha 2>/dev/null || echo "[]")
+
+            COUNT=$(echo "$RUNS_JSON" | jq -r '
+              [.[] | .conclusion]
+              | map(select(. == "skipped" or . == "failure"))
+              | length
+            ')
+
+            echo "::group::$WF — $COUNT silent fails / 5"
+            echo "$RUNS_JSON" | jq -r '.[] | "  \(.conclusion // "?") \(.createdAt) \(.databaseId)"'
+            echo "::endgroup::"
+
+            if [ "$COUNT" -lt "$THRESHOLD" ]; then
+              continue
+            fi
+
+            HEAD_SHA=$(echo "$RUNS_JSON" | jq -r '.[0].headSha[:8] // "unknown"')
+            FP="silent-skip-${WF%.yml}-${HEAD_SHA}"
+
+            EXISTING=$(gh issue list --repo "$REPO" --state open \
+              --search "in:title $FP" --json number --jq '.[0].number // empty')
+
+            if [ -n "$EXISTING" ]; then
+              echo "::notice::$WF — fp $FP issue #$EXISTING already open, skip"
+              continue
+            fi
+
+            BODY=$(cat <<EOF
+🔇 \`$WF\` — $COUNT 건 silent skip/fail 누적 (직전 5건 중, 임계 $THRESHOLD 도달)
+
+**fp**: \`$FP\`
+**최근 5건**:
+\`\`\`json
+$RUNS_JSON
+\`\`\`
+
+**의심 root cause**:
+- \`workflow_run\` trigger 작동 ✅, but \`if:\` 조건 / \`workflows[]\` 매칭 미통과
+- 또는 OAuth 만료, secret 오기입, runner 미가용
+
+**진단 5분 체크**:
+1. 가장 최근 run log: \`gh run view <databaseId> --repo $REPO --log\`
+2. workflow yaml \`if:\` 조건 + \`workflows[]\` 매칭 검증
+3. 마지막 fix commit 시점: \`git log --oneline -- .github/workflows/$WF\`
+
+본 issue 는 \`silent-skip-tracker\` 자동 생성. 진단 후 root cause fix 또는 수동 close.
+EOF
+)
+
+            gh issue create --repo "$REPO" \
+              --title "🔇 Silent Skip: $WF [$FP]" \
+              --body "$BODY"
+
+            CREATED=$((CREATED + 1))
+            echo "::warning::Created silent skip issue for $WF ($COUNT/$THRESHOLD)"
+          done
+
+          echo "Total issues created: $CREATED"
