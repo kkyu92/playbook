@@ -39,7 +39,7 @@ export function findUnacknowledgedIncidents(
 
   const reminderCutoff = new Date(now.getTime() - reminderDays * MS_PER_DAY);
 
-  return incidents.filter((inc) => {
+  const filtered = incidents.filter((inc) => {
     const fp = extractFingerprint(inc.title);
     if (!fp) return false;
     if (lessonFingerprints.has(fp)) return false;
@@ -49,4 +49,16 @@ export function findUnacknowledgedIncidents(
 
     return true;
   });
+
+  // 같은 fp 의 incident 가 hub 에 여러 건 박혀있어도 reminder 는 1건만 — 가장 오래된 incident 유지.
+  // gh API eventual consistency 로 workflow loop 의 dedup 검사가 같은 cron run 안에서 무력화되는 결함 차단.
+  const oldestByFp = new Map();
+  for (const inc of filtered) {
+    const fp = extractFingerprint(inc.title);
+    const existing = oldestByFp.get(fp);
+    if (!existing || new Date(inc.createdAt) < new Date(existing.createdAt)) {
+      oldestByFp.set(fp, inc);
+    }
+  }
+  return Array.from(oldestByFp.values());
 }

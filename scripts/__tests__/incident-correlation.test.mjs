@@ -78,4 +78,14 @@ describe("findUnacknowledgedIncidents — D5 reminder 트리거 (Phase 4a)", () 
     const r = findUnacknowledgedIncidents(incidents, lessons, NOW);
     expect(r.map((x) => x.number).sort()).toEqual([1, 3]);
   });
+
+  it("같은 fp 의 incident 여러 건 → 가장 오래된 1건만 반환 (reminder 중복 차단)", () => {
+    const incidents = [
+      mkIssue(1, "i1 [fp:dup1]", 5),
+      mkIssue(2, "i2 [fp:dup1]", 4),
+      mkIssue(3, "i3 [fp:bbb2]", 5),
+    ];
+    const r = findUnacknowledgedIncidents(incidents, [], NOW);
+    expect(r.map((x) => x.number).sort((a, b) => a - b)).toEqual([1, 3]);
+  });
 });
