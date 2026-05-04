@@ -72,31 +72,30 @@ jobs:
               continue
             fi
 
-            BODY=$(cat <<EOF
-🔇 \`$WF\` — $COUNT 건 silent skip/fail 누적 (직전 5건 중, 임계 $THRESHOLD 도달)
-
-**fp**: \`$FP\`
-**최근 5건**:
-\`\`\`json
-$RUNS_JSON
-\`\`\`
-
-**의심 root cause**:
-- \`workflow_run\` trigger 작동 ✅, but \`if:\` 조건 / \`workflows[]\` 매칭 미통과
-- 또는 OAuth 만료, secret 오기입, runner 미가용
-
-**진단 5분 체크**:
-1. 가장 최근 run log: \`gh run view <databaseId> --repo $REPO --log\`
-2. workflow yaml \`if:\` 조건 + \`workflows[]\` 매칭 검증
-3. 마지막 fix commit 시점: \`git log --oneline -- .github/workflows/$WF\`
-
-본 issue 는 \`silent-skip-tracker\` 자동 생성. 진단 후 root cause fix 또는 수동 close.
-EOF
-)
+            {
+              echo "🔇 \`$WF\` — $COUNT 건 silent skip/fail 누적 (직전 5건 중, 임계 $THRESHOLD 도달)"
+              echo ""
+              echo "**fp**: \`$FP\`"
+              echo "**최근 5건**:"
+              echo '```json'
+              echo "$RUNS_JSON"
+              echo '```'
+              echo ""
+              echo "**의심 root cause**:"
+              echo "- \`workflow_run\` trigger 작동 ✅, but \`if:\` 조건 / \`workflows[]\` 매칭 미통과"
+              echo "- 또는 OAuth 만료, secret 오기입, runner 미가용"
+              echo ""
+              echo "**진단 5분 체크**:"
+              echo "1. 가장 최근 run log: \`gh run view <databaseId> --repo $REPO --log\`"
+              echo "2. workflow yaml \`if:\` 조건 + \`workflows[]\` 매칭 검증"
+              echo "3. 마지막 fix commit 시점: \`git log --oneline -- .github/workflows/$WF\`"
+              echo ""
+              echo "본 issue 는 \`silent-skip-tracker\` 자동 생성. 진단 후 root cause fix 또는 수동 close."
+            } > /tmp/silent-skip-body.md
 
             gh issue create --repo "$REPO" \
               --title "🔇 Silent Skip: $WF [$FP]" \
-              --body "$BODY"
+              --body-file /tmp/silent-skip-body.md
 
             CREATED=$((CREATED + 1))
             echo "::warning::Created silent skip issue for $WF ($COUNT/$THRESHOLD)"
