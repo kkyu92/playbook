@@ -83,7 +83,7 @@ async function dispatchWorkflow(env: Env, workflow: string): Promise<void> {
   }
 }
 
-export default {
+const handler = {
   async scheduled(
     event: ScheduledEvent,
     env: Env,
@@ -135,3 +135,5 @@ export default {
     return new Response('playbook-cron', { status: 200 });
   },
 };
+
+export default handler;
