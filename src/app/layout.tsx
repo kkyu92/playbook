@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -7,6 +8,13 @@ import { SearchDialog } from "@/components/search-dialog";
 import { GraphSearchProvider } from "@/contexts/graph-search-context";
 import { getManifest } from "@/lib/content";
 import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://playbook-virid-xi.vercel.app";
 
@@ -43,13 +51,11 @@ export default function RootLayout({
   }));
 
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning className={jetbrainsMono.variable}>
       <head>
         {/* Font preconnect */}
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* RSS */}
         <link rel="alternate" type="application/rss+xml" title="Playbook Hub" href="/feed.xml" />
         {/* Satoshi — display font */}
@@ -62,11 +68,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
-        {/* JetBrains Mono — code font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
-          rel="stylesheet"
-        />
+        {/* JetBrains Mono = next/font/google (root className 으로 변수 주입) */}
       </head>
       <body className="min-h-screen antialiased pb-14 lg:pb-0">
         <ThemeProvider
