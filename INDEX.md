@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T06:05:04.022Z
+Updated: 2026-05-04T07:10:51.245Z
 
 ## 엔트리 (90개)
 
@@ -445,6 +445,7 @@ Updated: 2026-05-04T06:05:04.022Z
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ harness-engineering/hub-worker-compounding-pattern
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
