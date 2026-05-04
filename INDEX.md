@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T07:10:51.245Z
+Updated: 2026-05-04T07:39:29.020Z
 
 ## 엔트리 (90개)
 
@@ -442,6 +442,8 @@ Updated: 2026-05-04T07:10:51.245Z
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade ↔ infrastructure/sentry-serverless-flush
+- journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/question-own-defaults
