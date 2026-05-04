@@ -73,7 +73,7 @@
   --color-info: var(--info);
   --font-display: 'Geist Sans', system-ui, sans-serif;
   --font-body: 'Geist Sans', 'Pretendard Variable', sans-serif;
-  --font-code: 'Geist Mono', 'JetBrains Mono', monospace;
+  --font-code: var(--font-jetbrains-mono), 'Geist Mono', monospace;
   --font-data: 'Geist Mono', monospace;
 }
 
