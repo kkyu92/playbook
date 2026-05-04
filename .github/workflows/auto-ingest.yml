@@ -251,13 +251,30 @@ jobs:
           git config user.name "kkyu92"
           git config user.email "kyusikkyu@gmail.com"
 
+          # main push race retry — 다른 fingerprint 의 동시 dispatch 가 같은 main 에
+          # push 시 'main -> main (fetch first)' rejection. concurrency 그룹은 같은 fp
+          # 내 직렬화만 보장. pull --rebase + 재시도로 자연 회복 (cycle 47 fix-incident).
+          push_main_with_retry() {
+            local attempt
+            for attempt in 1 2 3 4 5; do
+              if git push origin main; then
+                return 0
+              fi
+              echo "⚠️ push 실패 (attempt $attempt/5) — pull --rebase 후 재시도"
+              git pull --rebase origin main || return 1
+              sleep $((attempt * 2))
+            done
+            echo "❌ push 5회 시도 모두 실패 — race condition 미해결"
+            return 1
+          }
+
           # 3a. intent=test 가드 — raw 만 저장 후 종료 (Issue/Journal 없음)
           if [ "$INTENT" = "test" ]; then
             echo "🧪 intent=test 감지 → raw 만 저장, Issue/Journal skip (가드 테스트)"
             git add raw-sources/
             if ! git diff --cached --quiet; then
               git commit -m "data: auto-ingest test raw from ${SOURCE_SHORT} — ${TITLE}"
-              git push origin main
+              push_main_with_retry
             fi
             exit 0
           fi
@@ -352,7 +369,7 @@ jobs:
               echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
             else
               git commit -m "data: auto-ingest raw from ${SOURCE_SHORT} — ${TITLE}"
-              git push origin main
+              push_main_with_retry
             fi
 
           elif [ "$SUBTYPE" = "self-policy" ]; then
@@ -396,7 +413,7 @@ jobs:
               POLICY_COMMIT=""
             else
               git commit -m "data: auto-ingest self-policy from ${SOURCE_SHORT} — ${TITLE}"
-              git push origin main
+              push_main_with_retry
               POLICY_COMMIT=$(git rev-parse HEAD)
             fi
 
