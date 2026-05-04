@@ -1,5 +1,16 @@
 # TODOS
 
+## [P1] 워커 trends.ts pickQueue test fix (cycle 26 worker-incident-triage carry-over)
+
+**What**: `src/lib/trends.ts:361` `JSON.parse(raw)` undefined guard + `src/lib/__tests__/trends.test.ts` pickQueue 2 test 5000ms timeout 원인 fix
+**Why**: cycle 26 진단 — issue #171 (main CI fail 9baae1a) root cause 가 본 fix. SKILL.md 머지가 노출 trigger 일 뿐, pre-existing main CI broken 상태. 워커 local 339 test vs main 358 test = local stale 상태 (PR #66 self-verify 시 main pull 안 함)
+**Fix 영역**: 워커 (blog-autopilot), 다음 워커 세션
+**Sub-deps**:
+- trends.ts:361 — JSON.parse(raw) raw undefined → SyntaxError. guard 추가 또는 LLM mock 시 raw 보장
+- trends.test.ts pickQueue 2 test — "count defaults to 5" / "count override: opts.count=3" timeout 5000ms. 원인 분석 (LLM mock 의존?)
+**완료 신호**: 워커 PR fix 머지 → main CI 재실행 PASS → issue #171 같은 inbound 자연 회피
+**Reference**: cycle 26 cycle_state JSON + lesson commit (5-4)
+
 ## [DONE] develop-cycle-blog skill fork — 옵션 A 박제 완료
 
 **Shipped**: 2026-05-04 12:52:55Z (kkyu92/blog-autopilot PR #66, commit 9baae1a, squash 머지)
