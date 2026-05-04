@@ -32,6 +32,47 @@
 **Effort**: L — 진단 깊이 + 사용자 결정 + 이관 구현
 **Reference**: cycle 3 retro carry-over + `feedback_gh_actions_cron_unreliable.md`
 
+## [DONE] develop-cycle-hub N=10 dogfood 검증 (cycle 1~10)
+
+**Shipped**: 2026-05-04 (cycle 1~10 한 세션 안에 N=10 milestone)
+
+**chain pool 11 발화 통계 (N=10)**:
+- ✅ 7 발화: curate (2회) / review-code (2회) / closed-loop-design / dimension-cycle (2회) / expand-scope / worker-incident-triage / explore-idea
+- ❌ 4 미발화: fix-incident / polish-ui / design-system / skill-evolution
+- retro-only 비율 = 3/10 (30%) — chain 시퀀스 PR X 자연 패턴 (cycle 3 closed-loop / cycle 5 expand-scope partial / cycle 7 worker-incident-triage)
+- partial outcome = 1/10 (cycle 5 expand-scope spec only)
+
+**ship PR list**:
+- PR #133 (cycle 1) — weekly reports connections (isolated 14 → 12)
+- PR #134 (cycle 2) — lint warnings cleanup (11 → 9)
+- PR #136 (cycle 4) — TODOS N=3 dogfood 박제
+- PR #138 (cycle 6) — eslint config _ prefix (9 → 8)
+- PR #139 (cycle 8) — TODOS raw-sources auto-archive idea
+- PR #140 (cycle 9) — journal 020 connections (isolated 12 → 11)
+- PR #136 본 사이클 (cycle 10) — 본 N=10 milestone 박제
+
+**메타 검증 (dogfood findings 누적)**:
+- chain 시퀀스 단순화 정신 = N=2 누적 evidence (cycle 2 + 5)
+- retro-only chain 패턴 정상 작동 (cycle 3/5/7)
+- 동일 chain 재선택 = 2회 OK (review-code 2회 / curate 2회 / dimension-cycle 2회)
+- 메모리 vs SKILL spec 충돌 = 메모리 우선 (issue #110 skip)
+- 메모리 datapoint 추가 자가 의심 = lazy + memory not state 정신 (cycle 3)
+- TODOS carry-over → 직접 fix loop 검증 (cycle 4 박제 → cycle 6 처리)
+- expand-scope trigger (1) "직전 4 사이클 모두 small fix" 자연 충족 (cycle 5)
+
+**Phase 진입 신호**:
+- ✅ Phase 0 (chain pool 11 즉시 + cycle-retro 강제) — N=10 검증
+- ✅ Phase 1 진입 (N≥5) — meta-pattern / chain-evolution dispatch 가능 (자율 판단, 본 사이클들 sample 부족 박제 X)
+- ⏳ Phase 2 (N≥20) — skill-evolution 첫 발화 가능 + zero-touch watch.sh 평가
+- ⏳ Phase 3 (N=50) — skill-evolution milestone 자동 발화
+
+**메모리 박제 lazy carry-over**:
+- 메모리 우선 규칙 / push 시점 정책 / chain 시퀀스 단순화 정신 — N=3+ 재발 → SKILL.md 갱신 trigger
+- 미발화 chain 4개 (fix-incident / polish-ui / design-system / skill-evolution) — N≥20 시 trigger (5) "chain 0회 발화" 명확화
+- raw-sources auto-archive (cycle 8 idea) + auto-ingest connections root cause (cycle 1+3 lazy) = 자동화 process 결손 패턴 누적
+
+**Reference**: `~/.develop-cycle-hub/cycles/1~10.json` + `~/.claude/skills/develop-cycle-hub/SKILL.md`
+
 ## [DONE] develop-cycle-hub 첫 dogfood — N=3 사이클 검증
 
 **Shipped**: 2026-05-04 (cycle 1+2+3)
