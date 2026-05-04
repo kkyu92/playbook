@@ -1,5 +1,13 @@
 # TODOS
 
+## [P2] drift detection 자동화 (sessionstart hook 강화)
+
+**What**: 매 사이클 시작 시 git fetch + status 자동. local stale 자동 감지
+**Why**: cycle 11 incident — git status="up to date" 거짓말 (직전 fetch 안 함, 6 commits behind 미감지) → PR #143 변경 사라짐 잘못된 결론. 본 SKILL.md 진단 단계 첫 step 에 git fetch 명시 필요
+**Trigger**: cycle 11 lesson 박제 1회. N≥2 재발 시 SKILL.md 갱신 trigger
+**Effort**: S — develop-cycle-hub SKILL.md 진단 첫 step 에 `git fetch` 추가 1줄
+**Reference**: cycle 11 lesson commit + memory `feedback_drift_detection_protocol`
+
 ## [P2] raw-sources auto-archive 자동화
 
 **What**: auto-ingest 후 처리 완료된 raw-sources/*.md 를 자동으로 `_archive/` 로 이동
