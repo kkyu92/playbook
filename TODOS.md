@@ -32,13 +32,27 @@
 **Effort**: S (CC ~5분) — eslint.config.mjs rules 추가
 **Reference**: cycle 2 carry-over
 
-## [P3] cron silent skip — 외부 scheduler 이관 평가
+## [DONE/잔여] 외부 scheduler 이관 — 진단 정정 (옵션 B 2/3)
 
-**What**: 9개 cron-trigger 워크플로 중 schedule 의존 vs 외부 dispatch 분류 진단 + Cloudflare Workers Cron Triggers 이관 평가
-**Why**: 7일치 schedule fire 측정 — weekly-triage / pat-expiry-check / silent-skip-tracker / smoke-test-gemini-keys / promotion-scan / vercel-retry / incident-followup = 0건. gemini-key-health / daily-ingest-geeknews = 1건. silent skip evidence 명확
-**Trigger**: cycle 3 retro carry-over. 사용자 결정 영역 (메모리 `feedback_gh_actions_cron_unreliable` 권장 = Cloudflare Workers Cron Triggers Free 5 cron/account, 머니볼+허브 검증)
-**Effort**: L — 진단 깊이 + 사용자 결정 + 이관 구현
-**Reference**: cycle 3 retro carry-over + `feedback_gh_actions_cron_unreliable.md`
+**Shipped**: 2026-05-04 (cycle 3 진단 errata + 사실상 완료 확인)
+
+**진단 정정 (cycle 3 errata)**:
+- cycle 3 진단 가설: 9 cron-trigger 워크플로 silent skip evidence
+- 본 진단 (workflow yaml grep): **schedule trigger 사용 = silent-skip-tracker.yml 1개만**
+- 다른 8개 = **이미 Cloudflare worker dispatch 사용** (workflow_dispatch only, schedule 제거됨)
+
+**Cloudflare worker (cloudflare-worker/src/worker.ts) 매핑 검증**:
+- UTC 09:00 sun → weekly-report
+- UTC 14:00 daily → embed-on-push
+- UTC 21:00 daily → daily-ingest-geeknews + incident-followup (+sun: promotion-scan + weekly-triage, +fri: pat-expiry-check, +1일: category-rebalance)
+- UTC 23:00 daily → gemini-key-health
+
+**잔여 (사용자 결정 영역)**:
+- silent-skip-tracker.yml = 유일한 schedule cron 잔여 — Cloudflare worker decideWorkflows 추가 + workflow yaml schedule 제거 (workflow yaml = 사용자 영역)
+
+**메모리 evidence 추가**: `feedback_gh_actions_cron_unreliable` 의 "9 워크플로 silent skip" 진단은 본 정정 정합 — 사실 silent skip X, 이미 외부 scheduler 이관 완료. silent fire ≈ 0 = schedule trigger 제거됨 자연 결과.
+
+**Reference**: cloudflare-worker/src/worker.ts decideWorkflows + cycle 3 retro carry-over (errata)
 
 ## [DONE] develop-cycle-hub N=20 milestone — Phase 2 진입 trigger 5 충족
 
