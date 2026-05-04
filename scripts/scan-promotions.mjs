@@ -58,6 +58,17 @@ function scanCategories() {
   return categories;
 }
 
+function isAlreadyPromoted(category) {
+  // _compiled-truth.md 안 "**코드 게이트 승격**: ✅" 패턴 매치 시 이미 승격 완료로 판정.
+  // gap: gates 디렉토리 매칭 (llm-gen-validate.mjs vs llm-generation) 은 fuzzy 라 unreliable.
+  // _compiled-truth.md 의 명시 marker 가 source of truth.
+  const compiledTruthPath = path.join(SOLUTIONS_DIR, category.name, "_compiled-truth.md");
+  if (!fs.existsSync(compiledTruthPath)) return false;
+
+  const content = fs.readFileSync(compiledTruthPath, "utf-8");
+  return /\*\*코드 게이트 승격\*\*:\s*✅/.test(content);
+}
+
 function checkExistingGates() {
   const gates = { hooks: [], commands: [], validators: [] };
 
@@ -159,7 +170,9 @@ function suggestPromotionType(category) {
 function main() {
   const categories = scanCategories();
   const gates = checkExistingGates();
-  const promotable = categories.filter((c) => c.count >= THRESHOLD);
+  const overThreshold = categories.filter((c) => c.count >= THRESHOLD);
+  const alreadyPromoted = overThreshold.filter(isAlreadyPromoted);
+  const promotable = overThreshold.filter((c) => !isAlreadyPromoted(c));
   const below = categories.filter((c) => c.count < THRESHOLD && c.count > 0);
 
   if (jsonMode) {
@@ -169,10 +182,15 @@ function main() {
       categories: categories.map((c) => ({
         name: c.name,
         count: c.count,
-        promotable: c.count >= THRESHOLD,
+        promotable: c.count >= THRESHOLD && !isAlreadyPromoted(c),
+        alreadyPromoted: isAlreadyPromoted(c),
       })),
       promotable: promotable.map((c) => ({
         ...suggestPromotionType(c),
+        category: c.name,
+        count: c.count,
+      })),
+      alreadyPromoted: alreadyPromoted.map((c) => ({
         category: c.name,
         count: c.count,
       })),
@@ -188,7 +206,11 @@ function main() {
   console.log("  카테고리              | 솔루션 수 | 승격 대상");
   console.log("  ----------------------|-----------|----------");
   for (const cat of categories) {
-    const status = cat.count >= THRESHOLD ? "✅ 승격 후보" : cat.count === 0 ? "⬜ 없음" : "⏳ 관찰 중";
+    let status;
+    if (cat.count === 0) status = "⬜ 없음";
+    else if (cat.count < THRESHOLD) status = "⏳ 관찰 중";
+    else if (isAlreadyPromoted(cat)) status = "✅ 승격 완료";
+    else status = "🚀 승격 후보";
     console.log(`  ${cat.name.padEnd(22)} | ${String(cat.count).padStart(9)} | ${status}`);
   }
 
@@ -200,8 +222,16 @@ function main() {
   console.log(`  validators: ${gates.validators.join(", ") || "(없음)"}`);
   console.log();
 
+  if (alreadyPromoted.length > 0) {
+    console.log(`✅ 이미 승격 완료 (${alreadyPromoted.length} 카테고리, _compiled-truth.md "코드 게이트 승격: ✅" marker 검출):`);
+    for (const cat of alreadyPromoted) {
+      console.log(`  ${cat.name}: ${cat.count}건`);
+    }
+    console.log();
+  }
+
   if (promotable.length === 0) {
-    console.log(`✅ 현재 승격 대상 없음 (모든 카테고리 N < ${THRESHOLD})`);
+    console.log(`✅ 현재 승격 대상 없음 (모든 카테고리 N < ${THRESHOLD} 또는 이미 승격 완료)`);
 
     if (below.length > 0) {
       console.log(`\n⏳ 관찰 중 (N < ${THRESHOLD}):`);
