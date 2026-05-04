@@ -1,0 +1,43 @@
+name: "🔁 AI Review Chain — re-fire ai-review after bot push"
+
+# 갭: GitHub 재귀 방지 정책 — GITHUB_TOKEN push 는 다른 workflow 의 push trigger 차단.
+# 결과: 봇 push (auto-ingest 등) 가 만든 PR 은 ai-review.yml 미트리거 → 누적.
+# 해결: workflow_run 으로 봇 push workflow 완료 신호 받기 (workflow_run 은 재귀 방지 무관)
+#       → 빈 commit 을 PAT 으로 push → ai-review.yml push trigger 정상 fire
+#       → 자동 머지.
+#
+# 빈 commit 은 squash merge 시 자동 제거됨 (history clean).
+# PAT (GH_PAT) = notify-workers.yml 에서 이미 사용 중. 새 secret X.
+
+on:
+  workflow_run:
+    workflows:
+      - "🔄 Auto-Ingest from Worker"
+      - "🔭 Daily Ingest — GeekNews"
+      - "📊 Weekly Learning Report"
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  re-trigger:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch != 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout head branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 1
+
+      - name: Empty commit to re-fire ai-review
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          MSG="chore(trigger): re-fire ai-review after ${{ github.event.workflow_run.name }}"
+          git commit --allow-empty -m "$MSG"
+          git push origin HEAD:${{ github.event.workflow_run.head_branch }}
+          echo "✅ Empty commit pushed — ai-review.yml will fire on push trigger"
