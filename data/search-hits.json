@@ -1,6 +1,6 @@
 {
-  "totalQueries": 6,
-  "lastUpdated": "2026-04-29T05:17:32.775Z",
+  "totalQueries": 7,
+  "lastUpdated": "2026-05-04T01:42:47.501Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 2,
@@ -9,6 +9,10 @@
     "agents/qwen3-6-max-preview-llm-agentic-coding-evaluation": 1,
     "evaluation/llm-output-validation-quality-metrics-design": 1,
     "harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security": 1,
-    "harness-engineering/question-own-defaults": 1
+    "harness-engineering/question-own-defaults": 1,
+    "harness-engineering/gstack-framework-ai-agent-collaboration-architecture": 1,
+    "evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth": 1,
+    "project-ops/generative-ai-mlops-pipeline-design-patterns": 1,
+    "agents/gpt-5-5-agent-model-evaluation-integration-strategies": 1
   }
 }
