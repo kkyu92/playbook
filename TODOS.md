@@ -1,5 +1,53 @@
 # TODOS
 
+## [P2] auto-ingest connections 자동 결손 root cause
+
+**What**: 12 journals isolated (connections [] 박제) — auto-ingest workflow 가 entry 생성 시 connections 5~15 cross-update 단계 누락
+**Why**: `/ingest` 명령은 spec 정합 (connections 5~15 + 양방향 cross-update), 단 auto-ingest workflow (LLM 자동 호출) 흐름은 이 단계 누락 가능. 12 journals 누적 = 자동화 process 결손
+**Trigger**: cycle 1+3 lazy 박제 (단발 → N=2 누적). N≥3 재발 시 closed-loop-design chain 자동 trigger 또는 fix-incident
+**Effort**: M~L — auto-ingest.yml 분석 + LLM prompt 변경 + cross-update 단계 통합
+**Reference**: cycle 1 lazy / cycle 3 retro carry-over
+
+## [P2] eslint config `_` prefix convention
+
+**What**: `@typescript-eslint/no-unused-vars` rule 에 `argsIgnorePattern: "^_"`, `varsIgnorePattern: "^_"` 추가
+**Why**: `_` underscore prefix = 의도된 unused convention. 현재 lint 에서 경고 → 9 warnings 잔여 중 `_` prefix 류 다수
+**Trigger**: cycle 2 lazy carry-over. eslint config 변경 = 모든 unused vars 영향 (사용자 결정 후보)
+**Effort**: S (CC ~5분) — eslint.config.mjs rules 추가
+**Reference**: cycle 2 carry-over
+
+## [P3] cron silent skip — 외부 scheduler 이관 평가
+
+**What**: 9개 cron-trigger 워크플로 중 schedule 의존 vs 외부 dispatch 분류 진단 + Cloudflare Workers Cron Triggers 이관 평가
+**Why**: 7일치 schedule fire 측정 — weekly-triage / pat-expiry-check / silent-skip-tracker / smoke-test-gemini-keys / promotion-scan / vercel-retry / incident-followup = 0건. gemini-key-health / daily-ingest-geeknews = 1건. silent skip evidence 명확
+**Trigger**: cycle 3 retro carry-over. 사용자 결정 영역 (메모리 `feedback_gh_actions_cron_unreliable` 권장 = Cloudflare Workers Cron Triggers Free 5 cron/account, 머니볼+허브 검증)
+**Effort**: L — 진단 깊이 + 사용자 결정 + 이관 구현
+**Reference**: cycle 3 retro carry-over + `feedback_gh_actions_cron_unreliable.md`
+
+## [DONE] develop-cycle-hub 첫 dogfood — N=3 사이클 검증
+
+**Shipped**: 2026-05-04 (cycle 1+2+3)
+
+**검증 결과**:
+- ✅ chain pool 다양성 보강 (curate / review-code / closed-loop-design 3개 발화)
+- ✅ chain 시퀀스 가벼운 step 직접 진행 (4 sub-skills 강제 X) — review-code 경험
+- ✅ cycle_state JSON 외부 박제 + commit body subtype dispatch 흐름 (`~/.develop-cycle-hub/cycles/<n>.json`)
+- ✅ retro-only outcome 패턴 (cycle 3 closed-loop-design)
+- ✅ 메모리 vs SKILL spec 충돌 시 메모리 우선 (issue #110 skip)
+- ✅ skill-evolution trigger 5종 자가 평가 정상
+
+**ship PR**:
+- **PR #133** (cycle 1 curate) — weekly reports connections 보강 (isolated 14 → 12)
+- **PR #134** (cycle 2 review-code) — lint warnings cleanup (11 → 9)
+- cycle 3 = retro-only (외부 scheduler 이관 = 사용자 GO 영역)
+
+**메모리 박제 lazy carry-over**:
+- chain pool 11개 적정성 (N=4 sample) — N≥20 후 trigger 5 (chain 0회 발화) 명확화
+- 메모리 우선 규칙 / push 시점 정책 — N=3+ 재발 시 SKILL.md 갱신 trigger
+- skill-evolution chain 첫 발화는 N≥20 + 5 trigger 충족 시점 (현재 0 evidence)
+
+**Reference**: `~/.claude/skills/develop-cycle-hub/SKILL.md` + cycle_state 1/2/3.json + commits aba5f2f / 9291580 / e5cd796
+
 ## [P3] embed-on-push incremental embedding
 
 **What**: 변경된 entry 만 embed, 기존 embeddings.json 재사용
