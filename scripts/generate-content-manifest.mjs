@@ -144,7 +144,7 @@ function main() {
 
   for (const filePath of mdxFiles) {
     const raw = fs.readFileSync(filePath, "utf-8");
-    const { data, content } = matter(raw);
+    const { data, content: _content } = matter(raw);
 
     const relativePath = path.relative(CONTENT_DIR, filePath);
     const slug = relativePath.replace(/\.mdx$/, "").replace(/\\/g, "/");

@@ -186,7 +186,7 @@ function run() {
 function stringifyPreservingOrder(raw, oldFm, newFm, body) {
   const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
   if (!fmMatch) throw new Error("No frontmatter found");
-  const oldFmRaw = fmMatch[1];
+  const _oldFmRaw = fmMatch[1];
 
   // js-yaml dump 로 inline array + single-quoted preserve
   const newFmYaml = yaml.dump(newFm, {

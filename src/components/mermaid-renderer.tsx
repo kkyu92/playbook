@@ -46,7 +46,7 @@ export function MermaidRenderer() {
           // Center the SVG
           const svgEl = block.querySelector("svg");
           if (svgEl) svgEl.style.margin = "0 auto";
-        } catch (err) {
+        } catch (_err) {
           block.innerHTML = `<div style="border:1px solid rgba(255,0,0,0.3); background:rgba(255,0,0,0.05); padding:1rem; border-radius:8px;">
             <p style="font-size:12px; color:#f87171; margin:0 0 8px;">Mermaid 에러</p>
             <pre style="font-size:12px; color:#999; white-space:pre-wrap; margin:0;">${chart}</pre>

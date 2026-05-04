@@ -52,7 +52,7 @@ function main() {
   const sourceTotal = weekEntries.length;
   const pct = (n) => (sourceTotal === 0 ? 0 : Math.round((n / sourceTotal) * 100));
 
-  const slug = `reports/week-${year}-${String(weekNum).padStart(2, "0")}`;
+  const _slug = `reports/week-${year}-${String(weekNum).padStart(2, "0")}`;
   const title = `${year}년 ${weekNum}주차 학습 리포트`;
 
   const content = `---

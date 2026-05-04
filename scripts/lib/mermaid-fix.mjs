@@ -25,7 +25,7 @@
  * @param {string} [filename] - (로깅용, 현재 미사용)
  * @returns {{ fixed: string, autoFixed: boolean, errors: Array<{line:number,message:string}> }}
  */
-export function fixAndValidateMermaid(code, filename) {
+export function fixAndValidateMermaid(code, _filename) {
   let fixed = code;
   const errors = [];
 

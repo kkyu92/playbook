@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CATEGORY_COLORS } from "@/lib/schema";
-import type { Category } from "@/lib/schema";
 
 interface Entry {
   slug: string;
