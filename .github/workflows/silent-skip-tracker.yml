@@ -32,11 +32,13 @@ jobs:
         run: |
           set -euo pipefail
 
-          # 추적 대상 — silent skip/fail 누적 위험이 있는 핵심 워크플로만 시작.
+          # 추적 대상 — silent skip/fail 누적 위험이 있는 핵심 워크플로만.
+          # 의도된 skip 영역 제외 원칙:
+          # - ai-review-chain.yml: workflow_run.head_branch != main 가드 = 의도 정합
+          #   (chain 갭은 별개 carry-over: trigger workflow head_branch 와 PR head 분리 갭)
+          # - auto-workers-tag.yml: OAuth 24h 만료 옵션 D 채택 = 자율 정지 허용 영역
           # 확장: 새 silent skip 사건 발견 시 추가.
           WORKFLOWS=(
-            "ai-review-chain.yml"
-            "auto-workers-tag.yml"
             "daily-ingest-geeknews.yml"
           )
 
