@@ -40,6 +40,30 @@
 **Effort**: L — 진단 깊이 + 사용자 결정 + 이관 구현
 **Reference**: cycle 3 retro carry-over + `feedback_gh_actions_cron_unreliable.md`
 
+## [DONE] develop-cycle-hub N=20 milestone — Phase 2 진입 trigger 5 충족
+
+**Shipped**: 2026-05-04 (cycle 11~20, 한 세션 안에 N=20 milestone)
+
+**chain pool 11 발화 통계 (N=20 누적)**:
+- 발화 8/11: curate (6회) / review-code (3회) / dimension-cycle (3회) / closed-loop-design (2회) / worker-incident-triage (2회) / explore-idea (2회) / fix-incident (1회) / expand-scope (1회)
+- 미발화 3/11: **polish-ui / design-system / skill-evolution** — 직전 20 사이클 0회 = **trigger 5 충족** (Phase 2 진입)
+- retro-only 비율 = 7/20 (35%) — chain 시퀀스 PR X 패턴 누적
+
+**ship PR list (cycle 11~20)**:
+- PR #148 (cycle 11) — Cloudflare worker named const (lint 2 → 1)
+- PR #149 (cycle 12) — journal 010 connections (isolated 11 → 10)
+- PR #150 (cycle 13) — TODOS drift detection 자동화 idea
+- PR #151 (cycle 14) — journal 013 connections
+- PR #152 (cycle 15) — journal 014 connections
+- PR #153 (cycle 19) — journal 015 connections
+
+**Phase 2 진입 결과**:
+- ✅ trigger 5 (chain 0회 발화 in 20 사이클) = **첫 충족 evidence**
+- → cycle 21 진단 단계 첫 step 에서 마커 발견 시 `skill-evolution` chain 강제 발화
+- 갱신 영역 = 미발화 chain 3개 trigger 명확화 또는 chain pool 줄이기
+
+**Reference**: `~/.develop-cycle-hub/cycles/11~20.json`
+
 ## [DONE] develop-cycle-hub N=10 dogfood 검증 (cycle 1~10)
 
 **Shipped**: 2026-05-04 (cycle 1~10 한 세션 안에 N=10 milestone)
