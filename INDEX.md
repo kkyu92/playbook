@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T03:52:36.665Z
+Updated: 2026-05-04T06:05:04.022Z
 
 ## 엔트리 (90개)
 
@@ -453,3 +453,6 @@ Updated: 2026-05-04T03:52:36.665Z
 - reports/mid-review-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
 - reports/mid-review-2026-04-28 ↔ harness-engineering/drift-detection-methodology
 - reports/mid-review-2026-04-28 ↔ harness-engineering/question-own-defaults
+- reports/week-2026-18 ↔ reports/mid-review-2026-04-28
+- reports/week-2026-19 ↔ reports/mid-review-2026-04-28
+- reports/week-2026-19 ↔ reports/week-2026-18
