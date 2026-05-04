@@ -1,12 +1,20 @@
 ---
-title: "AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프"
+title: AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프
 category: harness-engineering
 date: "2026-04-20"
-tags: [ai-harness, frontend-ai, validation, feedback-loop, adaptive-ui, prompt-engineering, ux-resilience, harness-engineering]
+tags:
+  - ai-harness
+  - frontend-ai
+  - validation
+  - feedback-loop
+  - adaptive-ui
+  - prompt-engineering
+  - ux-resilience
+  - harness-engineering
 confidence: 1
-connections: [harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, harness-engineering/hub-worker-compounding-pattern]
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, harness-engineering/hub-worker-compounding-pattern, harness-engineering/realtime-ai-model-deployment-monitoring-patterns]
 status: draft
-description: "불확실한 AI 응답을 사용자 경험의 핵심 흐름에 안전하게 통합하고 지속적으로 개선하는 엔지니어링 방법론."
+description: 불확실한 AI 응답을 사용자 경험의 핵심 흐름에 안전하게 통합하고 지속적으로 개선하는 엔지니어링 방법론.
 type: entry
 quiz:
   - question: AI 시대의 프론트엔드 개발자에게 'Harness Engineering'이 가지는 핵심적인 역할은 무엇인가요?
@@ -33,7 +41,6 @@ quiz:
       - 응답 데이터의 'estimatedReadingTimeMinutes' 필드가 1 이상의 정수인지 확인한다.
     answer: 1
     explanation: 의미적 검증은 응답의 '내용' 자체가 기대와 다르거나, 맥락에 맞지 않는 경우를 확인하는 것입니다. '필수 주제 키워드 포함 여부'나 '감정 분석'은 응답의 '의미'를 평가하는 대표적인 기법으로 본문에 설명되어 있습니다. 반면, JSON 형식 유효성 검사, 필드의 타입 검사, 정규 표현식을 이용한 패턴 추출, 특정 값의 범위 확인 등은 응답의 '구조'나 '형식'을 검증하는 구조적(Syntactic) 검증에 해당합니다.
-
 ---
 
 ## AI 시대의 프론트엔드: 불확실성과의 싸움
