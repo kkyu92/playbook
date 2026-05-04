@@ -1,5 +1,13 @@
 # TODOS
 
+## [P2] raw-sources auto-archive 자동화
+
+**What**: auto-ingest 후 처리 완료된 raw-sources/*.md 를 자동으로 `_archive/` 로 이동
+**Why**: cycle 7 worker-incident-triage 진단 결과 — raw-sources 누적 48건, archive 율 12% (6/48). ci-main-* (워커 incident) 11건 누적. auto-ingest 가 entry 변환 후 raw 파일 archive 단계 부재 또는 silent skip
+**Trigger**: cycle 7 진단 직접 follow-up. 누적 비율 ↑ 시 신호 (50% archive 율 도달 목표)
+**Effort**: M — auto-ingest workflow 끝 step 에 archive 분기 추가 (entry 생성 success 시 raw → _archive mv) + git mv tracking
+**Reference**: cycle 7 retro / `feedback_auto_ingest_after_merge.md`
+
 ## [P2] auto-ingest connections 자동 결손 root cause
 
 **What**: 12 journals isolated (connections [] 박제) — auto-ingest workflow 가 entry 생성 시 connections 5~15 cross-update 단계 누락
