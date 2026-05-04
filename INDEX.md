@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T07:37:37.812Z
+Updated: 2026-05-04T13:13:17.979Z
 
 ## 엔트리 (90개)
 
@@ -443,6 +443,12 @@ Updated: 2026-05-04T07:37:37.812Z
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade ↔ infrastructure/sentry-serverless-flush
+- journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo ↔ infrastructure/sentry-pii-scrubbing-beforesend
+- journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo ↔ infrastructure/sentry-serverless-flush
+- journal/playbook-journal-015-self-develop-yml-push-step-fire-1-10-9035f22 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-015-self-develop-yml-push-step-fire-1-10-9035f22 ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/question-own-defaults
