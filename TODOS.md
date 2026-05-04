@@ -1,5 +1,17 @@
 # TODOS
 
+## [In Progress] develop-cycle-blog skill fork — 옵션 A (5-4 시작)
+
+**What**: blog-autopilot 워커에 develop-cycle skill 3번째 fork 박제 (`~/projects/blog-autopilot/.claude/skills/develop-cycle-blog/SKILL.md`)
+**Why**: develop-cycle skill family 3 fork 임계 도달 (#1 머니볼 + #2 허브 검증 후). WP→Blogger 마이그레이션 (블로그 2개) 자연 첫 dogfood source. 옵션 B (통합 base 추출) 은 마이그레이션 동시 진행 시 risk ↑ 위해 보류
+**Channel**: 워커 측 세션 병렬 작업 (사용자 전달 프롬프트 = 본 세션 5-4 정리). 허브 측 = 메모리 + TODOS 박제 (동시)
+**Sub-deps**:
+- chain pool 도메인 결정 (워커 자율) — publish-incident / content-curate / wp-to-blogger-migration / audience-feedback / 공통 7
+- dispatch transport — 허브 패턴 (commit body subtype) 권장
+- 첫 dogfood = 마이그레이션 plan 박제 (사용자 GO 시점)
+**완료 신호**: 워커 PR URL + chain pool 명세 + 도메인 swap 표 보고 → 사용자 review → 머지 → 메모리 운영 상태 update
+**Reference**: `project_develop_cycle_skill_family.md` (5-4 갱신)
+
 ## [P2] drift detection 자동화 (sessionstart hook 강화)
 
 **What**: 매 사이클 시작 시 git fetch + status 자동. local stale 자동 감지
