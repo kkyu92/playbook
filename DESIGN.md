@@ -21,12 +21,10 @@
 | Data (지표/숫자) | Geist Mono | — | `--font-data` 별 변수 |
 
 CSS 변수 (`globals.css` `@theme inline`):
-- `--font-display: 'Geist Sans', system-ui, sans-serif`
+- `--font-display: 'Satoshi', 'Geist Sans', system-ui, sans-serif`
 - `--font-body: 'Geist Sans', 'Pretendard Variable', sans-serif`
 - `--font-code: var(--font-jetbrains-mono), 'Geist Mono', monospace`
 - `--font-data: 'Geist Mono', monospace`
-
-> ⚠️ 미해결: `--font-display` 가 Geist 로 박혀 있어 Satoshi 로드된 게 헤딩에 적용 안 됨. 의도 vs 누락 사용자 결정 필요 (공개 대비 lens 포함).
 
 ## 3. Color
 
@@ -53,9 +51,8 @@ CSS 변수 (`globals.css` `@theme inline`):
 | `--text` | #1a1a2e |
 | `--muted` | #6b6b80 |
 | `--border` | #e0e0e8 |
-| `--accent` | #0891b2 (cyan, dark 와 의도적 분리) |
-
-> ⚠️ 미해결: light theme 가 dark amber 가 아닌 cyan 으로 분기. 일관성 vs 다크/라이트 별도 브랜드 선택 — 사용자 vision 결정 필요.
+| `--accent` | #b8782e (dark amber 와 일관, 가독성 위해 톤 darker) |
+| `--accent-hover` | #a36919 |
 
 ### 3c. Category (Neon Terminal)
 
@@ -84,7 +81,7 @@ CSS 변수 (`globals.css` `@theme inline`):
 
 ## 4. Spacing & Radius
 
-`globals.css` 에는 spacing scale 박제 X — Tailwind 기본 scale 사용.
+Spacing scale: Tailwind 기본 scale 사용 (4px 단위).
 
 | Radius | Token | px |
 |---|---|---|
@@ -96,17 +93,30 @@ CSS 변수 (`globals.css` `@theme inline`):
 
 - `body`: `min-h-screen antialiased pb-14 lg:pb-0` (모바일 하단 nav 공간 확보)
 - 데스크탑: `MobileNav` hidden (lg+), 데스크탑 nav 는 페이지별 Header
-- Container: 페이지별 자유 (`max-w-*` Tailwind)
 
-> ⚠️ 미해결: 글로벌 grid / column / max-width 표준 부재. 페이지마다 자유. 공개 대비 시 일관성 가이드라인 필요.
+Container max-width 토큰 (`globals.css`):
+
+| Token | px | 용도 |
+|---|---|---|
+| `--container-narrow` | 720 | reading-first (위키 본문 단일 컬럼) |
+| `--container-default` | 960 | 카드/그리드 페이지 |
+| `--container-wide` | 1200 | 대시보드/관제 페이지 |
+
+페이지에서 `max-width: var(--container-*)` 또는 Tailwind arbitrary value 로 호출.
 
 ## 6. Motion
 
-- `disableTransitionOnChange` (theme switch 깜박임 방지)
-- 카드 hover / 링크 underline-offset 등 마이크로 인터랙션은 컴포넌트 레벨 자유
-- Magnetic mode / Cursor glow 등 effect 은 과거 사양 (현행 미적용)
+`disableTransitionOnChange` (theme switch 깜박임 방지) + 토큰화된 duration / easing.
 
-> ⚠️ 미해결: 모션 spec 통일 X. duration / easing 토큰 정의 필요 (공개 대비 lens).
+| Token | 값 | 용도 |
+|---|---|---|
+| `--duration-fast` | 120ms | hover / focus / 마이크로 |
+| `--duration-normal` | 200ms | 패널/모달/dropdown |
+| `--duration-slow` | 320ms | 페이지 전환/큰 영역 |
+| `--easing-standard` | cubic-bezier(0.4, 0, 0.2, 1) | 일반 |
+| `--easing-emphasized` | cubic-bezier(0.2, 0, 0, 1) | 강조 (CTA / 알림) |
+
+Magnetic mode / Cursor glow / Neon glow effect 는 과거 사양 — 현행 코드 0건 grep 확인 후 **폐기**.
 
 ## 7. Prose (MDX)
 
@@ -118,27 +128,7 @@ CSS 변수 (`globals.css` `@theme inline`):
 - blockquote: accent 좌측 보더 3px, italic muted
 - table: 2px bottom border (th), 1px (td)
 
-## 8. 미해결 — 공개 대비 vision 입력 영역
-
-### 8a. Display font 의도 정리
-Satoshi 가 layout.tsx 에서 로드되지만 CSS 변수에 미적용. 의도:
-- (A) 헤딩에 Satoshi 적용 → `--font-display: 'Satoshi', ...` 갱신
-- (B) Satoshi 로드 제거 → preconnect + link 정리
-- 결정 필요.
-
-### 8b. Light theme 색 정합
-다크 amber, 라이트 cyan 의도 분리 vs 일관성. 공개 대비 lens 에서 재검토.
-
-### 8c. Motion / Spacing 토큰화
-duration / easing / spacing scale CSS 변수 박제 → 컴포넌트 일관성. 현재 자유로 잠재 균열.
-
-### 8d. Layout / Container 표준
-페이지별 자유 max-width / padding → 공개 대비 시 일관 reading width 필요.
-
-### 8e. Magnetic / Cursor glow / Neon glow effect
-과거 spec (구 DESIGN.md). 현재 적용 X. 부활 vs 폐기 결정 필요.
-
-## 9. Reference
+## 8. Reference
 
 - `src/app/globals.css` — CSS 변수 source of truth
 - `src/app/layout.tsx` — font loading (Satoshi / Pretendard / JetBrains Mono)
