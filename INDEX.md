@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T07:10:51.245Z
+Updated: 2026-05-04T07:37:37.812Z
 
 ## 엔트리 (90개)
 
@@ -438,6 +438,7 @@ Updated: 2026-05-04T07:10:51.245Z
 - journal/playbook-journal-008-github-repo-rename-self-hosted-runner ↔ journal/playbook-journal-003-drift-silent-bugs
 - journal/playbook-journal-009-claude-cli-hang-paperclip-4-step ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - journal/playbook-journal-009-claude-cli-hang-paperclip-4-step ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
+- journal/playbook-journal-010-title-outdated-title-b ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-011-mid-review-dialectic-2026-04-28 ↔ reports/mid-review-2026-04-28
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
