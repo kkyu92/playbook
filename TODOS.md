@@ -1,17 +1,27 @@
 # TODOS
 
-## [In Progress] develop-cycle-blog skill fork — 옵션 A (워커 SKILL.md 박제 완료, PR push 대기)
+## [DONE] develop-cycle-blog skill fork — 옵션 A 박제 완료
 
-**What**: blog-autopilot 워커에 develop-cycle skill 3번째 fork 박제 (`~/projects/blog-autopilot/.claude/skills/develop-cycle-blog/SKILL.md`)
-**진행 상태** (5-4):
-- ✅ 워커 측 SKILL.md 박제 완료 (chain pool 10, 426 lines)
-- ✅ chain pool 결정: 공통 7 (fix-incident / polish-ui / review-code / explore-idea / expand-scope / design-system / skill-evolution) + 도메인 3 (publish-incident / content-curate / audience-feedback)
-- ✅ dispatch transport: **머니볼 패턴 (submit-lesson.yml workflow)** 채택 — PR #41 Phase 4a D4 인프라 재사용 + 외부 dispatch 자연 (5-4 사용자 confirm)
-- ✅ default fallback: fix-incident (dimension-cycle legacy 청산)
-- ⏳ 워커 측 PR push + 머지 대기
-- ⏳ 첫 dogfood: 5/5 WP→Blogger cut-over 완료 후 자연 (publish-incident chain 첫 발화 conditions 완비)
-**완료 신호**: 워커 PR 머지 → 본 TODOS DONE 이동 + 메모리 family 운영 상태 update (cycle 0+ 운영)
-**Reference**: 메모리 `project_develop_cycle_skill_family.md` + 신규 `feedback_fork_dispatch_transport_decision.md`
+**Shipped**: 2026-05-04 12:52:55Z (kkyu92/blog-autopilot PR #66, commit 9baae1a, squash 머지)
+
+**최종 박제**:
+- SKILL.md: `~/projects/blog-autopilot/.claude/skills/develop-cycle-blog/SKILL.md` (1 file, 426 insertions)
+- chain pool 10: 공통 7 (fix-incident / polish-ui / review-code / explore-idea / expand-scope / design-system / skill-evolution) + 도메인 3 (publish-incident / content-curate / audience-feedback)
+- dispatch transport: 머니볼 패턴 (submit-lesson.yml workflow) — PR #41 Phase 4a D4 인프라 재사용
+- default fallback: fix-incident (dimension-cycle legacy 청산)
+- smoke test: pnpm test 339/339 pass (5.35s)
+
+**워커 보고 vs 허브 GO 차이 2건 (자체 정정 OK)**:
+1. 사용자 직접 머지 GO → 즉시 squash 머지 (사용자 명시 > 허브 review default)
+2. branch 명명 SKILL spec 정합 (`develop-cycle-blog/skill-init-1`)
+
+**워커 자체 처리 issue 1건**: PR #66 초안에 PR #65 superset 포함 → cherry-pick isolate + force-push (clean PR). PR #65 (5/5 cut-over) 와 PR #66 (skill 박제) 독립.
+
+**잔여 (별 영역)**:
+- 첫 dogfood: 5/5 WP→Blogger cut-over (사용자 GO) 후 5/6 첫 Blogger 분기 cron 검증 시점 자연 발화 (publish-incident chain)
+- ⚠ 신규 inbound issue #171 (CI 실패: 9baae1a) — 워커 보고 (Test PASS) 와 drift. worker-incident-triage chain 별도 처리
+
+**Reference**: 메모리 `project_develop_cycle_skill_family.md` 운영 상태 update + `feedback_fork_dispatch_transport_decision.md`
 
 ## [P2] drift detection 자동화 (sessionstart hook 강화)
 
