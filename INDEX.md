@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T03:43:34.238Z
+Updated: 2026-05-04T03:50:25.440Z
 
-## 엔트리 (88개)
+## 엔트리 (89개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -55,6 +55,7 @@ Updated: 2026-05-04T03:43:34.238Z
 - [Playbook Journal 020 — /develop-cycle 6 chain pool 첫 fire 결과 박제 (4 prefix dispatch trigger)](wiki/journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch-) — confidence: 3, status: in-progress
 - [Playbook Journal 021 — prediction baseline 7d/30d 첫 박제 (Brier 0.248 ≈ coin flip) (#49)](wiki/journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4) — confidence: 3, status: in-progress
 - [Playbook Journal 022 — factor attribution cycle 11 — head_to_head/sfr 가중치 0% vs LLM reasoning 갭 (#50)](wiki/journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs-) — confidence: 3, status: in-progress
+- [Playbook Journal 023 — H5 검증 N=62 — v1.5 75% vs v1.6 36.96% 38.04pp 격차 (cycle 14) (#53)](wiki/journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 
 ### Agents
