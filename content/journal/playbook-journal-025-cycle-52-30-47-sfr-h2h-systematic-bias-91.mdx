@@ -1,0 +1,146 @@
+---
+title: "Playbook Journal 025 — cycle 52 — 30일 47% 적중률 + sfr/h2h systematic bias 박제 (#91)"
+category: harness-engineering
+date: "2026-05-05"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: []
+status: in-progress
+description: "자동 수집: cycle 52 — 30일 47% 적중률 + sfr/h2h systematic bias 박제 (#91) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/20260505-cycle-52-30-47-sfr-h2h-systematic-bias-91-d7715390431808473970260620b148.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+* lesson: cycle 52 — operational metric 30일 47% 적중률 + sfr/h2h systematic bias 박제
+
+subtype: lesson
+
+## 측정 (2026-05-05 KST, prod DB REST API 직접 query)
+
+표본: 30일 (2026-04-05~05-05), pre_game / model=v2.0-debate 80건 (verified 62건)
+
+| 메트릭 | 값 |
+|---|---|
+| 30일 적중률 | 47% (29/62) — coin flip -3.2%p |
+| 7일 적중률 | 36% (9/25) — 단기 진폭 |
+| confidence mean / median / stdev | 0.513 / 0.520 / 0.104 |
+| confidence min / max | 0.104 / 0.680 |
+| 0.65+ bucket | 1.2% (1/80) — 자신감 부재 |
+| <0.55 calibration | 40% (14/35) — anti-signal |
+| 0.55-0.65 calibration | 56% (15/27) — slight signal |
+
+## Factor error analysis (factor_error_summary view)
+
+| factor | error_count | avg_bias |
+|---|---|---|
+| recent_form | 56 | -0.058 |
+| **sfr** | 45 | **-0.233** ⚠️ |
+| **head_to_head** | 40 | **-0.161** ⚠️ |
+| bullpen_fip | 30 | 0.011 |
+| sp_fip | 22 | -0.019 |
+
+## hypothesis (carry-over → cycle 53+)
+
+- **H1**: sfr/h2h systematic underestimate → 가중치 또는 normalization 정정 (backtest 후보)
+- **H2**: confidence 압축 (max=0.680) = agent ensemble 합의 부재 → reasoning 분기 다양성 측정
+- **H3**: 47% v2.0-debate vs v1.5 비교 baseline 부재 → backtest 30일 백캐스트 후보
+
+## 운영 안정성
+
+- pipeline_runs 7일: 115/115 success (CF Worker 안정)
+- postview 7일: 30/30 = 1:1 (v4-3 자동 트리거 정상)
+- agent_memories 누적 66 / sp_log 910 (KBO 455 + Naver 455)
+
+## R8 적용
+
+본 lesson 의 모든 주장은 prod DB REST API 직접 query 측정 숫자. 직관·"그럴듯함" 0회.
+
+spec: docs/superpowers/specs/2026-05-05-cycle-52-operational-analysis-snapshot.md
+
+* policy: cycle 52 retro — operational-analysis lite 1년 부재 영역 자율 발화 + 47% 적중률 anti-signal 박제
+
+subtype: cycle-retro
+cycle_n: 52
+chain_selected: operational-analysis (lite)
+outcome: success
+
+## 진단 단계 결과
+
+- /handoff load drift major (17 커밋, cycle 44~51 자동 chain 진행 + cycle 45 R5 정정 5번째 PASS 박제)
+- skill-evolution-pending 마커 부재
+- open GH issue 0건 (hub-dispatch label + 전체)
+- cycle 49 룰 적용: 직전 20 사이클 (32~51) chain 분포 측정 → 0회 발화 chain 3개 = explore-idea / dimension-cycle / design-system
+
+## 0회 chain 매핑 자연도 (cycle 49 룰 PASS 검증 2번째 시도)
+
+| chain | trigger source | 매핑 결과 |
+|---|---|---|
+| explore-idea | open issue 0 + TODOS Next-Up 자연 진행 부재 (AdSense 사용자 트리거 / GH→CF 이관 ✅ 완료) | X |
+| design-system | DESIGN.md mtime 0일 (cycle 50 polish-ui 처리) + 균열 X | X |
+| dimension-cycle | legacy default. 위 5 chain 매핑 우선 | 약함 |
+
+cycle 50 = polish-ui 1택 PASS / cycle 52 = 매핑 자연 X 후 fallback (룰 정상 동작 — 매번 자율 매핑 보장 X).
+
+## chain 선택
+
+fallback 5 chain 중 operational-analysis 자율 1택. 이유:
+- 직전 1회 (lite, cycle 23) + 30 cycle 부재
+- 본 사이트 본질 (예측 적중률 시스템) 영역
+- cycle 51 retro fallback 명시
+- lite 모드 = REST API 직접 query 박제 (skill 풀 호출 X)
+- R8 ("데이터로만 이야기") 적용 자연
+
+## 핵심 측정 (lesson commit accf415 박제)
+
+- 30일 적중률 **47%** (29/62) = coin flip -3.2%p
+- confidence max=**0.680** (0.65+ bucket = 1.2%)
+- factor sfr avg_bias **-0.233** / h2h **-0.161** = systematic underestimate
+- pipeline_runs 7일 115/115 success (CF Worker 안정)
+
+## carry-over → cycle 53+
+
+- review-code 또는 backtest chain 후보 — sfr/h2h 가중치 재조정 검증 (H1)
+- watch.log FIRE_HANG 잔여 2건 cycle 48 partial fix 후속 = fix-incident 후보
+- agent_memories isoformat 에러 fix (snapshot query 정정 = 측정 도구 보강)
+
+## 다음 사이클 추천 chain
+
+review-code 또는 fix-incident.
+
+## skill-evolution trigger 평가
+
+| # | 조건 | 결과 |
+|---|---|---|
+| 1 | chain-evolution subtype commit ≥5 | X |
+| 2 | 같은 chain 5회 연속 fail | X |
+| 3 | cycle_n % 50 == 0 | X (52 % 50 = 2) |
+| 4 | meta-pattern body "SKILL 갱신 필요" | X |
+| 5 | 직전 20 사이클 chain 1개 0회 | ✅ 3개 (explore-idea / dimension-cycle / design-system) — 단 cycle 49 갱신이 이미 본 trigger 처리 + cycle 51 milestone 50 가 영향. 본 cycle 52 추가 발화 X |
+
+skill-evolution-pending 마커 박제 X (정상 진행).
+
+## 비용
+
+- Claude API 0회 / Supabase REST 6 query / 1 사이클 ~16분
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_

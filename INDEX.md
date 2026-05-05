@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-04T21:09:41.154Z
+Updated: 2026-05-05T10:20:48.971Z
 
-## 엔트리 (94개)
+## 엔트리 (95개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -61,6 +61,7 @@ Updated: 2026-05-04T21:09:41.154Z
 - [Playbook Journal 022 — factor attribution cycle 11 — head_to_head/sfr 가중치 0% vs LLM reasoning 갭 (#50)](wiki/journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs-) — confidence: 3, status: in-progress
 - [Playbook Journal 023 — H5 검증 N=62 — v1.5 75% vs v1.6 36.96% 38.04pp 격차 (cycle 14) (#53)](wiki/journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53) — confidence: 3, status: in-progress
 - [Playbook Journal 024 — H3 반증 — 시즌 초 stat noise 가설 폐기 (cycle 16) (#55)](wiki/journal/playbook-journal-024-h3-stat-noise-cycle-16-55) — confidence: 3, status: in-progress
+- [Playbook Journal 025 — cycle 52 — 30일 47% 적중률 + sfr/h2h systematic bias 박제 (#91)](wiki/journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 
 ### Agents
@@ -475,7 +476,30 @@ Updated: 2026-05-04T21:09:41.154Z
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
+- journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger ↔ agents/llm-agent-goal-achievement-planning-patterns
+- journal/playbook-journal-018-5-1-1-n-47-h5 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-018-5-1-1-n-47-h5 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-018-5-1-1-n-47-h5 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-018-5-1-1-n-47-h5 ↔ agents/llm-agent-goal-achievement-planning-patterns
+- journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ agents/llm-agent-goal-achievement-planning-patterns
 - journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ agents/llm-agent-goal-achievement-planning-patterns
+- journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs- ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs- ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs- ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
+- journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ harness-engineering/drift-detection-methodology
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
