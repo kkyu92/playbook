@@ -1,85 +1,73 @@
 ---
-title: "Closed-Loop Health Dashboard — 허브 자가 organism 건강도"
+title: Closed-Loop Health Dashboard — 허브 자가 organism 건강도
 category: reports
-date: "2026-05-05"
-tags: [closed-loop, dashboard, self-monitoring, develop-cycle-hub]
+date: '2026-05-05'
+tags:
+  - closed-loop
+  - dashboard
+  - self-monitoring
+  - develop-cycle-hub
 confidence: 4
 connections:
   - harness-engineering/hub-worker-compounding-pattern
   - harness-engineering/drift-detection-methodology
-  - harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
+  - >-
+    harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 status: in-progress
-description: "develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동 갱신."
-auto_updated: false
-last_updated: "2026-05-05T11:00:00Z"
-last_cycle: 41
+description: >-
+  develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
+  갱신.
+auto_updated: true
+last_updated: '2026-05-05T11:36:25.601Z'
+last_cycle: 42
 ---
-
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **41**. 마지막 update: 2026-05-05T11:00:00Z.
+> 직전 cycle: **42**. 마지막 update: 2026-05-05T11:36:25.598Z.
 
 ## 4차원 Metric
 
-| 차원 | Metric | 현재 | 7일 변동 | 추세 |
-|---|---|---|---|---|
-| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 1 / 0 | +2 / +1 / 0 | ↑ |
-| **Process** | chain pool 분포 (curate% / fix-incident% / retro-only%) | 38 / 8 / 27 | +0 / +0 / +13 | retro-only ↑ |
-| **Output** | PR ship / 사이클 (직전 N=10 평균) | 0.5 | -0.2 | ↓ |
-| **Feedback** | skill-evolution 자동 발화 (누적) | 1 | 0 | flat |
+| 차원 | Metric | 현재 |
+|---|---|---|
+| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 2 / 0 |
+| **Process** | chain pool 분포 (직전 20) | curate=5 / explore-idea=2 / dimension-cycle=2 / worker-incident-triage=2 / review-code=2 / closed-loop-design=2 / skill-evolution=1 / expand-scope=1 / fix-incident=1 / expand-scope (impl phase)=1 / expand-scope (impl phase α-1)=1 |
+| **Process** | retro-only 비율 | 9/20 (45%) |
+| **Output** | PR ship (직전 10) | 5 |
+| **Feedback** | 0회 chain (직전 20) | polish-ui, design-system |
 
 ## skill-evolution Trigger 평가
 
 | # | 조건 | 현재 | 임계 | 상태 |
 |---|---|---|---|---|
-| 1 | `chain-evolution` commit 누적 | 0 | ≥5 | ❌ |
+| 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 41 | 50 | ❌ (9 cycles 후) |
-| 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1+ | ❌ |
-| 5 | 0회 chain × 직전 20 + meta-pattern 1+ 누적 | 2 chain × 1 meta | 자율 | ✅ 형식 |
+| 3 | `cycle_n % 50 == 0` (milestone) | 42 | 50 | ❌ |
+| 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
+| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 2 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
-| Cycle | Chain | Outcome | PR / Dispatch |
+| Cycle | Chain | Outcome | PR |
 |---|---|---|---|
-| 41 | (sub-cycle 39 expand-scope) | success | PR γ (dashboard 본 entry) |
-| 40 | expand-scope (eng+design lock-in) | success | PR #197 |
-| 39 | expand-scope (office-hours+ceo) | success | PR #196 |
-| 38 | dimension-cycle | retro-only | — |
-| 37 | explore-idea | retro-only | — |
-
-## 자율 진단 (cycle 41 시점)
-
-- ✅ retro-only 비율 27% — 정상 범위 (목표 ≤30%)
-- ⚠️ skill-evolution trigger #5 형식 충족 — cycle 39~41 expand-scope evidence 강화 진행 중
-- ⚠️ design-system / polish-ui 0회 — 공개 GO 시점 trigger 별도 (deferred)
-- ✅ closed-loop 4차원 모두 active
-
-## 다음 진화 후보
-
-(자동 추출 from `meta-pattern` + `chain-evolution` dispatch — manual update 시 기록)
-
-- **chain pool dynamic resize** (cycle 50 milestone trigger 시 평가)
-- **design-system 공개 lens** (사용자 공개 GO 시점)
-- **cross-project pattern detection** (3 fork 사이 메타 패턴 자동 cluster — E dashboard 부산물)
+| 42 | expand-scope (impl phase α-1) | success | #199 |
+| 41 | expand-scope (impl phase) | success | #198 |
+| 38 | dimension-cycle | success (retro-only) | — |
+| 37 | explore-idea | success (retro-only) | — |
+| 36 | review-code | success (retro-only) | — |
 
 ## Methodology
 
-### 차원 정의
-
+차원 정의:
 - **Input**: 외부 (워커 dispatch / 사용자 호출) 가 hub 에 들어오는 신호 양
-- **Process**: hub 의 chain pool 사용 패턴 (어떤 작업을 어떻게 처리하는가)
-- **Output**: hub 가 외부에 내보내는 가시 산출물 (PR / dispatch)
-- **Feedback**: hub 가 자기 자신 갱신하는 루프 (skill-evolution / meta-pattern dispatch)
+- **Process**: hub 의 chain pool 사용 패턴
+- **Output**: hub 가 외부에 내보내는 가시 산출물
+- **Feedback**: hub 가 자기 자신 갱신하는 루프
 
-### 자동 갱신
+자동 갱신: `scripts/dashboard-update.mjs` (본 스크립트). 매 cycle retro 끝 호출 권장.
+Source: `~/.develop-cycle-hub/cycles/*.json` + `git log --grep "subtype: ..."`.
 
-- `scripts/dashboard-update.mjs` (cycle 42 ship 예정) — cycle retro 끝 자동 호출
-- cron daily — Cloudflare worker dispatch (R6 사용자 영역, 후속 PR)
-
-### Reference
-
-- [develop-cycle-hub SKILL spec](#) — chain pool 정의 + dispatch 채널
+Reference:
+- develop-cycle-hub SKILL spec — chain pool + dispatch 채널
 - cycle 35 meta-pattern dispatch — chain pool 분포 26 사이클 누적
 - cycle 39~42 expand-scope — 본 dashboard 도입 spec
