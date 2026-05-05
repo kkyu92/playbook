@@ -27,6 +27,11 @@ function decideWorkflows(scheduledTime: number): string[] {
 
   const workflows: string[] = [];
 
+  // UTC 00:00 매일 → curate-routine (KST 09:00, 자가 큐레이션 routine: raw-archive + future α-2)
+  if (utcHour === 0) {
+    workflows.push('curate-routine.yml');
+  }
+
   // UTC 09:00 sun → weekly-report (KST 일요일 18:00)
   if (utcDay === 0 && utcHour === 9) {
     workflows.push('weekly-report.yml');

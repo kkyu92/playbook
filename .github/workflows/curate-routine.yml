@@ -1,0 +1,113 @@
+name: "🧹 Curate Routine"
+
+# 자가 큐레이션 routine — raw-sources auto-archive 등 정기 위생 작업.
+# cron 은 cloudflare-worker/ 가 매일 KST 09:00 (UTC 00:00) dispatch.
+# (단일 cron expression 보존 — wrangler.toml [triggers] 1개 슬롯)
+#
+# 묶음 단계 (현재 1개, future α-2 connection-inference 추가 자리):
+#   1. raw-archive.mjs — entry 변환 완료된 raw → _archive/ 이동
+#
+# Push trigger 없음 (recursive fire 방지) — workflow_dispatch only.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: curate-routine-main
+  cancel-in-progress: false
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure git
+        run: |
+          git config user.name "kkyu92"
+          git config user.email "kyusikkyu@gmail.com"
+
+      - name: Step 1 — raw-sources auto-archive
+        id: raw_archive
+        run: |
+          set -euo pipefail
+          BEFORE=$(node scripts/raw-archive.mjs --dry-run 2>&1 | grep -E '후보:' | head -1 || echo "")
+          echo "before: $BEFORE"
+          node scripts/raw-archive.mjs
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ archive 변경 없음 (모든 raw 이미 _archive/)"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # future α-2 connection-inference hook 자리 (isolated journals 자동 connections 박제)
+      # - name: Step 2 — connection-inference (Gemini)
+      #   if: <조건>
+      #   run: node scripts/connection-inference.mjs
+
+      - name: Commit + push (race retry)
+        if: steps.raw_archive.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          git add raw-sources/
+          if git diff --cached --quiet; then
+            echo "staged 0 — skip"
+            exit 0
+          fi
+
+          DATE=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          git commit -m "chore(curate): daily raw-sources auto-archive (${DATE})"
+
+          # main push race retry — auto-ingest.yml 의 push_main_with_retry 와 동일 패턴.
+          # 동시 dispatch 충돌 시 pull --rebase + 재시도로 자연 회복.
+          for attempt in 1 2 3 4 5; do
+            if git push origin main; then
+              echo "✅ push OK (attempt ${attempt})"
+              exit 0
+            fi
+            echo "⚠️ push 실패 (attempt ${attempt}/5) — pull --rebase 후 재시도"
+            git pull --rebase origin main || { echo "❌ rebase 실패"; exit 1; }
+            sleep $((attempt * 2))
+          done
+          echo "❌ push 5회 시도 모두 실패 — race condition 미해결"
+          exit 1
+
+      - name: Self-report on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh label create hub-self-report --color "b60205" --description "허브 워크플로 자가 실패 보고" 2>/dev/null || true
+          DATE=$(TZ=Asia/Seoul date +%Y-%m-%dT%H:%M)
+          RUN_URL="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+          EXISTING=$(gh issue list --state open --label hub-self-report --search "curate-routine in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "🔁 재발 (${DATE}) — Run: ${RUN_URL}"
+          else
+            gh issue create \
+              --title "🚨 hub-self-report: curate-routine 실패 (${DATE})" \
+              --body "**Run:** ${RUN_URL}\n\n워크플로가 실패했습니다. 로그 확인 후 처리 필요." \
+              --label "hub-self-report" \
+              --assignee kkyu92
+          fi

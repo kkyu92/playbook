@@ -369,7 +369,8 @@ jobs:
               echo "raw-sources 변경 없음, push 생략 (fingerprint idempotent)"
             else
               git commit -m "data: auto-ingest raw from ${SOURCE_SHORT} — ${TITLE}"
-              push_main_with_retry
+              # push fail = step fail (self-report 발화). incident issue 는 open 유지 = 재발 코멘트로 자연 회복
+              push_main_with_retry || exit 1
             fi
 
           elif [ "$SUBTYPE" = "self-policy" ]; then
@@ -413,7 +414,13 @@ jobs:
               POLICY_COMMIT=""
             else
               git commit -m "data: auto-ingest self-policy from ${SOURCE_SHORT} — ${TITLE}"
-              push_main_with_retry
+              # push fail 시 issue close 도달 X — alert 만 남기고 step fail (TODOS [P1])
+              if ! push_main_with_retry; then
+                if [ -n "$ISSUE_NUM" ]; then
+                  gh issue comment "$ISSUE_NUM" --body "⚠️ self-policy push 실패 (race 5회 retry 소진) — issue close 보류. 다음 dispatch 에서 fingerprint idempotent 로 회복 예정. Run: ${RUN_URL:-N/A}"
+                fi
+                exit 1
+              fi
               POLICY_COMMIT=$(git rev-parse HEAD)
             fi
 
@@ -489,7 +496,21 @@ jobs:
             git checkout -b "$BRANCH"
             git add -A
             git commit -m "feat(auto-ingest): Journal ${NEXT_NUM} — ${TITLE}"
-            git push origin "$BRANCH"
+            # branch push 도 retry — 같은 BRANCH 동시 dispatch 시 race 가능 (TODOS [P1])
+            push_branch_with_retry() {
+              local attempt
+              for attempt in 1 2 3 4 5; do
+                if git push origin "$BRANCH"; then
+                  return 0
+                fi
+                echo "⚠️ branch push 실패 (attempt ${attempt}/5) — pull --rebase 후 재시도"
+                git pull --rebase origin "$BRANCH" 2>/dev/null || true
+                sleep $((attempt * 2))
+              done
+              echo "❌ branch push 5회 시도 실패"
+              return 1
+            }
+            push_branch_with_retry || exit 1
 
             PR_BODY=$(cat <<PREND
           워커 프로젝트(\`${SOURCE_REPO}\`)에서 자동 수집된 Journal 엔트리입니다.
