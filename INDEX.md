@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-05T10:20:48.971Z
+Updated: 2026-05-05T11:09:53.792Z
 
-## 엔트리 (95개)
+## 엔트리 (97개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -62,6 +62,7 @@ Updated: 2026-05-05T10:20:48.971Z
 - [Playbook Journal 023 — H5 검증 N=62 — v1.5 75% vs v1.6 36.96% 38.04pp 격차 (cycle 14) (#53)](wiki/journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53) — confidence: 3, status: in-progress
 - [Playbook Journal 024 — H3 반증 — 시즌 초 stat noise 가설 폐기 (cycle 16) (#55)](wiki/journal/playbook-journal-024-h3-stat-noise-cycle-16-55) — confidence: 3, status: in-progress
 - [Playbook Journal 025 — cycle 52 — 30일 47% 적중률 + sfr/h2h systematic bias 박제 (#91)](wiki/journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91) — confidence: 3, status: in-progress
+- [Playbook Journal 026 — cycle 57 — sfr/h2h v2.1 backtest validation 변경 보류 박제 (#94)](wiki/journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 
 ### Agents
@@ -115,6 +116,7 @@ Updated: 2026-05-05T10:20:48.971Z
 
 ### Reports
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
+- [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: in-progress
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
@@ -505,6 +507,9 @@ Updated: 2026-05-05T10:20:48.971Z
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- reports/closed-loop-health ↔ harness-engineering/hub-worker-compounding-pattern
+- reports/closed-loop-health ↔ harness-engineering/drift-detection-methodology
+- reports/closed-loop-health ↔ harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 - reports/mid-review-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
 - reports/mid-review-2026-04-28 ↔ harness-engineering/drift-detection-methodology
 - reports/mid-review-2026-04-28 ↔ harness-engineering/question-own-defaults
