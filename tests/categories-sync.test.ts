@@ -1,8 +1,12 @@
 import { describe, it, expect } from "vitest";
 import { CATEGORIES as SCHEMA_CATEGORIES } from "../src/lib/schema";
 // .mjs 단일 원천 — JS file
-// @ts-expect-error — .mjs import, no types; shape checked at runtime.
-import { CATEGORIES as SCRIPT_CATEGORIES, CATEGORY_LABELS as SCRIPT_LABELS } from "../scripts/lib/categories.mjs";
+import {
+  CATEGORIES as SCRIPT_CATEGORIES,
+  CATEGORY_LABELS as SCRIPT_LABELS_RAW,
+} from "../scripts/lib/categories.mjs";
+
+const SCRIPT_LABELS = SCRIPT_LABELS_RAW as Record<string, string>;
 
 describe("CATEGORIES sync — schema.ts ↔ scripts/lib/categories.mjs", () => {
   it("배열 길이 일치", () => {
