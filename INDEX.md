@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-05T11:09:53.792Z
+Updated: 2026-05-05T11:44:31.250Z
 
-## 엔트리 (97개)
+## 엔트리 (98개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -63,6 +63,7 @@ Updated: 2026-05-05T11:09:53.792Z
 - [Playbook Journal 024 — H3 반증 — 시즌 초 stat noise 가설 폐기 (cycle 16) (#55)](wiki/journal/playbook-journal-024-h3-stat-noise-cycle-16-55) — confidence: 3, status: in-progress
 - [Playbook Journal 025 — cycle 52 — 30일 47% 적중률 + sfr/h2h systematic bias 박제 (#91)](wiki/journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91) — confidence: 3, status: in-progress
 - [Playbook Journal 026 — cycle 57 — sfr/h2h v2.1 backtest validation 변경 보류 박제 (#94)](wiki/journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94) — confidence: 3, status: in-progress
+- [Playbook Journal 027 — cycle 59 — sfr/h2h prod 30일 bias bootstrap CI (systematic confirmed) (#96)](wiki/journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 
 ### Agents
