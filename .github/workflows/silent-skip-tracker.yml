@@ -40,6 +40,7 @@ jobs:
           # 확장: 새 silent skip 사건 발견 시 추가.
           WORKFLOWS=(
             "daily-ingest-geeknews.yml"
+            "curate-routine.yml"
           )
 
           THRESHOLD=3
@@ -74,29 +75,24 @@ jobs:
               continue
             fi
 
+            LATEST_ID=$(echo "$RUNS_JSON" | jq -r '.[0].databaseId // "unknown"')
+            KST_NOW=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            ORGANISM="${WF%.yml}"
+
             {
-              echo "🔇 \`$WF\` — $COUNT 건 silent skip/fail 누적 (직전 5건 중, 임계 $THRESHOLD 도달)"
+              echo "https://github.com/${REPO}/actions/runs/${LATEST_ID}"
               echo ""
-              echo "**fp**: \`$FP\`"
-              echo "**최근 5건**:"
-              echo '```json'
-              echo "$RUNS_JSON"
-              echo '```'
+              echo "silent skip — ${COUNT}/${THRESHOLD} events in last 5 runs (fp: \`$FP\`)"
               echo ""
-              echo "**의심 root cause**:"
-              echo "- \`workflow_run\` trigger 작동 ✅, but \`if:\` 조건 / \`workflows[]\` 매칭 미통과"
-              echo "- 또는 OAuth 만료, secret 오기입, runner 미가용"
+              echo "Next: \`gh run view ${LATEST_ID} --repo ${REPO} --log\`"
               echo ""
-              echo "**진단 5분 체크**:"
-              echo "1. 가장 최근 run log: \`gh run view <databaseId> --repo $REPO --log\`"
-              echo "2. workflow yaml \`if:\` 조건 + \`workflows[]\` 매칭 검증"
-              echo "3. 마지막 fix commit 시점: \`git log --oneline -- .github/workflows/$WF\`"
-              echo ""
-              echo "본 issue 는 \`silent-skip-tracker\` 자동 생성. 진단 후 root cause fix 또는 수동 close."
+              echo "---"
+              echo "source: plan #1 / organism: ${ORGANISM}"
             } > /tmp/silent-skip-body.md
 
             gh issue create --repo "$REPO" \
-              --title "🔇 Silent Skip: $WF [$FP]" \
+              --title "[organism] ${ORGANISM} silent-skip [$FP] @ ${KST_NOW}" \
+              --label hub-self-report \
               --body-file /tmp/silent-skip-body.md
 
             CREATED=$((CREATED + 1))
