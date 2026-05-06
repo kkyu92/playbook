@@ -9,7 +9,9 @@ function main() {
   // Regenerate manifest first
   try {
     execSync("node scripts/generate-content-manifest.mjs", { stdio: "inherit" });
-  } catch {}
+  } catch (err) {
+    console.warn(`⚠️ manifest 재생성 실패 — stale manifest 사용: ${err.message}`);
+  }
 
   const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
   const now = new Date();
