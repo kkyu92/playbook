@@ -70,8 +70,8 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
           graph.d3Force?.("y", forceY(0).strength(0.04));
           graph.d3ReheatSimulation?.();
         })
-        .catch(() => {
-          // d3-force not available — fall back to default forces only
+        .catch((err) => {
+          console.warn("[knowledge-graph] d3-force dynamic import failed — default forces only:", err);
         });
     }, 100);
     return () => {
