@@ -72,9 +72,14 @@ const PROJECTS = [
 
 // ─── Gemini 매칭 (wrapExternalContent + responseSchema) ──────────
 
+// Gemini 가 본 articles 와 실제 dispatch 대상 articles 가 일치해야 함.
+// articleList 만 slice 하고 articles 배열은 그대로 두면 Gemini 가 본 적 없는
+// article_index (31+) 환각 시 실 articles 배열 안에서 valid 조회되어 silent dispatch.
+// articles 자체를 cap 으로 잘라 prompt 와 dispatch 영역을 1:1 일치시킴.
+const ARTICLES_CAP = 30;
+
 async function scoutArticles(articles) {
   const articleList = articles
-    .slice(0, 30)
     .map((a, i) => `${i + 1}. [${a.title}] — ${a.description.slice(0, 300)}`)
     .join("\n");
 
@@ -255,8 +260,9 @@ async function main() {
 
   console.log("1️⃣ RSS 피드...");
   const xml = await fetchGeekNews();
-  const articles = parseAtomFeed(xml);
-  console.log(`   ${articles.length}개 기사 파싱\n`);
+  const allArticles = parseAtomFeed(xml);
+  const articles = allArticles.slice(0, ARTICLES_CAP);
+  console.log(`   ${allArticles.length}개 기사 파싱 → ${articles.length}개 cap 적용\n`);
 
   if (articles.length === 0) {
     console.log("ℹ️ 기사 없음. 종료.");
@@ -280,7 +286,10 @@ async function main() {
   const entriesCreated = [];
   for (const m of playbookHigh) {
     const article = articles[m.article_index - 1];
-    if (!article) continue;
+    if (!article) {
+      console.warn(`   ⚠️ playbook entry skip — article_index ${m.article_index} 가 articles 배열 (length ${articles.length}) 범위 밖. Gemini 환각 가능성`);
+      continue;
+    }
     console.log(`\n   🎓 ${m.action_title}`);
     if (dryRun) {
       console.log("   [DRY] skip entry 생성");
@@ -309,11 +318,18 @@ ${m.action_plan}`;
     }
   }
 
-  console.log(`\n4️⃣ moneyballscore Issue dispatch: ${moneyballMatches.length}개`);
+  console.log(`\n4️⃣ moneyballscore Issue dispatch: ${moneyballMatches.length}개 매칭`);
+  let moneyballDispatched = 0;
   for (const m of moneyballMatches) {
     const article = articles[m.article_index - 1];
-    if (article) createDispatchIssue(m, article);
+    if (!article) {
+      console.warn(`   ⚠️ moneyball dispatch skip — article_index ${m.article_index} 가 articles 배열 (length ${articles.length}) 범위 밖. Gemini 환각 가능성`);
+      continue;
+    }
+    createDispatchIssue(m, article);
+    moneyballDispatched++;
   }
+  console.log(`   📤 실 dispatch: ${moneyballDispatched}/${moneyballMatches.length}`);
 
   // GitHub Actions outputs / summary
   if (process.env.GITHUB_OUTPUT) {
