@@ -1,8 +1,8 @@
 # TODOS
 
-## [P0] origin/main diverged 통합 결정 (cycle 77 최초 → cycle 104 갱신, R6 사용자 영역, BRANCHED N=13 evidence)
+## [P0] origin/main diverged 통합 결정 (cycle 77 최초 → cycle 105 갱신, R6 사용자 영역, BRANCHED N=14 evidence)
 
-**What**: 로컬 main ↔ origin/main = **84 ahead / 27 behind** (`fatal: Not possible to fast-forward`) — cycle 77 당시 37/18, 이후 develop-cycle-hub 자율 회전 + moneyball auto-ingest 누적
+**What**: 로컬 main ↔ origin/main = **85 ahead / 27 behind** (`fatal: Not possible to fast-forward`) — cycle 77 당시 37/18, 이후 develop-cycle-hub 자율 회전 + moneyball auto-ingest 누적
 **Why**: cycle 77~103 = 12 cycle 연속 handoff load drift MAJOR+BRANCHED 감지 (cycle 91 첫 evidence). 양방향 모두 의미 있는 자율 커밋 — 손실 0 통합 필요
 - 로컬 only 84건: cycle 65~103 develop-cycle-hub 자율 회전 (retro/meta/curate commit 누적, push 정책 batch 대기 중)
 - 원격 only 27건: moneyball→playbook self-policy auto-ingest (cycle 165~179 retro, PR #154~166 자동 박제)
@@ -12,8 +12,16 @@
 - C. 보류 (carry-over 지속 — N=13 evidence, 가시성 확보 의무)
 **자율 처리 한계**: R6 force-push/merge/rebase 사용자 영역 (메모리 `feedback_automation_default_zone`). 자율 PR/실행 X
 **완료 신호**: 사용자 GO 후 통합 + push 1회 → `git rev-list --left-right --count origin/main...main` = `0	0`
-**Trigger**: cycle 77 최초 + cycle 91~104 13 cycle 연속 evidence. cycle 99 skill-evolution TODOS 자동 박제 룰 첫 발동 → cycle 100/101/102/103/104 횟수 갱신
-**Reference**: cycle 77 cycle_state + cycle 98/99/100/101/102/103/104 retro + handoff load drift BRANCHED N=13 evidence
+**Trigger**: cycle 77 최초 + cycle 91~105 14 cycle 연속 evidence. cycle 99 skill-evolution TODOS 자동 박제 룰 첫 발동 → cycle 100~105 횟수 갱신
+**Reference**: cycle 77 cycle_state + cycle 98/99/100/101/102/103/104/105 retro + handoff load drift BRANCHED N=14 evidence
+
+## [P1] GitHub Actions billing 경고 확인 (cycle 105 발견)
+
+**What**: `🧠 Embed Content Index` (run #25439995740, 2026-05-06 14:00:36Z) workflow_dispatch fail — "recent account payments have failed or your spending limit needs to be increased"
+**Why**: embed-on-push 워크플로가 GH Actions 결제 한도 오류로 미시작. 단 같은 시간대 worker-lesson auto-ingest 4건 SUCCESS → 전체 billing 실패 X, embed 특정 이슈 가능성
+**자율 처리 한계**: billing/결제 = 사용자 결정 영역
+**완료 신호**: GH Settings > Billing > Actions 확인 + embed-on-push 재시도 성공
+**Reference**: cycle 105 진단 key_findings
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
