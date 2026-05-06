@@ -19,7 +19,8 @@ function loadNoiseTags() {
   try {
     const cfg = JSON.parse(fs.readFileSync(WORKERS_CONFIG, "utf-8"));
     return new Set([...base, ...(cfg.registered || []), ...(cfg.special || [])]);
-  } catch {
+  } catch (err) {
+    console.warn(`[lint-content] workers.config.json 읽기 실패 — base tags 만 사용: ${err.message}`);
     return new Set(base);
   }
 }
@@ -120,7 +121,8 @@ function checkUnusedEntries(entries) {
   let hitsData;
   try {
     hitsData = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
-  } catch {
+  } catch (err) {
+    console.warn(`[lint-content] hits.json 파싱 실패 — unused 체크 skip: ${err.message}`);
     return [];
   }
   if ((hitsData.totalQueries || 0) < UNUSED_WARN_MIN_TOTAL) return [];
