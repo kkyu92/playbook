@@ -71,13 +71,9 @@
 **Effort**: M~L — auto-ingest.yml 분석 + LLM prompt 변경 + cross-update 단계 통합
 **Reference**: cycle 1 lazy / cycle 3 retro carry-over
 
-## [P2] eslint config `_` prefix convention
+## [DONE] eslint config `_` prefix convention
 
-**What**: `@typescript-eslint/no-unused-vars` rule 에 `argsIgnorePattern: "^_"`, `varsIgnorePattern: "^_"` 추가
-**Why**: `_` underscore prefix = 의도된 unused convention. 현재 lint 에서 경고 → 9 warnings 잔여 중 `_` prefix 류 다수
-**Trigger**: cycle 2 lazy carry-over. eslint config 변경 = 모든 unused vars 영향 (사용자 결정 후보)
-**Effort**: S (CC ~5분) — eslint.config.mjs rules 추가
-**Reference**: cycle 2 carry-over
+**Shipped**: cycle 52 curate audit (2026-05-06) — eslint.config.mjs:18-25 이미 박제됨 (`argsIgnorePattern: "^_"`, `varsIgnorePattern: "^_"`, `caughtErrorsIgnorePattern: "^_"`). `pnpm lint` exit 0 (warnings 0건) 자연 검증. cycle 2 carry-over 작성 시점 이후 별도 cycle 에서 처리됨 — TODOS audit trail 결손 (stale carry-over 자가 발견 패턴).
 
 ## [DONE/잔여] 외부 scheduler 이관 — 진단 정정 (옵션 B 2/3)
 
