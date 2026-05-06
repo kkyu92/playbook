@@ -22,6 +22,7 @@ export default function AdminDashboard() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -29,6 +30,10 @@ export default function AdminDashboard() {
       .then((r) => r.json())
       .then((data) => {
         setEntries(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
         setLoading(false);
       });
   }, []);
@@ -42,22 +47,34 @@ export default function AdminDashboard() {
   async function handleDelete(entry: Entry) {
     if (!confirm(`"${entry.frontmatter.title}" 삭제하시겠습니까?`)) return;
 
-    const res = await fetch(`/api/admin/entries/${entry.slug}`, {
-      method: "GET",
-    });
-    const { sha } = await res.json();
+    try {
+      const res = await fetch(`/api/admin/entries/${entry.slug}`, {
+        method: "GET",
+      });
+      const { sha } = await res.json();
 
-    await fetch(`/api/admin/entries/${entry.slug}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sha }),
-    });
+      await fetch(`/api/admin/entries/${entry.slug}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sha }),
+      });
 
-    setEntries((prev) => prev.filter((e) => e.slug !== entry.slug));
+      setEntries((prev) => prev.filter((e) => e.slug !== entry.slug));
+    } catch (err) {
+      alert(`삭제 실패: ${err instanceof Error ? err.message : "알 수 없는 오류"}`);
+    }
   }
 
   if (loading) {
     return <p className="text-muted">로딩 중...</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-[var(--radius-md)] border border-error bg-error/10 p-4">
+        <p className="text-error">{error}</p>
+      </div>
+    );
   }
 
   return (
