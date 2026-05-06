@@ -42,7 +42,8 @@ function loadCycles() {
       try {
         const data = JSON.parse(fs.readFileSync(path.join(CYCLES_DIR, f), "utf-8"));
         return data;
-      } catch {
+      } catch (err) {
+        console.warn(`⚠️ loadCycles parse failed for ${f}: ${err.message?.slice(0, 200)}`);
         return null;
       }
     })
