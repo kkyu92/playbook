@@ -14,7 +14,7 @@
  */
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const MODELS = ["gemini-2.5-flash"];
+const MODEL = "gemini-2.5-flash";
 const BACKOFFS = [10, 30, 60, 120];
 
 /**
@@ -68,9 +68,8 @@ export function isDailyQuotaError(err) {
  *
  * 전환 우선순위:
  *   1. Daily quota 감지 → 즉시 다음 key 전환 (backoff skip)
- *   2. Attempt 1 실패 → 모델 전환 (2.5 → 2.0, 전역 장애 대응)
- *   3. Attempt 4 (마지막) 실패 → 다음 key 전환, 없으면 throw
- *   4. 그 외 → backoff 후 재시도
+ *   2. Attempt 4 (마지막) 실패 → 다음 key 전환, 없으면 throw
+ *   3. 그 외 → backoff 후 재시도
  *
  * @param {object} opts
  * @param {string} opts.prompt
@@ -86,20 +85,15 @@ export async function generateStructured({ prompt, responseSchema, parse, valida
   for (let keyIdx = 0; keyIdx < clients.length; keyIdx++) {
     const { client, label } = clients[keyIdx];
     const hasMoreKeys = keyIdx < clients.length - 1;
-    let modelIdx = 0;
 
-    const makeModel = (idx) => {
-      const config = { model: MODELS[idx] };
-      if (responseSchema) {
-        config.generationConfig = {
-          responseMimeType: "application/json",
-          responseSchema,
-        };
-      }
-      return client.getGenerativeModel(config);
-    };
-
-    let model = makeModel(modelIdx);
+    const config = { model: MODEL };
+    if (responseSchema) {
+      config.generationConfig = {
+        responseMimeType: "application/json",
+        responseSchema,
+      };
+    }
+    const model = client.getGenerativeModel(config);
 
     for (let attempt = 0; attempt < 5; attempt++) {
       try {
@@ -122,19 +116,12 @@ export async function generateStructured({ prompt, responseSchema, parse, valida
         return parsed;
       } catch (err) {
         lastErr = err;
-        console.warn(`⚠️  [${label}] Attempt ${attempt + 1} (${MODELS[modelIdx]}) failed: ${(err.message || "").slice(0, 300)}`);
+        console.warn(`⚠️  [${label}] Attempt ${attempt + 1} (${MODEL}) failed: ${(err.message || "").slice(0, 300)}`);
 
         // Daily quota 감지 → 즉시 다음 key 전환 (backoff 무의미)
         if (hasMoreKeys && isDailyQuotaError(err)) {
           console.log(`   🔑 [${label}] daily quota 소진 → fallback key 로 전환`);
           break;
-        }
-
-        // 2번째 실패부터 모델 전환 (2.5 전역 장애 대응)
-        if (attempt === 1 && modelIdx < MODELS.length - 1) {
-          modelIdx++;
-          model = makeModel(modelIdx);
-          console.log(`   🔄 모델 전환: ${MODELS[modelIdx]}`);
         }
 
         // 마지막 attempt 처리
@@ -143,7 +130,7 @@ export async function generateStructured({ prompt, responseSchema, parse, valida
             console.log(`   🔑 [${label}] 5 attempts 소진 → fallback key 로 전환`);
             break;
           }
-          throw new Error(`All ${clients.length} keys × ${MODELS.length} models exhausted — ${err.message}`);
+          throw new Error(`All ${clients.length} keys exhausted (model: ${MODEL}) — ${err.message}`);
         }
 
         const wait = BACKOFFS[attempt];
