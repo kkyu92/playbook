@@ -1,6 +1,6 @@
 # TODOS
 
-## [P0] origin/main diverged 통합 결정 (cycle 77 최초 → cycle 107 갱신, R6 사용자 영역, BRANCHED N=16 evidence)
+## [P0] origin/main diverged 통합 결정 (cycle 77 최초 → cycle 108 갱신, R6 사용자 영역, BRANCHED N=17 evidence)
 
 **What**: 로컬 main ↔ origin/main = **89 ahead / 27 behind** (`fatal: Not possible to fast-forward`) — cycle 77 당시 37/18, 이후 develop-cycle-hub 자율 회전 + moneyball auto-ingest 누적
 **Why**: cycle 77~107 = 16 cycle 연속 handoff load drift MAJOR+BRANCHED 감지 (cycle 91 첫 evidence). 양방향 모두 의미 있는 자율 커밋 — 손실 0 통합 필요
@@ -13,7 +13,7 @@
 **자율 처리 한계**: R6 force-push/merge/rebase 사용자 영역 (메모리 `feedback_automation_default_zone`). 자율 PR/실행 X
 **완료 신호**: 사용자 GO 후 통합 + push 1회 → `git rev-list --left-right --count origin/main...main` = `0	0`
 **Trigger**: cycle 77 최초 + cycle 91~107 16 cycle 연속 evidence. cycle 99 skill-evolution TODOS 자동 박제 룰 첫 발동 → cycle 100~107 횟수 갱신
-**Reference**: cycle 77 cycle_state + cycle 98/99/100/101/102/103/104/105/106/107 retro + handoff load drift BRANCHED N=16 evidence
+**Reference**: cycle 77 cycle_state + cycle 98/99/100/101/102/103/104/105/106/107/108 retro + handoff load drift BRANCHED N=17 evidence
 
 ## [P1] GitHub Actions billing 경고 확인 (cycle 105 발견)
 
