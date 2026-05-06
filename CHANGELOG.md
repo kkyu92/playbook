@@ -4,6 +4,36 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.0] — 2026-05-06
+
+### Added
+- **Phase 4+5 closed-loop (양방향 복리성장 비전 완전 검증)**: D4 dual SessionStart hook (워커 auto-sync) + D5 incident-followup pressure + Phase 5 워커 self-develop (Cloudflare + claude-code-action OAuth). 비전 1+2+3 모두 smoke 검증 완료 (2026-04-29/30)
+- **Cloudflare Workers scheduler** (T9): GH Actions cron 8개 → Cloudflare `playbook-cron` worker 이관. silent drop 근본 원인 해소. 분 정밀도 손실만 (무관)
+- **develop-cycle-hub zero-touch infrastructure** (cycle 48): `watch.sh` + `launchd com.kkyu.dch-watch` + `plist` + `install.sh` ship. 1 세션 = 1 사이클 자동 회전 활성
+- **blog-autopilot 3rd fork** (develop-cycle-blog skill, PR #66 머지 5-4): develop-cycle 3 fork 운영 체제 확립 (머니볼 + 허브 + blog-autopilot)
+- `curate-routine.yml` + Cloudflare UTC 00:00 매핑: daily raw-sources auto-archive (KST 09:00). 자가 organism 휴면 → 활성
+- `notify-workers.yml` (PR #88): 허브 content 머지 → 영향 워커 레포 hub-update Issue 자동 생성 (push channel GA)
+- `incident-followup.yml` (Phase 4 D5): Vercel/CI incident 3+ 일 미해결 자동 follow-up pressure
+- `silent-skip-tracker.yml`: CI cron silent skip 자동 감지 + visibility
+- Fine-grained PAT (T5, PR #44~48): Classic → Fine-grained PAT 전환. 만료 2027-04-27. `pat-expiry-check.yml` 신규
+- `docs/solutions/` 7건 축적: llm-generation 4건 (`_compiled-truth.md` 코드 게이트 승격), ci-github-actions 2건, mdx 1건
+- Wiki entries: `silent-drift-family-pattern` 9→13 fork 진화 (review-code chain dominance dogfood). Journal 026편까지 append
+- `category-rebalance.yml` + `scripts/category-rebalance.mjs`: monthly self-gating 클러스터링 (N_total < 30 시 silent-skip)
+- `src/config/projects.ts` PROJECTS: 워커 UI 대시보드 표시 (PR #43 gap 보강)
+
+### Changed
+- GH Actions cron `on.schedule` 8개 제거, `workflow_dispatch:` 만 유지 (T9)
+- develop-cycle-hub SKILL.md: zero-touch 룰 강화 (1 세션 1 사이클), chain pool 고도화
+- `auto-ingest.yml` push fail hardening: self-policy/incident/lesson 3분기 explicit exit + lesson branch retry
+- `embed-on-push.yml`: 워커 inbound content 포함 임베딩 자동 갱신
+
+### Fixed
+- Mermaid AUTO-FIX #2b: subgraph invalid-id + bracket-label normalize (PR #39, 6회 재발 패치)
+- `notify-workers.yml` HEREDOC EOF gap (ci-github-actions solution #1)
+- `notify-workers.yml` guard-skip cascade gap (ci-github-actions solution #2)
+- blog-autopilot Pull 축 e2e 검증: lesson commit → 허브 auto-ingest PR 자동 생성 완전 동작
+- PLAYBOOK_PAT `GH_PAT || GITHUB_TOKEN` fallback: cross-repo dispatch silent fail 방어
+
 ## [0.2.0] — 2026-04-19
 
 ### Added
