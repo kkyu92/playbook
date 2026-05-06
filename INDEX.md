@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-05T21:27:24.593Z
+Updated: 2026-05-06T14:16:00.482Z
 
-## 엔트리 (101개)
+## 엔트리 (102개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -35,6 +35,7 @@ Updated: 2026-05-05T21:27:24.593Z
 - [LLM Data Pipeline Engineering - Input and Output Design Patterns](wiki/harness-engineering/llm-input-output-data-pipeline-design-patterns) — confidence: 1, status: draft
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
+- [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
@@ -435,6 +436,9 @@ Updated: 2026-05-05T21:27:24.593Z
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/question-own-defaults ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/question-own-defaults ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
+- harness-engineering/silent-drift-family-pattern ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/silent-drift-family-pattern ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/silent-drift-family-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
@@ -478,7 +482,11 @@ Updated: 2026-05-05T21:27:24.593Z
 - journal/playbook-journal-009-claude-cli-hang-paperclip-4-step ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - journal/playbook-journal-009-claude-cli-hang-paperclip-4-step ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
 - journal/playbook-journal-010-title-outdated-title-b ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-010-title-outdated-title-b ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-010-title-outdated-title-b ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-011-mid-review-dialectic-2026-04-28 ↔ reports/mid-review-2026-04-28
+- journal/playbook-journal-011-mid-review-dialectic-2026-04-28 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-011-mid-review-dialectic-2026-04-28 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/drift-detection-methodology
 - journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas ↔ harness-engineering/question-own-defaults
@@ -506,6 +514,9 @@ Updated: 2026-05-05T21:27:24.593Z
 - journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5 ↔ agents/llm-agent-goal-achievement-planning-patterns
 - journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ agents/llm-agent-goal-achievement-planning-patterns
+- journal/playbook-journal-020-develop-cycle-6-chain-pool-fire-4-prefix-dispatch- ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4 ↔ agents/llm-agent-goal-achievement-planning-patterns
@@ -515,6 +526,23 @@ Updated: 2026-05-05T21:27:24.593Z
 - journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-024-h3-stat-noise-cycle-16-55 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-024-h3-stat-noise-cycle-16-55 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-024-h3-stat-noise-cycle-16-55 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ harness-engineering/drift-detection-methodology
+- journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ harness-engineering/question-own-defaults
+- journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring

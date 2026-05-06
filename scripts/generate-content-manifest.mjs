@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const OUTPUT_FILE = path.join(
@@ -9,22 +10,6 @@ const OUTPUT_FILE = path.join(
   "generated",
   "content-manifest.json"
 );
-
-// NOTE: src/lib/schema.ts의 CATEGORIES와 동기화 유지 필요.
-// 이 파일은 .mjs라 .ts에서 import 불가 → 수동 동기화.
-// 카테고리 추가 시 schema.ts + CATEGORY_LABELS(아래) 3곳 모두 업데이트.
-const CATEGORIES = [
-  "prompt-engineering",
-  "context-engineering",
-  "harness-engineering",
-  "agents",
-  "evaluation",
-  "infrastructure",
-  "frontend-ai",
-  "project-ops",
-  "data-engineering",
-  "reports",
-];
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
 
@@ -189,9 +174,7 @@ function main() {
     for (const target of entry.frontmatter.connections) {
       if (nodeIds.has(target)) {
         edges.push({ source: entry.slug, target });
-      } else if (allSlugs.has(target)) {
-        // 노드는 있지만 필터됨 (draft) — edge 스킵
-      } else {
+      } else if (!allSlugs.has(target)) {
         danglingConnections.push({ from: entry.slug, to: target });
       }
     }
@@ -221,18 +204,6 @@ function main() {
 
   // Add placeholder nodes for empty categories (shown as grey in graph)
   const categoriesWithEntries = new Set(entries.map((e) => e.frontmatter.category));
-  const CATEGORY_LABELS = {
-    "prompt-engineering": "Prompt Engineering",
-    "context-engineering": "Context Engineering",
-    "harness-engineering": "Harness Engineering",
-    agents: "Agents",
-    evaluation: "Evaluation",
-    infrastructure: "Infrastructure",
-    "frontend-ai": "Frontend + AI",
-    "project-ops": "Project Ops",
-    "data-engineering": "Data Engineering",
-    reports: "Reports",
-  };
   for (const cat of CATEGORIES) {
     if (!categoriesWithEntries.has(cat)) {
       const nodeId = `__empty__${cat}`;
@@ -252,14 +223,11 @@ function main() {
   let longestStreak = 0;
 
   if (dates.length > 0) {
-    // Current streak: count consecutive days backwards from today
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const dateSet = new Set(dates);
 
-    // Check from today backwards
     let checkDate = new Date(today);
-    // If today has no entry, start from most recent entry date
     const todayStr = checkDate.toISOString().split("T")[0];
     if (!dateSet.has(todayStr)) {
       checkDate = new Date(dates[0]);
@@ -276,7 +244,6 @@ function main() {
       }
     }
 
-    // Longest streak: scan all dates
     let streak = 1;
     const sortedDates = [...dates].sort();
     for (let i = 1; i < sortedDates.length; i++) {
@@ -293,14 +260,12 @@ function main() {
     longestStreak = Math.max(longestStreak, streak);
   }
 
-  // Build dailyEntries map (date → count) for heatmap
   const dailyEntries = {};
   for (const entry of entries) {
     const d = entry.frontmatter.date;
     dailyEntries[d] = (dailyEntries[d] || 0) + 1;
   }
 
-  // Calculate stats
   const categoryStats = {};
   for (const cat of CATEGORIES) {
     const catEntries = entries.filter((e) => e.frontmatter.category === cat);
@@ -332,7 +297,6 @@ function main() {
     });
   }
 
-  // Recent entries (last 5)
   const recentEntries = [...entries]
     .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
     .slice(0, 5)
@@ -370,10 +334,10 @@ function main() {
   );
 
   // ── Generate INDEX.md ──
-  generateIndex(entries, edges, CATEGORY_LABELS);
+  generateIndex(entries, edges);
 }
 
-function generateIndex(entries, edges, CATEGORY_LABELS) {
+function generateIndex(entries, edges) {
   const INDEX_FILE = path.join(process.cwd(), "INDEX.md");
 
   const now = new Date().toISOString();
