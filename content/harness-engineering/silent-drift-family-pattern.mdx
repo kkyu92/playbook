@@ -1,5 +1,5 @@
 ---
-title: Silent Drift Family Pattern — silent fail 가시화 10 fork + scripts/ 자연 종료 + src/ 도메인 진입 (entry 자체 dogfood)
+title: Silent Drift Family Pattern — silent fail 가시화 12 fork + scripts/ 자연 종료 + src/ 차원 직교 두 번째 누적 + 보존 판정 reverse 메타 lens (entry 자체 dogfood)
 category: harness-engineering
 date: "2026-05-06"
 tags:
@@ -12,13 +12,14 @@ tags:
   - observability
   - meta-pattern
   - entry-self-dogfood
+  - preservation-reverse
 workers:
   - all
 confidence: 4
 last_verified: "2026-05-06"
 connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, harness-engineering/question-own-defaults]
 status: complete
-description: silent catch / silent fail 가시화가 review-code chain 자연 발화로 10 fork 누적된 후 chain dominance 정착 → scripts/ 영역 자연 종료 detect → src/ 새 도메인 직교 진입까지의 메타 패턴. 무한 카운팅 산술 X, 자연 종료 detect + 새 도메인 fork 자체가 entry 의 차원 재정의 trigger #1 자연 발화 dogfood evidence.
+description: silent catch / silent fail 가시화가 review-code chain 자연 발화로 12 fork 누적된 후 chain dominance 정착 → scripts/ 영역 자연 종료 detect → src/lib 첫 직교 진입 → src/lib N=2 deepen → src/app+components 차원 직교 두 번째 누적까지의 메타 패턴. 무한 카운팅 산술 X, 자연 종료 + 도메인 직교 fork + 보존 판정 reverse (cycle 78 시점 "보존" 분류 영역이 cycle 80~82 에 가시화로 reverse) 자체가 entry 의 차원 재정의 trigger 자연 발화 dogfood evidence.
 type: entry
 source: manual
 ---
@@ -27,9 +28,9 @@ source: manual
 
 자동화 루프에서 가장 비싼 결손은 [작동 드리프트 #3](/wiki/harness-engineering/drift-detection-methodology) 의 sub-family — `try { ... } catch {}` empty catch, `.error` 미체크, fallback 0 stub, JSON.parse 미가드 — 이 모두 **silent 하게 실패**해서 자동화 루프 안에서 "성공"으로 박제된다. CI green / cron success / lint pass 모두 통과해도 결과만 invisible degradation.
 
-이 패턴은 워커 (머니볼) 에서 23 cycle SUCCESS streak 으로 먼저 정착됐고, 허브 (playbook) 에 cross-project transport 되어 10 fork 누적했다. 9 fork 후 scripts/ 영역에서 자연 종료 신호를 detect 했고, 그 직후 cycle 78 에서 src/ 새 도메인 (Next.js 코드 영역) 으로 자연 직교 fork — 본 entry 의 [차원 재정의 trigger #1](#차원-재정의-trigger) 자연 발화 dogfood.
+이 패턴은 워커 (머니볼) 에서 23 cycle SUCCESS streak 으로 먼저 정착됐고, 허브 (playbook) 에 cross-project transport 되어 12 fork 누적했다. 9 fork 후 scripts/ 영역에서 자연 종료 신호를 detect 했고, 그 직후 cycle 78 에서 src/lib 첫 직교 진입 → cycle 80 N=2 deepen (quiz-storage + auth.ts) → cycle 82 src/app + components 차원 직교 두 번째 누적 — 본 entry 의 [차원 재정의 trigger #1](#차원-재정의-trigger) 자연 발화 dogfood + 보존 판정 reverse 메타 lens 자연 추가.
 
-## 10 fork evidence (허브, cycle 54~78)
+## 12 fork evidence (허브, cycle 54~82)
 
 | # | Cycle | 영역 | 가시화 대상 | Chain |
 |---|---|---|---|---|
@@ -43,22 +44,46 @@ source: manual
 | 8 | 67 | `scripts/generate-lesson.mjs:42` | catch silent reason 가시화 | review-code (heavy) |
 | 9 | 69 | `scripts/generate-weekly-report.mjs:12` | catch silent reason 가시화 | review-code (lite) |
 | 10 | 78 | `src/lib/github-projects.ts:65` ⭐ | catch silent reason 가시화 (외부 GitHub API fail 디버깅 surface) | review-code (lite) |
+| 11 | 80 | `src/lib/quiz-storage.ts` (6) + `src/lib/auth.ts` (1) ⭐⭐ | catch silent reason 가시화 — src/lib 차원 N=2 deepen (cycle 78 첫 진입 후 두 번째) | review-code (lite) |
+| 12 | 82 | `src/app/api/og/route.tsx` (2) + `src/components/code-block.tsx` (1) ⭐⭐⭐ | catch silent reason 가시화 — src/app + components 차원 직교 두 번째 누적 (src/lib 종료 후 새 차원) | review-code (lite) |
 
-⭐ = scripts/ 자연 종료 (cycle 70) 후 src/ 새 도메인 첫 직교 fork — 차원 재정의 trigger #1 자연 발화.
+⭐ = scripts/ 자연 종료 (cycle 70) 후 src/lib 첫 직교 fork — 차원 재정의 trigger #1 자연 발화.
+⭐⭐ = src/lib 차원 N=2 deepen — 동차원 재진입 (cycle 78 직후 사이 81 curate 끼워 R3 정합).
+⭐⭐⭐ = src/lib 종료 후 src/app + components 차원 직교 두 번째 누적 — 본 entry 의 차원 재정의 trigger #1 N=2 evidence (직교 fork 패턴 반복성 검증).
 
-각 fork = 1 commit 박제 (`fix(scripts):` 또는 `fix(src):`) + 1 retro commit (`policy: cycle N retro`). 10 fork 모두 outcome=success, R3 회피 정합 (5 review-code 연속 후 다른 chain 1회 이상 끼워 자연 분산).
+각 fork = 1 commit 박제 (`fix(scripts):` 또는 `fix(src):`) + 1 retro commit (`policy: cycle N retro`). 12 fork 모두 outcome=success, R3 회피 정합 (review-code 직전 3 사이클 발화 시 사이 curate / closed-loop-design / skill-evolution 끼워 자연 분산).
 
 ## chain dominance 자연 정착 — review-code lite/heavy
 
-10 fork 중 **9건이 review-code chain** (lite 7 + heavy 2) → 직전 20 cycle 중 review-code dominant 패턴 자연 정착. 직전 5 cycle (74~78) chain distribution:
+12 fork 중 **11건이 review-code chain** (lite 9 + heavy 2) → 직전 20 cycle 중 review-code dominant 패턴 자연 정착. 직전 5 cycle (78~82) chain distribution:
 
-- 74: closed-loop-design
-- 75: curate
-- 76: skill-evolution (trigger 5 N=2 dogfood)
-- 77: curate
-- 78: review-code (lite) ⭐ src/ 첫 진입
+- 78: review-code (lite) ⭐ src/lib 첫 진입
+- 79: explore-idea (lite) — 본 entry 박제
+- 80: review-code (lite) ⭐⭐ src/lib N=2 deepen
+- 81: curate — dispatch 채널 80 cycle 누적 균형 분석
+- 82: review-code (lite) ⭐⭐⭐ src/app + components 두 번째 직교
 
-`R3 회피` (직전 3 사이클 모두 같은 chain X) 룰이 review-code 의 외부 source trigger 에 자연 응답 — silent drift 발견 시 review-code 진입, 다른 외부 source (curate / fix-incident / skill-evolution / closed-loop-design) 도 자연 끼워 dominance 자체가 정합.
+`R3 회피` (직전 3 사이클 모두 같은 chain X) 룰이 review-code 의 외부 source trigger 에 자연 응답 — silent drift 발견 시 review-code 진입, 다른 외부 source (curate / explore-idea / skill-evolution / closed-loop-design) 도 자연 끼워 dominance 자체가 정합. cycle 79 explore-idea + 81 curate 가 review-code dominance 사이 자연 분산.
+
+## 보존 판정 reverse 메타 lens (cycle 78 → 80, 82)
+
+cycle 78 표 에 "보존 (의도)" 분류된 src/ 영역 후보들이 cycle 80, 82 에 가시화 대상으로 reverse:
+
+| 위치 | cycle 78 분류 | cycle 80/82 처리 | reverse 사유 |
+|---|---|---|---|
+| `src/lib/quiz-storage.ts` | 보존 (localStorage quota 의도, 1건) | cycle 80 가시화 (6건 = +5 detect) | 추가 catch grep 시 동 파일 안 다른 catch 발견 — 첫 분류 단일 site 만 봄 |
+| `src/lib/auth.ts` | 보존 (보안 영역, console.warn 정보 누출 회피) | cycle 80 가시화 (1건) | reason variable 박제 (정보 누출 X 검증 후) — 보안 reasoning 보존 + 가시화 양립 |
+| `src/app/api/og/route.tsx` | 보존 (system font fallback 의도, 5건) | cycle 82 가시화 (2건) | 부분 보존 — 의도 명시 위치 일부 보존, 나머지 가시화 |
+| `src/components/code-block.tsx` | 보존 (clipboard fallback 의도, 4건) | cycle 82 가시화 (1건) | 부분 보존 — 명시 의도 외 catch 가시화 |
+
+**메타 lens 추가**: 일회성 의도 분류는 시간 lens 따라 reverse 가능. **강한 보존** (보안/안전 critical, cleanup/dev-only) vs **약한 보존** (의도 명시 가능, 추후 재진입 시 가시화 가능) 자연 구분 발생.
+
+- **강한 보존 evidence**: scripts/ 5건 (cycle 70 분류) 은 cycle 71~82 12 사이클 동안 0건 reverse — `} catch { /* already exists */ }` / cleanup unlink / dev tool watcher 카테고리는 의도 분류 영구 정합
+- **약한 보존 evidence**: src/ "의도 명시" 분류 7건 중 cycle 80~82 에서 9 catch 가시화 — 첫 분류 단일 site 만 보고 동 파일 안 다른 catch 누락, 또는 의도 명시 reasoning 자체 reverse 가능
+
+[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "의도 명시 분류" 자체도 자가 의심 대상 — 첫 grep 단일 site 만 본 결정은 동 파일 안 추가 catch 누락 가능. 강한 보존 (보안 critical / cleanup / dev-only) 외 약한 보존은 추후 재진입 시 reverse trigger.
+
+**자가 dogfood**: cycle 78 분류 vs cycle 80~82 reverse 가 본 entry 안 박제 = entry 자체가 첫 분류 reverse 패턴을 박제하는 메커니즘 작동 evidence.
 
 ## 자연 종료 신호 detect (cycle 70)
 
@@ -78,51 +103,53 @@ cycle 70 진단 시 scripts/ 잔여 silent catch 5건 모두 **의도적 silent*
 
 **자연 종료 detect 의 의미**: 9 fork 누적 후 scripts/ 영역 잔여 candidate 가 모두 의도적 silent 로 판별 = scripts/ 차원의 fix domain exhaustion. 본 entry 의 [차원 재정의 trigger #1](#차원-재정의-trigger) 자연 발화 조건 (cycle 71+ 새 영역 발견) 직접 만족 → cycle 78 src/ 새 도메인 직교 fork 자연 등장.
 
-## src/ 도메인 직교 fork (cycle 78) — 차원 재정의 trigger #1 자연 발화 dogfood
+## src/ 도메인 직교 fork (cycle 78~82) — 차원 재정의 trigger #1 N=2 dogfood
 
-cycle 78 진단 시 src/ 영역 silent catch grep 결과 19건 후보 분포:
+scripts/ 자연 종료 (cycle 70) → src/lib 첫 진입 (cycle 78) → src/lib N=2 deepen (cycle 80) → src/app + components 차원 직교 두 번째 누적 (cycle 82) 까지 5 cycle 동안 src/ 도메인 4 fork 진행.
 
-| 위치 | 후보 수 | cycle 78 처리 | 사유 |
-|---|---|---|---|
-| `src/lib` | 8건 | 1건 가시화 (`github-projects.ts:65`) ⭐ | 외부 GitHub API fetch 실패 silent → dashboard 데이터 누락 디버깅 surface 필요 |
-| `src/app` | 5건 | 보존 (system font fallback 의도) | `api/og/route.tsx:48` 등 명시 의도 |
-| `src/components` | 4건 | 보존 (clipboard fallback 의도) | `code-block.tsx:15` 명시 의도 |
-| `src/lib/auth.ts` | 1건 | 보존 (보안 영역) | console.warn 정보 누출 회피 |
-| `src/lib/quiz-storage.ts` | 1건 | 보존 (localStorage quota 명시) | 주석 명시 의도 |
+| Cycle | 처리 영역 | 사유 |
+|---|---|---|
+| 78 | `src/lib/github-projects.ts:65` (1건 가시화) | 외부 GitHub API fetch 실패 silent → dashboard 데이터 누락 디버깅 surface |
+| 80 | `src/lib/quiz-storage.ts` (6건) + `src/lib/auth.ts` (1건) | src/lib 차원 N=2 deepen — cycle 78 시점 단일 site 분류의 reverse (동 파일 추가 catch detect) |
+| 82 | `src/app/api/og/route.tsx` (2건) + `src/components/code-block.tsx` (1건) | src/lib 종료 후 src/app + components 차원 직교 두 번째 누적 — system font / clipboard fallback "의도 명시" 부분 보존 분류 |
 
-scripts/ 자연 종료 (cycle 70) → src/ 첫 진입 (cycle 78) 사이 8 사이클 동안 외부 source 자연 발화 (curate / skill-evolution / closed-loop-design 등) 끼워 R3 정합. **메타 패턴**: 자연 종료 detect 후 강제 새 도메인 진입 X, 자연 source 발화 8 사이클 후 review-code 자체 trigger 가 src/ 영역 자연 진입 → entry 가 박제한 "차원 재정의 trigger #1 → chain 자연 추가 발화" 메커니즘 자체 작동성 검증.
+**메타 패턴 N=2 evidence**:
+1. 자연 종료 detect 후 강제 새 도메인 진입 X — scripts/ 종료 후 8 사이클 자연 source 발화 (curate / skill-evolution / closed-loop-design / explore-idea) 끼워 R3 정합 후 src/lib 자연 진입
+2. src/lib 종료 (cycle 80 N=2 deepen 후 잔여 catch 0) → 1 사이클 (cycle 81 curate 끼움) → src/app + components 차원 자연 진입 = 차원 직교 fork 패턴 N=2 반복성 검증
+3. entry 가 박제한 "차원 재정의 trigger #1 → chain 자연 추가 발화" 메커니즘이 N=2 차원 (src/lib → src/app+components) 직교 fork 로 자체 작동성 두 번째 검증
 
 ## 메타 lens — 머니볼 23 streak → 허브 10 fork (도메인 직교 진입) transport
 
 본 패턴은 워커 (머니볼) 의 23 cycle SUCCESS streak 정착 후 cross-project transport 됐다:
 
 - 머니볼 cycle 100~123: silent drift family 23 fork (`assertSelectOk` helper 통일 + `.error` 가시화) — packages/kbo-data + apps/moneyball page + lib/dashboard + route handler 4+ 차원
-- 허브 cycle 54~78: 10 fork transport 누적 — scripts/ 9 fork 자연 종료 + src/lib 첫 진입 (도메인 직교 fork) 1건
+- 허브 cycle 54~82: 12 fork transport 누적 — scripts/ 9 fork 자연 종료 + src/lib 3 fork (cycle 78 첫 진입 + cycle 80 N=2 deepen) + src/app+components 직교 두 번째 fork (cycle 82) 차원 직교 N=2 누적
 
-머니볼 패턴은 codebase 큰 만큼 동일 helper 패턴 다차원 재진입, 허브는 codebase 작아 scripts/ 단일 차원 자연 종료 후 코드 베이스 두 번째 차원 (src/ Next.js 영역) 으로 직교 진입. **허브 fork 패턴 = "차원 종료 → 직교 도메인 진입" 두 단계 evidence** (머니볼 동차원 재진입 패턴과 직교).
+머니볼 패턴은 codebase 큰 만큼 동일 helper 패턴 다차원 재진입, 허브는 codebase 작아 scripts/ 단일 차원 자연 종료 후 src/ 영역도 lib → app+components 차원 직교 두 단계로 진입. **허브 fork 패턴 = "차원 종료 → 직교 도메인 진입" N=2 단계 evidence** (cycle 78 → 82 자연 진행, 머니볼 동차원 재진입 패턴과 직교).
 
 [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 양방향 흐름 dogfood evidence: 워커 → 허브 transport (PR auto-tag + auto-ingest 채널) 가 패턴 자체를 흘려보냈고, 허브는 자체 코드 baseline 따라 도메인 직교 fork 패턴으로 진화.
 
-## 박제 가치 — 무한 카운팅 X, 자연 종료 + 도메인 직교 fork 자체가 milestone
+## 박제 가치 — 무한 카운팅 X, 자연 종료 + 차원 직교 N=2 + 보존 reverse 자체가 milestone
 
 전통적 milestone 박제 default = "10 streak 도달 시 박제". 본 entry 는 그 default 를 깨뜨린다:
 
-- **9 fork + 자연 종료 detect (cycle 70) + 도메인 직교 fork 1건 (cycle 78) = 충분 evidence**
-- 10+ 산술 무한 누적 강박 X — chain 자체의 fix domain exhaustion 후 강제 trigger 발화하면 silent drift family 차원 외 발견을 silent drift 로 잘못 분류 risk
-- chain dominance + 자연 종료 detect + 도메인 직교 진입 자체가 메타 패턴 차원
-- **본 entry 자체 dogfood**: cycle 71 박제 → cycle 78 차원 재정의 trigger #1 자연 발화 evidence (entry 박제 후 7 사이클 만에 자체 메커니즘 작동성 검증)
+- **9 fork + 자연 종료 detect (cycle 70) + 차원 직교 N=2 (src/lib cycle 78 + src/app+components cycle 82) + 보존 판정 reverse 메타 lens 자연 추가 = 충분 evidence**
+- 12+ 산술 무한 누적 강박 X — chain 자체의 fix domain exhaustion 후 강제 trigger 발화하면 silent drift family 차원 외 발견을 silent drift 로 잘못 분류 risk
+- chain dominance + 자연 종료 detect + 차원 직교 N=2 진입 + 보존 판정 reverse (시간 lens) 자체가 메타 패턴 차원
+- **본 entry 자체 dogfood**: cycle 71 박제 → cycle 78 차원 재정의 trigger #1 첫 자연 발화 → cycle 82 차원 직교 N=2 evidence + 보존 판정 reverse 메타 lens 자연 추가 (entry 박제 후 11 사이클 만에 자체 메커니즘 작동성 N=2 검증 + 새 메타 lens 자연 발화)
 
-[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "10 streak milestone" 자체도 자가 의심 대상 — 산술 단순 카운팅이 아니라 자연 종료 detect + 도메인 직교 진입이 박제 trigger.
+[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "10 streak milestone" 자체도 자가 의심 대상 — 산술 단순 카운팅이 아니라 자연 종료 detect + 차원 직교 진입 + 보존 판정 시간 lens 변동이 박제 trigger.
 
 ## 차원 재정의 trigger
 
 본 entry 박제 후 silent drift family chain 자연 추가 발화 조건:
 
-1. **✅ cycle 71+ 에서 새 영역 발견** — cycle 78 src/lib/github-projects.ts:65 자연 발화 evidence (scripts/ 자연 종료 후 8 사이클 만에 src/ Next.js 코드 영역 첫 직교 진입). 추가 자연 등장 영역 후보 = content/ MDX 위키 / GitHub Actions yaml shell embed / Cloudflare worker TypeScript / src/app + components 잔여 (보존 후보 4건은 의도된 silent 로 판별)
-2. **머니볼 fork 추가 transport** — 머니볼 cycle 165+ 가 silent drift family 새 차원 (예: api route handler / sync job concurrency / migration safety / write 측 assertWriteOk) 발견 시 cross-project 자연 transport. cycle 170~172 = write 측 assertWriteOk 통일 transport candidate (origin/main 자율 ingest)
-3. **chain dominance 다른 패턴 정착** — review-code 외 chain (closed-loop-design 등) 이 silent fail 가시화 영역에 자연 발화 시 메타 lens 보강. 직전 5 cycle (74~78) 에서 closed-loop-design (74) + skill-evolution (76) 끼워 review-code dominance 균형 (R3 회피 정합)
+1. **✅ N=2 cycle 71+ 에서 새 영역 발견** — cycle 78 src/lib 첫 진입 + cycle 82 src/app + components 차원 직교 두 번째 (N=2 evidence). 추가 자연 등장 영역 후보 = content/ MDX 위키 / GitHub Actions yaml shell embed / Cloudflare worker TypeScript / src/app + components 잔여 (보존 reverse 가능)
+2. **머니볼 fork 추가 transport** — 머니볼 cycle 165+ 가 silent drift family 새 차원 (예: api route handler / sync job concurrency / migration safety / write 측 assertWriteOk) 발견 시 cross-project 자연 transport. cycle 170~174 = write 측 assertWriteOk 통일 + agents 차원 transport candidate (origin/main 자율 ingest 23 cycle 누적)
+3. **chain dominance 다른 패턴 정착** — review-code 외 chain (closed-loop-design 등) 이 silent fail 가시화 영역에 자연 발화 시 메타 lens 보강. 직전 5 cycle (78~82) 에서 explore-idea (79) + curate (81) 끼워 review-code dominance 균형 (R3 회피 정합)
+4. **✅ 보존 판정 reverse (시간 lens)** — cycle 78 분류 vs cycle 80~82 reverse 자연 발생 evidence. 강한 보존 (보안/cleanup/dev-only) vs 약한 보존 (의도 명시 가능) 자연 구분 발생. 첫 grep 단일 site 분류는 동 파일 안 추가 catch 누락 가능 — 추후 재진입 시 reverse trigger
 
-**차원 재정의 X 시 동작**: silent drift family chain trigger 자체 자연 dormant — 외부 source 부재 → review-code 자체 자연 종료 (cycle 70 dimension-cycle RETRO-ONLY 정합). 본 entry 가 "dormant 도 정합" evidence 박제. cycle 78 dogfood 후 src/ 잔여 18건도 의도된 silent 부분 많아 추가 fork dormant 가능 — 자연 종료 detect 두 번째 단계 가능.
+**차원 재정의 X 시 동작**: silent drift family chain trigger 자체 자연 dormant — 외부 source 부재 → review-code 자체 자연 종료 (cycle 70 dimension-cycle RETRO-ONLY 정합). 본 entry 가 "dormant 도 정합" evidence 박제. cycle 82 dogfood 후 src/ 잔여 catch 도 강한/약한 보존 분류 따라 일부 가시화 가능 — 자연 종료 detect 세 번째 단계 + 보존 reverse N=2 가능.
 
 ## 박제 위치 / connections
 
