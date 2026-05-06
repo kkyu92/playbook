@@ -62,7 +62,11 @@ async function githubFetch(endpoint: string) {
 
     if (!res.ok) return null;
     return res.json();
-  } catch {
+  } catch (err) {
+    console.warn(
+      `[github-projects] fetch ${endpoint} failed:`,
+      err instanceof Error ? err.message : err
+    );
     return null;
   }
 }
