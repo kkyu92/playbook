@@ -1,0 +1,111 @@
+---
+title: Silent Drift Family Pattern — silent fail 가시화 누적 9 fork + 자연 종료 detect
+category: harness-engineering
+date: "2026-05-06"
+tags:
+  - silent-drift
+  - review-code
+  - chain-dominance
+  - hub-fork
+  - natural-termination
+  - observability
+  - meta-pattern
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-06"
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, harness-engineering/question-own-defaults]
+status: complete
+description: silent catch / silent fail 가시화가 review-code chain 자연 발화로 9 fork 누적된 후 chain dominance 정착 → scripts/ 영역 자연 종료 신호 detect 까지의 메타 패턴. 무한 카운팅 산술 X, 자연 종료 detect 자체가 milestone.
+type: entry
+source: manual
+---
+
+## 문제
+
+자동화 루프에서 가장 비싼 결손은 [작동 드리프트 #3](/wiki/harness-engineering/drift-detection-methodology) 의 sub-family — `try { ... } catch {}` empty catch, `.error` 미체크, fallback 0 stub, JSON.parse 미가드 — 이 모두 **silent 하게 실패**해서 자동화 루프 안에서 "성공"으로 박제된다. CI green / cron success / lint pass 모두 통과해도 결과만 invisible degradation.
+
+이 패턴은 워커 (머니볼) 에서 23 cycle SUCCESS streak 으로 먼저 정착됐고, 허브 (playbook) 에 cross-project transport 되어 9 fork 누적했다. 9 fork 후 scripts/ 영역에서 자연 종료 신호를 detect 했다.
+
+## 9 fork evidence (허브, cycle 54~69)
+
+| # | Cycle | 영역 | 가시화 대상 | Chain |
+|---|---|---|---|---|
+| 1 | 54 | `scripts/rss-fetch.mjs` | 1차 fetch network error fallback 누락 | review-code (lite) |
+| 2 | 55 | `scripts/scout-geeknews.mjs` | articles slice + index 환각 silent dispatch 차단 | review-code (lite) |
+| 3 | 57 | `scripts/gemini-client.mjs` | dead code MODELS 배열 1개 단순화 | review-code |
+| 4 | 59 | `scripts/dashboard-update.mjs` | git() silent error 가시화 | review-code (lite) |
+| 5 | 61 | `scripts/raw-archive.mjs` | 2 silent catch 가시화 | review-code (lite) |
+| 6 | 62 | `scripts/lint-content.mjs` | 2 silent catch 가시화 | review-code (lite) |
+| 7 | 63 | `scripts/dashboard-update.mjs` | loadCycles catch silent skip 가시화 | review-code (lite) |
+| 8 | 67 | `scripts/generate-lesson.mjs:42` | catch silent reason 가시화 | review-code (heavy) |
+| 9 | 69 | `scripts/generate-weekly-report.mjs:12` | catch silent reason 가시화 | review-code (lite) |
+
+각 fork = 1 commit 박제 (`fix(scripts):`) + 1 retro commit (`policy: cycle N retro`). 9 fork 모두 outcome=success, R3 회피 정합 (5 review-code 연속 후 다른 chain 1회 이상 끼워 자연 분산).
+
+## chain dominance 자연 정착 — review-code lite/heavy
+
+9 fork 중 **8건이 review-code chain** (lite 6 + heavy 2) → 직전 20 cycle 중 review-code dominant 패턴 자연 정착. 직전 5 cycle (66~70) chain distribution:
+
+- 66: curate
+- 67: review-code (heavy)
+- 68: curate
+- 69: review-code (lite)
+- 70: dimension-cycle (legacy default, RETRO-ONLY)
+
+`R3 회피` (직전 3 사이클 모두 같은 chain X) 룰이 review-code 의 외부 source trigger 에 자연 응답 — silent drift 발견 시 review-code 진입, 다른 외부 source (curate / fix-incident) 도 자연 끼워 dominance 자체가 정합.
+
+## 자연 종료 신호 detect (cycle 70)
+
+cycle 70 진단 시 scripts/ 잔여 silent catch 5건 모두 **의도적 silent** 로 판정:
+
+| 위치 | 의도성 | 근거 |
+|---|---|---|
+| `scout-geeknews.mjs:211` | 의도 | `} catch { /* already exists */ }` 주석 명시 |
+| `scout-geeknews.mjs:228` | 의도 | `try { fs.unlinkSync; fs.rmdirSync } catch {}` cleanup 주석 |
+| `watch-content.mjs:12` | 의도 | dev tool watcher (운영 영향 약) |
+| `watch-content.mjs:26` | 의도 | dev tool watcher (운영 영향 약) |
+| `search.mjs:41` | 의도 | 주석 명시 의도적 |
+
+추가 grep:
+- `app/` + `lib/` + `components/` (Next.js 코드 영역) silent catch = **0건**
+- silent drift family 코드 영역 외 추가 fork 후보 부재
+
+**자연 종료 detect 의 의미**: 9 fork 누적 후 잔여 candidate 가 모두 의도적 silent 로 판별 = chain 자체의 fix domain exhaustion. 10+ fork 산술 무한 누적 강박 X — 자연 종료 detect 자체가 milestone.
+
+## 메타 lens — 머니볼 23 streak → 허브 9 streak transport
+
+본 패턴은 워커 (머니볼) 의 23 cycle SUCCESS streak 정착 후 cross-project transport 됐다:
+
+- 머니볼 cycle 100~123: silent drift family 23 fork (`assertSelectOk` helper 통일 + `.error` 가시화)
+- 허브 cycle 54~69: 9 fork transport 누적 + scripts/ 영역 자연 종료 detect
+
+머니볼 패턴은 packages/kbo-data + apps/moneyball page 차원 6+ 영역 재진입했지만, 허브는 scripts/ 단일 영역 9 fork 후 종료 — 코드 베이스 크기 차이 정합.
+
+[hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 양방향 흐름 dogfood evidence: 워커 → 허브 transport (PR auto-tag + auto-ingest 채널) 가 패턴 자체를 흘려보냈다.
+
+## 박제 가치 — 무한 카운팅 X, 자연 종료 자체가 milestone
+
+전통적 milestone 박제 default = "10 streak 도달 시 박제". 본 entry 는 그 default 를 깨뜨린다:
+
+- **9 fork + 자연 종료 detect = 충분 evidence** (cycle 70 박제 명시)
+- 10+ 산술 누적 강박 = chain 자체의 fix domain 이미 exhaustion 됐는데 강제 trigger 발화 → silent drift family 차원 외 발견을 silent drift 로 잘못 분류 risk
+- chain dominance + 자연 종료 detect 자체가 메타 패턴 차원
+
+[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "10 streak milestone" 자체도 자가 의심 대상 — 산술 단순 카운팅이 아니라 자연 종료 detect 가 박제 trigger.
+
+## 차원 재정의 trigger
+
+본 entry 박제 후 silent drift family chain 자연 추가 발화 조건:
+
+1. **cycle 71+ 에서 새 영역 발견** — content/ MDX 위키 / app + lib + components Next.js 코드 / GitHub Actions yaml shell embed / Cloudflare worker TypeScript 등 scripts/ 외 영역 silent catch 자연 등장 → 차원 재정의 (entry 갱신 또는 신규 fork entry)
+2. **머니볼 fork 추가 transport** — 머니볼 cycle 165+ 가 silent drift family 새 차원 (예: api route handler / sync job concurrency / migration safety) 발견 시 cross-project 자연 transport
+3. **chain dominance 다른 패턴 정착** — review-code 외 chain (closed-loop-design 등) 이 silent fail 가시화 영역에 자연 발화 시 메타 lens 보강
+
+**차원 재정의 X 시 동작**: silent drift family chain trigger 자체 자연 dormant — 외부 source 부재 → review-code 자체 자연 종료 (cycle 70 dimension-cycle RETRO-ONLY 정합). 본 entry 가 "dormant 도 정합" evidence 박제.
+
+## 박제 위치 / connections
+
+- 인접: [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) (silent drift = 작동 드리프트 #3 의 sub-family)
+- 인접: [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) (cross-project transport 메커니즘)
+- 인접: [question-own-defaults](/wiki/harness-engineering/question-own-defaults) (10 streak milestone default 자가 의심 정합)
