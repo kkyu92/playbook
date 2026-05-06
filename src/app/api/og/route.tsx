@@ -45,8 +45,11 @@ export async function GET(req: NextRequest) {
       const fontDataRes = await fetch(fontUrlMatch[1]);
       font = await fontDataRes.arrayBuffer();
     }
-  } catch {
-    // fallback to system font if fetch fails
+  } catch (err) {
+    console.warn(
+      "[og] Google Fonts fetch failed (system font fallback):",
+      err,
+    );
   }
 
   return new ImageResponse(

@@ -12,8 +12,11 @@ export function CodeBlock({ children, ...props }: React.ComponentProps<"pre">) {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // fallback
+    } catch (err) {
+      console.warn(
+        "[code-block] clipboard write failed (HTTPS/permission?):",
+        err,
+      );
     }
   }
 

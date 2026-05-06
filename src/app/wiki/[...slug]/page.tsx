@@ -153,7 +153,12 @@ export default async function WikiEntryPage({
       },
     });
     content = result.content;
-  } catch {
+  } catch (err) {
+    console.warn(
+      "[wiki/page] MDX compile failed (rehype-mermaid/shiki?):",
+      entry.frontmatter.title,
+      err,
+    );
     content = (
       <div className="rounded-[var(--radius-md)] border border-error bg-error/10 p-4">
         <p className="text-error font-semibold">MDX 컴파일 에러</p>
