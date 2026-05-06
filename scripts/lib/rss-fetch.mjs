@@ -7,12 +7,17 @@ const FEED_URL = "https://news.hada.io/rss/news";
 const FALLBACK_FEED_URL = "http://feeds.feedburner.com/geeknews-feed";
 
 export async function fetchGeekNews() {
-  const res = await fetch(FEED_URL, {
-    redirect: "follow",
-    headers: { "User-Agent": "playbook-bot/1.0" },
-  });
+  let res;
+  try {
+    res = await fetch(FEED_URL, {
+      redirect: "follow",
+      headers: { "User-Agent": "playbook-bot/1.0" },
+    });
+  } catch (err) {
+    console.warn(`⚠️ Primary feed network error: ${err.message}, trying fallback`);
+  }
 
-  if (!res.ok) {
+  if (!res || !res.ok) {
     const fallbackRes = await fetch(FALLBACK_FEED_URL, {
       headers: { "User-Agent": "playbook-bot/1.0" },
     });
