@@ -35,8 +35,8 @@ function listEntryRawSources() {
         try {
           const fm = matter(fs.readFileSync(p, "utf-8")).data;
           if (fm.raw_source) refs.add(path.basename(fm.raw_source));
-        } catch {
-          // ignore parse error
+        } catch (err) {
+          console.warn(`⚠️ raw-archive: MDX parse failed at ${p}: ${err.message?.slice(0, 200)}`);
         }
       }
     }
@@ -50,7 +50,8 @@ function isSelfPolicy(rawPath) {
   try {
     const fm = matter(fs.readFileSync(rawPath, "utf-8")).data;
     return fm.subtype === "self-policy" || fm.payload_type === "self-policy";
-  } catch {
+  } catch (err) {
+    console.warn(`⚠️ raw-archive: self-policy frontmatter parse failed at ${rawPath}: ${err.message?.slice(0, 200)}`);
     return false;
   }
 }
