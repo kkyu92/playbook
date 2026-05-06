@@ -22,7 +22,8 @@ const DRY_RUN = process.argv.includes("--dry-run");
 function git(cmd) {
   try {
     return execSync(cmd, { encoding: "utf-8" }).trim();
-  } catch {
+  } catch (err) {
+    console.warn(`⚠️ git ${cmd.slice(0, 80)} failed: ${err.message?.slice(0, 200)}`);
     return "";
   }
 }
