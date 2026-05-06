@@ -9,8 +9,8 @@ console.log("👁️  Watching content/ for changes...");
 // Generate once on start
 try {
   execSync("node scripts/generate-content-manifest.mjs", { stdio: "inherit" });
-} catch {
-  // Non-fatal on initial run
+} catch (err) {
+  console.warn("[watch-content] initial manifest generation failed (non-fatal — will retry on next change):", err);
 }
 
 const watcher = watch(CONTENT_DIR, {

@@ -38,8 +38,8 @@ function recordHits(slugs) {
     if (fs.existsSync(HITS_FILE)) {
       data = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
     }
-  } catch {
-    // 파일 손상 시 초기화
+  } catch (err) {
+    console.warn("[search] HITS_FILE parse failed — resetting to empty (path:", HITS_FILE, "):", err);
   }
   data.totalQueries++;
   data.lastUpdated = new Date().toISOString();
