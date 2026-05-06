@@ -39,8 +39,8 @@ const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-mani
 function regenerateManifest() {
   try {
     execSync("node scripts/generate-content-manifest.mjs", { stdio: "inherit" });
-  } catch {
-    console.warn("⚠️  Manifest regen warnings — continuing");
+  } catch (err) {
+    console.warn(`⚠️  Manifest regen warnings — continuing: ${err.message}`);
   }
 }
 
