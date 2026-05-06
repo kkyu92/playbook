@@ -93,7 +93,11 @@ export async function verifyToken(token: string): Promise<boolean> {
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
     return safeCompare(sig, expectedHex);
-  } catch {
+  } catch (err) {
+    console.warn(
+      `[auth] verifyToken failed:`,
+      err instanceof Error ? err.message : err
+    );
     return false;
   }
 }

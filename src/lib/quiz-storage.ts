@@ -35,7 +35,11 @@ export function loadQuizState(slug: string): QuizState | null {
     const raw = localStorage.getItem(STATE_PREFIX + slug);
     if (!raw) return null;
     return JSON.parse(raw) as QuizState;
-  } catch {
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] loadQuizState slug=${slug} failed:`,
+      err instanceof Error ? err.message : err
+    );
     return null;
   }
 }
@@ -48,8 +52,11 @@ export function saveQuizState(slug: string, state: QuizState | null): void {
     } else {
       localStorage.setItem(STATE_PREFIX + slug, JSON.stringify(state));
     }
-  } catch {
-    // ignore quota errors
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] saveQuizState slug=${slug} failed (quota?):`,
+      err instanceof Error ? err.message : err
+    );
   }
 }
 
@@ -61,7 +68,11 @@ export function loadAttempts(): QuizAttempt[] {
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
     return parsed as QuizAttempt[];
-  } catch {
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] loadAttempts parse failed:`,
+      err instanceof Error ? err.message : err
+    );
     return [];
   }
 }
@@ -74,8 +85,11 @@ export function recordQuizAttempt(attempt: QuizAttempt): void {
     // Cap log size to keep localStorage usage bounded
     const trimmed = log.slice(-500);
     localStorage.setItem(LOG_KEY, JSON.stringify(trimmed));
-  } catch {
-    // ignore
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] recordQuizAttempt slug=${attempt.slug} write failed (quota?):`,
+      err instanceof Error ? err.message : err
+    );
   }
   // Update SRS schedule based on this attempt
   updateReviewSchedule(attempt);
@@ -103,7 +117,11 @@ export function loadReviews(): ReviewMap {
     const parsed = JSON.parse(raw);
     if (typeof parsed !== "object" || parsed === null) return {};
     return parsed as ReviewMap;
-  } catch {
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] loadReviews parse failed:`,
+      err instanceof Error ? err.message : err
+    );
     return {};
   }
 }
@@ -112,8 +130,11 @@ function saveReviews(map: ReviewMap): void {
   if (!isBrowser()) return;
   try {
     localStorage.setItem(REVIEW_KEY, JSON.stringify(map));
-  } catch {
-    // ignore
+  } catch (err) {
+    console.warn(
+      `[quiz-storage] saveReviews write failed (quota?):`,
+      err instanceof Error ? err.message : err
+    );
   }
 }
 
