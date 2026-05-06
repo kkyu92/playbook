@@ -47,13 +47,14 @@
 
 **Reference**: 메모리 `project_develop_cycle_skill_family.md` 운영 상태 update + `feedback_fork_dispatch_transport_decision.md`
 
-## [P2] drift detection 자동화 (sessionstart hook 강화)
+## [PARTIAL] drift detection 자동화 — develop-cycle-hub SKILL.md 부분 처리 (잔여 = sessionstart hook 사용자 결정)
 
-**What**: 매 사이클 시작 시 git fetch + status 자동. local stale 자동 감지
-**Why**: cycle 11 incident — git status="up to date" 거짓말 (직전 fetch 안 함, 6 commits behind 미감지) → PR #143 변경 사라짐 잘못된 결론. 본 SKILL.md 진단 단계 첫 step 에 git fetch 명시 필요
-**Trigger**: cycle 11 lesson 박제 1회. N≥2 재발 시 SKILL.md 갱신 trigger
-**Effort**: S — develop-cycle-hub SKILL.md 진단 첫 step 에 `git fetch` 추가 1줄
-**Reference**: cycle 11 lesson commit + memory `feedback_drift_detection_protocol`
+**Partial shipped**: cycle 74 closed-loop-design SUCCESS (2026-05-06, commit `5aaca40`) — develop-cycle-hub SKILL.md 진단 단계 첫 step 에 `git fetch origin --quiet` + `git rev-list --left-right --count origin/main...main` diverged 감지 line 박제 (line 131-138). cycle 75 진단 첫 step 에서 자가 dogfood PASS (local 32 vs origin 17 diverged 정상 detect → R6 carry-over 분리 박제).
+**What** (잔여): sessionstart hook (settings.json) 영역 — 매 새 세션 시작 시 git fetch 자동 수행하도록 `~/.claude/settings.json` SessionStart hook 갱신
+**Why**: cycle 74 가 develop-cycle-hub SKILL.md 부분 처리 — 본 사이클 안 진단은 dogfood PASS. 단 본 SKILL.md 영역 밖 (예: 일반 세션 시작 시 git pull 실패 silent surface) 은 여전히 sessionstart hook 영역. settings.json 갱신 = R6 사용자 결정 영역 (메모리 `feedback_automation_default_zone`)
+**Trigger**: cycle 11 lesson + cycle 74 N=2 재발 → SKILL.md 갱신으로 hub 영역 부분 처리. 잔여는 N=3 재발 시 settings.json 갱신 사용자 결정
+**Effort**: S — settings.json `SessionStart` hook 1줄 추가 (사용자 GO 영역)
+**Reference**: cycle 11 lesson + cycle 74 retro / commit `5aaca40` (SKILL.md 갱신) / cycle 75 dogfood PASS evidence
 
 ## [P2] raw-sources auto-archive 자동화
 
