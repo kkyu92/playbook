@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.2] — 2026-05-07
+
+### Changed
+- **Cycle 201 skill-evolution** — Trigger-3 N=13 dogfood (cycle 200 milestone). SKILL.md stage 3 evidence 13회 박제, zero-touch 63+→200+ 갱신. 마커 삭제.
+- **Memory rot 2건 수정**: `project_develop_cycle_skill_family` cycle 191→201 갱신 / `project_bidirectional_compound_growth_goal` zero-touch 200+ 로그 추가
+- **Cycle 202 curate** — lint clean (0 issues), memory rot 수정 완료
+
 ## [0.4.1] — 2026-05-07
 
 ### Changed
