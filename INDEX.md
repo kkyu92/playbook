@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T04:31:29.593Z
+Updated: 2026-05-07T04:31:49.328Z
 
 ## 엔트리 (109개)
 
@@ -245,6 +245,7 @@ Updated: 2026-05-07T04:31:29.593Z
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/sentry-serverless-flush
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - context-engineering/nextjs-instrumentation-location ↔ infrastructure/vercel-env-oauth-security-enhancement
+- context-engineering/nextjs-instrumentation-location ↔ harness-engineering/db-query-type-safety-assert-select-ok-pattern
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
@@ -402,7 +403,6 @@ Updated: 2026-05-07T04:31:29.593Z
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/drift-detection-methodology
-- harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ context-engineering/nextjs-instrumentation-location
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/hub-worker-compounding-pattern
