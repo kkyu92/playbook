@@ -1,0 +1,106 @@
+---
+title: Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - agentic-loop
+  - chain-pool
+  - saturation
+  - skill-evolution
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/develop-cycle-positive-streak-recognition, harness-engineering/hub-worker-compounding-pattern, context-engineering/agentic-cycle-state-json-carry-over-design, agents/llm-agent-goal-achievement-planning-patterns]
+status: complete
+description: 자율 에이전트 루프에서 특정 chain이 의미 있는 target을 소진(포화)했을 때의 감지 패턴. consecutive success streak과 달리 domain exhaustion을 N사이클 분포로 감지 → skill-evolution 재조정 trigger.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+자율 에이전트 루프에서 explore-idea 같은 chain이 반복 성공하더라도, 어느 시점부터 진정한 새 target 이 없는 상태 (포화) 에 진입할 수 있다.
+
+- **Positive streak** (연속 성공): chain이 해당 domain에 잘 맞아 _연속_으로 성공 중 → 계속하는 게 맞음
+- **Saturation** (포화): chain이 역할을 다해 domain 내 의미 있는 target을 소진 → 강제 다양화가 아닌 **pool 재조정 신호**
+
+두 신호를 혼동하면:
+- Positive streak를 saturation으로 오판 → 작동 중인 chain 인위 중단 (자가 의심 패턴)
+- Saturation을 positive streak으로 오판 → explore-idea가 marginal return 영역에서 계속 발화 (resource 낭비)
+
+## 포화 감지 패턴
+
+### 비율 기반 감지 (N 사이클 윈도우)
+
+```python
+직전 N 사이클의 chain_selected 분포 계산
+IF (target_chain 발화 / N) >= SATURATION_THRESHOLD
+  AND 각 발화의 outcome = "success"
+  AND trigger_source 가 동일 카테고리 반복
+→ saturation 신호 → skill-evolution trigger
+```
+
+임계값 예 (moneyball develop-cycle):
+- N = 15 사이클 윈도우
+- SATURATION_THRESHOLD = 12/15 = 80%
+- "개선계열" chain (explore-idea / fix-incident 계열) 이 15사이클 중 12회 이상 = saturation
+
+### Consecutive vs. Distributed 구분
+
+| 패턴 | 감지 방식 | 의미 | 권장 행동 |
+|---|---|---|---|
+| **Positive streak** | 연속 N회 같은 chain + success | 집중 처리 중 (시리즈) | 계속 |
+| **Dominant (distributed)** | 윈도우 내 발화 비율 ≥ 임계값 | domain 포화 | skill-evolution 재조정 |
+| **Stuck streak** | 연속 N회 같은 chain + retro-only | trigger source 없음 | 강제 전환 |
+
+연속(consecutive) 여부와 무관하게 **윈도우 비율**이 높으면 saturation.
+
+예: explore-idea가 15사이클 중 12회 발화하되 연속이 아닌 경우 → consecutive 규칙으로 감지 불가, 비율로만 감지 가능.
+
+## 증거 (moneyball develop-cycle, cycle 210)
+
+**cycle 210 skill-evolution (13회째 자가 진화)**:
+- Trigger: explore-idea 직전 15 사이클에서 12회 이상 발화 (개선계열)
+- 내용: `explore-idea saturation trigger` 추가
+- 사이클 범위: cycles 195~209 (15 사이클 윈도우)
+- 결과: skill-evolution chain이 새 trigger 조건 박제 → pool 재조정
+
+이전까지 moneyball 은 explore-idea 발화 빈도가 높았으나 pool의 다른 chain (review-code / fix-incident) 이 교대로 발화. cycle 195~209 에서 개선계열 12회+ 누적 → saturation 신호 발동.
+
+## 허브 적용 고려
+
+현재 허브 develop-cycle pool 에는 이 saturation trigger 없음.
+
+허브 pool 상황 (cycles 142~161, 20 사이클 윈도우):
+- curate: 8/20 (40%)
+- dimension-cycle: 4/20 (20%)
+- review-code: 3/20 (15%)
+- explore-idea: 3/20 (15%)
+- skill-evolution: 2/20 (10%)
+
+허브의 curate dominant 패턴 (40%) 은 lint/memory rot/connections 등 **지속 발생 trigger** 가 있어 포화 형태와 다름 — curate target 은 소진되지 않고 축적됨.
+
+explore-idea 를 포함한 "성장계열" chain 이 20 사이클 중 12+ 회 = 60%+ 이면 saturation 검토 가치. 현재 3/20 = 15% → 포화와 거리 멀음.
+
+**박제 시점**: 허브에서 explore-idea 또는 성장계열이 특정 윈도우에서 60%+ 를 차지하면서 marginal return 신호 (엔트리 내용이 얕아지거나 발견 반복)가 나타날 때.
+
+## Positive Streak 과의 짝
+
+```
+consecutive success streak → 계속 (자가 의심 차단)
+distributed dominant streak → 포화 검토 (skill-evolution 재조정)
+```
+
+두 패턴은 orthogonal:
+- `develop-cycle-positive-streak-recognition`: 연속 성공 = 강제 다양화 차단
+- 본 엔트리: 분산 dominant = 포화 신호 → pool 재조정
+
+연속 성공을 보호하면서 분산 포화를 감지하는 것이 두 패턴의 목표.
+
+## 관련
+
+- [Develop-Cycle Positive Streak Recognition](/wiki/harness-engineering/develop-cycle-positive-streak-recognition): consecutive success streak 구분 (포화와 다름)
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 워커 패턴 추출 → 허브 일반화 흐름 (본 엔트리 출처)
+- [Agentic Cycle State JSON](/wiki/context-engineering/agentic-cycle-state-json-carry-over-design): 윈도우 계산에 cycle_state JSON 필요
