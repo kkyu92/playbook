@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-06T14:46:20.426Z
+Updated: 2026-05-07T02:14:57.489Z
 
-## 엔트리 (102개)
+## 엔트리 (104개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -30,7 +30,8 @@ Updated: 2026-05-06T14:46:20.426Z
 - [AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프](wiki/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop) — confidence: 1, status: draft
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
-- [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 3, status: complete
+- [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
+- [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [LLM Dependency Risk Mitigation — Assessing and Addressing API Vulnerabilities](wiki/harness-engineering/llm-api-dependency-risk-mitigation-strategy) — confidence: 1, status: draft
 - [LLM Data Pipeline Engineering - Input and Output Design Patterns](wiki/harness-engineering/llm-input-output-data-pipeline-design-patterns) — confidence: 1, status: draft
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
@@ -93,6 +94,7 @@ Updated: 2026-05-06T14:46:20.426Z
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 - [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
+- [Vercel ignoreCommand — PR Preview 배포 비활성화로 100회/일 한도 보호](wiki/infrastructure/vercel-ignore-command-preview-skip) — confidence: 3, status: complete
 
 ### Frontend + AI
 - [AI 모델 추론 시각화 — 사용자 친화적 프론트엔드 디자인 패턴](wiki/frontend-ai/ai-inference-visualization-design-patterns) — confidence: 1, status: draft
@@ -427,6 +429,10 @@ Updated: 2026-05-06T14:46:20.426Z
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
+- harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/question-own-defaults
+- harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/guard-test-pattern
+- harness-engineering/llm-agent-artifact-first-diagnosis ↔ agents/llm-agent-goal-achievement-planning-patterns
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
@@ -459,6 +465,8 @@ Updated: 2026-05-06T14:46:20.426Z
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- infrastructure/vercel-ignore-command-preview-skip ↔ harness-engineering/hub-worker-compounding-pattern
+- infrastructure/vercel-ignore-command-preview-skip ↔ agents/llm-agent-goal-achievement-planning-patterns
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-001-drift-greenfield
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-002-drift-existing-setup
