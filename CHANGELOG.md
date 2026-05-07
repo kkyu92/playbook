@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.8] — 2026-05-08
+
+### Fixed
+- dashboard `closed-loop-health` `reports` 카테고리 부제목 누락 (`CATEGORY_SUBS` 미등록 → 빈 칸) — `reports: "회고 / 리포트"` 추가 (cycle 245 fix)
+
+### Changed
+- dashboard `closed-loop-health` cycle 244 → 246 갱신 — skill-evolution=8/curate=7/review-code=4/explore-idea=1 (window 227-246). Trigger-5 SE #28 skip 지속 (명단 동일 4회 연속 + SE 점유율 40% ≥ 40%). wiki 119 entries CLEAN
+- wiki lint CLEAN 확인 (cycle 246 curate) — 119 entries, 중복 의심 2쌍 의미 분리 확인 (llm-fine-tuning × 2, frontend-ai personalized/powered × 2)
+- memory 업데이트 — project_bidirectional_compound_growth_goal (zero-touch 245+ 검증) + project_develop_cycle_skill_family (cycle 246 진행 중, SE #28 박제)
+
 ## [0.5.7] — 2026-05-08
 
 ### Changed
