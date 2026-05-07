@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.7] — 2026-05-07
+
+### Changed
+- dashboard `closed-loop-health` cycle 211 → 213 갱신 (N=50 batch 213-262 진입 반영)
+- lint clean 118 entries
+
 ## [0.4.6] — 2026-05-07
 
 ### Changed
