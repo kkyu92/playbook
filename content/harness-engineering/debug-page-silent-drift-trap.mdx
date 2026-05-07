@@ -1,0 +1,116 @@
+---
+title: Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - debugging
+  - silent-drift
+  - incident-diagnosis
+  - observability
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/llm-agent-artifact-first-diagnosis, harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern]
+status: complete
+description: 인시던트 조사 시 사용하는 debug/analysis 페이지에 silent query 실패가 있으면 잘못된 데이터로 오진 (misdiagnosis) 발생. 진단 도구 자체의 신뢰성이 프로덕션 코드보다 높아야 한다는 메타 원칙.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+프로덕션 인시던트 조사 시, 개발자는 debug/analysis/모니터링 페이지에 의존한다. 그런데 이 **진단 도구 자체** 에 silent query 실패가 있으면:
+
+1. 잘못된 (stale/empty) 데이터를 "정상 데이터" 로 오인
+2. "이 metric 은 정상이다" → 다른 영역으로 시야 이동
+3. 실제 문제가 있는 영역을 진단에서 제외
+4. 근본 원인 미발견 + 인시던트 지속
+
+**특이점**: 이 패턴은 다른 silent drift 와 달리 **진단 단계에서 발동** 한다. 코드가 "작동하는" 상태에서 발견이 가장 어렵다.
+
+## 증거 (moneyball, cycle 212)
+
+`apps/moneyball` debug 페이지 2건:
+
+```
+/debug/hallucination — samples 쿼리 .error 미체크
+  → 쿼리 실패 시 빈 테이블 렌더, console.warn 없음
+  → 환각 분석 중 "샘플 없음" = 실제 DB 실패인지 정말 없는지 구분 불가
+
+/debug/factor-correlation — teamsData 2차 쿼리 .error 미체크
+  → factor-accuracy dead conditional (factor가 항상 존재한다고 가정)
+  → 팩터 분석 중 누락 데이터 → 잘못된 correlation 값
+```
+
+수정: console.warn → 가시화. dead conditional 제거. 두 debug 페이지가 이제 쿼리 실패 시 명시적 오류 표시.
+
+## 왜 발견이 늦어지나
+
+| 이유 | 설명 |
+|---|---|
+| **"작동하는" 착시** | debug 페이지는 렌더링됨 — 400/500 에러 없음 |
+| **테스트 미적용** | 프로덕션 코드는 테스트하지만 debug 페이지는 skip 경향 |
+| **간헐적 실패** | DB 쿼리 실패 조건이 드물어 평소엔 정상처럼 보임 |
+| **self-referential trap** | 진단 도구로 진단 도구를 검사하기 어려움 |
+
+## 감지 패턴
+
+### 1. debug/analysis 페이지 `.error` 체크 감사
+
+```bash
+# debug 페이지에서 DB 쿼리 호출 찾기
+grep -rn "\.from\|\.select\|supabase\|findMany" apps/moneyball/app/debug/
+# .error 체크 없는 쿼리 식별
+grep -L "\.error" apps/moneyball/app/debug/*.tsx 2>/dev/null
+```
+
+### 2. 인시던트 시작 직후 checklist
+
+```
+□ 사용하는 debug/analysis 페이지 자체 쿼리가 .error 체크 있는지 확인
+□ 각 metric이 "정상" 로 보이는 게 실제 정상인지 vs. 쿼리 실패로 빈 값인지 구분
+□ debug 페이지 직접 console 열어 네트워크 탭 확인 (silent 실패 탐지)
+```
+
+## assertSelectOk 연결
+
+DB silent drift 방어에서 assertSelectOk 는 "빈 결과" 를, `.error` 체크는 "쿼리 실패" 를 담당 (`db-query-type-safety-assert-select-ok-pattern` 참조).
+
+debug 페이지에도 동일 적용 — **특히 debug 페이지는 인시던트 중에 사용되기 때문에 신뢰도 요구사항이 더 높다.**
+
+```typescript
+// ❌ debug 페이지 쿼리 — silent 실패
+const { data: samples } = await supabase
+  .from('samples')
+  .select('*')
+  .limit(100);
+
+// ✅ 명시적 에러 가시화
+const { data: samples, error } = await supabase
+  .from('samples')
+  .select('*')
+  .limit(100);
+if (error) {
+  return <ErrorBanner message={`samples query failed: ${error.message}`} />;
+}
+```
+
+## 메타 원칙 — 진단 도구 신뢰성
+
+> **진단 도구의 신뢰성은 진단 대상보다 높아야 한다.**
+
+이 원칙이 깨지면 "도구가 정상이라고 했다" 는 false-negative 가 인시던트 대응을 방해한다.
+
+같은 원칙이 적용되는 영역:
+- 모니터링/알림: 알림 자체가 silent fail 시 인시던트 미감지
+- 로그 파이프라인: 로그 수집이 fail 시 "로그 없음 = 정상" 오판
+- 테스트: 테스트 자체의 assertion 이 silent pass 시 버그 미감지
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — debug-page silent drift = .error 미체크 family
+- [LLM Agent Artifact-First Diagnosis](/wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — 표면 신호 (debug 페이지 출력) vs 실 artifact 구분
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2: 작동 드리프트 (debug 페이지도 포함)
+- [Guard Test Pattern](/wiki/harness-engineering/guard-test-pattern) — 의도적 검증 테스트가 진단 도구 신뢰성도 확보
