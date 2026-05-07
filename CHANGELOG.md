@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.6] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 열네 번째 발화 (N=14) 박제 — Trigger-5 (0회 chain 6개 명단 3회 연속 동일, dormancy 항구화), N=50 batch (213-262) 개시. zero-touch 63+→212+ cycle 검증.
+
 ## [0.4.5] — 2026-05-07
 
 ### Added
