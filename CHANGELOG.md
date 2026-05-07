@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.3] — 2026-05-07
+
+### Added
+- **Wiki entry 1건 신규** (107→108 예정): `github-actions-billing-block-diagnosis-recovery` — GH Actions billing block 진단·복구·재발 방지 패턴 (2026-05-07 실 사례: 3 레포 41분 복구)
+- **ci-github-actions `_compiled-truth.md` 신규** (cycle 138): solution 3건 임계 충족 → 메타 패턴 3개 압축 (yaml+bash 이중환경 / guard cascade / LLM 자동화 인프라 한도). 승격 후보 탐지
+
+### Changed
+- `drift-detection-methodology` + `vercel-ignore-command-preview-skip` connections 갱신 (billing-block backlink — cycle 137)
+- MEMORY.md rot 2건 갱신: develop-cycle-family cycle 112→138 / bidirectional-growth zero-touch 63+→133+ (cycle 139)
+- `project_develop_cycle_skill_family.md` 운영 상태 갱신: cycle 112→138, skill-evolution 9회 박제
+
+### Fixed
+- ci-github-actions solution #3 추가 → scan-promotions 임계 충족 자동 탐지 (billing-block → yaml+bash+guard cascade 메타 패턴 완성)
+
 ## [0.3.2] — 2026-05-07
 
 ### Added
