@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.6] — 2026-05-07
+
+### Added
+- **Wiki entries 2건 신규** (111·112번째):
+  - `agentic-chain-saturation-detection` — chain pool 포화 감지: consecutive streak vs distributed dominance 구분 (moneyball cycle 210 skill-evolution 패턴 추출)
+  - `agentic-loop-analytical-chain-lite-mode` — 코드 변경 없는 측정 전용 chain: execution chain / analytical chain 구분 (moneyball operational-analysis 패턴 일반화)
+
+### Changed
+- `develop-cycle-positive-streak-recognition` connections 갱신 (saturation-detection backlink)
+- `agentic-chain-saturation-detection` connections 갱신 (analytical-chain backlink)
+- `closed-loop-health` 대시보드 cycle 161→174 갱신 (curate=11/dim=4/review=3/explore=2 chain 분포)
+- memory rot 2건 갱신 (project_develop_cycle_skill_family cycle 151→174 / bidirectional_growth 150+→174+)
+
+### Fixed
+- search index (embed-content): 740 chunks — 112 entries 포함 (cycle 178)
+
 ## [0.3.5] — 2026-05-07
 
 ### Added
