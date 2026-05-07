@@ -1,7 +1,7 @@
 # Playbook Wiki Index
 Updated: 2026-05-08T00:00:00.000Z
 
-## 엔트리 (122개+)
+## 엔트리 (123개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
