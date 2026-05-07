@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T02:34:20.722Z
+Updated: 2026-05-07T02:36:46.163Z
 
 ## 엔트리 (107개)
 
@@ -405,6 +405,7 @@ Updated: 2026-05-07T02:34:20.722Z
 - harness-engineering/drift-detection-methodology ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - harness-engineering/drift-detection-methodology ↔ reports/ai-project-kpi-dashboard-building-strategy
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- harness-engineering/drift-detection-methodology ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/ephemeral-credentials-session-llm-harness
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
@@ -463,7 +464,6 @@ Updated: 2026-05-07T02:34:20.722Z
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ harness-engineering/llm-agent-artifact-first-diagnosis
-- infrastructure/github-actions-billing-block-diagnosis-recovery ↔ harness-engineering/drift-detection-methodology
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
