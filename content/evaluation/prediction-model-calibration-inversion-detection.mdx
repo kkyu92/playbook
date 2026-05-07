@@ -1,0 +1,135 @@
+---
+title: 예측 모델 Calibration 역전 감지 — confidence bucket vs 실제 적중률 불일치
+category: evaluation
+date: "2026-05-07"
+tags:
+  - calibration
+  - prediction-model
+  - evaluation
+  - silent-bug
+  - ml-ops
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [evaluation/llm-response-quality-automated-evaluation-metrics-design-str, harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology]
+status: complete
+description: 예측 모델의 신뢰도(confidence)와 실제 적중률이 역전되는 calibration 역전 현상 — 감지 방법과 근본 원인 패턴. moneyball KBO 예측 모델 실 사례 기반.
+type: entry
+source: manual
+---
+
+## 문제
+
+예측 모델이 `confidence = 0.5` 인 케이스보다 `confidence = 0.4` 인 케이스에서 실제 적중률이 더 높게 나오는 현상. 모델이 "확신이 낮다"고 말하는 케이스가 "확신이 높다"는 케이스보다 실제로 더 잘 맞음.
+
+**증상**:
+```
+conf=0.4 bucket → 실제 적중률 54.5%
+conf=0.5 bucket → 실제 적중률 41.9%   ← 역전
+```
+
+이 상태에서 threshold filtering (conf > 0.5 만 사용) 을 적용하면 오히려 성과가 나빠진다.
+
+## 원인 분류
+
+| 원인 | 설명 |
+|---|---|
+| **입력 피처 왜곡** | 특정 피처가 confidence 에 과도한 가중치. 그 피처가 실제로 예측력 낮을 때 역전 발생 |
+| **정규화 함수 버그** | normalize() 가 음수 입력 시 factor < 0 반환 → confidence 수치 왜곡 (6/72 건 사례) |
+| **과신 구간** | 모델이 특정 조건에서 systematically overconfident. 실제 어려운 케이스를 쉽다고 판단 |
+| **데이터 불균형** | confidence bucket 별 샘플 수 불균형 → 소수 bucket 은 통계적 노이즈 |
+
+## 감지 방법
+
+### Confidence Bucket 분석
+
+```python
+# confidence를 0.05 단위 bucket으로 나눠 실제 적중률 측정
+import pandas as pd
+
+def calibration_audit(predictions_df, confidence_col='confidence', actual_col='hit'):
+    df = predictions_df.copy()
+    df['bucket'] = (df[confidence_col] / 0.05).round() * 0.05
+    
+    result = df.groupby('bucket').agg(
+        n=('hit', 'count'),
+        actual_hit_rate=(actual_col, 'mean')
+    ).reset_index()
+    
+    # 역전 감지: confidence 순으로 정렬 후 actual_hit_rate 단조 증가 여부 확인
+    result = result.sort_values('bucket')
+    inversions = []
+    for i in range(len(result) - 1):
+        if result.iloc[i]['actual_hit_rate'] > result.iloc[i+1]['actual_hit_rate']:
+            inversions.append({
+                'low_conf': result.iloc[i]['bucket'],
+                'high_conf': result.iloc[i+1]['bucket'],
+                'low_actual': result.iloc[i]['actual_hit_rate'],
+                'high_actual': result.iloc[i+1]['actual_hit_rate']
+            })
+    return result, inversions
+```
+
+### 최소 샘플 수 가드
+
+N < 20 bucket 은 통계적 신뢰도 부족 → 분석 제외 권고. 전체 N < 100 이면 bucket 분석 자체를 보류.
+
+## 해결 패턴
+
+### 1. 버그 우선 제거
+
+calibration 역전 발견 시 먼저 normalize() 같은 **수치 연산 함수의 edge case** 점검:
+
+```typescript
+// ❌ 음수 입력 시 factor < 0 — silent wrong output
+function normalize(value: number, min: number, max: number): number {
+  return (value - min) / (max - min);  // value < min 이면 음수 반환
+}
+
+// ✅ 클램핑으로 방어
+function normalize(value: number, min: number, max: number): number {
+  return Math.max(0, Math.min(1, (value - min) / (max - min)));
+}
+```
+
+### 2. Confidence 재보정 (Re-calibration)
+
+버그 없는데도 역전이면 → bucket 별 실제 적중률로 confidence 재매핑:
+
+```python
+# Platt Scaling 또는 Isotonic Regression
+from sklearn.calibration import CalibratedClassifierCV
+calibrated = CalibratedClassifierCV(base_model, method='isotonic', cv='prefit')
+calibrated.fit(X_val, y_val)
+```
+
+### 3. Threshold 동적 조정
+
+역전 구간이 일부라면 threshold 를 역전 없는 구간으로 이동:
+- 역전 구간: conf 0.4~0.5 → 필터링 기준에서 제외
+- 안전 구간: conf ≥ 0.55 (역전 없는 첫 bucket) 사용
+
+## 운영 체크리스트
+
+```
+[ ] 200건 누적 후 calibration audit 정기 실행 (또는 월 1회)
+[ ] N < 100 이면 bucket 분석 보류, 직관 의존 금지
+[ ] normalize() 같은 수치 함수: 음수/영(0)/최대값 경계 테스트 포함
+[ ] confidence threshold 변경 전 bucket audit 선행
+[ ] 역전 발견 시 1순위 = 버그 탐색 (silent wrong output), 2순위 = re-calibration
+```
+
+## 실 사례 (moneyball KBO 예측 모델, 2026-05-07)
+
+- **대상**: 72건 4월 이후 KBO 경기 예측
+- **발견**: conf=0.4 → 54.5% vs conf=0.5 → 41.9% 역전
+- **원인 1**: `normalize()` 음수 입력 시 factor < 0 (6/72 건) — 수학적 증명으로 fix
+- **원인 2**: calibration 과신 구간 독립적 존재 (버그 외)
+- **조치**: 버그 fix → re-audit → 가중치 조정은 100건 임계 후 보류
+
+## 관련
+
+- [LLM 응답 품질 자동 평가 메트릭 설계](/wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str)
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — normalize 버그 = silent wrong output (crash X)
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 운영 환경 검증

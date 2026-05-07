@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T02:36:46.163Z
+Updated: 2026-05-07T04:28:15.799Z
 
-## 엔트리 (107개)
+## 엔트리 (108개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -87,6 +87,7 @@ Updated: 2026-05-07T02:36:46.163Z
 - [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 - [LLM 시스템 UX 평가 — 지표 설계 및 측정 전략](wiki/evaluation/llm-ux-evaluation-metrics-design-measurement) — confidence: 1, status: draft
 - [Multi-Persona LLM Validation — Output Robustness Enhancement](wiki/evaluation/multi-persona-llm-output-validation-enhancement) — confidence: 1, status: draft
+- [예측 모델 Calibration 역전 감지 — confidence bucket vs 실제 적중률 불일치](wiki/evaluation/prediction-model-calibration-inversion-detection) — confidence: 2, status: complete
 - [RAG 애플리케이션 평가 — 검색 정확도 및 생성 품질 측정 전략](wiki/evaluation/rag-application-evaluation-retrieval-generation-quality) — confidence: 1, status: draft
 - [RAG Search Performance Evaluation - Designing Robust Metrics](wiki/evaluation/rag-search-performance-evaluation-metrics-design) — confidence: 1, status: draft
 
@@ -343,6 +344,9 @@ Updated: 2026-05-07T02:36:46.163Z
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ harness-engineering/guard-test-pattern
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
+- evaluation/prediction-model-calibration-inversion-detection ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
+- evaluation/prediction-model-calibration-inversion-detection ↔ harness-engineering/silent-drift-family-pattern
+- evaluation/prediction-model-calibration-inversion-detection ↔ harness-engineering/drift-detection-methodology
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
