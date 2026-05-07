@@ -4,7 +4,11 @@
 
 **완료**: `git merge origin/main` + `git push origin main` (사용자 GO, cycle 111 직전 세션) → diverge 0↔0 해소. BRANCHED N=18 → 종료.
 
-## [P0] GitHub Actions billing 전체 차단 — 즉시 조치 필요 (cycle 105 최초 → cycle 111 에스컬레이션)
+## [DONE] GitHub Actions billing 전체 차단 — 2026-05-07 해소
+
+**해소**: 퍼블릭 레포 전환 (playbook/moneyball/blog-autopilot) + 초과분 결제 처리. 2026-05-07 01:42 run #25471190398 success 확인.
+
+## [P0-PREV] GitHub Actions billing 전체 차단 — (참고 기록, DONE)
 
 **What**: GH Actions **전체 워크플로 blocked** — "account payments have failed or spending limit needs to be increased"
 - cycle 105 (2026-05-06 14:00): embed-on-push 1건만 실패 (partial)
