@@ -1,27 +1,19 @@
 # TODOS
 
-## [P0] origin/main diverged 통합 결정 (cycle 77 최초 → cycle 109 갱신, R6 사용자 영역, BRANCHED N=18 evidence)
+## [DONE] origin/main diverged 통합 — 2026-05-07 완료
 
-**What**: 로컬 main ↔ origin/main = **92 ahead / 27 behind** (`fatal: Not possible to fast-forward`) — cycle 77 당시 37/18, 이후 develop-cycle-hub 자율 회전 + moneyball auto-ingest 누적
-**Why**: cycle 77~108 = 17 cycle 연속 handoff load drift MAJOR+BRANCHED 감지 (cycle 91 첫 evidence). 양방향 모두 의미 있는 자율 커밋 — 손실 0 통합 필요
-- 로컬 only 92건: cycle 65~108 develop-cycle-hub 자율 회전 (retro/meta/curate commit 누적, push 정책 batch 대기 중)
-- 원격 only 27건: moneyball→playbook self-policy auto-ingest (cycle 165~179 retro, PR #154~166 자동 박제)
-**옵션**:
-- A. `git merge origin/main` — 머지 커밋 1건, 양쪽 히스토리 보존 (**권장** — 로컬 92 커밋 SHA 보존, cycle retro 메타 박제 SHA 영향 0)
-- B. `git rebase origin/main` — 히스토리 선형, 단 로컬 92 커밋 SHA 변경 → cycle retro 박제와 어긋날 가능성 (회피)
-- C. 보류 (carry-over 지속 — N=18 evidence, 가시성 확보 의무)
-**자율 처리 한계**: R6 force-push/merge/rebase 사용자 영역 (메모리 `feedback_automation_default_zone`). 자율 PR/실행 X
-**완료 신호**: 사용자 GO 후 통합 + push 1회 → `git rev-list --left-right --count origin/main...main` = `0	0`
-**Trigger**: cycle 77 최초 + cycle 91~108 17 cycle 연속 evidence. cycle 99 skill-evolution TODOS 자동 박제 룰 첫 발동 → cycle 100~108 횟수 갱신
-**Reference**: cycle 77 cycle_state + cycle 98/99/100/101/102/103/104/105/106/107/108/109 retro + handoff load drift BRANCHED N=18 evidence
+**완료**: `git merge origin/main` + `git push origin main` (사용자 GO, cycle 111 직전 세션) → diverge 0↔0 해소. BRANCHED N=18 → 종료.
 
-## [P1] GitHub Actions billing 경고 확인 (cycle 105 발견)
+## [P0] GitHub Actions billing 전체 차단 — 즉시 조치 필요 (cycle 105 최초 → cycle 111 에스컬레이션)
 
-**What**: `🧠 Embed Content Index` (run #25439995740, 2026-05-06 14:00:36Z) workflow_dispatch fail — "recent account payments have failed or your spending limit needs to be increased"
-**Why**: embed-on-push 워크플로가 GH Actions 결제 한도 오류로 미시작. 단 같은 시간대 worker-lesson auto-ingest 4건 SUCCESS → 전체 billing 실패 X, embed 특정 이슈 가능성
+**What**: GH Actions **전체 워크플로 blocked** — "account payments have failed or spending limit needs to be increased"
+- cycle 105 (2026-05-06 14:00): embed-on-push 1건만 실패 (partial)
+- cycle 111 (2026-05-07 01:00): **7개 전부 실패** — CI / Notify Workers / Embed Content Index / Curate Routine / Gemini Key Health / Silent Skip Tracker / Incident Follow-up
+**영향**: CI 차단 → 자동화 파이프라인 전면 정지. zero-touch 자동 fire 결과 확인 불가. auto-ingest 미작동.
+**조치**: GitHub Settings → Billing & plans → Actions → 결제 수단 확인 or spending limit 상향
 **자율 처리 한계**: billing/결제 = 사용자 결정 영역
-**완료 신호**: GH Settings > Billing > Actions 확인 + embed-on-push 재시도 성공
-**Reference**: cycle 105 진단 key_findings
+**완료 신호**: CI run 재성공 + curate-routine fire 성공
+**Reference**: run #25439995740 (cycle 105) → run #25469899568/25467983336/25463172256 (cycle 111 에스컬레이션)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
