@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T15:10:42.797Z
+Updated: 2026-05-07T15:45:20.247Z
 
-## 엔트리 (118개)
+## 엔트리 (119개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -50,6 +50,7 @@ Updated: 2026-05-07T15:10:42.797Z
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/harness-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
+- [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/harness-engineering/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
 - [Playbook Journal 001 — 구현된 코드를 그린필드로 간주한 드리프트](wiki/journal/playbook-journal-001-drift-greenfield) — confidence: 5, status: complete
 - [Playbook Journal 002 — 이미 설치된 것을 신규로 간주한 드리프트](wiki/journal/playbook-journal-002-drift-existing-setup) — confidence: 5, status: complete
@@ -510,6 +511,9 @@ Updated: 2026-05-07T15:10:42.797Z
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
+- harness-engineering/zero-touch-develop-cycle-session-management ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/agentic-chain-saturation-detection
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ harness-engineering/llm-agent-artifact-first-diagnosis
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e

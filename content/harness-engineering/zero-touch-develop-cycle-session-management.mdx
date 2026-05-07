@@ -1,0 +1,119 @@
+---
+title: Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처
+category: harness-engineering
+date: "2026-05-08"
+tags:
+  - harness-engineering
+  - agentic-loop
+  - zero-touch
+  - process-management
+  - launchd
+  - tmux
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-08"
+connections: [context-engineering/agentic-cycle-state-json-carry-over-design, harness-engineering/hub-worker-compounding-pattern, harness-engineering/agentic-chain-saturation-detection]
+status: complete
+description: LLM 자율 루프를 "1세션 = 1사이클" 로 격리하는 zero-touch 인프라 설계. watch.sh + launchd + tmux 조합으로 fresh context를 매 사이클 보장하면서 N회 연속 회전.
+type: entry
+source: manual
+---
+
+## 문제
+
+LLM 자율 루프(develop-cycle)를 1세션 N사이클 batch로 실행하면:
+
+1. **컨텍스트 압축 누적**: 사이클이 늘수록 early context가 압축 → 진단 신뢰도 저하
+2. **메모리 스왑 압력**: 긴 세션 → 토큰 비용 + LLM 응답 품질 저하
+3. **중단 복구 취약**: 세션 도중 크래시 시 진행 상황 불투명
+
+"각 사이클이 fresh context에서 시작하면" 이 문제가 사라진다. 하지만 사람이 매 사이클마다 새 세션을 열면 zero-touch가 아님.
+
+## 해결: 파일 기반 IPC + OS 표준 도구
+
+```
+launchd (plist) → watch.sh loop → tmux new-session → claude CLI
+     ↑                                                    ↓
+signal 파일 감시 ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← signal 박제
+```
+
+외부 서버/REST API 없음. 파일 3개 + OS 표준 도구(launchd, tmux, kill)만.
+
+### 상태 파일 3종
+
+| 파일 | 내용 | 역할 |
+|---|---|---|
+| `~/.develop-cycle-hub/active-cycle` | cycle_n / PID / started_at (3줄) | 현재 사이클 + 프로세스 존재 확인 |
+| `~/.develop-cycle-hub/signal` | cycle_n / OK\|FAIL / reason / next_n (4줄) | 사이클 종료 신호 |
+| `~/.develop-cycle-hub/skill-evolution-pending` | cycle_n: git_hash | skill-evolution 강제 발화 마커 |
+
+## 핵심 메커니즘
+
+### 1. FIRE_PENDING placeholder → PID 박제 (FIRE_HANG 오판 방지)
+
+watch.sh가 새 사이클을 fire할 때 active-cycle에 임시 placeholder를 쓴다:
+
+```
+<cycle_n>
+FIRE_PENDING
+<started_at>
+```
+
+새 claude 세션이 실행되면 **진단 첫 step**에서 이 파일을 실 PID로 덮어써야 한다:
+
+```bash
+if grep -q "FIRE_PENDING" ~/.develop-cycle-hub/active-cycle; then
+  # 실 PID 탐색: pgrep → tmux pane PID → 현재 shell $$ fallback
+  printf '%s\n%s\n%s\n' "$CYCLE_N" "$CLAUDE_PID" "$STARTED_AT" > active-cycle
+fi
+```
+
+**왜 이게 필요한가**: watch.sh의 `check_timeout()`은 active-cycle의 PID로 `kill -0 $pid`를 실행해 프로세스 생존을 확인한다. FIRE_PENDING이 남아있으면 `kill -0 FIRE_PENDING`이 실패 → 10분 후 FIRE_HANG 오판 + 잘못된 capture log 박제.
+
+### 2. signal 파일 4줄 프로토콜
+
+사이클 종료 시 claude CLI가 signal 파일을 박제:
+
+```
+237          ← 방금 끝난 사이클 번호
+OK           ← OK | FAIL
+chain=explore-idea outcome=success  ← 한 줄 요약
+236          ← 다음 사이클 번호 (0이면 회전 종료)
+```
+
+watch.sh가 이 파일을 감지 → next_n > 0이면 새 tmux session + claude 실행 → active-cycle FIRE_PENDING 박제 → 반복.
+
+next_n = 0이면 회전 종료. 사용자가 `/develop-cycle-hub 10`을 호출하면 10번째 사이클에서 next_n=0 박제.
+
+### 3. CYCLE_SOFT / CYCLE_HARD 임계값
+
+| 임계값 | 기본값 | 동작 |
+|---|---|---|
+| `FIRE_HANG_THRESHOLD` | 10분 | FIRE_PENDING 상태에서 이 시간 초과 시 FIRE_HANG 판정 |
+| `CYCLE_SOFT` | 45분 | 경고 로그 (claude는 계속 실행) |
+| `CYCLE_HARD` | 60분 | SIGTERM + 다음 사이클 fire (강제 종료) |
+
+정상 사이클은 10~30분이므로 CYCLE_SOFT는 오버런 감지용.
+
+## 설계 원리
+
+**pure file IPC**: 파일 읽기/쓰기가 유일한 통신 채널. 포트 없음, 데몬 없음.
+
+**OS 보장 활용**: launchd가 프로세스 관리(재실행/종료)를 담당. claude 자신은 "내가 다음 세션을 시작한다"고 알 필요 없음.
+
+**fresh context 격리**: 각 사이클이 독립 tmux session + 독립 claude 프로세스 → 이전 사이클 컨텍스트 오염 없음. cycle_state JSON 파일로만 사이클 간 정보 전달.
+
+**실패 격리**: 한 사이클이 크래시해도 CYCLE_HARD 타임아웃 후 watch.sh가 다음 사이클을 fire. 연속 실패 시 FAIL signal → 회전 중단 + 캡처 로그 박제.
+
+## 실전 증거
+
+- **Phase 2 ship**: 2026-05-06 cycle 49 — watch.sh + launchd + tmux 조합 첫 ship
+- **검증 범위**: cycle 49 → 236+ (188+ 사이클) zero-touch 자율 회전 성공
+- **FIRE_HANG 사건**: cycle 46~49 5회 streak — FIRE_PENDING 미박제로 인한 오판 → 이 메커니즘 개발 계기
+
+## 연관 패턴
+
+- **cycle_state JSON**: 사이클 간 연속성은 파일 기반 IPC (→ agentic-cycle-state-json-carry-over-design)
+- **허브-워커 복리 성장**: zero-touch가 가능케 하는 상위 자동화 패턴 (→ hub-worker-compounding-pattern)
+- **chain 포화 감지**: 1세션 1사이클로 fresh context가 보장되어야 포화 감지가 신뢰 가능 (→ agentic-chain-saturation-detection)
