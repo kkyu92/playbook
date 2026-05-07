@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.9] — 2026-05-07
+
+### Added
+- `docs/solutions/react/` 카테고리 신규 — NavLinks useEffect 내 setState 직접 호출 ESLint 재발 패턴 (cycle 217, moneyball cycle 227-229 2회 연발)
+
+### Changed
+- dashboard `closed-loop-health` cycle 213 → 217 갱신 — worker-incident-triage 2회 발화로 0회 chain 명단 탈퇴, retro-only 10%→5%
+
 ## [0.4.8] — 2026-05-07
 
 ### Changed
