@@ -46,6 +46,7 @@ const CATEGORY_SUBS: Record<string, string> = {
   "frontend-ai": "iOS / React / React Native",
   "project-ops": "릴리즈 / 모노레포 / 운영",
   "data-engineering": "파이프라인 / 임베딩 / 벡터",
+  reports: "회고 / 리포트",
 };
 
 function formatCount(n: number): string {
