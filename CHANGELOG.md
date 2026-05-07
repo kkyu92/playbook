@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.6] — 2026-05-08
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물여덟 번째 발화 (N=28) 박제 — cycle 241 Trigger-5 (직전 20 cycle 221-240, 0회 chain 7개: fix-incident/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). **신규 룰 첫 적용**: 명단 SE #27 동일 (2회 연속) + SE 점유율 55% ≥ 40% → 마커 skip (무한 SE 루프 자가 차단 메커니즘 추가). 다음 마커 재개 = 명단 변화 감지 시. zero-touch 63+→241+ cycle 검증
+- `develop-cycle-hub` SKILL.md 스물일곱 번째 발화 (N=27) 박제 — cycle 240 Trigger-5 (직전 20 cycle 220-239, 0회 chain 7개 → worker-incident-triage 재진입). 명단 변화 6→7개 (cycle 219 window 대비). zero-touch 63+→240+ cycle 검증
+- dashboard `closed-loop-health` cycle 238 → 241 갱신 — skill-evolution=12/curate=5/review-code=2/explore-idea=1 (window 222-241), trigger-5 SE #28 skip 룰 반영
+
 ## [0.5.5] — 2026-05-08
 
 ### Added
