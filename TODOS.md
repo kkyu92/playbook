@@ -1,11 +1,11 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 220)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 221)
 
 origin/main 과 local main 이 재발산. force-push / merge / rebase 중 선택 필요.
-현재 상태: **local 138개 ahead, origin 19개 ahead** (cycle 214~220 연속 감지 N≥7).
+현재 상태: **local 141개 ahead, origin 20개 ahead** (cycle 214~221 연속 감지 N≥8).
 
-발산 원인: moneyball auto-ingest 9건 (cycles 225~229) 이 origin/main 으로 직접 push, local 은 허브 hub cycle 208-218 누적.
+발산 원인: moneyball auto-ingest 20건 (cycles 225~240) 이 origin/main 으로 직접 push, local 은 허브 hub cycle 208-221 누적.
 
 **권장 조치**: `git merge origin/main` + `git push origin main` (이전 패턴 정합, N=18 → N=0 성공 사례)
 **자율 처리 한계**: merge/push = 사용자 GO 영역 (R6)
