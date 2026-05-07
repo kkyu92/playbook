@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.4] — 2026-05-08
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물다섯 번째 발화 (N=25) 박제 — cycle 234 Trigger-5 (직전 20 cycle 214-233, 0회 chain 7개 명단 3회 연속 동일: fix-incident/explore-idea/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). 항구화 완전 확정. zero-touch 63+→234+ cycle 검증
+- `review-code` cycle 233 — `isRoadmapLink()` 헬퍼 추출 (knowledge-graph.tsx 7줄 중복 제거) + STATUS/BADGE/FILL/SOURCE_CLASS 모듈 레벨 호이스트 (dashboard/page.tsx per-render 생성 제거)
+- dashboard `closed-loop-health` cycle 231 → 234 갱신 — retro-only 0%, skill-evolution=11/curate=5/review-code=2 분포, 0회 chain 7개, meta-pattern 18건
+
 ## [0.5.3] — 2026-05-07
 
 ### Changed

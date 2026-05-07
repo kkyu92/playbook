@@ -19,20 +19,20 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-05-07T15:04:29.358Z'
-last_cycle: 231
+last_updated: '2026-05-07T15:24:12.657Z'
+last_cycle: 234
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **231**. 마지막 update: 2026-05-07T15:04:29.354Z.
+> 직전 cycle: **234**. 마지막 update: 2026-05-07T15:24:12.654Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
-| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 17 / 0 |
-| **Process** | chain pool 분포 (직전 20) | skill-evolution=11 / curate=6 / worker-incident-triage=2 / review-code=1 |
+| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 18 / 0 |
+| **Process** | chain pool 분포 (직전 20) | skill-evolution=11 / curate=5 / worker-incident-triage=2 / review-code=2 |
 | **Process** | retro-only 비율 | 0/20 (0%) |
 | **Output** | PR ship (직전 10) | 0 |
 | **Feedback** | 0회 chain (직전 20) | fix-incident, explore-idea, polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
@@ -43,7 +43,7 @@ last_cycle: 231
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 231 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 234 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
 | 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 7 | 자율 | ✅ |
 
@@ -51,11 +51,11 @@ last_cycle: 231
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 234 | skill-evolution | success | — |
+| 233 | review-code | success | — |
+| 232 | curate | success | — |
 | 231 | skill-evolution | success | — |
 | 230 | skill-evolution | success | — |
-| 229 | curate | success | — |
-| 228 | skill-evolution | success | — |
-| 227 | skill-evolution | success | — |
 
 ## Methodology
 
