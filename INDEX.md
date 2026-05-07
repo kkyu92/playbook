@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T02:26:19.056Z
+Updated: 2026-05-07T02:27:19.103Z
 
 ## 엔트리 (106개)
 

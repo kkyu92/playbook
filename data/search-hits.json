@@ -1,6 +1,6 @@
 {
-  "totalQueries": 9,
-  "lastUpdated": "2026-05-07T02:08:23.213Z",
+  "totalQueries": 11,
+  "lastUpdated": "2026-05-07T02:24:30.891Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 2,
@@ -17,6 +17,8 @@
     "solutions/llm-generation/2026-04-20-post-gen-validation-loop": 1,
     "solutions/README.md/README": 1,
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 2,
-    "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 1
+    "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 1,
+    "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 2,
+    "reports/closed-loop-health": 1
   }
 }
