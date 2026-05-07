@@ -19,23 +19,23 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-05-07T14:42:27.573Z'
-last_cycle: 228
+last_updated: '2026-05-07T15:04:29.358Z'
+last_cycle: 231
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **228**. 마지막 update: 2026-05-07T14:42:27.568Z.
+> 직전 cycle: **231**. 마지막 update: 2026-05-07T15:04:29.354Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 17 / 0 |
-| **Process** | chain pool 분포 (직전 20) | skill-evolution=9 / curate=6 / review-code=2 / worker-incident-triage=2 / explore-idea=1 |
+| **Process** | chain pool 분포 (직전 20) | skill-evolution=11 / curate=6 / worker-incident-triage=2 / review-code=1 |
 | **Process** | retro-only 비율 | 0/20 (0%) |
 | **Output** | PR ship (직전 10) | 0 |
-| **Feedback** | 0회 chain (직전 20) | fix-incident, polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
+| **Feedback** | 0회 chain (직전 20) | fix-incident, explore-idea, polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -43,19 +43,19 @@ last_cycle: 228
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 228 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 231 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
-| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 6 | 자율 | ✅ |
+| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 7 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 231 | skill-evolution | success | — |
+| 230 | skill-evolution | success | — |
+| 229 | curate | success | — |
 | 228 | skill-evolution | success | — |
 | 227 | skill-evolution | success | — |
-| 226 | skill-evolution | success | — |
-| 225 | curate | success | — |
-| 224 | skill-evolution | success | — |
 
 ## Methodology
 

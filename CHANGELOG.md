@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.3] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물세·스물네 번째 발화 (N=23/24) 박제 — cycles 230/231 연속 Trigger-5 (직전 20 cycle 210-229/211-230, 0회 chain 7개 명단 — explore-idea 신규 진입 (N=23) 후 2회 연속 동일 안정 확인). zero-touch 63+→231+ cycle 검증
+- dashboard `closed-loop-health` cycle 228 → 231 갱신 — retro-only 0%, skill-evolution=11/curate=6 분포, 0회 chain 7개
+
 ## [0.5.2] — 2026-05-07
 
 ### Changed
