@@ -1,0 +1,133 @@
+---
+title: Agentic Cycle State JSON — 멀티 세션 연속성을 위한 carry-over 설계
+category: context-engineering
+date: "2026-05-07"
+tags:
+  - context-engineering
+  - agentic-loop
+  - state-management
+  - carry-over
+  - session-continuity
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-07"
+connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/drift-detection-methodology, agents/llm-agent-goal-achievement-planning-patterns, context-engineering/ambient-knowledge-injection]
+status: complete
+description: 에이전트 자율 루프에서 세션 간 연속성을 유지하기 위한 cycle_state JSON 설계 패턴. 외부 파일 박제 + 3 사이클 lookback + 분리된 handoff/TODOS 책임 경계.
+type: entry
+source: manual
+---
+
+## 문제
+
+LLM 에이전트가 자율 루프 (develop-cycle 등) 를 반복하면서 발생하는 세션 경계 문제:
+
+1. **세션 시작 시 blank slate**: 새 세션은 직전 세션의 결정/발견/추천을 모름
+2. **중복 작업**: 이미 처리한 chain 을 다시 선택
+3. **컨텍스트 압축 손실**: 장기 대화에서 early context 가 압축 → 직전 사이클 결과 사라짐
+
+메모리나 handoff 만으로 이 문제를 해결할 수 없음 — 메모리는 일반 규칙용, handoff 는 세션 단위 스냅샷이지 사이클 단위 결과가 아님.
+
+## cycle_state JSON 패턴
+
+### 핵심 원칙
+
+**외부 파일** (`~/.develop-cycle-hub/cycles/<n>.json`) — 세션 바깥에 박제:
+- LLM 컨텍스트 압축에 영향받지 않음
+- 새 세션이 `cat` 으로 즉시 복원 가능
+- 사이클 간 persistent, 세션 간 persistent
+
+**직전 3 사이클 read** — 1개만 읽으면 편향:
+```bash
+for n in $(($CYCLE_N - 1)) $(($CYCLE_N - 2)) $(($CYCLE_N - 3)); do
+  cat ~/.develop-cycle-hub/cycles/$n.json 2>/dev/null
+done
+```
+
+3 사이클 lookback 이유:
+- 직전 1개: bias (한 chain 연속 선택 유도)
+- 3개: 충분한 다양성 신호 (consecutive 감지 가능)
+- 5개+: 오래된 상황까지 포함 (현재 상황 신호 희석)
+
+### 스키마 설계
+
+```json
+{
+  "cycle_n": 42,
+  "started_at": "2026-05-07T10:00:00Z",
+  "ended_at": "2026-05-07T10:45:00Z",
+  "diagnosis": {
+    "scan_summary": "진단 요약 (1줄)",
+    "key_findings": ["발견 1", "발견 2"],
+    "input_from_prev_cycles": ["cycle 41 chain=X outcome=Y"]
+  },
+  "chain_selected": "fix-incident",
+  "chain_reason": "chain 선택 근거 (자연어)",
+  "execution": {
+    "skills_invoked": ["investigate", "ship"],
+    "results": {"investigate": "결과", "ship": "결과"},
+    "outcome": "success"
+  },
+  "commit_hash": "abc1234",
+  "pr_number": 45,
+  "retro": {
+    "summary": "사이클 회고 (2~3줄)",
+    "todos_added": [],
+    "next_recommended_chain": "curate",
+    "next_recommended_reason": "다음 사이클 추천 근거"
+  }
+}
+```
+
+### outcome enum
+
+| value | 의미 |
+|---|---|
+| `success` | chain stop 조건 도달 + 실제 변경 완료 |
+| `partial` | 일부 완료, carry-over 남음 |
+| `fail` | chain 실행 실패 (에러 / 근본 원인 미해결) |
+| `retro-only` | 실제 변경 없이 회고만 박제 (source 부재) |
+
+`retro-only` 를 `success` 와 구분하는 것이 중요 — 연속 `retro-only` streak 감지 = stuck 신호.
+
+## 분리된 책임 경계
+
+| 메커니즘 | 단위 | 위치 | 목적 |
+|---|---|---|---|
+| `cycle_state JSON` | 사이클 | `~/.develop-cycle-hub/cycles/<n>.json` | 사이클 간 연속성 |
+| `/handoff save` | 세션 | `~/.gstack/projects/.../checkpoints/` | 세션 간 드리프트 감지 |
+| `git commit` | 변경 | git history | 영구 변경 기록 |
+| `TODOS.md` | 사용자 가시 | repo root | 사용자 결정 대기 항목 |
+| memory (auto-memory) | 사용자 정합 | `~/.claude/projects/.../memory/` | 세션 간 규칙/피드백 |
+
+**흔한 실수**: cycle_state 에 사용자 결정 항목 넣기 → TODOS.md 와 중복, 사용자 가시화 실패.
+
+## 실 적용 증거 (develop-cycle-hub)
+
+허브 fork 에서 cycle 49 이후 **63+ 사이클** zero-touch 자율 회전:
+- 각 사이클 끝에 `~/.develop-cycle-hub/cycles/<n>.json` 박제
+- 다음 사이클 진단 단계 첫 step 에서 직전 3개 read
+- `retro.next_recommended_chain` 힌트 활용 (강제 X, LLM 자율 판단 input)
+- stuck streak guard: `retro-only` 3회 연속 → `curate` 강제 진입
+
+zero-touch 에서 이 패턴이 없었다면:
+- 새 세션 = blank slate → 직전 fix 모르고 같은 버그 재진단
+- chain 선택 편향 → 같은 chain 반복 (signal 없음)
+- curate/review-code 없이 explore-idea 만 반복 가능
+
+## 적용 조건
+
+**필요**:
+- 에이전트 루프가 N 사이클 이상 자율 실행 (N ≥ 5)
+- 각 사이클 평균 45분+ (세션 중 여러 사이클 또는 세션 경계 발생)
+- chain 선택이 이전 결과에 의존해야 효과적인 구조
+
+**불필요**:
+- 단발성 task (사이클 1회만)
+- 동기화 실패 시 재시작 가능한 idempotent 프로세스 (carry-over 불필요)
+
+## 관련
+
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 이 패턴이 허브 fork 의 핵심 인프라
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology): carry-over read 시 Level 0 드리프트 감지와 결합
