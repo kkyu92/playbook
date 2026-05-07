@@ -1,8 +1,19 @@
 # TODOS
 
-## [DONE] origin/main diverged 통합 — 2026-05-07 완료
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 217)
+
+origin/main 과 local main 이 재발산. force-push / merge / rebase 중 선택 필요.
+현재 상태: **local 133개 ahead, origin 9개 ahead** (cycle 214~217 연속 감지 N≥4).
+
+발산 원인: moneyball auto-ingest 9건 (cycles 219~229) 이 origin/main 으로 직접 push, local 은 허브 hub cycle 208-216 누적.
+
+**권장 조치**: `git merge origin/main` + `git push origin main` (이전 패턴 정합, N=18 → N=0 성공 사례)
+**자율 처리 한계**: merge/push = 사용자 GO 영역 (R6)
+
+## [DONE] origin/main diverged 통합 — 2026-05-07 완료 (이전 diverge 해소)
 
 **완료**: `git merge origin/main` + `git push origin main` (사용자 GO, cycle 111 직전 세션) → diverge 0↔0 해소. BRANCHED N=18 → 종료.
+*주의: 이후 재발산 — 위 [P0] 참조.*
 
 ## [DONE] GitHub Actions billing 전체 차단 — 2026-05-07 해소
 
@@ -43,21 +54,14 @@
 **완료 신호**: 워커 PR fix 머지 → main CI 재실행 PASS → issue #171 같은 inbound 자연 회피
 **Reference**: cycle 26 cycle_state JSON + lesson commit (5-4)
 
-## [P1] moneyball NavLinks.tsx lint fix (cycle 48 worker-incident-triage carry-over)
+## [DONE] moneyball NavLinks.tsx lint fix — 2026-05-07 해소
 
-**What**: `apps/moneyball/src/components/layout/NavLinks.tsx:39` — setState synchronously in useEffect (ESLint rule 위반)
-**Why**: cycle 227 polish-ui-nav-a11y (PR #211 머지) 에서 도입. 브랜치 CI 실패(#329) → main 머지 → main CI 연속 실패(#330, #332). moneyball main CI 현재 broken 상태.
+**완료**: moneyball cycle 229 fix-incident SUCCESS — PR #212 머지 (NavLinks lint 오류 수정). PASS_ship 누적 100 달성.
+moneyball main CI 현재 PASSING (cycle 230 run success 확인).
 
-```
-error: Calling setState synchronously within an effect can trigger cascading renders
-```
-
-**Fix 영역**: 워커 (moneyball), 다음 moneyball 세션
-**Sub-deps**:
-- NavLinks.tsx:39 — useEffect 내 setState 직접 호출 → `useRef` 또는 `initialState` 패턴으로 대체
-- CI 재확인: fix 머지 후 main CI PASS 검증
-**완료 신호**: moneyball main CI lint PASS → inbound CI failure 자연 회피
-**Reference**: cycle 48 worker-incident-triage / issue #330/#332 (closed as carry-over) / run #25483168788 lint log
+**원인**: cycle 227 polish-ui-nav-a11y (PR #211) 에서 도입된 `useEffect` 내 동기 state setter 패턴.
+**Solution 박제**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md` (2회+ 재발 → 기록 의무)
+**Issue 처리**: #330/#332 (cycle 48 close) / #334 (cycle 217 close)
 
 ## [DONE] develop-cycle-blog skill fork — 옵션 A 박제 완료
 
