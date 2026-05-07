@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T05:59:00.832Z
+Updated: 2026-05-07T06:55:27.859Z
 
-## 엔트리 (115개)
+## 엔트리 (116개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -44,6 +44,7 @@ Updated: 2026-05-07T05:59:00.832Z
 - [LLM Prompt-Validator 대칭성 드리프트 — 구조화 출력 일관성 보장](wiki/harness-engineering/llm-prompt-validator-symmetry-drift) — confidence: 2, status: complete
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
+- [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
@@ -488,6 +489,9 @@ Updated: 2026-05-07T05:59:00.832Z
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/question-own-defaults ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/question-own-defaults ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
+- harness-engineering/recurring-file-bug-accumulator-pattern ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/recurring-file-bug-accumulator-pattern ↔ harness-engineering/db-query-type-safety-assert-select-ok-pattern
+- harness-engineering/recurring-file-bug-accumulator-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/question-own-defaults

@@ -1,0 +1,129 @@
+---
+title: 서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - silent-bug
+  - design-debt
+  - review-code
+  - db-query
+  - recurring-pattern
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/db-query-type-safety-assert-select-ok-pattern, harness-engineering/question-own-defaults]
+status: complete
+description: review-code 중 같은 파일에서 동일 버그 유형이 3회+ 발견되면 코드 리뷰 누락이 아니라 설계 구조가 버그를 유발하는 신호 — wrapper/guard 부재 → 개별 호출마다 수동 체크 요구.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+`review-code` chain 이 반복적으로 같은 파일, 같은 버그 유형으로 진입할 때:
+
+```
+cycle 190: daily.ts — .error 미체크 (1st)
+cycle 204: daily.ts — .error 미체크 (2nd)
+cycle 216: daily.ts — .error 미체크 (3rd)
+```
+
+각 fix 후 "이제 다 고쳤다" 상태가 되지만 다음 기능 추가 시 동일 버그 유형이 재발. **개발자(LLM 포함) 실수가 아니라 구조가 버그를 재생산하는 패턴.**
+
+## 근본 원인 분류
+
+| 원인 | 증상 |
+|---|---|
+| **Guard 부재** | `.error` 체크를 공통 wrapper 없이 개별 호출마다 수동 처리 → 신규 호출 추가 시 누락 |
+| **일관성 없는 패턴** | 파일 내 일부 쿼리는 체크, 일부는 미체크 → reviewer 가 "이미 있는 패턴" 으로 오인 |
+| **fallback 존재** | unchecked error 가 조용히 다른 경로로 처리됨 (KBO scraping fallback 등) → 증상이 표면화 X |
+
+## 실 사례 (moneyball daily.ts, 2026-05-07)
+
+```typescript
+// ❌ .error 미체크 — DB 오류 시 KBO scraping fallback silent 발동
+const { data: recentFinalGames } = await supabase
+  .from('game_results')
+  .select('*')
+  .order('date', { ascending: false })
+  .limit(10);
+// .error 없으면 recentFinalGames = null → fallback 호출 발동 (불필요한 외부 API 호출)
+
+// ❌ weather .error 무시
+const { data: existing } = await supabase
+  .from('weather')
+  .select('*')
+  .eq('date', date)
+  .single();
+// DB 오류 시 날씨 API 재호출 → 불필요한 비용 + 불일치
+```
+
+3rd instance 발견 = **구조 문제 신호**. 개별 fix 로는 해결 불가.
+
+## 감지 방법
+
+review-code chain 진입 시 패턴 체크:
+
+```bash
+# 같은 파일이 몇 번 review-code 로 처리됐는지
+git log --oneline --grep="review-code" --all | head -20
+# 파일 내 .error 체크 현황
+grep -n "\.error" src/lib/daily.ts | grep -v "// "
+```
+
+**3회+ 같은 파일 + 같은 버그 유형 발견 시**: 다음 review-code 는 개별 fix 가 아닌 구조 fix (wrapper 추가) 고려.
+
+## 해결 패턴
+
+### Guard wrapper 추가
+
+```typescript
+// ✅ 공통 error guard — 모든 쿼리가 동일 패턴 강제
+function assertQueryOk<T>(
+  result: { data: T | null; error: unknown },
+  context: string
+): T {
+  if (result.error) throw new Error(`DB query failed [${context}]: ${result.error}`);
+  if (result.data === null) throw new Error(`DB query returned null [${context}]`);
+  return result.data;
+}
+
+// 사용
+const recentGames = assertQueryOk(
+  await supabase.from('game_results').select('*').limit(10),
+  'recentFinalGames'
+);
+```
+
+wrapper 가 있으면 신규 쿼리 추가 시 자연스럽게 동일 패턴 적용 → 3rd instance 방지.
+
+### 단기 vs 장기 대응
+
+```
+단기 (each cycle): 누락된 .error 체크 추가 — 개별 쿼리 fix
+장기 (3rd instance 도달 시): 파일 전체 구조 검토 → guard wrapper 또는 query helper 추출
+```
+
+단기 fix 만 반복하면 4th instance, 5th instance 발생 확정.
+
+## 운영 가이드라인
+
+**review-code chain 진입 시 자가 점검:**
+
+```
+□ 이 파일이 직전 N 사이클에서 몇 번 review-code 에 진입했는가?
+□ 동일 버그 유형인가 (같은 guard 미체크)?
+□ 3회+ 이면 구조 fix 제안 (wrapper/helper 추출) — 개별 fix 만으로 stop X
+```
+
+**commit message 에 진입 횟수 명시** (히스토리 시각화):
+```
+fix: daily.ts .error 체크 추가 (3rd instance — wrapper 추출 고려)
+```
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — .error 미체크 = silent wrong output (fallback 발화)
+- [DB 쿼리 타입 안전성 강제](/wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — assertSelectOk 패턴 (Server Component 레벨 구조 fix)
+- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "기존 코드도 체크 안 했으니까 OK" 가정을 먼저 의심
