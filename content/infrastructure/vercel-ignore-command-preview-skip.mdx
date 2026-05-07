@@ -1,0 +1,70 @@
+---
+title: Vercel ignoreCommand — PR Preview 배포 비활성화로 100회/일 한도 보호
+category: infrastructure
+date: "2026-05-07"
+tags:
+  - vercel
+  - deployment
+  - infrastructure
+  - cost-optimization
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-07"
+connections: [harness-engineering/hub-worker-compounding-pattern, agents/llm-agent-goal-achievement-planning-patterns]
+status: complete
+description: Vercel 100회/일 배포 한도 초과 방지 — vercel.json ignoreCommand 로 PR preview 배포를 skip하고 production(main) 배포만 유지.
+type: entry
+source: manual
+---
+
+## 문제
+
+LLM 에이전트가 자동화로 PR 을 반복 생성/머지하면 Vercel 배포 한도 (100회/일, Free/Hobby 플랜) 를 빠르게 소진. PR preview 배포마다 1회 차감 → X 표시 (배포 실패 = 한도 초과).
+
+증상: PR 목록에서 Vercel 체크 → `Deployment failed: Resource is limited`. 본문에 `This branch was successfully deployed` 와 `Deployment failed` 가 혼재.
+
+## 해결책
+
+`vercel.json` 에 `ignoreCommand` 추가:
+
+```json
+{
+  "ignoreCommand": "[ \"$VERCEL_ENV\" = 'preview' ]"
+}
+```
+
+이 명령이 exit 1 을 반환하면 Vercel 이 해당 환경 배포를 skip. `preview` 환경만 skip → `production` (main 브랜치) 배포는 정상 진행.
+
+## 적용 범위
+
+허브와 워커 모두 동일 설정 적용:
+
+```
+/path/to/project/vercel.json   → 프로젝트 루트에 위치
+```
+
+- `playbook` (허브): `feat(vercel): PR preview 배포 비활성화` (commit `1d3a192`)
+- `moneyballscore` (`apps/moneyball/vercel.json`): 동일 패턴
+
+## 트레이드오프
+
+| 항목 | 결과 |
+|---|---|
+| PR preview 배포 | ❌ 비활성화 (PR에서 Vercel 체크 = skip 표시) |
+| Production 배포 | ✅ main 머지 시 정상 배포 |
+| Vercel 한도 | ✅ PR 수 무관하게 main 배포만 차감 |
+| PR 리뷰 경험 | 약간 저하 (preview URL 없음) — LLM 에이전트 운영 시 trade-off 수용 |
+
+## 적용 시점
+
+- LLM 에이전트가 PR을 자동 생성/머지하는 환경
+- Vercel Free/Hobby 플랜 (100회/일)
+- PR preview 미확인 워크플로 (자동화 중심)
+
+사람이 직접 PR 리뷰하며 preview 확인이 필요한 팀 환경에는 부적합.
+
+## 관련
+
+- 허브 커밋: `1d3a192` (`feat(vercel): PR preview 배포 비활성화 — 100회/일 한도 보호`)
+- Vercel docs: `ignoreCommand` — https://vercel.com/docs/projects/project-configuration#ignorecommand
