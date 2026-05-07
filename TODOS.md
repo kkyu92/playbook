@@ -43,6 +43,22 @@
 **완료 신호**: 워커 PR fix 머지 → main CI 재실행 PASS → issue #171 같은 inbound 자연 회피
 **Reference**: cycle 26 cycle_state JSON + lesson commit (5-4)
 
+## [P1] moneyball NavLinks.tsx lint fix (cycle 48 worker-incident-triage carry-over)
+
+**What**: `apps/moneyball/src/components/layout/NavLinks.tsx:39` — setState synchronously in useEffect (ESLint rule 위반)
+**Why**: cycle 227 polish-ui-nav-a11y (PR #211 머지) 에서 도입. 브랜치 CI 실패(#329) → main 머지 → main CI 연속 실패(#330, #332). moneyball main CI 현재 broken 상태.
+
+```
+error: Calling setState synchronously within an effect can trigger cascading renders
+```
+
+**Fix 영역**: 워커 (moneyball), 다음 moneyball 세션
+**Sub-deps**:
+- NavLinks.tsx:39 — useEffect 내 setState 직접 호출 → `useRef` 또는 `initialState` 패턴으로 대체
+- CI 재확인: fix 머지 후 main CI PASS 검증
+**완료 신호**: moneyball main CI lint PASS → inbound CI failure 자연 회피
+**Reference**: cycle 48 worker-incident-triage / issue #330/#332 (closed as carry-over) / run #25483168788 lint log
+
 ## [DONE] develop-cycle-blog skill fork — 옵션 A 박제 완료
 
 **Shipped**: 2026-05-04 12:52:55Z (kkyu92/blog-autopilot PR #66, commit 9baae1a, squash 머지)
