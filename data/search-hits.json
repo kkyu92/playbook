@@ -1,6 +1,6 @@
 {
-  "totalQueries": 12,
-  "lastUpdated": "2026-05-07T04:39:54.046Z",
+  "totalQueries": 16,
+  "lastUpdated": "2026-05-07T04:46:32.179Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 2,
@@ -21,6 +21,12 @@
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 2,
     "reports/closed-loop-health": 1,
     "journal/playbook-journal-001-drift-greenfield": 1,
-    "harness-engineering/guard-test-pattern": 1
+    "harness-engineering/guard-test-pattern": 3,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 1,
+    "context-engineering/nextjs-instrumentation-location": 1,
+    "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
+    "context-engineering/agentic-cycle-state-json-carry-over-design": 1,
+    "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 1,
+    "reports/mid-review-2026-04-28": 1
   }
 }
