@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.4] — 2026-05-07
+
+### Added
+- **Wiki entries 2건 신규** (118·119번째 예정):
+  - `stale-temporal-comment-cleanup-policy` — LLM 코드의 cycle/phase/spec 참조 주석 제거 vs WHY 주석 보존 정책 (moneyball cycles 220/224)
+
+### Changed
+- `robots.ts` BASE_URL fallback 불일치 수정 (playbook-hub → playbook-virid-xi, 5파일 통일)
+- raw-sources cycles 222-224 archive 정리
+- dashboard cycle 209 갱신
+
 ## [0.4.3] — 2026-05-07
 
 ### Added
