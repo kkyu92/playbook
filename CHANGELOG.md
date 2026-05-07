@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.9] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 246 → 250 갱신 — skill-evolution=8/curate=6/review-code=4/explore-idea=1/unknown=1 (window 230-249). SE #29 마커 설정 (35% < 40%) → SE #30 skip (window 재평가 40% ≥ 40% 자기조정). wiki 119 entries CLEAN
+- wiki lint CLEAN 확인 (cycle 250 curate) — 119 entries, orphan/stale/isolated 0건, scan-promotions 승격 대상 없음
+- memory 업데이트 — project_develop_cycle_skill_family (N=50 batch 후반, zero-touch 249+ 검증, SE #30 박제)
+- TODOS.md `[P0] R6 대기` BRANCHED N=17 → N=18 (local 40개 ahead cycles 222-249)
+
+### Fixed
+- cycle 247 review-code — og/route category reports 누락 + font 404 guard + catGrid 5×2 레이아웃 + 주석 10 카테고리 정렬 fix (PR `aa639f9`)
+
 ## [0.5.8] — 2026-05-08
 
 ### Fixed
