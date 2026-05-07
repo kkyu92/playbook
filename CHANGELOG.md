@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.8] — 2026-05-07
+
+### Changed
+- `closed-loop-health` 대시보드 cycle 185→192 갱신 (curate=9/explore=4/dim=3/review=2 chain 분포, retro-only 10%)
+- memory rot 2건 갱신 (develop-cycle-skill-family cycle 174→191 / bidirectional-growth 진행 로그 cycle 191 추가)
+- SKILL.md Trigger-5 N=12 dogfood 박제 (cycle 191: 직전 20 cycle 171-190, 0회 chain 7개, zero-touch 63+→190+ 갱신)
+
+### Fixed
+- cycle_state JSON 2건 (186, 187): `chain_selected` 필드에 literal newline 삽입 → JSON.parse 오류. heredoc 이스케이프 실패 원인. 유효한 JSON 으로 수정 (curate 대체)
+
 ## [0.3.7] — 2026-05-07
 
 ### Added
