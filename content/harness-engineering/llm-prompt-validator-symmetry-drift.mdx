@@ -1,0 +1,106 @@
+---
+title: LLM Prompt-Validator 대칭성 드리프트 — 구조화 출력 일관성 보장
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - llm-output
+  - validation
+  - silent-drift
+  - prompt-engineering
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop]
+status: complete
+description: LLM 구조화 출력을 생성하는 prompt template과 그 출력을 검증하는 validator가 독립적으로 변경될 때 발생하는 대칭성 드리프트. prompt에만 있는 필드 = false positive 보안 갭; validator에만 있는 필드 = false negative 보안 갭.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+LLM이 구조화 출력 (팀 분석 요약, 예측 근거 등) 을 생성할 때, 두 컴포넌트가 독립적으로 진화:
+
+1. **Prompt template** — LLM에게 "어떤 필드를 포함해라" 를 지시
+2. **Output validator** — LLM 출력에서 필드 존재/값 범위를 검사
+
+이 두 컴포넌트가 drift 하면:
+
+| 드리프트 방향 | 증상 | 보안 갭 유형 |
+|---|---|---|
+| Prompt에 있고 Validator에 없음 | LLM이 필드를 생성하지만 검증 안 됨 | **False positive** — 잘못된 값이 통과 |
+| Validator에 있고 Prompt에 없음 | LLM이 필드를 생성 못 함, validator 체크는 항상 통과 | **False negative** — 보안 갭 은닉 |
+
+## 증거 (moneyball, cycle 179)
+
+`packages/kbo-data/src/agents/team-agent.ts` (prompt) vs `validator.ts` (validator) 드리프트 3건:
+
+```
+SP WAR:
+  validator: `spLine WAR ${p.war}` 포함 → 팀 요약에 SP WAR 존재 여부 검사
+  team-agent: SP WAR 언급 없음 → LLM이 SP WAR 생성 불가
+  → false negative 보안 갭: validator는 항상 SP WAR 검사를 통과 (없어도 OK 처리)
+
+gameTime:
+  team-agent: `시간: ${gameTime}` 포함 → LLM에게 시간 포함 지시
+  validator: gameTime 검사 없음 → 시간 값 false positive 통과 가능
+
+recentForm:
+  team-agent: Math.round(form*100)% (정수%)
+  validator: raw decimal (소수점)
+  → round-off 불일치 시 false positive (validator 판단 오류)
+```
+
+3건 수정 후 테스트 520→523 PASS.
+
+## 감지 방법
+
+### 정기 대칭성 감사 (review-code 체크리스트)
+
+```bash
+# prompt template 에서 LLM 에게 포함 지시하는 필드 추출
+grep -n "\${.*}" src/agents/team-agent.ts | grep -v "comment"
+
+# validator 에서 체크하는 필드 추출  
+grep -n "includes\|contains\|match\|===\|!==" src/agents/validator.ts
+```
+
+두 목록을 대조:
+- `prompt_fields - validator_fields` = false positive 위험 필드
+- `validator_fields - prompt_fields` = false negative 위험 필드 (보안 갭)
+
+### 자동 감지 (가드 패턴)
+
+```typescript
+// prompt template 에서 사용되는 필드 집합 추출 (컴파일 타임)
+const PROMPT_FIELDS = new Set<keyof TeamSummary>(['spWar', 'gameTime', 'recentForm']);
+// validator 에서 체크하는 필드 집합
+const VALIDATOR_FIELDS = new Set<keyof TeamSummary>(['spWar', 'recentForm']);
+
+// 불일치 감지
+const falsePositiveRisk = [...PROMPT_FIELDS].filter(f => !VALIDATOR_FIELDS.has(f));
+// → ['gameTime']
+```
+
+## Level 3 drift 감지와 연결
+
+CLAUDE.md Level 3 "머지 전 완전성 드리프트" 체크리스트 항목:
+> 대칭 로직 체크리스트: home/away, source/target, request/response 양쪽 다 처리?
+
+Prompt-Validator 쌍은 이 패턴의 특수 케이스 — "생성 지시 vs 생성 결과 검증" 의 대칭성.
+
+## 허브 적용 범위
+
+허브에는 직접 LLM 구조화 출력 + 별도 validator 쌍 없음.
+그러나 **Gemini generate-lesson.mjs** 패턴:
+- `responseSchema` (Zod) = validator 역할
+- prompt 상세 지시 = prompt template 역할
+- 두 컴포넌트가 같은 파일 안에 있어 drift 적음 — 분리 시 이 패턴 적용
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern): validator-prompt drift = silent false positive/negative 계열
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology): Level 3 대칭 로직 체크리스트
+- [Frontend AI Response Safety Net](/wiki/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop): LLM 응답 전체 안전망 레이어
