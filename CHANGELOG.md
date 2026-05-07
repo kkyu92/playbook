@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.9] — 2026-05-07
+
+### Added
+- **Wiki entry 1건 신규** (114번째): `debug-page-silent-drift-trap` — 인시던트 조사 시 debug 페이지 자체 silent query 실패로 오진 발생 패턴 (moneyball cycle 212 기반, 진단 도구 신뢰성 메타 원칙)
+
+### Changed
+- `silent-drift-family-pattern` connections 갱신 (debug-page-silent-drift-trap backlink — 8 fork 진화)
+- `llm-agent-artifact-first-diagnosis` connections 갱신 (debug-page-silent-drift-trap backlink)
+- `closed-loop-health` 대시보드 cycle 185→192 갱신 (curate=9/explore=4/dim=3/review=2)
+- memory rot 2건 갱신 (develop-cycle-skill-family cycle 174→191 / bidirectional-growth 진행 로그 cycle 191)
+
+### Fixed
+- cycle_state JSON 2건 (186, 187): `chain_selected` literal newline → JSON.parse 실패 수정
+
 ## [0.3.8] — 2026-05-07
 
 ### Changed
