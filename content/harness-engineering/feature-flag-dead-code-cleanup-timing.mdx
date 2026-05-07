@@ -1,0 +1,94 @@
+---
+title: Feature Flag 수명 주기 — 비활성 플래그 dead code 감지 및 정리 타이밍
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - feature-flag
+  - dead-code
+  - technical-debt
+  - code-cleanup
+  - silent-drift
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/question-own-defaults, harness-engineering/drift-detection-methodology]
+status: complete
+description: Feature flag 도입 후 실제로 끈 적 없는 플래그가 코드베이스에 잔존 — prod env var 이력 확인 + 코드 직접 read 로 dead code 확증 후 제거. 111 cycle 지연 사례 기반.
+type: entry
+source: manual
+---
+
+## 문제
+
+Feature flag 는 "나중에 꺼야 할 수도 있다"는 가정으로 추가된다. 그러나 실제로 그 가정이 실현되지 않으면 플래그 관련 코드 (conditional + else 분기 + 테스트 + 주석) 가 점점 dead code 로 누적된다. CI 통과, 테스트 green, 빌드 무에러 — 감지 신호가 없어 수십 사이클이 지나도 정리되지 않는다.
+
+**증상**:
+- `if (FEATURE_ENABLED) { ... } else { /* never reached */ }` 분기가 수십 cycle 후에도 존재
+- env var 가 prod 에서 한 번도 `false` 로 설정된 적 없음
+- 코드를 읽은 사람 없이 "여전히 필요할 수도 있다"는 가정만 유지
+
+## 사례 (moneyball SFR_ENABLED, 2026-05-07)
+
+`MONEYBALL_SFR_ENABLED` feature flag — cycle 81 에서 도입, cycle 206 에서 정리 = **111 cycle 지연**.
+
+```typescript
+// cycle 81 도입 시 (predictor.ts)
+const sfrEnabled = process.env.MONEYBALL_SFR_ENABLED === 'true';
+if (sfrEnabled) {
+  // SFR 가중치 적용 경로
+  return applyFancyStats(base, sfr);
+} else {
+  // ← 이 분기: prod 에서 한 번도 실행되지 않음
+  return applyBaseline(base);
+}
+```
+
+**dead code 확증 방법**:
+1. `predictor.ts` 직접 read → `'cycle 95+ cleanup 강제'` 주석 발견 (이미 알고 있었음, 방치됨)
+2. env var 이력 확인 → prod 에서 `false` 설정 이력 없음
+3. else 분기 dead code 확증 → 제거 결정
+
+**정리 범위**: conditional + else 분기 + export + 관련 테스트 + 주석. 757 tests green 유지 (PR #194).
+
+## Dead code 확증 체크리스트
+
+```
+[ ] env var / feature flag 이름으로 prod 설정 이력 확인 (Vercel env / Cloudflare env)
+[ ] 코드 직접 read — "cleanup 강제" 또는 "TODO: remove" 주석 존재 여부
+[ ] else 분기 / off-path 에 실제 테스트 커버리지 있는지 (없으면 dead code 가능성 ↑)
+[ ] 마지막으로 분기 실행된 CI run 확인 (없으면 dead code)
+```
+
+## Silent drift 연결
+
+Feature flag dead code 는 [silent drift family](/wiki/harness-engineering/silent-drift-family-pattern) 의 한 변형:
+
+| silent drift 유형 | 기저 원인 | feature flag 버전 |
+|---|---|---|
+| silent wrong output | 런타임 버그 | flag 조건 역전 시 의도 안 한 분기 실행 |
+| silent accumulation | 쌓이는 부채 | dead code 쌓여도 CI green 유지 |
+| silent assumption | 가정 고착 | "나중에 꺼야 할 수도" 가정 영구화 |
+
+## 정리 타이밍 기준
+
+| 조건 | 권장 조치 |
+|---|---|
+| prod 에서 flag = off 로 설정한 적 없음 + N ≥ 10 cycle | dead code 의심 → 이력 확인 |
+| `TODO: remove after cycle N` 주석 방치 + cycle N 지남 | cleanup 즉시 |
+| flag 의 else 분기가 테스트에서도 도달 안 됨 | dead code 확증 → 제거 |
+| 팀이 "나중에 쓸 수도 있다"는 말만 반복 | question-own-defaults 적용 |
+
+## 방어
+
+[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 프로토콜 적용:
+- "이 플래그 현재 prod 에서 on/off 어느 방향인가?" 정기 자가 질문
+- 코드 리뷰에서 `if (FLAG)` 발견 시 → "이 플래그 언제 끄나?" 즉시 질문
+- dead code 경보: `// cleanup 강제` 주석이 review-code chain 에서 첫 감지 신호
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — dead code 누적 = silent accumulation drift
+- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "이 플래그 여전히 필요한가?" 자가 의심 프로토콜
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2: 코드 직접 read 로 가정 검증

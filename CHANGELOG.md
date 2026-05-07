@@ -4,10 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.5] — 2026-05-07
+
+### Added
+- **Wiki entry 1건 신규** (110번째): `feature-flag-dead-code-cleanup-timing` — Feature flag 수명 주기: 비활성 플래그 dead code 111 cycle 지연 사례 + 확증 체크리스트 (moneyball cycle 206 기반)
+- SKILL.md Trigger-3 milestone 갱신 (cycle 150): N=11, zero-touch 150+
+
+### Changed
+- `silent-drift-family-pattern` connections 갱신 (feature-flag-dead-code-cleanup-timing backlink)
+- `question-own-defaults` connections 갱신 (feature-flag-dead-code-cleanup-timing backlink)
+- memory rot 2건 갱신 (project_develop_cycle_skill_family cycle 138→151 / bidirectional_growth 112+→151+)
+
 ## [0.3.4] — 2026-05-07
 
 ### Added
-- **Wiki entries 3건 신규** (107→108→109→110 예정):
+- **Wiki entries 2건 신규** (108·109번째):
   - `prediction-model-calibration-inversion-detection` — confidence bucket vs 실제 적중률 역전 감지 패턴 (moneyball cycle 207 기반)
   - `db-query-type-safety-assert-select-ok-pattern` — Server Component DB select silent drift 방지 (moneyball cycle 155 기반)
 - **`/ci-github-actions-guard` slash command 승격** (cycle 141): ci-github-actions 3건 임계 충족, 3대 패턴 가드 (heredoc/guard-cascade/billing-block)
@@ -20,7 +31,7 @@
 - SKILL.md Trigger-5 N=10 dogfood (cycles 122-141, 0회 chain 4개 = 명단 축소) + zero-touch 141+ 갱신
 
 ### Fixed
-- search index (embed-content): 714 chunks — 108 entries 포함 (cycle 145)
+- search index (embed-content): 720 chunks — 109 entries 포함 (cycle 150, assertSelectOk 반영)
 
 ## [0.3.3] — 2026-05-07
 

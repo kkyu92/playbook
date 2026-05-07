@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T04:36:24.787Z
+Updated: 2026-05-07T04:41:06.965Z
 
-## 엔트리 (109개)
+## 엔트리 (110개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -30,6 +30,7 @@ Updated: 2026-05-07T04:36:24.787Z
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [엔터프라이즈 에이전트 관리 패턴: 확장 가능하고 거버넌스 가능한 LLM 에이전트 오케스트레이션](wiki/harness-engineering/enterprise-agent-management-patterns-llm-orchestration) — confidence: 1, status: draft
 - [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/harness-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
+- [Feature Flag 수명 주기 — 비활성 플래그 dead code 감지 및 정리 타이밍](wiki/harness-engineering/feature-flag-dead-code-cleanup-timing) — confidence: 2, status: complete
 - [AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프](wiki/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop) — confidence: 1, status: draft
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
@@ -427,6 +428,9 @@ Updated: 2026-05-07T04:36:24.787Z
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
+- harness-engineering/feature-flag-dead-code-cleanup-timing ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/feature-flag-dead-code-cleanup-timing ↔ harness-engineering/question-own-defaults
+- harness-engineering/feature-flag-dead-code-cleanup-timing ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop ↔ harness-engineering/guard-test-pattern
 - harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop ↔ harness-engineering/hub-worker-compounding-pattern
