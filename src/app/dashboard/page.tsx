@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/dashboard" },
 };
 
-// 카테고리 서브 설명 — mockup H1 v2 기준. 9 카테고리.
+// 카테고리 서브 설명 — mockup H1 v2 기준. 10 카테고리.
 const CATEGORY_SUBS: Record<string, string> = {
   "prompt-engineering": "프롬프트 설계 / 버전 관리",
   "context-engineering": "컨텍스트 주입 / 관리 전략",
