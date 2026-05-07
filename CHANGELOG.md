@@ -13,6 +13,9 @@
 ### Changed
 - `silent-drift-family-pattern` connections 갱신 (feature-flag-dead-code-cleanup-timing backlink)
 - `question-own-defaults` connections 갱신 (feature-flag-dead-code-cleanup-timing backlink)
+- `assertSelectOk` entry 보강: try/catch bypass 패턴 + daily.ts cycle 211 사례 추가
+- `agentic-cycle-state-json-carry-over-design` evidence 63+→150+ 갱신
+- `closed-loop-health` 대시보드 cycle 133→161 gap 해소 (N=28)
 - memory rot 2건 갱신 (project_develop_cycle_skill_family cycle 138→151 / bidirectional_growth 112+→151+)
 
 ## [0.3.4] — 2026-05-07
