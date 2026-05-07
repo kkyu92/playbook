@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.2] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물 번째·스물한·스물두 번째 발화 (N=20/21/22) 박제 — cycles 226/227/228 연속 Trigger-5 (직전 20 cycle 206-225/207-226/208-227, 0회 chain 6개 명단 7회 연속 동일: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). zero-touch 63+→228+ cycle 검증
+- dashboard `closed-loop-health` cycle 224 → 228 갱신 — retro-only 0%, curate=7/skill-evolution=9 분포 (cycle 229)
+
 ## [0.5.1] — 2026-05-07
 
 ### Added
