@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.8] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 열다섯 번째 발화 (N=15) 박제 — Trigger-5 (명단 4회 연속 동일 201→212→213→215), cycle 216 retro 재평가: 명단 6→5 축소 (worker-incident-triage cycle 215 자연 발화 탈퇴). zero-touch 63+→215+ cycle 검증.
+
 ## [0.4.7] — 2026-05-07
 
 ### Changed
