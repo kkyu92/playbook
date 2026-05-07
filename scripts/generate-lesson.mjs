@@ -1,12 +1,5 @@
 /**
- * Entry 생성 파이프라인 (post-pivot).
- *
- * 설계 근거: CEO plan 2026-04-21-geeknews-pipeline-pivot (Task 4)
- * - topic-pool.json 폐기 → coverage-analyzer 기반 gap-pull
- * - entry 생성은 1 call (본문 + title + desc + tags + slug + connections 통합, responseSchema)
- * - 양방향 sync + cap 15 (lib/bidirectional-sync)
- * - source 필드 주입 (scout | gap-pull | manual)
- * - ping 호출 / 별도 slug 호출 제거 (쿼터 최적화)
+ * Entry 생성 파이프라인.
  *
  * CLI:
  *   suggest          — coverage-analyzer + Gemini 2개 추천 (dev/debug)
@@ -51,7 +44,7 @@ function loadManifest() {
   return JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
 }
 
-// ─── 양방향 파일 write (backfill 패턴 재사용) ──────────────────
+// ─── 양방향 파일 write ──────────────────────────────────────────
 
 function loadAllEntryFiles() {
   const entries = [];
@@ -79,7 +72,7 @@ function loadAllEntryFiles() {
   return entries;
 }
 
-// gray-matter 는 field 순서 변경. backfill 과 동일한 preserving stringify 사용.
+// gray-matter 는 field 순서 변경 — yaml.dump + connections inline 재조립.
 function stringifyPreservingOrder(raw, newFm, body) {
   const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
   if (!fmMatch) throw new Error(`No frontmatter in ${raw.slice(0, 80)}`);
@@ -108,14 +101,6 @@ function inlineConnectionsArray(yamlText) {
 }
 
 /**
- * 새 entry 생성 + 역방향 sync 적용 + 변경된 파일들 write.
- *
- * 동작:
- *  1. 새 entry 파일 write (fresh)
- *  2. connections 타겟 파일들 load + 역방향 연결 추가
- *  3. cap 15 초과 시 축출 (lib/bidirectional-sync 규칙)
- *  4. 변경된 파일만 write
- *
  * @param {object} newEntry — { slug, category, topicSlug, frontmatter, body }
  * @returns {{ newPath: string, updatedFiles: string[], evictions: Array }}
  */
@@ -128,15 +113,13 @@ function persistNewEntryWithSync(newEntry) {
     throw new Error(`File already exists: ${newPath}`);
   }
 
-  // 새 파일 write
   const newRaw = stringifyPreservingOrder(
-    `---\n\n---\n`, // dummy raw (stringifyPreservingOrder 는 body 만 참조)
+    `---\n\n---\n`, // new file — minimal dummy to satisfy frontmatter-check
     newEntry.frontmatter,
     `\n${newEntry.body}`,
   );
   fs.writeFileSync(newPath, newRaw);
 
-  // 역방향 파일 업데이트
   const allEntries = loadAllEntryFiles();
   const working = allEntries.map((e) => ({
     slug: e.slug,
@@ -146,7 +129,6 @@ function persistNewEntryWithSync(newEntry) {
       : [],
   }));
 
-  // 역방향 연결: newEntry.connections 의 각 target 의 connections 에 newEntry.slug 추가
   const evictions = [];
   for (const targetSlug of newEntry.frontmatter.connections) {
     const target = working.find((w) => w.slug === targetSlug);
@@ -154,7 +136,7 @@ function persistNewEntryWithSync(newEntry) {
     if (!target.newConnections.includes(newEntry.slug)) {
       target.newConnections.push(newEntry.slug);
     }
-    // cap 15 초과 시 축출 — newEntry 는 보호
+    // newEntry 는 축출 대상 제외
     while (target.newConnections.length > MAX_CONNECTIONS) {
       const candidates = target.newConnections
         .filter((s) => s !== newEntry.slug)
@@ -179,7 +161,6 @@ function persistNewEntryWithSync(newEntry) {
     }
   }
 
-  // 변경된 파일만 write
   const updatedFiles = [];
   for (const w of working) {
     const before = Array.isArray(w.original.frontmatter.connections)
@@ -442,9 +423,6 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
     topicSlug = `${topicSlug}-${Date.now().toString(36).slice(-4)}`;
   }
   const newSlug = `${cat}/${topicSlug}`;
-
-  // Quiz 생성 제거 — 1인칭 학습 관점 유산. 프로젝트 지식 그래프 목표와 불일치.
-  // 본문 자체가 트레이드오프 + 실전 체크리스트 섹션을 포함.
 
   const frontmatter = buildFrontmatter({
     payload,
