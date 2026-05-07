@@ -5,6 +5,30 @@ import { analyzeCoverage, type CoverageResult, type CoverageCategory } from "@/l
 import { EmptyState } from "./empty-state";
 import styles from "./dashboard.module.css";
 
+const STATUS_CLASS: Record<string, string> = {
+  empty: styles.catEmpty,
+  low: styles.catLow,
+  ok: styles.catOk,
+  over: styles.catOver,
+};
+const BADGE_CLASS: Record<string, string> = {
+  empty: styles.badgeEmpty,
+  low: styles.badgeLow,
+  ok: styles.badgeOk,
+  over: styles.badgeOver,
+};
+const FILL_CLASS: Record<string, string> = {
+  empty: styles.fillEmpty,
+  low: styles.fillLow,
+  ok: styles.fillOk,
+  over: styles.fillOver,
+};
+const SOURCE_CLASS: Record<string, string> = {
+  scout: styles.sourceScout,
+  "gap-pull": styles.sourceGap,
+  manual: styles.sourceManual,
+};
+
 export const metadata: Metadata = {
   title: "Playbook Health",
   description: "Wiki coverage / 갭 분석 / source mix / staleness",
@@ -51,24 +75,6 @@ function daysAgoLabel(dateStr: string): string {
 
 // ─── Panel: Category Coverage (3×3) ──────────────────────────
 function CategoryCoverage({ coverage, medianVal }: { coverage: CoverageResult; medianVal: number }) {
-  const statusClass: Record<string, string> = {
-    empty: styles.catEmpty,
-    low: styles.catLow,
-    ok: styles.catOk,
-    over: styles.catOver,
-  };
-  const badgeClass: Record<string, string> = {
-    empty: styles.badgeEmpty,
-    low: styles.badgeLow,
-    ok: styles.badgeOk,
-    over: styles.badgeOver,
-  };
-  const fillClass: Record<string, string> = {
-    empty: styles.fillEmpty,
-    low: styles.fillLow,
-    ok: styles.fillOk,
-    over: styles.fillOver,
-  };
   const binding = coverage.target === coverage.targetFloor ? "floor" : "median";
 
   return (
@@ -87,14 +93,14 @@ function CategoryCoverage({ coverage, medianVal }: { coverage: CoverageResult; m
             <Link
               key={c.name}
               href={`/wiki#category-${c.name}`}
-              className={`${styles.catCard} ${statusClass[c.status]}`}
+              className={`${styles.catCard} ${STATUS_CLASS[c.status]}`}
             >
               <div className={styles.catTopRow}>
                 <div>
                   <div className={styles.catName}>{c.name}</div>
                   <div className={styles.catSub}>{CATEGORY_SUBS[c.name] || ""}</div>
                 </div>
-                <span className={`${styles.catBadge} ${badgeClass[c.status]}`}>
+                <span className={`${styles.catBadge} ${BADGE_CLASS[c.status]}`}>
                   {c.status.toUpperCase()}
                 </span>
               </div>
@@ -105,7 +111,7 @@ function CategoryCoverage({ coverage, medianVal }: { coverage: CoverageResult; m
                 </div>
                 <div className={styles.catBar}>
                   <div
-                    className={`${styles.catFill} ${fillClass[c.status]}`}
+                    className={`${styles.catFill} ${FILL_CLASS[c.status]}`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
@@ -139,12 +145,6 @@ function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>[
     if (byDate[e.frontmatter.date]) byDate[e.frontmatter.date].push(e);
   }
 
-  const sourceClass: Record<string, string> = {
-    scout: styles.sourceScout,
-    "gap-pull": styles.sourceGap,
-    manual: styles.sourceManual,
-  };
-
   return (
     <div className={styles.panel}>
       <div className={styles.panelHeader}>
@@ -171,7 +171,7 @@ function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>[
                     </Link>
                     <div className={styles.recentItemMeta}>
                       <span>{e.frontmatter.category}</span>
-                      <span className={`${styles.sourceTag} ${sourceClass[src]}`}>{src}</span>
+                      <span className={`${styles.sourceTag} ${SOURCE_CLASS[src]}`}>{src}</span>
                     </div>
                   </div>
                 );
