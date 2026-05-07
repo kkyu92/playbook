@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.7] — 2026-05-07
+
+### Added
+- **Wiki entry 1건 신규** (113번째): `llm-prompt-validator-symmetry-drift` — LLM 구조화 출력 prompt/validator 대칭성 드리프트 (false positive/negative 갭, moneyball cycle 179 validator.ts/team-agent.ts 3건)
+
+### Changed
+- `db-query-type-safety-assert-select-ok-pattern` 보강: `.error` 미체크 섹션 추가 (moneyball cycle 216 daily.ts 사례)
+- `silent-drift-family-pattern` connections 갱신 (llm-prompt-validator backlink)
+- `closed-loop-health` 대시보드 cycle 174→185 갱신 (curate=10/explore=4/review=3/dim=3, retro-only 5%)
+
+### Fixed
+- search index (embed-content): 746 chunks — 113 entries 포함 (cycle 185)
+
 ## [0.3.6] — 2026-05-07
 
 ### Added
