@@ -2,7 +2,7 @@
 // 이유: dashboard (src/app/...) 에서 scripts/ 를 직접 import 할 때 TS 타입이 any. 여기서 한 번 typed.
 // 런타임은 scripts/coverage-analyzer.mjs 그대로 재사용.
 
-export { analyzeCoverage, computeTarget, computeGapScore, ALL_CATEGORIES, TARGET_FLOOR, STALE_MONTHS } from "../../scripts/coverage-analyzer.mjs";
+export { analyzeCoverage } from "../../scripts/coverage-analyzer.mjs";
 
 export type CoverageCategory = {
   name: string;

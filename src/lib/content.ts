@@ -35,10 +35,6 @@ export function getAllSlugs(): string[] {
   return manifest.entries.map((e) => e.slug);
 }
 
-export function getEntriesByCategory(category: string) {
-  const manifest = getManifest();
-  return manifest.entries.filter((e) => e.frontmatter.category === category);
-}
 
 export interface SidebarEntry {
   slug: string;

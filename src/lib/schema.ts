@@ -84,7 +84,7 @@ export const CATEGORY_GROUPS: Array<{
   },
 ];
 
-export const quizQuestionSchema = z.object({
+const quizQuestionSchema = z.object({
   question: z.string(),
   choices: z.array(z.string()).min(2),
   answer: z.number().int().min(0),

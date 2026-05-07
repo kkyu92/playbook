@@ -45,10 +45,6 @@ function buildClients() {
   return clients;
 }
 
-export function getClient() {
-  // backward compat — primary client 만 반환
-  return buildClients()[0].client;
-}
 
 /**
  * Daily quota 소진 여부 감지.

@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 
 function getEnv(name: string, minLength: number): string {
   const value = process.env[name];
@@ -100,11 +99,4 @@ export async function verifyToken(token: string): Promise<boolean> {
     );
     return false;
   }
-}
-
-export async function isAuthenticated(): Promise<boolean> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("admin-token")?.value;
-  if (!token) return false;
-  return verifyToken(token);
 }
