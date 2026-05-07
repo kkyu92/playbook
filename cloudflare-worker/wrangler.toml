@@ -19,10 +19,13 @@ crons = [
 
 [vars]
 GH_REPO = "kkyu92/playbook"
+GH_REPO_SILVER = "kkyu92/silver-autopilot"
 
 # Secret 등록 (대시보드 또는 CLI):
 #   wrangler secret put GH_DISPATCH_PAT
 #     → fine-grained PAT, Actions = Read and Write 만, repo: kkyu92/playbook
+#   wrangler secret put GH_DISPATCH_PAT_SILVER
+#     → fine-grained PAT, Actions = Read and Write 만, repo: kkyu92/silver-autopilot
 #
 # 보안: 토큰 유출 시 workflow_dispatch trigger 만 가능. contents/PR/issues 권한 없음.
 
