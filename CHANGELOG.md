@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.7] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 241 → 244 갱신 — skill-evolution=9/curate=7/review-code=3/explore-idea=1 (window 225-244). Trigger-5 SE #28 skip 룰 지속 적용 (명단 동일 3회 연속 + SE 점유율 45%). wiki 119 entries CLEAN (orphan/stale/isolated 0건)
+- wiki lint CLEAN 확인 (cycle 244 curate) — 119 entries, pattern candidate 0건 신규, scan-promotions 승격 대상 없음
+
 ## [0.5.6] — 2026-05-08
 
 ### Changed

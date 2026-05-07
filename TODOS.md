@@ -24,18 +24,18 @@
 **완료 신호**: CI run 재성공 + curate-routine fire 성공
 **Reference**: run #25439995740 (cycle 105) → run #25469899568/25467983336/25463172256 (cycle 111 에스컬레이션)
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED N=14)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED N=15)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-**현재 상태**: local 29개 ahead (cycles 222-242 policy/content commits), origin 3개 ahead (moneyball auto-ingest 248-250)
+**현재 상태**: local 30개 ahead (cycles 222-244 policy/content commits), origin 3개 ahead (moneyball auto-ingest 248-250)
 **자동 머지 가능**: `git merge --no-commit --no-ff origin/main` clean (충돌 없음, cycle 238 확인)
 **origin ahead (누락)**:
 - `7a9aa24` cycle 250 — polish-ui text-green-* (PR #232)
 - `c4a681d` cycle 249 — explore-idea /analysis 이번 달 AI 최고 픽 (PR #231)
 - `7bd0428` cycle 248 — review-code buildTeamAccuracy CURRENT_MODEL_FILTER (PR #230)
-**local ahead (미push)**: 184f33e~ab513d5 (cycle 222-242 retro+content commits)
+**local ahead (미push)**: 184f33e~d97623b (cycle 222-243 retro+content commits)
 **해소 방법**: `git merge origin/main` + `git push origin main` (사용자 GO 필수 — R6)
-**감지 이력**: cycle 226(N=1) → cycle 227(N=2) → cycle 228(N=3) → cycle 229(N=4) → cycle 230(N=5) → cycle 231(N=6) → cycle 232(N=7) → cycle 233(N=8) → cycle 234(N=9) → cycle 235(N=10) → cycle 237(N=11) → cycle 238(N=12) → cycle 242(N=13) → cycle 243(N=14)
+**감지 이력**: cycle 226(N=1) → cycle 227(N=2) → cycle 228(N=3) → cycle 229(N=4) → cycle 230(N=5) → cycle 231(N=6) → cycle 232(N=7) → cycle 233(N=8) → cycle 234(N=9) → cycle 235(N=10) → cycle 237(N=11) → cycle 238(N=12) → cycle 242(N=13) → cycle 243(N=14) → cycle 244(N=15)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
