@@ -102,6 +102,32 @@ describe('assertSelectOk', () => {
 });
 ```
 
+## 주의 — try/catch 가 guard 를 무력화
+
+assertSelectOk 는 throw 기반 fail-loud 가드다. try/catch 가 상위 호출 스택에 있으면 throw 가 잡혀서 silent 처리된다.
+
+```typescript
+// ❌ try/catch 가 assertSelectOk throw 를 삼켜버림
+async function pipelineStep() {
+  try {
+    const rows = assertSelectOk(await db.select()..., 'pipelineStep');
+    await process(rows);
+  } catch (e) {
+    logger.warn('skipping step:', e);  // assertSelectOk Error 도 여기서 조용히 삼켜짐
+  }
+}
+
+// ✅ throw 를 caller 에게 전파
+async function pipelineStep() {
+  const rows = assertSelectOk(await db.select()..., 'pipelineStep');  // throw = caller 몫
+  await process(rows);
+}
+```
+
+**패턴**: assertSelectOk rollout 시 page 컴포넌트 외에 pipeline/batch 코드에서 try/catch 갭 별도 점검 필수. 에러 기반 가드는 call stack 전체가 propagation 경로.
+
+**사례** (moneyball daily.ts, cycle 211): page 10개 assertSelectOk 적용 후 4 cycle 뒤에 daily.ts pipeline 코드에서 try/catch 갭 발견 — finish() 우회로 pipeline_runs 미기록. 구조 수정으로 해소.
+
 ## 도입 효과 (moneyball, 2026-05-06)
 
 - apps/moneyball page 10개 select 통일 (4 step sequence, cycles 148~155)
