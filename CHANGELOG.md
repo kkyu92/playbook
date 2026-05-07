@@ -4,6 +4,26 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.2] — 2026-05-07
+
+### Added
+- **Wiki entries 4건 신규** (104→106→108 예정):
+  - `develop-cycle-positive-streak-recognition` — 성공 streak vs stuck streak 구분 패턴
+  - `agentic-cycle-state-json-carry-over-design` — 멀티세션 연속성 cycle_state JSON 설계
+  - CHANGELOG 0.3.1 (cycle 122), 0.3.2 (cycle 135)
+- **develop-cycle-hub SKILL.md Trigger-5 N=7 dogfood** (cycle 133): 0회 chain 7→5 축소 (explore-idea/fix-incident batch session 발화). zero-touch 63+→133+ 갱신
+- **Closed-Loop Health Dashboard 갱신** (cycle 134): cycle 42→133 (91 cycle gap 해소)
+
+### Changed
+- `hub-worker-compounding-pattern` connections 갱신 (positive-streak + agentic-cycle-state backlink)
+- `question-own-defaults` connections 갱신 (positive-streak backlink)
+- `ambient-knowledge-injection` connections 갱신 (agentic-cycle-state backlink)
+- MEMORY.md: cycle 128→133, pivot T8 billing 해소 상태 갱신
+
+### Fixed
+- search index (embed-content): 690 chunks — 신규 2 entries 포함 (cycle 131)
+- INDEX.md + data/search-hits.json 2회 갱신 (cycles 123, 131)
+
 ## [0.3.1] — 2026-05-07
 
 ### Added
