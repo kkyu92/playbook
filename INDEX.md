@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T04:28:15.799Z
+Updated: 2026-05-07T04:28:48.320Z
 
 ## 엔트리 (108개)
 
@@ -334,6 +334,7 @@ Updated: 2026-05-07T04:28:15.799Z
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/llm-interactive-ui-frontend-implementation
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ harness-engineering/drift-detection-methodology
@@ -344,7 +345,6 @@ Updated: 2026-05-07T04:28:15.799Z
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ harness-engineering/guard-test-pattern
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - evaluation/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
-- evaluation/prediction-model-calibration-inversion-detection ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/prediction-model-calibration-inversion-detection ↔ harness-engineering/silent-drift-family-pattern
 - evaluation/prediction-model-calibration-inversion-detection ↔ harness-engineering/drift-detection-methodology
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ evaluation/rag-search-performance-evaluation-metrics-design
