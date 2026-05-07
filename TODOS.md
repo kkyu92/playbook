@@ -24,10 +24,11 @@
 **완료 신호**: CI run 재성공 + curate-routine fire 성공
 **Reference**: run #25439995740 (cycle 105) → run #25469899568/25467983336/25463172256 (cycle 111 에스컬레이션)
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED N=11)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED N=12)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-**현재 상태**: local 21개 ahead (cycles 222-237 policy/content commits), origin 3개 ahead (moneyball auto-ingest 248-250)
+**현재 상태**: local 23개 ahead (cycles 222-238 policy/content commits), origin 3개 ahead (moneyball auto-ingest 248-250)
+**자동 머지 가능**: `git merge --no-commit --no-ff origin/main` clean (충돌 없음, cycle 238 확인)
 **origin ahead (누락)**:
 - `7a9aa24` cycle 250 — polish-ui text-green-* (PR #232)
 - `c4a681d` cycle 249 — explore-idea /analysis 이번 달 AI 최고 픽 (PR #231)
