@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.5] — 2026-05-08
+
+### Added
+- `content/harness-engineering/zero-touch-develop-cycle-session-management.mdx` 신규 entry (cycle 237 explore-idea) — zero-touch 자동 fire 세션 관리 패턴: watch.sh + launchd + tmux claude-hub 구조, FIRE_PENDING 해소 프로토콜, session 수명 관리
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물여섯 번째 발화 (N=26) 박제 — cycle 238 Trigger-5 (직전 20 cycle 217-236, 0회 chain 6개: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). explore-idea 명단 탈퇴 (cycle 237 activation, 28 사이클 만의 발화). zero-touch 63+→238+ cycle 검증
+- `review-code` cycle 236 — health 10.0/10 CLEAN 4회 연속 (cycles 233~236)
+- dashboard `closed-loop-health` cycle 234 → 238 갱신 — retro-only 0%, skill-evolution=11/curate=5/explore-idea=1/review-code=1 분포, 0회 chain 6개
+
 ## [0.5.4] — 2026-05-08
 
 ### Changed

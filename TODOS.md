@@ -35,7 +35,7 @@ origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택
 - `7bd0428` cycle 248 — review-code buildTeamAccuracy CURRENT_MODEL_FILTER (PR #230)
 **local ahead (미push)**: 184f33e~a0e5aa6 (cycle 222-236 retro+content commits)
 **해소 방법**: `git merge origin/main` + `git push origin main` (사용자 GO 필수 — R6)
-**감지 이력**: cycle 226(N=1) → cycle 227(N=2) → cycle 228(N=3) → cycle 229(N=4) → cycle 230(N=5) → cycle 231(N=6) → cycle 232(N=7) → cycle 233(N=8) → cycle 234(N=9) → cycle 235(N=10) → cycle 237(N=11)
+**감지 이력**: cycle 226(N=1) → cycle 227(N=2) → cycle 228(N=3) → cycle 229(N=4) → cycle 230(N=5) → cycle 231(N=6) → cycle 232(N=7) → cycle 233(N=8) → cycle 234(N=9) → cycle 235(N=10) → cycle 237(N=11) → cycle 238(N=12)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
