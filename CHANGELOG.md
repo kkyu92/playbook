@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.3.1] — 2026-05-07
+
+### Added
+- **Wiki entries 2건 신규**: `llm-agent-artifact-first-diagnosis` (표면 로그 vs artifact 실파일 진단 패턴) + `vercel-ignore-command-preview-skip` (100회/일 배포 한도 보호)
+- **Wiki entries 총 104건** (102→104)
+- **GH Actions billing 완전 해소** (2026-05-07): playbook/moneyball/blog-autopilot 퍼블릭 전환 + 초과분 결제. run #25471190398 success 확인
+
+### Changed
+- `hub-worker-compounding-pattern` confidence 3→4: zero-touch 63+ cycle 자율 회전 + 3 fork 운영 + worker-lesson 자동 ingest 운영 증거 추가
+- develop-cycle-hub SKILL.md: Trigger-5 N=6 dogfood 박제 (동일 0회 chain 명단 4회 연속 = dormancy 완전 항구화). zero-touch 59+→63+ 갱신
+- TODOS.md: `[P0] GitHub Actions billing 차단` → `[DONE]` 해소 처리
+
+### Fixed
+- SKILL.md 0-byte 복원: 직전 세션 sed 오동작으로 비워진 파일을 JSONL 트랜스크립트에서 복원
+
 ## [0.3.0] — 2026-05-06
 
 ### Added
