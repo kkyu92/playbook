@@ -18,23 +18,23 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-05-07T02:31:36.350Z'
-last_cycle: 133
+last_updated: '2026-05-07T04:40:00.000Z'
+last_cycle: 161
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **133**. 마지막 update: 2026-05-07T02:31:36.347Z.
+> 직전 cycle: **161**. 마지막 update: 2026-05-07T04:40:00.000Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
-| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 16 / 0 |
-| **Process** | chain pool 분포 (직전 20) | curate=6 / dimension-cycle=5 / explore-idea=4 / review-code=3 / fix-incident=1 / skill-evolution=1 |
+| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 17 / 0 |
+| **Process** | chain pool 분포 (직전 20, cycles 142-161) | curate=8 / dimension-cycle=4 / review-code=3 / explore-idea=3 / skill-evolution=2 |
 | **Process** | retro-only 비율 | 0/20 (0%) |
-| **Output** | PR ship (직전 10) | 0 |
-| **Feedback** | 0회 chain (직전 20) | polish-ui, worker-incident-triage, closed-loop-design, expand-scope, design-system |
+| **Output** | PR ship (직전 10) | 0 (main 직접 commit 모드) |
+| **Feedback** | 0회 chain (직전 20) | polish-ui, worker-incident-triage, closed-loop-design, fix-incident, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -42,19 +42,19 @@ last_cycle: 133
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 133 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 161→200 다음 milestone | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
-| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 5 | 자율 | ✅ |
+| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 6 | 자율 | ✅ (cycle 161 완료, 다음 milestone = cycle 200) |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
-| 133 | skill-evolution | success | — |
-| 132 | dimension-cycle | success | — |
-| 131 | review-code | success | — |
-| 130 | curate | success | — |
-| 129 | explore-idea | success | — |
+| 161 | curate | success | — |
+| 160 | dimension-cycle | success | — |
+| 159 | curate | success | — |
+| 158 | review-code | success | — |
+| 157 | curate | success | — |
 
 ## Methodology
 
