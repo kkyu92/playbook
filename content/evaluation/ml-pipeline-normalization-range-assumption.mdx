@@ -1,0 +1,102 @@
+---
+title: ML 파이프라인 정규화 함수 입력 범위 가정 — 피처 확장 시 silent 오계산
+category: evaluation
+date: "2026-05-07"
+tags:
+  - ml-pipeline
+  - normalization
+  - silent-bug
+  - prediction-model
+  - feature-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [evaluation/prediction-model-calibration-inversion-detection, harness-engineering/silent-drift-family-pattern, harness-engineering/question-own-defaults]
+status: complete
+description: ML 파이프라인에 새 피처나 계산 경로를 추가할 때, 기존 정규화 함수가 "입력 양수" 를 암묵적으로 가정하고 있으면 음수 입력 시 factor < 0 가 발생하는 silent 버그. calibration 역전 또는 신뢰도 왜곡의 근본 원인이 될 수 있다.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+ML 파이프라인에서 피처 집합을 확장하거나 새 계산 경로를 추가할 때, 기존 `normalize()` 함수가 암묵적으로 가정하는 입력 범위를 벗어나는 값이 들어올 수 있다.
+
+**증상**: 새 피처 활성화 후 일부 예측의 `factor` 값이 `[0, 1]` 범위를 벗어남 → 신뢰도 점수 왜곡 → calibration 역전의 숨겨진 원인.
+
+## 증거 (moneyball, cycle 207-208)
+
+```
+SFR (Starter-Relief Factor) 비활성 상태 (cycle 81 이전):
+  모든 factor 입력 = 양수 → normalize(x) 정상 동작
+
+SFR 활성 후 (cycle 81+):
+  sfr factor = 선발/구원 투수 간 차이 → 일부 매치업에서 음수 값 가능
+  → normalize(sfr_factor) = factor < 0 반환 (6/72건)
+  → confidence 점수 왜곡 → calibration bucket 역전 (cycle 207 발견)
+```
+
+cycle 207 operational-analysis 까지 버그가 **활성화 81 사이클 뒤** 에 발견됨. 6/72 (8.3%) 케이스에서 음수 factor 발생이었지만 전체 정확도에 묻혀 표면화되지 않음.
+
+## 정규화 함수 입력 범위 가정 유형
+
+| 가정 유형 | 예시 | 위험 |
+|---|---|---|
+| **양수 전용** | `factor = (x - min) / (max - min)` | x < min 시 factor < 0 |
+| **고정 범위** | `factor = x / 100` (0~100 가정) | 범위 밖 입력 시 1 초과 또는 음수 |
+| **상대적 차이** | 두 값의 차이 → 차이 범위 가정 | 예상 범위 외 이상치 |
+
+## 차이 기반 정규화 — range-agnostic 설계
+
+moneyball cycle 208 fix: normalize() 를 **차이 기반** 으로 재설계:
+
+```typescript
+// ❌ 절대값 기반 — 입력 범위 가정
+function normalize(value: number, min: number, max: number): number {
+  return (value - min) / (max - min);
+  // value < min → 결과 < 0 (가정 위반)
+}
+
+// ✅ 차이 기반 — range-agnostic
+function normalize(
+  home: number,
+  away: number,
+  scale: number
+): number {
+  const diff = home - away;
+  // diff ∈ (-scale, +scale)
+  // (diff + scale) / (2 * scale) → [0, 1] 항상 보장
+  return Math.max(0, Math.min(1, (diff + scale) / (2 * scale)));
+}
+```
+
+차이 기반 접근은 **음수 입력이 발생해도** `[0, 1]` 범위가 수학적으로 보장.
+
+## 피처 확장 시 체크리스트
+
+새 피처 또는 계산 경로 추가 시:
+
+```
+□ 새 피처의 이론적 최솟값 확인 — 음수 가능성 있나?
+□ 기존 normalize() 함수가 새 입력 범위를 처리할 수 있나?
+□ 경계 조건 unit test 추가: normalize(negativeInput) 의 결과 검증
+□ 활성화 후 첫 N 예측 결과에서 factor 분포 샘플링
+```
+
+## operational-analysis 로 늦게 발견하는 이유
+
+silent 버그가 **81 사이클 동안** 감지 안 된 이유:
+- 8.3% 케이스에만 음수 factor 발생 → 전체 정확도에 묻힘
+- 단위 테스트: 양수 입력만 테스트 → 음수 입력 경계 케이스 X
+- CI 통과: 빌드·타입 오류 없음
+- weekly 리뷰: W18 급락 (36%) 을 "3쌍 0% 매치업 이상치" 로 설명 가능 → 더 깊이 안 팜
+
+cycle 207 operational-analysis 에서 72건 전수 분석 중 **calibration bucket 역전 발견** →
+bucket 역전의 원인 중 하나로 normalize 음수 추정 → cycle 208 수정.
+
+## 관련
+
+- [Calibration Inversion Detection](/wiki/evaluation/prediction-model-calibration-inversion-detection) — normalize 버그가 calibration 역전의 원인 중 하나
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — factor 범위 오계산 = 조용히 누적되는 silent drift
+- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "기존 normalize() 가 새 피처에도 OK" 가정을 먼저 의심했어야
