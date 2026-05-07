@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.11] — 2026-05-08
+
+### Fixed
+- BRANCHED N=22 해소 — cycle 257 세션 시작 시 origin/main diverged 감지 → `git merge origin/main` 수행 (INDEX.md 충돌 1건 수동 해소, commit `65fbd78`+`e49237d`). local 53개 ahead, origin 0개 ahead 정렬 완료
+
+### Changed
+- embeddings.json 갱신 — origin/main 머지로 유입된 46개 신규 content 파일 인덱싱. 825 chunks (123 entries + 13 solutions + 1 retro, 384d vector, 7835 KB)
+- INDEX.md 엔트리 수 123개 (origin 122개 + local 1개 신규 merge 결과)
+- TODOS.md `[P0] R6 대기 BRANCHED N=22` → DONE 처리
+
 ## [0.5.10] — 2026-05-08
 
 ### Fixed

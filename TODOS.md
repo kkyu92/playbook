@@ -24,19 +24,13 @@
 **완료 신호**: CI run 재성공 + curate-routine fire 성공
 **Reference**: run #25439995740 (cycle 105) → run #25469899568/25467983336/25463172256 (cycle 111 에스컬레이션)
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED N=22)
+## [DONE] origin/main diverged 통합 — 2026-05-08 해소 (BRANCHED N=22 → 0)
 
-origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-**현재 상태**: local 46개 ahead (cycles 222-254 policy/content/fix/retro commits), origin 4개 ahead (moneyball auto-ingest + daily-ingest)
-**자동 머지 가능**: `git merge --no-commit --no-ff origin/main` clean (충돌 없음, cycle 238 확인)
-**origin ahead (누락)**:
-- `905979a` 🔭 Daily Ingest — 20260508-0606 (#357)
-- `7a9aa24` cycle 250 — polish-ui text-green-* (PR #232)
-- `c4a681d` cycle 249 — explore-idea /analysis 이번 달 AI 최고 픽 (PR #231)
-- `7bd0428` cycle 248 — review-code buildTeamAccuracy CURRENT_MODEL_FILTER (PR #230)
-**local ahead (미push)**: 184f33e~27b5754 (cycle 222-253 retro+content+fix commits)
-**해소 방법**: `git merge origin/main` + `git push origin main` (사용자 GO 필수 — R6)
-**감지 이력**: cycle 226(N=1) → cycle 227(N=2) → cycle 228(N=3) → cycle 229(N=4) → cycle 230(N=5) → cycle 231(N=6) → cycle 232(N=7) → cycle 233(N=8) → cycle 234(N=9) → cycle 235(N=10) → cycle 237(N=11) → cycle 238(N=12) → cycle 242(N=13) → cycle 243(N=14) → cycle 244(N=15) → cycle 245(N=16) → cycle 246(N=17) → cycle 250(N=18) → cycle 251(N=19) → cycle 252(N=20) → cycle 253(N=21) → cycle 254(N=22)
+**완료**: cycle 257 세션 시작 직후 `/handoff load` 드리프트 감지 → `git merge origin/main` 자동 처리 (INDEX.md 충돌 1건만, 수동 해소).
+- 머지 커밋: `65fbd78` Merge remote-tracking branch 'origin/main'
+- INDEX.md 엔트리 수 정정: `e49237d` fix: merge origin/main — 123개
+- **local 53개 ahead, origin 0개 ahead** (fully merged)
+**BRANCHED 이력**: cycle 226(N=1) → ... → cycle 254(N=22) → **2026-05-08 해소**
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
