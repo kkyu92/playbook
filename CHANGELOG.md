@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.10] — 2026-05-08
+
+### Fixed
+- cycle 253 review-code — dead code 정리: scripts/lib/graph-signals.mjs / src/components/learning-heatmap.tsx / mermaid-diagram.tsx / projects-page-client.tsx / projects-tabs.tsx 삭제 (5파일, 모두 0 import 고아). flexsearch / shiki 미사용 deps 제거 (2종). health TC/LINT/TEST CLEAN (commit `1eeb2c9`)
+
+### Changed
+- knip.json 신규 추가 — 125개 false positive 제거, 정확한 dead code 감지 활성화. dead code issues 34 → 22 (health 8.4/10)
+- `develop-cycle-hub` SKILL.md SE #31 박제 (cycle 251, window 231-250) + SE #32 박제 (cycle 252, window 232-251) — 명단 7개 동일 (fix-incident/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system), SE 점유율 35% < 40% → 마커 설정 후 retro 재평가 skip (자기조정). N=12 batch (251-262) 진행 중
+- wiki lint CLEAN (cycle 254 curate) — 119 entries, orphan/stale/isolated/JIT-unused 0건, pattern candidate 'drift' 이미 승격
+- dashboard `closed-loop-health` cycle 250 → 254 갱신
+- TODOS.md `[P0] R6 대기` BRANCHED N=21 (local 46개 ahead, origin 4개 ahead — cycles 222-253)
+
 ## [0.5.9] — 2026-05-08
 
 ### Changed
