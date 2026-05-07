@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T05:26:07.347Z
+Updated: 2026-05-07T05:33:10.330Z
 
-## 엔트리 (111개)
+## 엔트리 (112개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -22,6 +22,7 @@ Updated: 2026-05-07T05:26:07.347Z
 
 ### Harness Engineering
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
+- [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
@@ -391,6 +392,10 @@ Updated: 2026-05-07T05:26:07.347Z
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-chain-saturation-detection ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-chain-saturation-detection ↔ agents/llm-agent-goal-achievement-planning-patterns
+- harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ reports/closed-loop-health
+- harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/guard-test-pattern

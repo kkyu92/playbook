@@ -1,0 +1,102 @@
+---
+title: Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - agentic-loop
+  - chain-pool
+  - harness-engineering
+  - analytics
+  - observability
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/hub-worker-compounding-pattern, context-engineering/agentic-cycle-state-json-carry-over-design, reports/closed-loop-health, harness-engineering/agentic-chain-saturation-detection]
+status: complete
+description: 에이전트 자율 루프의 chain pool에 "코드 변경 0, 측정만" 전용 chain을 두는 패턴. 측정 이벤트를 cycle_state 히스토리에 박제 → 다음 사이클이 분석 결과를 진단 input으로 활용.
+type: entry
+source: worker-lesson
+---
+
+## 패턴
+
+Develop-cycle 루프의 chain pool에는 두 종류의 chain이 공존해야 한다:
+
+| 종류 | 코드 변경 | 목적 |
+|---|---|---|
+| **Execution chain** | O (PR ship) | 버그 수정 / 기능 추가 / 정리 |
+| **Analytical chain (lite mode)** | X | 측정 / 관찰 / 패턴 분석 |
+
+Analytical chain의 `outcome`은 항상 `success` (측정 완료) — 변경이 없어도 성공.
+
+## 왜 별도 chain으로 두는가
+
+"코드를 바꾸지 않는 사이클"을 execution chain 실패로 처리하면:
+1. 측정 결과가 `retro-only` (= stuck 신호) 로 잘못 분류됨
+2. 다음 사이클 진단이 "측정이 필요하지 않았다"로 해석
+3. 정기 측정 기회가 chain selection 압력에 의해 밀려남
+
+Analytical chain을 별도 슬롯으로 박제하면:
+- `outcome: success` 정상 기록 → stuck streak 오분류 없음
+- 측정 결과가 `cycle_state.execution.results` 에 박제 → lookback input
+- 다음 사이클이 "N 사이클 전 측정값" 을 맥락으로 활용 가능
+
+## 증거 (moneyball develop-cycle, `operational-analysis` chain)
+
+moneyball fork 는 `operational-analysis` chain 을 pool 에 포함:
+
+- **lite mode** (코드 변경 0): accuracy / Brier score 계산 + cycle_state 박제
+- **heavy mode**: 통계 분석 + calibration 이상 발견 → 다음 사이클 code fix trigger
+
+cycle 144 → cycle 166 (21 cycle gap):
+- cycle 144 lite: accuracy 47.7% / Brier 0.2481 박제
+- cycle 166 lite: 동일 수치 안정 확인 (21 cycle 동안 데이터 변화 X 자동 검증)
+- cycle 207 heavy: accuracy W17→W18→W19 = 54.1%→36.0%→60.0% + SFR normalize 음수 버그 발견
+- cycle 208: fix-incident 로 즉시 전환 (heavy op-analysis trigger)
+
+21 cycle에 걸쳐 side-by-side 박제된 측정값이 버그 진단의 baseline 역할.
+
+## 허브 적용 패턴
+
+허브에는 `curate` chain이 부분적으로 analytical 역할 수행:
+- lint → 위키 건강도 측정
+- `/learn` → memory rot 발견
+- CHANGELOG → 누적 evidence 정리
+
+그러나 curate의 stop 조건 = "위키 정리 완료" → 측정 전용 모드 미보장.
+
+**허브에서 analytical chain을 명시적으로 추가하는 조건**:
+- wiki entry 수 ≥ 150 (측정 복잡도 증가)
+- 자동화 루프 chain pool 활성 ≥ 7개 (건강도 측정 필요)
+- `dimension-cycle` fallback rate ≥ 30% (다른 chain trigger 없음 = 측정이 핵심)
+
+**현재 허브** (111 entries, pool 11개): `closed-loop-health.mdx` dashboard + `dashboard-update.mjs` 가 외부 측정 레이어 역할. chain pool 안에 별도 analytical chain = 현재 미필요.
+
+## 구현 패턴
+
+```json
+{
+  "chain_selected": "operational-analysis",
+  "execution": {
+    "mode": "lite",
+    "results": {
+      "accuracy_30d": "47.7%",
+      "brier_30d": "0.2481",
+      "window_verified": 67
+    },
+    "outcome": "success"
+  }
+}
+```
+
+**stop 조건**: 측정 완료 + cycle_state 박제 (코드 변경 없어도 success).
+
+**trigger**: 직전 analytical 발화 이후 N 사이클 경과 (cron-like, 이벤트 X).
+
+## 관련
+
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 워커 chain을 허브 wiki로 일반화하는 흐름
+- [Agentic Cycle State JSON](/wiki/context-engineering/agentic-cycle-state-json-carry-over-design): 측정 결과를 cycle_state에 박제하는 패턴
+- [Closed-Loop Health Dashboard](/wiki/reports/closed-loop-health): 허브의 "external analytical layer" 구현체
+- [Agentic Chain Saturation Detection](/wiki/harness-engineering/agentic-chain-saturation-detection): analytical chain이 saturation 감지에 필요한 데이터 공급
