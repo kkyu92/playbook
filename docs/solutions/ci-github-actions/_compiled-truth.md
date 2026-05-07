@@ -1,12 +1,12 @@
 # [ci-github-actions] Compiled Truth
 
-코드 게이트 승격: 미착수 (3건 임계 충족 — 승격 검토 필요)
+코드 게이트 승격: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07, cycle 141)
 
 ## 종합 (3건, 최종 갱신 2026-05-07)
 
 - **재발 횟수**: 7건+ (notify-workers 계열 4건 + billing-block 3 레포)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
-- **코드 게이트 승격**: 미착수 (scan-promotions 임계 3건 첫 충족 — 2026-05-07)
+- **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
 - **마지막 발생**: 2026-05-07 (billing block 3 레포 동시 차단)
 
 ### 주요 교훈 요약
