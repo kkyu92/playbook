@@ -11,8 +11,8 @@ tags:
   - repository-dispatch
 workers:
   - all
-confidence: 3
-last_verified: "2026-04-19"
+confidence: 4
+last_verified: "2026-05-07"
 connections: [context-engineering/nextjs-instrumentation-location, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, prompt-engineering/prompt-versioning-and-testing, harness-engineering/question-own-defaults, agents/qwen3-6-max-preview-llm-agentic-coding-evaluation, agents/kimi-k2-6-open-source-agentic-coding-exploration, harness-engineering/gstack-framework-ai-agent-collaboration-architecture, agents/google-agents-cli-agent-development-acceleration, frontend-ai/claude-code-session-web-mobile-monitoring-implementation, prompt-engineering/lao-workflow-llm-agent-design-enhancement, agents/llm-agent-goal-achievement-planning-patterns, agents/multi-llm-agent-workload-partitioning-patterns, agents/ouroboros-agent-performance-cost-optimization]
 status: complete
 description: 워커 프로젝트가 발견한 교훈/에러를 허브로 자동 흘려보내고, 허브가 정제한 지식을 워커 ambient context 로 다시 흘려보내는 양방향 복리 패턴.
@@ -120,6 +120,13 @@ ai-study 또는 일반 LLM Wiki 와 비교:
 - **Cross-update 평균 N**: `/ingest` 1회당 보강된 기존 엔트리 수. 목표 5~15.
 - **Dispatch 처리 latency**: 워커 dispatch → 허브 raw 저장까지. < 30초 목표.
 - **재발 차단율**: dedup 코멘트 / 총 inbound Issue. 높을수록 같은 cron 실패 알림 누적 차단 잘 됨.
+
+## 운영 증거 (2026-05-07)
+
+- **zero-touch 63+ cycle 자율 회전** (cycle 49~112+): develop-cycle-hub skill 이 허브 자체를 자율 개선. 허브 사이클 skill-evolution 8회 자동 발화.
+- **develop-cycle 3 fork**: #1 머니볼 cycle 206+ / #2 허브 cycle 112+ / #3 blog-autopilot (PR #66 머지, billing 해소로 dogfood 재개 가능).
+- **worker-lesson 자동 ingest**: 오늘 session 에서 moneyball cycle 205/206 retro 자동 dispatch → raw-sources 2건 도착 (run #25471177956, #25471692208 success). CI 재가동 확인.
+- **GH Actions billing 해소**: 3 레포 퍼블릭 전환 + 초과분 결제 (2026-05-07). 자동화 파이프라인 전면 재가동.
 
 ## 관련
 
