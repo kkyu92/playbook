@@ -1,0 +1,115 @@
+---
+title: DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - db-query
+  - type-safety
+  - silent-drift
+  - server-components
+  - testing
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, context-engineering/nextjs-instrumentation-location]
+status: complete
+description: Server Component page의 DB select 쿼리가 타입 없이 any를 반환할 때 런타임에서 silent null/undefined — assertSelectOk 헬퍼로 쿼리 결과를 타입 강제 + 빈 결과를 즉시 에러로 표면화.
+type: entry
+source: manual
+---
+
+## 문제
+
+Next.js App Router Server Component에서 DB 쿼리를 호출할 때 흔한 패턴:
+
+```typescript
+// ❌ any 반환 — 빈 결과 silent
+const rows = await db.select().from(predictions).where(eq(predictions.date, date));
+// rows = [] 이어도 타입 에러 없음 → 페이지가 빈 채로 렌더링
+```
+
+증상:
+- 쿼리 조건이 잘못됐어도 런타임 에러 없음
+- 빈 배열이 반환됐을 때 페이지가 빈 UI를 렌더링 (사용자 입장에서 "데이터 없음"과 구분 불가)
+- 마이그레이션 후 컬럼명 변경 시 런타임까지 감지 안 됨
+
+## 패턴: assertSelectOk
+
+```typescript
+// lib/db-helpers.ts
+function assertSelectOk<T>(
+  rows: T[],
+  context: string,
+  { allowEmpty = false } = {}
+): T[] {
+  if (!allowEmpty && rows.length === 0) {
+    throw new Error(`[assertSelectOk] Empty result: ${context}`);
+  }
+  return rows;
+}
+
+// 사용
+const predictions = assertSelectOk(
+  await db.select().from(predictions).where(eq(predictions.date, date)),
+  'getPredictionsByDate',
+  { allowEmpty: true }  // 날짜별 예측 없을 수 있음 → 빈 허용
+);
+
+const overview = assertSelectOk(
+  await db.select().from(overview).where(eq(overview.season, currentSeason)),
+  'getOverview'  // 반드시 존재해야 하는 데이터 → 빈 = 에러
+);
+```
+
+## 적용 기준
+
+| 상황 | allowEmpty | 이유 |
+|---|---|---|
+| 시즌/날짜 고정 데이터 | false (기본) | 항상 존재해야 함. 없으면 버그 |
+| 검색 결과 / 필터 결과 | true | 조건에 따라 없을 수 있음 |
+| 특정 ID 조회 | false | ID 있으면 반드시 row 있어야 |
+| 집계 쿼리 (count) | true | 0 가능 |
+
+## silent drift 방지 연결
+
+assertSelectOk 없는 상태에서 발생하는 drift:
+
+1. **컬럼 rename drift**: 마이그레이션 후 컬럼명 변경 → 쿼리 결과 undefined → 타입 에러 없이 빈 UI
+2. **조건 변경 drift**: WHERE 조건이 더 이상 맞지 않음 → 빈 결과 silent
+3. **시즌/기준 변경 drift**: 시즌 롤오버 후 이전 기준 쿼리가 빈 결과 반환
+
+assertSelectOk 적용 시 모두 즉시 500 에러 표면화 → Sentry/로그로 감지 가능.
+
+## 테스트 패턴
+
+```typescript
+// assertSelectOk 테스트
+describe('assertSelectOk', () => {
+  it('빈 배열에서 allowEmpty=false 시 에러 throw', () => {
+    expect(() => assertSelectOk([], 'test-context')).toThrow('[assertSelectOk]');
+  });
+  
+  it('빈 배열에서 allowEmpty=true 시 빈 배열 반환', () => {
+    expect(assertSelectOk([], 'test', { allowEmpty: true })).toEqual([]);
+  });
+  
+  it('데이터 있으면 그대로 반환', () => {
+    const rows = [{ id: 1 }];
+    expect(assertSelectOk(rows, 'test')).toEqual(rows);
+  });
+});
+```
+
+## 도입 효과 (moneyball, 2026-05-06)
+
+- apps/moneyball page 10개 select 통일 (4 step sequence, cycles 148~155)
+- analysis/dashboard/predictions/search 4개 차원 모두 assertSelectOk 적용
+- silent drift family target 0건 달성 (page 차원 완전 방어)
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — assertSelectOk = silent null을 표면화하는 drift 방어 패턴
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2: 머지 후 DB 결과 `.error` 체크
+- [Next.js instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 같은 moneyball에서 동시 발견된 패턴
