@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T02:18:54.561Z
+Updated: 2026-05-07T02:20:01.161Z
 
 ## 엔트리 (105개)
 
@@ -173,6 +173,7 @@ Updated: 2026-05-07T02:18:54.561Z
 - agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - agents/llm-agent-goal-achievement-planning-patterns ↔ context-engineering/ai-agent-global-context-gc-tree-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
+- agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/hub-worker-compounding-pattern
@@ -392,7 +393,6 @@ Updated: 2026-05-07T02:18:54.561Z
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/question-own-defaults
-- harness-engineering/develop-cycle-positive-streak-recognition ↔ agents/llm-agent-goal-achievement-planning-patterns
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/drift-detection-methodology ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/drift-detection-methodology ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
