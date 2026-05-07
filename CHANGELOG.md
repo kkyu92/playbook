@@ -18,6 +18,9 @@
 - `closed-loop-health` 대시보드 cycle 133→161 gap 해소 (N=28)
 - memory rot 2건 갱신 (project_develop_cycle_skill_family cycle 138→151 / bidirectional_growth 112+→151+)
 
+### Fixed
+- search index (embed-content): 728 chunks — 110 entries 포함 (cycle 172, feature-flag-dead-code-cleanup-timing 반영)
+
 ## [0.3.4] — 2026-05-07
 
 ### Added
