@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T02:14:57.489Z
+Updated: 2026-05-07T02:18:54.561Z
 
-## 엔트리 (104개)
+## 엔트리 (105개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -24,6 +24,7 @@ Updated: 2026-05-07T02:14:57.489Z
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/harness-engineering/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
+- [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [엔터프라이즈 에이전트 관리 패턴: 확장 가능하고 거버넌스 가능한 LLM 에이전트 오케스트레이션](wiki/harness-engineering/enterprise-agent-management-patterns-llm-orchestration) — confidence: 1, status: draft
 - [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/harness-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
@@ -389,6 +390,9 @@ Updated: 2026-05-07T02:14:57.489Z
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/question-own-defaults
+- harness-engineering/develop-cycle-positive-streak-recognition ↔ agents/llm-agent-goal-achievement-planning-patterns
 - harness-engineering/drift-detection-methodology ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/drift-detection-methodology ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/drift-detection-methodology ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring

@@ -1,0 +1,90 @@
+---
+title: Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - develop-cycle
+  - agentic-loop
+  - harness-engineering
+  - streak
+  - self-correction
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/question-own-defaults, agents/llm-agent-goal-achievement-planning-patterns]
+status: complete
+description: 에이전트 사이클에서 같은 chain 이 연속 성공 (outcome=success) 하는 streak 은 강제 다양화 대상이 아님. stuck streak (retro-only) 과 positive streak (success) 를 구분해야 함.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+develop-cycle 의 "중복 chain 회피" 규칙 — "직전 3 사이클이 같은 chain 이면 다른 chain 우선" — 은 stuck streak (같은 chain + retro-only) 를 깨기 위한 것.
+
+그런데 이 규칙을 positive streak (같은 chain + outcome=success) 에도 동일 적용하면 **작동하고 있는 chain 을 인위 교란**하게 된다.
+
+예: `review-code` 4 연속 성공 중 3번째 시점에서 강제 diversification → `curate` 실행 → `review-code` 가 발견하던 영역 중단. 에이전트 자가 의심 패턴의 한 형태.
+
+## 두 종류의 streak 구분
+
+| 유형 | 패턴 | 의미 | 권장 행동 |
+|---|---|---|---|
+| **stuck streak** | 같은 chain + outcome=retro-only N≥3 | chain 이 실제 문제를 처리 못 함 (source 부재 / 실행 capacity 결핍) | 다른 chain 강제 진입 |
+| **positive streak** | 같은 chain + outcome=success N≥3 | chain 이 해당 도메인에 잘 맞음 (진짜 작업 존재 + 처리 성공) | **그대로 진행** — 자가 의심 차단 |
+
+현재 구현된 허브 streak guard 는 stuck streak 만 다룬다:
+```
+dimension-cycle RETRO-ONLY 3회 연속 → curate 강제 진입
+```
+
+positive streak 는 별도 규칙 없음 → "직전 3 사이클 같은 chain" 일반 규칙 적용 = **오적용 위험**.
+
+## 증거 (moneyball develop-cycle)
+
+**cycle 135 박제 룰**: "같은 chain N 연속 발화 + outcome=success streak ≥3 = 자가 의심 차단".
+
+**cycle 152~155 적용 (4번째 사례)**:
+- cycle 148: `review-code (heavy)` — analysis page assertSelectOk
+- cycle 153: `review-code (heavy)` — dashboard page
+- cycle 154: `review-code (heavy)` — predictions/[date] + reviews
+- cycle 155: `review-code (heavy)` — search page
+
+4 연속 성공. `apps/moneyball` page 차원 silent drift family 10 select 통일 완성 (4-step sequence).
+
+이 streak 에서 3번째 사이클 (cycle 154) 에 중복 chain 회피 규칙을 적용했다면:
+- `review-code` 강제 중단 → 4-step sequence 완성 불가
+- search page 1 select 잔존 → page 차원 silent drift family 미완
+
+**cycle 135 룰 없이 다양화 강제 = page drift 수리 미완** 이 됐을 사례.
+
+## 적용 기준
+
+positive streak 인지 판단하는 단순 기준:
+
+```python
+직전 N 사이클의 chain_selected 가 모두 동일
+AND
+직전 N 사이클의 execution.outcome 이 모두 "success"
+→ N ≥ 3 이어도 다양화 강제 차단
+```
+
+**추가 조건 (안전장치)**:
+- 직전 진단에서 같은 chain 의 새 trigger source 가 발견되어야 함 (trigger 부재 시 계속은 `retro-only` 로 전락할 가능성)
+- 한 chain 이 10+ cycle 연속이면 재평가 (LLM 추론 input)
+
+## 허브 develop-cycle 에의 적용
+
+현재 hub SKILL.md 규칙 (`직전 3 사이클 같은 chain → 다른 chain 우선`) 은 positive streak 예외 처리 미포함.
+
+긴급도 낮음 이유:
+1. 허브에서 같은 chain 3회 연속 success 가 발생한 사례 적음 (큐레이션/review-code 가 번갈아 발화하는 패턴)
+2. 현재 "LLM 추론 input" 단계에서 맥락 반영 가능
+
+**명시적 규칙으로 박제할 시점**: 허브에서도 같은 chain 3+ 연속 success streak 가 의미 있는 연속 작업 (시리즈) 을 완성하려 할 때 중단됐다는 evidence 발생 시.
+
+## 관련 패턴
+
+- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults): AI 가 "다양화가 좋다" 라는 default 도 zero-base 재검토 대상
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 허브가 워커 사례에서 패턴 추출해 일반화하는 흐름 (본 엔트리 출처)
