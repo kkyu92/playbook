@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.0] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 열여섯 번째 발화 (N=16) 박제 — Trigger-5 (직전 20 cycle 199-218, 0회 chain 6개: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). dimension-cycle 명단 재진입 관측 (cycle 196-198 window 탈퇴 해소). zero-touch 63+→218+ cycle 검증 (cycle 219)
+- TODOS BRANCHED N≥6 정책 박제 — origin/local 재발산 N≥6 연속 감지, [P0] 항목 업데이트 자동화 정착 (cycle 219)
+- dashboard `closed-loop-health` cycle 217 → 219 갱신 — retro-only 5%, 0회 chain 6개 유지 (cycle 220)
+
 ## [0.4.9] — 2026-05-07
 
 ### Added
