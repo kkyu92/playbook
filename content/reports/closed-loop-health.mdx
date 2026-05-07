@@ -18,23 +18,23 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-05-05T11:36:25.601Z'
-last_cycle: 42
+last_updated: '2026-05-07T02:31:36.350Z'
+last_cycle: 133
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **42**. 마지막 update: 2026-05-05T11:36:25.598Z.
+> 직전 cycle: **133**. 마지막 update: 2026-05-07T02:31:36.347Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
-| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 2 / 0 |
-| **Process** | chain pool 분포 (직전 20) | curate=5 / explore-idea=2 / dimension-cycle=2 / worker-incident-triage=2 / review-code=2 / closed-loop-design=2 / skill-evolution=1 / expand-scope=1 / fix-incident=1 / expand-scope (impl phase)=1 / expand-scope (impl phase α-1)=1 |
-| **Process** | retro-only 비율 | 9/20 (45%) |
-| **Output** | PR ship (직전 10) | 5 |
-| **Feedback** | 0회 chain (직전 20) | polish-ui, design-system |
+| **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 16 / 0 |
+| **Process** | chain pool 분포 (직전 20) | curate=6 / dimension-cycle=5 / explore-idea=4 / review-code=3 / fix-incident=1 / skill-evolution=1 |
+| **Process** | retro-only 비율 | 0/20 (0%) |
+| **Output** | PR ship (직전 10) | 0 |
+| **Feedback** | 0회 chain (직전 20) | polish-ui, worker-incident-triage, closed-loop-design, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -42,19 +42,19 @@ last_cycle: 42
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 42 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 133 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
-| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 2 | 자율 | ✅ |
+| 5 | 0회 chain × 직전 20 + meta-pattern 1+ | 5 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
-| 42 | expand-scope (impl phase α-1) | success | #199 |
-| 41 | expand-scope (impl phase) | success | #198 |
-| 38 | dimension-cycle | success (retro-only) | — |
-| 37 | explore-idea | success (retro-only) | — |
-| 36 | review-code | success (retro-only) | — |
+| 133 | skill-evolution | success | — |
+| 132 | dimension-cycle | success | — |
+| 131 | review-code | success | — |
+| 130 | curate | success | — |
+| 129 | explore-idea | success | — |
 
 ## Methodology
 
