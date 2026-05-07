@@ -1,0 +1,93 @@
+---
+title: LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - llm-agent
+  - debugging
+  - root-cause
+  - harness
+  - incident-diagnosis
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-07"
+connections: [harness-engineering/drift-detection-methodology, harness-engineering/question-own-defaults, harness-engineering/guard-test-pattern, agents/llm-agent-goal-achievement-planning-patterns]
+status: complete
+description: LLM 에이전트가 표면 신호 (watch.log, 에러 메시지) 만으로 root cause 즉답 시 잘못된 가설 박제 패턴 — 실제 artifact (capture 파일, trace 로그) 먼저 읽어야 진단 정확도 달성.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+LLM 에이전트가 운영 인시던트를 진단할 때 **표면 신호 (로그 메시지, 에러 텍스트)** 만 보고 root cause 즉답하는 경향. 실제 artifact (capture 파일, 상세 trace, DB 쿼리 결과) 를 읽지 않은 채 가설을 확정.
+
+moneyball develop-cycle 에서 fire-hang 인시던트가 **5회 연속 잘못 진단** — 6번째 시도에서 capture 파일 5건을 실제로 읽은 후 진짜 root cause 식별.
+
+## 패턴
+
+### 표면 신호 과신 (안티패턴)
+
+```
+LLM 진단 루프:
+watch.log: "FIRE_HANG cycle=N elapsed=305s — 새 claude 진단 단계 진입 못함"
+→ LLM 즉답: "warm-up race 가능성" (가설 1)
+→ 다음 cycle: 동일 메시지 → "claude TUI init 지연" (가설 2)
+→ ... (5회 반복, 매번 다른 표면 가설)
+```
+
+capture 파일 (8KB, 매 발생 시 자동 생성) 은 모든 cycle 에 존재했으나 **read X**.
+
+### Artifact-First 진단 (올바른 패턴)
+
+```
+1단계: 표면 신호 인지 (로그 / 에러 메시지)
+2단계: artifact 먼저 읽기 — capture 파일 / trace / DB row / CI 로그 전문
+3단계: artifact 내용 보고 가설 수립
+4단계: 가설 검증 → root cause 확정
+```
+
+6번째 시도: capture 5건 tail 80 line read → 4건 모두 `AskUserQuestion` 옵션 화면 멈춤, 1건만 rate limit → **진짜 root cause = auto-fire 환경에서 AskUserQuestion 발화** 즉시 식별.
+
+## 증거 (moneyball cycle 178, N=6)
+
+| 시도 | 진단 방법 | 결과 |
+|---|---|---|
+| cycle 45, 63, 64, 83, 90 | watch.log 표면 메시지만 읽음 | 잘못된 가설 5개 박제 (warm-up race / TUI init 지연 / SessionStart hook 등) |
+| cycle 178 | capture 파일 5건 tail 80 line 읽음 | 진짜 root cause 즉시 식별 (AskUserQuestion in auto-fire env) |
+
+**차이**: capture 파일 자동 생성 = 매 발생 시 8KB 증거 보존. 5회 동안 존재했으나 읽지 않음.
+
+## R5 정정 패턴과의 연결
+
+이 anti-pattern 은 더 넓은 "R5 정정" 패턴의 일부 — LLM 이 체크포인트/메모리/로그 주장을 **실제 코드/파일 read 없이 수용**:
+
+- cycle 81: `@types/node` 버전 즉답 (실제 package.json 미확인)
+- cycle 83: postview LLM 모킹 즉답 (실제 코드 미확인)
+- cycle 126: 3 stale carry-over 즉답 (실제 cycle_state 미확인)
+- cycle 178: fire-hang root cause 즉답 (실제 capture 파일 미확인)
+
+모두 동일 패턴: **"존재한다고 가정된 증거" 미확인 채 즉답**.
+
+## 실행 가이드라인
+
+인시던트 진단 시:
+
+```bash
+# 1. artifact 위치 먼저 파악
+ls -lt ~/.develop-cycle-hub/fire-hang-*.log 2>/dev/null | head -5
+find . -name "*.log" -newer <reference_file> 2>/dev/null
+
+# 2. artifact 읽기 (tail + grep)
+tail -80 ~/.develop-cycle-hub/fire-hang-<timestamp>.log
+grep -i "error\|fail\|hang\|question\|limit" ~/.develop-cycle-hub/fire-hang-*.log
+
+# 3. 읽은 후 가설 수립
+```
+
+**규칙**: 표면 로그 메시지 보이면 → "이 인시던트의 capture/artifact 파일이 있나?" 먼저 확인.
+
+## 자동화 fix (carry-over)
+
+watch.sh 개선: fire-hang capture 생성 후 다음 fire 시 capture 마지막 30 line 자동 grep → `AskUserQuestion` / `hit your limit` 패턴 detect → 분리된 notify_fail 메시지 출력. 또는 develop-cycle 진단 첫 step 에서 `~/.develop-cycle/fire-hang-*.log` 직전 5건 자동 read 룰 추가.
