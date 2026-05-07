@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.3] — 2026-05-07
+
+### Added
+- **Wiki entries 2건 신규** (116·117번째):
+  - `recurring-file-bug-accumulator-pattern` — 같은 파일에 같은 버그 유형이 3회+ 반복 = 구조 부채 신호. wrapper/guard 부재가 root cause (moneyball daily.ts .error 3rd instance)
+  - `fail-loud-partial-adoption-escape-hatch-trap` — fail-loud 패턴(assertSelectOk) 도입 후 기존 try/catch 미제거 → 보호막 부분 적용 함정 (moneyball cycle 211 4 사이클 방치)
+
+### Changed
+- raw-sources 43건 → `_archive/` 이동 (cycles 152-221 처리 완료분)
+
 ## [0.4.2] — 2026-05-07
 
 ### Changed
