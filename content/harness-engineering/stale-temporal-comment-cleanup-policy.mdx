@@ -1,0 +1,100 @@
+---
+title: 스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존
+category: harness-engineering
+date: "2026-05-07"
+tags:
+  - code-review
+  - comments
+  - silent-drift
+  - technical-debt
+  - llm-code
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-07"
+connections: [harness-engineering/recurring-file-bug-accumulator-pattern, harness-engineering/question-own-defaults, harness-engineering/silent-drift-family-pattern]
+status: complete
+description: LLM/에이전트가 생성한 코드에 자주 나타나는 시간적 참조 주석(cycle N / phase N / spec N)은 시간이 지나면 오해를 유발하는 스테일 정보가 된다. WHY 주석(설계 근거)은 보존하고, 참조 주석만 제거하는 구분 정책.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+LLM 또는 에이전트가 작성한 코드에는 두 종류의 주석이 혼재:
+
+```typescript
+// cycle 143에서 assertSelectOk 도입 — 이후 PR에서 전수 교체 예정 ← 스테일 참조
+// SFR 피처 (phase 2, spec-3.2) 에서 추가 ← 스테일 참조
+// normalize() 음수 입력 시 factor < 0 버그 — cycle 208에서 fix됨 ← 스테일 버그 참조
+
+// DB 오류 시 조용히 fallback 대신 즉시 throw — 운영 감지 우선 ← WHY 주석 (보존)
+// 양방향 symmetric 패치 필수 — home/away 한쪽만 수정하면 balance 깨짐 ← WHY 주석 (보존)
+```
+
+스테일 참조 주석은:
+- 이미 fix된 버그를 "여전히 있는 것처럼" 보이게 함
+- 과거 사이클/스펙을 참조하지만 현재 코드와 무관해진 상태
+- 미래 개발자(LLM 포함) 가 해당 버그/기능을 중복 처리할 위험
+
+## 분류 기준
+
+| 주석 유형 | 예시 | 처리 |
+|---|---|---|
+| **사이클 참조** | `// cycle 143에서 추가` / `// cycle 208 fix` | 제거 |
+| **스펙/페이즈 참조** | `// spec-3.2 / phase 2 기준` | 제거 |
+| **버그 참조 (수정됨)** | `// 알려진 버그: X — cycle N에서 수정됨` | 제거 (수정 후) |
+| **TODO 완료** | `// TODO: Y 추가 예정` (이미 구현됨) | 제거 |
+| **WHY (설계 근거)** | `// 음수 허용 시 factor range 깨짐` | **보존** |
+| **WHY (불변식)** | `// home/away 반드시 대칭 처리` | **보존** |
+| **WHY (edge case)** | `// null 반환 시 downstream TypeError 방지` | **보존** |
+
+## 실 사례 (moneyball, cycle 220, 224)
+
+**cycle 220 (page.tsx)**: 9건 사이클 참조 주석 + test 참조 2건 제거:
+```typescript
+// ❌ 제거 대상
+// 빅매치 섹션 (cycle 160에서 도입) 
+// TODO: PR #190 머지 후 라이브 데이터로 전환
+
+// ✅ 보존
+// KBO 시스템 시간대는 항상 KST — UTC 변환 없이 date string 직접 사용
+```
+
+**cycle 224 (validator.ts + daily.ts)**: 11건 스테일 주석 제거:
+- cycle#/phase#/spec# 참조 패턴 → 제거
+- WHY 주석 → 보존
+
+## 왜 LLM 코드에 특히 많은가
+
+LLM은 자신이 수행한 작업을 문서화하려는 경향:
+- "이번 PR에서 X를 추가함" → 코드 변경 맥락 주석 (시간 지나면 스테일)
+- 에이전트 루프: 각 사이클에서 생성한 코드에 해당 사이클 컨텍스트 포함
+
+이 주석들은 **PR description에 속하는 정보** 이지 코드에 속하지 않음.
+
+## 운영 가이드라인
+
+### review-code 체인 진입 시
+
+```bash
+# 스테일 참조 주석 감지
+grep -rn "cycle [0-9]\+\|phase [0-9]\+\|spec-[0-9]\|TODO: .*완료\|알려진 버그\|fix됨" src/ --include="*.ts" --include="*.tsx"
+
+# 결과 분류:
+# - cycle/phase/spec 참조 → 제거 후보
+# - "fix됨" + 이미 fix된 코드 → 제거
+# - WHY 설명 → 보존
+```
+
+### LLM 코드 생성 시 (사전 방지)
+
+- 커밋 메시지에 "cycle N에서 추가" 기록 → 코드 주석에는 미포함
+- 코드 주석은 WHY 만: "왜 이 로직이 필요한가"
+- "무엇을" 했는지는 git log 가 담당
+
+## 관련
+
+- [서비스 파일 반복 진입 패턴](/wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — 같은 파일 반복 진입 → 누적 부채 신호
+- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "이 주석이 지금도 유효한가" 자가 의심
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — 스테일 주석 = 코드 현실과 문서 간 silent drift

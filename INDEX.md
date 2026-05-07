@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-07T07:00:00.388Z
+Updated: 2026-05-07T07:02:58.196Z
 
-## 엔트리 (117개)
+## 엔트리 (118개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -47,6 +47,7 @@ Updated: 2026-05-07T07:00:00.388Z
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
+- [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/harness-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: in-progress
@@ -500,6 +501,9 @@ Updated: 2026-05-07T07:00:00.388Z
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/question-own-defaults
+- harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/recurring-file-bug-accumulator-pattern
+- harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/question-own-defaults
+- harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
