@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.1] — 2026-05-07
+
+### Added
+- `silver-autopilot` 워커 신규 등록 + Cloudflare cron 연동 (UTC 16:00 = KST 01:00)
+
+### Changed
+- `develop-cycle-hub` SKILL.md 열일곱·열여덟·열아홉 번째 발화 (N=17/18/19) 박제 — cycles 222/223/224 연속 Trigger-5 (직전 20 cycle 202-221/203-222/204-223, 0회 chain 6개 명단 4회 연속 동일: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). dormancy 완전 안정. zero-touch 63+→224+ cycle 검증
+- `generate-lesson.mjs` 641→619줄 스테일 주석 정리 (cycle 221 review-code)
+- dashboard `closed-loop-health` cycle 219 → 224 갱신 — retro-only 0%, curate=7/skill-evolution=6 분포 (cycle 225)
+
 ## [0.5.0] — 2026-05-07
 
 ### Changed
