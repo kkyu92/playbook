@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.1] — 2026-05-07
+
+### Changed
+- **Cycle 200 milestone** (200 % 50 == 0) — Trigger-3 skill-evolution-pending 마커 박제. 다음 사이클 skill-evolution 강제 발화.
+- `closed-loop-health` 대시보드 cycle 199→200 갱신
+
 ## [0.4.0] — 2026-05-07
 
 ### Added
