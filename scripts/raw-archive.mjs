@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // raw-sources auto-archive — entry 변환 완료된 raw 를 _archive/ 로 이동
-// cycle 39~42 expand-scope α-1 — TODOS [P2] cycle 7 carry-over 해소
 //
 // 사용법:
 //   node scripts/raw-archive.mjs --dry-run   (변경 없이 list)

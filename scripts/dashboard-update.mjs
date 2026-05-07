@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// closed-loop-health.mdx 자동 갱신 — develop-cycle-hub spec E2 (cycle 39~40)
+// closed-loop-health.mdx 자동 갱신 — develop-cycle-hub cycle retro 끝 호출
 //
 // Source:
 //   - ~/.develop-cycle-hub/cycles/*.json (cycle_state)
