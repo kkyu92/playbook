@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.0] — 2026-05-07
+
+### Added
+- **Wiki entries 2건 신규** (114·115번째):
+  - `debug-page-silent-drift-trap` — 인시던트 조사 시 debug 페이지 자체 silent query 실패로 오진 발생 패턴 (moneyball cycle 212 기반, 진단 도구 신뢰성 메타 원칙)
+  - `ml-pipeline-normalization-range-assumption` — 피처 확장 시 정규화 함수 입력 범위 가정 위반 (moneyball SFR cycle 208 normalize 음수 버그 일반화)
+
+### Changed
+- `silent-drift-family-pattern` connections 8 fork 진화 (debug-page backlink)
+- `prediction-model-calibration-inversion-detection` connections 갱신 (normalization backlink)
+- cycle_state JSON 버그 2건 수정 (186/187 literal newline), dashboard cycle 192 갱신
+- memory rot 2건 갱신 (skill-family cycle 174→191 / bidirectional-growth 로그 갱신)
+- SKILL.md Trigger-5 N=12 dogfood (cycle 191, zero-touch 63+→190+ 갱신)
+
 ## [0.3.9] — 2026-05-07
 
 ### Added
