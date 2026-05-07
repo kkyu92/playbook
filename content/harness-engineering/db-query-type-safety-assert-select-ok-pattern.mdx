@@ -128,6 +128,27 @@ async function pipelineStep() {
 
 **사례** (moneyball daily.ts, cycle 211): page 10개 assertSelectOk 적용 후 4 cycle 뒤에 daily.ts pipeline 코드에서 try/catch 갭 발견 — finish() 우회로 pipeline_runs 미기록. 구조 수정으로 해소.
 
+## 동반 패턴 — DB 오류 전파 누락 (`.error` 미체크)
+
+assertSelectOk 는 "빈 결과" 감지. `.error` 체크는 "쿼리 실패" 감지. 둘 다 silent drift family.
+
+```typescript
+// ❌ .error 무시 — DB 오류 시 fallback 발생해도 errors[] 누락
+const { data: recent } = await db.query.finalGames.findMany({ ... });
+// data=undefined 이어도 errors 배열에 기록 안 됨
+
+// ✅ .error 체크
+const { data: recent, error } = await db.query.finalGames.findMany({ ... });
+if (error) throw new Error(`[recentFinalGames] DB error: ${error.message}`);
+```
+
+**사례** (moneyball daily.ts, cycle 216): recentFinalGames + weather existing.single() `.error` 미체크 — DB 오류 시 KBO scraping fallback 발생해도 `errors[]` 누락. pipeline_runs 에 error 기록 없음.
+
+| silent drift 유형 | 증상 | 가드 |
+|---|---|---|
+| 빈 결과 | row 0개, 페이지 빈 UI | assertSelectOk (allowEmpty=false) |
+| 쿼리 실패 | error 무시, fallback 발생 | `.error` 체크 + throw |
+
 ## 도입 효과 (moneyball, 2026-05-06)
 
 - apps/moneyball page 10개 select 통일 (4 step sequence, cycles 148~155)
