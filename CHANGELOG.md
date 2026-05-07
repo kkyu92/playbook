@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.4.5] — 2026-05-07
+
+### Added
+- **Wiki entries 3건 신규** (116~118번째):
+  - `recurring-file-bug-accumulator-pattern` — 같은 파일 같은 버그 3회+ = 구조 부채 신호 (daily.ts)
+  - `fail-loud-partial-adoption-escape-hatch-trap` — assertSelectOk 도입 후 try/catch 미제거 함정
+  - `stale-temporal-comment-cleanup-policy` — cycle/phase 참조 주석 제거 vs WHY 주석 보존 정책
+
+### Changed
+- `robots.ts` BASE_URL 불일치 수정 (5파일 일관성)
+- scripts stale 주석 제거 (raw-archive.mjs, dashboard-update.mjs) — 0.4.4 entry dogfood
+- dashboard cycle 211 갱신 / N=12 batch (201→212) 완주
+
 ## [0.4.4] — 2026-05-07
 
 ### Added
