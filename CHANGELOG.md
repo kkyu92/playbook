@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.12] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 250 → 258 갱신 — window 239-258 chain 분포: skill-evolution=8 / curate=7 / review-code=4 / unknown=1. dispatch 누적: lesson=6 / meta-pattern=18 / chain-evolution=0. 0회 chain 8개 (fix-incident/explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). SE trigger-5 평가: 명단 SE#34 동일 + SE 점유율 40% ≥ 40% → 마커 SKIP (자기조정)
+- wiki lint CLEAN (cycle 259 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 재발 (cycle 259 감지, local 56개 ahead, origin 3개 ahead — cycle 257 해소 이후 재발산)
+
 ## [0.5.11] — 2026-05-08
 
 ### Fixed

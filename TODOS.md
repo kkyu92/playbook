@@ -1,5 +1,17 @@
 # TODOS
 
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259 감지)
+
+origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
+현재 상태: local **56개** ahead, origin **3개** ahead.
+
+origin 3개 커밋 (자동화 push):
+- `7507c1a` data: auto-ingest moneyball cycle 255 retro (skill-evolution 17회)
+- `b4abaea` chore(curate): daily raw-sources auto-archive (2026-05-08)
+- `5e8881e` data: auto-ingest moneyball cycle 254 retro (info-architecture-review SUCCESS)
+
+**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 3개 모두 data: 계열).
+
 ## [DONE] origin/main diverged 통합 — 2026-05-07 재해소 (cycle 221→222)
 
 **완료**: `git merge origin/main` + `git push origin main` (사용자 GO, cycle 222 진단 시점) → diverge 0↔0 해소. BRANCHED N≥8 → 종료. HEAD = `bd821ec chore: silver-autopilot 워커 등록`.
