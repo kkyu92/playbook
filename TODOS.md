@@ -1,22 +1,25 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-266 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-267 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **67개** ahead, origin **9개** ahead.
+현재 상태: local **68개** ahead, origin **12개** ahead.
 
-origin 9개 커밋 (자동화 push):
-- `5d80fc6` data: auto-ingest raw from moneyball — CI 실패 (4e09afd, cycle 259 retro)
-- `c8402ac` data: auto-ingest moneyball cycle 259 retro (review-code heavy SUCCESS — CURRENT_MODEL_FILTER fix)
-- `9dea3e4` data: auto-ingest raw from moneyball — CI 실패 (6dcd210, silent-drift.test.ts TypeCheck)
-- `97caabd` data: auto-ingest moneyball cycle 258 retro (fix-incident SUCCESS — calibration_buckets NOT NULL 수정)
-- `cd489b3` data: auto-ingest moneyball cycle 257 retro (skill-evolution 18회, trigger 5 영구 opt-out)
+origin 12개 커밋 (자동화 push, 최신 순):
+- `509a03b` data: auto-ingest raw from moneyball — CI 실패 (03d644c)
+- `f332d03` data: auto-ingest raw from moneyball — CI 실패 (d8221eb)
+- `6e77cc0` data: auto-ingest moneyball cycle 260 retro (info-architecture-review SUCCESS)
+- `5d80fc6` data: auto-ingest raw from moneyball — CI 실패 (4e09afd)
+- `c8402ac` data: auto-ingest moneyball cycle 259 retro (review-code heavy SUCCESS)
+- `9dea3e4` data: auto-ingest raw from moneyball — CI 실패 (6dcd210)
+- `97caabd` data: auto-ingest moneyball cycle 258 retro (fix-incident SUCCESS)
+- `cd489b3` data: auto-ingest moneyball cycle 257 retro (skill-evolution 18회)
 - `1c5d598` data: auto-ingest moneyball cycle 256 retro (operational-analysis lite SUCCESS)
 - `7507c1a` data: auto-ingest moneyball cycle 255 retro (skill-evolution 17회)
 - `b4abaea` chore(curate): daily raw-sources auto-archive (2026-05-08)
 - `5e8881e` data: auto-ingest moneyball cycle 254 retro (info-architecture-review SUCCESS)
 
-**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 9개 모두 data:/chore: 계열).
+**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 12개 모두 data:/chore: 계열).
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
