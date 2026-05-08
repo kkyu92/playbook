@@ -3,7 +3,7 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-277 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **79개** ahead, origin **44개** ahead (auto-ingest 계속 추가 중). _(cycle 277 갱신)_
+현재 상태: local **81개** ahead, origin **48개** ahead (auto-ingest 계속 추가 중). _(cycle 278 갱신)_
 
 origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 - `694453a` data: auto-ingest raw from moneyball — CI 실패 (e041ec0) → #402 close
