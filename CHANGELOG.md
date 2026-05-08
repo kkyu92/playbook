@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.17] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 285 → 289 갱신 — window 270-289 chain 분포: skill-evolution=9 / worker-incident-triage=8 / curate=2 / review-code=1. retro-only 0/20. 0회 chain 7개 (review-code 탈퇴 — cycle 287 발화로 명단 축소). SE trigger-5: 명단 SE #46 동일 + SE 점유율 45% ≥ 40% → SKIP (자기조정)
+- wiki lint CLEAN (cycle 290 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **98개** ahead, origin **54개** ahead _(cycle 290 갱신)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~289 = **241 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 290
+
 ## [0.5.16] — 2026-05-08
 
 ### Changed

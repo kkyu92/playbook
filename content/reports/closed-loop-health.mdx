@@ -1,7 +1,7 @@
 ---
 title: Closed-Loop Health Dashboard — 허브 자가 organism 건강도
 category: reports
-date: '2026-05-05'
+date: '2026-05-08'
 tags:
   - closed-loop
   - dashboard
@@ -19,23 +19,23 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-05-08T12:20:00.000Z'
-last_cycle: 285
+last_updated: '2026-05-08T12:30:00.000Z'
+last_cycle: 289
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **285**. 마지막 update: 2026-05-08T12:20:00.000Z.
+> 직전 cycle: **289**. 마지막 update: 2026-05-08T12:30:00.000Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 6 / 18 / 0 |
-| **Process** | chain pool 분포 (직전 20, window 266-285) | worker-incident-triage=10 / skill-evolution=9 / curate=1 |
+| **Process** | chain pool 분포 (직전 20, window 270-289) | skill-evolution=9 / worker-incident-triage=8 / curate=2 / review-code=1 |
 | **Process** | retro-only 비율 | 0/20 (0%) — all success |
 | **Output** | PR ship (직전 10) | 0 (zero-touch push 없음) |
-| **Feedback** | 0회 chain (직전 20) | fix-incident, explore-idea, polish-ui, review-code, closed-loop-design, dimension-cycle, expand-scope, design-system |
+| **Feedback** | 0회 chain (직전 20) | fix-incident, explore-idea, polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -43,19 +43,19 @@ last_cycle: 285
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 0 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 286%50=36 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 289%50=39 | 50 | ❌ (next: 300) |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 0 | 1 | ❌ |
-| 5 | 0회 chain × 직전 20 | 8개 (명단 SE #45 동일) | 자율 | ✅ SKIP — window 266-285 SE 점유율 45% ≥ 40% + 명단 동일 (자기조정) |
+| 5 | 0회 chain × 직전 20 | 7개 (명단 SE #46 동일) | 자율 | ✅ SKIP — window 270-289 SE 점유율 45% ≥ 40% + 명단 동일 (자기조정) |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 289 | worker-incident-triage | success | — |
+| 288 | skill-evolution | success | — |
+| 287 | review-code | success | — |
+| 286 | curate | success | — |
 | 285 | skill-evolution | success | — |
-| 284 | skill-evolution | success | — |
-| 283 | skill-evolution | success | — |
-| 282 | worker-incident-triage | success | — |
-| 281 | curate | success | — |
 
 ## Methodology
 
