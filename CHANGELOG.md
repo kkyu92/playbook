@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.13] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 263 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 58→61개 ahead, origin 3→5개 ahead (cycle 259-263 감지, origin 2개 신규: moneyball cycle 256-257 retro auto-ingest)
+- N=50 batch (213-262) 완료 / N=30 batch (263-292) 시작 — zero-touch 262+ cycle 검증
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 258→262, SE #34→SE #36), MEMORY.md index 2줄 갱신
+
 ## [0.5.12] — 2026-05-08
 
 ### Changed
