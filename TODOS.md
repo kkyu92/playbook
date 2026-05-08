@@ -1,15 +1,15 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-291 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-292 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **102개** ahead, origin **55개** ahead. _(cycle 291 갱신)_
+현재 상태: local **103개** ahead, origin **58개** ahead. _(cycle 292 갱신)_
 
 origin 최근 커밋 (자동화 push, 최신 순):
-- `ea1b20e` data: auto-ingest self-policy from moneyball — cycle 277 retro (review-code heavy)
-- `8c0eab7` data: auto-ingest self-policy from moneyball — cycle 276 retro (review-code heavy)
-- `41d5700` data: auto-ingest self-policy from moneyball — cycle 275 retro (review-code heavy)
-- 그 외 moneyball cycle 271-277 retro 자동 push 계열 (CI 모두 SUCCESS)
+- `4fbf77a` data: auto-ingest self-policy from moneyball — cycle 281 retro (operational-analysis lite)
+- `81a16b5` data: auto-ingest self-policy from moneyball — cycle 280 retro (review-code heavy)
+- `db164a6` data: auto-ingest self-policy from moneyball — cycle 279 retro (info-architecture-review)
+- 그 외 moneyball cycle 272-281 retro 자동 push 계열 (CI 모두 SUCCESS)
 
 **원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
 **주의 해소**: moneyball CI cycle 272 이후 연속 PASS — incident auto-ingest 신규 push 없음.

@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.18] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 292 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **103개** ahead, origin **58개** ahead _(cycle 292 갱신)_
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 290→292, N=30 batch ✅ 완료, BRANCHED 98/54→103/58), MEMORY.md index 2줄 갱신
+
+### Fixed
+- `scripts/cross-update-shadow.mjs`: unused `join` import 제거 (ESLint warning → CLEAN)
+
+### Metrics
+- zero-touch 자동화: cycle 49~292 = **244 사이클** 검증 완료
+- N=30 batch (263-292) ✅ 완료 — 다음 batch TBD
+
 ## [0.5.17] — 2026-05-08
 
 ### Changed

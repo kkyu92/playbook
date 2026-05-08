@@ -16,7 +16,6 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
 import { execSync } from "child_process";
 import matter from "gray-matter";
 import { findMdxFiles } from "./lib/fs-helpers.mjs";
