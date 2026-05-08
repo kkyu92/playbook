@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.15] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 264 → 280 갱신 — window 261-280 chain 분포: skill-evolution=8 / worker-incident-triage=9 / curate=2 / review-code=1. retro-only 0/20. 0회 chain 7개 (명단 SE #42 동일). SE trigger-5: 점유율 40% ≥ 40% + 명단 동일 → SKIP (자기조정)
+- wiki lint CLEAN (cycle 281 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 84개 ahead, origin 50개 ahead (zero-touch push 정책 + 워커 auto-ingest 병행으로 재발산 중)
+
+### Fixed
+- moneyball CI MockResult<T> inbound 닫힘: 허브 hub-dispatch issues 26건 close (cycles 266-280) — MockResult<T> discriminated union TypeCheck fail 연속 발생, 워커 측 해결 의존
+- moneyball PitcherFipTrend color '700' TypeCheck inbound (#397, cycle 276) close
+
+### Metrics
+- zero-touch 자동화: cycle 49~280 = **232 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 281
+
 ## [0.5.14] — 2026-05-08
 
 ### Changed
