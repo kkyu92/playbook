@@ -1,11 +1,11 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-263 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-264 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **61개** ahead, origin **5개** ahead.
+현재 상태: local **64개** ahead, origin **6개** ahead.
 
-origin 5개 커밋 (자동화 push):
+origin 6개 커밋 (자동화 push):
 - `cd489b3` data: auto-ingest moneyball cycle 257 retro (skill-evolution 18회, trigger 5 영구 opt-out)
 - `1c5d598` data: auto-ingest moneyball cycle 256 retro (operational-analysis lite SUCCESS)
 - `7507c1a` data: auto-ingest moneyball cycle 255 retro (skill-evolution 17회)
