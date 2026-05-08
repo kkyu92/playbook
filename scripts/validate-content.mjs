@@ -15,23 +15,9 @@ import { compile } from "@mdx-js/mdx";
 import remarkGfm from "remark-gfm";
 import { fixAndValidateMermaid } from "./lib/mermaid-fix.mjs";
 import { detectJsxTraps } from "./lib/mdx-validate.mjs";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
-
-function findMdxFiles(dir) {
-  const results = [];
-  if (!fs.existsSync(dir)) return results;
-  const items = fs.readdirSync(dir, { withFileTypes: true });
-  for (const item of items) {
-    const fullPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      results.push(...findMdxFiles(fullPath));
-    } else if (item.name.endsWith(".mdx")) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 function extractMermaidBlocks(content) {
   const blocks = [];

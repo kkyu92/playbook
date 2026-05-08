@@ -100,4 +100,23 @@ function evictOldest(targetEntry, protectSlug, byS) {
   return toEvict;
 }
 
+/**
+ * Convert YAML block-style connections array to inline format.
+ * connections:\n  - foo\n  - bar → connections: [foo, bar]
+ * @param {string} yamlText
+ * @returns {string}
+ */
+export function inlineConnectionsArray(yamlText) {
+  return yamlText.replace(
+    /^connections:\n((?:  - [^\n]+\n)+)/m,
+    (_, itemsBlock) => {
+      const items = itemsBlock
+        .split("\n")
+        .filter((l) => l.startsWith("  - "))
+        .map((l) => l.slice(4).trim().replace(/^["']|["']$/g, ""));
+      return `connections: [${items.join(", ")}]\n`;
+    },
+  );
+}
+
 export { MAX_CONNECTIONS };

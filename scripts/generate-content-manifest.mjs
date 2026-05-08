@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const OUTPUT_FILE = path.join(
@@ -51,21 +52,6 @@ const REGISTERED = loadRegisteredWorkers();
 const REGISTERED_WORKERS = REGISTERED?.names || null;
 const REGISTERED_SOURCE = REGISTERED?.source || null;
 
-function findMdxFiles(dir) {
-  const results = [];
-  if (!fs.existsSync(dir)) return results;
-
-  const items = fs.readdirSync(dir, { withFileTypes: true });
-  for (const item of items) {
-    const fullPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      results.push(...findMdxFiles(fullPath));
-    } else if (item.name.endsWith(".mdx")) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 function validateFrontmatter(data, filePath) {
   const errors = [];
