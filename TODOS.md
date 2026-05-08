@@ -15,14 +15,14 @@ origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 **원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
 **주의**: moneyball CI 연속 실패로 incident auto-ingest 가 계속 origin push 중 — merge 시점에 latest 반영 필요.
 
-## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 268 worker-incident-triage, 워커 영역)
+## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 274 worker-incident-triage 갱신, 워커 영역)
 
 **What**: `kkyu92/moneyballscore: src/lib/players/__tests__/silent-drift.test.ts` line 147-148, 160-161 에 `type: 'return'` discriminator 추가
-**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 2026-05-08 단일 세션 계속 누적 총 11건. 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
+**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 총 20건 누적 (cycle 274 갱신). 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
 **Fix 영역**: moneyball 워커 세션 PR (R6 외부 레포)
 **Solution**: `docs/solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type.md`
 **완료 신호**: moneyball main CI TypeCheck PASS → hub inbound 자연 회피
-**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270)
+**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270), #381, #383, #384, #385, #387, #389, #390, #391, #393 (cycle 274)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
