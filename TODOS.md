@@ -1,9 +1,9 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-269 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-270 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **70개** ahead, origin **18개+** ahead (auto-ingest 계속 추가 중).
+현재 상태: local **71개** ahead, origin **22개+** ahead (auto-ingest 계속 추가 중).
 
 origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 - `509a03b` data: auto-ingest raw from moneyball — CI 실패 (03d644c)
@@ -18,11 +18,11 @@ origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 ## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 268 worker-incident-triage, 워커 영역)
 
 **What**: `kkyu92/moneyballscore: src/lib/players/__tests__/silent-drift.test.ts` line 147-148, 160-161 에 `type: 'return'` discriminator 추가
-**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 2026-05-08 단일 세션 4건 연속 (cycle 266 2건 포함 총 6건). 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
+**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 2026-05-08 단일 세션 계속 누적 총 11건. 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
 **Fix 영역**: moneyball 워커 세션 PR (R6 외부 레포)
 **Solution**: `docs/solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type.md`
 **완료 신호**: moneyball main CI TypeCheck PASS → hub inbound 자연 회피
-**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269)
+**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 

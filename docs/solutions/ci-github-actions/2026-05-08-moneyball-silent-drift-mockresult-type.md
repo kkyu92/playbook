@@ -2,8 +2,8 @@
 
 **날짜**: 2026-05-08
 **발생 파일**: `kkyu92/moneyballscore: src/lib/players/__tests__/silent-drift.test.ts`
-**관련 PR/커밋**: hub issue #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269)
-**재발 여부**: 8건 재발 (2026-05-08 단일 세션 계속 누적 — 워커 fix 전까지 매 push 마다 재발)
+**관련 PR/커밋**: hub issue #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270)
+**재발 여부**: 11건 재발 (2026-05-08 단일 세션 계속 누적 — 워커 fix 전까지 매 push 마다 재발)
 
 ## 문제
 
@@ -74,6 +74,6 @@ grep -r "mock\.results\s*=\s*\[{" src/ --include="*.ts" | grep -v "type:"
 
 ## 관련
 
-- 허브 이슈: #365, #367 (cycle 266 triage), #369, #370, #371, #373 (cycle 268 triage)
-- cycle_state: `~/.develop-cycle-hub/cycles/266.json`, `~/.develop-cycle-hub/cycles/268.json`
+- 허브 이슈: #365, #367 (cycle 266 triage), #369, #370, #371, #373 (cycle 268 triage), #374, #376 (cycle 269 triage), #377, #378, #380 (cycle 270 triage)
+- cycle_state: `~/.develop-cycle-hub/cycles/266.json`, `~/.develop-cycle-hub/cycles/268.json`, `~/.develop-cycle-hub/cycles/269.json`, `~/.develop-cycle-hub/cycles/270.json`
 - TODOS: [P1] moneyball silent-drift.test.ts MockResult<T> fix (moneyball 워커 영역)
