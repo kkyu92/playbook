@@ -1,9 +1,9 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-273 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-276 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **76개** ahead, origin **37개** ahead (auto-ingest 계속 추가 중). _(cycle 275 갱신)_
+현재 상태: local **77개** ahead, origin **40개** ahead (auto-ingest 계속 추가 중). _(cycle 276 갱신)_
 
 origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 - `509a03b` data: auto-ingest raw from moneyball — CI 실패 (03d644c)
@@ -15,14 +15,24 @@ origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
 **원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
 **주의**: moneyball CI 연속 실패로 incident auto-ingest 가 계속 origin push 중 — merge 시점에 latest 반영 필요.
 
-## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 275 worker-incident-triage 갱신, 워커 영역)
+## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 276 worker-incident-triage 갱신, 워커 영역)
 
 **What**: `kkyu92/moneyballscore: src/lib/players/__tests__/silent-drift.test.ts` line 147-148, 160-161 에 `type: 'return'` discriminator 추가
-**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 총 22건 누적 (cycle 275 갱신). 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
+**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 총 23건 누적 (cycle 276 갱신). 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
 **Fix 영역**: moneyball 워커 세션 PR (R6 외부 레포)
 **Solution**: `docs/solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type.md`
 **완료 신호**: moneyball main CI TypeCheck PASS → hub inbound 자연 회피
-**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270), #381, #383, #384, #385, #387, #389, #390, #391, #393 (cycle 274), #394, #396 (cycle 275)
+**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270), #381, #383, #384, #385, #387, #389, #390, #391, #393 (cycle 274), #394, #396 (cycle 275), #397 (cycle 276)
+
+## [P1] moneyball PitcherFipTrend.tsx color index '700' TypeScript 에러 (cycle 276 신규 감지, 워커 영역)
+
+**What**: `kkyu92/moneyballscore: src/components/players/PitcherFipTrend.tsx(40)` — `gray[700]` 형식의 color index 접근이 TypeScript 에러
+**Why**: cycle 269 FIP/xFIP 추이 차트 추가 시 color palette 에 없는 key '700' 사용. 팔레트는 `{ 200, 400, 500, white }` 만 정의 — `700` 미존재
+**Error**: `Element implicitly has an 'any' type because expression of type '700' can't be used to index type '{ readonly 200: "#e5e7eb"; readonly 400: "#9ca3af"; readonly 500: "#6b7280"; readonly white: "#ffffff"; }'`
+**Fix 영역**: moneyball 워커 세션 (R6 외부 레포)
+**Fix 방향**: 팔레트에 `700: "#374151"` 추가 또는 `PitcherFipTrend.tsx:40` 에서 존재하는 key 사용
+**완료 신호**: moneyball main CI TypeCheck PASS (MockResult<T> fix와 동시 처리 권장)
+**Reference**: run #25532508335, issue #397 (cycle 276 triage)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
