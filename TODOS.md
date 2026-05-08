@@ -1,38 +1,18 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-277 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-289 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **91개** ahead, origin **54개** ahead (auto-ingest 계속 추가 중). _(cycle 286 갱신)_
+현재 상태: local **96개** ahead, origin **54개** ahead. _(cycle 289 갱신)_
 
-origin 최근 커밋 (자동화 push, 최신 순 — 계속 추가됨):
-- `694453a` data: auto-ingest raw from moneyball — CI 실패 (e041ec0) → #402 close
-- `46d45f9` data: auto-ingest raw from moneyball — CI 실패 (000c42d) → #401 close
-- `fdff637` data: auto-ingest self-policy from moneyball — cycle 270 retro (review-code)
-- `e8db03b` data: auto-ingest raw from moneyball — CI 실패 (c75fbc1) → #399 close
-- 그 외 moneyball cycle retro 자동 push 계열
+origin 최근 커밋 (자동화 push, 최신 순):
+- `ea1b20e` data: auto-ingest self-policy from moneyball — cycle 277 retro (review-code heavy)
+- `8c0eab7` data: auto-ingest self-policy from moneyball — cycle 276 retro (review-code heavy)
+- `41d5700` data: auto-ingest self-policy from moneyball — cycle 275 retro (review-code heavy)
+- 그 외 moneyball cycle 271-277 retro 자동 push 계열 (CI 모두 SUCCESS)
 
 **원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
-**주의**: moneyball CI 연속 실패로 incident auto-ingest 가 계속 origin push 중 — merge 시점에 latest 반영 필요.
-
-## [P1] moneyball silent-drift.test.ts MockResult<T> fix (cycle 277 worker-incident-triage 갱신, 워커 영역)
-
-**What**: `kkyu92/moneyballscore: src/lib/players/__tests__/silent-drift.test.ts` line 147-148, 160-161 에 `type: 'return'` discriminator 추가
-**Why**: vitest MockResult<T> discriminated union 강화로 `{ value: ... }` 형식 TypeCheck fail. 총 26건 누적 (cycle 277 갱신). 허브 inbound incident 계속 생성 중 — fix 없으면 매 moneyball push 마다 재발
-**Fix 영역**: moneyball 워커 세션 PR (R6 외부 레포)
-**Solution**: `docs/solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type.md`
-**완료 신호**: moneyball main CI TypeCheck PASS → hub inbound 자연 회피
-**Hub issues 종료**: #365, #367 (cycle 266), #369, #370, #371, #373 (cycle 268), #374, #376 (cycle 269), #377, #378, #380 (cycle 270), #381, #383, #384, #385, #387, #389, #390, #391, #393 (cycle 274), #394, #396 (cycle 275), #397 (cycle 276), #399, #401, #402 (cycle 277)
-
-## [P1] moneyball PitcherFipTrend.tsx color index '700' TypeScript 에러 (cycle 276 신규 감지, 워커 영역)
-
-**What**: `kkyu92/moneyballscore: src/components/players/PitcherFipTrend.tsx(40)` — `gray[700]` 형식의 color index 접근이 TypeScript 에러
-**Why**: cycle 269 FIP/xFIP 추이 차트 추가 시 color palette 에 없는 key '700' 사용. 팔레트는 `{ 200, 400, 500, white }` 만 정의 — `700` 미존재
-**Error**: `Element implicitly has an 'any' type because expression of type '700' can't be used to index type '{ readonly 200: "#e5e7eb"; readonly 400: "#9ca3af"; readonly 500: "#6b7280"; readonly white: "#ffffff"; }'`
-**Fix 영역**: moneyball 워커 세션 (R6 외부 레포)
-**Fix 방향**: 팔레트에 `700: "#374151"` 추가 또는 `PitcherFipTrend.tsx:40` 에서 존재하는 key 사용
-**완료 신호**: moneyball main CI TypeCheck PASS (MockResult<T> fix와 동시 처리 권장)
-**Reference**: run #25532508335 (issue #397, cycle 276), run #25532641363 (issue #401, cycle 277 — MockResult<T> + PitcherFipTrend 동시 확인)
+**주의 해소**: moneyball CI cycle 272 이후 연속 PASS — incident auto-ingest 신규 push 없음.
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
@@ -101,6 +81,7 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 
 ## DONE History (compressed)
 
+- **[DONE 2026-05-08]** moneyball MockResult<T> + PitcherFipTrend.tsx:40 TypeCheck fix → commit `1775b56` (cycle 272 fix-incident), CI 연속 PASS 확인 (cycle 289 worker-incident-triage)
 - **[DONE 2026-05-08]** BRANCHED N=22 해소 (cycle 257) → `git merge origin/main` (merge 65fbd78, INDEX.md 123개 정정)
 - **[DONE 2026-05-07]** BRANCHED 해소 (cycle 221→222) → `git merge + push origin main` (bd821ec)
 - **[DONE 2026-05-07]** GH Actions billing 전체 차단 해소 → 퍼블릭 레포 전환 + 결제 처리 (run #25471190398)
