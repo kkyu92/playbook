@@ -112,7 +112,7 @@ export function inlineConnectionsArray(yamlText) {
     (_, itemsBlock) => {
       const items = itemsBlock
         .split("\n")
-        .filter((l) => l.startsWith("  - "))
+        .filter(Boolean)
         .map((l) => l.slice(4).trim().replace(/^["']|["']$/g, ""));
       return `connections: [${items.join(", ")}]\n`;
     },

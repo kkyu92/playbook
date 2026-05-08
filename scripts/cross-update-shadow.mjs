@@ -15,10 +15,11 @@
 // - subagent finding #9 (ai-review.yml overlap) 같은 stack 으로 통합 검토 가능
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { readFileSync, readdirSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { execSync } from "child_process";
 import matter from "gray-matter";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const MERGED_FILE = process.env.MERGED_FILE;
 const PR_NUMBER = process.env.PR_NUMBER;
@@ -46,18 +47,7 @@ console.log(`  tags: ${(merged.data.tags || []).join(", ")}`);
 // INDEX.md
 const index = readFileSync("INDEX.md", "utf-8");
 
-// 모든 entries metadata (frontmatter only)
-function findMdx(dir) {
-  const out = [];
-  for (const item of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, item.name);
-    if (item.isDirectory()) out.push(...findMdx(full));
-    else if (item.name.endsWith(".mdx")) out.push(full);
-  }
-  return out;
-}
-
-const allEntries = findMdx("content")
+const allEntries = findMdxFiles("content")
   .map((path) => {
     const fm = matter(readFileSync(path, "utf-8")).data;
     const slug = path.replace(/^content\//, "").replace(/\.mdx$/, "");

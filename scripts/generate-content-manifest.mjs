@@ -203,8 +203,8 @@ function main() {
     }
   }
 
-  // Calculate streak
-  const dates = [...new Set(entries.map((e) => e.frontmatter.date))].sort().reverse();
+  // Calculate streak — sorted ascending; .at(-1) = most recent
+  const dates = [...new Set(entries.map((e) => e.frontmatter.date))].sort();
   let currentStreak = 0;
   let longestStreak = 0;
 
@@ -216,7 +216,7 @@ function main() {
     let checkDate = new Date(today);
     const todayStr = checkDate.toISOString().split("T")[0];
     if (!dateSet.has(todayStr)) {
-      checkDate = new Date(dates[0]);
+      checkDate = new Date(dates.at(-1));
       checkDate.setHours(0, 0, 0, 0);
     }
 
@@ -231,10 +231,9 @@ function main() {
     }
 
     let streak = 1;
-    const sortedDates = [...dates].sort();
-    for (let i = 1; i < sortedDates.length; i++) {
-      const prev = new Date(sortedDates[i - 1]);
-      const curr = new Date(sortedDates[i]);
+    for (let i = 1; i < dates.length; i++) {
+      const prev = new Date(dates[i - 1]);
+      const curr = new Date(dates[i]);
       const diffDays = (curr - prev) / (1000 * 60 * 60 * 24);
       if (diffDays === 1) {
         streak++;

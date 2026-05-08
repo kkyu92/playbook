@@ -65,16 +65,13 @@ function checkIsolated(entries) {
 }
 
 function checkStale(entries) {
-  return entries
-    .filter((e) => {
-      const conf = e.frontmatter.confidence || 1;
-      return conf < 3 && daysSince(e.frontmatter.date) > STALE_DAYS;
-    })
-    .map((e) => ({
-      slug: e.slug,
-      confidence: e.frontmatter.confidence || 1,
-      days: daysSince(e.frontmatter.date),
-    }));
+  const results = [];
+  for (const e of entries) {
+    const conf = e.frontmatter.confidence || 1;
+    const days = daysSince(e.frontmatter.date);
+    if (conf < 3 && days > STALE_DAYS) results.push({ slug: e.slug, confidence: conf, days });
+  }
+  return results;
 }
 
 function checkPatterns(entries) {
@@ -100,9 +97,13 @@ function checkPatterns(entries) {
 
 function checkInProgressOldEntries(entries) {
   // status: in-progress 인 채로 오래된 entry — 보강 또는 status 변경 후보
-  return entries
-    .filter((e) => e.frontmatter.status === "in-progress" && daysSince(e.frontmatter.date) > STALE_DAYS)
-    .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date) }));
+  const results = [];
+  for (const e of entries) {
+    if (e.frontmatter.status !== "in-progress") continue;
+    const days = daysSince(e.frontmatter.date);
+    if (days > STALE_DAYS) results.push({ slug: e.slug, days });
+  }
+  return results;
 }
 
 function checkUnusedEntries(entries) {
