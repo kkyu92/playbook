@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.14] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 265 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- dashboard `closed-loop-health` cycle 258 → 264 갱신 — window 245-264 chain 분포: skill-evolution=8 / curate=7 / review-code=4 / unknown=1. dispatch 누적: lesson=6 / meta-pattern=18 / chain-evolution=0. 0회 chain 8개 (fix-incident/explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). SE trigger-5 평가: 명단 SE#36 동일 + SE 점유율 40% ≥ 40% → 마커 SKIP (자기조정)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 64→65개 ahead, origin 6개 ahead (cycle 259-265 감지, origin 누락 1건 추가: moneyball cycle 258 retro auto-ingest)
+
+### Added
+- Daily Ingest 20260508-0606 (#357) — 4 신규 entry: user-behavior-prediction-ai-model-integration / claude-code-harness-skillset-reinforcement-agent-playbook / on-device-llm-inference-efficiency-patterns / llm-call-orchestration-reliability-enhancement
+
 ## [0.5.13] — 2026-05-08
 
 ### Changed

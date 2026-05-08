@@ -1,18 +1,19 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-264 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-265 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **64개** ahead, origin **6개** ahead.
+현재 상태: local **65개** ahead, origin **6개** ahead.
 
 origin 6개 커밋 (자동화 push):
+- `97caabd` data: auto-ingest moneyball cycle 258 retro (fix-incident SUCCESS — calibration_buckets NOT NULL 수정)
 - `cd489b3` data: auto-ingest moneyball cycle 257 retro (skill-evolution 18회, trigger 5 영구 opt-out)
 - `1c5d598` data: auto-ingest moneyball cycle 256 retro (operational-analysis lite SUCCESS)
 - `7507c1a` data: auto-ingest moneyball cycle 255 retro (skill-evolution 17회)
 - `b4abaea` chore(curate): daily raw-sources auto-archive (2026-05-08)
 - `5e8881e` data: auto-ingest moneyball cycle 254 retro (info-architecture-review SUCCESS)
 
-**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 5개 모두 data:/chore: 계열).
+**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 6개 모두 data:/chore: 계열).
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
