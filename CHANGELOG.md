@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.16] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 280 → 285 갱신 — window 266-285 chain 분포: worker-incident-triage=10 / skill-evolution=9 / curate=1. retro-only 0/20. 0회 chain 8개 (review-code 재진입 — SE #45 window 265-284 명단 변화). SE trigger-5: 점유율 45% ≥ 40% + 명단 동일 → SKIP (자기조정)
+- wiki lint CLEAN (cycle 286 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 264→285, SE #36→#45, BRANCHED 65/6→91/54), project_bidirectional_compound_growth_goal (cycles 263-285 progress entry 추가), MEMORY.md index 2줄 갱신
+
+### Fixed
+- moneyball CI raw-sources 32건 archive (cycle 282 worker-incident-triage — cycles 225-253 retro + CI incident logs)
+
+### Metrics
+- zero-touch 자동화: cycle 49~285 = **237 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 286
+
 ## [0.5.15] — 2026-05-08
 
 ### Changed
