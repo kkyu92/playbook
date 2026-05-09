@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-08T21:04:44.091Z
+Updated: 2026-05-09T21:03:38.045Z
 
-## 엔트리 (126개)
+## 엔트리 (130개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -24,6 +24,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
+- [Claude Code Harness Visibility — Component Introspection with ccinv CLI](wiki/harness-engineering/claude-code-harness-component-visibility-ccinv) — confidence: 1, status: draft
 - [Claude Code 하네스 스킬셋 강화 — 에이전트 플레이북 엔지니어링](wiki/harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook) — confidence: 1, status: draft
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
@@ -39,6 +40,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - [AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프](wiki/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop) — confidence: 1, status: draft
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
+- [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/harness-engineering/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
@@ -85,6 +87,8 @@ Updated: 2026-05-08T21:04:44.091Z
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 
 ### Agents
+- [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/agents/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
+- [다중 에이전트 시스템: 협업 및 충돌 해결 디자인 패턴](wiki/agents/collaboration-conflict-resolution-multi-agent-systems) — confidence: 1, status: draft
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
 - [GPT-5.5 Agent Model — Advanced Evaluation and Workflow Integration](wiki/agents/gpt-5-5-agent-model-evaluation-integration-strategies) — confidence: 1, status: draft
 - [Kimi K2.6: 오픈소스 에이전트형 코딩 모델 실전 통합 전략](wiki/agents/kimi-k2-6-open-source-agentic-coding-exploration) — confidence: 1, status: draft
@@ -150,6 +154,20 @@ Updated: 2026-05-08T21:04:44.091Z
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
 ## 교차 참조 (connections 기반)
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ agents/llm-agent-tool-use-design-patterns
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/claude-code-ctx-plugin-context-persistence
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ harness-engineering/agentic-chain-saturation-detection
+- agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ agents/llm-agent-goal-achievement-planning-patterns
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ agents/llm-agent-goal-achievement-planning-patterns
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ agents/llm-agent-tool-use-design-patterns
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ harness-engineering/agentic-chain-saturation-detection
+- agents/collaboration-conflict-resolution-multi-agent-systems ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
@@ -178,9 +196,6 @@ Updated: 2026-05-08T21:04:44.091Z
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/ouroboros-agent-performance-cost-optimization
 - agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/hub-worker-compounding-pattern
-- agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
-- agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
-- agents/llm-agent-goal-achievement-planning-patterns ↔ agents/ouroboros-agent-performance-cost-optimization
 - agents/llm-agent-goal-achievement-planning-patterns ↔ context-engineering/claude-code-ctx-plugin-context-persistence
 - agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/code-based-agent-task-patterns-harness-design
 - agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -192,15 +207,16 @@ Updated: 2026-05-08T21:04:44.091Z
 - agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/llm-agent-goal-achievement-planning-patterns ↔ project-ops/ai-project-scope-management-complexity-change
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/llm-agent-tool-use-design-patterns
+- agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/llm-agent-tool-use-design-patterns ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - agents/llm-agent-tool-use-design-patterns ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/agentic-chain-saturation-detection
 - agents/llm-agent-tool-use-design-patterns ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/llm-agent-tool-use-design-patterns ↔ data-engineering/production-db-ai-agent-guardrails
-- agents/multi-llm-agent-workload-partitioning-patterns ↔ evaluation/multi-persona-llm-output-validation-enhancement
+- agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
+- agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/hub-worker-compounding-pattern
-- agents/multi-llm-agent-workload-partitioning-patterns ↔ data-engineering/production-db-ai-agent-guardrails
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ agents/ouroboros-agent-performance-cost-optimization
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/claude-code-ctx-plugin-context-persistence
@@ -212,6 +228,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ project-ops/ai-project-scope-management-complexity-change
+- agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
 - agents/ouroboros-agent-performance-cost-optimization ↔ harness-engineering/hub-worker-compounding-pattern
 - agents/ouroboros-agent-performance-cost-optimization ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - agents/ouroboros-agent-performance-cost-optimization ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
@@ -227,9 +244,6 @@ Updated: 2026-05-08T21:04:44.091Z
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ agents/llm-agent-goal-achievement-planning-patterns
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
-- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ agents/llm-agent-goal-achievement-planning-patterns
-- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
-- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ data-engineering/llm-fine-tuning-high-quality-data-construction
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ context-engineering/claude-code-ctx-plugin-context-persistence
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/code-based-agent-task-patterns-harness-design
@@ -241,6 +255,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ frontend-ai/user-behavior-prediction-ai-model-integration
+- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ context-engineering/claude-code-ctx-plugin-context-persistence
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
@@ -261,6 +276,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
+- context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
 - context-engineering/nextjs-instrumentation-location ↔ harness-engineering/hub-worker-compounding-pattern
@@ -318,6 +334,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
 - data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ harness-engineering/drift-detection-methodology
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ data-engineering/vector-db-embedding-data-optimization-patterns
@@ -342,7 +359,6 @@ Updated: 2026-05-08T21:04:44.091Z
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/ai-project-scope-management-complexity-change
-- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection
 - evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/claude-code-cost-optimization-strategies
 - evaluation/llm-output-validation-quality-metrics-design ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -355,6 +371,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - evaluation/llm-output-validation-quality-metrics-design ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/ai-project-scope-management-complexity-change
+- evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/prompt-versioning-and-testing
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
@@ -387,6 +404,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
+- evaluation/rag-application-evaluation-retrieval-generation-quality ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
@@ -419,6 +437,7 @@ Updated: 2026-05-08T21:04:44.091Z
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ project-ops/claude-code-cost-optimization-strategies
+- frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ harness-engineering/guard-test-pattern
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -436,16 +455,20 @@ Updated: 2026-05-08T21:04:44.091Z
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
+- harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
+- harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ reports/closed-loop-health
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/guard-test-pattern
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ project-ops/claude-code-cost-optimization-strategies
+- harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/claude-code-harness-component-visibility-ccinv
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ harness-engineering/code-based-agent-task-patterns-harness-design
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
