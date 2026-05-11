@@ -3,9 +3,9 @@
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **131개** ahead, origin **6개** ahead. _(cycle 309 갱신 — origin 6 commits = worker-lesson/journal auto-ingest, fast-forward 불가)_
+현재 상태: local **132개** ahead, origin **8개** ahead. _(cycle 310 갱신 — origin 8 commits = worker-lesson/journal auto-ingest. Journal 029 #425 + Journal 030 #431 머지 완료 on origin. 로컬은 미반영)_
 
-**⚠️ 남은 CI 영향**: daily ingest PR #418, #421 CI 실패 중 — PR 브랜치가 old origin/main 기반이라 Next.js 16.2.3 포함. journal-029 PR #425 는 이미 머지 완료. **push + pull 해결 후 자동 해결** (`git push --force-with-lease` 또는 merge 전략 결정 → origin이 16.2.6 받음 → CI 재실행 통과).
+**⚠️ 남은 CI 영향**: daily ingest PR #418, #421 CI 실패 중 — PR 브랜치가 old origin/main 기반이라 Next.js 16.2.3 포함. push 후 origin이 16.2.6 받으면 **CI 자동 재실행 통과**. **push + merge 해결 후 자동 해결** (`git push --force-with-lease` 또는 merge 전략 결정).
 
 **다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 close/merge 검토.
 
@@ -42,6 +42,15 @@
 **Why**: 일반 세션 시작 시 git pull 실패 silent surface → sessionstart hook 갱신 필요 (R6 사용자 결정 영역)
 **Trigger**: cycle 11 lesson + cycle 74 N=2 재발 → SKILL.md 부분 처리. **N=3 재발 시** settings.json 갱신 사용자 결정
 **Effort**: S — settings.json `SessionStart` hook 1줄 추가
+
+## [P2] GH Actions Node.js 20 → 24 마이그레이션 (deadline 2026-06-02, R6 사용자 영역)
+
+**What**: `.github/workflows/` 전체 — `actions/checkout@v4`, `actions/setup-node@v4` 등 Node.js 20 기반 actions 를 Node.js 24 지원 버전으로 업그레이드
+**Why**: cycle 310 worker-lesson CI 경고 — "Node.js 20 actions are deprecated. forced to Node.js 24 starting June 2nd, 2026". 현재: deprecated warning. 2026-06-02 이후: 강제 실행 + 예상치 못한 동작 가능
+**Fix 영역**: workflow yaml = R6 사용자 영역 (20개+ 워크플로 일괄 업데이트)
+**Recommended fix**: `actions/checkout@v4` → `actions/checkout@v5` (Node.js 24 지원), `actions/setup-node@v4` → `actions/setup-node@v5` (또는 `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` env 추가로 임시 opt-in)
+**Effort**: S — sed 일괄 치환 가능
+**Deadline**: 2026-06-02 (3주 남음)
 
 ## [P2] weekly-triage.yml — CI 알림 스텁 필터링 (cycle 297 carry-over, R6 사용자 영역)
 
