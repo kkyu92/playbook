@@ -1,17 +1,17 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-294 감지)
+## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-297 감지)
 
 origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **110개** ahead, origin **67개** ahead. _(cycle 296 갱신)_
+현재 상태: local **111개** ahead, origin **68개** ahead. _(cycle 297 갱신)_
 
 **⚠️ CI 영향**: origin/main이 Next.js 16.2.4 유지 중 (local의 16.2.6 upgrade 미push). auto-ingest 신규 PR이 `pnpm audit --audit-level high` 실패 중 (GHSA-8h8q-6873-q5fj 외 3건). 해소 방법 = BRANCHED merge/push 후 자동 해결.
 
 origin 최근 커밋 (자동화 push, 최신 순):
-- `4fbf77a` data: auto-ingest self-policy from moneyball — cycle 281 retro (operational-analysis lite)
-- `81a16b5` data: auto-ingest self-policy from moneyball — cycle 280 retro (review-code heavy)
-- `db164a6` data: auto-ingest self-policy from moneyball — cycle 279 retro (info-architecture-review)
-- 그 외 moneyball cycle 272-281 retro 자동 push 계열 (CI 모두 SUCCESS)
+- `86ac016` data: auto-ingest from moneyball — cycle 286 retro (fix-incident retro-only)
+- `3ffc4fa` 📓 Auto-Ingest: Journal 029 — lesson-pending false-positive 잔존 batch close 패턴
+- `6c7acee` data: auto-ingest from moneyball — cycle 285 retro (fix-incident SUCCESS, PASS_ship 149)
+- 그 외 moneyball cycle 280-286 retro 자동 push 계열 + Daily Ingest PR 2건 OPEN (#418, #421)
 
 **원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
 **주의 해소**: moneyball CI cycle 272 이후 연속 PASS — incident auto-ingest 신규 push 없음.
@@ -47,6 +47,14 @@ origin 최근 커밋 (자동화 push, 최신 순):
 **Why**: 일반 세션 시작 시 git pull 실패 silent surface → sessionstart hook 갱신 필요 (R6 사용자 결정 영역)
 **Trigger**: cycle 11 lesson + cycle 74 N=2 재발 → SKILL.md 부분 처리. **N=3 재발 시** settings.json 갱신 사용자 결정
 **Effort**: S — settings.json `SessionStart` hook 1줄 추가
+
+## [P2] weekly-triage.yml — CI 알림 스텁 필터링 (cycle 297 carry-over, R6 사용자 영역)
+
+**What**: `payload_type: incident` 유형 raw-source 파일을 weekly-triage issue 에서 제외 (또는 별도 섹션으로 분리)
+**Why**: cycle 297 Issue #419 분석 — 33건 전부 CI 실패 알림 스텁 (commit hash + run URL 만, 학습 내용 없음). `/ingest` 대상이 아님. 매주 triage issue 에 포함되어 불필요한 manual review 비용 발생
+**Fix 영역**: `.github/workflows/weekly-triage.yml` = R6 사용자 영역 (yaml 수정)
+**Recommended fix**: frontmatter `payload_type: incident` 파일은 triage 체크리스트 제외 → 자동 archive (`_archive/` 이동) 또는 별도 🔕 섹션
+**Effort**: S — weekly-triage.yml raw-sources 스캔 로직 1 조건 추가
 
 ## [P2] raw-sources auto-archive 자동화
 
