@@ -1,20 +1,15 @@
 # TODOS
 
-## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발, cycle 259-297 감지)
+## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
-origin/main 과 local main 이 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **111개** ahead, origin **68개** ahead. _(cycle 297 갱신)_
+~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
+현재 상태: local **116개** ahead, origin **0개** ahead. _(cycle 299 갱신)_
 
-**⚠️ CI 영향**: origin/main이 Next.js 16.2.4 유지 중 (local의 16.2.6 upgrade 미push). auto-ingest 신규 PR이 `pnpm audit --audit-level high` 실패 중 (GHSA-8h8q-6873-q5fj 외 3건). 해소 방법 = BRANCHED merge/push 후 자동 해결.
+**⚠️ 남은 CI 영향**: daily ingest PR #418, #421 CI 여전히 실패 중 — PR 브랜치가 old origin/main 기반이라 Next.js 16.2.3 포함. **push 후 PR 재검토 시 자동 해결** (`git push origin main` → origin이 16.2.6 받음 → PR의 base branch 업데이트 → CI 재실행 통과).
 
-origin 최근 커밋 (자동화 push, 최신 순):
-- `86ac016` data: auto-ingest from moneyball — cycle 286 retro (fix-incident retro-only)
-- `3ffc4fa` 📓 Auto-Ingest: Journal 029 — lesson-pending false-positive 잔존 batch close 패턴
-- `6c7acee` data: auto-ingest from moneyball — cycle 285 retro (fix-incident SUCCESS, PASS_ship 149)
-- 그 외 moneyball cycle 280-286 retro 자동 push 계열 + Daily Ingest PR 2건 OPEN (#418, #421)
+**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 close/merge 검토.
 
-**원인**: zero-touch push 정책 (local commit 누적) + 워커 자동 push (auto-ingest) 동시 진행 → 필연적 재발산. 권장: `git merge origin/main` (충돌 가능성 낮음 — 모두 data:/chore: 계열).
-**주의 해소**: moneyball CI cycle 272 이후 연속 PASS — incident auto-ingest 신규 push 없음.
+**원인**: zero-touch push 정책 + 워커 자동 push 동시 진행 → 필연적 재발산. 로컬 머지로 1회 해소됨. push 후 재발산 방지는 배치 push 주기 단축 검토.
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
