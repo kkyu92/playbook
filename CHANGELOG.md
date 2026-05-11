@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.22] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #54 (cycle 309) — window 289-308, 0회 chain 6개 명단 SE #53 대비 동일, SE 점유율 35%→40% 자기조정 마커 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **132개** ahead, origin **8개** ahead _(cycle 310 갱신 — origin 8 = worker-lesson/journal auto-ingest)_
+- Node.js 20 Actions deprecation P2 추가 (cycle 310) — `.github/workflows/` 전체 Node.js 20→24 마이그레이션 deadline 2026-06-02 (3주)
+
+### Metrics
+- zero-touch 자동화: cycle 49~311 = **263 사이클** 검증 완료 (N=40 batch 294~333 진행 중, 현재 cycle 311/333)
+- wiki entries: **133** (lint CLEAN 유지, orphan/isolated/stale/JIT-unused 전항목 0건)
+- BRANCHED 지속: local 132 / origin 8 (R6 사용자 결정 영역)
+
 ## [0.5.21] — 2026-05-12
 
 ### Changed
