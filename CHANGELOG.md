@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.21] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #51→#53 (3회 연속 갱신 — cycles 305/306/307) — SE 점유율 30%→35%→40% 회복, cycle 307 마커 자기조정 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **129개** ahead, origin **6개** ahead _(cycle 307 갱신 — origin 6 = worker-lesson/journal auto-ingest)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~307 = **259 사이클** 검증 완료 (N=40 batch 294~333 진행 중, 현재 cycle 307/333)
+- wiki entries: **133** (lint CLEAN 유지)
+- BRANCHED 지속: local 129 / origin 6 (R6 사용자 결정 영역)
+
 ## [0.5.20] — 2026-05-12
 
 ### Added
