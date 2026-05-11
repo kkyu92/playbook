@@ -4,6 +4,27 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.20] — 2026-05-12
+
+### Added
+- Journal 029 auto-ingest (PR #425 머지) — `lesson-pending false-positive batch close` 패턴 wiki 박제. `docs/solutions/ci-github-actions/` 새 solution 추가 (PR branch old-base audit failure 패턴)
+
+### Changed
+- SKILL.md stage 3 evidence SE #50 박제 (cycle 300) — Trigger-3 N=300 milestone + Trigger-5 동시 발화. zero-touch 63+→299+ 갱신
+- wiki lint CLEAN (cycle 301 curate) — **133 entries**, isolated 2→0, orphan/stale/JIT-unused 0건. 10개 신규 entries (agents/context-engineering/data-engineering/evaluation 도메인)
+- code quality baseline 박제 (cycle 302 review-code) — health 10/10 STABLE, 4회 연속 CLEAN 확정
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **124개** ahead, origin **2개** ahead _(cycle 303 갱신 — origin 2 = worker-lesson auto-ingest)_
+
+### Fixed
+- BRANCHED 로컬 머지 (cycle 299) — `git merge origin/main` 69 commits 통합. INDEX.md 충돌 → manifest 재생성으로 해결. push 대기 (R6 사용자 영역)
+- PR #418/#421 CI root cause 확인 (cycle 303) — PR branches 가 old origin/main 기반 (Next.js 16.2.3). push 후 CI 자동 재실행 통과 예정
+
+### Metrics
+- zero-touch 자동화: cycle 49~303 = **255 사이클** 검증 완료 (N=40 batch 294~333 진행 중)
+- wiki entries: **133** (cycle 298 기준 123 → +10: agents 4, context-engineering 4, data-engineering 5, evaluation 3 등)
+- BRANCHED 지속: local 124 / origin 2 (R6 사용자 결정 영역)
+- open PRs: 2건 (#418, #421 daily ingest — push 후 자동 해결 예정)
+
 ## [0.5.19] — 2026-05-12
 
 ### Fixed
