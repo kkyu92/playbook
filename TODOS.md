@@ -3,7 +3,7 @@
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **124개** ahead, origin **2개** ahead. _(cycle 304 갱신 — origin 2 commits = worker-lesson auto-ingest, fast-forward 불가)_
+현재 상태: local **126개** ahead, origin **4개** ahead. _(cycle 305 갱신 — origin 4 commits = worker-lesson/journal auto-ingest, fast-forward 불가)_
 
 **⚠️ 남은 CI 영향**: daily ingest PR #418, #421 CI 실패 중 — PR 브랜치가 old origin/main 기반이라 Next.js 16.2.3 포함. journal-029 PR #425 는 이미 머지 완료. **push + pull 해결 후 자동 해결** (`git push --force-with-lease` 또는 merge 전략 결정 → origin이 16.2.6 받음 → CI 재실행 통과).
 
