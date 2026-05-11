@@ -1,0 +1,33 @@
+---
+date: "2026-05-11"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "2e3b50c1cf23e426c77ae9b3919f52049161c0e0"
+---
+
+
+## 사례 (cycle 285, 2026-05-12)
+- 증상: lesson-pending label open 이슈 25건 (#242-267) 누적
+- 근본 원인: submit-lesson grep pipefail (cycle 282 수정) 로 인해
+  비-lesson 커밋(style/refactor/docs/feat)의 CI가 2026-05-07~08 실패
+  → 허브 incident 생성 → 3일 후 incident-followup.yml 이 lesson-pending 리마인더 batch 생성
+- cycle 282 fix 시 명시적으로 지정된 9건(#268-277)만 close됨
+  → 더 오래된 25건은 미정리 상태로 잔존
+
+## 원인
+cycle 282 retro가 "#268-277 close" 로 범위를 명시했으나
+같은 근본 원인의 더 오래된 이슈들(#242-267)은 retro 범위 밖이었음
+
+## 대응
+gh issue close <N> --comment "외부 요인(cycle 282 수정됨)" 으로 일괄 close
+
+## 박제 패턴
+CI 워크플로우 bug fix 후 lesson-pending 이슈 cleanup:
+1. fix 커밋이 적용됐는지 확인 (submit-lesson runs 최근 success 여부)
+2. `gh issue list --state open --label lesson-pending --limit 100` 로 전체 범위 확인
+3. 한 번에 close (loop) + comment "근본 원인 cycle N에서 해결됨"
+4. fix 커밋 시점 이전 생성 이슈 = 모두 false-positive 처리 가능
+
+## 방지책
+fix-incident 종료 시 lesson-pending 이슈 전체 범위 scan → 근본 원인 동일 이슈 일괄 close
