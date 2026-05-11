@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-11T22:26:32.125Z
+Updated: 2026-05-11T22:45:48.100Z
 
 ## 엔트리 (133개)
 
@@ -678,6 +678,8 @@ Updated: 2026-05-11T22:26:32.125Z
 - journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ harness-engineering/question-own-defaults
 - journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- journal/playbook-journal-029-lesson-pending-false-positive-batch-close ↔ harness-engineering/hub-worker-compounding-pattern
+- journal/playbook-journal-029-lesson-pending-false-positive-batch-close ↔ harness-engineering/recurring-file-bug-accumulator-pattern
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
@@ -692,3 +694,5 @@ Updated: 2026-05-11T22:26:32.125Z
 - reports/week-2026-18 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-19 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-19 ↔ reports/week-2026-18
+- reports/week-2026-20 ↔ reports/week-2026-19
+- reports/week-2026-20 ↔ reports/mid-review-2026-04-28
