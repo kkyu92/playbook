@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.19] — 2026-05-12
+
+### Fixed
+- Next.js 16.2.4 → 16.2.6 (cycle 295 fix-incident) — 4건 high CVE 패치 (GHSA-8h8q, mg66, c4j6, middleware-bypass). daily ingest PR CI gate `pnpm audit --audit-level high` 차단 해소
+
+### Changed
+- SKILL.md stage 3 evidence SE #47→#49 (3회 연속 발화 — cycles 293/294/296): trigger-5 window 274~296, 0회 chain 6개 명단 fix-incident 탈퇴 신호 포함
+- Issue #419 batch close — weekly-triage 33 raw CI stubs 전량 reject (payload_type: incident, wiki entry 가치 없음). weekly-triage.yml CI 스텁 필터 개선 [P2] carry-over
+- wiki lint CLEAN (cycle 298 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 'drift' 이미 승격
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **111개** ahead, origin **68개** ahead _(cycle 297 갱신)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~297 = **249 사이클** 검증 완료 (N=40 batch 294~333 진행 중)
+- BRANCHED 지속: local 111 / origin 68 (R6 사용자 결정 영역)
+
 ## [0.5.18] — 2026-05-08
 
 ### Changed
