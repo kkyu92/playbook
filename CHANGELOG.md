@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.35] — 2026-05-12
+
+### Changed
+- curate cycle 364 — TODOS [P0] git BRANCHED → DONE 갱신 (merge `2808ce6` 2026-05-12 21:31 KST, 0	0 완전 동기)
+- memory 갱신 — N=30 batch (364-393) 시작 + BRANCHED 해소 반영
+
+### Metrics
+- zero-touch 자동화: cycle 49~364 = **316 사이클** 검증 완료 / N=30 batch (364-393) 시작
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **73회** (SE #73, cycle 360)
+- **BRANCHED ✅ 해소** (0	0 완전 동기, merge `2808ce6`)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.34] — 2026-05-12
 
 ### Changed

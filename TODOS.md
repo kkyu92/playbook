@@ -7,21 +7,12 @@ CI Failure Dispatch = skipped (실패 없음). 해소 조건 충족 (cycle 356 �
 **이력**: 7차 (cycle 350) → 8차 (cycle 353, close+fix 동시, commit `44947fd`) → 이후 신규 실패 없음
 **Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
 
-## [P0] git BRANCHED — local/origin diverge 해소 (cycle 363 갱신, R6 사용자 영역)
+## [DONE 2026-05-12] git BRANCHED — local/origin diverge 해소 (cycle 364 확인)
 
-**상태**: local main: **41커밋 ahead** (cycles 336-363 + auto-ingest), origin main: **33커밋 ahead** (moneyball cycles 318-327 + CI failures)
-**검출**: 2026-05-12 cycle 363 진단 (`git rev-list --left-right --count origin/main...main` = `33	41`)
-**충돌 여부**: `git merge --no-ff origin/main` 자동 성공 확인됨 (충돌 없음)
-**원인**: cycle 354+357 push race fix (708be8f, a3057da)가 local에만 반영됨. BRANCHED로 인해 origin auto-ingest.yml은 구버전 유지 중.
-**재발 evidence**: 2026-05-12 08:39:13 failure (issue #519 v2) = 동일 push race 5번째 재발. 수정이 origin 미push → 영구 재발 루프.
-**Solution**: `docs/solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked.md` (cycle 359 신규 박제)
-**이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
-**해소 방법** (R6 사용자 직접):
-```bash
-git pull origin main --no-rebase   # merge (local + origin 양쪽 통합)
-git push origin main               # sync
-```
-또는 conflict 있으면 `git pull --rebase` 후 `git push`.
+**상태**: ✅ DONE — cycle 364 진단 (`git rev-list --left-right --count origin/main...main` = `0	0`). 완전 동기.
+**해소**: merge commit `2808ce6` (2026-05-12 21:31 KST) — moneyball auto-ingest(10:00~10:18) + hub cycles 361-363(18:46~19:00) 양방향 통합 완료
+**이전 상태**: cycle 363 진단 시 local 41ahead / origin 33ahead (push race fix 미push 재발)
+**Solution**: `docs/solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked.md`
 
 ## [DONE 2026-05-12] moneyball CI lint 수정 (cycle 307 moneyball 세션 처리 — issue #298 CLOSED)
 
