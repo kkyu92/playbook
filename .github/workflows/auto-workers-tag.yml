@@ -31,7 +31,7 @@ jobs:
     timeout-minutes: 10
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 5
 
@@ -73,7 +73,7 @@ jobs:
         with:
           version: 10
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.detect.outputs.skip != 'true'
         with:
           node-version: "20"
