@@ -1,5 +1,12 @@
 # TODOS
 
+## [P0] moneyball CI lint 수정 필요 (cycle 318 worker-incident-triage carry-over)
+
+**What**: `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제
+**Why**: ESLint `no-unused-vars` — `Metadata`(line 1), `DayBucket/WeekBucket/RecentForm`(lines 11-13), `SITE_URL`(line 24) 미사용. cycle 296 리팩터(PR #285) 후 잔존. PR #287 머지 후 main CI 차단 (issues #441/#442/#443 → 트리아지 close 완료 5-12)
+**Fix**: 다음 moneyball 세션에서 3줄 삭제 → CI 자동 회복
+**Effort**: XS (5분)
+
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
