@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.26] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #59/60 (2회 연속 갱신 — cycles 324/325) — window 303-322/306-325, 0회 chain 8개 (SE #59: 명단 변화 7→8개, review-code 신규 진입 / SE #60: 명단 동일 8개 유지). SE #60: 마커 skip 자기조정 성공 (window 306-325 SE 9/20=45% ≥ 40% + 명단 동일)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **159개** ahead, origin **41개** ahead _(cycle 325→326 갱신 — origin 41 = daily-ingest/worker-lesson/auto-ingest 연속 유입)_
+- gstack upgrade 1.27.1.0 → **1.33.0.0** (cycle 327 curate — auto-upgrade)
+
+### Fixed
+- moneyball CI inbound 3건 트리아지 close (cycle 326) — issues #466/#467/#468 batch close. picks-polish-ui feature branch transient CI failures (retry 성공). hub read-only → TODOS P0 갱신
+
+### Metrics
+- zero-touch 자동화: cycle 49~326 = **278 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 327/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 159 / origin 41 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (CI 3건 cycle 326 close 완료)
+
 ## [0.5.25] — 2026-05-12
 
 ### Changed
