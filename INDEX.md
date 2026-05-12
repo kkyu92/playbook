@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-12T00:08:11.125Z
+Updated: 2026-05-12T05:15:53.920Z
 
-## 엔트리 (141개)
+## 엔트리 (143개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -88,8 +88,9 @@ Updated: 2026-05-12T00:08:11.125Z
 - [Playbook Journal 026 — cycle 57 — sfr/h2h v2.1 backtest validation 변경 보류 박제 (#94)](wiki/journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94) — confidence: 3, status: in-progress
 - [Playbook Journal 027 — cycle 59 — sfr/h2h prod 30일 bias bootstrap CI (systematic confirmed) (#96)](wiki/journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema) — confidence: 3, status: in-progress
 - [Playbook Journal 028 — cycle 60 — fancy-stats.ts silent fallback risk (SFR=0/wOBA=0.320/FIP=4.00/Elo=1500)](wiki/journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0) — confidence: 3, status: in-progress
-- [Playbook Journal 029 — lesson-pending false-positive 잔존 batch close 패턴](wiki/journal/playbook-journal-029-lesson-pending-false-positive-batch-close) — confidence: 3, status: in-progress
+- [Playbook Journal 029 — lesson-pending false-positive 잔존 batch close 패턴](wiki/journal/playbook-journal-029-lesson-pending-false-positive-batch-close) — confidence: 4, status: complete
 - [Playbook Journal 030 — 신규 페이지 3사이클 cleanup 패턴 + confidence 역전 + 일요일 취약 + h2h 노이즈 박제](wiki/journal/playbook-journal-030-3-cleanup-confidence-h2h) — confidence: 3, status: in-progress
+- [Playbook Journal 032 — Sunday confidence cap — judge-agent 일요일 과적합 방지 (cycle 309)](wiki/journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 
