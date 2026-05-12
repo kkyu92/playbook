@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.53] — 2026-05-13
+
+### Changed
+- review-code cycle 411 — health 10/10 (9회 연속) · simplify 5개 scripts: embed-content regex 버그 수정 + vectors[] 제거, generate-lesson validate lambda + fullSlug 제거, gemini-client buildClients memoize, lint-content existsSync 중복 제거 (N=380 batch 17/380)
+- curate cycle 412 — retro 410-411 박제 + CHANGELOG 0.5.53 + TODOS BRANCHED 70 갱신 (N=380 batch 18/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~411 = **363 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 18/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **92회** (SE #92, cycle 409)
+- SE #92 0회 chain 7개: explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system
+- BRANCHED 재발: local 70 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.52] — 2026-05-13
 
 ### Changed
