@@ -35,6 +35,11 @@ on:
         description: "(가드 테스트) test 면 raw 만 저장 후 종료"
         required: false
 
+# Node 20 deprecation 대응 — GitHub Actions runner가 2026-06-02부터 Node 24로 전환.
+# 지금 opt-in해서 새 런타임 기반으로 선제 전환. 롤백은 이 env 블록 제거만.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 permissions:
   contents: write
   pull-requests: write
@@ -495,7 +500,7 @@ jobs:
               echo "date: \"${DATE}\""
               echo "tags: [playbook-journal, auto-ingest, lesson, ${SOURCE_SHORT}]"
               echo "confidence: 3"
-              echo "connections: []"
+              echo "connections: [journal/playbook-journal-000-bootstrap]"
               echo "status: in-progress"
               echo "description: \"자동 수집: ${ESC_TITLE} (from ${SOURCE_REPO})\""
               echo "type: entry"
@@ -528,7 +533,8 @@ jobs:
             echo "✅ Journal draft: $JOURNAL_FILE"
 
             # auto-connections: semantic search 기반 connections 자동 생성 + 양방향 연결
-            node scripts/auto-connections.mjs "$JOURNAL_FILE" 8 || echo "⚠️ auto-connections 실패 — connections: [] 유지"
+            # 실패 시 fallback connection (journal-000-bootstrap) 으로 CLAUDE.md 규칙 보장
+            node scripts/auto-connections.mjs "$JOURNAL_FILE" 8 || echo "⚠️ auto-connections 실패 — fallback connection 유지"
 
             # manifest 재생성
             node scripts/generate-content-manifest.mjs

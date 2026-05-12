@@ -16,6 +16,11 @@ on:
       - "scripts/lib/query-router.mjs"
   workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 23:00 dispatch
 
+# Node 20 deprecation 대응 — GitHub Actions runner가 2026-06-02부터 Node 24로 전환.
+# 지금 opt-in해서 새 런타임 기반으로 선제 전환. 롤백은 이 env 블록 제거만.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 permissions:
   contents: read
 
