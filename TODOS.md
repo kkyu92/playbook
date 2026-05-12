@@ -3,9 +3,9 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **49개** ahead, origin **4개** ahead. (cycle 400 기준)
+현재 상태: local **51개** ahead, origin **4개** ahead. (cycle 401 기준)
 - origin 4 commits: moneyball auto-ingest cycles 332-335 retro + Journal 033 (W21 모델 성과 분석)
-- local 49 commits: hub cycles 364-400 (+cycle 400 skill-evolution SE #88: stage 3 evidence 갱신 fix-incident 탈퇴 7→6)
+- local 51 commits: hub cycles 364-401 (+cycle 401 curate: retro 398-400 박제 + CHANGELOG 0.5.48)
 - 해소 방법: `git merge origin/main && git push origin main` (push 정책 따라 사용자 직접 실행)
 - **직전 해소**: cycle 364 (merge `2808ce6`, 0	0 완전 동기 확인)
 - ⚠ 주의: Journal 033 MDX (`content/journal/playbook-journal-033-...mdx`) `connections: []` 위반 — BRANCHED 해소 후 connections 1개 이상 추가 필요 (CLAUDE.md 규칙). 신규 journal은 fallback connection으로 위반 방지 (cycle 399 fix)

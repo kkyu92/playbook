@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.48] — 2026-05-13
+
+### Changed
+- fix-incident cycle 399 — actions/cache@v4 Node.js 20 deprecation 3 workflows 패치 (embed-on-push/category-rebalance/auto-ingest) + journal connections fallback 추가 (connections: [] → playbook-journal-000-bootstrap)
+- skill-evolution SE #88 cycle 400 — stage 3 evidence 갱신 (zero-touch 64+→399+ / fix-incident 탈퇴 7→6 SE 40% 자기조정 성공 → 마커 skip)
+- curate cycle 401 — retro 398-400 박제 + CHANGELOG 0.5.48 + TODOS BRANCHED 51 갱신 + memory 갱신 (N=380 batch 8/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~400 = **352 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 8/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **88회** (SE #88, cycle 400)
+- health 연속: **15회 10/10** (cycle 396 review-code 기준)
+- SE 자기조정: cycle 400 window 381-400 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 51 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.47] — 2026-05-13
 
 ### Changed
