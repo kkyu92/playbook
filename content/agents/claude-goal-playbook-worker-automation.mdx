@@ -1,0 +1,99 @@
+---
+title: Claude Code /goal 기능 — 자율 플레이북 워커를 위한 반복 실행 및 검증 강화
+category: agents
+date: "2026-05-12"
+tags:
+  - Claude Code
+  - AI Agent
+  - Autonomous System
+  - Workflow Automation
+  - Validation
+  - Iterative Process
+  - agents
+confidence: 1
+connections: [agents/llm-agent-goal-achievement-planning-patterns, agents/ouroboros-agent-performance-cost-optimization, context-engineering/ai-agent-context-window-optimization-session-longevity, evaluation/llm-output-validation-quality-metrics-design, evaluation/generative-ai-hallucination-automated-detection-evaluation, evaluation/multi-persona-llm-output-validation-enhancement, agents/llm-agent-tool-use-design-patterns, agents/multi-tool-ai-agent-design-patterns-orchestration]
+status: draft
+description: Claude Code의 /goal 기능을 활용하여 플레이북 워커의 자율적인 목표 달성 반복 실행 및 자동 교정 메커니즘을 강화하는 방안을 설명합니다.
+type: entry
+source: scout
+---
+
+Claude Code의 `/goal` 기능은 언어 모델 기반 에이전트의 자율성을 혁신적으로 강화하는 핵심 요소입니다. 이 기능은 에이전트가 특정 목표(goal)를 달성할 때까지 여러 턴(turn)을 스스로 반복 실행하도록 지원하며, 각 턴 종료 후 Fast Model을 통해 목표 달성 여부를 평가합니다. 목표가 미완료 시 다음 턴을 자동으로 시작하고, 완료 시 `goal`을 자동 제거하여 에이전트 워크플로의 효율성과 자율성을 극대화합니다. 기존 플레이북의 'LLM 출력 검증 파이프라인 (MDX validation 루프, Zod schema, Gemini retry)' 및 '허브-워커 복리 자동화'와 결합될 때, 이 기능은 단순한 자동화를 넘어선 자가 교정 및 목표 지향적 에이전트 시스템을 구현합니다.
+
+## 목표 기반 자율 실행 아키텍처
+
+`/goal` 기능을 플레이북 워커에 통합하는 핵심은 목표를 명확히 정의하고, 에이전트가 이 목표를 향해 스스로 작업을 반복하며 진행 상황을 평가하도록 하는 것입니다. 예를 들어, 'moneyballscore' 워커가 특정 데이터셋에서 최적의 예측 모델을 생성하는 목표를 가지고 있거나, 'blog-autopilot' 워커가 특정 주제에 대한 고품질 블로그 초안을 작성하는 목표를 가질 수 있습니다.
+
+### 워크플로 개요
+
+1.  **목표 설정 (Goal Definition)**: 워커가 달성해야 할 구체적이고 측정 가능한 목표를 `claude.tool_code_goal()`과 같은 내부 도구를 통해 정의합니다. 이 목표는 파일 생성, 특정 데이터 구조 완성, 특정 테스트 통과 등으로 명시될 수 있습니다.
+2.  **초기 실행 (Initial Execution)**: 워커가 목표 달성을 위한 첫 번째 작업을 수행합니다.
+3.  **반복 실행 루프 (Iterative Execution Loop)**:
+    *   **실행 (Execution)**: 워커가 현재 상태에서 다음 최적의 단계를 결정하고 실행합니다 (코드 작성, 파일 수정, 외부 API 호출 등).
+    *   **평가 (Evaluation)**: 각 턴 종료 후, Fast Model이 현재까지의 진행 상황을 기반으로 목표 달성 여부를 평가합니다. 이 평가는 파일 내용 검사, 명령어 실행 결과 분석, 또는 플레이북의 Zod 스키마 검증, MDX validation 루프와 같은 정교한 내부 검증 파이프라인과 결합됩니다.
+    *   **피드백 및 수정 (Feedback & Correction)**: 목표가 미달성된 경우, Fast Model은 다음 턴을 위한 가이드라인 또는 문제점을 제공하여 워커가 자율적으로 수정 작업을 수행하도록 지시합니다. 이 과정에서 Gemini retry 메커니즘을 활용하여 실패한 작업을 재시도하거나 다른 전략을 시도할 수 있습니다.
+    *   **종료 (Termination)**: 목표가 완전히 달성되면 `/goal` 프로세스가 종료되고, 최종 결과가 반환됩니다.
+
+### 통합 아키텍처 다이어그램
+
+```mermaid
+graph TD
+    A[Playbook Worker Initialization] --> B{Set Goal via claude.tool_code_goal()};
+    B --> C[Worker Executes Initial Task];
+    C --> D{Loop: Is Goal Achieved?};
+    D -- No --> E["Worker Performs Next Action (Code/File/API)"];
+    E --> F[Fast Model Evaluation & Internal Validation Pipeline];
+    F -- Goal Not Met --> G[Generate Feedback for Next Iteration];
+    G --> E;
+    F -- Goal Met --> H[Goal Accomplished: Terminate Loop];
+    H --> I[Return Final Output];
+
+    subgraph "Internal Validation Pipeline"
+        F1[MDX Validation Loop]
+        F2[Zod Schema Check]
+        F3[Gemini Retry Mechanism]
+        F --> F1
+        F --> F2
+        F --> F3
+    end
+    subgraph "Playbook Worker Context"
+        C --> C1[Moneyball Score Worker]
+        C --> C2[Blog Autopilot Worker]
+    end
+```
+
+## 실제 통합 시나리오 (2026 트렌드 반영)
+
+2026년에는 AI 에이전트가 더욱 복잡한 비즈니스 프로세스를 자율적으로 관리하고 최적화하는 것이 일반화될 것입니다. `/goal` 기능은 이러한 트렌드의 핵심 동력이 됩니다.
+
+예를 들어, 'blog-autopilot' 워커는 단순한 초안 작성을 넘어, 특정 SEO 키워드 목표 달성, 독자 참여도 예측, 이미지 생성 및 배치, 그리고 최종 발행 전 A/B 테스트 결과를 반영하여 콘텐츠를 자동으로 수정하는 복합적인 목표를 가질 수 있습니다. 이 과정에서 `/goal`은 에이전트가 다단계 목표를 순차적 또는 병렬적으로 달성하도록 이끌며, 각 단계마다 외부 데이터(예: SEO 분석 도구, 사용자 행동 분석)를 실시간으로 통합하여 자체 평가 및 교정합니다.
+
+또 다른 예로, 'moneyballscore' 워커는 주어진 경제 지표 데이터에서 가장 수익률 높은 투자 전략을 찾아내는 목표를 가집니다. `/goal`은 워커가 다양한 모델 아키텍처를 실험하고, 백테스팅을 실행하며, 리스크 관리 파라미터를 조정하는 일련의 과정을 자율적으로 반복하도록 합니다. 각 반복마다 Fast Model은 전략의 성능(수익률, MDD 등)을 평가하고, 최적의 전략을 찾아낼 때까지 탐색 공간을 줄여나갑니다. 이 때, 기존의 'LLM 출력 검증 파이프라인'은 모델의 구조적 타당성, 코드 안전성, 결과 해석의 일관성을 검증하는 데 핵심적인 역할을 수행합니다.
+
+이러한 고도화된 자율성은 에이전트 시스템이 '허브-워커 복리 자동화'의 잠재력을 최대한 발휘하게 합니다. 허브 에이전트가 상위 수준의 목표를 설정하면, 각 워커 에이전트가 `/goal` 기능을 통해 자신의 하위 목표를 자율적으로 달성하며 전체 시스템의 생산성을 복리적으로 증가시키는 형태입니다.
+
+## 트레이드오프
+
+### 1. 자율성 및 효율성 vs. 제어 및 예측 가능성
+*   **언제 좋은가**: 명확하게 정의된 목표를 가진 반복적이고 복잡한 작업에서 에이전트의 자율성을 극대화하여 개발자의 개입 없이 신속하게 목표를 달성할 수 있습니다. 장기적인 워크플로의 생산성을 크게 향상시킵니다.
+*   **언제 나쁜가**: 목표 정의가 모호하거나, 예상치 못한 부작용(side effects)이 큰 작업, 또는 인간의 창의성이나 미묘한 판단이 필수적인 작업에서는 에이전트의 행동을 제어하기 어렵고 결과의 예측 가능성이 떨어질 수 있습니다.
+
+### 2. 강력한 자동 교정 vs. 평가 오버헤드 및 편향
+*   **언제 좋은가**: 에이전트가 자체적으로 오류를 감지하고 수정하며, 목표 달성까지 필요한 반복 횟수를 최소화하여 안정적인 결과물을 도출할 수 있습니다. 특히 코드 생성, 데이터 분석 등 오류 수정이 중요한 분야에서 강점을 보입니다.
+*   **언제 나쁜가**: Fast Model의 평가 로직 설계가 복잡해지거나, 평가 자체에 드는 비용과 시간이 증가할 수 있습니다. 또한, Fast Model의 평가 기준에 편향이 존재할 경우, 에이전트가 비정상적인 방향으로 수렴하거나 최적의 경로를 찾지 못할 위험이 있습니다.
+
+### 3. 복잡한 워크플로 관리 용이성 vs. 초기 설계 및 디버깅 난이도
+*   **언제 좋은가**: 다단계의 복잡한 태스크를 단일 `goal`로 묶어 관리함으로써 전체 워크플로의 추상화 수준을 높이고 유지보수를 용이하게 합니다. 각 단계별 진행 상황을 `/goal` 평가를 통해 파악할 수 있어 전반적인 시스템 가시성을 확보할 수 있습니다.
+*   **언제 나쁜가**: 초기 `/goal` 설계 및 평가 로직 구현이 어렵습니다. 목표 정의의 모호성, 평가 기준의 불충분성, 그리고 에이전트의 자율적인 행동 경로 추적이 복잡해 디버깅에 많은 시간과 노력이 소요될 수 있습니다. 특히 예상치 못한 에이전트의 발산(divergence)이나 무한 루프에 빠지는 상황에 대한 대비가 필요합니다.
+
+## 실전 체크리스트
+
+`/goal` 기능을 활용한 자율 워커를 구현할 때 다음 항목들을 점검해야 합니다.
+
+- [ ] **목표 명확성 및 측정 가능성**: `/goal`로 설정된 목표가 구체적이고, Fast Model 또는 외부 검증 파이프라인을 통해 객관적으로 측정 및 평가 가능한지 확인합니다. (예: "YAML 파일 스키마 준수 및 특정 키 값 포함")
+- [ ] **평가 로직 견고성**: Fast Model 기반의 평가 로직이 다양한 시나리오와 에이전트의 잠재적 오작동을 충분히 커버하며, 오탐(false positive) 및 미탐(false negative)을 최소화하도록 설계되었는지 검증합니다.
+- [ ] **외부 검증 파이프라인 통합**: MDX validation, Zod schema 검증, Gemini retry 등의 기존 플레이북 검증 로직이 `/goal`의 평가 단계에 효과적으로 통합되어 자동 교정 메커니즘을 강화하는지 점검합니다.
+- [ ] **종료 조건 및 안전 장치**: 목표 달성 실패 시나리오, 무한 루프 방지를 위한 최대 반복 횟수 제한, 타임아웃 등의 안전 장치가 명확히 정의되고 구현되었는지 확인합니다.
+- [ ] **비용 및 성능 최적화**: 반복 실행 과정에서 발생하는 LLM 토큰 사용량과 컴퓨팅 비용을 모니터링하고, Fast Model의 효율적 활용 및 반복 횟수 최적화를 통해 비용 효율성을 확보했는지 점검합니다.
+- [ ] **가시성 및 모니터링**: `/goal` 워크플로의 각 턴별 진행 상황, 평가 결과, 에이전트의 행동 로그 등을 실시간으로 모니터링할 수 있는 대시보드 또는 로깅 시스템이 구축되었는지 확인합니다.
+- [ ] **에이전트 컨텍스트 관리**: 장기 반복 실행 과정에서 에이전트의 컨텍스트 윈도우(context window)가 적절히 관리되어 이전 턴의 정보를 효과적으로 활용하면서도 컨텍스트 오염을 방지하는지 점검합니다. (예: `context-engineering/ai-agent-context-window-optimization-session-longevity` 참조)
