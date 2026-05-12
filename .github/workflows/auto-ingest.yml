@@ -68,6 +68,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache Xenova transformers model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: xenova-multilingual-e5-small-v1
+
       - name: Auto-ingest — route by event type
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -246,6 +252,13 @@ jobs:
             printf '%s\n' "$BODY"
           } > "$RAW_FILE"
           echo "✅ raw 저장: $RAW_FILE"
+
+          # raw-sources/ root 누적 방지 — 즉시 _archive/ 이동
+          # weekly-triage 스캔 = maxdepth 1 만 → archive 파일은 triage noise 에서 제외
+          mkdir -p raw-sources/_archive
+          mv "$RAW_FILE" "raw-sources/_archive/$(basename "$RAW_FILE")"
+          RAW_FILE="raw-sources/_archive/$(basename "$RAW_FILE")"
+          echo "📦 raw archived: $RAW_FILE"
 
           # git config — 모든 경로 공통
           git config user.name "kkyu92"
@@ -490,6 +503,9 @@ jobs:
               echo "_TODO: 다음 액션_"
             } > "$JOURNAL_FILE"
             echo "✅ Journal draft: $JOURNAL_FILE"
+
+            # auto-connections: semantic search 기반 connections 자동 생성 + 양방향 연결
+            node scripts/auto-connections.mjs "$JOURNAL_FILE" 8 || echo "⚠️ auto-connections 실패 — connections: [] 유지"
 
             # manifest 재생성
             node scripts/generate-content-manifest.mjs

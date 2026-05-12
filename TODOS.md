@@ -50,7 +50,7 @@
 **Effort**: S — sed 일괄 치환 가능
 **Deadline**: 2026-06-02 (3주 남음)
 
-## [P2] weekly-triage.yml — CI 알림 스텁 필터링 (cycle 297 carry-over, R6 사용자 영역)
+## [DONE 2026-05-12] weekly-triage.yml — CI 알림 스텁 필터링
 
 **What**: `payload_type: incident` 유형 raw-source 파일을 weekly-triage issue 에서 제외 (또는 별도 섹션으로 분리)
 **Why**: cycle 297 Issue #419 분석 — 33건 전부 CI 실패 알림 스텁 (commit hash + run URL 만, 학습 내용 없음). `/ingest` 대상이 아님. 매주 triage issue 에 포함되어 불필요한 manual review 비용 발생
@@ -58,14 +58,14 @@
 **Recommended fix**: frontmatter `payload_type: incident` 파일은 triage 체크리스트 제외 → 자동 archive (`_archive/` 이동) 또는 별도 🔕 섹션
 **Effort**: S — weekly-triage.yml raw-sources 스캔 로직 1 조건 추가
 
-## [P2] raw-sources auto-archive 자동화
+## [DONE 2026-05-12] raw-sources auto-archive 자동화
 
 **What**: auto-ingest 후 처리 완료된 raw-sources/*.md 를 자동으로 `_archive/` 로 이동
 **Why**: cycle 7 — raw-sources 누적 누적, archive 율 저조. entry 변환 후 raw 파일 archive 단계 부재
 **Trigger**: N≥3 재발 또는 raw-sources/ 50건 초과 시
 **Effort**: M — auto-ingest workflow 끝 step 에 archive 분기 추가
 
-## [P2] auto-ingest connections 자동 결손 root cause
+## [DONE 2026-05-12] auto-ingest connections 자동 결손 root cause
 
 **What**: journals isolated (connections [] 박제) — auto-ingest workflow 가 entry 생성 시 connections cross-update 단계 누락
 **Why**: `/ingest` 명령은 connections 5~15 + 양방향 cross-update 정합. auto-ingest workflow LLM 자동 호출 흐름은 이 단계 누락
