@@ -1,9 +1,9 @@
-# [react] useEffect 내 setState 직접 호출 — ESLint 재발 패턴 (NavLinks / useLeaderboard)
+# [react] useEffect 내 setState 직접 호출 — ESLint 재발 패턴 (NavLinks / useLeaderboard / use-user-picks)
 
 **카테고리**: react
-**날짜**: 2026-05-07 (갱신: 2026-05-12, 8차 — 근본 수정 완료)
+**날짜**: 2026-05-07 (갱신: 2026-05-12, 9차 — use-user-picks 확산 확인)
 **프로젝트**: moneyballscore
-**관련 파일**: `apps/moneyball/src/components/layout/NavLinks.tsx:39`, `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75`
+**관련 파일**: `apps/moneyball/src/components/layout/NavLinks.tsx:39`, `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75`, `apps/moneyball/src/lib/picks/use-user-picks.ts`
 
 ## 문제
 
@@ -23,6 +23,7 @@ NavLinks.tsx UI 개선 작업 중 `useEffect` 내부에서 state setter를 직�
 - **6차: cycle 320 이후 push (ci-stubs batch 포함)** — 동일 → CI 실패 #503/#504/#505 inbound (2026-05-12). 허브 cycle 348 triage
 - **7차: cycle 320 `ai-hint-polish` PR #311 + main 연속 push** — 동일 `use-leaderboard.ts:75` 미수정 → CI 실패 #507/#508/#509 inbound (2026-05-12). 허브 cycle 350 triage
 - **8차: PR #312 `leaderboard-autosync` merge 후 main + branch CI 실패 #511/#512/#513** (2026-05-12). 허브 cycle 353에서 **근본 수정 완료** — `useState<string | null>(() => readNickname())` lazy init 교체 + `useEffect` deps에 `nickname` 추가. moneyball commit `44947fd`. 이후 재발 시 이 파일을 직접 regression으로 처리.
+- **9차: cycle 325 (PR #316 `review-code heavy` — use-user-picks lazy init)** — `use-user-picks.ts` 내 setState-in-effect 패턴 (ESLint disable 포함 상태로 잠복). review-code 체인 전수 독해 중 발견 → `useState lazy init` 교체. 44947fd (use-leaderboard 8차) 와 동일 패턴 동시 발화. 326 tests pass. 허브 cycle 362 triage. **패턴이 use-leaderboard.ts → use-user-picks.ts 로 확산 — `use-*.ts` 신규 작성 시 regression 점검 필수.**
 
 ## 근본 원인
 
@@ -31,7 +32,7 @@ NavLinks.tsx UI 개선 작업 중 `useEffect` 내부에서 state setter를 직�
 | **useEffect 내 동기 state setter** | `useEffect` 안에서 `setXxx()` 를 조건 없이 직접 호출 → 렌더링 cascade |
 | **UI/훅 개선 시 패턴 재도입** | NavLinks·leaderboard 훅 변경 작업마다 동일 anti-pattern 반복 유입 |
 | **로컬 lint 미실행** | 개발 시 `pnpm lint` 생략 → CI 에서야 검출, main 머지 후 발견 |
-| **파일 범위 확산** | 1~2차: NavLinks.tsx (컴포넌트), 3차: use-leaderboard.ts (훅) — UI 계층에서 비즈니스 훅으로 패턴 확산 |
+| **파일 범위 확산** | 1~2차: NavLinks.tsx (컴포넌트), 3차: use-leaderboard.ts (훅), 9차: use-user-picks.ts — UI 계층→leaderboard 훅→picks 훅으로 확산 중 |
 
 ## 해결 패턴
 
@@ -60,7 +61,7 @@ NavLinks.tsx (nav 계열) + use-xxx.ts (훅) 수정 시:
 ```
 [ ] useEffect 내 setter 직접 호출 grep (컴포넌트 + 훅 모두):
     grep -rn "set[A-Z][a-zA-Z]*(.*)" src/ --include="*.ts" --include="*.tsx" | grep "useEffect" -A3
-    또는: grep -n "set[A-Z]" use-leaderboard.ts | grep -v "//\|async\|then\|catch"
+    또는: grep -rn "set[A-Z]" src/lib/picks/use-user-picks.ts src/lib/leaderboard/use-leaderboard.ts | grep -v "//\|async\|then\|catch"
 [ ] useState lazy initializer 대안 검토:
     setState(syncFn())  →  useState(() => syncFn())  (useEffect 불필요)
 [ ] pnpm lint 로컬 실행: exit 0 확인
@@ -82,7 +83,18 @@ const [nickname, setNickname] = useState(() => readNickname());
 // useEffect 불필요 — 초기화는 lazy initializer로
 ```
 
-컴포넌트 계층을 넘어 비즈니스 훅으로 패턴 확산 중. `use-*.ts` 신규 작성 시 동일 점검 필수.
+컴포넌트 계층을 넘어 비즈니스 훅으로 패턴 확산 중. **현재 확인된 감염 파일**: NavLinks.tsx → use-leaderboard.ts → use-user-picks.ts. `use-*.ts` 신규 작성 또는 review-code 체인 시 전수 점검 필수.
+
+```typescript
+// 9차 재발 코드 (use-user-picks.ts — eslint-disable 잠복 상태)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  setUserPicks(readStoredPicks());   // ❌ sync setState in effect
+}, []);
+
+// ✅ 수정: lazy useState initializer 사용 (ESLint disable 불필요)
+const [userPicks, setUserPicks] = useState(() => readStoredPicks());
+```
 
 ## 관련
 
@@ -96,3 +108,4 @@ const [nickname, setNickname] = useState(() => readNickname());
 - Issue #511/#512/#513: CI failure inbound (3건, use-leaderboard.ts:76 동일) — **8차 (2026-05-12), 근본 수정 완료**
 - 허브 처리: cycle 48(1차) → cycle 217(2차) → cycle 338(3차) → cycle 340(4차) → cycle 341(5차) → cycle 348(6차) → cycle 350(7차) close → **cycle 353(8차) lazy init 근본 수정**
 - **✅ 근본 수정 (cycle 353)**: `useState<string | null>(() => typeof window === 'undefined' ? null : readNickname())` 교체. useEffect 내 `setNickname` 제거. moneyball commit `44947fd`.
+- 9차 use-user-picks.ts (cycle 325, PR #316): review-code heavy — ESLint disable 잠복 상태 발견 + lazy init 교체. 허브 cycle 362 triage.

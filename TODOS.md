@@ -9,8 +9,8 @@ CI Failure Dispatch = skipped (실패 없음). 해소 조건 충족 (cycle 356 �
 
 ## [P0] git BRANCHED — local/origin diverge 해소 (cycle 360 갱신, R6 사용자 영역)
 
-**상태**: local main: **39커밋 ahead** (cycles 336-361 + auto-ingest), origin main: **32커밋 ahead** (moneyball auto-ingest + daily-ingest)
-**검출**: 2026-05-12 cycle 361 진단 (`git rev-list --left-right --count origin/main...main` = `32	39`)
+**상태**: local main: **40커밋 ahead** (cycles 336-362 + auto-ingest), origin main: **33커밋 ahead** (moneyball cycles 318-327 + CI failures)
+**검출**: 2026-05-12 cycle 362 진단 (`git rev-list --left-right --count origin/main...main` = `33	40`)
 **충돌 여부**: `git merge --no-ff origin/main` 자동 성공 확인됨 (충돌 없음)
 **원인**: cycle 354+357 push race fix (708be8f, a3057da)가 local에만 반영됨. BRANCHED로 인해 origin auto-ingest.yml은 구버전 유지 중.
 **재발 evidence**: 2026-05-12 08:39:13 failure (issue #519 v2) = 동일 push race 5번째 재발. 수정이 origin 미push → 영구 재발 루프.
