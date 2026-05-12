@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-12T05:15:53.920Z
+Updated: 2026-05-12T09:16:00.968Z
 
-## 엔트리 (143개)
+## 엔트리 (144개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -89,8 +89,9 @@ Updated: 2026-05-12T05:15:53.920Z
 - [Playbook Journal 027 — cycle 59 — sfr/h2h prod 30일 bias bootstrap CI (systematic confirmed) (#96)](wiki/journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema) — confidence: 3, status: in-progress
 - [Playbook Journal 028 — cycle 60 — fancy-stats.ts silent fallback risk (SFR=0/wOBA=0.320/FIP=4.00/Elo=1500)](wiki/journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0) — confidence: 3, status: in-progress
 - [Playbook Journal 029 — lesson-pending false-positive 잔존 batch close 패턴](wiki/journal/playbook-journal-029-lesson-pending-false-positive-batch-close) — confidence: 4, status: complete
-- [Playbook Journal 030 — 신규 페이지 3사이클 cleanup 패턴 + confidence 역전 + 일요일 취약 + h2h 노이즈 박제](wiki/journal/playbook-journal-030-3-cleanup-confidence-h2h) — confidence: 3, status: in-progress
-- [Playbook Journal 032 — Sunday confidence cap — judge-agent 일요일 과적합 방지 (cycle 309)](wiki/journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309) — confidence: 3, status: in-progress
+- [Playbook Journal 030 — 신규 페이지 3사이클 cleanup 패턴 + confidence 역전 + 일요일 취약 + h2h 노이즈 박제](wiki/journal/playbook-journal-030-3-cleanup-confidence-h2h) — confidence: 3, status: complete
+- [Playbook Journal 031 — W20 모델 성과 분석 — 일요일 20% + calibration 역전 심화 (cycle 308)](wiki/journal/playbook-journal-031-w20-20-calibration-cycle-308) — confidence: 3, status: complete
+- [Playbook Journal 032 — Sunday confidence cap — judge-agent 일요일 과적합 방지 (cycle 309)](wiki/journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309) — confidence: 3, status: complete
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 
@@ -296,8 +297,6 @@ Updated: 2026-05-12T05:15:53.920Z
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ frontend-ai/claude-code-html-output-ux-enhancement
-- context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ context-engineering/ambient-knowledge-injection
-- context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ context-engineering/nextjs-instrumentation-location
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/vector-db-embedding-data-optimization-patterns
@@ -382,15 +381,12 @@ Updated: 2026-05-12T05:15:53.920Z
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- data-engineering/vector-db-embedding-data-optimization-patterns ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
-- evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ data-engineering/llm-fine-tuning-high-quality-data-construction-management
-- evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ data-engineering/llm-data-acquisition-high-quality-datasets
-- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
-- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-ux-evaluation-metrics-design-measurement
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
@@ -615,13 +611,6 @@ Updated: 2026-05-12T05:15:53.920Z
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ agents/ouroboros-agent-performance-cost-optimization
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ data-engineering/vector-db-embedding-data-optimization-patterns
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
-- harness-engineering/llm-scalable-service-architecture-patterns ↔ data-engineering/production-db-ai-agent-guardrails
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/question-own-defaults ↔ infrastructure/vercel-env-oauth-security-enhancement
 - harness-engineering/question-own-defaults ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
@@ -643,13 +632,6 @@ Updated: 2026-05-12T05:15:53.920Z
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/agentic-chain-saturation-detection
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ agents/llm-agent-tool-use-design-patterns
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ agents/multi-llm-agent-workload-partitioning-patterns
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ data-engineering/production-db-ai-agent-guardrails
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ frontend-ai/ai-inference-visualization-design-patterns
-- infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ harness-engineering/llm-agent-artifact-first-diagnosis
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
@@ -754,6 +736,12 @@ Updated: 2026-05-12T05:15:53.920Z
 - journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0 ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - journal/playbook-journal-029-lesson-pending-false-positive-batch-close ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-029-lesson-pending-false-positive-batch-close ↔ harness-engineering/recurring-file-bug-accumulator-pattern
+- journal/playbook-journal-030-3-cleanup-confidence-h2h ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-030-3-cleanup-confidence-h2h ↔ journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema
+- journal/playbook-journal-030-3-cleanup-confidence-h2h ↔ journal/playbook-journal-031-w20-20-calibration-cycle-308
+- journal/playbook-journal-031-w20-20-calibration-cycle-308 ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-031-w20-20-calibration-cycle-308 ↔ journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309
+- journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309 ↔ evaluation/prediction-model-calibration-inversion-detection
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
