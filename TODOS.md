@@ -8,10 +8,10 @@
 **해소 조건**: cycle 356 이후 2회 이상 moneyball push에서 CI PASS 확인 시 DONE으로 이동
 **Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
 
-## [P0] git BRANCHED — local/origin diverge 해소 (cycle 356 갱신, R6 사용자 영역)
+## [P0] git BRANCHED — local/origin diverge 해소 (cycle 358 갱신, R6 사용자 영역)
 
-**상태**: local main: **31커밋 ahead** (cycles 336-355 + auto-ingest), origin main: **29커밋 ahead** (moneyball auto-ingest + daily-ingest)
-**검출**: 2026-05-12 cycle 356 진단 (`git rev-list --left-right --count origin/main...main` = `29	31`)
+**상태**: local main: **35커밋 ahead** (cycles 336-357 + auto-ingest), origin main: **31커밋 ahead** (moneyball auto-ingest + daily-ingest)
+**검출**: 2026-05-12 cycle 358 진단 (`git rev-list --left-right --count origin/main...main` = `31	35`)
 **충돌 여부**: `git merge --no-ff origin/main` 자동 성공 확인됨 (충돌 없음)
 **원인**: cycle 354 push race fix (708be8f)가 local에만 반영됨. BRANCHED로 인해 origin auto-ingest.yml은 구버전 유지 중 → GH Actions push race 재발 (2026-05-12 08:39:13 failure).
 **이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
