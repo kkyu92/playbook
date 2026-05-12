@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.36] — 2026-05-12
+
+### Changed
+- skill-evolution SE #74/75/76 연속 3회 (cycles 365/366/367) — SKILL.md stage 3 evidence 갱신, zero-touch 64+→366+ 검증
+- curate cycle 368 — retro 364-367 박제 + memory 갱신 (N=30 batch 4/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~367 = **319 사이클** 검증 완료 (N=30 batch **4/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **76회** (SE #76, cycle 367 — 마커 skip 자기조정 성공)
+- BRANCHED 재발: local 5 ahead / origin 2 ahead (R6 사용자 영역)
+- open hub-dispatch issues: **0건**
+- TODOS P0: 전항목 DONE
+
 ## [0.5.35] — 2026-05-12
 
 ### Changed
