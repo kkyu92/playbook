@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.39] — 2026-05-12
+
+### Changed
+- skill-evolution SE #77 cycle 372 — stage 3 evidence 갱신 (window 352-371, SE 35%, 0회 chain 7개 명단 동일, 자기조정 불가 → 마커 유지)
+- skill-evolution SE #78 cycle 373 — stage 3 evidence 갱신 (window 353-372, SE 35%, 명단 동일, retro 재평가 SE 40% → 자기조정 성공)
+- curate cycle 374 — retro 371-373 박제 + TODOS BRANCHED 갱신 (local 14 / origin 4) + memory 갱신 (N=30 batch 10/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~373 = **325 사이클** 검증 완료 (N=30 batch **10/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **78회** (SE #78, cycle 373)
+- SE 자기조정: cycle 373 retro 재평가 window 354-373 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 14 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기)
+
 ## [0.5.38] — 2026-05-12
 
 ### Changed
