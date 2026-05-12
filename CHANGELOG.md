@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.57] — 2026-05-13
+
+### Changed
+- review-code cycle 422 — auth.ts 3개 DRY (encoder 함수 추출 + safeCompare 단순화 + importHMACKey 캐싱) + content.ts manifest lazy cache (중복 build() 호출 방지) + gemini-client.mjs 주석 정정 + health 10/10 (N=380 batch 28/380)
+- curate cycle 423 — retro 421-422 박제 + CHANGELOG 0.5.57 + TODOS BRANCHED 89→92 갱신 + memory 갱신 (N=380 batch 29/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~423 = **375 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 29/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **96회** (SE #96, cycle 420)
+- BRANCHED 재발: local 92 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.56] — 2026-05-13
 
 ### Changed
