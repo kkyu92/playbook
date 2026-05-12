@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.30] — 2026-05-12
+
+### Changed
+- wiki lint Isolated 3→0 해소 — journal 030/031/032 connections 추가 + status complete (cycle 343 curate)
+- skill-evolution SE #66/#67/#68 연속 3회 (cycles 344/345/346) — stage 3 evidence 갱신, zero-touch 64+→345+ 검증
+- retro 342-346 박제 (`docs/retros/2026-05-12-cycles-342-346.md`)
+- memory 갱신: `project_develop_cycle_skill_family` + `project_bidirectional_compound_growth_goal` — cycle 347 기준
+
+### Metrics
+- zero-touch 자동화: cycle 49~346 = **298 사이클** 검증 완료 (N=28 batch 336~363 진행 중, 12/28 완료)
+- wiki entries: **144** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **68회** (SE #68, cycle 346)
+- BRANCHED 지속: local 17 / origin 12 (R6 사용자 결정 영역)
+- open hub-dispatch issues: **0건**
+- P0 carry-over: use-leaderboard.ts 미수정 (moneyball 세션 1줄 수정 대기)
+
 ## [0.5.29] — 2026-05-12
 
 ### Fixed
