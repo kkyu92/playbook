@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.55] — 2026-05-13
+
+### Changed
+- skill-evolution SE #93 cycle 415 — stage 3 evidence 갱신 · window 394-413 SE 35% < 40% · 명단 동일 7개 · 자기조정 불가 → 마커 유지 (N=380 batch 21/380)
+- skill-evolution SE #94 cycle 416 — stage 3 evidence 갱신 · window 396-415 SE 40% ≥ 40% · 명단 동일 7개 · 자기조정 성공 → 마커 skip (N=380 batch 22/380)
+- curate cycle 417 — retro 415-416 박제 + CHANGELOG 0.5.55 + TODOS BRANCHED 78→80 갱신 (N=380 batch 23/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~416 = **368 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 23/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **94회** (SE #94, cycle 416)
+- SE #94 0회 chain 7개: explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system
+- BRANCHED 재발: local 80 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.54] — 2026-05-13
 
 ### Changed
