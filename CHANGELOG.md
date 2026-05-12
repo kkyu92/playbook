@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.54] — 2026-05-13
+
+### Changed
+- review-code cycle 413 — health 10/10 (10회 연속) · simplify 3개 app code: knowledge-graph handleNodeHover dead code 제거, auth bufToHex DRY 헬퍼 추출, content getEntry TOCTOU → try/catch (N=380 batch 19/380)
+- curate cycle 414 — retro 411-413 박제 + CHANGELOG 0.5.54 + TODOS BRANCHED 74 갱신 (N=380 batch 20/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~413 = **365 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 20/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **92회** (SE #92, cycle 409)
+- SE #92 0회 chain 7개: explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system
+- BRANCHED 재발: local 74 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.53] — 2026-05-13
 
 ### Changed
