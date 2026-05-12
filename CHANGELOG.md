@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.60] — 2026-05-13
+
+### Changed
+- review-code cycle 429 — dashboard/page.tsx STATUS_MAP/SOURCE_MAP lookup 통합(3→1, 2→1) + DOT_STYLE 호이스팅 + today Date 단일 생성 props 공유(cross-midnight 수정) + 노이즈 주석 제거 413→384줄 (N=380 batch 35/380)
+- curate cycle 430 — retro 429 박제 + CHANGELOG 0.5.60 + TODOS BRANCHED 102→106 갱신 + memory 갱신 (N=380 batch 36/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~430 = **382 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 36/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **98회** (SE #98, cycle 427)
+- BRANCHED 재발: local 106 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.59] — 2026-05-13
 
 ### Changed
