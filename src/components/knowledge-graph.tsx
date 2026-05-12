@@ -124,10 +124,6 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
   const handleNodeHover = useCallback((node: GraphNode | null) => {
     hoveredNodeRef.current = node;
     setTooltipNode(node);
-    // Force canvas repaint without recreating graph data
-    if (graphRef.current) {
-      // Trigger a visual refresh by nudging the render
-    }
   }, []);
 
   const nodeCanvasObject = useCallback(

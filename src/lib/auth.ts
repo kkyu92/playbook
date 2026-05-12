@@ -17,6 +17,12 @@ function getAdminSecret(): string {
   return getEnv("ADMIN_SECRET", 16);
 }
 
+function bufToHex(buf: ArrayBuffer): string {
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 /** Edge-compatible constant-time string comparison using Web Crypto */
 async function safeCompare(a: string, b: string): Promise<boolean> {
   if (a.length !== b.length) return false;
@@ -60,10 +66,7 @@ export async function createToken(): Promise<string> {
     key,
     encoder.encode(`admin:${timestamp}`)
   );
-  const sig = Array.from(new Uint8Array(signature))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return `${timestamp}.${sig}`;
+  return `${timestamp}.${bufToHex(signature)}`;
 }
 
 export async function verifyToken(token: string): Promise<boolean> {
@@ -88,10 +91,7 @@ export async function verifyToken(token: string): Promise<boolean> {
       key,
       encoder.encode(`admin:${timestamp}`)
     );
-    const expectedHex = Array.from(new Uint8Array(expected))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    return safeCompare(sig, expectedHex);
+    return safeCompare(sig, bufToHex(expected));
   } catch (err) {
     console.warn(
       `[auth] verifyToken failed:`,

@@ -18,16 +18,13 @@ export function getManifest(): ContentManifest {
 
 export function getEntry(slug: string): WikiEntry | null {
   const filePath = path.join(CONTENT_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
-
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(raw);
-
-  return {
-    slug,
-    frontmatter: data as Frontmatter,
-    content,
-  };
+  try {
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const { data, content } = matter(raw);
+    return { slug, frontmatter: data as Frontmatter, content };
+  } catch {
+    return null;
+  }
 }
 
 export function getAllSlugs(): string[] {
