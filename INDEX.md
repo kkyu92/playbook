@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-12T09:16:00.968Z
+Updated: 2026-05-12T13:00:21.299Z
 
-## 엔트리 (144개)
+## 엔트리 (145개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -92,6 +92,7 @@ Updated: 2026-05-12T09:16:00.968Z
 - [Playbook Journal 030 — 신규 페이지 3사이클 cleanup 패턴 + confidence 역전 + 일요일 취약 + h2h 노이즈 박제](wiki/journal/playbook-journal-030-3-cleanup-confidence-h2h) — confidence: 3, status: complete
 - [Playbook Journal 031 — W20 모델 성과 분석 — 일요일 20% + calibration 역전 심화 (cycle 308)](wiki/journal/playbook-journal-031-w20-20-calibration-cycle-308) — confidence: 3, status: complete
 - [Playbook Journal 032 — Sunday confidence cap — judge-agent 일요일 과적합 방지 (cycle 309)](wiki/journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309) — confidence: 3, status: complete
+- [Playbook Journal 033 — W21 모델 성과 분석 — head_to_head noise + 일요일 14.3% + lineup_woba 최고 신뢰 (cycle 333)](wiki/journal/playbook-journal-033-w21-head-to-head-noise-14-3-lineup-woba-cycle-333) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 
