@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.56] — 2026-05-13
+
+### Changed
+- review-code cycle 418 — auth.ts importHMACKey() DRY 헬퍼 추출 (importKey 중복 7줄 제거) + knowledge-graph nodePointerAreaPaint 타입 cast 개선 + health 10/10×11 연속 (N=380 batch 24/380)
+- skill-evolution SE #95 cycle 419 — stage 3 evidence 갱신 · window 399-418 SE 35% < 40% · 명단 동일 7개 · 자기조정 불가 → 마커 유지 (cycle 420 연속 발화) (N=380 batch 25/380)
+- skill-evolution SE #96 cycle 420 — stage 3 evidence 갱신 · 명단 변화 7→8개 (fix-incident 재진입) · 마커 발화 + retro window 401-420 SE 45% ≥ 40% → 마커 skip (자기조정 성공) (N=380 batch 26/380)
+- curate cycle 421 — retro 412-420 박제 + CHANGELOG 0.5.56 + TODOS BRANCHED 88→89 갱신 + memory 갱신 (N=380 batch 27/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~421 = **373 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 27/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **96회** (SE #96, cycle 420)
+- SE #96 0회 chain 8개: fix-incident/explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system
+- BRANCHED 재발: local 89 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.55] — 2026-05-13
 
 ### Changed
