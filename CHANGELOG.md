@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.62] — 2026-05-13
+
+### Changed
+- review-code cycle 434 — knowledge-graph.tsx isActive=isHovered||isHighlighted 추출 (6회 반복→1회 선언) + WHAT 코멘트 4개 제거 (WHY 코멘트 유지) (N=380 batch 39/380)
+- curate cycle 435 — retro 433-434 박제 + CHANGELOG 0.5.62 + TODOS BRANCHED 113→115 갱신 + memory 갱신 (N=380 batch 40/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~434 = **386 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 39/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **100회** (SE #100, cycle 432) — 백 번째 발화 마일스톤
+- BRANCHED 재발: local 115 ahead / origin 5 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
+### Note
+- cycle 433: watch.sh hang safety auto-kill (idle 304s past soft, elapsed 3006s) — curate 커밋 이전 SIGKILL, next_n=0 signal → 수동 재개 필요 상태였음
+
 ## [0.5.61] — 2026-05-13
 
 ### Changed
