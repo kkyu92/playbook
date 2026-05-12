@@ -1,7 +1,7 @@
 # [react] useEffect 내 setState 직접 호출 — ESLint 재발 패턴 (NavLinks / useLeaderboard)
 
 **카테고리**: react
-**날짜**: 2026-05-07 (갱신: 2026-05-12, 7차 이력)
+**날짜**: 2026-05-07 (갱신: 2026-05-12, 8차 — 근본 수정 완료)
 **프로젝트**: moneyballscore
 **관련 파일**: `apps/moneyball/src/components/layout/NavLinks.tsx:39`, `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75`
 
@@ -21,7 +21,8 @@ NavLinks.tsx UI 개선 작업 중 `useEffect` 내부에서 state setter를 직�
 - **4차: cycle 318 이후 push (ia-ai-nav-megamenu PR #308 + main 연속)** — 동일 `use-leaderboard.ts:75` 미수정 상태 → CI 실패 #494/#495/#497 inbound (2026-05-12). 허브 cycle 340 triage
 - **5차: cycle 318~320 이후 push (picks-polish 연속 push)** — 동일 `use-leaderboard.ts:75` → CI 실패 #499/#500/#501 inbound (2026-05-12). 허브 cycle 341 triage
 - **6차: cycle 320 이후 push (ci-stubs batch 포함)** — 동일 → CI 실패 #503/#504/#505 inbound (2026-05-12). 허브 cycle 348 triage
-- **7차: cycle 320 `ai-hint-polish` PR #311 + main 연속 push** — 동일 `use-leaderboard.ts:75` 미수정 → CI 실패 #507/#508/#509 inbound (2026-05-12). 허브 cycle 350 triage. **7차 재발 — lazy initializer 교체 절대 필수**
+- **7차: cycle 320 `ai-hint-polish` PR #311 + main 연속 push** — 동일 `use-leaderboard.ts:75` 미수정 → CI 실패 #507/#508/#509 inbound (2026-05-12). 허브 cycle 350 triage
+- **8차: PR #312 `leaderboard-autosync` merge 후 main + branch CI 실패 #511/#512/#513** (2026-05-12). 허브 cycle 353에서 **근본 수정 완료** — `useState<string | null>(() => readNickname())` lazy init 교체 + `useEffect` deps에 `nickname` 추가. moneyball commit `44947fd`. 이후 재발 시 이 파일을 직접 regression으로 처리.
 
 ## 근본 원인
 
@@ -91,10 +92,7 @@ const [nickname, setNickname] = useState(() => readNickname());
 - Issue #494/#495/#497: CI failure inbound (3건, use-leaderboard.ts:75 동일) — 4차 (2026-05-12)
 - Issue #499/#500/#501: CI failure inbound (3건, use-leaderboard.ts:75 동일) — 5차 (2026-05-12)
 - Issue #503/#504/#505: CI failure inbound (3건, use-leaderboard.ts:75 동일) — 6차 (2026-05-12)
-- Issue #507/#508/#509: CI failure inbound (3건, use-leaderboard.ts:75 동일) — **7차 (2026-05-12)**
-- 허브 처리: cycle 48(1차) → cycle 217(2차) → cycle 338(3차) → cycle 340(4차) → cycle 341(5차) → cycle 348(6차) → **cycle 350(7차) close**
-- **⚠️ 긴급 (7차 재발)**: `use-leaderboard.ts:74-76` 완전 미수정 지속. moneyball 세션마다 CI 차단 반복. lazy initializer로 교체 절대 필수:
-  ```ts
-  // 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
-  // 수정 (✅): const [nickname, setNickname] = useState(() => readNickname());
-  ```
+- Issue #507/#508/#509: CI failure inbound (3건, use-leaderboard.ts:75 동일) — 7차 (2026-05-12)
+- Issue #511/#512/#513: CI failure inbound (3건, use-leaderboard.ts:76 동일) — **8차 (2026-05-12), 근본 수정 완료**
+- 허브 처리: cycle 48(1차) → cycle 217(2차) → cycle 338(3차) → cycle 340(4차) → cycle 341(5차) → cycle 348(6차) → cycle 350(7차) close → **cycle 353(8차) lazy init 근본 수정**
+- **✅ 근본 수정 (cycle 353)**: `useState<string | null>(() => typeof window === 'undefined' ? null : readNickname())` 교체. useEffect 내 `setNickname` 제거. moneyball commit `44947fd`.
