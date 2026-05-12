@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.40] — 2026-05-12
+
+### Changed
+- worker-incident-triage cycle 375 partial — origin 4 inbound 검토 (Journal 033 connections:[] 위반 carry-over + moneyball retro 332/334/335 정보성) + TODOS 14→16 갱신
+- skill-evolution SE #79 cycle 376 — stage 3 evidence 갱신 (window 356-375, SE 35%, 0회 chain 7개 명단 동일, retro 재평가 SE 40% → 자기조정 성공)
+- curate cycle 377 — retro 374-376 박제 + CHANGELOG 0.5.40 박제 + memory 갱신 (N=30 batch 13/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~376 = **328 사이클** 검증 완료 (N=30 batch **13/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **79회** (SE #79, cycle 376)
+- SE 자기조정: cycle 376 retro 재평가 window 357-376 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 18 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.39] — 2026-05-12
 
 ### Changed
