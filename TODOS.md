@@ -107,6 +107,7 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 
 ## DONE History (compressed)
 
+- **[DONE 2026-05-12]** cycle 365 skill-evolution SE #74 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 366, N=30 batch 364-393, zero-touch 64+→364+)
 - **[DONE 2026-05-12]** cycle 345 skill-evolution SE #67 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 마커 유지 cycle 346, N=28 batch 336-363, zero-touch 64+→344+)
 - **[DONE 2026-05-12]** cycle 344 skill-evolution SE #66 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 마커 유지 cycle 345, N=28 batch 336-363, zero-touch 64+→343+)
 - **[DONE 2026-05-12]** cycle 339 skill-evolution SE #65 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속 후 retro 320-339 40% 마커 skip, N=28 batch 336-363, zero-touch 64+→338+)
