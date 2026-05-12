@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.43] — 2026-05-12
+
+### Changed
+- review-code cycle 383 — retro-only (health 10/10 12회 연속) + TODOS BRANCHED 24→26 갱신 + SE Trigger-5 자기조정 (window 364-383 SE 40% → 마커 skip)
+- curate cycle 384 — retro 382-383 박제 + CHANGELOG 0.5.43 + TODOS BRANCHED 26→27 갱신 + memory 갱신 (N=30 batch 20/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~383 = **335 사이클** 검증 완료 (N=30 batch **20/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **81회** (SE #81, cycle 381)
+- health 연속: **12회 10/10** (cycle 383 기준)
+- SE 자기조정: cycle 381 window 362-381 SE 40% + cycle 383 window 364-383 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 27 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.42] — 2026-05-12
 
 ### Changed
