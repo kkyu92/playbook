@@ -3,11 +3,11 @@
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **132개** ahead, origin **8개** ahead. _(cycle 310 갱신 — origin 8 commits = worker-lesson/journal auto-ingest. Journal 029 #425 + Journal 030 #431 머지 완료 on origin. 로컬은 미반영)_
+현재 상태: local **136개** ahead, origin **10개** ahead. _(cycle 312 갱신)_
 
-**⚠️ 남은 CI 영향**: daily ingest PR #418, #421 CI 실패 중 — PR 브랜치가 old origin/main 기반이라 Next.js 16.2.3 포함. push 후 origin이 16.2.6 받으면 **CI 자동 재실행 통과**. **push + merge 해결 후 자동 해결** (`git push --force-with-lease` 또는 merge 전략 결정).
+**✅ cycle 312**: PR #418, #421 신규 8 entries 로컬 통합 완료 (133→141 entries). push 후 PR 브랜치가 main에 포함되어 자동 close 가능.
 
-**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 close/merge 검토.
+**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 자동 close.
 
 **원인**: zero-touch push 정책 + 워커 자동 push 동시 진행 → 필연적 재발산. 로컬 머지로 1회 해소됨. push 후 재발산 방지는 배치 push 주기 단축 검토.
 
