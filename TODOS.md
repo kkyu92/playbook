@@ -1,9 +1,9 @@
 # TODOS
 
-## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 348 갱신, 6차 재발)
+## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 350 갱신, 7차 재발)
 
 **상태**: `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75` — `setNickname(readNickname())` in `useEffect` 미수정. 매 moneyball push 시 ESLint `react-hooks/set-state-in-effect` 로 CI 차단.
-**재발**: 6차 (cycle 341 #499/#500/#501 close → 미수정 → #503/#504/#505 신규 발생)
+**재발**: 7차 (cycle 348 #503/#504/#505 close → 미수정 → cycle 350 #507/#508/#509 신규 발생)
 **수정법** (moneyball 세션에서):
 ```ts
 // 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
@@ -14,8 +14,8 @@
 
 ## [P0] git BRANCHED — local/origin diverge 해소 (cycle 349 갱신, R6 사용자 영역)
 
-**상태**: local main: 20커밋 ahead (cycles 336-348 + data), origin main: 16커밋 ahead (moneyball auto-ingest + daily-ingest)
-**검출**: 2026-05-12 cycle 349 진단 (`git rev-list --left-right --count origin/main...main` = `16	20`)
+**상태**: local main: 23커밋 ahead (cycles 336-350 + data), origin main: 20커밋 ahead (moneyball auto-ingest + daily-ingest)
+**검출**: 2026-05-12 cycle 350 진단 (`git rev-list --left-right --count origin/main...main` = `20	23`)
 **이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
 **해소 방법** (R6 사용자 직접):
 ```bash
