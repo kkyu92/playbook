@@ -12,10 +12,10 @@
 **Effort**: XS (1줄 변경)
 **Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
 
-## [P0] git BRANCHED — local/origin diverge 해소 (cycle 349 갱신, R6 사용자 영역)
+## [P0] git BRANCHED — local/origin diverge 해소 (cycle 351 갱신, R6 사용자 영역)
 
-**상태**: local main: 23커밋 ahead (cycles 336-350 + data), origin main: 20커밋 ahead (moneyball auto-ingest + daily-ingest)
-**검출**: 2026-05-12 cycle 350 진단 (`git rev-list --left-right --count origin/main...main` = `20	23`)
+**상태**: local main: 25커밋 ahead (cycles 336-351), origin main: 20커밋 ahead (moneyball auto-ingest + daily-ingest)
+**검출**: 2026-05-12 cycle 351 진단 (`git rev-list --left-right --count origin/main...main` = `20	25`)
 **이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
 **해소 방법** (R6 사용자 직접):
 ```bash
