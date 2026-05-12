@@ -1,5 +1,17 @@
 # TODOS
 
+## [P0] git BRANCHED — local/origin 4-4 diverge 해소 (cycle 338 진단, R6 사용자 영역)
+
+**상태**: local main: 4커밋 ahead (cycles 335-337 + data), origin main: 4커밋 ahead (moneyball auto-ingest)
+**검출**: 2026-05-12 cycle 338 진단 (`git rev-list --left-right --count origin/main...main` = `4	4`)
+**이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
+**해소 방법** (R6 사용자 직접):
+```bash
+git pull origin main --no-rebase   # merge (local + origin 양쪽 통합)
+git push origin main               # sync
+```
+또는 conflict 있으면 `git pull --rebase` 후 `git push`.
+
 ## [DONE 2026-05-12] moneyball CI lint 수정 (cycle 307 moneyball 세션 처리 — issue #298 CLOSED)
 
 **What**: `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제
