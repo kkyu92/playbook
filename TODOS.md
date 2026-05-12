@@ -93,6 +93,7 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 
 ## DONE History (compressed)
 
+- **[DONE 2026-05-12]** cycle 336 skill-evolution SE #63 — stage 3 evidence 갱신 (명단 변화 8→7: fix-incident 탈퇴 activation, N=28 batch 시작 336-363, zero-touch 63+→335+)
 - **[DONE 2026-05-12]** cycle 335 worker-incident-triage — moneyball CI stubs 9건 batch close (#477/#479/#480/#481/#482/#484/#485/#487/#488) — develop-cycle 311-314 PR 머지 완료 확인 + transient main CI 해소 확인
 - **[DONE 2026-05-08]** moneyball MockResult<T> + PitcherFipTrend.tsx:40 TypeCheck fix → commit `1775b56` (cycle 272 fix-incident), CI 연속 PASS 확인 (cycle 289 worker-incident-triage)
 - **[DONE 2026-05-08]** BRANCHED N=22 해소 (cycle 257) → `git merge origin/main` (merge 65fbd78, INDEX.md 123개 정정)
