@@ -18,6 +18,7 @@ NavLinks.tsx UI 개선 작업 중 `useEffect` 내부에서 state setter를 직�
 - 1차: cycle 227 (PR #211 `polish-ui-nav-a11y`) — aria-expanded UI 개선 중 도입 → CI 실패 #329/#330/#332
 - 2차: commit fb9b93f (cycle 228 retro 이후 빌드) — main CI 실패 → issue #334 inbound
 - 3차: cycle 316 (PR #307 `this-week-archive-316`) — `use-leaderboard.ts:75` `setNickname(readNickname())` → CI 실패 #490/#491/#493 inbound (2026-05-12)
+- **4차: cycle 318 이후 push (ia-ai-nav-megamenu PR #308 + main 연속)** — 동일 `use-leaderboard.ts:75` 미수정 상태 → CI 실패 #494/#495/#497 inbound (2026-05-12). **근본 수정 없이 계속 재발 중**
 
 ## 근본 원인
 
@@ -84,5 +85,10 @@ const [nickname, setNickname] = useState(() => readNickname());
 - TODOS: `[P1] moneyball NavLinks.tsx lint fix` → PR #212 머지로 해소 (cycle 229)
 - Issue #330/#332/#334: CI failure inbound (3건, 같은 NavLinks 루트) — 1차/2차
 - Issue #490/#491/#493: CI failure inbound (3건, use-leaderboard.ts 루트) — 3차 (2026-05-12)
-- 허브 처리: cycle 48 worker-incident-triage (1차) → cycle 217 worker-incident-triage (2차 close) → cycle 338 worker-incident-triage (3차 close)
-- **moneyball 수정 필요**: `use-leaderboard.ts:74-76` lazy initializer로 교체 → `pnpm lint` 확인
+- Issue #494/#495/#497: CI failure inbound (3건, use-leaderboard.ts:75 동일) — **4차 (2026-05-12, 아직 미수정)**
+- 허브 처리: cycle 48 worker-incident-triage (1차) → cycle 217 worker-incident-triage (2차 close) → cycle 338 worker-incident-triage (3차 close) → cycle 340 worker-incident-triage (4차 close)
+- **⚠️ 긴급**: `use-leaderboard.ts:74-76` 아직 미수정. 매번 moneyball push 시 CI 차단. lazy initializer로 교체 필수:
+  ```ts
+  // 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
+  // 수정 (✅): const [nickname, setNickname] = useState(() => readNickname());
+  ```

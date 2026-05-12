@@ -1,5 +1,17 @@
 # TODOS
 
+## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 340 갱신, 4차 재발)
+
+**상태**: `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75` — `setNickname(readNickname())` in `useEffect` 미수정. 매 moneyball push 시 ESLint `react-hooks/set-state-in-effect` 로 CI 차단.
+**재발**: 4차 (cycle 338 #490/#491/#493 close → 미수정 → #494/#495/#497 신규 발생)
+**수정법** (moneyball 세션에서):
+```ts
+// 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
+// 수정 (✅): const [nickname, setNickname] = useState(() => readNickname());
+```
+**Effort**: XS (1줄 변경)
+**Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
+
 ## [P0] git BRANCHED — local/origin 6-8 diverge 해소 (cycle 339 갱신, R6 사용자 영역)
 
 **상태**: local main: 6커밋 ahead (cycles 335-338 + data), origin main: 8커밋 ahead (moneyball auto-ingest + daily-ingest)
