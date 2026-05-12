@@ -3,9 +3,9 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **10개** ahead, origin **4개** ahead.
+현재 상태: local **12개** ahead, origin **4개** ahead.
 - origin 4 commits: moneyball auto-ingest cycles 332-335 retro + Journal 033 (W21 모델 성과 분석)
-- local 10 commits: hub cycles 364-370 (curate/SE/review-code 시리즈)
+- local 12 commits: hub cycles 364-371 + cycle 372 (curate/SE/review-code/skill-evolution 시리즈)
 - 해소 방법: `git merge origin/main && git push origin main` (push 정책 따라 사용자 직접 실행)
 - **직전 해소**: cycle 364 (merge `2808ce6`, 0	0 완전 동기 확인)
 
@@ -116,6 +116,7 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 
 ## DONE History (compressed)
 
+- **[DONE 2026-05-12]** cycle 372 skill-evolution SE #77 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 373, N=30 batch 364-393, zero-touch 64+→371+)
 - **[DONE 2026-05-12]** cycle 367 skill-evolution SE #76 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% → retro 348-367 40% 마커 skip 자기조정 성공, N=30 batch 364-393, zero-touch 64+→366+)
 - **[DONE 2026-05-12]** cycle 366 skill-evolution SE #75 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 367, N=30 batch 364-393, zero-touch 64+→365+)
 - **[DONE 2026-05-12]** cycle 365 skill-evolution SE #74 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 366, N=30 batch 364-393, zero-touch 64+→364+)
