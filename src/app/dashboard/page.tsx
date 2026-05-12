@@ -75,8 +75,7 @@ function daysAgoLabel(dateStr: string): string {
 }
 
 // ─── Panel: Category Coverage (3×3) ──────────────────────────
-function CategoryCoverage({ coverage, medianVal }: { coverage: CoverageResult; medianVal: number }) {
-  const binding = coverage.target === coverage.targetFloor ? "floor" : "median";
+function CategoryCoverage({ coverage, medianVal, binding }: { coverage: CoverageResult; medianVal: number; binding: string }) {
 
   return (
     <div className={styles.panel}>
@@ -234,9 +233,9 @@ function GrowthChart({ entries }: { entries: ReturnType<typeof getManifest>["ent
         <span>{days[29]}</span>
       </div>
       <div className={styles.legendInline}>
-        <span><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: "var(--d-scout)" }} />scout</span>
-        <span><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: "var(--d-gap)" }} />gap-pull</span>
-        <span><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: "var(--d-manual)" }} />manual</span>
+        {(["scout", "gap-pull", "manual"] as const).map((src) => (
+          <span key={src}><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: `var(--d-${src === "gap-pull" ? "gap" : src})` }} />{src}</span>
+        ))}
       </div>
     </div>
   );
@@ -249,7 +248,6 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
   const gapPct = total > 0 ? (sourceMix["gap-pull"] / total) * CIRC : 0;
   const manualPct = total > 0 ? (sourceMix.manual / total) * CIRC : 0;
 
-  // arc offsets (연속적으로 그리기 위해 dashoffset 누적)
   const scoutOffset = 0;
   const gapOffset = -scoutPct;
   const manualOffset = -(scoutPct + gapPct);
@@ -288,24 +286,18 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
           )}
         </svg>
         <div className={styles.donutLegend}>
-          <div className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-            <span><span style={{ ...dot, background: "var(--d-scout)" }} />scout</span>
-            <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
-              {sourceMix.scout} · {Math.round((sourceMix.scout / Math.max(1, total)) * 100)}%
-            </span>
-          </div>
-          <div className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-            <span><span style={{ ...dot, background: "var(--d-gap)" }} />gap-pull</span>
-            <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
-              {sourceMix["gap-pull"]} · {Math.round((sourceMix["gap-pull"] / Math.max(1, total)) * 100)}%
-            </span>
-          </div>
-          <div className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-            <span><span style={{ ...dot, background: "var(--d-manual)" }} />manual</span>
-            <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
-              {sourceMix.manual} · {Math.round((sourceMix.manual / Math.max(1, total)) * 100)}%
-            </span>
-          </div>
+          {(["scout", "gap-pull", "manual"] as const).map((src) => {
+            const cssVar = src === "gap-pull" ? "var(--d-gap)" : `var(--d-${src})`;
+            const count = src === "gap-pull" ? sourceMix["gap-pull"] : sourceMix[src];
+            return (
+              <div key={src} className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
+                <span><span style={{ ...dot, background: cssVar }} />{src}</span>
+                <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
+                  {count} · {Math.round((count / Math.max(1, total)) * 100)}%
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -401,7 +393,7 @@ export default function DashboardPage() {
         </div>
 
         <div className={styles.main}>
-          <CategoryCoverage coverage={coverage} medianVal={medianVal} />
+          <CategoryCoverage coverage={coverage} medianVal={medianVal} binding={binding} />
           <RecentAdditions entries={manifest.entries} />
         </div>
 

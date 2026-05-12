@@ -85,13 +85,15 @@ function checkPatterns(entries) {
       tagCount[tag] = (tagCount[tag] || 0) + 1;
     }
   }
+  const tagToSlug = new Map();
+  for (const e of nonJournals) {
+    for (const tag of e.frontmatter.tags || []) {
+      if (!tagToSlug.has(tag)) tagToSlug.set(tag, e.slug);
+    }
+  }
   return Object.entries(tagCount)
     .filter(([_, n]) => n >= PATTERN_MIN_COUNT)
-    .map(([tag, count]) => {
-      // 이미 비-journal wiki entry 의 tags 에 포함된 tag 면 "승격됨" 으로 표시
-      const promoted = nonJournals.find((e) => (e.frontmatter.tags || []).includes(tag));
-      return { tag, count, promoted: promoted?.slug || null };
-    })
+    .map(([tag, count]) => ({ tag, count, promoted: tagToSlug.get(tag) || null }))
     .sort((a, b) => b.count - a.count);
 }
 
@@ -121,12 +123,9 @@ function checkUnusedEntries(entries) {
 
   const hits = hitsData.hits || {};
   return entries
-    .filter((e) => {
-      if (daysSince(e.frontmatter.date) < UNUSED_WARN_DAYS) return false;
-      const count = hits[e.slug] || 0;
-      return count === 0;
-    })
-    .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date) }));
+    .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date), count: hits[e.slug] || 0 }))
+    .filter((e) => e.days >= UNUSED_WARN_DAYS && e.count === 0)
+    .map(({ slug, days }) => ({ slug, days }));
 }
 
 function main() {

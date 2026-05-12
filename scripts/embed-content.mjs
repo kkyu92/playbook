@@ -31,6 +31,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { findFilesByExt } from "./lib/fs-helpers.mjs";
 
 const OUTPUT_FILE = path.join(process.cwd(), "public", "embeddings.json");
 
@@ -48,20 +49,6 @@ const MIN_CHUNK_LEN = 200;
 // 청크 최대 크기 (너무 길면 모델 윈도우 초과 + 신호 희석)
 const MAX_CHUNK_LEN = 2000;
 
-function findFiles(dir, ext) {
-  const results = [];
-  if (!fs.existsSync(dir)) return results;
-  const items = fs.readdirSync(dir, { withFileTypes: true });
-  for (const item of items) {
-    const fullPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      results.push(...findFiles(fullPath, ext));
-    } else if (item.name.endsWith(ext)) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 /**
  * MDX 본문을 H2 단위로 청킹.
@@ -169,7 +156,7 @@ async function main() {
 
   for (const source of SOURCES) {
     const sourceDir = path.join(process.cwd(), source.dir);
-    const files = findFiles(sourceDir, source.ext);
+    const files = findFilesByExt(sourceDir, source.ext);
     sourceCounts[source.source_type] = files.length;
     console.log(`\n🔍 [${source.source_type}] ${files.length} ${source.ext} files in ${source.dir}/`);
 

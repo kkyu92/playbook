@@ -16,6 +16,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = path.join(__dirname, "../content");
@@ -38,18 +39,6 @@ function addFieldAfter(content, afterField, newField, newValue) {
 let totalFiles = 0;
 let patchedFiles = 0;
 let skippedFiles = 0;
-
-function processDir(dir) {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      processDir(fullPath);
-    } else if (entry.name.endsWith(".mdx")) {
-      processFile(fullPath);
-    }
-  }
-}
 
 function processFile(filePath) {
   totalFiles++;
@@ -80,7 +69,9 @@ function processFile(filePath) {
   }
 }
 
-processDir(CONTENT_DIR);
+for (const filePath of findMdxFiles(CONTENT_DIR)) {
+  processFile(filePath);
+}
 
 console.log(`\n결과: ${totalFiles}개 파일 / ${patchedFiles}개 패치 대상 / ${skippedFiles}개 스킵`);
 if (DRY_RUN && patchedFiles > 0) {
