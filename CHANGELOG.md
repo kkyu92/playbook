@@ -4,6 +4,27 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.29] — 2026-05-12
+
+### Fixed
+- Mermaid CI 차단 수정 — subgraph 레이블 형식 + 노드 괄호 오류 2건 (cycle 334 fix-incident, commit `4f05e1d`)
+- moneyball CI stubs 9건 batch close (cycle 335 worker-incident-triage)
+- use-leaderboard.ts `setState in useEffect` 3/4/5차 재발 triage close — #490~#501 (cycles 338/340/341)
+
+### Changed
+- skill-evolution SE #63/#64/#65 연속 3회 (cycles 336/337/339) — stage 3 evidence 갱신, zero-touch 64+→338+ 검증
+- auto-ingest 3건 개선: connections 자동생성 + raw-sources 아카이브 + weekly-triage CI 스텁 필터 (commit `b373471`)
+- memory 2건 갱신: `project_bidirectional_compound_growth_goal` + `project_develop_cycle_skill_family` — cycle 341 기준 최신화
+- N=28 batch 시작 (336–363)
+
+### Metrics
+- zero-touch 자동화: cycle 49~341 = **293 사이클** 검증 완료 (N=28 batch 336~363 진행 중)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **65회** (SE #65, cycle 339)
+- BRANCHED 지속: local 11 / origin 12 (R6 사용자 결정 영역)
+- open hub-dispatch issues: **0건**
+- P0 carry-over: use-leaderboard.ts 미수정 (moneyball 세션 1줄 수정 대기)
+
 ## [0.5.28] — 2026-05-12
 
 ### Changed
