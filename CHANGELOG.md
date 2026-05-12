@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.24] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #55/56/57 (3회 연속 갱신 — cycles 315/316/317) — window 295-317, 0회 chain 6개 명단 안정 (SE #54 동일), SE 점유율 35%→40% 자기조정 마커 skip 성공 (cycle 317 최종)
+- TODOS.md P0 moneyball CI lint 추가 — `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제 (XS 5분, cycle 296 리팩터 잔존, 다음 moneyball 세션 처리)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **148개** ahead, origin **20개** ahead _(cycle 319 갱신 — origin 20 = worker-lesson/journal/daily-ingest auto-ingest 누적)_
+
+### Fixed
+- journal-029 보강 (cycle 314) — `in-progress` → `complete` 완료 처리 + raw-sources 35건 아카이브 (CI stubs 28건 + cycle retros 6건 + lesson 1건)
+- moneyball CI inbound 6건 트리아지 close (cycles 318/319) — issues #441/#442/#443/#445/#446/#447. root cause 공통: accuracy/page.tsx 미사용 imports (cycle 296 PR#285 리팩터 잔존). hub read-only → carry-over TODOS P0 박제
+
+### Metrics
+- zero-touch 자동화: cycle 49~319 = **271 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 320/333)
+- wiki entries: **141** (lint CLEAN 전항목 0건, orphan/isolated/stale/JIT-unused 5항목 모두 0건)
+- BRANCHED 지속: local 148 / origin 20 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (moneyball CI 6건 cycle 318/319 close 완료)
+
 ## [0.5.23] — 2026-05-12
 
 ### Added
