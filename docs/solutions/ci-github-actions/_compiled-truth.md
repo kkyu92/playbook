@@ -2,12 +2,12 @@
 
 코드 게이트 승격: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07, cycle 141)
 
-## 종합 (5건, 최종 갱신 2026-05-12)
+## 종합 (6건, 최종 갱신 2026-05-12)
 
-- **재발 횟수**: 14건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건)
+- **재발 횟수**: 19건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
 - **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
-- **마지막 발생**: 2026-05-12 (PR #418/#421 — Next.js 16.2.3 audit failure, push 후 자동 해결 예정)
+- **마지막 발생**: 2026-05-12 (push race #519 v2 — BRANCHED로 cycle 354+357 fix origin 미push → 재발)
 
 ### 주요 교훈 요약
 
@@ -18,6 +18,7 @@
 | 3 | Billing block — LLM 에이전트 자동화로 Private repo 2,000 min/월 소진 | Public 전환 (즉시) 또는 spending limit 상향 | 1회 (3 레포 동시) |
 | 4 | moneyball silent-drift.test.ts MockResult<T> type — discriminated union 강화로 `{ value }` 형식 무효화 | `type: 'return'` 필드 추가. 워커 PR fix 필요 (R6 외부 레포) | 6회 재발 (2026-05-08 단일 세션 4건) |
 | 5 | PR branch old-base audit failure — BRANCHED 상태에서 security patch 미push, PR branch 가 구버전 가져감 | local main 즉시 push (R6). 장기: security patch 후 즉시 batch push 권장 | 1회 (PR #418/#421, 2026-05-12) |
+| 6 | push_main_with_retry 레이스 — BRANCHED로 수정 origin 미배포 → 재발 루프 | origin 즉시 push (R6). CI-critical workflow 수정 시 batch push 즉시 실행 | 5회 (cycle 29→47→354→357→359) |
 
 ### 메타 패턴
 
@@ -27,6 +28,8 @@
 
 3. **LLM 에이전트 자동화 환경 인프라 한도**: 일반 개발 팀 대비 PR/CI 회전 속도 10~50x. Free tier 한도 (GH Actions 2,000 min/월, Vercel 100회/일) 1~2주 소진. **Private repo + LLM 자동화 = 조합 위험.**
 
+4. **BRANCHED 차단 재발 루프**: CI-critical 수정이 local commit으로만 존재하고 BRANCHED 상태에서 push 지연 시 — origin은 구버전 실행 → 동일 버그 재발 무한루프. solution #5(security patch)와 #6(push race) 모두 동일 구조. **CI-critical workflow 수정 = 즉시 batch push 트리거.**
+
 ## 개별 솔루션 목록
 
 1. [2026-05-01 — notify-workers heredoc EOF gap](2026-05-01-notify-workers-heredoc-eof-gap.md) — heredoc 3회 재발
@@ -34,6 +37,7 @@
 3. [2026-05-07 — billing block all workflows](2026-05-07-billing-block-all-workflows-blocked.md) — 3 레포 동시 차단
 4. [2026-05-08 — moneyball silent-drift MockResult<T> type](2026-05-08-moneyball-silent-drift-mockresult-type.md) — 6건 재발 (cycle 266/268)
 5. [2026-05-12 — PR branch old-base audit failure](2026-05-12-pr-branch-old-base-audit-failure.md) — BRANCHED + security patch 미push 조합 (cycle 303)
+6. [2026-05-12 — push race BRANCHED fix blocked](2026-05-12-push-race-branched-fix-blocked.md) — push_main_with_retry 레이스 5회 재발, BRANCHED 차단 구조 (cycle 359)
 
 ## 승격 후보 분석
 
