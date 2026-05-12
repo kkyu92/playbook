@@ -111,12 +111,11 @@ function checkInProgressOldEntries(entries) {
 function checkUnusedEntries(entries) {
   // JIT 검색 hit=0 + UNUSED_WARN_DAYS 경과 → "검색 안 되는" 사각지대 의심
   // totalQueries 가 충분히 쌓였을 때만 (n<10 이면 통계 무의미)
-  if (!fs.existsSync(HITS_FILE)) return [];
   let hitsData;
   try {
     hitsData = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
   } catch (err) {
-    console.warn(`[lint-content] hits.json 파싱 실패 — unused 체크 skip: ${err.message}`);
+    if (err.code !== "ENOENT") console.warn(`[lint-content] hits.json 파싱 실패 — unused 체크 skip: ${err.message}`);
     return [];
   }
   if ((hitsData.totalQueries || 0) < UNUSED_WARN_MIN_TOTAL) return [];
@@ -205,7 +204,6 @@ function main() {
     console.error("   회귀 가드: connections 변경 후 재검증 필요. orphan/isolated 0 이어야 통과.");
     process.exit(1);
   }
-  process.exit(0);
 }
 
 main();

@@ -170,21 +170,19 @@ async function main() {
       // solution: docs/solutions/<category>/<filename>.md → "solutions/<category>/<filename>"
       // retro: docs/retros/<filename>.md → "retros/<filename>"
       const parts = rel.split(path.sep);
-      let category, filename, slug;
+      const basename = parts[parts.length - 1].slice(0, -source.ext.length);
+      let category, slug;
       if (source.source_type === "entry") {
         category = parts[1];
-        filename = parts[parts.length - 1].replace(new RegExp(`\\${source.ext}$`), "");
-        slug = `${category}/${filename}`;
+        slug = `${category}/${basename}`;
       } else if (source.source_type === "solution") {
         // docs/solutions/<category>/<filename>.md
         category = parts[2] || "uncategorized";
-        filename = parts[parts.length - 1].replace(/\.md$/, "");
-        slug = `${source.slug_prefix}/${category}/${filename}`;
+        slug = `${source.slug_prefix}/${category}/${basename}`;
       } else {
         // retro: docs/retros/<filename>.md
         category = "retro";
-        filename = parts[parts.length - 1].replace(/\.md$/, "");
-        slug = `${source.slug_prefix}/${filename}`;
+        slug = `${source.slug_prefix}/${basename}`;
       }
 
       const chunks = chunkByH2(content);
@@ -196,7 +194,7 @@ async function main() {
           source: source.source_type,  // "entry" | "solution" | "retro"
           slug,
           category,
-          title: data.title || filename,
+          title: data.title || basename,
           tags: data.tags || [],
           date: data.date || null,
           confidence: data.confidence ?? null,
@@ -212,13 +210,11 @@ async function main() {
   console.log(`\n🧮 ${totalChunks} chunks total from ${totalFiles} files (entry: ${sourceCounts.entry}, solution: ${sourceCounts.solution}, retro: ${sourceCounts.retro}). Embedding...`);
 
   const start = Date.now();
-  const vectors = [];
   for (let i = 0; i < allChunks.length; i++) {
     const meta = allChunks[i];
     const text = buildEmbeddingText(meta.title, meta.h2_title, meta.chunk_text);
     const output = await extractor(text, { pooling: "mean", normalize: true });
-    // tensor → 일반 배열 (정규화된 384 float)
-    vectors.push(Array.from(output.data));
+    meta.vector = Array.from(output.data);
 
     if ((i + 1) % 50 === 0 || i === allChunks.length - 1) {
       const pct = (((i + 1) / allChunks.length) * 100).toFixed(0);
@@ -231,9 +227,9 @@ async function main() {
   // 인덱스 저장
   const index = {
     model: "Xenova/multilingual-e5-small",
-    dim: vectors[0]?.length || 0,
+    dim: allChunks[0]?.vector?.length || 0,
     created_at: new Date().toISOString(),
-    chunks: allChunks.map((meta, i) => ({ ...meta, vector: vectors[i] })),
+    chunks: allChunks,
   };
 
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });

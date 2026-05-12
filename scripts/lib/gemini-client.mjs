@@ -24,7 +24,9 @@ const BACKOFFS = [10, 30, 60, 120];
  *
  * 지원 env: GEMINI_API_KEY, GEMINI_API_KEY_FALLBACK, _FALLBACK_2, _FALLBACK_3
  */
+let _clients = null;
 function buildClients() {
+  if (_clients) return _clients;
   const primary = process.env.GEMINI_API_KEY;
   if (!primary) throw new Error("GEMINI_API_KEY not set");
 
@@ -42,7 +44,8 @@ function buildClients() {
       seen.add(value);
     }
   }
-  return clients;
+  _clients = clients;
+  return _clients;
 }
 
 

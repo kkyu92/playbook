@@ -389,10 +389,9 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
   topicSlug = stripCategoryPrefix(topicSlug, cat);
   if (!topicSlug || topicSlug.length < 3) topicSlug = slugifyTitle(payload.title);
   if (topicSlug.length > 60) topicSlug = topicSlug.slice(0, 60).replace(/-$/, "");
-  const fullSlug = `${cat}/${topicSlug}`;
 
   // Collision handling
-  if (existingSlugs.includes(fullSlug)) {
+  if (existingSlugs.includes(`${cat}/${topicSlug}`)) {
     topicSlug = `${topicSlug}-${Date.now().toString(36).slice(-4)}`;
   }
   const newSlug = `${cat}/${topicSlug}`;
@@ -479,7 +478,7 @@ ${topGaps}
   return await generateStructured({
     prompt,
     responseSchema: schema,
-    validate: (p) => Array.isArray(p) && p.length === 2 || "need 2",
+    validate: (p) => (Array.isArray(p) && p.length === 2) ? true : "need 2",
   });
 }
 
