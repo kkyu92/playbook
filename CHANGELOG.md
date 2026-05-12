@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.38] — 2026-05-12
+
+### Changed
+- curate cycle 371 — retro 370 박제 + TODOS BRANCHED [P0] 추가 (local 10 / origin 4) + memory 갱신 (N=30 batch 8/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~371 = **323 사이클** 검증 완료 (N=30 batch **8/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **76회** (SE #76, cycle 367)
+- BRANCHED 재발: local 10 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기)
+
 ## [0.5.37] — 2026-05-12
 
 ### Changed
