@@ -4,6 +4,24 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.47] — 2026-05-13
+
+### Changed
+- curate cycle 395 — retro 392-394 박제 + CHANGELOG 0.5.46 + TODOS BRANCHED 42 갱신 + memory 갱신 (N=380 batch 시작)
+- review-code cycle 396 — 7개 품질 개선 (42+/67-): findFilesByExt 헬퍼 추출, O(N*M)→O(M+K) 최적화, daysSince 중복 제거, dashboard prop/legend 중복 제거
+- skill-evolution SE #87 cycle 397 — stage 3 evidence 갱신 (zero-touch 64+→396+ / 명단 동일 7개 SE 35% 자기조정 성공 → 마커 skip)
+- curate cycle 398 — retro 395-397 박제 + CHANGELOG 0.5.47 + TODOS BRANCHED 46 갱신 + memory 갱신 (N=380 batch 5/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~397 = **349 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 5/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **87회** (SE #87, cycle 397)
+- health 연속: **15회 10/10** (cycle 396 review-code 기준)
+- SE 자기조정: cycle 397 window 378-397 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 46 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.46] — 2026-05-13
 
 ### Changed
