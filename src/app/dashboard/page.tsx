@@ -28,6 +28,11 @@ const SOURCE_CLASS: Record<string, string> = {
   "gap-pull": styles.sourceGap,
   manual: styles.sourceManual,
 };
+const SOURCE_CSS_VAR: Record<"scout" | "gap-pull" | "manual", string> = {
+  scout: "var(--d-scout)",
+  "gap-pull": "var(--d-gap)",
+  manual: "var(--d-manual)",
+};
 
 export const metadata: Metadata = {
   title: "Playbook Health",
@@ -234,7 +239,7 @@ function GrowthChart({ entries }: { entries: ReturnType<typeof getManifest>["ent
       </div>
       <div className={styles.legendInline}>
         {(["scout", "gap-pull", "manual"] as const).map((src) => (
-          <span key={src}><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: `var(--d-${src === "gap-pull" ? "gap" : src})` }} />{src}</span>
+          <span key={src}><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: SOURCE_CSS_VAR[src] }} />{src}</span>
         ))}
       </div>
     </div>
@@ -287,11 +292,10 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
         </svg>
         <div className={styles.donutLegend}>
           {(["scout", "gap-pull", "manual"] as const).map((src) => {
-            const cssVar = src === "gap-pull" ? "var(--d-gap)" : `var(--d-${src})`;
-            const count = src === "gap-pull" ? sourceMix["gap-pull"] : sourceMix[src];
+            const count = sourceMix[src];
             return (
               <div key={src} className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-                <span><span style={{ ...dot, background: cssVar }} />{src}</span>
+                <span><span style={{ ...dot, background: SOURCE_CSS_VAR[src] }} />{src}</span>
                 <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
                   {count} · {Math.round((count / Math.max(1, total)) * 100)}%
                 </span>

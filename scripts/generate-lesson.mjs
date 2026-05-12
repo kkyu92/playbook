@@ -17,6 +17,7 @@ import matter from "gray-matter";
 import yaml from "js-yaml";
 
 import { generateStructured } from "./lib/gemini-client.mjs";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
 import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
@@ -47,29 +48,12 @@ function loadManifest() {
 // ─── 양방향 파일 write ──────────────────────────────────────────
 
 function loadAllEntryFiles() {
-  const entries = [];
-  const walk = (dir, rel = "") => {
-    for (const item of fs.readdirSync(dir)) {
-      const full = path.join(dir, item);
-      const relPath = rel ? `${rel}/${item}` : item;
-      const stat = fs.statSync(full);
-      if (stat.isDirectory()) walk(full, relPath);
-      else if (item.endsWith(".mdx")) {
-        const slug = relPath.replace(/\.mdx$/, "");
-        const raw = fs.readFileSync(full, "utf8");
-        const parsed = matter(raw);
-        entries.push({
-          slug,
-          path: full,
-          raw,
-          frontmatter: parsed.data,
-          body: parsed.content,
-        });
-      }
-    }
-  };
-  walk(CONTENT_DIR);
-  return entries;
+  return findMdxFiles(CONTENT_DIR).map((full) => {
+    const slug = path.relative(CONTENT_DIR, full).replace(/\.mdx$/, "");
+    const raw = fs.readFileSync(full, "utf8");
+    const parsed = matter(raw);
+    return { slug, path: full, raw, frontmatter: parsed.data, body: parsed.content };
+  });
 }
 
 // gray-matter 는 field 순서 변경 — yaml.dump + connections inline 재조립.

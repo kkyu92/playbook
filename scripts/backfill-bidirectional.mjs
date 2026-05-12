@@ -22,6 +22,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import yaml from "js-yaml";
 import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const DRY_RUN = process.argv.includes("--dry-run");
@@ -29,30 +30,12 @@ const DRY_RUN = process.argv.includes("--dry-run");
 // ─── 1. 모든 MDX entry 로드 ─────────────────────────────────────────
 
 function loadAllEntries() {
-  const entries = [];
-  const walk = (dir, rel = "") => {
-    for (const item of fs.readdirSync(dir)) {
-      const full = path.join(dir, item);
-      const relPath = rel ? `${rel}/${item}` : item;
-      const stat = fs.statSync(full);
-      if (stat.isDirectory()) {
-        walk(full, relPath);
-      } else if (item.endsWith(".mdx")) {
-        const slug = relPath.replace(/\.mdx$/, "");
-        const raw = fs.readFileSync(full, "utf8");
-        const parsed = matter(raw);
-        entries.push({
-          slug,
-          path: full,
-          raw,
-          frontmatter: parsed.data,
-          body: parsed.content,
-        });
-      }
-    }
-  };
-  walk(CONTENT_DIR);
-  return entries;
+  return findMdxFiles(CONTENT_DIR).map((full) => {
+    const slug = path.relative(CONTENT_DIR, full).replace(/\.mdx$/, "");
+    const raw = fs.readFileSync(full, "utf8");
+    const parsed = matter(raw);
+    return { slug, path: full, raw, frontmatter: parsed.data, body: parsed.content };
+  });
 }
 
 // ─── 2. Backfill 적용 ────────────────────────────────────────────

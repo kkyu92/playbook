@@ -8,9 +8,9 @@ import path from "node:path";
  * @returns {string[]} absolute paths
  */
 export function findFilesByExt(dir, ext) {
+  if (!fs.existsSync(dir)) return [];
   const results = [];
   function walk(d) {
-    if (!fs.existsSync(d)) return;
     for (const item of fs.readdirSync(d, { withFileTypes: true })) {
       const full = path.join(d, item.name);
       if (item.isDirectory()) walk(full);
