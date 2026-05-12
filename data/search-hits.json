@@ -1,6 +1,6 @@
 {
-  "totalQueries": 21,
-  "lastUpdated": "2026-05-07T15:43:36.593Z",
+  "totalQueries": 26,
+  "lastUpdated": "2026-05-12T07:36:48.120Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 2,
@@ -31,6 +31,14 @@
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 2,
     "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 1,
-    "harness-engineering/agentic-chain-saturation-detection": 1
+    "harness-engineering/agentic-chain-saturation-detection": 1,
+    "harness-engineering/stale-temporal-comment-cleanup-policy": 1,
+    "harness-engineering/silent-drift-family-pattern": 1,
+    "retros/2026-05-12-cycles-293-298": 1,
+    "evaluation/prediction-model-calibration-inversion-detection": 3,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 1,
+    "harness-engineering/develop-cycle-positive-streak-recognition": 1,
+    "retros/2026-05-12-cycles-308-311": 1,
+    "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1
   }
 }
