@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.59] — 2026-05-13
+
+### Changed
+- review-code cycle 426 — entry-editor.tsx DEFAULT_FRONTMATTER date lazy init + filteredSlugs useMemo (N=380 batch 32/380)
+- skill-evolution SE #98 cycle 427 — stage 3 evidence 갱신 · window 407-426 SE 35% < 40% · 명단 동일 8개 · 자기조정 성공 (retro 재평가 window 408-427 SE 40% → 마커 skip) (N=380 batch 33/380)
+- curate cycle 428 — retro 426-427 박제 + CHANGELOG 0.5.59 + TODOS BRANCHED 100→102 갱신 + memory 갱신 (N=380 batch 34/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~428 = **380 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 34/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **98회** (SE #98, cycle 427)
+- BRANCHED 재발: local 102 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.58] — 2026-05-13
 
 ### Changed
