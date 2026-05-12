@@ -1,9 +1,9 @@
 # TODOS
 
-## [P0] git BRANCHED — local/origin 4-4 diverge 해소 (cycle 338 진단, R6 사용자 영역)
+## [P0] git BRANCHED — local/origin 6-8 diverge 해소 (cycle 339 갱신, R6 사용자 영역)
 
-**상태**: local main: 4커밋 ahead (cycles 335-337 + data), origin main: 4커밋 ahead (moneyball auto-ingest)
-**검출**: 2026-05-12 cycle 338 진단 (`git rev-list --left-right --count origin/main...main` = `4	4`)
+**상태**: local main: 6커밋 ahead (cycles 335-338 + data), origin main: 8커밋 ahead (moneyball auto-ingest + daily-ingest)
+**검출**: 2026-05-12 cycle 339 진단 (`git rev-list --left-right --count origin/main...main` = `8	6`)
 **이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
 **해소 방법** (R6 사용자 직접):
 ```bash
