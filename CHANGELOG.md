@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.31] — 2026-05-12
+
+### Fixed
+- use-leaderboard.ts `setState in useEffect` 6차 재발 triage close — #503/#504/#505 (cycle 348 worker-incident-triage)
+
+### Changed
+- memory 2건 갱신: `project_bidirectional_compound_growth_goal` + `project_develop_cycle_skill_family` — cycle 349 기준 최신화 (zero-touch 348+, batch 13/28, BRANCHED 20/16)
+- TODOS.md BRANCHED P0 상태 갱신 — local 17→20 ahead / origin 12→16 ahead
+
+### Metrics
+- zero-touch 자동화: cycle 49~348 = **300 사이클** 검증 완료 (N=28 batch 336~363 진행 중, 13/28 완료)
+- wiki entries: **144** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **68회** (SE #68, cycle 346)
+- BRANCHED 지속: local 20 / origin 16 (R6 사용자 결정 영역)
+- open hub-dispatch issues: **0건**
+- P0 carry-over: use-leaderboard.ts 미수정 6차 (moneyball 세션 1줄 수정 대기)
+
 ## [0.5.30] — 2026-05-12
 
 ### Changed
