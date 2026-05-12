@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.41] — 2026-05-12
+
+### Changed
+- review-code cycle 378 — health 10/10 (11회 연속) + origin inbound 4커밋 진단 (raw-sources 3건 archive + Journal 033 connections 위반 확인)
+- curate cycle 379 — retro 377-378 박제 + CHANGELOG 0.5.41 박제 + TODOS BRANCHED 19→20 갱신 + memory 갱신 (N=30 batch 15/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~378 = **330 사이클** 검증 완료 (N=30 batch **15/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **79회** (SE #79, cycle 376)
+- health 연속: **11회 10/10** (cycles 368-378 기준)
+- BRANCHED 재발: local 20 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- SE Trigger-5 평가: window 359-378 SE 7/20=35% < 40% → 마커 설정 (cycle 380 SE #80 강제 발화)
+
 ## [0.5.40] — 2026-05-12
 
 ### Changed
