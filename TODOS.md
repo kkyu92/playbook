@@ -3,18 +3,20 @@
 ## [P0] moneyball CI lint 수정 필요 (cycle 322 worker-incident-triage carry-over)
 
 **What**: `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제
-**Why**: ESLint `no-unused-vars` — `Metadata`(line 1), `DayBucket/WeekBucket/RecentForm`(lines 11-13), `SITE_URL`(line 24) 미사용. cycle 296 리팩터(PR #285) 후 잔존. PR #287 머지 후 main CI 차단 (issues #441/#442/#443 → 트리아지 close 5-12) + moneyball cycle 299 picks-polish PR #288 머지 후 재발 (issues #445/#446/#447 → 트리아지 close 5-12) + 추가 13건 (issues #448-#464 → 트리아지 close 5-12 cycle 322)
+**Why**: ESLint `no-unused-vars` — `Metadata`(line 1), `DayBucket/WeekBucket/RecentForm`(lines 11-13), `SITE_URL`(line 24) 미사용. cycle 296 리팩터(PR #285) 후 잔존. PR #287 머지 후 main CI 차단 (issues #441/#442/#443 → 트리아지 close 5-12) + moneyball cycle 299 picks-polish PR #288 머지 후 재발 (issues #445/#446/#447 → 트리아지 close 5-12) + 추가 13건 (issues #448-#464 → 트리아지 close 5-12 cycle 322) + picks-polish-ui 3건 (issues #466/#467/#468 → 트리아지 close 5-12 cycle 326, transient retry 성공)
 **Fix**: 다음 moneyball 세션에서 3줄 삭제 → CI 자동 회복
 **Effort**: XS (5분)
 
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **156개** ahead, origin **41개** ahead. _(cycle 325 갱신)_
+현재 상태: local **158개** ahead, origin **41개** ahead. _(cycle 326 갱신)_
 
 **✅ cycle 312**: PR #418, #421 신규 8 entries 로컬 통합 완료 (133→141 entries). push 후 PR 브랜치가 main에 포함되어 자동 close 가능.
 
-**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 자동 close.
+⚠️ **PR #418/#421 CI 차단**: `pnpm audit` high CVE (Next.js >=16.0.0 <16.2.5) — origin/main에 16.2.4 잔존, local에는 cycle 295 (commit `6fc4eaf`) 16.2.6 fix 존재. **R6 push 후 자동 해소** (PR 브랜치가 main에 포함 + CVE fix 반영).
+
+**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 CI 해소 + 자동 close.
 
 **원인**: zero-touch push 정책 + 워커 자동 push 동시 진행 → 필연적 재발산. 로컬 머지로 1회 해소됨. push 후 재발산 방지는 배치 push 주기 단축 검토.
 
