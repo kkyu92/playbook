@@ -5,7 +5,7 @@
  * - gemini-2.5-flash 단일 모델 사용
  *   (과거 2.0-flash fallback 제거 — 2026-04 신규 계정은 2.0-flash free tier quota 0
  *    할당받음. Google 의 legacy 모델 sunset 정책. 구식 모델 유지 = 신규 키 호환성 손실.)
- * - 5회 retry, exponential backoff (10s → 30s → 60s → 120s)
+ * - 5회 시도, 4 backoff 구간 (attempt 0-3): 10s → 30s → 60s → 120s; attempt 4 = key 전환 or throw
  * - responseSchema 기반 JSON 강제 (Zod retry loop 대체)
  * - Daily quota 감지 시 즉시 다음 key 전환 (backoff 낭비 차단)
  *

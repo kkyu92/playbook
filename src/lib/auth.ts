@@ -1,3 +1,6 @@
+const encoder = new TextEncoder();
+let _hmacKeyPromise: Promise<CryptoKey> | null = null;
+
 function getEnv(name: string, minLength: number): string {
   const value = process.env[name];
   if (!value || value.length < minLength) {
@@ -22,26 +25,15 @@ function bufToHex(buf: ArrayBuffer): string {
     .join("");
 }
 
-/** Edge-compatible constant-time string comparison using Web Crypto */
-async function safeCompare(a: string, b: string): Promise<boolean> {
-  if (a.length !== b.length) return false;
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode("compare-key"),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const [sigA, sigB] = await Promise.all([
-    crypto.subtle.sign("HMAC", key, encoder.encode(a)),
-    crypto.subtle.sign("HMAC", key, encoder.encode(b)),
-  ]);
-  const viewA = new Uint8Array(sigA);
-  const viewB = new Uint8Array(sigB);
+// Constant-time byte-XOR comparison. Uses encoded byte arrays so multi-byte
+// UTF-8 chars don't bypass the length check via code-unit vs byte-length mismatch.
+function safeCompare(a: string, b: string): boolean {
+  const aBytes = encoder.encode(a);
+  const bBytes = encoder.encode(b);
+  if (aBytes.length !== bBytes.length) return false;
   let diff = 0;
-  for (let i = 0; i < viewA.length; i++) {
-    diff |= viewA[i] ^ viewB[i];
+  for (let i = 0; i < aBytes.length; i++) {
+    diff |= aBytes[i] ^ bBytes[i];
   }
   return diff === 0;
 }
@@ -51,20 +43,21 @@ export async function verifyPassword(password: string): Promise<boolean> {
 }
 
 async function importHMACKey(): Promise<CryptoKey> {
-  const encoder = new TextEncoder();
-  return crypto.subtle.importKey(
-    "raw",
-    encoder.encode(getAdminSecret()),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
+  if (!_hmacKeyPromise) {
+    _hmacKeyPromise = crypto.subtle.importKey(
+      "raw",
+      encoder.encode(getAdminSecret()),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+  }
+  return _hmacKeyPromise;
 }
 
 export async function createToken(): Promise<string> {
   const timestamp = Date.now().toString();
   const key = await importHMACKey();
-  const encoder = new TextEncoder();
   const signature = await crypto.subtle.sign(
     "HMAC",
     key,
@@ -83,7 +76,6 @@ export async function verifyToken(token: string): Promise<boolean> {
     if (age > 7 * 24 * 60 * 60 * 1000) return false;
 
     const key = await importHMACKey();
-    const encoder = new TextEncoder();
     const expected = await crypto.subtle.sign(
       "HMAC",
       key,

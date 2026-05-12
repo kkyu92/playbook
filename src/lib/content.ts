@@ -11,9 +11,14 @@ const MANIFEST_PATH = path.join(
   "content-manifest.json"
 );
 
+let _manifestCache: ContentManifest | null = null;
+
 export function getManifest(): ContentManifest {
-  const raw = fs.readFileSync(MANIFEST_PATH, "utf-8");
-  return JSON.parse(raw);
+  if (!_manifestCache) {
+    const raw = fs.readFileSync(MANIFEST_PATH, "utf-8");
+    _manifestCache = JSON.parse(raw) as ContentManifest;
+  }
+  return _manifestCache!;
 }
 
 export function getEntry(slug: string): WikiEntry | null {
