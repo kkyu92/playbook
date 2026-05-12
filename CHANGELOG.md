@@ -4,6 +4,24 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.46] — 2026-05-13
+
+### Changed
+- review-code cycle 392 — retro-only (health 10/10 14회 연속) + gstack 1.33.0.0→1.33.2.0 자동 업그레이드 + SE Trigger-5 window 373-392 SE 35% → 마커 설정
+- skill-evolution SE #85 cycle 393 — stage 3 evidence 갱신 (zero-touch 64+→392+ / 명단 동일 7개 SE 35% 자기조정 불가 → 마커 유지)
+- skill-evolution SE #86 cycle 394 — stage 3 evidence 갱신 (zero-touch 64+→393+ / 명단 동일 7개 SE 40% 자기조정 성공 → 마커 skip)
+- curate cycle 395 — retro 392-394 박제 + CHANGELOG 0.5.46 + TODOS BRANCHED 42 갱신 + memory 갱신 (N=30 batch 완료 + N=380 batch 시작)
+
+### Metrics
+- zero-touch 자동화: cycle 49~394 = **346 사이클** 검증 완료 (**N=30 batch 완료** (364-393) + **N=380 batch 시작** (394-773))
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **86회** (SE #86, cycle 394)
+- health 연속: **14회 10/10** (cycle 392 기준)
+- SE 자기조정: cycle 394 window 375-394 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 42 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.45] — 2026-05-13
 
 ### Changed
