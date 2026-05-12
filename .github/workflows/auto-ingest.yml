@@ -276,7 +276,25 @@ jobs:
                 return 0
               fi
               echo "⚠️ push 실패 (attempt $attempt/5) — pull --rebase 후 재시도"
-              git pull --rebase origin main || return 1
+              if ! git pull --rebase origin main 2>/dev/null; then
+                # rebase 실패 — concurrent dispatch add/add 충돌 가능성 (동일 raw file)
+                git rebase --abort 2>/dev/null || true
+                git fetch origin main --quiet 2>/dev/null || true
+                # HEAD 커밋의 raw-sources 파일이 origin 에 이미 존재하면 push 불필요
+                local already_in_origin=true
+                local f
+                for f in $(git diff-tree --no-commit-id -r --name-only HEAD 2>/dev/null | grep "^raw-sources/"); do
+                  if ! git cat-file -e "origin/main:$f" 2>/dev/null; then
+                    already_in_origin=false
+                    break
+                  fi
+                done
+                if $already_in_origin; then
+                  echo "✅ origin 에 이미 동일 raw 파일 — push 불필요 (concurrent race recovery)"
+                  return 0
+                fi
+                return 1
+              fi
               sleep $((attempt * 2))
             done
             echo "❌ push 5회 시도 모두 실패 — race condition 미해결"
