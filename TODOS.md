@@ -10,7 +10,7 @@
 ## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
 
 ~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **169개** ahead, origin **44개** ahead. _(cycle 332 갱신)_
+현재 상태: local **171개** ahead, origin **44개** ahead. _(cycle 333 갱신)_
 
 **✅ cycle 312**: PR #418, #421 신규 8 entries 로컬 통합 완료 (133→141 entries). push 후 PR 브랜치가 main에 포함되어 자동 close 가능.
 

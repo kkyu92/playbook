@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.28] — 2026-05-12
+
+### Changed
+- retro 331-332 박제 (`docs/retros/2026-05-12-cycles-331-332.md`) — curate 2회 연속, N=40 batch 막바지 정리
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **171개** ahead, origin **44개** ahead _(cycle 333 갱신)_
+- N=40 batch 완료 (294–333) — 40 사이클 자율 회전 검증
+
+### Metrics
+- zero-touch 자동화: cycle 49~333 = **285 사이클** 검증 완료 (N=40 batch 294~333 **완료**)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **62회** (SE #62, cycle 330)
+- BRANCHED 지속: local 171 / origin 44 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건
+
 ## [0.5.27] — 2026-05-12
 
 ### Changed
