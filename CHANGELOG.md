@@ -4,6 +4,25 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.44] — 2026-05-13
+
+### Changed
+- worker-incident-triage cycle 385 — raw-sources 36개 archive (cycles 298-310 retro + CI 결과 + 분석 파일) + TODOS BRANCHED 27→30 갱신 + SE Trigger 5 마커 설정 (window 366-385 SE 35% → cycle 386 skill-evolution 강제 발화)
+- skill-evolution SE #82 cycle 386 — stage 3 evidence 갱신 (zero-touch 64+→385+ / 명단 동일 7개 SE 35% 자기조정 불가 → 마커 유지)
+- skill-evolution SE #83 cycle 387 — stage 3 evidence 갱신 (zero-touch 64+→386+ / 명단 동일 7개 SE 35% 자기조정 불가 → 마커 유지)
+- skill-evolution SE #84 cycle 388 — stage 3 evidence 갱신 (zero-touch 64+→387+ / 명단 동일 7개 SE 35%→window 369-388 SE 40% 자기조정 성공 → 마커 skip)
+- curate cycle 389 — retro 385-388 박제 + CHANGELOG 0.5.44 + TODOS BRANCHED 33→34 갱신 + memory 갱신 (N=30 batch 26/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~388 = **340 사이클** 검증 완료 (N=30 batch **26/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **84회** (SE #84, cycle 388)
+- health 연속: 12회 10/10 (cycle 383 기준, review-code 미발화)
+- SE 자기조정: cycle 388 window 369-388 SE 40% → 마커 skip 성공
+- BRANCHED 재발: local 34 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.43] — 2026-05-12
 
 ### Changed
