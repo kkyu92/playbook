@@ -4,6 +4,26 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.33] — 2026-05-12
+
+### Fixed
+- auto-ingest `push_main_with_retry` 3개 버그 수정 — push race 후 caller 종료 (`set -e` 영향), issue close 단계 분리, rebase 중 origin 파일 safe skip (cycle 357, commit `a3057da`)
+
+### Changed
+- skill-evolution SE #72/#73 연속 2회 (cycles 358/360) — stage 3 evidence 갱신, zero-touch 64+→357+→359+ 검증
+- worker-incident-triage cycle 359 — push race BRANCHED block solution 박제 (`docs/solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked.md`, #6) + meta-pattern #4 (BRANCHED 차단 재발 루프)
+- retro 356-360 박제 (`docs/retros/2026-05-12-cycles-356-360.md`)
+- TODOS.md 갱신 — BRANCHED P0 (local 39 / origin 32, cycle 361 기준)
+- memory 2건 갱신: `project_develop_cycle_skill_family` + `project_bidirectional_compound_growth_goal` — cycle 361 기준
+
+### Metrics
+- zero-touch 자동화: cycle 49~360 = **312 사이클** 검증 완료 (N=28 batch 336~363 진행 중, 25/28 완료)
+- wiki entries: **144** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **73회** (SE #73, cycle 360)
+- BRANCHED 지속: local 39 / origin 32 (R6 사용자 결정 영역 — 충돌 없음 확인)
+- open hub-dispatch issues: **0건**
+- P0 use-leaderboard: ✅ DONE — lazy init 근본 수정 (moneyball `44947fd`) + CI 지속 PASS (cycles 323-326+)
+
 ## [0.5.32] — 2026-05-12
 
 ### Fixed
