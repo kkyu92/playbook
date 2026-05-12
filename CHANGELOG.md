@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.25] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #58 (cycle 321) — window 301-320, 0회 chain 6개 명단 SE #57 대비 동일 (explore-idea/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system), SE 35% → cycle 321 retro 재평가 window 302-321 SE 8/20=40% 자기조정 마커 skip 성공
+- TODOS.md P0 R6 대기 갱신 (cycle 322) — local **153개** ahead, origin **37개** ahead _(origin 누적 = daily-ingest/worker-lesson/auto-ingest 연속 유입)_
+
+### Fixed
+- moneyball CI inbound 13건 트리아지 close (cycle 322) — issues #448-#464 batch close. Pattern A (5건 stale develop-cycle/* 브랜치 #449/#453/#456/#457/#463) + Pattern B (8건 main accuracy/page.tsx 동일 root cause #448/#451/#452/#455/#458/#460/#462/#464). hub read-only → carry-over TODOS P0
+
+### Metrics
+- zero-touch 자동화: cycle 49~322 = **274 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 322/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 153 / origin 37 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (moneyball CI 13건 cycle 322 close 완료)
+- open PRs: 2건 (#418/#421 daily ingest — push 후 자동 해결 예정)
+
 ## [0.5.24] — 2026-05-12
 
 ### Changed
