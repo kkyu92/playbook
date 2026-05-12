@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { CATEGORIES, CATEGORY_LABELS } from "@/lib/schema";
@@ -80,10 +80,9 @@ interface EntryEditorProps {
   allSlugs?: string[];
 }
 
-const DEFAULT_FRONTMATTER: Frontmatter = {
+const DEFAULT_FRONTMATTER: Omit<Frontmatter, "date"> = {
   title: "",
   category: "prompt-engineering",
-  date: new Date().toISOString().split("T")[0],
   tags: [],
   confidence: 1,
   connections: [],
@@ -102,7 +101,7 @@ export function EntryEditor({
 }: EntryEditorProps) {
   const router = useRouter();
   const [fm, setFm] = useState<Frontmatter>(
-    initialFrontmatter || DEFAULT_FRONTMATTER
+    () => initialFrontmatter ?? { ...DEFAULT_FRONTMATTER, date: new Date().toISOString().split("T")[0] }
   );
   const [content, setContent] = useState(initialContent || "");
   const [sha, setSha] = useState(initialSha || "");
@@ -112,6 +111,7 @@ export function EntryEditor({
   const [tagInput, setTagInput] = useState("");
   const editorCmds = useEditorCommands();
   const [editorHeight, setEditorHeight] = useState(600);
+  const filteredSlugs = useMemo(() => allSlugs.filter((s) => s !== slug), [allSlugs, slug]);
   const resizingRef = useRef(false);
   const startYRef = useRef(0);
   const startHeightRef = useRef(600);
@@ -436,9 +436,7 @@ export function EntryEditor({
               연결 ({fm.connections.length})<Tip text="관련 엔트리를 선택하면 지식 그래프에서 선으로 연결되고, 글 하단에 '관련 엔트리'로 표시됩니다." />
             </label>
             <div className="max-h-40 overflow-y-auto rounded-[var(--radius-md)] border border-border bg-bg p-2 space-y-1">
-              {allSlugs
-                .filter((s) => s !== slug)
-                .map((s) => (
+              {filteredSlugs.map((s) => (
                   <label
                     key={s}
                     className="flex items-center gap-2 text-xs text-text cursor-pointer hover:bg-surface rounded px-1 py-0.5"
