@@ -1,9 +1,9 @@
 # TODOS
 
-## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 341 갱신, 5차 재발)
+## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 348 갱신, 6차 재발)
 
 **상태**: `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75` — `setNickname(readNickname())` in `useEffect` 미수정. 매 moneyball push 시 ESLint `react-hooks/set-state-in-effect` 로 CI 차단.
-**재발**: 5차 (cycle 340 #494/#495/#497 close → 미수정 → #499/#500/#501 신규 발생)
+**재발**: 6차 (cycle 341 #499/#500/#501 close → 미수정 → #503/#504/#505 신규 발생)
 **수정법** (moneyball 세션에서):
 ```ts
 // 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
