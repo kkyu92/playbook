@@ -5,34 +5,18 @@ import { analyzeCoverage, type CoverageResult, type CoverageCategory } from "@/l
 import { EmptyState } from "./empty-state";
 import styles from "./dashboard.module.css";
 
-const STATUS_CLASS: Record<string, string> = {
-  empty: styles.catEmpty,
-  low: styles.catLow,
-  ok: styles.catOk,
-  over: styles.catOver,
+const STATUS_MAP: Record<string, { card: string; badge: string; fill: string }> = {
+  empty: { card: styles.catEmpty, badge: styles.badgeEmpty, fill: styles.fillEmpty },
+  low:   { card: styles.catLow,   badge: styles.badgeLow,   fill: styles.fillLow },
+  ok:    { card: styles.catOk,    badge: styles.badgeOk,    fill: styles.fillOk },
+  over:  { card: styles.catOver,  badge: styles.badgeOver,  fill: styles.fillOver },
 };
-const BADGE_CLASS: Record<string, string> = {
-  empty: styles.badgeEmpty,
-  low: styles.badgeLow,
-  ok: styles.badgeOk,
-  over: styles.badgeOver,
+const SOURCE_MAP: Record<"scout" | "gap-pull" | "manual", { className: string; cssVar: string }> = {
+  scout:    { className: styles.sourceScout, cssVar: "var(--d-scout)" },
+  "gap-pull": { className: styles.sourceGap, cssVar: "var(--d-gap)" },
+  manual:   { className: styles.sourceManual, cssVar: "var(--d-manual)" },
 };
-const FILL_CLASS: Record<string, string> = {
-  empty: styles.fillEmpty,
-  low: styles.fillLow,
-  ok: styles.fillOk,
-  over: styles.fillOver,
-};
-const SOURCE_CLASS: Record<string, string> = {
-  scout: styles.sourceScout,
-  "gap-pull": styles.sourceGap,
-  manual: styles.sourceManual,
-};
-const SOURCE_CSS_VAR: Record<"scout" | "gap-pull" | "manual", string> = {
-  scout: "var(--d-scout)",
-  "gap-pull": "var(--d-gap)",
-  manual: "var(--d-manual)",
-};
+const DOT_STYLE = { display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 6, verticalAlign: "middle" as const };
 
 export const metadata: Metadata = {
   title: "Playbook Health",
@@ -40,7 +24,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/dashboard" },
 };
 
-// 카테고리 서브 설명 — mockup H1 v2 기준. 10 카테고리.
 const CATEGORY_SUBS: Record<string, string> = {
   "prompt-engineering": "프롬프트 설계 / 버전 관리",
   "context-engineering": "컨텍스트 주입 / 관리 전략",
@@ -79,9 +62,7 @@ function daysAgoLabel(dateStr: string): string {
   return dateStr;
 }
 
-// ─── Panel: Category Coverage (3×3) ──────────────────────────
 function CategoryCoverage({ coverage, medianVal, binding }: { coverage: CoverageResult; medianVal: number; binding: string }) {
-
   return (
     <div className={styles.panel}>
       <div className={styles.panelHeader}>
@@ -94,18 +75,19 @@ function CategoryCoverage({ coverage, medianVal, binding }: { coverage: Coverage
         {coverage.categories.map((c: CoverageCategory) => {
           const pct = Math.min(100, coverage.target > 0 ? Math.round((c.count / coverage.target) * 100) : 0);
           const gapDelta = c.count - coverage.target;
+          const sm = STATUS_MAP[c.status];
           return (
             <Link
               key={c.name}
               href={`/wiki#category-${c.name}`}
-              className={`${styles.catCard} ${STATUS_CLASS[c.status]}`}
+              className={`${styles.catCard} ${sm.card}`}
             >
               <div className={styles.catTopRow}>
                 <div>
                   <div className={styles.catName}>{c.name}</div>
                   <div className={styles.catSub}>{CATEGORY_SUBS[c.name] || ""}</div>
                 </div>
-                <span className={`${styles.catBadge} ${BADGE_CLASS[c.status]}`}>
+                <span className={`${styles.catBadge} ${sm.badge}`}>
                   {c.status.toUpperCase()}
                 </span>
               </div>
@@ -116,7 +98,7 @@ function CategoryCoverage({ coverage, medianVal, binding }: { coverage: Coverage
                 </div>
                 <div className={styles.catBar}>
                   <div
-                    className={`${styles.catFill} ${FILL_CLASS[c.status]}`}
+                    className={`${styles.catFill} ${sm.fill}`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
@@ -132,11 +114,7 @@ function CategoryCoverage({ coverage, medianVal, binding }: { coverage: Coverage
   );
 }
 
-// ─── Panel: Recent Additions (3 days) ────────────────────────
-function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>["entries"] }) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+function RecentAdditions({ entries, today }: { entries: ReturnType<typeof getManifest>["entries"]; today: Date }) {
   const days: string[] = [];
   for (let i = 0; i < 3; i++) {
     const d = new Date(today);
@@ -168,7 +146,7 @@ function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>[
               <div className={styles.recentEmpty}>no entries added</div>
             ) : (
               items.map((e) => {
-                const src = e.frontmatter.source || "manual";
+                const src = (e.frontmatter.source || "manual") as "scout" | "gap-pull" | "manual";
                 return (
                   <div key={e.slug} className={styles.recentItem}>
                     <Link href={`/wiki/${e.slug}`} className={styles.recentItemTitle}>
@@ -176,7 +154,7 @@ function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>[
                     </Link>
                     <div className={styles.recentItemMeta}>
                       <span>{e.frontmatter.category}</span>
-                      <span className={`${styles.sourceTag} ${SOURCE_CLASS[src]}`}>{src}</span>
+                      <span className={`${styles.sourceTag} ${SOURCE_MAP[src].className}`}>{src}</span>
                     </div>
                   </div>
                 );
@@ -189,10 +167,7 @@ function RecentAdditions({ entries }: { entries: ReturnType<typeof getManifest>[
   );
 }
 
-// ─── Panel: Growth 30 days (stacked bars per source) ─────────
-function GrowthChart({ entries }: { entries: ReturnType<typeof getManifest>["entries"] }) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+function GrowthChart({ entries, today }: { entries: ReturnType<typeof getManifest>["entries"]; today: Date }) {
   const days: string[] = [];
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today);
@@ -225,9 +200,9 @@ function GrowthChart({ entries }: { entries: ReturnType<typeof getManifest>["ent
           const c = counts[d];
           return (
             <div key={d} className={styles.growthBar} title={`${d}: ${c.scout + c["gap-pull"] + c.manual}`}>
-              {c.scout > 0 && <span style={{ background: "var(--d-scout)", height: c.scout * pxPerCount }} />}
-              {c["gap-pull"] > 0 && <span style={{ background: "var(--d-gap)", height: c["gap-pull"] * pxPerCount }} />}
-              {c.manual > 0 && <span style={{ background: "var(--d-manual)", height: c.manual * pxPerCount }} />}
+              {c.scout > 0 && <span style={{ background: SOURCE_MAP.scout.cssVar, height: c.scout * pxPerCount }} />}
+              {c["gap-pull"] > 0 && <span style={{ background: SOURCE_MAP["gap-pull"].cssVar, height: c["gap-pull"] * pxPerCount }} />}
+              {c.manual > 0 && <span style={{ background: SOURCE_MAP.manual.cssVar, height: c.manual * pxPerCount }} />}
             </div>
           );
         })}
@@ -239,16 +214,15 @@ function GrowthChart({ entries }: { entries: ReturnType<typeof getManifest>["ent
       </div>
       <div className={styles.legendInline}>
         {(["scout", "gap-pull", "manual"] as const).map((src) => (
-          <span key={src}><span className="dot" style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 5, verticalAlign: "middle", background: SOURCE_CSS_VAR[src] }} />{src}</span>
+          <span key={src}><span style={{ ...DOT_STYLE, background: SOURCE_MAP[src].cssVar }} />{src}</span>
         ))}
       </div>
     </div>
   );
 }
 
-// ─── Panel: Source Mix (donut) ───────────────────────────────
 function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull": number; manual: number }; total: number }) {
-  const CIRC = 100; // intentional for stroke-dasharray fraction
+  const CIRC = 100; // stroke-dasharray fraction denominator
   const scoutPct = total > 0 ? (sourceMix.scout / total) * CIRC : 0;
   const gapPct = total > 0 ? (sourceMix["gap-pull"] / total) * CIRC : 0;
   const manualPct = total > 0 ? (sourceMix.manual / total) * CIRC : 0;
@@ -256,8 +230,6 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
   const scoutOffset = 0;
   const gapOffset = -scoutPct;
   const manualOffset = -(scoutPct + gapPct);
-
-  const dot = { display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 6, verticalAlign: "middle" as const };
 
   return (
     <div className={styles.panel}>
@@ -270,21 +242,21 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
           <circle cx="21" cy="21" r="15.91" fill="transparent" stroke="var(--d-surface-2)" strokeWidth="5" />
           {sourceMix.scout > 0 && (
             <circle cx="21" cy="21" r="15.91" fill="transparent"
-              stroke="var(--d-scout)" strokeWidth="5"
+              stroke={SOURCE_MAP.scout.cssVar} strokeWidth="5"
               strokeDasharray={`${scoutPct} ${CIRC - scoutPct}`}
               strokeDashoffset={scoutOffset}
               transform="rotate(-90 21 21)" />
           )}
           {sourceMix["gap-pull"] > 0 && (
             <circle cx="21" cy="21" r="15.91" fill="transparent"
-              stroke="var(--d-gap)" strokeWidth="5"
+              stroke={SOURCE_MAP["gap-pull"].cssVar} strokeWidth="5"
               strokeDasharray={`${gapPct} ${CIRC - gapPct}`}
               strokeDashoffset={gapOffset}
               transform="rotate(-90 21 21)" />
           )}
           {sourceMix.manual > 0 && (
             <circle cx="21" cy="21" r="15.91" fill="transparent"
-              stroke="var(--d-manual)" strokeWidth="5"
+              stroke={SOURCE_MAP.manual.cssVar} strokeWidth="5"
               strokeDasharray={`${manualPct} ${CIRC - manualPct}`}
               strokeDashoffset={manualOffset}
               transform="rotate(-90 21 21)" />
@@ -295,7 +267,7 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
             const count = sourceMix[src];
             return (
               <div key={src} className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>
-                <span><span style={{ ...dot, background: SOURCE_CSS_VAR[src] }} />{src}</span>
+                <span><span style={{ ...DOT_STYLE, background: SOURCE_MAP[src].cssVar }} />{src}</span>
                 <span className="num" style={{ color: "var(--d-muted)", fontVariantNumeric: "tabular-nums" }}>
                   {count} · {Math.round((count / Math.max(1, total)) * 100)}%
                 </span>
@@ -308,7 +280,6 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
   );
 }
 
-// ─── Panel: Stale full-width row ─────────────────────────────
 function StaleRow({ staleEntries }: { staleEntries: CoverageResult["staleEntries"] }) {
   const count = staleEntries.length;
   return (
@@ -332,7 +303,6 @@ function StaleRow({ staleEntries }: { staleEntries: CoverageResult["staleEntries
   );
 }
 
-// ─── Main page ───────────────────────────────────────────────
 function computeMedian(counts: number[]): number {
   if (counts.length === 0) return 0;
   const sorted = [...counts].sort((a, b) => a - b);
@@ -349,11 +319,12 @@ export default function DashboardPage() {
 
   if (coverage.totalEntries === 0) return <EmptyState />;
 
-  // 오늘 추가된 entry count (delta)
-  const today = new Date().toISOString().split("T")[0];
-  const todayCount = manifest.entries.filter((e) => e.frontmatter.date === today).length;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayStr = today.toISOString().split("T")[0];
+  const todayCount = manifest.entries.filter((e) => e.frontmatter.date === todayStr).length;
 
-  // target binding 표시용 — median 값 역계산 (coverage-analyzer 는 median 을 직접 return 하지 않음)
+  // coverage-analyzer returns target but not median directly — recompute for display
   const medianVal = computeMedian(coverage.categories.map((c) => c.count));
   const binding = coverage.target === coverage.targetFloor ? "floor" : "median";
 
@@ -398,11 +369,11 @@ export default function DashboardPage() {
 
         <div className={styles.main}>
           <CategoryCoverage coverage={coverage} medianVal={medianVal} binding={binding} />
-          <RecentAdditions entries={manifest.entries} />
+          <RecentAdditions entries={manifest.entries} today={today} />
         </div>
 
         <div className={styles.bottom}>
-          <GrowthChart entries={manifest.entries} />
+          <GrowthChart entries={manifest.entries} today={today} />
           <SourceMix sourceMix={coverage.sourceMix} total={coverage.totalEntries} />
         </div>
 
