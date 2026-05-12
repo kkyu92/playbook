@@ -179,7 +179,7 @@ function round(n, digits = 2) {
   return Math.round(n * factor) / factor;
 }
 
-export { ALL_CATEGORIES, TARGET_FLOOR, STALE_MONTHS };
+export { TARGET_FLOOR };
 
 // CLI smoke test: node scripts/coverage-analyzer.mjs
 if (import.meta.url === `file://${process.argv[1]}`) {

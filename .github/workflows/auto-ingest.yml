@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
@@ -60,13 +60,19 @@ jobs:
           version: 10
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Cache Xenova transformers model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: xenova-multilingual-e5-small-v1
 
       - name: Auto-ingest — route by event type
         env:
@@ -247,6 +253,13 @@ jobs:
           } > "$RAW_FILE"
           echo "✅ raw 저장: $RAW_FILE"
 
+          # raw-sources/ root 누적 방지 — 즉시 _archive/ 이동
+          # weekly-triage 스캔 = maxdepth 1 만 → archive 파일은 triage noise 에서 제외
+          mkdir -p raw-sources/_archive
+          mv "$RAW_FILE" "raw-sources/_archive/$(basename "$RAW_FILE")"
+          RAW_FILE="raw-sources/_archive/$(basename "$RAW_FILE")"
+          echo "📦 raw archived: $RAW_FILE"
+
           # git config — 모든 경로 공통
           git config user.name "kkyu92"
           git config user.email "kyusikkyu@gmail.com"
@@ -255,6 +268,8 @@ jobs:
           # push 시 'main -> main (fetch first)' rejection. concurrency 그룹은 같은 fp
           # 내 직렬화만 보장. pull --rebase + 재시도로 자연 회복 (cycle 47 fix-incident).
           push_main_with_retry() {
+            local -  # 함수 종료 시 set 옵션 자동 복원 (set -euo pipefail 격리)
+            set +e
             local attempt
             for attempt in 1 2 3 4 5; do
               if git push origin main; then
@@ -414,22 +429,23 @@ jobs:
               POLICY_COMMIT=""
             else
               git commit -m "data: auto-ingest self-policy from ${SOURCE_SHORT} — ${TITLE}"
-              # push fail 시 issue close 도달 X — alert 만 남기고 step fail (TODOS [P1])
+              PUSH_FAILED=0
               if ! push_main_with_retry; then
-                if [ -n "$ISSUE_NUM" ]; then
-                  gh issue comment "$ISSUE_NUM" --body "⚠️ self-policy push 실패 (race 5회 retry 소진) — issue close 보류. 다음 dispatch 에서 fingerprint idempotent 로 회복 예정. Run: ${RUN_URL:-N/A}"
-                fi
-                exit 1
+                PUSH_FAILED=1
               fi
-              POLICY_COMMIT=$(git rev-parse HEAD)
+              POLICY_COMMIT=$([ "$PUSH_FAILED" = "0" ] && git rev-parse HEAD || echo "")
             fi
 
-            # self-policy = data-only (no review needed). raw-sources commit 시점이
-            # 처리 완료 신호 → 동일 fp issue 자동 close (audit trail 보존).
+            # self-policy = data-only (no review needed). push 성공/실패 무관 항상 close
+            # (audit trail 보존 — push 실패 시 close body 에 ⚠ 명시)
             if [ -n "$ISSUE_NUM" ]; then
-              CLOSE_BODY="✅ self-policy raw-sources/ 머지 완료 → 자동 close (audit trail 보존). commit: ${POLICY_COMMIT:-(no change — fingerprint idempotent)}, raw: ${RAW_FILE}"
+              if [ "${PUSH_FAILED:-0}" = "0" ]; then
+                CLOSE_BODY="✅ self-policy raw-sources/ 머지 완료 → 자동 close (audit trail 보존). commit: ${POLICY_COMMIT:-(no change — fingerprint idempotent)}, raw: ${RAW_FILE}"
+              else
+                CLOSE_BODY="⚠️ self-policy push 실패 (race 5회 retry 소진) — audit trail 보존을 위해 close. raw: ${RAW_FILE}, Run: ${RUN_URL:-N/A}. 다음 dispatch 에서 fingerprint idempotent 로 회복 예정."
+              fi
               gh issue close "$ISSUE_NUM" --comment "$CLOSE_BODY" --reason completed
-              echo "🤖 Self-policy Issue #${ISSUE_NUM} 자동 close"
+              echo "🤖 Self-policy Issue #${ISSUE_NUM} 자동 close (push_failed=${PUSH_FAILED:-0})"
             fi
 
           else
@@ -487,6 +503,9 @@ jobs:
               echo "_TODO: 다음 액션_"
             } > "$JOURNAL_FILE"
             echo "✅ Journal draft: $JOURNAL_FILE"
+
+            # auto-connections: semantic search 기반 connections 자동 생성 + 양방향 연결
+            node scripts/auto-connections.mjs "$JOURNAL_FILE" 8 || echo "⚠️ auto-connections 실패 — connections: [] 유지"
 
             # manifest 재생성
             node scripts/generate-content-manifest.mjs

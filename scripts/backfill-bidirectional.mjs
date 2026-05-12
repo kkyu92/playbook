@@ -21,7 +21,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import yaml from "js-yaml";
-import { validateConnections, MAX_CONNECTIONS } from "./lib/bidirectional-sync.mjs";
+import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const DRY_RUN = process.argv.includes("--dry-run");
@@ -201,20 +201,6 @@ function stringifyPreservingOrder(raw, oldFm, newFm, body) {
   const processedYaml = inlineConnectionsArray(newFmYaml);
 
   return `---\n${processedYaml}---\n${body}`;
-}
-
-function inlineConnectionsArray(yamlText) {
-  // connections: 블록을 한 줄 array 로 변환
-  return yamlText.replace(
-    /^connections:\n((?:  - [^\n]+\n)+)/m,
-    (_, itemsBlock) => {
-      const items = itemsBlock
-        .split("\n")
-        .filter((l) => l.startsWith("  - "))
-        .map((l) => l.slice(4).trim().replace(/^["']|["']$/g, ""));
-      return `connections: [${items.join(", ")}]\n`;
-    },
-  );
 }
 
 run();

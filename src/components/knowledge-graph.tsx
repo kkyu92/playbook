@@ -11,6 +11,14 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
+function isRoadmapLink(link: Record<string, unknown>): boolean {
+  const src = link.source;
+  const tgt = link.target;
+  const srcId = typeof src === "string" ? src : (src as { id?: string })?.id;
+  const tgtId = typeof tgt === "string" ? tgt : (tgt as { id?: string })?.id;
+  return Boolean((srcId && srcId.startsWith("roadmap/")) || (tgtId && tgtId.startsWith("roadmap/")));
+}
+
 
 interface GraphNode {
   id: string;
@@ -274,26 +282,12 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         backgroundColor="#0a0a0f"
         nodeCanvasObject={nodeCanvasObject as never}
         nodePointerAreaPaint={nodePointerAreaPaint as never}
-        linkColor={((link: Record<string, unknown>) => {
-          const src = link.source;
-          const tgt = link.target;
-          const srcId = typeof src === "string" ? src : (src as { id?: string })?.id;
-          const tgtId = typeof tgt === "string" ? tgt : (tgt as { id?: string })?.id;
-          const isRoadmapEdge =
-            (srcId && srcId.startsWith("roadmap/")) ||
-            (tgtId && tgtId.startsWith("roadmap/"));
-          return isRoadmapEdge ? "rgba(107, 107, 128, 0.25)" : "rgba(107, 107, 128, 0.5)";
-        }) as never}
-        linkLineDash={((link: Record<string, unknown>) => {
-          const src = link.source;
-          const tgt = link.target;
-          const srcId = typeof src === "string" ? src : (src as { id?: string })?.id;
-          const tgtId = typeof tgt === "string" ? tgt : (tgt as { id?: string })?.id;
-          const isRoadmapEdge =
-            (srcId && srcId.startsWith("roadmap/")) ||
-            (tgtId && tgtId.startsWith("roadmap/"));
-          return isRoadmapEdge ? [4, 4] : null;
-        }) as never}
+        linkColor={((link: Record<string, unknown>) =>
+          isRoadmapLink(link) ? "rgba(107, 107, 128, 0.25)" : "rgba(107, 107, 128, 0.5)"
+        ) as never}
+        linkLineDash={((link: Record<string, unknown>) =>
+          isRoadmapLink(link) ? [4, 4] : null
+        ) as never}
         linkWidth={0.8}
         // @ts-expect-error -- linkDistance not in types but works at runtime
         linkDistance={50}

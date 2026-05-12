@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": [
+    "@testing-library/jest-dom",
+    "@testing-library/react",
+    "tailwindcss"
+  ],
+  "entry": [
+    "src/app/**/{page,layout,loading,error,not-found,route}.{ts,tsx}",
+    "next.config.{js,mjs,ts}",
+    "vitest.config.{js,ts}",
+    "scripts/dashboard-update.mjs",
+    "scripts/notify-workers.mjs",
+    "scripts/backfill-bidirectional.mjs",
+    "scripts/backfill-frontmatter.mjs"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "scripts/**/*.{mjs,js,ts}"
+  ]
+}
