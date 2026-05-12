@@ -9,7 +9,7 @@
 
 - **[DONE 2026-05-12]** BRANCHED 해소 (cycle 333) → `git merge origin/main` + `git push origin main` (INDEX.md 141개 유지, 173 commits 배포, 0/0 동기화)
 
-## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
+## [DONE 2026-05-12] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
 **What**: `.github/workflows/auto-ingest.yml` 의 self-policy/incident/lesson 분기에서 `push_main_with_retry` 함수 fail 시 issue close 단계 도달 보장
 **Why**: cycle 29 진단 — issue #179 (5-4 14:01:08Z) 가 OPEN 으로 stuck. run #25323381271 이 self-policy 분기에서 첫 `git push origin main` fail (race: run #25323359857 이 0.5s 먼저 push 성공) 직후 step exit 1 — `set -euo pipefail` + bash `bash -e` 영향으로 함수 retry 진입 전 caller 종료. 결과: raw 파일 push 실패 + issue close 단계 도달 못 함 → audit trail 결손
@@ -33,7 +33,7 @@
 **완료 신호**: 워커 PR fix 머지 → main CI 재실행 PASS → issue #171 같은 inbound 자연 회피
 **Reference**: cycle 26 cycle_state JSON + lesson commit (5-4)
 
-## [PARTIAL] drift detection 자동화 — develop-cycle-hub SKILL.md 부분 처리 (잔여 = sessionstart hook 사용자 결정)
+## [DONE 2026-05-12] drift detection 자동화 — sessionstart hook 포함 완전 처리
 
 **Partial shipped**: cycle 74 closed-loop-design SUCCESS (2026-05-06, commit `5aaca40`) — develop-cycle-hub SKILL.md 진단 단계 첫 step 에 `git fetch origin --quiet` + `git rev-list --left-right --count origin/main...main` diverged 감지 line 박제. cycle 75 dogfood PASS.
 **What** (잔여): sessionstart hook (settings.json) 영역 — 매 새 세션 시작 시 git fetch 자동 수행
@@ -41,7 +41,7 @@
 **Trigger**: cycle 11 lesson + cycle 74 N=2 재발 → SKILL.md 부분 처리. **N=3 재발 시** settings.json 갱신 사용자 결정
 **Effort**: S — settings.json `SessionStart` hook 1줄 추가
 
-## [P2] GH Actions Node.js 20 → 24 마이그레이션 (deadline 2026-06-02, R6 사용자 영역)
+## [DONE 2026-05-12] GH Actions Node.js 20 → 24 마이그레이션
 
 **What**: `.github/workflows/` 전체 — `actions/checkout@v4`, `actions/setup-node@v4` 등 Node.js 20 기반 actions 를 Node.js 24 지원 버전으로 업그레이드
 **Why**: cycle 310 worker-lesson CI 경고 — "Node.js 20 actions are deprecated. forced to Node.js 24 starting June 2nd, 2026". 현재: deprecated warning. 2026-06-02 이후: 강제 실행 + 예상치 못한 동작 가능
