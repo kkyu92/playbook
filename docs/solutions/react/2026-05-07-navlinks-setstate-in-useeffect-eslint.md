@@ -1,9 +1,9 @@
-# [react] NavLinks useEffect 내 setState 직접 호출 — ESLint 재발 패턴
+# [react] useEffect 내 setState 직접 호출 — ESLint 재발 패턴 (NavLinks / useLeaderboard)
 
 **카테고리**: react
-**날짜**: 2026-05-07
+**날짜**: 2026-05-07 (갱신: 2026-05-12)
 **프로젝트**: moneyballscore
-**관련 파일**: `apps/moneyball/src/components/layout/NavLinks.tsx:39`
+**관련 파일**: `apps/moneyball/src/components/layout/NavLinks.tsx:39`, `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75`
 
 ## 문제
 
@@ -17,14 +17,16 @@ NavLinks.tsx UI 개선 작업 중 `useEffect` 내부에서 state setter를 직�
 **재발 이력**:
 - 1차: cycle 227 (PR #211 `polish-ui-nav-a11y`) — aria-expanded UI 개선 중 도입 → CI 실패 #329/#330/#332
 - 2차: commit fb9b93f (cycle 228 retro 이후 빌드) — main CI 실패 → issue #334 inbound
+- 3차: cycle 316 (PR #307 `this-week-archive-316`) — `use-leaderboard.ts:75` `setNickname(readNickname())` → CI 실패 #490/#491/#493 inbound (2026-05-12)
 
 ## 근본 원인
 
 | 원인 | 설명 |
 |---|---|
 | **useEffect 내 동기 state setter** | `useEffect` 안에서 `setXxx()` 를 조건 없이 직접 호출 → 렌더링 cascade |
-| **UI 개선 시 패턴 재도입** | NavLinks 변경 작업마다 동일 anti-pattern 반복 유입 |
+| **UI/훅 개선 시 패턴 재도입** | NavLinks·leaderboard 훅 변경 작업마다 동일 anti-pattern 반복 유입 |
 | **로컬 lint 미실행** | 개발 시 `pnpm lint` 생략 → CI 에서야 검출, main 머지 후 발견 |
+| **파일 범위 확산** | 1~2차: NavLinks.tsx (컴포넌트), 3차: use-leaderboard.ts (훅) — UI 계층에서 비즈니스 훅으로 패턴 확산 |
 
 ## 해결 패턴
 
@@ -49,22 +51,38 @@ useEffect(() => {
 
 ## 재발 방지 체크리스트
 
-NavLinks.tsx (또는 nav 계열 컴포넌트) 수정 시:
+NavLinks.tsx (nav 계열) + use-xxx.ts (훅) 수정 시:
 ```
-[ ] useEffect 내 setter 직접 호출 grep:
-    grep -n "set[A-Z]" NavLinks.tsx | grep -v "//\|async\|then\|catch"
+[ ] useEffect 내 setter 직접 호출 grep (컴포넌트 + 훅 모두):
+    grep -rn "set[A-Z][a-zA-Z]*(.*)" src/ --include="*.ts" --include="*.tsx" | grep "useEffect" -A3
+    또는: grep -n "set[A-Z]" use-leaderboard.ts | grep -v "//\|async\|then\|catch"
+[ ] useState lazy initializer 대안 검토:
+    setState(syncFn())  →  useState(() => syncFn())  (useEffect 불필요)
 [ ] pnpm lint 로컬 실행: exit 0 확인
 [ ] CI 첫 run "Lint" step 통과 확인
 ```
 
 ## 일반화
 
-navigation 컴포넌트 (NavLinks / Sidebar / Dropdown) 는 active/open 상태를 `useEffect`에서 초기화하려는 패턴이 자주 유입됨. 대안:
-- **URL 파생 상태**: `usePathname()` 직접 비교 (state 불필요)
-- **컴포넌트 외부 초기값**: 부모에서 초기 상태 계산해서 prop 전달
+navigation 컴포넌트 (NavLinks / Sidebar / Dropdown) 뿐 아니라 **훅 (use-xxx.ts)** 에서도 동일 패턴 발생:
+
+```typescript
+// 3차 재발 코드 (use-leaderboard.ts:74-76)
+useEffect(() => {
+  setNickname(readNickname());   // ❌ sync setState in effect
+}, []);
+
+// ✅ 수정: lazy useState initializer 사용
+const [nickname, setNickname] = useState(() => readNickname());
+// useEffect 불필요 — 초기화는 lazy initializer로
+```
+
+컴포넌트 계층을 넘어 비즈니스 훅으로 패턴 확산 중. `use-*.ts` 신규 작성 시 동일 점검 필수.
 
 ## 관련
 
 - TODOS: `[P1] moneyball NavLinks.tsx lint fix` → PR #212 머지로 해소 (cycle 229)
-- Issue #330/#332/#334: CI failure inbound (3건, 같은 NavLinks 루트)
-- 허브 처리: cycle 48 worker-incident-triage (1차) → cycle 217 worker-incident-triage (2차 close)
+- Issue #330/#332/#334: CI failure inbound (3건, 같은 NavLinks 루트) — 1차/2차
+- Issue #490/#491/#493: CI failure inbound (3건, use-leaderboard.ts 루트) — 3차 (2026-05-12)
+- 허브 처리: cycle 48 worker-incident-triage (1차) → cycle 217 worker-incident-triage (2차 close) → cycle 338 worker-incident-triage (3차 close)
+- **moneyball 수정 필요**: `use-leaderboard.ts:74-76` lazy initializer로 교체 → `pnpm lint` 확인
