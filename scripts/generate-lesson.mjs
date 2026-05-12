@@ -17,7 +17,7 @@ import matter from "gray-matter";
 import yaml from "js-yaml";
 
 import { generateStructured } from "./lib/gemini-client.mjs";
-import { validateConnections, MAX_CONNECTIONS } from "./lib/bidirectional-sync.mjs";
+import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
 import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
 import { validateMdxContent } from "./lib/mdx-validate.mjs";
@@ -87,18 +87,7 @@ function stringifyPreservingOrder(raw, newFm, body) {
   return `---\n${processed}---\n${body}`;
 }
 
-function inlineConnectionsArray(yamlText) {
-  return yamlText.replace(
-    /^connections:\n((?:  - [^\n]+\n)+)/m,
-    (_, itemsBlock) => {
-      const items = itemsBlock
-        .split("\n")
-        .filter((l) => l.startsWith("  - "))
-        .map((l) => l.slice(4).trim().replace(/^["']|["']$/g, ""));
-      return `connections: [${items.join(", ")}]\n`;
-    },
-  );
-}
+
 
 /**
  * @param {object} newEntry — { slug, category, topicSlug, frontmatter, body }

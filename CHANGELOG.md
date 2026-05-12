@@ -4,6 +4,329 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.28] — 2026-05-12
+
+### Changed
+- retro 331-332 박제 (`docs/retros/2026-05-12-cycles-331-332.md`) — curate 2회 연속, N=40 batch 막바지 정리
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **171개** ahead, origin **44개** ahead _(cycle 333 갱신)_
+- N=40 batch 완료 (294–333) — 40 사이클 자율 회전 검증
+
+### Metrics
+- zero-touch 자동화: cycle 49~333 = **285 사이클** 검증 완료 (N=40 batch 294~333 **완료**)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **62회** (SE #62, cycle 330)
+- BRANCHED 지속: local 171 / origin 44 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건
+
+## [0.5.27] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #61/62 (2회 연속 갱신 — cycles 329/330) — window 309-328/310-329, 0회 chain 8개 (SE #61/62 모두 명단 동일 유지). SE #61: 자기조정 불가 (35% 연속). SE #62: window 311-330 재평가 SE 40% 자기조정 마커 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **167개** ahead, origin **44개** ahead _(cycle 330 갱신)_
+- retro 327-330 박제 (`docs/retros/2026-05-12-cycles-327-330.md`)
+
+### Metrics
+- zero-touch 자동화: cycle 49~330 = **282 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 331/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 167 / origin 44 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건
+
+## [0.5.26] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #59/60 (2회 연속 갱신 — cycles 324/325) — window 303-322/306-325, 0회 chain 8개 (SE #59: 명단 변화 7→8개, review-code 신규 진입 / SE #60: 명단 동일 8개 유지). SE #60: 마커 skip 자기조정 성공 (window 306-325 SE 9/20=45% ≥ 40% + 명단 동일)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **159개** ahead, origin **41개** ahead _(cycle 325→326 갱신 — origin 41 = daily-ingest/worker-lesson/auto-ingest 연속 유입)_
+- gstack upgrade 1.27.1.0 → **1.33.0.0** (cycle 327 curate — auto-upgrade)
+
+### Fixed
+- moneyball CI inbound 3건 트리아지 close (cycle 326) — issues #466/#467/#468 batch close. picks-polish-ui feature branch transient CI failures (retry 성공). hub read-only → TODOS P0 갱신
+
+### Metrics
+- zero-touch 자동화: cycle 49~326 = **278 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 327/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 159 / origin 41 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (CI 3건 cycle 326 close 완료)
+
+## [0.5.25] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #58 (cycle 321) — window 301-320, 0회 chain 6개 명단 SE #57 대비 동일 (explore-idea/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system), SE 35% → cycle 321 retro 재평가 window 302-321 SE 8/20=40% 자기조정 마커 skip 성공
+- TODOS.md P0 R6 대기 갱신 (cycle 322) — local **153개** ahead, origin **37개** ahead _(origin 누적 = daily-ingest/worker-lesson/auto-ingest 연속 유입)_
+
+### Fixed
+- moneyball CI inbound 13건 트리아지 close (cycle 322) — issues #448-#464 batch close. Pattern A (5건 stale develop-cycle/* 브랜치 #449/#453/#456/#457/#463) + Pattern B (8건 main accuracy/page.tsx 동일 root cause #448/#451/#452/#455/#458/#460/#462/#464). hub read-only → carry-over TODOS P0
+
+### Metrics
+- zero-touch 자동화: cycle 49~322 = **274 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 322/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 153 / origin 37 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (moneyball CI 13건 cycle 322 close 완료)
+- open PRs: 2건 (#418/#421 daily ingest — push 후 자동 해결 예정)
+
+## [0.5.24] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #55/56/57 (3회 연속 갱신 — cycles 315/316/317) — window 295-317, 0회 chain 6개 명단 안정 (SE #54 동일), SE 점유율 35%→40% 자기조정 마커 skip 성공 (cycle 317 최종)
+- TODOS.md P0 moneyball CI lint 추가 — `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제 (XS 5분, cycle 296 리팩터 잔존, 다음 moneyball 세션 처리)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **148개** ahead, origin **20개** ahead _(cycle 319 갱신 — origin 20 = worker-lesson/journal/daily-ingest auto-ingest 누적)_
+
+### Fixed
+- journal-029 보강 (cycle 314) — `in-progress` → `complete` 완료 처리 + raw-sources 35건 아카이브 (CI stubs 28건 + cycle retros 6건 + lesson 1건)
+- moneyball CI inbound 6건 트리아지 close (cycles 318/319) — issues #441/#442/#443/#445/#446/#447. root cause 공통: accuracy/page.tsx 미사용 imports (cycle 296 PR#285 리팩터 잔존). hub read-only → carry-over TODOS P0 박제
+
+### Metrics
+- zero-touch 자동화: cycle 49~319 = **271 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 320/333)
+- wiki entries: **141** (lint CLEAN 전항목 0건, orphan/isolated/stale/JIT-unused 5항목 모두 0건)
+- BRANCHED 지속: local 148 / origin 20 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건 (moneyball CI 6건 cycle 318/319 close 완료)
+
+## [0.5.23] — 2026-05-12
+
+### Added
+- 8 new wiki entries via auto-ingest (PR #418 + #421) — wiki 133 → **141**
+  - PR #418 (20260510): `ai-agent-remote-management-ux`, `collaboration-conflict-resolution-multi-agent`, `claude-code-harness-component-visibility-ccinv`, `high-availability-llm-disaster-recovery`
+  - PR #421 (20260512): `kuku-concepts-playbook-local-markdown`, `generative-ai-hallucination-detection`, `llm-scalable-service-architecture`, `bifrost-ai-gateway-integration`
+  - domains: agents×3, harness-engineering×3, context-engineering×1, infrastructure×1
+
+### Metrics
+- zero-touch 자동화: cycle 49~312 = **264 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 313/333)
+- wiki entries: **141** (lint CLEAN, 전항목 0건)
+- embeddings: 994 chunks (cycle 312 갱신)
+- BRANCHED 지속: local 137 / origin 12 (R6 사용자 결정 영역)
+
+## [0.5.22] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #54 (cycle 309) — window 289-308, 0회 chain 6개 명단 SE #53 대비 동일, SE 점유율 35%→40% 자기조정 마커 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **132개** ahead, origin **8개** ahead _(cycle 310 갱신 — origin 8 = worker-lesson/journal auto-ingest)_
+- Node.js 20 Actions deprecation P2 추가 (cycle 310) — `.github/workflows/` 전체 Node.js 20→24 마이그레이션 deadline 2026-06-02 (3주)
+
+### Metrics
+- zero-touch 자동화: cycle 49~311 = **263 사이클** 검증 완료 (N=40 batch 294~333 진행 중, 현재 cycle 311/333)
+- wiki entries: **133** (lint CLEAN 유지, orphan/isolated/stale/JIT-unused 전항목 0건)
+- BRANCHED 지속: local 132 / origin 8 (R6 사용자 결정 영역)
+
+## [0.5.21] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #51→#53 (3회 연속 갱신 — cycles 305/306/307) — SE 점유율 30%→35%→40% 회복, cycle 307 마커 자기조정 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **129개** ahead, origin **6개** ahead _(cycle 307 갱신 — origin 6 = worker-lesson/journal auto-ingest)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~307 = **259 사이클** 검증 완료 (N=40 batch 294~333 진행 중, 현재 cycle 307/333)
+- wiki entries: **133** (lint CLEAN 유지)
+- BRANCHED 지속: local 129 / origin 6 (R6 사용자 결정 영역)
+
+## [0.5.20] — 2026-05-12
+
+### Added
+- Journal 029 auto-ingest (PR #425 머지) — `lesson-pending false-positive batch close` 패턴 wiki 박제. `docs/solutions/ci-github-actions/` 새 solution 추가 (PR branch old-base audit failure 패턴)
+
+### Changed
+- SKILL.md stage 3 evidence SE #50 박제 (cycle 300) — Trigger-3 N=300 milestone + Trigger-5 동시 발화. zero-touch 63+→299+ 갱신
+- wiki lint CLEAN (cycle 301 curate) — **133 entries**, isolated 2→0, orphan/stale/JIT-unused 0건. 10개 신규 entries (agents/context-engineering/data-engineering/evaluation 도메인)
+- code quality baseline 박제 (cycle 302 review-code) — health 10/10 STABLE, 4회 연속 CLEAN 확정
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **124개** ahead, origin **2개** ahead _(cycle 303 갱신 — origin 2 = worker-lesson auto-ingest)_
+
+### Fixed
+- BRANCHED 로컬 머지 (cycle 299) — `git merge origin/main` 69 commits 통합. INDEX.md 충돌 → manifest 재생성으로 해결. push 대기 (R6 사용자 영역)
+- PR #418/#421 CI root cause 확인 (cycle 303) — PR branches 가 old origin/main 기반 (Next.js 16.2.3). push 후 CI 자동 재실행 통과 예정
+
+### Metrics
+- zero-touch 자동화: cycle 49~303 = **255 사이클** 검증 완료 (N=40 batch 294~333 진행 중)
+- wiki entries: **133** (cycle 298 기준 123 → +10: agents 4, context-engineering 4, data-engineering 5, evaluation 3 등)
+- BRANCHED 지속: local 124 / origin 2 (R6 사용자 결정 영역)
+- open PRs: 2건 (#418, #421 daily ingest — push 후 자동 해결 예정)
+
+## [0.5.19] — 2026-05-12
+
+### Fixed
+- Next.js 16.2.4 → 16.2.6 (cycle 295 fix-incident) — 4건 high CVE 패치 (GHSA-8h8q, mg66, c4j6, middleware-bypass). daily ingest PR CI gate `pnpm audit --audit-level high` 차단 해소
+
+### Changed
+- SKILL.md stage 3 evidence SE #47→#49 (3회 연속 발화 — cycles 293/294/296): trigger-5 window 274~296, 0회 chain 6개 명단 fix-incident 탈퇴 신호 포함
+- Issue #419 batch close — weekly-triage 33 raw CI stubs 전량 reject (payload_type: incident, wiki entry 가치 없음). weekly-triage.yml CI 스텁 필터 개선 [P2] carry-over
+- wiki lint CLEAN (cycle 298 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 'drift' 이미 승격
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **111개** ahead, origin **68개** ahead _(cycle 297 갱신)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~297 = **249 사이클** 검증 완료 (N=40 batch 294~333 진행 중)
+- BRANCHED 지속: local 111 / origin 68 (R6 사용자 결정 영역)
+
+## [0.5.18] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 292 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **103개** ahead, origin **58개** ahead _(cycle 292 갱신)_
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 290→292, N=30 batch ✅ 완료, BRANCHED 98/54→103/58), MEMORY.md index 2줄 갱신
+
+### Fixed
+- `scripts/cross-update-shadow.mjs`: unused `join` import 제거 (ESLint warning → CLEAN)
+
+### Metrics
+- zero-touch 자동화: cycle 49~292 = **244 사이클** 검증 완료
+- N=30 batch (263-292) ✅ 완료 — 다음 batch TBD
+
+## [0.5.17] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 285 → 289 갱신 — window 270-289 chain 분포: skill-evolution=9 / worker-incident-triage=8 / curate=2 / review-code=1. retro-only 0/20. 0회 chain 7개 (review-code 탈퇴 — cycle 287 발화로 명단 축소). SE trigger-5: 명단 SE #46 동일 + SE 점유율 45% ≥ 40% → SKIP (자기조정)
+- wiki lint CLEAN (cycle 290 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **98개** ahead, origin **54개** ahead _(cycle 290 갱신)_
+
+### Metrics
+- zero-touch 자동화: cycle 49~289 = **241 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 290
+
+## [0.5.16] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 280 → 285 갱신 — window 266-285 chain 분포: worker-incident-triage=10 / skill-evolution=9 / curate=1. retro-only 0/20. 0회 chain 8개 (review-code 재진입 — SE #45 window 265-284 명단 변화). SE trigger-5: 점유율 45% ≥ 40% + 명단 동일 → SKIP (자기조정)
+- wiki lint CLEAN (cycle 286 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 264→285, SE #36→#45, BRANCHED 65/6→91/54), project_bidirectional_compound_growth_goal (cycles 263-285 progress entry 추가), MEMORY.md index 2줄 갱신
+
+### Fixed
+- moneyball CI raw-sources 32건 archive (cycle 282 worker-incident-triage — cycles 225-253 retro + CI incident logs)
+
+### Metrics
+- zero-touch 자동화: cycle 49~285 = **237 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 286
+
+## [0.5.15] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 264 → 280 갱신 — window 261-280 chain 분포: skill-evolution=8 / worker-incident-triage=9 / curate=2 / review-code=1. retro-only 0/20. 0회 chain 7개 (명단 SE #42 동일). SE trigger-5: 점유율 40% ≥ 40% + 명단 동일 → SKIP (자기조정)
+- wiki lint CLEAN (cycle 281 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 84개 ahead, origin 50개 ahead (zero-touch push 정책 + 워커 auto-ingest 병행으로 재발산 중)
+
+### Fixed
+- moneyball CI MockResult<T> inbound 닫힘: 허브 hub-dispatch issues 26건 close (cycles 266-280) — MockResult<T> discriminated union TypeCheck fail 연속 발생, 워커 측 해결 의존
+- moneyball PitcherFipTrend color '700' TypeCheck inbound (#397, cycle 276) close
+
+### Metrics
+- zero-touch 자동화: cycle 49~280 = **232 사이클** 검증 완료
+- N=30 batch (263-292) 진행 중 — 현재 cycle 281
+
+## [0.5.14] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 265 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- dashboard `closed-loop-health` cycle 258 → 264 갱신 — window 245-264 chain 분포: skill-evolution=8 / curate=7 / review-code=4 / unknown=1. dispatch 누적: lesson=6 / meta-pattern=18 / chain-evolution=0. 0회 chain 8개 (fix-incident/explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). SE trigger-5 평가: 명단 SE#36 동일 + SE 점유율 40% ≥ 40% → 마커 SKIP (자기조정)
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 64→65개 ahead, origin 6개 ahead (cycle 259-265 감지, origin 누락 1건 추가: moneyball cycle 258 retro auto-ingest)
+
+### Added
+- Daily Ingest 20260508-0606 (#357) — 4 신규 entry: user-behavior-prediction-ai-model-integration / claude-code-harness-skillset-reinforcement-agent-playbook / on-device-llm-inference-efficiency-patterns / llm-call-orchestration-reliability-enhancement
+
+## [0.5.13] — 2026-05-08
+
+### Changed
+- wiki lint CLEAN (cycle 263 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, pattern 'drift' 이미 승격됨
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local 58→61개 ahead, origin 3→5개 ahead (cycle 259-263 감지, origin 2개 신규: moneyball cycle 256-257 retro auto-ingest)
+- N=50 batch (213-262) 완료 / N=30 batch (263-292) 시작 — zero-touch 262+ cycle 검증
+- memory rot 수정 — project_develop_cycle_skill_family (cycle 258→262, SE #34→SE #36), MEMORY.md index 2줄 갱신
+
+## [0.5.12] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 250 → 258 갱신 — window 239-258 chain 분포: skill-evolution=8 / curate=7 / review-code=4 / unknown=1. dispatch 누적: lesson=6 / meta-pattern=18 / chain-evolution=0. 0회 chain 8개 (fix-incident/explore-idea/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). SE trigger-5 평가: 명단 SE#34 동일 + SE 점유율 40% ≥ 40% → 마커 SKIP (자기조정)
+- wiki lint CLEAN (cycle 259 curate) — 123 entries, orphan/stale/isolated/JIT-unused 0건, scan-promotions 승격 대상 없음
+- TODOS.md `[P0] R6 대기` BRANCHED 재발 (cycle 259 감지, local 56개 ahead, origin 3개 ahead — cycle 257 해소 이후 재발산)
+
+## [0.5.11] — 2026-05-08
+
+### Fixed
+- BRANCHED N=22 해소 — cycle 257 세션 시작 시 origin/main diverged 감지 → `git merge origin/main` 수행 (INDEX.md 충돌 1건 수동 해소, commit `65fbd78`+`e49237d`). local 53개 ahead, origin 0개 ahead 정렬 완료
+
+### Changed
+- embeddings.json 갱신 — origin/main 머지로 유입된 46개 신규 content 파일 인덱싱. 825 chunks (123 entries + 13 solutions + 1 retro, 384d vector, 7835 KB)
+- INDEX.md 엔트리 수 123개 (origin 122개 + local 1개 신규 merge 결과)
+- TODOS.md `[P0] R6 대기 BRANCHED N=22` → DONE 처리
+
+## [0.5.10] — 2026-05-08
+
+### Fixed
+- cycle 253 review-code — dead code 정리: scripts/lib/graph-signals.mjs / src/components/learning-heatmap.tsx / mermaid-diagram.tsx / projects-page-client.tsx / projects-tabs.tsx 삭제 (5파일, 모두 0 import 고아). flexsearch / shiki 미사용 deps 제거 (2종). health TC/LINT/TEST CLEAN (commit `1eeb2c9`)
+
+### Changed
+- knip.json 신규 추가 — 125개 false positive 제거, 정확한 dead code 감지 활성화. dead code issues 34 → 22 (health 8.4/10)
+- `develop-cycle-hub` SKILL.md SE #31 박제 (cycle 251, window 231-250) + SE #32 박제 (cycle 252, window 232-251) — 명단 7개 동일 (fix-incident/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system), SE 점유율 35% < 40% → 마커 설정 후 retro 재평가 skip (자기조정). N=12 batch (251-262) 진행 중
+- wiki lint CLEAN (cycle 254 curate) — 119 entries, orphan/stale/isolated/JIT-unused 0건, pattern candidate 'drift' 이미 승격
+- dashboard `closed-loop-health` cycle 250 → 254 갱신
+- TODOS.md `[P0] R6 대기` BRANCHED N=21 (local 46개 ahead, origin 4개 ahead — cycles 222-253)
+
+## [0.5.9] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 246 → 250 갱신 — skill-evolution=8/curate=6/review-code=4/explore-idea=1/unknown=1 (window 230-249). SE #29 마커 설정 (35% < 40%) → SE #30 skip (window 재평가 40% ≥ 40% 자기조정). wiki 119 entries CLEAN
+- wiki lint CLEAN 확인 (cycle 250 curate) — 119 entries, orphan/stale/isolated 0건, scan-promotions 승격 대상 없음
+- memory 업데이트 — project_develop_cycle_skill_family (N=50 batch 후반, zero-touch 249+ 검증, SE #30 박제)
+- TODOS.md `[P0] R6 대기` BRANCHED N=17 → N=18 (local 40개 ahead cycles 222-249)
+
+### Fixed
+- cycle 247 review-code — og/route category reports 누락 + font 404 guard + catGrid 5×2 레이아웃 + 주석 10 카테고리 정렬 fix (PR `aa639f9`)
+
+## [0.5.8] — 2026-05-08
+
+### Fixed
+- dashboard `closed-loop-health` `reports` 카테고리 부제목 누락 (`CATEGORY_SUBS` 미등록 → 빈 칸) — `reports: "회고 / 리포트"` 추가 (cycle 245 fix)
+
+### Changed
+- dashboard `closed-loop-health` cycle 244 → 246 갱신 — skill-evolution=8/curate=7/review-code=4/explore-idea=1 (window 227-246). Trigger-5 SE #28 skip 지속 (명단 동일 4회 연속 + SE 점유율 40% ≥ 40%). wiki 119 entries CLEAN
+- wiki lint CLEAN 확인 (cycle 246 curate) — 119 entries, 중복 의심 2쌍 의미 분리 확인 (llm-fine-tuning × 2, frontend-ai personalized/powered × 2)
+- memory 업데이트 — project_bidirectional_compound_growth_goal (zero-touch 245+ 검증) + project_develop_cycle_skill_family (cycle 246 진행 중, SE #28 박제)
+
+## [0.5.7] — 2026-05-08
+
+### Changed
+- dashboard `closed-loop-health` cycle 241 → 244 갱신 — skill-evolution=9/curate=7/review-code=3/explore-idea=1 (window 225-244). Trigger-5 SE #28 skip 룰 지속 적용 (명단 동일 3회 연속 + SE 점유율 45%). wiki 119 entries CLEAN (orphan/stale/isolated 0건)
+- wiki lint CLEAN 확인 (cycle 244 curate) — 119 entries, pattern candidate 0건 신규, scan-promotions 승격 대상 없음
+
+## [0.5.6] — 2026-05-08
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물여덟 번째 발화 (N=28) 박제 — cycle 241 Trigger-5 (직전 20 cycle 221-240, 0회 chain 7개: fix-incident/polish-ui/worker-incident-triage/closed-loop-design/dimension-cycle/expand-scope/design-system). **신규 룰 첫 적용**: 명단 SE #27 동일 (2회 연속) + SE 점유율 55% ≥ 40% → 마커 skip (무한 SE 루프 자가 차단 메커니즘 추가). 다음 마커 재개 = 명단 변화 감지 시. zero-touch 63+→241+ cycle 검증
+- `develop-cycle-hub` SKILL.md 스물일곱 번째 발화 (N=27) 박제 — cycle 240 Trigger-5 (직전 20 cycle 220-239, 0회 chain 7개 → worker-incident-triage 재진입). 명단 변화 6→7개 (cycle 219 window 대비). zero-touch 63+→240+ cycle 검증
+- dashboard `closed-loop-health` cycle 238 → 241 갱신 — skill-evolution=12/curate=5/review-code=2/explore-idea=1 (window 222-241), trigger-5 SE #28 skip 룰 반영
+
+## [0.5.5] — 2026-05-08
+
+### Added
+- `content/harness-engineering/zero-touch-develop-cycle-session-management.mdx` 신규 entry (cycle 237 explore-idea) — zero-touch 자동 fire 세션 관리 패턴: watch.sh + launchd + tmux claude-hub 구조, FIRE_PENDING 해소 프로토콜, session 수명 관리
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물여섯 번째 발화 (N=26) 박제 — cycle 238 Trigger-5 (직전 20 cycle 217-236, 0회 chain 6개: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). explore-idea 명단 탈퇴 (cycle 237 activation, 28 사이클 만의 발화). zero-touch 63+→238+ cycle 검증
+- `review-code` cycle 236 — health 10.0/10 CLEAN 4회 연속 (cycles 233~236)
+- dashboard `closed-loop-health` cycle 234 → 238 갱신 — retro-only 0%, skill-evolution=11/curate=5/explore-idea=1/review-code=1 분포, 0회 chain 6개
+
+## [0.5.4] — 2026-05-08
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물다섯 번째 발화 (N=25) 박제 — cycle 234 Trigger-5 (직전 20 cycle 214-233, 0회 chain 7개 명단 3회 연속 동일: fix-incident/explore-idea/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). 항구화 완전 확정. zero-touch 63+→234+ cycle 검증
+- `review-code` cycle 233 — `isRoadmapLink()` 헬퍼 추출 (knowledge-graph.tsx 7줄 중복 제거) + STATUS/BADGE/FILL/SOURCE_CLASS 모듈 레벨 호이스트 (dashboard/page.tsx per-render 생성 제거)
+- dashboard `closed-loop-health` cycle 231 → 234 갱신 — retro-only 0%, skill-evolution=11/curate=5/review-code=2 분포, 0회 chain 7개, meta-pattern 18건
+
+## [0.5.3] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물세·스물네 번째 발화 (N=23/24) 박제 — cycles 230/231 연속 Trigger-5 (직전 20 cycle 210-229/211-230, 0회 chain 7개 명단 — explore-idea 신규 진입 (N=23) 후 2회 연속 동일 안정 확인). zero-touch 63+→231+ cycle 검증
+- dashboard `closed-loop-health` cycle 228 → 231 갱신 — retro-only 0%, skill-evolution=11/curate=6 분포, 0회 chain 7개
+
+## [0.5.2] — 2026-05-07
+
+### Changed
+- `develop-cycle-hub` SKILL.md 스물 번째·스물한·스물두 번째 발화 (N=20/21/22) 박제 — cycles 226/227/228 연속 Trigger-5 (직전 20 cycle 206-225/207-226/208-227, 0회 chain 6개 명단 7회 연속 동일: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). zero-touch 63+→228+ cycle 검증
+- dashboard `closed-loop-health` cycle 224 → 228 갱신 — retro-only 0%, curate=7/skill-evolution=9 분포 (cycle 229)
+
+## [0.5.1] — 2026-05-07
+
+### Added
+- `silver-autopilot` 워커 신규 등록 + Cloudflare cron 연동 (UTC 16:00 = KST 01:00)
+
+### Changed
+- `develop-cycle-hub` SKILL.md 열일곱·열여덟·열아홉 번째 발화 (N=17/18/19) 박제 — cycles 222/223/224 연속 Trigger-5 (직전 20 cycle 202-221/203-222/204-223, 0회 chain 6개 명단 4회 연속 동일: fix-incident/polish-ui/closed-loop-design/dimension-cycle/expand-scope/design-system). dormancy 완전 안정. zero-touch 63+→224+ cycle 검증
+- `generate-lesson.mjs` 641→619줄 스테일 주석 정리 (cycle 221 review-code)
+- dashboard `closed-loop-health` cycle 219 → 224 갱신 — retro-only 0%, curate=7/skill-evolution=6 분포 (cycle 225)
+
 ## [0.5.0] — 2026-05-07
 
 ### Changed

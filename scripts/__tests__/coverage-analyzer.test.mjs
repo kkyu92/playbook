@@ -128,7 +128,7 @@ describe("analyzeCoverage — balance", () => {
 describe("analyzeCoverage — category status", () => {
   it("status: empty/low/ok/over 분류", () => {
     // target 계산: counts=[0,10,10,10,...], median 의 floor
-    // 9 카테고리 중 harness 10개, 나머지 0 → counts=[0,0,0,0,0,0,0,0,10] (sorted)
+    // 10 카테고리 중 harness 10개, 나머지 0 → counts=[0,0,0,0,0,0,0,0,0,10] (sorted)
     // median = 0 → max(8, 0) = 8
     const entries = Array(10).fill(0).map(() => makeEntry("harness-engineering"));
     const result = analyzeCoverage({ entries });

@@ -93,9 +93,9 @@
   font-size: 11px; color: var(--d-muted);
 }
 
-/* Category gauge grid — 3×3 for 9 categories */
+/* Category gauge grid — 5×2 for 10 categories */
 .catGrid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
 }
 .catCard {
   background: var(--d-surface-2); border-left: 2px solid var(--d-border);

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 // /lint 의 결정론적 검사 부분.
 // 의미 판단 (중복 감지, 패턴 → wiki 승격 권장) 은 Claude 가 /lint 호출 시 추가로 수행.
@@ -26,16 +27,6 @@ function loadNoiseTags() {
 }
 const NOISE_TAGS = loadNoiseTags();
 
-function findMdxFiles(dir) {
-  const results = [];
-  if (!fs.existsSync(dir)) return results;
-  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, item.name);
-    if (item.isDirectory()) results.push(...findMdxFiles(full));
-    else if (item.name.endsWith(".mdx")) results.push(full);
-  }
-  return results;
-}
 
 function loadEntries() {
   return findMdxFiles(CONTENT_DIR).map((filePath) => {
@@ -74,16 +65,13 @@ function checkIsolated(entries) {
 }
 
 function checkStale(entries) {
-  return entries
-    .filter((e) => {
-      const conf = e.frontmatter.confidence || 1;
-      return conf < 3 && daysSince(e.frontmatter.date) > STALE_DAYS;
-    })
-    .map((e) => ({
-      slug: e.slug,
-      confidence: e.frontmatter.confidence || 1,
-      days: daysSince(e.frontmatter.date),
-    }));
+  const results = [];
+  for (const e of entries) {
+    const conf = e.frontmatter.confidence || 1;
+    const days = daysSince(e.frontmatter.date);
+    if (conf < 3 && days > STALE_DAYS) results.push({ slug: e.slug, confidence: conf, days });
+  }
+  return results;
 }
 
 function checkPatterns(entries) {
@@ -109,9 +97,13 @@ function checkPatterns(entries) {
 
 function checkInProgressOldEntries(entries) {
   // status: in-progress 인 채로 오래된 entry — 보강 또는 status 변경 후보
-  return entries
-    .filter((e) => e.frontmatter.status === "in-progress" && daysSince(e.frontmatter.date) > STALE_DAYS)
-    .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date) }));
+  const results = [];
+  for (const e of entries) {
+    if (e.frontmatter.status !== "in-progress") continue;
+    const days = daysSince(e.frontmatter.date);
+    if (days > STALE_DAYS) results.push({ slug: e.slug, days });
+  }
+  return results;
 }
 
 function checkUnusedEntries(entries) {

@@ -2,12 +2,12 @@
 
 코드 게이트 승격: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07, cycle 141)
 
-## 종합 (3건, 최종 갱신 2026-05-07)
+## 종합 (5건, 최종 갱신 2026-05-12)
 
-- **재발 횟수**: 7건+ (notify-workers 계열 4건 + billing-block 3 레포)
+- **재발 횟수**: 14건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
 - **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
-- **마지막 발생**: 2026-05-07 (billing block 3 레포 동시 차단)
+- **마지막 발생**: 2026-05-12 (PR #418/#421 — Next.js 16.2.3 audit failure, push 후 자동 해결 예정)
 
 ### 주요 교훈 요약
 
@@ -16,6 +16,8 @@
 | 1 | heredoc EOF yaml indent 충돌 — bash heredoc 종료 토큰 미인식 | heredoc 폐기 → multi-line string 대체 | 3회 재발 |
 | 2 | guard skip cascade 갭 — 후속 step 이 guard output 체크 누락 | 모든 후속 step if 조건에 guard chain 명시 | 2회 재발 |
 | 3 | Billing block — LLM 에이전트 자동화로 Private repo 2,000 min/월 소진 | Public 전환 (즉시) 또는 spending limit 상향 | 1회 (3 레포 동시) |
+| 4 | moneyball silent-drift.test.ts MockResult<T> type — discriminated union 강화로 `{ value }` 형식 무효화 | `type: 'return'` 필드 추가. 워커 PR fix 필요 (R6 외부 레포) | 6회 재발 (2026-05-08 단일 세션 4건) |
+| 5 | PR branch old-base audit failure — BRANCHED 상태에서 security patch 미push, PR branch 가 구버전 가져감 | local main 즉시 push (R6). 장기: security patch 후 즉시 batch push 권장 | 1회 (PR #418/#421, 2026-05-12) |
 
 ### 메타 패턴
 
@@ -30,6 +32,8 @@
 1. [2026-05-01 — notify-workers heredoc EOF gap](2026-05-01-notify-workers-heredoc-eof-gap.md) — heredoc 3회 재발
 2. [2026-05-02 — notify-workers guard skip cascade](2026-05-02-notify-workers-guard-skip-cascade-gap.md) — guard chain 2회 재발
 3. [2026-05-07 — billing block all workflows](2026-05-07-billing-block-all-workflows-blocked.md) — 3 레포 동시 차단
+4. [2026-05-08 — moneyball silent-drift MockResult<T> type](2026-05-08-moneyball-silent-drift-mockresult-type.md) — 6건 재발 (cycle 266/268)
+5. [2026-05-12 — PR branch old-base audit failure](2026-05-12-pr-branch-old-base-audit-failure.md) — BRANCHED + security patch 미push 조합 (cycle 303)
 
 ## 승격 후보 분석
 

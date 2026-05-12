@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const OUTPUT_FILE = path.join(
@@ -51,21 +52,6 @@ const REGISTERED = loadRegisteredWorkers();
 const REGISTERED_WORKERS = REGISTERED?.names || null;
 const REGISTERED_SOURCE = REGISTERED?.source || null;
 
-function findMdxFiles(dir) {
-  const results = [];
-  if (!fs.existsSync(dir)) return results;
-
-  const items = fs.readdirSync(dir, { withFileTypes: true });
-  for (const item of items) {
-    const fullPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      results.push(...findMdxFiles(fullPath));
-    } else if (item.name.endsWith(".mdx")) {
-      results.push(fullPath);
-    }
-  }
-  return results;
-}
 
 function validateFrontmatter(data, filePath) {
   const errors = [];
@@ -217,8 +203,8 @@ function main() {
     }
   }
 
-  // Calculate streak
-  const dates = [...new Set(entries.map((e) => e.frontmatter.date))].sort().reverse();
+  // Calculate streak — sorted ascending; .at(-1) = most recent
+  const dates = [...new Set(entries.map((e) => e.frontmatter.date))].sort();
   let currentStreak = 0;
   let longestStreak = 0;
 
@@ -230,7 +216,7 @@ function main() {
     let checkDate = new Date(today);
     const todayStr = checkDate.toISOString().split("T")[0];
     if (!dateSet.has(todayStr)) {
-      checkDate = new Date(dates[0]);
+      checkDate = new Date(dates.at(-1));
       checkDate.setHours(0, 0, 0, 0);
     }
 
@@ -245,10 +231,9 @@ function main() {
     }
 
     let streak = 1;
-    const sortedDates = [...dates].sort();
-    for (let i = 1; i < sortedDates.length; i++) {
-      const prev = new Date(sortedDates[i - 1]);
-      const curr = new Date(sortedDates[i]);
+    for (let i = 1; i < dates.length; i++) {
+      const prev = new Date(dates[i - 1]);
+      const curr = new Date(dates[i]);
       const diffDays = (curr - prev) / (1000 * 60 * 60 * 24);
       if (diffDays === 1) {
         streak++;

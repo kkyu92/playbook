@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Scan raw-sources and build report
         id: scan
@@ -53,20 +53,28 @@ jobs:
             raw_id=$(basename "$raw_path" .md)
             [ -z "$raw_id" ] && continue
 
-            # A0-5 — frontmatter intent 추출 (test/debug → terminal state, scan 제외)
-            intent=$(awk '
+            # A0-5 — frontmatter 추출 (intent=test/debug + payload_type=incident → scan 제외)
+            fm_intent=$(awk '
               /^---$/ { block++; next }
               block == 1 && /^intent:/ {
                 sub(/^intent:[[:space:]]*/, "");
                 gsub(/"/, "");
                 gsub(/^[[:space:]]+|[[:space:]]+$/, "");
-                print;
-                exit
+                print; exit
               }
             ' "$raw_path")
-            if [ "$intent" = "test" ] || [ "$intent" = "debug" ]; then
+            fm_payload_type=$(awk '
+              /^---$/ { block++; next }
+              block == 1 && /^payload_type:/ {
+                sub(/^payload_type:[[:space:]]*/, "");
+                gsub(/"/, "");
+                gsub(/^[[:space:]]+|[[:space:]]+$/, "");
+                print; exit
+              }
+            ' "$raw_path")
+            if [ "$fm_intent" = "test" ] || [ "$fm_intent" = "debug" ] || [ "$fm_payload_type" = "incident" ]; then
               SUPPRESSED=$((SUPPRESSED + 1))
-              echo "skip (intent=$intent): $raw_path"
+              echo "skip (intent=$fm_intent, payload_type=$fm_payload_type): $raw_path"
               continue
             fi
 

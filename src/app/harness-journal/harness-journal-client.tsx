@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export interface JournalEntry {
+interface JournalEntry {
   slug: string;
   episode: number;
   frontmatter: {

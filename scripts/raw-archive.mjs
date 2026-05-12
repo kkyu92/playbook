@@ -8,6 +8,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const RAW_DIR = path.join(process.cwd(), "raw-sources");
 const ARCHIVE_DIR = path.join(RAW_DIR, "_archive");
@@ -25,22 +26,14 @@ function listRawFiles() {
 function listEntryRawSources() {
   // content/**/*.mdx frontmatter raw_source field 모음
   const refs = new Set();
-  function walk(dir) {
-    if (!fs.existsSync(dir)) return;
-    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
-      const p = path.join(dir, ent.name);
-      if (ent.isDirectory()) walk(p);
-      else if (ent.name.endsWith(".mdx")) {
-        try {
-          const fm = matter(fs.readFileSync(p, "utf-8")).data;
-          if (fm.raw_source) refs.add(path.basename(fm.raw_source));
-        } catch (err) {
-          console.warn(`⚠️ raw-archive: MDX parse failed at ${p}: ${err.message?.slice(0, 200)}`);
-        }
-      }
+  for (const p of findMdxFiles(CONTENT_DIR)) {
+    try {
+      const fm = matter(fs.readFileSync(p, "utf-8")).data;
+      if (fm.raw_source) refs.add(path.basename(fm.raw_source));
+    } catch (err) {
+      console.warn(`⚠️ raw-archive: MDX parse failed at ${p}: ${err.message?.slice(0, 200)}`);
     }
   }
-  walk(CONTENT_DIR);
   return refs;
 }
 

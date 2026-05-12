@@ -13,6 +13,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   "frontend-ai": "#ffa07a",
   "project-ops": "#ff6348",
   "data-engineering": "#ff69b4",
+  reports: "#9ca3af",
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -25,6 +26,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "frontend-ai": "Frontend + AI",
   "project-ops": "Project Ops",
   "data-engineering": "Data Engineering",
+  reports: "Reports",
 };
 
 export async function GET(req: NextRequest) {
@@ -43,6 +45,7 @@ export async function GET(req: NextRequest) {
     const fontUrlMatch = css.match(/url\(([^)]+)\)/);
     if (fontUrlMatch) {
       const fontDataRes = await fetch(fontUrlMatch[1]);
+      if (!fontDataRes.ok) throw new Error(`Font CDN ${fontDataRes.status}`);
       font = await fontDataRes.arrayBuffer();
     }
   } catch (err) {
