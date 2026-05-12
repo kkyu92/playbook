@@ -4,6 +4,27 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.32] — 2026-05-12
+
+### Fixed
+- auto-ingest concurrent dispatch add/add 충돌 버그 수정 — `push_main_with_retry` rebase 충돌 시 origin 파일 존재 체크 + safe skip (cycle 354, commit `708be8f`, issue #519 close)
+- use-leaderboard.ts `setState in useEffect` 8차 재발 close + **lazy init 근본 패치** — moneyball main `44947fd` push (cycle 353 worker-incident-triage, 처음으로 close+fix 동시)
+- moneyball CI 3건 batch triage close — #518/#516/#515 (cycle 354)
+
+### Changed
+- skill-evolution SE #69/#70/#71 연속 3회 (cycles 351/352/355) — stage 3 evidence 갱신, zero-touch 64+→354+ 검증
+- retro 350-355 박제 (`docs/retros/2026-05-12-cycles-350-355.md`)
+- TODOS.md 갱신 — BRANCHED P0 (local 31 / origin 29), use-leaderboard P0 → monitoring (근본 수정 완료)
+- memory 2건 갱신: `project_develop_cycle_skill_family` + `project_bidirectional_compound_growth_goal` — cycle 356 기준
+
+### Metrics
+- zero-touch 자동화: cycle 49~355 = **307 사이클** 검증 완료 (N=28 batch 336~363 진행 중, 20/28 완료)
+- wiki entries: **144** (lint CLEAN 유지, 전항목 0건)
+- skill-evolution 누적: **71회** (SE #71, cycle 355)
+- BRANCHED 지속: local 31 / origin 29 (R6 사용자 결정 영역 — 충돌 없음 확인)
+- open hub-dispatch issues: **0건**
+- P0 use-leaderboard: 모니터링 중 (8차 재발 후 근본 수정, 신규 CI 실패 없음)
+
 ## [0.5.31] — 2026-05-12
 
 ### Fixed

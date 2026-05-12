@@ -1,21 +1,19 @@
 # TODOS
 
-## [P0] moneyball use-leaderboard.ts 미수정 — CI 매번 차단 (cycle 350 갱신, 7차 재발)
+## [P0-monitoring] moneyball use-leaderboard.ts lazy init 패치 반영 — 모니터링 중 (cycle 356 갱신, 8차 재발 후 근본 수정)
 
-**상태**: `apps/moneyball/src/lib/leaderboard/use-leaderboard.ts:75` — `setNickname(readNickname())` in `useEffect` 미수정. 매 moneyball push 시 ESLint `react-hooks/set-state-in-effect` 로 CI 차단.
-**재발**: 7차 (cycle 348 #503/#504/#505 close → 미수정 → cycle 350 #507/#508/#509 신규 발생)
-**수정법** (moneyball 세션에서):
-```ts
-// 현재 (❌): useEffect(() => { setNickname(readNickname()); }, []);
-// 수정 (✅): const [nickname, setNickname] = useState(() => readNickname());
-```
-**Effort**: XS (1줄 변경)
+**상태**: cycle 353에서 **근본 수정 완료** — moneyball main에 lazy init 패치 직접 push (commit `44947fd`).
+`useState(() => readNickname())` 패턴으로 교체 완료. **8차 재발 이후 신규 CI 실패 없음** (cycle 354/355/356 진단 기준).
+**이력**: 7차 (cycle 350 #507/#508/#509) → 8차 (cycle 353 #511/#512/#513, close+fix 동시) → 이후 모니터링 중
+**해소 조건**: cycle 356 이후 2회 이상 moneyball push에서 CI PASS 확인 시 DONE으로 이동
 **Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
 
-## [P0] git BRANCHED — local/origin diverge 해소 (cycle 352 갱신, R6 사용자 영역)
+## [P0] git BRANCHED — local/origin diverge 해소 (cycle 356 갱신, R6 사용자 영역)
 
-**상태**: local main: 26커밋 ahead (cycles 336-352), origin main: 24커밋 ahead (moneyball auto-ingest + daily-ingest)
-**검출**: 2026-05-12 cycle 351 진단 (`git rev-list --left-right --count origin/main...main` = `20	25`)
+**상태**: local main: **31커밋 ahead** (cycles 336-355 + auto-ingest), origin main: **29커밋 ahead** (moneyball auto-ingest + daily-ingest)
+**검출**: 2026-05-12 cycle 356 진단 (`git rev-list --left-right --count origin/main...main` = `29	31`)
+**충돌 여부**: `git merge --no-ff origin/main` 자동 성공 확인됨 (충돌 없음)
+**원인**: cycle 354 push race fix (708be8f)가 local에만 반영됨. BRANCHED로 인해 origin auto-ingest.yml은 구버전 유지 중 → GH Actions push race 재발 (2026-05-12 08:39:13 failure).
 **이전 해소**: cycle 333 `git merge origin/main + git push origin main` ✅ → 이후 재발
 **해소 방법** (R6 사용자 직접):
 ```bash
