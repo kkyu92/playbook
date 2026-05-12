@@ -142,16 +142,16 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       const isDangling = !isRoadmap && node.confidence === 0;
       const rawBase = isRoadmap ? 3.5 : isDangling ? 3 : 4 + (node.confidence || 0) * 1.2;
       const baseSize = Number.isFinite(rawBase) && rawBase > 0 ? rawBase : 4;
-      const size = isHovered || isHighlighted ? baseSize * 1.5 : baseSize;
+      const isActive = isHovered || isHighlighted;
+      const size = isActive ? baseSize * 1.5 : baseSize;
 
       const opacity = isDimmed ? 0.15 : isRoadmap ? 0.55 : 1;
 
       ctx.globalAlpha = opacity;
 
-      // Glow effect
       if (!isDangling && !isRoadmap) {
         const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, size + 6);
-        grad.addColorStop(0, `${color}${isHovered || isHighlighted ? "80" : "30"}`);
+        grad.addColorStop(0, `${color}${isActive ? "80" : "30"}`);
         grad.addColorStop(1, `${color}00`);
         ctx.beginPath();
         ctx.arc(node.x, node.y, size + 6, 0, Math.PI * 2);
@@ -159,7 +159,6 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         ctx.fill();
       }
 
-      // Highlight ring
       if (isHighlighted && !isDangling && !isRoadmap) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, size + 4, 0, Math.PI * 2);
@@ -168,7 +167,6 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         ctx.stroke();
       }
 
-      // Node circle
       ctx.beginPath();
       ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
       if (isRoadmap) {
@@ -192,10 +190,6 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         ctx.fill();
       }
 
-      // Label — 줌 레벨 + 호버/하이라이트 기반으로만 표시
-      // - 줌 인 (globalScale ≥ 1.8): 모든 라벨 표시 (roadmap은 2.2부터)
-      // - 줌 아웃 (< 1.8): 호버 / 하이라이트 / 큰 노드(confidence ≥ 4) 만 표시
-      // - dangling은 호버 시만
       const isImportant = !isDangling && !isRoadmap && node.confidence >= 4;
       const showLabel =
         isHovered ||
@@ -205,18 +199,17 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
         (globalScale >= 2.0 && isImportant);
 
       if (showLabel) {
-        const fontSize = (isHovered || isHighlighted ? 13 : 11) / Math.max(globalScale, 1);
-        ctx.font = `${isHovered || isHighlighted ? "bold " : ""}${fontSize * globalScale}px Pretendard Variable, sans-serif`;
+        const fontSize = (isActive ? 13 : 11) / Math.max(globalScale, 1);
+        ctx.font = `${isActive ? "bold " : ""}${fontSize * globalScale}px Pretendard Variable, sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
 
-        // Truncate long labels (한국어 24자 기준)
-        const maxLen = isHovered || isHighlighted ? 60 : 24;
+        // 24자 기준: 한국어 한 줄 가독성
+        const maxLen = isActive ? 60 : 24;
         const labelText =
           node.label.length > maxLen ? node.label.slice(0, maxLen - 1) + "…" : node.label;
 
-        // Subtle background for legibility (호버/하이라이트 시만)
-        if (isHovered || isHighlighted) {
+        if (isActive) {
           const metrics = ctx.measureText(labelText);
           const padX = 6;
           const padY = 3;
@@ -231,7 +224,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
 
         ctx.fillStyle = isDimmed
           ? "rgba(232,232,237,0.25)"
-          : isHovered || isHighlighted
+          : isActive
           ? "#ffffff"
           : isRoadmap
           ? "rgba(232,232,237,0.4)"
