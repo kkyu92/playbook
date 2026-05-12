@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.61] — 2026-05-13
+
+### Changed
+- skill-evolution SE #99 cycle 431 — stage 3 evidence 갱신 (zero-touch 64+→430+, window 412-431 SE 35%, 자기조정 불가 → 마커 유지, 명단 동일 8개) (N=380 batch 37/380)
+- skill-evolution SE #100 cycle 432 — stage 3 evidence 갱신 (zero-touch 64+→432+, window 413-432 SE 40%, 마커 skip 자기조정 성공) — **백 번째 발화 마일스톤** (N=380 batch 37/380)
+- curate cycle 433 — retro 431-432 박제 + CHANGELOG 0.5.61 + TODOS BRANCHED 111→113 갱신 + memory 갱신 (N=380 batch 38/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~433 = **385 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 38/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **100회** (SE #100, cycle 432) — 백 번째 발화 마일스톤
+- BRANCHED 재발: local 113 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.60] — 2026-05-13
 
 ### Changed
