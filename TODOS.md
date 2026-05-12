@@ -1,6 +1,6 @@
 # TODOS
 
-## [P0] moneyball CI lint 수정 필요 (cycle 322 worker-incident-triage carry-over)
+## [DONE 2026-05-12] moneyball CI lint 수정 (cycle 307 moneyball 세션 처리 — issue #298 CLOSED)
 
 **What**: `apps/moneyball/src/app/accuracy/page.tsx` 미사용 imports 3줄 삭제
 **Why**: ESLint `no-unused-vars` — `Metadata`(line 1), `DayBucket/WeekBucket/RecentForm`(lines 11-13), `SITE_URL`(line 24) 미사용. cycle 296 리팩터(PR #285) 후 잔존. PR #287 머지 후 main CI 차단 (issues #441/#442/#443 → 트리아지 close 5-12) + moneyball cycle 299 picks-polish PR #288 머지 후 재발 (issues #445/#446/#447 → 트리아지 close 5-12) + 추가 13건 (issues #448-#464 → 트리아지 close 5-12 cycle 322) + picks-polish-ui 3건 (issues #466/#467/#468 → 트리아지 close 5-12 cycle 326, transient retry 성공)
@@ -22,7 +22,7 @@
 **자율 처리 한계**: cycle 29 partial — raw 파일 backfill (#179) + close 만 자율, code fix 사용자 PR 후속
 **Reference**: cycle 29 cycle_state + run #25323381271 fail log
 
-## [P1] 워커 trends.ts pickQueue test fix (cycle 26 worker-incident-triage carry-over)
+## [DONE 2026-05-12] 워커 trends.ts pickQueue test fix — PR #87 생성 (blog-autopilot)
 
 **What**: `src/lib/trends.ts:361` `JSON.parse(raw)` undefined guard + `src/lib/__tests__/trends.test.ts` pickQueue 2 test 5000ms timeout 원인 fix
 **Why**: cycle 26 진단 — issue #171 (main CI fail 9baae1a) root cause 가 본 fix. SKILL.md 머지가 노출 trigger 일 뿐, pre-existing main CI broken 상태. 워커 local 339 test vs main 358 test = local stale 상태 (PR #66 self-verify 시 main pull 안 함)
