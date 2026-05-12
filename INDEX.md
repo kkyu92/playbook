@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-12T05:05:05.274Z
+Updated: 2026-05-12T05:15:53.920Z
 
 ## 엔트리 (143개)
 
@@ -90,7 +90,7 @@ Updated: 2026-05-12T05:05:05.274Z
 - [Playbook Journal 028 — cycle 60 — fancy-stats.ts silent fallback risk (SFR=0/wOBA=0.320/FIP=4.00/Elo=1500)](wiki/journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0) — confidence: 3, status: in-progress
 - [Playbook Journal 029 — lesson-pending false-positive 잔존 batch close 패턴](wiki/journal/playbook-journal-029-lesson-pending-false-positive-batch-close) — confidence: 4, status: complete
 - [Playbook Journal 030 — 신규 페이지 3사이클 cleanup 패턴 + confidence 역전 + 일요일 취약 + h2h 노이즈 박제](wiki/journal/playbook-journal-030-3-cleanup-confidence-h2h) — confidence: 3, status: in-progress
-- [Playbook Journal 031 — W20 모델 성과 분석 — 일요일 20% + calibration 역전 심화 (cycle 308)](wiki/journal/playbook-journal-031-w20-20-calibration-cycle-308) — confidence: 3, status: in-progress
+- [Playbook Journal 032 — Sunday confidence cap — judge-agent 일요일 과적합 방지 (cycle 309)](wiki/journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 
