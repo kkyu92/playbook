@@ -2,11 +2,11 @@
 title: "Playbook Journal 029 — lesson-pending false-positive 잔존 batch close 패턴"
 category: harness-engineering
 date: "2026-05-11"
-tags: [playbook-journal, auto-ingest, lesson, moneyball]
-confidence: 3
+tags: [playbook-journal, auto-ingest, lesson, moneyball, github-actions, incident-management]
+confidence: 4
 connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/recurring-file-bug-accumulator-pattern]
-status: in-progress
-description: "자동 수집: lesson-pending false-positive 잔존 batch close 패턴 (from kkyu92/moneyballscore)"
+status: complete
+description: "CI 워크플로우 버그 수정 후 fix 범위가 루트 원인 범위보다 좁을 때 발생하는 잔존 이슈 패턴과 일괄 정리 체크리스트"
 type: entry
 series: playbook-journal
 raw_source: "raw-sources/20260511-lesson-pending-false-positive-batch-close-2e3b50c1cf23e426c77ae9b3919f52.md"
@@ -48,12 +48,50 @@ fix-incident 종료 시 lesson-pending 이슈 전체 범위 scan → 근본 원�
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+**핵심 패턴: "fix 범위 < 루트 원인 범위"**
+
+이 사건은 fix-incident 체인의 구조적 맹점을 드러낸다. 수정 커밋(cycle 282)이 특정 이슈 번호 9건(`#268-277`)을 명시적으로 close 하면서, 같은 루트 원인(submit-lesson grep pipefail)에서 파생된 더 오래된 25건(`#242-267`)은 닫히지 않았다.
+
+**시간 흐름 재구성**:
+```
+2026-05-07~08: grep pipefail 버그 → 비-lesson 커밋 CI 실패 burst
+   ↓ (3일 지연)
+incident-followup.yml: #268-277 lesson-pending 리마인더 9건 자동 생성
+   ↓
+cycle 282 fix-incident: #268-277 close + || true 1라인 fix
+   ↓ (잔존)
+#242-267 이전 25건: 루트 원인 동일이지만 retro 명시 범위 밖 → 잔존
+   ↓
+cycle 285: full scan → 25건 일괄 close
+```
+
+**왜 좁게 잡았나**: retro 시점에 `gh issue list` 전체 스캔 없이 "이번 에러와 연관된 이슈" 를 가시적 범위에서만 식별했기 때문이다. incident-followup.yml 이 `lesson-pending` label 이슈를 배치 생성하는 패턴은 루트 원인 1개 → 이슈 N개를 만들어내므로, fix 시 전체 범위 스캔이 필수다.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+1. **fix-incident 완료 = 이슈 전체 범위 스캔까지** — `gh issue list --label lesson-pending --state open --limit 100` 로 전수 확인. "눈에 보이는 이슈" close = 불완전.
+
+2. **incident-followup 패턴은 루트 원인 배수 효과를 갖는다** — 자동 리마인더 워크플로우가 있으면 1개 버그 → N개 이슈 생성이 상시 가능. fix 시 생성 배율 인식 필요.
+
+3. **루트 원인 발생 시점 기반 false-positive 식별** — fix 커밋 HEAD가 적용된 이후 CI 실패 없음 확인 → 그 이전에 생성된 `lesson-pending` 이슈는 모두 false-positive로 간주 가능.
+
+4. **commit 메시지의 이슈 번호 명시 = 범위 선언이자 맹점** — `Closes #268-277` 은 범위를 선언하지만 암묵적으로 나머지를 제외한다. 명시 대신 label 기반 close 가 안전하다.
 
 ## 적용
 
-_TODO: 다음 액션_
+**다음 fix-incident 시 체크리스트**:
+
+```bash
+# 1. 관련 label 전체 open 이슈 스캔
+gh issue list --repo <repo> --state open --label lesson-pending --limit 100
+
+# 2. 루트 원인 커밋 이전 생성 이슈 식별
+# created_at < fix_commit_date 인 이슈 = false-positive 후보
+
+# 3. 일괄 close
+for issue_num in $(seq <start> <end>); do
+  gh issue close $issue_num --comment "루트 원인 cycle N에서 수정됨 (false-positive)"
+done
+```
+
+**허브 적용**: lesson-pending 아닌 label이더라도 `incident-followup.yml` 트리거 패턴이라면 동일 원칙 적용.
