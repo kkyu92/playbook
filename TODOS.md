@@ -1,11 +1,10 @@
 # TODOS
 
-## [P0-monitoring] moneyball use-leaderboard.ts lazy init 패치 반영 — 모니터링 중 (cycle 356 갱신, 8차 재발 후 근본 수정)
+## [DONE 2026-05-12] moneyball use-leaderboard.ts lazy init 패치 반영 — 모니터링 완료 (cycle 359)
 
-**상태**: cycle 353에서 **근본 수정 완료** — moneyball main에 lazy init 패치 직접 push (commit `44947fd`).
-`useState(() => readNickname())` 패턴으로 교체 완료. **8차 재발 이후 신규 CI 실패 없음** (cycle 354/355/356 진단 기준).
-**이력**: 7차 (cycle 350 #507/#508/#509) → 8차 (cycle 353 #511/#512/#513, close+fix 동시) → 이후 모니터링 중
-**해소 조건**: cycle 356 이후 2회 이상 moneyball push에서 CI PASS 확인 시 DONE으로 이동
+**상태**: ✅ DONE — cycle 359 진단 기준 moneyball CI 지속 PASS (cycles 323-326 CI PASS 확인).
+CI Failure Dispatch = skipped (실패 없음). 해소 조건 충족 (cycle 356 이후 4회+ CI PASS).
+**이력**: 7차 (cycle 350) → 8차 (cycle 353, close+fix 동시, commit `44947fd`) → 이후 신규 실패 없음
 **Solution**: `docs/solutions/react/2026-05-07-navlinks-setstate-in-useeffect-eslint.md`
 
 ## [P0] git BRANCHED — local/origin diverge 해소 (cycle 359 갱신, R6 사용자 영역)
