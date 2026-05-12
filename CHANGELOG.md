@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.27] — 2026-05-12
+
+### Changed
+- SKILL.md stage 3 evidence SE #61/62 (2회 연속 갱신 — cycles 329/330) — window 309-328/310-329, 0회 chain 8개 (SE #61/62 모두 명단 동일 유지). SE #61: 자기조정 불가 (35% 연속). SE #62: window 311-330 재평가 SE 40% 자기조정 마커 skip 성공
+- TODOS.md `[P0] R6 대기` BRANCHED 갱신 — local **167개** ahead, origin **44개** ahead _(cycle 330 갱신)_
+- retro 327-330 박제 (`docs/retros/2026-05-12-cycles-327-330.md`)
+
+### Metrics
+- zero-touch 자동화: cycle 49~330 = **282 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 331/333)
+- wiki entries: **141** (lint CLEAN 유지, 전항목 0건)
+- BRANCHED 지속: local 167 / origin 44 (R6 사용자 결정 영역)
+- open hub-dispatch issues: 0건
+
 ## [0.5.26] — 2026-05-12
 
 ### Changed
