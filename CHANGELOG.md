@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.50] — 2026-05-13
+
+### Changed
+- review-code cycle 404 — simplify 3개 fix (existsSync hoist / inline walk DRY x2 / SOURCE_CSS_VAR lookup map) + health 10.0×15 + SE #28 skip (명단 동일 + SE 40%)
+- curate cycle 405 — retro 403-404 박제 + CHANGELOG 0.5.50 + TODOS BRANCHED 54→57 갱신 + memory 갱신 (N=380 batch 12/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~405 = **357 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 12/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **89회** (SE #89, cycle 402)
+- health 연속: **15회 10/10** (cycle 404 review-code 기준)
+- SE #28 skip: cycle 404 window 385-404 SE 40% + 명단 동일 6개 → 마커 skip 성공
+- BRANCHED 재발: local 57 ahead / origin 4 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+- TODOS P0: BRANCHED [P0] 재발 (R6 대기) + Journal 033 connections 위반 carry-over
+
 ## [0.5.49] — 2026-05-13
 
 ### Changed
