@@ -7,18 +7,7 @@
 **Fix**: 다음 moneyball 세션에서 3줄 삭제 → CI 자동 회복
 **Effort**: XS (5분)
 
-## [P0] R6 대기 — push 필요 (로컬 머지 완료, cycle 299)
-
-~~origin/main 과 local main 이 양방향 diverged.~~ **cycle 299 로컬 머지 완료** — `git merge origin/main` 성공 (INDEX.md 충돌 → manifest 재생성으로 해결, 133 entries).
-현재 상태: local **171개** ahead, origin **44개** ahead. _(cycle 333 갱신)_
-
-**✅ cycle 312**: PR #418, #421 신규 8 entries 로컬 통합 완료 (133→141 entries). push 후 PR 브랜치가 main에 포함되어 자동 close 가능.
-
-⚠️ **PR #418/#421 CI 차단**: `pnpm audit` high CVE (Next.js >=16.0.0 <16.2.5) — origin/main에 16.2.4 잔존, local에는 cycle 295 (commit `6fc4eaf`) 16.2.6 fix 존재. **R6 push 후 자동 해소** (PR 브랜치가 main에 포함 + CVE fix 반영).
-
-**다음 단계**: `git push origin main` (사용자 실행, R6 영역) → PR #418, #421 CI 해소 + 자동 close.
-
-**원인**: zero-touch push 정책 + 워커 자동 push 동시 진행 → 필연적 재발산. 로컬 머지로 1회 해소됨. push 후 재발산 방지는 배치 push 주기 단축 검토.
+- **[DONE 2026-05-12]** BRANCHED 해소 (cycle 333) → `git merge origin/main` + `git push origin main` (INDEX.md 141개 유지, 173 commits 배포, 0/0 동기화)
 
 ## [P1] auto-ingest.yml push race retry 강화 (cycle 29 fix-incident carry-over, R6 사용자 영역)
 
