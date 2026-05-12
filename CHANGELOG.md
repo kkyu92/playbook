@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.34] — 2026-05-12
+
+### Changed
+- worker-incident-triage cycle 362 — react `setState in useEffect` 9차 evidence (use-user-picks.ts, moneyball cycle 325 PR #316) → `docs/solutions/react/` 갱신
+- curate cycle 361 — retro 356-360 박제 + CHANGELOG 0.5.33 박제 + memory 갱신
+- **N=28 batch 336-363 완료** (총 28 사이클)
+
+### Metrics
+- zero-touch 자동화: cycle 49~362 = **314 사이클** 검증 완료 (N=28 batch **28/28 완료**)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **73회** (SE #73, cycle 360)
+- BRANCHED 지속: local 41 / origin 33 (R6 사용자 결정 영역)
+- open hub-dispatch issues: **0건**
+- react setState pattern: 9차 재발 추적 중 (use-user-picks lazy init 확산)
+
 ## [0.5.33] — 2026-05-12
 
 ### Fixed
