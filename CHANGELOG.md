@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.23] — 2026-05-12
+
+### Added
+- 8 new wiki entries via auto-ingest (PR #418 + #421) — wiki 133 → **141**
+  - PR #418 (20260510): `ai-agent-remote-management-ux`, `collaboration-conflict-resolution-multi-agent`, `claude-code-harness-component-visibility-ccinv`, `high-availability-llm-disaster-recovery`
+  - PR #421 (20260512): `kuku-concepts-playbook-local-markdown`, `generative-ai-hallucination-detection`, `llm-scalable-service-architecture`, `bifrost-ai-gateway-integration`
+  - domains: agents×3, harness-engineering×3, context-engineering×1, infrastructure×1
+
+### Metrics
+- zero-touch 자동화: cycle 49~312 = **264 사이클** 검증 완료 (N=40 batch 294~333 진행 중, cycle 313/333)
+- wiki entries: **141** (lint CLEAN, 전항목 0건)
+- embeddings: 994 chunks (cycle 312 갱신)
+- BRANCHED 지속: local 137 / origin 12 (R6 사용자 결정 영역)
+
 ## [0.5.22] — 2026-05-12
 
 ### Changed
