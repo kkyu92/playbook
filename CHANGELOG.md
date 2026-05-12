@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.37] — 2026-05-12
+
+### Changed
+- review-code cycle 369 — health 10/10 (5회 연속) + stale worktree 제거 (claude/serene-easley-b24ce9, cycle 85 이후 미사용)
+- curate cycle 370 — retro 368-369 박제 + memory 갱신 (N=30 batch 7/30)
+
+### Metrics
+- zero-touch 자동화: cycle 49~370 = **322 사이클** 검증 완료 (N=30 batch **7/30** 진행 중)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **76회** (SE #76, cycle 367)
+- BRANCHED 재발: local 8 ahead / origin 3 ahead (R6 사용자 영역)
+- open hub-dispatch issues: **0건**
+- TODOS P0: 전항목 DONE
+
 ## [0.5.36] — 2026-05-12
 
 ### Changed
