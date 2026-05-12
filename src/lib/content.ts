@@ -32,7 +32,6 @@ export function getAllSlugs(): string[] {
   return manifest.entries.map((e) => e.slug);
 }
 
-
 export interface SidebarEntry {
   slug: string;
   title: string;

@@ -1,4 +1,3 @@
-
 function getEnv(name: string, minLength: number): string {
   const value = process.env[name];
   if (!value || value.length < minLength) {
@@ -51,16 +50,21 @@ export async function verifyPassword(password: string): Promise<boolean> {
   return safeCompare(password, getAdminPassword());
 }
 
-export async function createToken(): Promise<string> {
-  const timestamp = Date.now().toString();
+async function importHMACKey(): Promise<CryptoKey> {
   const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
+  return crypto.subtle.importKey(
     "raw",
     encoder.encode(getAdminSecret()),
     { name: "HMAC", hash: "SHA-256" },
     false,
     ["sign"]
   );
+}
+
+export async function createToken(): Promise<string> {
+  const timestamp = Date.now().toString();
+  const key = await importHMACKey();
+  const encoder = new TextEncoder();
   const signature = await crypto.subtle.sign(
     "HMAC",
     key,
@@ -78,14 +82,8 @@ export async function verifyToken(token: string): Promise<boolean> {
     const age = Date.now() - parseInt(timestamp);
     if (age > 7 * 24 * 60 * 60 * 1000) return false;
 
+    const key = await importHMACKey();
     const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-      "raw",
-      encoder.encode(getAdminSecret()),
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["sign"]
-    );
     const expected = await crypto.subtle.sign(
       "HMAC",
       key,

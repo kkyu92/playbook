@@ -245,9 +245,9 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
   );
 
   const nodePointerAreaPaint = useCallback(
-    (node: { x: number; y: number; confidence?: number }, color: string, ctx: CanvasRenderingContext2D) => {
+    (node: GraphNode & { x: number; y: number }, color: string, ctx: CanvasRenderingContext2D) => {
       if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
-      const confidence = (node as GraphNode).confidence ?? 0;
+      const confidence = node.confidence ?? 0;
       const size = confidence === 0 ? 3 : 4 + confidence * 1.2;
       ctx.beginPath();
       ctx.arc(node.x, node.y, size + 6, 0, Math.PI * 2);
