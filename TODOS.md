@@ -6,6 +6,7 @@ origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택
 현재 상태: local **106개** ahead, origin **4개** ahead. (cycle 430 기준)
 - origin 4 commits: moneyball auto-ingest cycles 332-335 retro + Journal 033 (W21 모델 성과 분석)
 - local 106 commits: hub cycles 364-430 (+cycle 430 curate)
+- SE Trigger-5 마커 설정 (cycle 430) — cycle 431 SE #99 강제 발화 예정 (window 410-429 SE 30%<40%)
 - 해소 방법: `git merge origin/main && git push origin main` (push 정책 따라 사용자 직접 실행)
 - **직전 해소**: cycle 364 (merge `2808ce6`, 0	0 완전 동기 확인)
 - ⚠ 주의: Journal 033 MDX (`content/journal/playbook-journal-033-...mdx`) `connections: []` 위반 — BRANCHED 해소 후 connections 1개 이상 추가 필요 (CLAUDE.md 규칙). 신규 journal은 fallback connection으로 위반 방지 (cycle 399 fix)
