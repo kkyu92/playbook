@@ -94,8 +94,8 @@ graph TD
     A[Playbook MDX Files] --> B{MDX Parsing & Indexing};
     B --> C[Wikilinks Extraction];
     B --> D[Content & Metadata Extraction];
-    C --> E[Link Graph Database ("e.g. SQLite")];
-    D --> F[Vector Database ("for Semantic Search")];
+    C --> E["Link Graph Database (e.g. SQLite)"];
+    D --> F["Vector Database (for Semantic Search)"];
     E --> G[Graph View Frontend];
     F --> H[JIT Semantic Search];
     H --> I[LLM for AI Editing];
