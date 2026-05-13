@@ -1,0 +1,76 @@
+---
+title: "Playbook Journal 035 — setState-in-effect 재발 패턴 + lesson-pending false-positive 10건 batch close"
+category: harness-engineering
+date: "2026-05-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: []
+status: in-progress
+description: "자동 수집: setState-in-effect 재발 패턴 + lesson-pending false-positive 10건 batch close (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260513-setstate-in-effect-lesson-pending-false-positive-1-a34d72b0f758d04ad078f5fe234e51.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+## 사례 요약
+
+cycle 302 (/picks 페이지 신규) 이후 localStorage 읽기를 useEffect 안에서 setState 로
+초기화하는 패턴이 9차례 재발 (cycles 302→305→321→325 fix 반복).
+
+## 근본 원인
+
+```ts
+// ❌ setState-in-effect 패턴 (ESLint 에러)
+const [value, setValue] = useState<T>(defaultValue);
+useEffect(() => { setValue(readFromLocalStorage()); }, []);
+
+// ✅ lazy init 패턴 (fix)
+const [value, setValue] = useState<T>(() => readFromLocalStorage());
+```
+
+`useEffect` 안 setState 는 React Compiler 관점에서 cascading render trigger.
+ESLint `react-hooks/react-compiler` 룰이 잡아냄. CI lint 실패 원인.
+
+## 재발 경로
+
+use-user-picks.ts / use-leaderboard.ts 두 파일이 독립적으로 같은 패턴 도입:
+- cycle 305: fix(picks) — 1차 fix
+- cycle 321: fix(leaderboard) use-leaderboard lazy init — 8차 재발 근본 수정 (Fixes #511 #512 #513)
+- cycle 325: fix(picks) use-user-picks lazy init — 9차 재발 근본 수정
+
+## lesson-pending false-positive 10건 (issues #350-#359)
+
+허브 incident-followup.yml 이 fingerprint 기반으로 생성. 해당 CI 실패는
+모두 후속 커밋 (cycles 305/321/325) 에서 수정 완료. 현재 lint PASS + CI green.
+개별 lesson commit 중복 작성 대신 본 lesson 으로 대표 박제 후 manual batch close.
+
+## 방지 룰
+
+새 localStorage hook 작성 시:
+1. useState 초기값으로 반드시 lazy init `() => read()` 사용
+2. PR 전 로컬 `pnpm run lint` 확인
+
+Closes #350 #351 #352 #353 #354 #355 #356 #357 #358 #359
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
