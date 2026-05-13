@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.76] — 2026-05-13
+
+### Changed
+- review-code cycle 478 — `stringifyPreservingOrder` 공유 lib 추출 (bidirectional-sync.mjs) + `slug.slice(0,40)` 제거 (152 슬러그 전체 노출) (N=380 batch 79/380)
+- skill-evolution SE #118 cycle 479 — stage 3 evidence 갱신 (명단 동일 7개 SE #117 대비 / SE 35% 자기조정 불가 → 마커 skip 자기조정 성공 window 460-479) (N=380 batch 80/380)
+- worker-incident-triage cycle 480 — moneyball inbound 10건 CLOSED (CI 실패 8 + Vercel 실패 2) + [P1] pnpm-lock RESOLVED + lesson: confidence cap boundary pitfall 박제 (N=380 batch 81/380)
+- curate cycle 481 — wiki lint CLEAN (152 entries) + memory review + CHANGELOG 0.5.76 + TODOS BRANCHED 28→31/15 갱신 (N=380 batch 82/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~480 = **432 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 81/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **118회** (SE #118, cycle 479) — 명단 동일 7개 SE #117 대비 / 마커 skip 자기조정 성공 window 460-479
+- BRANCHED: **재발** (local 31 / origin 15 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.75] — 2026-05-13
 
 ### Changed
