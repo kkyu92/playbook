@@ -1,5 +1,11 @@
 # TODOS
 
+## [DONE 2026-05-13] worker-incident-triage — moneyball inbound incidents 2건 (cycle 473)
+
+**상태**: ✅ DONE — 2건 모두 CLOSED (cycle 473 worker-incident-triage)
+**이슈**: #568/#569 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
+**결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
+
 ## [DONE 2026-05-13] worker-incident-triage — moneyball inbound incidents 3건 (cycle 472)
 
 **상태**: ✅ DONE — 3건 모두 CLOSED (cycle 472 worker-incident-triage)
@@ -12,11 +18,11 @@
 **이슈**: #557/#558/#559/#560/#562 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
 **결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 472 진단, local 13 / origin 12)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 473 진단, local 15 / origin 14)
 
-**상태**: OPEN — local 13개 ahead, origin 12개 ahead (양방향 diverged)
+**상태**: OPEN — local 15개 ahead, origin 14개 ahead (양방향 diverged)
 **해소 필요**: force-push / merge / rebase 중 선택 (R6 사용자 영역)
-현재 상태: hub cycle 464-472 commits (local) vs moneyball auto-ingest 12건 (origin)
+현재 상태: hub cycle 464-473 commits (local) vs moneyball auto-ingest 14건 (origin)
 
 ## [DONE 2026-05-13] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
@@ -27,7 +33,7 @@
 
 **What**: `apps/moneyball/pnpm-lock.yaml` 재생성 + 커밋
 **Why**: cycle 353 knip cleanup에서 `@testing-library/user-event` package.json 제거 후 lockfile 미갱신 → CI `ERR_PNPM_OUTDATED_LOCKFILE` 실패
-**누적 이슈**: #552/#553/#555 (cycle 464 close) + #557/#558/#559/#560/#562 (cycle 470 close) + #564/#565/#567 (cycle 472 close) — **총 11건** moneyball CI 계속 failing
+**누적 이슈**: #552/#553/#555 (cycle 464 close) + #557/#558/#559/#560/#562 (cycle 470 close) + #564/#565/#567 (cycle 472 close) + #568/#569 (cycle 473 close) — **총 13건** moneyball CI 계속 failing
 **Fix**: moneyball 워커 세션에서:
 ```bash
 pnpm install
