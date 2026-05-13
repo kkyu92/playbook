@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.77] — 2026-05-13
+
+### Changed
+- skill-evolution SE #119 cycle 482 — stage 3 evidence 갱신 (명단 동일 7개 SE #118 대비 / SE 35% 자기조정 불가 → 마커 skip 자기조정 성공 window 463-482) + TODOS BRANCHED 31/15→33/15 갱신 (N=380 batch 83/380)
+- review-code cycle 483 — 3개 버그 수정: lastActiveDate 실시간 갱신 / CATEGORIES 정의 불일치 / roadmapCount 산식 오류 + working Map O(1) (N=380 batch 84/380)
+- skill-evolution SE #120 cycle 484 — stage 3 evidence 갱신 (명단 동일 7개 SE #119 대비 / SE 35% 자기조정 불가 → 마커 skip 자기조정 성공 window 465-484) + TODOS BRANCHED 33/15→36/15 갱신 (N=380 batch 85/380)
+- curate cycle 485 — wiki lint CLEAN (152 entries) + memory review (SE #118→120/cycles 482-484 log) + CHANGELOG 0.5.77 + TODOS BRANCHED 38/15 갱신 (N=380 batch 86/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~484 = **436 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 85/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **120회** (SE #120, cycle 484) — 명단 동일 7개 SE #119 대비 / 마커 skip 자기조정 성공 window 465-484
+- BRANCHED: **재발** (local 38 / origin 15 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.76] — 2026-05-13
 
 ### Changed
