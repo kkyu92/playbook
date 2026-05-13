@@ -3,9 +3,9 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **162개** ahead, origin **22개** ahead. (cycle 460 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
-- origin 22 commits: moneyball auto-ingest (cycles 337-350 retro) + Journal 033/034/035/036 + geeknews 20260513 + worker-lesson 다수건 auto-ingest + PR #546 protobufjs fix + issue #548 inbound + cycle 348-350 self-policy
-- local 162 commits: hub cycles 364-460 (cycle 457 curate + cycle 458 SE #110 + cycle 459 curate + cycle 460 SE #111)
+현재 상태: local **164개** ahead, origin **22개** ahead. (cycle 461 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
+- origin 22 commits: moneyball auto-ingest (cycles 337-350 retro) + Journal 033/034/035/036 + geeknews 20260513 + worker-lesson 다수건 auto-ingest + PR #546 protobufjs fix + issue #548 inbound + cycle 348-350 self-policy + worker-lesson×2 (2026-05-13 02:xx) + worker-incident×1
+- local 164 commits: hub cycles 364-461 (cycle 459 curate + cycle 460 SE #111 + cycle 461 curate)
 - ⚠ 추가 영향 (cycle 442→444 해소): auto-merge test gate pnpm audit ci.yml에 존재. **cycle 444 fix-incident**: protobufjs >=7.5.6 pnpm.overrides 추가 + lockfile 갱신 → origin PR #546 auto-merge (ae40499) → auto-ingest PR CI audit 정상화 완료
 - ⚠ **cycle 450 fix**: ci.yml pnpm audit step에 `auto-ingest/*` 브랜치 skip 조건 추가 (commit 로컬 박제) — BRANCHED 해소 + push 시 origin에 반영, 이후 journal auto-ingest PR false positive CI 차단
 - ⚠ BRANCHED 해소 시 package.json 충돌 예상: local pnpm.overrides `"protobufjs": "^7.5.6"` vs origin `">=7.5.6"` — 해소 시 `>=7.5.6` 채택 + `pnpm install` + pnpm-lock.yaml 재생성 필요

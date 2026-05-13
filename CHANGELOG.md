@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.70] — 2026-05-13
+
+### Changed
+- curate cycle 461 — wiki lint CLEAN (144 entries, 0 orphan/isolated/stale) + memory 갱신 (project_develop_cycle_skill_family cycle 460 수치 반영) + retro 459-460 박제 + CHANGELOG 0.5.70 + TODOS BRANCHED 162→164 갱신 (N=380 batch 63/380)
+- skill-evolution SE #111 cycle 460 — stage 3 evidence 갱신 (zero-touch 64+→459+ / 명단 동일 7개 SE 40% 자기조정 성공 → 마커 skip) + TODOS BRANCHED 159→162 갱신 (N=380 batch 63/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~460 = **412 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 63/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **111회** (SE #111, cycle 460) — 명단 동일 7개 (window 441-460 SE 40% 자기조정 성공 → 마커 skip)
+- BRANCHED 재발: local **164** ahead / origin **22** ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.69] — 2026-05-13
 
 ### Changed
