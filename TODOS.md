@@ -3,10 +3,11 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **130개** ahead, origin **15개** ahead. (cycle 443 기준)
+현재 상태: local **132개** ahead, origin **18개** ahead. (cycle 444 기준 — origin: PR #544 #546 auto-merge 포함)
 - origin 15 commits: moneyball auto-ingest + Journal 033/035 + geeknews 20260513 + worker-lesson 다수건 auto-ingest
 - local 130 commits: hub cycles 364-443 (+cycle 441 SE #104 + cycle 442 fix-incident + cycle 443 curate)
-- ⚠ 추가 영향 (cycle 442): auto-merge test gate pnpm audit 추가 (ai-review.yml fix). BRANCHED 해소 시 origin에 배포됨 — 이후 auto-ingest PR은 audit 게이트 통과 필수
+- ⚠ 추가 영향 (cycle 442→444 해소): auto-merge test gate pnpm audit ci.yml에 존재. **cycle 444 fix-incident**: protobufjs >=7.5.6 pnpm.overrides 추가 + lockfile 갱신 → origin PR #546 auto-merge (ae40499) → auto-ingest PR CI audit 정상화 완료
+- local main은 여전히 ci.yml pnpm audit + protobufjs fix 보유 (BRANCHED 해소 시 origin과 통합)
 - SE Trigger-5 마커 없음 (cycle 441 SE #104: window 422-441 SE 40% ≥ 40% + 명단 동일 → 자기조정 성공)
 - 해소 방법: `git merge origin/main && git push origin main` (push 정책 따라 사용자 직접 실행)
 - **직전 해소**: cycle 364 (merge `2808ce6`, 0	0 완전 동기 확인)
