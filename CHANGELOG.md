@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.65] — 2026-05-13
+
+### Changed
+- fix-incident cycle 444 — protobufjs CVE PR #546 origin auto-merge 해소 + TODOS BRANCHED 130→132 갱신 (N=380 batch 48/380)
+- fix-incident cycle 445 — auto-ingest CI audit 인시던트 조사 완료, retro-only + TODOS BRANCHED 132→133 갱신 (N=380 batch 49/380)
+- skill-evolution SE #105 cycle 446 — stage 3 evidence 갱신 (zero-touch 64+→445+, window 425-444 SE 35%→40% 자기조정 성공, 명단 동일 7개 → 마커 skip, TODOS BRANCHED 133→134 갱신) (N=380 batch 50/380)
+- worker-incident-triage cycle 447 — compareModels-shadow 테스트 미동기 해소 + solution 박제 (hub issue #548 close) (N=380 batch 51/380)
+- skill-evolution SE #106 cycle 448 — stage 3 evidence 갱신 (zero-touch 64+→447+, 명단 변화 7→6개 worker-incident-triage 탈퇴 = activation signal → 마커 발화, window 429-448 SE 40% → 자기조정 성공 → 마커 skip, TODOS BRANCHED 134→137 갱신) (N=380 batch 51/380)
+- curate cycle 449 — retro 444-448 박제 + CHANGELOG 0.5.65 + memory 갱신 (BRANCHED / project 수치 갱신) + feedback_mid_review_protocol MEMORY.md 인덱싱 (N=380 batch 52/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~448 = **400 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 52/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **106회** (SE #106, cycle 448) — 명단 변화 7→6개 (worker-incident-triage 탈퇴, window 429-448 SE 40% 자기조정 성공)
+- BRANCHED 재발: local 139 ahead / origin 22 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.64] — 2026-05-13
 
 ### Changed
