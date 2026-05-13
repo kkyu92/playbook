@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.74] — 2026-05-13
+
+### Changed
+- skill-evolution SE #114 cycle 469 — stage 3 evidence 갱신 (명단 변화 6→2개 대규모 활성화 / SE 40% 마커 skip 자기조정) (N=380 batch 70/380)
+- worker-incident-triage cycle 470 — moneyball CI/Vercel 5건 close (#557/#558/#559/#560/#562) + pnpm-lock.yaml root cause 박제 + SE Trigger-5 마커 설정 (N=380 batch 71/380)
+- skill-evolution SE #115 cycle 471 — stage 3 evidence 갱신 (명단 변화 2→7개 SE #114 window shift-out 재비활성 / SE 45% 마커 skip 자기조정) (N=380 batch 72/380)
+- worker-incident-triage cycle 472 — moneyball CI 3건 close (#564/#565/#567) (N=380 batch 73/380)
+- worker-incident-triage cycle 473 — moneyball CI/Vercel 2건 close (#568/#569) + TODOS [P1] 13건 갱신 (N=380 batch 74/380)
+- curate cycle 474 — wiki lint CLEAN (152 entries) + memory 갱신 + CHANGELOG 0.5.74 (N=380 batch 75/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~473 = **425 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 74/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **115회** (SE #115, cycle 471) — 명단 변화 2→7개 (SE #114 window shift-out 재비활성 → 마커 skip 자기조정)
+- BRANCHED: **재발** (local 17 / origin 14 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.73] — 2026-05-13
 
 ### Changed
