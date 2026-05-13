@@ -24,11 +24,11 @@
 **이슈**: #557/#558/#559/#560/#562 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
 **결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 489 진단, local 46 / origin 16)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 490 진단, local 47 / origin 16)
 
-**상태**: OPEN — local 46개 ahead, origin 16개 ahead (양방향 diverged)
+**상태**: OPEN — local 47개 ahead, origin 16개 ahead (양방향 diverged)
 **해소 필요**: force-push / merge / rebase 중 선택 (R6 사용자 영역)
-현재 상태: hub cycle 464-489 commits (local) vs moneyball/worker auto-ingest 16건 (origin)
+현재 상태: hub cycle 464-490 commits (local) vs moneyball/worker auto-ingest 16건 (origin)
 
 ## [DONE 2026-05-13] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
