@@ -18,11 +18,11 @@
 **이슈**: #557/#558/#559/#560/#562 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
 **결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 474 진단, local 17 / origin 14)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 475 진단, local 19 / origin 15)
 
-**상태**: OPEN — local 17개 ahead, origin 14개 ahead (양방향 diverged)
+**상태**: OPEN — local 19개 ahead, origin 15개 ahead (양방향 diverged)
 **해소 필요**: force-push / merge / rebase 중 선택 (R6 사용자 영역)
-현재 상태: hub cycle 464-474 commits (local) vs moneyball auto-ingest 14건 (origin)
+현재 상태: hub cycle 464-475 commits (local) vs moneyball auto-ingest 15건 (origin)
 
 ## [DONE 2026-05-13] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
@@ -150,6 +150,7 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 
 ## DONE History (compressed)
 
+- **[DONE 2026-05-13]** cycle 475 skill-evolution SE #116 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 476, N=380 batch 394-773, zero-touch 64+→474+)
 - **[DONE 2026-05-12]** cycle 372 skill-evolution SE #77 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 373, N=30 batch 364-393, zero-touch 64+→371+)
 - **[DONE 2026-05-12]** cycle 367 skill-evolution SE #76 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% → retro 348-367 40% 마커 skip 자기조정 성공, N=30 batch 364-393, zero-touch 64+→366+)
 - **[DONE 2026-05-12]** cycle 366 skill-evolution SE #75 — stage 3 evidence 갱신 (명단 동일 7개, SE 35% 연속, 자기조정 불가 마커 유지 cycle 367, N=30 batch 364-393, zero-touch 64+→365+)
