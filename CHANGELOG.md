@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.78] — 2026-05-13
+
+### Changed
+- review-code cycle 486 — `scan-promotions.mjs` disk 캐시 추가 (Gemini 임베딩 중복 호출 제거) + `dashboard-update.mjs` SE Trigger-5 마커 설정 버그 수정 + SE 마커 skip 자기조정 성공 (명단 동일 7개 SE #120 대비 / SE 40% ≥ 40%) (N=380 batch 87/380)
+- curate cycle 487 — wiki lint CLEAN (152 entries) + memory 갱신 (cycles 486-487 log) + CHANGELOG 0.5.78 + TODOS BRANCHED 42/15 갱신 (N=380 batch 88/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~486 = **438 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 87/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **120회** (SE #120, cycle 484) — 명단 동일 7개 / 마커 skip 자기조정 성공 유지
+- BRANCHED: **재발** (local 42 / origin 15 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.77] — 2026-05-13
 
 ### Changed
