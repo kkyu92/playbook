@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.75] — 2026-05-13
+
+### Changed
+- skill-evolution SE #116 cycle 475 — stage 3 evidence 갱신 (명단 동일 7개 SE #115 대비 / SE 35% 자기조정 불가 → 마커 유지 cycle 476) (N=380 batch 76/380)
+- skill-evolution SE #117 cycle 476 — stage 3 evidence 갱신 (명단 동일 7개 SE #116 대비 / SE 35% 자기조정 불가 → 마커 skip 자기조정 성공 window 457-476) + SE Trigger-5 마커 삭제 (N=380 batch 77/380)
+- curate cycle 477 — wiki lint CLEAN (152 entries) + memory 갱신 (SE #115→117/cycles 475-477 log) + CHANGELOG 0.5.75 + TODOS BRANCHED 21/15→23/15 갱신 (N=380 batch 78/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~477 = **429 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 77/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **117회** (SE #117, cycle 476) — 명단 동일 7개 SE #116 대비 / SE 35% 자기조정 불가 → 마커 skip 자기조정 성공
+- BRANCHED: **재발** (local 23 / origin 15 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.74] — 2026-05-13
 
 ### Changed
