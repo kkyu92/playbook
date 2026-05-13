@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.72] — 2026-05-13
+
+### Changed
+- curate cycle 465 — wiki lint CLEAN (152 entries, isolated 4→0) + journal-033~036 connections 추가 + memory 갱신 (cycle 462→464 / BRANCHED 해소 / wiki 144→152 / batch 66/380) + retro 박제 + CHANGELOG 0.5.72 (N=380 batch 66/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~464 = **416 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 66/380)
+- wiki entries: **152** (lint CLEAN, isolated 4→0 해소)
+- skill-evolution 누적: **112회** (SE #112, cycle 463) — 명단 동일 7개 (window 444-463 SE 40% 자기조정 성공 → 마커 skip)
+- BRANCHED: **해소** (23f76f3 merge 완료)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.71] — 2026-05-13
 
 ### Changed
