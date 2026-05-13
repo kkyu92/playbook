@@ -1,5 +1,11 @@
 # TODOS
 
+## [P1] worker-incident-triage — moneyball inbound incidents 5건 (cycle 469 carry-over)
+
+**이슈**: #557 (CI main 1a7b41e), #558 (Vercel 배포 실패 1a7b41e), #559 (CI main 5bcade9), #560 (CI develop-cycle f3b460), #562 (CI main cc3b345)
+**What**: hub-dispatch label OPEN issues 분류 + close/fix/carry-over 결정
+**When**: 다음 worker-incident-triage chain cycle
+
 ## [DONE 2026-05-13] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 **상태**: ✅ DONE — commit `23f76f3` (fix: merge origin/main — BRANCHED 해소 local 168 / origin 23 ahead). cycle 464 진단 기준 `0 0` 완전 동기 확인.
