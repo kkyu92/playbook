@@ -1,15 +1,7 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-
-const CATEGORIES = [
-  "prompt-engineering",
-  "rag",
-  "agents",
-  "fine-tuning",
-  "evaluation",
-  "infrastructure",
-];
+import { CATEGORIES } from "./lib/categories.mjs";
 
 const rl = readline.createInterface({
   input: process.stdin,

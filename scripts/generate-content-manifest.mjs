@@ -48,9 +48,8 @@ function loadRegisteredWorkers() {
   return null;
 }
 
-const REGISTERED = loadRegisteredWorkers();
-const REGISTERED_WORKERS = REGISTERED?.names || null;
-const REGISTERED_SOURCE = REGISTERED?.source || null;
+const { names: REGISTERED_WORKERS = null, source: REGISTERED_SOURCE = null } =
+  loadRegisteredWorkers() ?? {};
 
 
 function validateFrontmatter(data, filePath) {
@@ -287,15 +286,13 @@ function main() {
     .slice(0, 5)
     .map((e) => ({ slug: e.slug, title: e.frontmatter.title, date: e.frontmatter.date, category: e.frontmatter.category }));
 
-  const roadmapCount = nodes.filter((n) => n.type === "roadmap").length;
-
   const manifest = {
     entries: entries.map((e) => ({ slug: e.slug, frontmatter: e.frontmatter })),
     graph: { nodes, edges },
     streak: {
       current: currentStreak,
       longest: longestStreak,
-      lastActiveDate: dates[0] || null,
+      lastActiveDate: dates.at(-1) || null,
     },
     dailyEntries,
     stats: {
@@ -307,7 +304,6 @@ function main() {
       categoryStats,
       weeklyStats,
       recentEntries,
-      roadmapCount,
     },
   };
 

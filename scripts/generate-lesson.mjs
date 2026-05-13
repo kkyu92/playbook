@@ -55,8 +55,6 @@ function loadAllEntryFiles() {
   });
 }
 
-
-
 /**
  * @param {object} newEntry — { slug, category, topicSlug, frontmatter, body }
  * @returns {{ newPath: string, updatedFiles: string[], evictions: Array }}
@@ -78,27 +76,26 @@ function persistNewEntryWithSync(newEntry) {
   fs.writeFileSync(newPath, newRaw);
 
   const allEntries = loadAllEntryFiles();
-  const working = allEntries.map((e) => ({
+  const workingMap = new Map(allEntries.map((e) => [e.slug, {
     slug: e.slug,
     original: e,
     newConnections: Array.isArray(e.frontmatter.connections)
       ? [...e.frontmatter.connections]
       : [],
-  }));
+  }]));
 
   const evictions = [];
   for (const targetSlug of newEntry.frontmatter.connections) {
-    const target = working.find((w) => w.slug === targetSlug);
+    const target = workingMap.get(targetSlug);
     if (!target) continue;
     if (!target.newConnections.includes(newEntry.slug)) {
       target.newConnections.push(newEntry.slug);
     }
-    // newEntry 는 축출 대상 제외
     while (target.newConnections.length > MAX_CONNECTIONS) {
       const candidates = target.newConnections
         .filter((s) => s !== newEntry.slug)
         .map((slug) => {
-          const ent = working.find((x) => x.slug === slug)?.original;
+          const ent = workingMap.get(slug)?.original;
           const lv =
             ent?.frontmatter?.last_verified || ent?.frontmatter?.date || "1970-01-01";
           return { slug, lv };
@@ -110,7 +107,7 @@ function persistNewEntryWithSync(newEntry) {
       if (candidates.length === 0) break;
       const toEvict = candidates[0].slug;
       target.newConnections = target.newConnections.filter((s) => s !== toEvict);
-      const other = working.find((x) => x.slug === toEvict);
+      const other = workingMap.get(toEvict);
       if (other) {
         other.newConnections = other.newConnections.filter((s) => s !== target.slug);
       }
@@ -119,7 +116,7 @@ function persistNewEntryWithSync(newEntry) {
   }
 
   const updatedFiles = [];
-  for (const w of working) {
+  for (const w of workingMap.values()) {
     const before = Array.isArray(w.original.frontmatter.connections)
       ? w.original.frontmatter.connections
       : [];
@@ -128,8 +125,8 @@ function persistNewEntryWithSync(newEntry) {
       before.length !== after.length || before.some((s, i) => s !== after[i]);
     if (!changed) continue;
     const newFm = { ...w.original.frontmatter, connections: after };
-    const newRaw2 = stringifyPreservingOrder(w.original.raw, newFm, w.original.body);
-    fs.writeFileSync(w.original.path, newRaw2);
+    const updatedRaw = stringifyPreservingOrder(w.original.raw, newFm, w.original.body);
+    fs.writeFileSync(w.original.path, updatedRaw);
     updatedFiles.push(w.original.path);
   }
 
