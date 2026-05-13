@@ -97,7 +97,7 @@ function buildMetrics(cycles) {
     2: { current: "N/A", threshold: 5, met: false },
     3: { current: lastCycle.cycle_n, threshold: 50, met: lastCycle.cycle_n % 50 === 0 && lastCycle.cycle_n > 0 },
     4: { current: 0, threshold: 1, met: false }, // body grep needs review
-    5: { current: zeroChains.length, threshold: "자율", met: zeroChains.length > 0 && metaPatternCount > 0 },
+    5: { current: zeroChains.length, threshold: "자율", met: zeroChains.length > 0 },
   };
 
   return {

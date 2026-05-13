@@ -170,9 +170,11 @@ function suggestPromotionType(category) {
 function main() {
   const categories = scanCategories();
   const gates = checkExistingGates();
+  const promotedCache = new Map(categories.map((c) => [c.name, isAlreadyPromoted(c)]));
+  const promoted = (c) => promotedCache.get(c.name);
   const overThreshold = categories.filter((c) => c.count >= THRESHOLD);
-  const alreadyPromoted = overThreshold.filter(isAlreadyPromoted);
-  const promotable = overThreshold.filter((c) => !isAlreadyPromoted(c));
+  const alreadyPromoted = overThreshold.filter(promoted);
+  const promotable = overThreshold.filter((c) => !promoted(c));
   const below = categories.filter((c) => c.count < THRESHOLD && c.count > 0);
 
   if (jsonMode) {
@@ -182,8 +184,8 @@ function main() {
       categories: categories.map((c) => ({
         name: c.name,
         count: c.count,
-        promotable: c.count >= THRESHOLD && !isAlreadyPromoted(c),
-        alreadyPromoted: isAlreadyPromoted(c),
+        promotable: c.count >= THRESHOLD && !promoted(c),
+        alreadyPromoted: promoted(c),
       })),
       promotable: promotable.map((c) => ({
         ...suggestPromotionType(c),
@@ -209,7 +211,7 @@ function main() {
     let status;
     if (cat.count === 0) status = "⬜ 없음";
     else if (cat.count < THRESHOLD) status = "⏳ 관찰 중";
-    else if (isAlreadyPromoted(cat)) status = "✅ 승격 완료";
+    else if (promoted(cat)) status = "✅ 승격 완료";
     else status = "🚀 승격 후보";
     console.log(`  ${cat.name.padEnd(22)} | ${String(cat.count).padStart(9)} | ${status}`);
   }
