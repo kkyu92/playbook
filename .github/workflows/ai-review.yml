@@ -178,10 +178,13 @@ jobs:
         if: steps.sync.outputs.status != 'conflict'
         run: pnpm install --frozen-lockfile
 
-      - name: 🔒 Test Gate (vitest + build)
+      - name: 🔒 Test Gate (audit + vitest + build)
         id: test_gate
         if: steps.sync.outputs.status != 'conflict'
         run: |
+          echo "::group::security audit"
+          pnpm audit --audit-level high
+          echo "::endgroup::"
           echo "::group::vitest"
           pnpm test
           echo "::endgroup::"
