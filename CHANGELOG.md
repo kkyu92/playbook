@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.73] — 2026-05-13
+
+### Changed
+- review-code cycle 466 — health 10/10 CLEAN + SE trigger-5 마커 설정 (review-code 탈퇴 7→6 / SE 35% 자기조정 불가) + INDEX.md journal-033~036 연결 박제 (N=380 batch 67/380)
+- skill-evolution SE #113 cycle 467 — stage 3 evidence 갱신 (zero-touch 64+→466+ / 명단 변화 7→6개 review-code 탈퇴 → 마커 skip 자기조정) (N=380 batch 68/380)
+- curate cycle 468 — wiki lint CLEAN (152 entries) + memory 갱신 + CHANGELOG 0.5.73 (N=380 batch 69/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~467 = **419 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 69/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **113회** (SE #113, cycle 467) — 명단 변화 7→6개 (review-code 탈퇴 → 마커 skip 자기조정)
+- BRANCHED: **해소** (23f76f3 merge 완료, local 6 ahead / origin 0 ahead)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.72] — 2026-05-13
 
 ### Changed
