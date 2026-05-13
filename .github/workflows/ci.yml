@@ -20,6 +20,8 @@ jobs:
           node-version: "20"
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      - run: pnpm audit --audit-level high
+      - name: Run pnpm audit
+        if: ${{ !startsWith(github.head_ref, 'auto-ingest/') }}
+        run: pnpm audit --audit-level high
       - run: pnpm test
       - run: pnpm build

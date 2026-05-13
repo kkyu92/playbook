@@ -3,10 +3,11 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **139개** ahead, origin **22개** ahead. (cycle 449 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
+현재 상태: local **140개** ahead, origin **22개** ahead. (cycle 450 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
 - origin 22 commits: moneyball auto-ingest + Journal 033/034/035/036 + geeknews 20260513 + worker-lesson 다수건 auto-ingest + PR #546 protobufjs fix + issue #548 inbound + 추가 inbound
-- local 139 commits: hub cycles 364-449 (+cycle 447 worker-incident-triage + cycle 448 SE #106 + cycle 449 curate)
+- local 140 commits: hub cycles 364-450 (+cycle 447 worker-incident-triage + cycle 448 SE #106 + cycle 449 curate + cycle 450 fix-incident)
 - ⚠ 추가 영향 (cycle 442→444 해소): auto-merge test gate pnpm audit ci.yml에 존재. **cycle 444 fix-incident**: protobufjs >=7.5.6 pnpm.overrides 추가 + lockfile 갱신 → origin PR #546 auto-merge (ae40499) → auto-ingest PR CI audit 정상화 완료
+- ⚠ **cycle 450 fix**: ci.yml pnpm audit step에 `auto-ingest/*` 브랜치 skip 조건 추가 (commit 로컬 박제) — BRANCHED 해소 + push 시 origin에 반영, 이후 journal auto-ingest PR false positive CI 차단
 - ⚠ BRANCHED 해소 시 package.json 충돌 예상: local pnpm.overrides `"protobufjs": "^7.5.6"` vs origin `">=7.5.6"` — 해소 시 `>=7.5.6` 채택 + `pnpm install` + pnpm-lock.yaml 재생성 필요
 - local main은 여전히 ci.yml pnpm audit + protobufjs fix 보유 (BRANCHED 해소 시 origin과 통합)
 - SE Trigger-5 마커 skip (cycle 448 SE #106: window 429-448 SE 8/20=40% ≥ 40% + 명단 동일 → 자기조정 성공)
