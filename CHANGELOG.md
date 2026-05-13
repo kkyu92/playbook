@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.63] — 2026-05-13
+
+### Changed
+- skill-evolution SE #101 cycle 436 — stage 3 evidence 갱신 (zero-touch 64+→435+, window 416-435 SE 35%, 명단 동일 8개, 자기조정 불가 → 마커 유지, TODOS BRANCHED 115→117 갱신) (N=380 batch 41/380)
+- skill-evolution SE #102 cycle 437 — stage 3 evidence 갱신 (zero-touch 64+→436+, window 417-436 SE 35%, 명단 동일 8개, retro 재평가 window 418-437 SE 40% → 마커 skip 자기조정 성공, TODOS BRANCHED 117→119 갱신) (N=380 batch 42/380)
+- fix-incident cycle 438 — protobufjs ^7.5.5→^7.5.6 pnpm audit high 4 CVE 해소 (N=380 batch 42/380)
+- skill-evolution SE #103 cycle 439 — stage 3 evidence 갱신 (zero-touch 64+→438+, window 419-438 SE 40%, 명단 변화 8→7개 fix-incident 탈퇴 → 마커 발화, retro window 420-439 SE 40% → 자기조정 성공, TODOS BRANCHED 119→122 갱신) (N=380 batch 43/380)
+- curate cycle 440 — retro 436-439 박제 + CHANGELOG 0.5.63 + TODOS BRANCHED 122→124 갱신 + memory 갱신 (N=380 batch 44/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~439 = **391 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 44/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **103회** (SE #103, cycle 439) — 명단 변화 8→7개 (fix-incident 탈퇴)
+- BRANCHED 재발: local 124 ahead / origin 15 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.62] — 2026-05-13
 
 ### Changed
