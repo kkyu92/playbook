@@ -3,14 +3,14 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **146개** ahead, origin **22개** ahead. (cycle 452 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
+현재 상태: local **148개** ahead, origin **22개** ahead. (cycle 453 기준 — origin: PR #544 #546 auto-merge + worker-lesson/incident inbound + Journal 033-036 포함 + 추가 auto-ingest)
 - origin 22 commits: moneyball auto-ingest (cycles 337-350 retro) + Journal 033/034/035/036 + geeknews 20260513 + worker-lesson 다수건 auto-ingest + PR #546 protobufjs fix + issue #548 inbound + cycle 348-350 self-policy
-- local 146 commits: hub cycles 364-452 (cycle 447 worker-incident-triage + cycle 448 SE #106 + cycle 449 curate + cycle 450 fix-incident + cycle 451 curate + cycle 452 worker-incident-triage)
+- local 148 commits: hub cycles 364-453 (cycle 452 worker-incident-triage + cycle 453 SE #107)
 - ⚠ 추가 영향 (cycle 442→444 해소): auto-merge test gate pnpm audit ci.yml에 존재. **cycle 444 fix-incident**: protobufjs >=7.5.6 pnpm.overrides 추가 + lockfile 갱신 → origin PR #546 auto-merge (ae40499) → auto-ingest PR CI audit 정상화 완료
 - ⚠ **cycle 450 fix**: ci.yml pnpm audit step에 `auto-ingest/*` 브랜치 skip 조건 추가 (commit 로컬 박제) — BRANCHED 해소 + push 시 origin에 반영, 이후 journal auto-ingest PR false positive CI 차단
 - ⚠ BRANCHED 해소 시 package.json 충돌 예상: local pnpm.overrides `"protobufjs": "^7.5.6"` vs origin `">=7.5.6"` — 해소 시 `>=7.5.6` 채택 + `pnpm install` + pnpm-lock.yaml 재생성 필요
 - local main은 여전히 ci.yml pnpm audit + protobufjs fix 보유 (BRANCHED 해소 시 origin과 통합)
-- SE Trigger-5 마커 skip (cycle 448 SE #106: window 429-448 SE 8/20=40% ≥ 40% + 명단 동일 → 자기조정 성공)
+- SE Trigger-5 마커 발화 (cycle 452 retro → cycle 453 SE #107 연속 발화: window 433-452 SE 점유율 30% < 40%, 명단 동일 6개)
 - 해소 방법: `git merge origin/main && git push origin main` (push 정책 따라 사용자 직접 실행)
 - **직전 해소**: cycle 364 (merge `2808ce6`, 0	0 완전 동기 확인)
 - ⚠ 주의: Journal 033 MDX (`content/journal/playbook-journal-033-...mdx`) `connections: []` 위반 — BRANCHED 해소 후 connections 1개 이상 추가 필요 (CLAUDE.md 규칙). 신규 journal은 fallback connection으로 위반 방지 (cycle 399 fix)
