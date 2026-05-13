@@ -46,6 +46,40 @@ function loadManifest() {
 
 // ─── 양방향 파일 write ──────────────────────────────────────────
 
+/**
+ * newEntry 의 connections 각각에 역방향 링크를 추가하고 MAX_CONNECTIONS cap 초과 시
+ * 가장 오래된 connection 을 축출한다. workingMap 을 직접 변이(mutation)하며 evictions 반환.
+ *
+ * 축출 기준: last_verified > date 로 정렬, 가장 오래된 것 우선 (신규 진입 보호).
+ */
+function addBacklinksWithCap(workingMap, newEntry) {
+  const evictions = [];
+  for (const targetSlug of newEntry.frontmatter.connections) {
+    const target = workingMap.get(targetSlug);
+    if (!target) continue;
+    if (!target.newConnections.includes(newEntry.slug)) {
+      target.newConnections.push(newEntry.slug);
+    }
+    while (target.newConnections.length > MAX_CONNECTIONS) {
+      const candidates = target.newConnections
+        .filter((s) => s !== newEntry.slug)
+        .map((slug) => {
+          const ent = workingMap.get(slug)?.original;
+          const lv = ent?.frontmatter?.last_verified || ent?.frontmatter?.date || "1970-01-01";
+          return { slug, lv };
+        })
+        .sort((a, b) => a.lv !== b.lv ? a.lv.localeCompare(b.lv) : b.slug.localeCompare(a.slug));
+      if (candidates.length === 0) break;
+      const toEvict = candidates[0].slug;
+      target.newConnections = target.newConnections.filter((s) => s !== toEvict);
+      const other = workingMap.get(toEvict);
+      if (other) other.newConnections = other.newConnections.filter((s) => s !== target.slug);
+      evictions.push({ from: target.slug, evicted: toEvict });
+    }
+  }
+  return evictions;
+}
+
 function loadAllEntryFiles() {
   return findMdxFiles(CONTENT_DIR).map((full) => {
     const slug = path.relative(CONTENT_DIR, full).replace(/\.mdx$/, "");
@@ -68,8 +102,10 @@ function persistNewEntryWithSync(newEntry) {
     throw new Error(`File already exists: ${newPath}`);
   }
 
+  // stringifyPreservingOrder 는 기존 raw 에서 frontmatter 순서를 보존하는 함수이지만
+  // 신규 파일은 보존할 기존 순서가 없으므로 regex 통과용 최소 dummy raw 를 전달한다.
   const newRaw = stringifyPreservingOrder(
-    `---\n\n---\n`, // new file — minimal dummy to satisfy frontmatter-check
+    `---\n\n---\n`,
     newEntry.frontmatter,
     `\n${newEntry.body}`,
   );
@@ -84,36 +120,7 @@ function persistNewEntryWithSync(newEntry) {
       : [],
   }]));
 
-  const evictions = [];
-  for (const targetSlug of newEntry.frontmatter.connections) {
-    const target = workingMap.get(targetSlug);
-    if (!target) continue;
-    if (!target.newConnections.includes(newEntry.slug)) {
-      target.newConnections.push(newEntry.slug);
-    }
-    while (target.newConnections.length > MAX_CONNECTIONS) {
-      const candidates = target.newConnections
-        .filter((s) => s !== newEntry.slug)
-        .map((slug) => {
-          const ent = workingMap.get(slug)?.original;
-          const lv =
-            ent?.frontmatter?.last_verified || ent?.frontmatter?.date || "1970-01-01";
-          return { slug, lv };
-        })
-        .sort((a, b) => {
-          if (a.lv !== b.lv) return a.lv.localeCompare(b.lv);
-          return b.slug.localeCompare(a.slug);
-        });
-      if (candidates.length === 0) break;
-      const toEvict = candidates[0].slug;
-      target.newConnections = target.newConnections.filter((s) => s !== toEvict);
-      const other = workingMap.get(toEvict);
-      if (other) {
-        other.newConnections = other.newConnections.filter((s) => s !== target.slug);
-      }
-      evictions.push({ from: target.slug, evicted: toEvict });
-    }
-  }
+  const evictions = addBacklinksWithCap(workingMap, newEntry);
 
   const updatedFiles = [];
   for (const w of workingMap.values()) {
