@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.67] — 2026-05-13
+
+### Changed
+- worker-incident-triage cycle 452 — moneyball CI batch 22건 CLOSE (protobufjs CVE 해소) + solution pr-branch-old-base-audit-failure recurrence 2→3 + SE Trigger-5 마커 설정 (N=380 batch 55/380)
+- skill-evolution SE #107 cycle 453 — stage 3 evidence 갱신 (zero-touch 64+→452+, window 433-452 SE 30% 자기조정 불가, 명단 동일 6개 → 마커 유지) + TODOS BRANCHED 146→148 갱신 (N=380 batch 56/380)
+- skill-evolution SE #108 cycle 454 — stage 3 evidence 갱신 (zero-touch 64+→453+, 명단 변화 6→7개 review-code 신규 진입 → 마커 유지 cycle 455 연속) + TODOS BRANCHED 148→149 갱신 (N=380 batch 57/380)
+- skill-evolution SE #109 cycle 455 — stage 3 evidence 갱신 (zero-touch 64+→454+, 명단 동일 7개, SE 45% ≥ 40% → 자기조정 성공 → 마커 skip) + TODOS BRANCHED 149→153 갱신 (N=380 batch 58/380)
+- curate cycle 456 — retro 452-455 박제 + CHANGELOG 0.5.67 + memory 갱신 (N=380 batch 59/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~455 = **407 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 59/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **109회** (SE #109, cycle 455) — 명단 동일 7개 (window 436-455 SE 45% 자기조정 성공)
+- BRANCHED 재발: local **153** ahead / origin **22** ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.66] — 2026-05-13
 
 ### Changed
