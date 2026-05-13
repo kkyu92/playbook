@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.64] — 2026-05-13
+
+### Changed
+- skill-evolution SE #104 cycle 441 — stage 3 evidence 갱신 (zero-touch 64+→440+, window 422-441 SE 40% ≥ 40% + 명단 동일 7개 → 자기조정 성공 → 마커 skip, TODOS BRANCHED 124→126 갱신) (N=380 batch 45/380)
+- fix-incident cycle 442 — auto-merge test gate pnpm audit 추가 (ai-review.yml 🔒 Test Gate 보강) + TODOS BRANCHED 126→128 갱신 (N=380 batch 46/380)
+- curate cycle 443 — retro 441-442 박제 + CHANGELOG 0.5.64 + TODOS BRANCHED 128→130 갱신 (N=380 batch 47/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~442 = **394 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 46/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **104회** (SE #104, cycle 441) — 명단 동일 7개 (window 422-441 SE 40% 자기조정 성공)
+- BRANCHED 재발: local 130 ahead / origin 15 ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.63] — 2026-05-13
 
 ### Changed
