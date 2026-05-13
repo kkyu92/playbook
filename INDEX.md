@@ -1,6 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-13T03:54:24.951Z
-Updated: 2026-05-13T02:00:46.739Z
+Updated: 2026-05-13T05:31:09.819Z
 
 ## 엔트리 (152개)
 
@@ -766,6 +765,17 @@ Updated: 2026-05-13T02:00:46.739Z
 - journal/playbook-journal-031-w20-20-calibration-cycle-308 ↔ evaluation/prediction-model-calibration-inversion-detection
 - journal/playbook-journal-031-w20-20-calibration-cycle-308 ↔ journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309
 - journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309 ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-033-w21-head-to-head-noise-14-3-lineup-woba-cycle-333 ↔ journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309
+- journal/playbook-journal-033-w21-head-to-head-noise-14-3-lineup-woba-cycle-333 ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-033-w21-head-to-head-noise-14-3-lineup-woba-cycle-333 ↔ journal/playbook-journal-034-w22-w21-20-5-cycle-339
+- journal/playbook-journal-034-w22-w21-20-5-cycle-339 ↔ journal/playbook-journal-032-sunday-confidence-cap-judge-agent-cycle-309
+- journal/playbook-journal-034-w22-w21-20-5-cycle-339 ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1 ↔ harness-engineering/fail-loud-partial-adoption-escape-hatch-trap
+- journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1 ↔ frontend-ai/generative-ai-ui-ux-design-patterns
+- journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1 ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- journal/playbook-journal-036-extract-pattern-3-cjk-og-prediction-type-filter-pe ↔ evaluation/prediction-model-calibration-inversion-detection
+- journal/playbook-journal-036-extract-pattern-3-cjk-og-prediction-type-filter-pe ↔ journal/playbook-journal-033-w21-head-to-head-noise-14-3-lineup-woba-cycle-333
+- journal/playbook-journal-036-extract-pattern-3-cjk-og-prediction-type-filter-pe ↔ harness-engineering/silent-drift-family-pattern
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
