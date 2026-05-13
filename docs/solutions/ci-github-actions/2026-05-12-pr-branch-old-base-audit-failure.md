@@ -2,9 +2,9 @@
 title: PR Branch Old-Base Audit Failure — BRANCHED 상태에서 security patch 미반영
 category: ci-github-actions
 date: 2026-05-12
-tags: [audit, branched, security-patch, pr-branch, nextjs]
+tags: [audit, branched, security-patch, pr-branch, nextjs, protobufjs]
 confidence: 3
-recurrence: 2
+recurrence: 3
 ---
 
 ## 문제
@@ -68,6 +68,7 @@ git push --force-with-lease origin auto-ingest/geeknews-YYYYMMDD
 | 날짜 | PR | 원인 | 해결 |
 |------|-----|------|------|
 | 2026-05-12 | #418, #421 | Next.js 16.2.3 (cycle 295 patch 미push) | cycle 303 root cause 확인, push 대기 |
+| 2026-05-12 | (moneyball 22건 batch) | protobufjs CVE — develop-cycle 브랜치 8건 + main 14건 | protobufjs >=7.5.6 fix PR #546 머지로 해소. cycle 452 triage CLOSE |
 
 ## 연관 솔루션
 
