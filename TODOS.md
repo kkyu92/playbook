@@ -3,7 +3,7 @@
 ## [P0] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local **124개** ahead, origin **15개** ahead. (cycle 440 기준)
+현재 상태: local **126개** ahead, origin **15개** ahead. (cycle 441 기준)
 - origin 15 commits: moneyball auto-ingest + Journal 033/035 + geeknews 20260513 + worker-lesson 다수건 auto-ingest
 - local 124 commits: hub cycles 364-440 (+cycle 440 curate)
 - SE Trigger-5 마커 없음 (cycle 439 SE #103: window 420-439 SE 40% ≥ 40% + 명단 동일 → 자기조정 성공)
