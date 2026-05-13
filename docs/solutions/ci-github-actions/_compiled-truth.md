@@ -2,12 +2,12 @@
 
 코드 게이트 승격: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07, cycle 141)
 
-## 종합 (7건, 최종 갱신 2026-05-13)
+## 종합 (8건, 최종 갱신 2026-05-13)
 
-- **재발 횟수**: 19건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건)
+- **재발 횟수**: 20건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건 + knip cleanup lockfile drift 1건)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
 - **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
-- **마지막 발생**: 2026-05-13 (compareModels-shadow test sync gap — 리팩터 후 테스트 기댓값 미동기, hub issue #548, moneyball cycle 349 fix)
+- **마지막 발생**: 2026-05-13 (knip cleanup 후 pnpm-lock.yaml 미갱신 → CI ERR_PNPM_OUTDATED_LOCKFILE, hub issues #552/#553/#555, moneyball cycle 353)
 
 ### 주요 교훈 요약
 
@@ -20,6 +20,7 @@
 | 5 | PR branch old-base audit failure — BRANCHED 상태에서 security patch 미push, PR branch 가 구버전 가져감 | local main 즉시 push (R6). 장기: security patch 후 즉시 batch push 권장 | 1회 (PR #418/#421, 2026-05-12) |
 | 6 | push_main_with_retry 레이스 — BRANCHED로 수정 origin 미배포 → 재발 루프 | origin 즉시 push (R6). CI-critical workflow 수정 시 batch push 즉시 실행 | 5회 (cycle 29→47→354→357→359) |
 | 7 | compareModels-shadow test sync gap — 리팩터 상수 rename 후 테스트 기댓값 미동기 (string literal mismatch) | 리팩터 커밋 시 테스트 파일 동시 grep 후 동기화. workaround: TypeScript 타입이 잡지 못하는 경우 수동 확인 필수 | 1회 (hub issue #548, moneyball cycle 349 fix, 2026-05-13) |
+| 8 | knip cleanup 후 pnpm-lock.yaml 미갱신 — dependency 제거 후 lockfile stale → `ERR_PNPM_OUTDATED_LOCKFILE` | knip 실행 후 반드시 `pnpm install` + lockfile diff 확인 + 함께 커밋. LLM이 typecheck/test 통과해도 lockfile 별도 확인 의무 | 1회 (hub issues #552/#553/#555, moneyball cycle 353, 2026-05-13) |
 
 ### 메타 패턴
 
@@ -40,6 +41,7 @@
 5. [2026-05-12 — PR branch old-base audit failure](2026-05-12-pr-branch-old-base-audit-failure.md) — BRANCHED + security patch 미push 조합 (cycle 303)
 6. [2026-05-12 — push race BRANCHED fix blocked](2026-05-12-push-race-branched-fix-blocked.md) — push_main_with_retry 레이스 5회 재발, BRANCHED 차단 구조 (cycle 359)
 7. [2026-05-13 — compareModels-shadow test sync gap](2026-05-13-refactor-const-rename-test-sync-gap.md) — 리팩터 상수 rename → 테스트 기댓값 미동기 (cycle 447, hub issue #548)
+8. [2026-05-13 — knip cleanup lockfile drift](2026-05-13-knip-cleanup-lockfile-drift.md) — knip 후 pnpm-lock.yaml 미갱신 → ERR_PNPM_OUTDATED_LOCKFILE (cycle 353, hub issues #552/#553/#555)
 
 ## 승격 후보 분석
 
