@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.79] — 2026-05-13
+
+### Changed
+- curate cycle 488 — wiki lint CLEAN (152 entries) + TODOS BRANCHED 42/15→44/16 갱신 + CHANGELOG 0.5.79 (N=380 batch 89/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~488 = **440 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 89/380)
+- wiki entries: **152** (lint CLEAN 유지)
+- skill-evolution 누적: **120회** (SE #120, cycle 484) — 명단 동일 7개 / 마커 skip 자기조정 성공
+- BRANCHED: **재발** (local 44 / origin 16 ahead — R6 사용자 carry-over)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.78] — 2026-05-13
 
 ### Changed
