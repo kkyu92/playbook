@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.66] — 2026-05-13
+
+### Changed
+- fix-incident cycle 450 — ci.yml pnpm audit step에 `auto-ingest/*` 브랜치 skip 조건 추가 (BRANCHED false positive 차단) + TODOS BRANCHED 139→142 갱신 (N=380 batch 53/380)
+- worker-incident-triage cycle 13 (batch session) — moneyball CI 실패 (91f828d) 분류 완료 + _compiled-truth.md solution 6→7건 갱신 + TODOS BRANCHED 140→143 갱신
+- curate cycle 451 — retro 450 + cycle 13 박제 + CHANGELOG 0.5.66 + memory 갱신 (N=380 batch 54/380)
+
+### Metrics
+- zero-touch 자동화: cycle 49~450 = **402 사이클** 검증 완료 (N=380 batch 진행 중 (394-773) — 54/380)
+- wiki entries: **144** (lint CLEAN 유지)
+- skill-evolution 누적: **106회** (SE #106, cycle 448)
+- BRANCHED 재발: local **143** ahead / origin **22** ahead (R6 사용자 영역, [P0] TODOS 박제)
+- open hub-dispatch issues: **0건**
+
 ## [0.5.65] — 2026-05-13
 
 ### Changed
