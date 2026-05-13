@@ -1,5 +1,11 @@
 # TODOS
 
+## [DONE 2026-05-13] worker-incident-triage — moneyball inbound 10건 CLOSED + [P1] RESOLVED (cycle 480)
+
+**상태**: ✅ DONE — 10건 CLOSED (cycle 480 worker-incident-triage)
+**내역**: CI 실패 8건 + Vercel 실패 2건 (moneyball cycles 354-358 진행 중 발생)
+**결론**: [P1] pnpm-lock.yaml RESOLVED — moneyball cycle 358 commit 55ecd62 lockfile sync 완료. 06:21 KST CI success 확인 (CI Failure Dispatch skipped = 정상). 총 누적 23건 전체 CLOSED.
+
 ## [DONE 2026-05-13] worker-incident-triage — moneyball inbound incidents 2건 (cycle 473)
 
 **상태**: ✅ DONE — 2건 모두 CLOSED (cycle 473 worker-incident-triage)
@@ -18,29 +24,23 @@
 **이슈**: #557/#558/#559/#560/#562 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
 **결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 479 진단, local 27 / origin 15)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 480 진단, local 28 / origin 15)
 
-**상태**: OPEN — local 27개 ahead, origin 15개 ahead (양방향 diverged)
+**상태**: OPEN — local 28개 ahead, origin 15개 ahead (양방향 diverged)
 **해소 필요**: force-push / merge / rebase 중 선택 (R6 사용자 영역)
-현재 상태: hub cycle 464-479 commits (local) vs moneyball/worker auto-ingest 15건 (origin)
+현재 상태: hub cycle 464-480 commits (local) vs moneyball/worker auto-ingest 15건 (origin)
 
 ## [DONE 2026-05-13] R6 대기 — git 병합 필요 (BRANCHED 재발 cycle 371)
 
 **상태**: ✅ DONE — commit `23f76f3` (fix: merge origin/main — BRANCHED 해소 local 168 / origin 23 ahead). cycle 464 진단 기준 `0 0` 완전 동기 확인.
 이전 상태: local 166개 ahead, origin 22개 ahead (cycle 463 기준)
 
-## [P1] moneyball CI fix — pnpm-lock.yaml 갱신 필요 (cycle 353 knip cleanup)
+## [DONE 2026-05-13] moneyball CI fix — pnpm-lock.yaml lockfile drift (cycle 353-358 arc)
 
+**상태**: ✅ DONE — moneyball cycle 358 commit 55ecd62 lockfile sync 완료. moneyball CI 06:21 KST success. CI Failure Dispatch skipped = 정상.
 **What**: `apps/moneyball/pnpm-lock.yaml` 재생성 + 커밋
 **Why**: cycle 353 knip cleanup에서 `@testing-library/user-event` package.json 제거 후 lockfile 미갱신 → CI `ERR_PNPM_OUTDATED_LOCKFILE` 실패
-**누적 이슈**: #552/#553/#555 (cycle 464 close) + #557/#558/#559/#560/#562 (cycle 470 close) + #564/#565/#567 (cycle 472 close) + #568/#569 (cycle 473 close) — **총 13건** moneyball CI 계속 failing
-**Fix**: moneyball 워커 세션에서:
-```bash
-pnpm install
-git add pnpm-lock.yaml
-git commit -m "fix: update pnpm-lock.yaml after @testing-library/user-event removal"
-```
-**Effort**: XS (1분)
+**누적 이슈**: #552/#553/#555 (cycle 464 close) + #557/#558/#559/#560/#562 (cycle 470 close) + #564/#565/#567 (cycle 472 close) + #568/#569 (cycle 473 close) + cycle 480 10건 — **총 23건** / 전체 CLOSED
 **Solution**: `docs/solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift.md`
 
 ## [DONE 2026-05-12] moneyball use-leaderboard.ts lazy init 패치 반영 — 모니터링 완료 (cycle 359)
