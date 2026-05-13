@@ -7,6 +7,8 @@
  * - Cap 15: target 의 connections 가 15 초과하면 last_verified 가 가장 오래된 것 1개 제거 (dangling edge 방지 위해 반대편도 제거, cascading 없음)
  */
 
+import yaml from "js-yaml";
+
 const MAX_CONNECTIONS = 15;
 
 /**
@@ -117,6 +119,24 @@ export function inlineConnectionsArray(yamlText) {
       return `connections: [${items.join(", ")}]\n`;
     },
   );
+}
+
+/**
+ * MDX frontmatter 재조립. gray-matter field 순서 변경 방지.
+ * yaml.dump + connections inline array 포맷 강제.
+ */
+export function stringifyPreservingOrder(raw, newFm, body) {
+  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
+  if (!fmMatch) throw new Error(`No frontmatter in ${raw.slice(0, 80)}`);
+  const newFmYaml = yaml.dump(newFm, {
+    lineWidth: -1,
+    flowLevel: -1,
+    noRefs: true,
+    quotingType: '"',
+    forceQuotes: false,
+  });
+  const processed = inlineConnectionsArray(newFmYaml);
+  return `---\n${processed}---\n${body}`;
 }
 
 export { MAX_CONNECTIONS };

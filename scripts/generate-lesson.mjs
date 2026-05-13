@@ -14,11 +14,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 import matter from "gray-matter";
-import yaml from "js-yaml";
 
 import { generateStructured } from "./lib/gemini-client.mjs";
 import { findMdxFiles } from "./lib/fs-helpers.mjs";
-import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
+import { validateConnections, MAX_CONNECTIONS, stringifyPreservingOrder } from "./lib/bidirectional-sync.mjs";
 import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
 import { validateMdxContent } from "./lib/mdx-validate.mjs";
@@ -54,21 +53,6 @@ function loadAllEntryFiles() {
     const parsed = matter(raw);
     return { slug, path: full, raw, frontmatter: parsed.data, body: parsed.content };
   });
-}
-
-// gray-matter 는 field 순서 변경 — yaml.dump + connections inline 재조립.
-function stringifyPreservingOrder(raw, newFm, body) {
-  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
-  if (!fmMatch) throw new Error(`No frontmatter in ${raw.slice(0, 80)}`);
-  const newFmYaml = yaml.dump(newFm, {
-    lineWidth: -1,
-    flowLevel: -1,
-    noRefs: true,
-    quotingType: '"',
-    forceQuotes: false,
-  });
-  const processed = inlineConnectionsArray(newFmYaml);
-  return `---\n${processed}---\n${body}`;
 }
 
 
@@ -215,7 +199,7 @@ function slugifyTitle(title) {
  */
 async function generateEntryPayload({ topicText, category, existingSlugs, extraContext }) {
   const catLabel = CATEGORY_LABELS[category] || category;
-  const slugList = existingSlugs.slice(0, 40).map((s) => `- ${s}`).join("\n");
+  const slugList = existingSlugs.map((s) => `- ${s}`).join("\n");
 
   const schema = {
     type: "object",

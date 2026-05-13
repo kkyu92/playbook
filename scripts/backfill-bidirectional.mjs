@@ -20,8 +20,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import yaml from "js-yaml";
-import { validateConnections, MAX_CONNECTIONS, inlineConnectionsArray } from "./lib/bidirectional-sync.mjs";
+import { validateConnections, MAX_CONNECTIONS, stringifyPreservingOrder } from "./lib/bidirectional-sync.mjs";
 import { findMdxFiles } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
@@ -135,13 +134,7 @@ function run() {
       source: afterSource,
     };
 
-    // matter.stringify 는 field 순서 고정. 원본 순서 보존 위해 커스텀 stringify.
-    const newRaw = stringifyPreservingOrder(
-      original.raw,
-      original.frontmatter,
-      newFrontmatter,
-      original.body,
-    );
+    const newRaw = stringifyPreservingOrder(original.raw, newFrontmatter, original.body);
 
     if (DRY_RUN) {
       console.log(`  📝 [dry] would update: ${w.slug}`);
@@ -160,30 +153,6 @@ function run() {
   } else {
     console.log(`\n✅ ${writes}개 파일 업데이트 완료`);
   }
-}
-
-/**
- * 원본 frontmatter 순서를 최대한 보존하면서 connections / source 만 교체.
- * 다른 필드는 원형 유지. 새 필드 (source) 는 끝에 append.
- */
-function stringifyPreservingOrder(raw, oldFm, newFm, body) {
-  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n/);
-  if (!fmMatch) throw new Error("No frontmatter found");
-  const _oldFmRaw = fmMatch[1];
-
-  // js-yaml dump 로 inline array + single-quoted preserve
-  const newFmYaml = yaml.dump(newFm, {
-    lineWidth: -1, // inline array 강제
-    flowLevel: -1,
-    noRefs: true,
-    quotingType: '"',
-    forceQuotes: false,
-  });
-
-  // Connections 는 inline array 포맷 유지 — 가독성
-  const processedYaml = inlineConnectionsArray(newFmYaml);
-
-  return `---\n${processedYaml}---\n${body}`;
 }
 
 run();
