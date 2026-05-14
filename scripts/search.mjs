@@ -93,6 +93,10 @@ function cosineSimilarity(a, b) {
   return dot;
 }
 
+function getPathPrefix(source) {
+  return source === "entry" || !source ? "/wiki/" : "/";
+}
+
 async function main() {
   const query = process.argv[2];
   const topK = parseInt(process.argv[3] || "5", 10);
@@ -172,7 +176,7 @@ async function main() {
     console.log(`<!-- JIT: ${bySlug.size} entries, ${top.length} chunks, ${elapsed}ms -->`);
     for (const [slug, chunks] of bySlug) {
       const first = chunks[0];
-      const pathPrefix = first.source === "entry" || !first.source ? "/wiki/" : "/";
+      const pathPrefix = getPathPrefix(first.source);
       console.log(`\n## ${first.title} (${pathPrefix}${slug})\n`);
       for (const c of chunks) {
         console.log(`### ${c.h2_title}\n`);
@@ -190,7 +194,7 @@ async function main() {
       const r = top[i];
       const preview = r.chunk_text.replace(/\n+/g, " ").slice(0, 200);
       const sourceTag = r.source ? `[${r.source}]` : "";
-      const pathPrefix = r.source === "entry" || !r.source ? "/wiki/" : "/";
+      const pathPrefix = getPathPrefix(r.source);
       console.log(`#${i + 1}  score=${r.score.toFixed(4)}  ${sourceTag}`);
       console.log(`     ${r.title}`);
       console.log(`     ${pathPrefix}${r.slug} § ${r.h2_title}`);

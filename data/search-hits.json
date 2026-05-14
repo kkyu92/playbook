@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 3,
-  "skipped": 1,
-  "searched": 2,
+  "totalInvocations": 6,
+  "skipped": 2,
+  "searched": 4,
   "hit": 0,
-  "noMatch": 2,
-  "lastUpdated": "2026-05-14T07:30:34.871Z",
+  "noMatch": 4,
+  "lastUpdated": "2026-05-14T14:21:11.378Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -55,5 +55,5 @@
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 1,
     "retros/2026-05-12-cycles-371-373": 1
   },
-  "totalQueries": 47
+  "totalQueries": 50
 }
