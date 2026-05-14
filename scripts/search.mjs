@@ -29,23 +29,57 @@ const INDEX_FILE = path.join(process.cwd(), "public", "embeddings.json");
 const HITS_FILE = path.join(process.cwd(), "data", "search-hits.json");
 
 /**
- * 검색 결과의 slug별 히트 카운트를 영구 저장.
- * 어떤 엔트리가 실제로 JIT 검색에서 활용되는지 추적.
+ * 검색 invocation 메트릭을 영구 저장.
+ * 3축 측정:
+ *  - engagement: 실제 검색 / 전체 invocation (라우터가 얼마나 skip 시키나)
+ *  - hit rate: ≥1 매치 / 실제 검색 (wiki에 답이 있는 비율)
+ *  - slug hit: 어떤 엔트리가 실제 활용되나 (무덤 진단)
+ *
+ * outcome: "skipped" | "no_match" | "hit"
  */
-function recordHits(slugs) {
-  let data = { totalQueries: 0, lastUpdated: null, hits: {} };
+function recordInvocation(outcome, slugs = []) {
+  // legacyQueries 는 schema v1 (totalQueries + hits dict 만 있던) 시절 누적치.
+  // hit/noMatch/skip 분리 측정이 불가능했으므로 rate 분모에서 제외한다.
+  const defaults = {
+    legacyQueries: 0,
+    totalInvocations: 0,
+    skipped: 0,
+    searched: 0,
+    hit: 0,
+    noMatch: 0,
+    lastUpdated: null,
+    hits: {},
+  };
+  let data = { ...defaults };
   try {
     if (fs.existsSync(HITS_FILE)) {
-      data = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
+      const loaded = JSON.parse(fs.readFileSync(HITS_FILE, "utf-8"));
+      data = { ...defaults, ...loaded };
+      // 구 schema (totalQueries + hits dict) → 신 schema 1회 마이그레이션
+      if (loaded.totalQueries != null && loaded.totalInvocations == null) {
+        data.legacyQueries = loaded.totalQueries;
+      }
     }
   } catch (err) {
     console.warn("[search] HITS_FILE parse failed — resetting to empty (path:", HITS_FILE, "):", err);
   }
-  data.totalQueries++;
-  data.lastUpdated = new Date().toISOString();
-  for (const slug of slugs) {
-    data.hits[slug] = (data.hits[slug] || 0) + 1;
+  data.totalInvocations++;
+  if (outcome === "skipped") {
+    data.skipped++;
+  } else {
+    data.searched++;
+    if (outcome === "hit") {
+      data.hit++;
+      for (const slug of slugs) {
+        data.hits[slug] = (data.hits[slug] || 0) + 1;
+      }
+    } else if (outcome === "no_match") {
+      data.noMatch++;
+    }
   }
+  data.lastUpdated = new Date().toISOString();
+  // 호환 필드: 외부 도구가 참조할 수 있도록 누적치 노출
+  data.totalQueries = data.legacyQueries + data.totalInvocations;
   fs.mkdirSync(path.dirname(HITS_FILE), { recursive: true });
   fs.writeFileSync(HITS_FILE, JSON.stringify(data, null, 2));
 }
@@ -75,6 +109,7 @@ async function main() {
   // 쿼리 라우터 — Phase 2c
   const route = routeQuery(query);
   if (!route.shouldSearch && !forceSearch && !injectMode) {
+    recordInvocation("skipped");
     console.log(`🚫 검색 스킵 (reason: ${route.reason}, confidence: ${route.confidence})`);
     console.log("   --force 플래그로 강제 검색 가능");
     process.exit(0);
@@ -120,7 +155,7 @@ async function main() {
 
   // 히트 카운트 기록 (unique slugs만)
   const hitSlugs = [...new Set(top.map((r) => r.slug))];
-  recordHits(hitSlugs);
+  recordInvocation(hitSlugs.length > 0 ? "hit" : "no_match", hitSlugs);
 
   if (injectMode) {
     if (top.length === 0) {

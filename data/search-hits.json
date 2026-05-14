@@ -1,6 +1,11 @@
 {
-  "totalQueries": 44,
-  "lastUpdated": "2026-05-14T06:12:05.599Z",
+  "legacyQueries": 44,
+  "totalInvocations": 3,
+  "skipped": 1,
+  "searched": 2,
+  "hit": 0,
+  "noMatch": 2,
+  "lastUpdated": "2026-05-14T07:30:34.871Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -49,5 +54,6 @@
     "retros/2026-05-13-cycles-452-455": 1,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 1,
     "retros/2026-05-12-cycles-371-373": 1
-  }
+  },
+  "totalQueries": 47
 }

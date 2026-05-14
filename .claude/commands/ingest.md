@@ -85,6 +85,19 @@ $ /ingest
   - 기타 schema.ts zod 준수
 - 본문: 문제 → 분석 → 해결 → 일반화 → Related 섹션 (Step 2 엔트리 링크)
 
+**Step 3a-2 — auto-connections 결정론 보강 (필수, 신규 entry 한정)**
+
+신규 `.mdx` 파일 저장 직후 의미 기반 connections 자동 채움:
+
+```bash
+node scripts/auto-connections.mjs content/<category>/<slug>.mdx 8
+```
+
+- 임베딩 유사도 ≥ 0.5 Top-8 자동 박기 + 양방향 (대상 entry 에도 역링크 추가)
+- LLM 가 Step 2 에서 박은 connections 와 합집합. 이미 있는 slug 는 skip
+- 결정론 단계라 LLM 누락 보완. **무덤 (orphan) 차단 마지막 방어선** — 진단 결과 zero-hit entries 의 94%가 connections 0 이라 추가됨 (cycle 494)
+- embeddings.json 이 없으면 자동 skip 후 진행
+
 **Step 3b — 기존 주제 → 기존 엔트리 보강**
 
 해당 엔트리에:
