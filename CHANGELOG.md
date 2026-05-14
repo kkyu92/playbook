@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.84] — 2026-05-15
+
+### Changed
+- curate cycle 509 — TODOS BRANCHED N=8→N=9 갱신 (local 12/origin 11, batch 직후 반복 패턴 evidence cycle 509 추가). wiki lint CLEAN (159 entries 유지) + scan-promotions N<3 또는 승격 완료 (5 카테고리). search dogfood 'BRANCHED 재발 push race' 2 entries 3 chunks 2ms (기존 solution 5회 재발 evidence 재확인). SE-heavy 후 다양성 회복 패턴 (cycle 506 curate → 507 SE → 508 review-code → 509 curate) (N=380 batch 107/380)
+
 ## [0.5.83] — 2026-05-15
 
 ### Changed
