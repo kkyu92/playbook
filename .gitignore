@@ -46,3 +46,14 @@ next-env.d.ts
 # JIT 검색 인덱스 (생성물, 매 빌드 재생성)
 /public/embeddings.json
 .env*.local
+
+# caveman skill installer (개인 로컬 도구, 멀티 IDE 배포물 — 본 리포는 콘텐츠/하네스, 도구 설치는 개인 환경에 분리)
+.agents/
+.claude/skills/
+.clinerules/
+.cursor/
+.opencode/
+.windsurf/
+.github/copilot-instructions.md
+AGENTS.md
+skills-lock.json
