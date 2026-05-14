@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.88] — 2026-05-15
+
+### Changed
+- curate cycle 520 — CHANGELOG 0.5.88 bump (cycle 518/519 SE #132/#133 carry-over). wiki lint CLEAN (159 entries 유지) + scan-promotions stable (2 카테고리 승격 완료 + 3 N<3 관찰 중). next_rec curate 정합 (SE #132/#133 2회 연속 → curate 다양성 회복). TODOS BRANCHED N=17→N=18 갱신 (cycle 520 재발 evidence 추가, local 29/origin 22) (N=380 batch 118/380)
+
 ## [0.5.87] — 2026-05-15
 
 ### Changed

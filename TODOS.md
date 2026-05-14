@@ -1,10 +1,10 @@
 # TODOS
 
-## [P0] R6 대기 — git BRANCHED 재발 N=17+ (cycle 519 진단, local 28 / origin 21)
+## [P0] R6 대기 — git BRANCHED 재발 N=18+ (cycle 520 진단, local 29 / origin 22)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local 28개 ahead, origin 21개 ahead.
-재발 evidence: cycle 371 / 463 / 493 / 494 / 502 / 504 / 505 / 507 / 509 / 511 / 512 / 513 / 514 / 516 / 517 / 518 / 519 (N=17). batch 직후 반복 패턴.
+현재 상태: local 29개 ahead, origin 22개 ahead.
+재발 evidence: cycle 371 / 463 / 493 / 494 / 502 / 504 / 505 / 507 / 509 / 511 / 512 / 513 / 514 / 516 / 517 / 518 / 519 / 520 (N=18). batch 직후 반복 패턴.
 **근본 패턴 의심**: matrix push race + moneyball auto-ingest 동시 ingest → 매 cycle 자동 origin commit + 본 cycle 자동 local commit = batch 5+ cycle 마다 diverged 재발. solution `ci-github-actions/2026-05-12-push-race-branched-fix-blocked` 박제 evidence 누적. 자동 batch push hook 또는 N% pull rebase 자동화 검토 필요 (R6 영역, 사용자 결정).
 
 ## [DONE 2026-05-13] worker-incident-triage — moneyball inbound 10건 CLOSED + [P1] RESOLVED (cycle 480)
