@@ -27,7 +27,7 @@ import { generateWithValidation } from "./lib/llm-gen-validate.mjs";
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
 
-function appendGithubOutput(entries) {
+export function appendGithubOutput(entries) {
   if (!process.env.GITHUB_OUTPUT) return;
   const lines = Object.entries(entries).map(([k, v]) => `${k}=${v}\n`).join("");
   fs.appendFileSync(process.env.GITHUB_OUTPUT, lines);

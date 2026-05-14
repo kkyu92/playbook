@@ -22,7 +22,7 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fetchGeekNews, parseAtomFeed } from "./lib/rss-fetch.mjs";
 import { generateStructured, wrapExternalContent } from "./lib/gemini-client.mjs";
-import { generateCustomEntry } from "./generate-lesson.mjs";
+import { generateCustomEntry, appendGithubOutput } from "./generate-lesson.mjs";
 import { CATEGORIES } from "./lib/categories.mjs";
 
 const args = process.argv.slice(2);
@@ -332,16 +332,14 @@ ${m.action_plan}`;
   console.log(`   📤 실 dispatch: ${moneyballDispatched}/${moneyballMatches.length}`);
 
   // GitHub Actions outputs / summary
-  if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `entries_created=${entriesCreated.length}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `dispatch_count=${moneyballMatches.length}\n`);
-    if (entriesCreated.length > 0) {
-      fs.appendFileSync(
-        process.env.GITHUB_OUTPUT,
-        `entry_slugs=${entriesCreated.map((e) => e.slug).join(",")}\n`,
-      );
-    }
+  const outputs = {
+    entries_created: entriesCreated.length,
+    dispatch_count: moneyballMatches.length,
+  };
+  if (entriesCreated.length > 0) {
+    outputs.entry_slugs = entriesCreated.map((e) => e.slug).join(",");
   }
+  appendGithubOutput(outputs);
   if (process.env.GITHUB_STEP_SUMMARY) {
     fs.appendFileSync(
       process.env.GITHUB_STEP_SUMMARY,
