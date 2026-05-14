@@ -14,6 +14,11 @@ const OUTPUT_FILE = path.join(
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
 
+function avgConfidence(items) {
+  if (items.length === 0) return 0;
+  return +(items.reduce((s, e) => s + e.frontmatter.confidence, 0) / items.length).toFixed(1);
+}
+
 // workers frontmatter 검증 기준 — 레포 진실 소스 (workers.config.json) 우선.
 // 머신 로컬 (~/.config/claude-hub/projects.conf) 은 fallback (개발자 편의).
 // 레포 파일 사용 시 contributor / 다른 머신 / CI 모두 동일 검증 동작 (reproducibility).
@@ -255,9 +260,7 @@ function main() {
     const catEntries = entries.filter((e) => e.frontmatter.category === cat);
     categoryStats[cat] = {
       count: catEntries.length,
-      avgConfidence: catEntries.length > 0
-        ? +(catEntries.reduce((s, e) => s + e.frontmatter.confidence, 0) / catEntries.length).toFixed(1)
-        : 0,
+      avgConfidence: avgConfidence(catEntries),
       complete: catEntries.filter((e) => e.frontmatter.status === "complete").length,
     };
   }
@@ -298,9 +301,7 @@ function main() {
     stats: {
       totalEntries: entries.length,
       totalComplete: entries.filter((e) => e.frontmatter.status === "complete").length,
-      avgConfidence: entries.length > 0
-        ? +(entries.reduce((s, e) => s + e.frontmatter.confidence, 0) / entries.length).toFixed(1)
-        : 0,
+      avgConfidence: avgConfidence(entries),
       categoryStats,
       weeklyStats,
       recentEntries,
