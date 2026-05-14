@@ -27,6 +27,12 @@ import { generateWithValidation } from "./lib/llm-gen-validate.mjs";
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-manifest.json");
 
+function appendGithubOutput(entries) {
+  if (!process.env.GITHUB_OUTPUT) return;
+  const lines = Object.entries(entries).map(([k, v]) => `${k}=${v}\n`).join("");
+  fs.appendFileSync(process.env.GITHUB_OUTPUT, lines);
+}
+
 // ─── Manifest ──────────────────────────────────────────────────
 
 function regenerateManifest() {
@@ -410,12 +416,12 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
     for (const e of evictions) console.log(`   ${e.from} ✂ ${e.evicted}`);
   }
 
-  if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `file_path=${path.relative(process.cwd(), newPath)}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `topic_title=${payload.title}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `category=${cat}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `source=${source}\n`);
-  }
+  appendGithubOutput({
+    file_path: path.relative(process.cwd(), newPath),
+    topic_title: payload.title,
+    category: cat,
+    source,
+  });
 
   return { slug: newSlug, path: newPath, evictions };
 }
@@ -486,12 +492,12 @@ async function suggest() {
     console.log(`     이유: ${t.rationale}`);
   });
 
-  if (process.env.GITHUB_OUTPUT) {
-    topics.forEach((t, i) => {
-      fs.appendFileSync(process.env.GITHUB_OUTPUT, `topic_${i + 1}_text=${t.topic_text}\n`);
-      fs.appendFileSync(process.env.GITHUB_OUTPUT, `topic_${i + 1}_category=${t.category}\n`);
-    });
-  }
+  const topicsOutput = {};
+  topics.forEach((t, i) => {
+    topicsOutput[`topic_${i + 1}_text`] = t.topic_text;
+    topicsOutput[`topic_${i + 1}_category`] = t.category;
+  });
+  appendGithubOutput(topicsOutput);
 
   return topics;
 }
@@ -516,11 +522,11 @@ async function auto() {
   }
   console.log(`\n✅ auto 완료: ${results.length}/${topics.length} 생성`);
 
-  if (process.env.GITHUB_OUTPUT) {
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `entries_created=${results.length}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `topics_targeted=${topics.length}\n`);
-    fs.appendFileSync(process.env.GITHUB_OUTPUT, `failed_count=${topics.length - results.length}\n`);
-  }
+  appendGithubOutput({
+    entries_created: results.length,
+    topics_targeted: topics.length,
+    failed_count: topics.length - results.length,
+  });
 
   // 부분/전체 실패 모두 exit 1 → workflow step outcome=failure → E6 Partial failure Issue 트리거
   if (results.length < topics.length && topics.length > 0) {
