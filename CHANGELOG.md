@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.87] — 2026-05-15
+
+### Changed
+- curate cycle 517 — CHANGELOG 0.5.87 bump (cycle 516 review-code carry-over: scout-geeknews.mjs cross-file appendGithubOutput helper 재사용, -2 lines, env check 1번, 회귀 0). wiki lint CLEAN (159 entries 유지) + scan-promotions stable (5 카테고리). next_rec curate 정합 (review-code → curate 교대 자연). TODOS BRANCHED N=14→N=15 갱신 (cycle 517 재발 evidence 추가, local 25/origin 19) (N=380 batch 115/380)
+
 ## [0.5.86] — 2026-05-15
 
 ### Changed
