@@ -1,5 +1,11 @@
 # TODOS
 
+## [P0] R6 대기 — git BRANCHED 재발 N=5+ (cycle 502 진단, local 2 / origin 1)
+
+origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
+현재 상태: local 2개 ahead (7549816, 848753e), origin 1개 ahead (f29062b auto-ingest moneyball cycle 421).
+재발 evidence: cycle 371 / 463 / 493 / 494 / 502 (N=5). batch 직후 반복 패턴.
+
 ## [DONE 2026-05-13] worker-incident-triage — moneyball inbound 10건 CLOSED + [P1] RESOLVED (cycle 480)
 
 **상태**: ✅ DONE — 10건 CLOSED (cycle 480 worker-incident-triage)
