@@ -115,13 +115,18 @@ async function main() {
   scored.sort((a, b) => b.score - a.score);
   const elapsed = Date.now() - start;
 
-  const top = scored.slice(0, topK);
+  const SCORE_THRESHOLD = 0.88;
+  const top = scored.filter((c) => c.score >= SCORE_THRESHOLD).slice(0, topK);
 
   // 히트 카운트 기록 (unique slugs만)
   const hitSlugs = [...new Set(top.map((r) => r.slug))];
   recordHits(hitSlugs);
 
   if (injectMode) {
+    if (top.length === 0) {
+      console.log(`<!-- JIT: no match (threshold=${SCORE_THRESHOLD}, best=${scored[0]?.score.toFixed(4)}) -->`);
+      process.exit(0);
+    }
     // 에이전트 컨텍스트 주입 모드: 청크 본문만 구조화 출력
     // 중복 slug 제거 — 같은 엔트리의 여러 청크는 하나로 합침
     const bySlug = new Map();
@@ -142,7 +147,10 @@ async function main() {
     }
   } else {
     // 사람용 verbose 모드
-    console.log(`\n⚡ Top ${topK} (검색 ${elapsed}ms)\n`);
+    if (top.length === 0) {
+      console.log(`\n🚫 No match (threshold=${SCORE_THRESHOLD}, best score=${scored[0]?.score.toFixed(4)} — wiki에 관련 entry 없음)\n`);
+    } else {
+    console.log(`\n⚡ Top ${topK} (검색 ${elapsed}ms, threshold=${SCORE_THRESHOLD})\n`);
     for (let i = 0; i < top.length; i++) {
       const r = top[i];
       const preview = r.chunk_text.replace(/\n+/g, " ").slice(0, 200);
@@ -153,6 +161,7 @@ async function main() {
       console.log(`     ${pathPrefix}${r.slug} § ${r.h2_title}`);
       console.log(`     ${preview}${r.chunk_text.length > 200 ? "…" : ""}`);
       console.log("");
+    }
     }
   }
 }
