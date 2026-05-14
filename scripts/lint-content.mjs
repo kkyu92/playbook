@@ -127,6 +127,14 @@ function checkUnusedEntries(entries) {
     .map(({ slug, days }) => ({ slug, days }));
 }
 
+function printSection(title, items, formatItem, footer) {
+  if (items.length === 0) return;
+  console.log(`=== ${title} ===`);
+  for (const item of items) console.log(`  ${formatItem(item)}`);
+  if (footer) console.log(`  ${footer}`);
+  console.log("");
+}
+
 function main() {
   const entries = loadEntries();
   const orphans = checkOrphans(entries);
@@ -152,43 +160,16 @@ function main() {
   console.log(`${newPatterns.length === 0 ? "  " : "💡"} Pattern Candidates:  ${newPatterns.length}건 신규 / ${patterns.length}건 전체 (Journal 태그 ${PATTERN_MIN_COUNT}회+)`);
   console.log("");
 
-  if (orphans.length > 0) {
-    console.log("=== Orphans (참조하지만 엔트리 없음) ===");
-    for (const o of orphans) console.log(`  ${o.from} → ${o.to}`);
-    console.log("");
-  }
-  if (isolated.length > 0) {
-    console.log("=== Isolated (connections 없음) ===");
-    for (const s of isolated) console.log(`  ${s}`);
-    console.log("");
-  }
-  if (stale.length > 0) {
-    console.log("=== Stale (보강 또는 아카이브) ===");
-    for (const s of stale) console.log(`  ${s.slug} — confidence ${s.confidence}, ${s.days}일 전`);
-    console.log("");
-  }
-  if (inProgress.length > 0) {
-    console.log("=== Long In-Progress (status 변경 또는 보강) ===");
-    for (const s of inProgress) console.log(`  ${s.slug} — ${s.days}일 전 작성, 여전히 in-progress`);
-    console.log("");
-  }
-  if (unused.length > 0) {
-    console.log("=== JIT Unused (검색 hit 0, 사각지대 의심) ===");
-    for (const s of unused) console.log(`  ${s.slug} — ${s.days}일 전 작성, JIT 검색 한 번도 안 걸림`);
-    console.log("  💡 실 활용 없으면 wiki 에서 archive 또는 connections 재검토 권장");
-    console.log("");
-  }
-  if (patterns.length > 0) {
-    console.log("=== Pattern Promotion Candidates ===");
-    for (const p of patterns) {
-      if (p.promoted) {
-        console.log(`  ✓ '${p.tag}' (Journal ${p.count}건) — 이미 승격: ${p.promoted}`);
-      } else {
-        console.log(`  💡 '${p.tag}' (Journal ${p.count}건) — Wiki 엔트리화 검토`);
-      }
-    }
-    console.log("");
-  }
+  printSection("Orphans (참조하지만 엔트리 없음)", orphans, (o) => `${o.from} → ${o.to}`);
+  printSection("Isolated (connections 없음)", isolated, (s) => s);
+  printSection("Stale (보강 또는 아카이브)", stale, (s) => `${s.slug} — confidence ${s.confidence}, ${s.days}일 전`);
+  printSection("Long In-Progress (status 변경 또는 보강)", inProgress, (s) => `${s.slug} — ${s.days}일 전 작성, 여전히 in-progress`);
+  printSection("JIT Unused (검색 hit 0, 사각지대 의심)", unused, (s) => `${s.slug} — ${s.days}일 전 작성, JIT 검색 한 번도 안 걸림`, "💡 실 활용 없으면 wiki 에서 archive 또는 connections 재검토 권장");
+  printSection("Pattern Promotion Candidates", patterns, (p) =>
+    p.promoted
+      ? `✓ '${p.tag}' (Journal ${p.count}건) — 이미 승격: ${p.promoted}`
+      : `💡 '${p.tag}' (Journal ${p.count}건) — Wiki 엔트리화 검토`,
+  );
 
   console.log("───");
   console.log("의미 판단 (제목 유사도 / 중복 / 패턴→entry 결정) 은 Claude 가 /lint 호출 시 추가 분석.");
