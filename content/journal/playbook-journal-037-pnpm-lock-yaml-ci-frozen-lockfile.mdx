@@ -1,0 +1,59 @@
+---
+title: "Playbook Journal 037 — pnpm-lock.yaml 미동기화 → CI frozen-lockfile 연쇄 실패 패턴"
+category: harness-engineering
+date: "2026-05-14"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: pnpm-lock.yaml 미동기화 → CI frozen-lockfile 연쇄 실패 패턴 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260514-pnpm-lock-yaml-ci-frozen-lockfile-4b9e2e081c3bb96e14e84546e8e12d.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+fingerprint: ci-pnpm-lockfile-drift
+
+## 사례
+
+2026-05-07~13 기간 main 커밋 10+ 건에서 CI "pnpm install --frozen-lockfile" 실패.
+원인: package.json 에서 의존성 제거(tsx, @testing-library/user-event) 후
+pnpm-lock.yaml 를 커밋 없이 main 으로 push.
+
+## 근본 원인
+
+develop-cycle 이 package.json 변경을 포함한 커밋을 push 하면서
+pnpm-lock.yaml 의 updated dirty state 를 누락. 특히 직접 push main 워크플로우에서
+pre-commit hook 이나 CI pnpm install 검증 없이 커밋 가능.
+
+## 대응
+
+1. pnpm install 재실행 → frozen-lockfile PASS 검증 후 pnpm-lock.yaml 포함 커밋
+2. 10개 lesson-pending GH 이슈 수동 close
+
+## 재발 방지
+
+package.json 변경 커밋 전 반드시 pnpm install + pnpm install --frozen-lockfile PASS 확인.
+pnpm-lock.yaml 이 unstaged 상태면 반드시 같은 커밋에 포함.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
