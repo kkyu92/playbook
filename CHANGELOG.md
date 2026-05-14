@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.83] — 2026-05-15
+
+### Changed
+- curate cycle 506 — TODOS BRANCHED N=7 갱신 (local 10/origin 7, batch 직후 반복 패턴 진단 추가). memory `develop-cycle skill family architecture` 갱신 (cycle 487→505 / SE #120→#128 / wiki 152→159 / batch 88→103/380). next_rec curate 정합 + SE-heavy 3/4 cycle 후 다양성 보강 (N=380 batch 104/380)
+
 ## [0.5.82] — 2026-05-14
 
 ### Changed

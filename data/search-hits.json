@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 6,
+  "totalInvocations": 7,
   "skipped": 2,
-  "searched": 4,
-  "hit": 0,
+  "searched": 5,
+  "hit": 1,
   "noMatch": 4,
-  "lastUpdated": "2026-05-14T14:21:11.378Z",
+  "lastUpdated": "2026-05-14T21:02:37.106Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -52,8 +52,9 @@
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 2,
     "retros/2026-05-13-cycles-452-455": 1,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 1,
-    "retros/2026-05-12-cycles-371-373": 1
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 2,
+    "retros/2026-05-12-cycles-371-373": 1,
+    "retros/2026-05-12-cycles-356-360": 1
   },
-  "totalQueries": 50
+  "totalQueries": 51
 }
