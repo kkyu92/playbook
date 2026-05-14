@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.82] — 2026-05-14
+
+### Changed
+- curate cycle 501 — TODOS BRANCHED 재발 P0 (cycle 494) DONE 박제. fake batch 87 fake commits revert 후 0/0 sync 회복 확인. wiki 159 entries lint CLEAN. fake batch self-block memory 박제 확인 (N=380 batch 99/380)
+
 ## [0.5.81] — 2026-05-14
 
 ### Added

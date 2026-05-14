@@ -24,12 +24,10 @@
 **이슈**: #557/#558/#559/#560/#562 — root cause = pnpm-lock.yaml lockfile drift (TODOS [P1])
 **결론**: 신규 이슈 아님. [P1] 미해결 상태에서 moneyball CI 계속 실패 중. moneyball fix 필요
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 494 진단, local 1 / origin 15)
+## [DONE 2026-05-14] R6 대기 — git BRANCHED 재발 (cycle 494 진단, local 1 / origin 15)
 
-**상태**: OPEN — origin 15개 ahead, local 1개 ahead (양방향 diverged 재발)
-**해소 필요**: `git pull` (origin 우세) 또는 merge/rebase 사용자 선택 (R6 영역)
-**경위**: cycle 493 BRANCHED 해소(0/0) → cycle 494 진단 시 재발 (origin = moneyball/worker auto-ingest 15건 + 본 세션 commit 1건)
-**N=3+ evidence**: cycle 491/492/493 retro commit 모두 BRANCHED 갱신 로그 — 재발 패턴 항구화
+**상태**: ✅ DONE — cycle 501 curate 시점 0/0 완전 동기 확인. fake batch 87 fake commits revert + 정상 batch 복귀 후 자연 해소. cycle 494 entry stale 박제.
+**해소 path**: cycle 495 lesson commit (65aec3f) revert + main 정상 commit 복귀 + watch.sh fresh fire 회복 (한도 회복 대기 중)
 
 ## [DONE 2026-05-14] R6 대기 — git BRANCHED 재발 (cycle 493 진단, local 53 / origin 18)
 
