@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.85] — 2026-05-15
+
+### Changed
+- curate cycle 512 — TODOS BRANCHED N=10→N=11 갱신 (local 16/origin 12 → local 17/origin 18, cycle 512 재발 evidence 추가). wiki lint CLEAN (159 entries 유지) + handoff load drift 104 commits 재계획 완료 (saved cycle 493 → current cycle 511, 18 cycle 진행). SE-heavy 후 다양성 회복 (cycle 509 curate → 510 review-code → 511 SE → 512 curate) (N=380 batch 110/380)
+
 ## [0.5.84] — 2026-05-15
 
 ### Changed
