@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.81] — 2026-05-14
+
+### Added
+- **wiki 검색 score threshold 0.88** — `scripts/search.mjs` SCORE_THRESHOLD 추가. 오답 반환 차단 ("no match" 정직 모드). 데이터 기반 calibration (정답 0.89+ / 오답 0.84~0.87)
+- **develop-cycle-hub skill 통합** — 4 chain (explore-idea/curate/fix-incident/worker-incident-triage) 시퀀스 첫 step에 `pnpm search` 추가. JIT 검색 강제 메커니즘 + ROI 측정 baseline 박제 (cycle 493 = 43 queries / 사이클당 0.087, target N=10 후 ≥ 51 / ≥ 0.8)
+
+### Changed
+- `public/embeddings.json` 재생성 (994 → 1246 chunks, +252)
+- curate cycle 494 — wiki lint CLEAN (156 entries) + skill 통합 dogfood 첫 발화 + memory 갱신 + TODOS BRANCHED 재발 박제 (N=380 batch 92/380)
+
+### Background
+- 벤치마크 (5 쿼리 실측): 오답 반환 2/5 → 0/5, honest no-match 0/5 → 3/5
+- 자가검증 4차례 반복 (모델 업그레이드 → skill 통합 → threshold 먼저 → 데이터 기반 0.88) 으로 정답 도달
+
 ## [0.5.80] — 2026-05-13
 
 ### Changed
