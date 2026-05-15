@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.90] — 2026-05-15
+
+### Changed
+- curate cycle 523 — CHANGELOG 0.5.90 bump. wiki lint CLEAN (159 entries 유지) + scan-promotions stable (2 카테고리 승격 완료 + 3 N<3 관찰 중). next_rec=skill-evolution 이지만 SE 자기조정 성공 (cycle 522 retro window 503-522 = SE 8/20=40% ≥ 40% + 명단 동일 8개) → 마커 부재 → curate 진행 (SE/curate 교대 안정 + 3회 연속 회피 OK). TODOS BRANCHED N=19→N=20 갱신 (cycle 523 재발 evidence 추가, local 34/origin 24) (N=380 batch 120/380)
+
 ## [0.5.89] — 2026-05-15
 
 ### Changed
