@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 17,
+  "totalInvocations": 18,
   "skipped": 3,
-  "searched": 14,
-  "hit": 3,
+  "searched": 15,
+  "hit": 4,
   "noMatch": 11,
-  "lastUpdated": "2026-05-15T12:10:13.828Z",
+  "lastUpdated": "2026-05-15T22:59:42.891Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 2,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 1,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 8,
+    "reports/closed-loop-health": 9,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 3,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 4,
@@ -55,7 +55,8 @@
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 3,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
-    "retros/2026-05-13-cycles-482-485": 1
+    "retros/2026-05-13-cycles-482-485": 1,
+    "retros/2026-05-13-cycles-410-411": 1
   },
-  "totalQueries": 61
+  "totalQueries": 62
 }
