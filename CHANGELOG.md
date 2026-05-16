@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.0] — 2026-05-16
+
+### Changed
+- curate cycle 565 — CHANGELOG 0.6.0 bump (cycles 563-564 누적). wiki lint CLEAN (164 entries 유지, JIT Unused 4건 journal append-only 정상). TODOS BRANCHED N=58→59 갱신 (local 50→51/origin 48). memory 2건 stale 갱신 (project_bidirectional/develop_cycle_skill_family). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). SE 마커 없음 (trigger-5 평가 대기). (N=380 batch ~172/380)
+- review-code cycle 563 — CONFIDENCE_LABELS 중앙화 (schema.ts export + 3파일 DRY fix) + health 10/10 STABLE + SE Trigger-5 마커 SET (window 544-563: SE=7/20=35%, 명단=8 동일 → cycle 564 SE #150 강제 발화).
+- skill-evolution SE #150 cycle 564 — **안정 명단 phase steady-state oscillation 확정** (SE-skip2~3-SE 주기 반복 패턴 박제). curate/review-code 우세 phase 에서 SE 35-45% oscillation 자연 현상. TODOS BRANCHED N=56→58 갱신 (local 50/origin 48). MIGRATION-PATH.md #150 append.
+
 ## [0.5.99] — 2026-05-16
 
 ### Changed
