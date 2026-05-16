@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { getManifest } from "@/lib/content";
-import { CATEGORIES, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/schema";
+import { CATEGORIES, CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS } from "@/lib/schema";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Wiki",
   description: "AI 하네스 엔지니어링 위키 엔트리 전체 목록",
 };
-
-const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"];
 
 const COMING_SOON_TOPICS: Record<string, string[]> = {
   "project-ops": ["Vercel 배포 전략", "GitHub Actions cron 운영", "드리프트 감지"],

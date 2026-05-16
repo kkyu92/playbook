@@ -1,8 +1,5 @@
 import type { Frontmatter } from "@/lib/schema";
-import { CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/schema";
-
-
-const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"];
+import { CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS } from "@/lib/schema";
 
 interface SummaryCardProps {
   frontmatter: Frontmatter;

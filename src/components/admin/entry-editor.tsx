@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { CATEGORIES, CATEGORY_LABELS } from "@/lib/schema";
+import { CATEGORIES, CATEGORY_LABELS, CONFIDENCE_LABELS } from "@/lib/schema";
 import type { Category } from "@/lib/schema";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
@@ -79,8 +79,6 @@ interface EntryEditorProps {
   initialSha?: string;
   allSlugs?: string[];
 }
-
-const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"] as const;
 
 const DEFAULT_FRONTMATTER: Omit<Frontmatter, "date"> = {
   title: "",
