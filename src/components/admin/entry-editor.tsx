@@ -80,6 +80,8 @@ interface EntryEditorProps {
   allSlugs?: string[];
 }
 
+const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"] as const;
+
 const DEFAULT_FRONTMATTER: Omit<Frontmatter, "date"> = {
   title: "",
   category: "prompt-engineering",
@@ -183,6 +185,7 @@ export function EntryEditor({
   }
 
   async function handleSave() {
+    if (saving) return;
     if (!fm.title.trim()) {
       setError("제목을 입력하세요");
       return;
@@ -362,11 +365,7 @@ export function EntryEditor({
               ))}
             </div>
             <p className="text-xs text-muted mt-1">
-              {
-                ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"][
-                  fm.confidence
-                ]
-              }
+              {CONFIDENCE_LABELS[fm.confidence]}
             </p>
           </div>
 
