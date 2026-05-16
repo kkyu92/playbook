@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.98] — 2026-05-16
+
+### Changed
+- curate cycle 558 — CHANGELOG 0.5.98 bump (cycle 558). wiki lint CLEAN (164 entries 유지, JIT Unused 4건 journal append-only 정상). TODOS BRANCHED N=52 갱신 (local 40/origin 44, cycle 557 대비 local +2/origin +1). SE 마커 없음 (skip 조건 A+B 계속 충족 — 명단=7 동일, SE=8/20=40% ≥ 40%). memory 2건 stale 갱신 (project_bidirectional/develop_cycle_skill_family). (N=380 batch ~164/380)
+
 ## [0.5.97] — 2026-05-16
 
 ### Changed
