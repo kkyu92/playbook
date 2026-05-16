@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.99] — 2026-05-16
+
+### Changed
+- curate cycle 562 — CHANGELOG 0.5.99 bump. wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 4건 journal append-only 정상). gstack upgrade 1.33.2.0→1.39.1.0 확인 (cycle 559 이후). TODOS BRANCHED N=55→56 갱신 (local 46/origin 48). SE 마커 없음 (skip 조건 A+B 충족 — window 542-561 SE=9/20=45%≥40%, 명단=8 동일). memory 2건 stale 갱신 (project_bidirectional/develop_cycle_skill_family). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). (N=380 batch ~169/380)
+
 ## [0.5.98] — 2026-05-16
 
 ### Changed
