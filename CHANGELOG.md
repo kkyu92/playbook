@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.97] — 2026-05-16
+
+### Changed
+- curate cycle 557 — CHANGELOG 0.5.97 bump (cycle 557). wiki lint CLEAN (164 entries 유지, JIT Unused 4건 journal append-only 정상). TODOS BRANCHED N=51 갱신 (local 38/origin 43, cycle 556 대비 local +2). SE 마커 없음 (skip 조건 A+B 계속 충족 — 명단=7 동일, SE=9/20=45% ≥ 40%). search-hits.json +1 invocation (totalInvocations 18→19). gstack upgrade 1.33.2.0→1.39.1.0 감지 (carry-over). (N=380 batch ~163/380)
+
 ## [0.5.96] — 2026-05-16
 
 ### Changed
