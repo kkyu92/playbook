@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.5.96] — 2026-05-16
+
+### Changed
+- curate cycle 556 — CHANGELOG 0.5.96 bump (cycles 540-555: SE #141~#147 7회 + curate 8회, 17 사이클 누적). SE #147 cycle 555 false-positive 방지 룰 박제 (N_ARG batch window 사용 시 skip 조건 오판 방지 — bash command 명시). wiki lint CLEAN (164 entries 유지) + scan-promotions stable (2 카테고리 승격 완료 + 3 N<3 관찰 중). memory 2건 stale 갱신 (cycle/BRANCHED 수치). TODOS BRANCHED N=50 갱신 (local 36/origin 43). (N=380 batch ~163/380)
+
 ## [0.5.95] — 2026-05-15
 
 ### Changed
