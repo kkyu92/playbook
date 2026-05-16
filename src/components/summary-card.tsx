@@ -1,5 +1,5 @@
 import type { Frontmatter } from "@/lib/schema";
-import { CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS } from "@/lib/schema";
+import { CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS, CONFIDENCE_RANGE } from "@/lib/schema";
 
 interface SummaryCardProps {
   frontmatter: Frontmatter;
@@ -54,7 +54,7 @@ export function SummaryCard({ frontmatter, slug, readingTime }: SummaryCardProps
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted">Confidence</span>
           <span className="inline-flex gap-1">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {CONFIDENCE_RANGE.map((i) => (
               <span
                 key={i}
                 className="inline-block h-2 w-2 rounded-full"

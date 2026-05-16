@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { CATEGORIES, CATEGORY_LABELS, CONFIDENCE_LABELS } from "@/lib/schema";
+import { CATEGORIES, CATEGORY_LABELS, CONFIDENCE_LABELS, CONFIDENCE_RANGE } from "@/lib/schema";
 import type { Category } from "@/lib/schema";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
@@ -348,7 +348,7 @@ export function EntryEditor({
               Confidence: {fm.confidence}<Tip text="이 주제에 대한 이해도. 1=들어봤다, 3=적용했다, 5=가르칠 수 있다. 그래프 노드 크기에 반영." />
             </label>
             <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((n) => (
+              {CONFIDENCE_RANGE.map((n) => (
                 <button
                   key={n}
                   onClick={() => updateFm("confidence", n)}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getManifest } from "@/lib/content";
-import { CATEGORIES, CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS } from "@/lib/schema";
+import { CATEGORIES, CATEGORY_LABELS, CATEGORY_COLORS, CONFIDENCE_LABELS, CONFIDENCE_RANGE } from "@/lib/schema";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -86,7 +86,7 @@ export default function WikiIndexPage() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs text-muted">Confidence</span>
                     <span className="inline-flex gap-0.5">
-                      {[1, 2, 3, 4, 5].map((i) => (
+                      {CONFIDENCE_RANGE.map((i) => (
                         <span
                           key={i}
                           className="h-1.5 w-1.5 rounded-full"

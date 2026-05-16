@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { getManifest } from "@/lib/content";
+import { CONFIDENCE_RANGE } from "@/lib/schema";
 import { KnowledgeGraph } from "@/components/knowledge-graph";
 import { MobileCategories } from "@/components/mobile-categories";
 import { Header } from "@/components/header";
@@ -9,7 +10,7 @@ function GraphSkeleton() {
     <div className="h-full w-full animate-pulse bg-surface/30 flex items-center justify-center">
       <div className="flex flex-col items-center gap-3">
         <div className="flex gap-2">
-          {[1, 2, 3, 4, 5].map((i) => (
+          {CONFIDENCE_RANGE.map((i) => (
             <div
               key={i}
               className="h-3 w-3 rounded-full bg-border animate-pulse"

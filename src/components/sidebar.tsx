@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CATEGORY_LABELS, CATEGORY_COLORS, CATEGORY_GROUPS, SERIES_LABELS } from "@/lib/schema";
+import { CATEGORY_LABELS, CATEGORY_COLORS, CATEGORY_GROUPS, SERIES_LABELS, CONFIDENCE_RANGE } from "@/lib/schema";
 import type { SidebarCategory, SidebarEntry } from "@/lib/content";
 
 
@@ -14,7 +14,7 @@ interface SidebarProps {
 function ConfidenceDots({ level }: { level: number }) {
   return (
     <span className="inline-flex gap-0.5 ml-auto">
-      {[1, 2, 3, 4, 5].map((i) => (
+      {CONFIDENCE_RANGE.map((i) => (
         <span
           key={i}
           className="inline-block h-1.5 w-1.5 rounded-full"

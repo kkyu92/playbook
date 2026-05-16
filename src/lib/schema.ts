@@ -19,6 +19,7 @@ export const CATEGORIES = [
 export type Category = (typeof CATEGORIES)[number];
 
 export const CONFIDENCE_LABELS = ["", "들어봤다", "이해했다", "적용했다", "깊이 안다", "가르칠 수 있다"] as const;
+export const CONFIDENCE_RANGE = [1, 2, 3, 4, 5] as const;
 
 export const CATEGORY_LABELS: Record<string, string> = {
   "prompt-engineering": "Prompt Engineering",

@@ -13,6 +13,7 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { Quiz } from "@/components/quiz";
 import { MermaidRenderer } from "@/components/mermaid-renderer";
 import Link from "next/link";
+import { CONFIDENCE_RANGE } from "@/lib/schema";
 
 const CATEGORY_COLORS: Record<string, string> = {
   "prompt-engineering": "var(--cat-prompt)",
@@ -237,7 +238,7 @@ export default async function WikiEntryPage({
                     {conn.direction === "mutual" ? "↔" : conn.direction === "outgoing" ? "→" : "←"}
                   </span>
                   <span className="inline-flex gap-0.5">
-                    {[1, 2, 3, 4, 5].map((i) => (
+                    {CONFIDENCE_RANGE.map((i) => (
                       <span
                         key={i}
                         className="h-1 w-1 rounded-full"
