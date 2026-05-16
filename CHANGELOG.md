@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.1] — 2026-05-16
+
+### Changed
+- curate cycle 566 — CHANGELOG 0.6.1 bump. wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 4건 journal series append-only 정상). TODOS BRANCHED N=59 갱신 (local 51→53/origin 48, cycle 565 2 commits 추가). memory 2건 갱신 (project_bidirectional/develop_cycle_skill_family cycle 565→566, local 51→53, ~172→~173). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). SE 마커 없음 (skip 조건 A+B 충족 — window 546-565 SE=8/20=40%≥40%, 명단=8 동일). worker-lesson CI all success (moneyball cycle 496-507 today). (N=380 batch ~173/380)
+
 ## [0.6.0] — 2026-05-16
 
 ### Changed
