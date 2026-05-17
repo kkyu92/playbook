@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.3] — 2026-05-17
+
+### Changed
+- review-code cycle 597 — buildDateRange 단순화 + SOURCE_KEYS 타입 안전화 + calcNodeBaseSize 매직넘버 상수화 + handleNodeHover null guard 추가 (4건 리팩터). TODOS BRANCHED N=87 갱신 (local 107/origin 53). SE Trigger-5 마커 X (window 578-597: SE=8/20=40%≥40% → B_PASS → cycle 598 skip 예정). (N=380 batch ~203/380)
+- curate cycle 598 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.3 bump. TODOS BRANCHED N=87→88 갱신 (local 109/origin 53). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE 마커 없음 (skip 조건 A+B 충족 지속). (N=380 batch ~204/380)
+
 ## [0.7.2] — 2026-05-17
 
 ### Changed
