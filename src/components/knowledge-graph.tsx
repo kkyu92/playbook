@@ -248,7 +248,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
     (node: GraphNode & { x: number; y: number }, color: string, ctx: CanvasRenderingContext2D) => {
       if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
       const confidence = node.confidence ?? 0;
-      const size = calcNodeBaseSize(confidence, undefined, confidence === 0);
+      const size = calcNodeBaseSize(confidence, node.type, node.type !== "roadmap" && confidence === 0);
       ctx.beginPath();
       ctx.arc(node.x, node.y, size + 6, 0, Math.PI * 2);
       ctx.fillStyle = color;
