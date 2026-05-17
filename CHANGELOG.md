@@ -7,7 +7,7 @@
 ## [0.7.16] — 2026-05-18
 
 ### Changed
-- curate cycle 633 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.16 bump. TODOS BRANCHED N=118→119 갱신 (local 162/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: window 614-633 SE=6/20=30%<40% → B_FAIL → cycle 634 SE #177 강제 발화 예정. (N=380 batch ~240/380)
+- curate cycle 633 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.16 bump. TODOS BRANCHED N=118→119 갱신 (local 162/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 window 613-632 SE=7/20=35%<40% → B_FAIL + 명단=8 동일(A_PASS) → cycle 634 SE #177 강제 발화 예정. (N=380 batch ~240/380)
 
 ## [0.7.15] — 2026-05-18
 
