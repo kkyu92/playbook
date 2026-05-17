@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.4] — 2026-05-17
+
+### Changed
+- curate cycle 575 — CHANGELOG 0.6.4 bump (cycles 573-575 누적). wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 4건 journal series append-only 정상). TODOS BRANCHED N=67→68 갱신 (local 68→70/origin 49→50, cycle 575). memory 2건 갱신 (project_bidirectional/develop_cycle_skill_family cycle 572→575, BRANCHED N=65→68). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). SE 마커 없음 (skip 조건 A+B 충족 — window 555-574 SE=8/20=40%≥40%, 명단=8 동일). data/search-hits.json totalQueries 69→70. (N=380 batch ~182/380)
+- skill-evolution SE #154 cycle 573 — 슬라이딩 윈도우 SE 이탈 재발 메커니즘 박제 (oscillation 5회 dogfood). MIGRATION-PATH.md #154 append. 명단=8 동일.
+- skill-evolution SE #155 cycle 574 — oscillation 6회 dogfood. window 553-573 SE=7/20=35% → 마커 SET → 강제 발화. 사후 window 555-574 SE=8/20=40% → B PASS + 명단=8 동일(A PASS) → cycle 575 skip. MIGRATION-PATH.md #155 append.
+
 ## [0.6.3] — 2026-05-17
 
 ### Changed
