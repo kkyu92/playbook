@@ -16,6 +16,7 @@ const SOURCE_MAP: Record<"scout" | "gap-pull" | "manual", { className: string; c
   "gap-pull": { className: styles.sourceGap, cssVar: "var(--d-gap)" },
   manual:   { className: styles.sourceManual, cssVar: "var(--d-manual)" },
 };
+const SOURCE_KEYS = Object.keys(SOURCE_MAP) as Array<keyof typeof SOURCE_MAP>;
 const DOT_STYLE = { display: "inline-block", width: 8, height: 8, borderRadius: 2, marginRight: 6, verticalAlign: "middle" as const };
 
 export const metadata: Metadata = {
@@ -36,6 +37,15 @@ const CATEGORY_SUBS: Record<string, string> = {
   "data-engineering": "파이프라인 / 임베딩 / 벡터",
   reports: "회고 / 리포트",
 };
+
+function buildDateRange(base: Date, count: number, ascending = false): string[] {
+  const dates = Array.from({ length: count }, (_, i) => {
+    const d = new Date(base);
+    d.setDate(d.getDate() - i);
+    return d.toISOString().split("T")[0];
+  });
+  return ascending ? dates.reverse() : dates;
+}
 
 function formatCount(n: number): string {
   if (n < 1000) return String(n);
@@ -115,12 +125,7 @@ function CategoryCoverage({ coverage, medianVal, binding }: { coverage: Coverage
 }
 
 function RecentAdditions({ entries, today }: { entries: ReturnType<typeof getManifest>["entries"]; today: Date }) {
-  const days: string[] = [];
-  for (let i = 0; i < 3; i++) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    days.push(d.toISOString().split("T")[0]);
-  }
+  const days = buildDateRange(today, 3);
 
   const byDate: Record<string, typeof entries> = {};
   for (const d of days) byDate[d] = [];
@@ -168,12 +173,7 @@ function RecentAdditions({ entries, today }: { entries: ReturnType<typeof getMan
 }
 
 function GrowthChart({ entries, today }: { entries: ReturnType<typeof getManifest>["entries"]; today: Date }) {
-  const days: string[] = [];
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(d.getDate() - i);
-    days.push(d.toISOString().split("T")[0]);
-  }
+  const days = buildDateRange(today, 30, true);
 
   const counts: Record<string, { scout: number; "gap-pull": number; manual: number }> = {};
   for (const d of days) counts[d] = { scout: 0, "gap-pull": 0, manual: 0 };
@@ -213,7 +213,7 @@ function GrowthChart({ entries, today }: { entries: ReturnType<typeof getManifes
         <span>{days[29]}</span>
       </div>
       <div className={styles.legendInline}>
-        {(Object.keys(SOURCE_MAP) as Array<keyof typeof SOURCE_MAP>).map((src) => (
+        {SOURCE_KEYS.map((src) => (
           <span key={src}><span style={{ ...DOT_STYLE, background: SOURCE_MAP[src].cssVar }} />{src}</span>
         ))}
       </div>
@@ -263,7 +263,7 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
           )}
         </svg>
         <div className={styles.donutLegend}>
-          {(Object.keys(SOURCE_MAP) as Array<keyof typeof SOURCE_MAP>).map((src) => {
+          {SOURCE_KEYS.map((src) => {
             const count = sourceMix[src];
             return (
               <div key={src} className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>

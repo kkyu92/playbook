@@ -11,6 +11,13 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
 });
 
+function calcNodeBaseSize(confidence: number, type?: "roadmap", isDangling?: boolean): number {
+  if (type === "roadmap") return 3.5;
+  if (isDangling) return 3;
+  const raw = 4 + (confidence || 0) * 1.2;
+  return Number.isFinite(raw) && raw > 0 ? raw : 4;
+}
+
 function isRoadmapLink(link: Record<string, unknown>): boolean {
   const src = link.source;
   const tgt = link.target;
@@ -122,6 +129,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
   );
 
   const handleNodeHover = useCallback((node: GraphNode | null) => {
+    if (node?.id === hoveredNodeRef.current?.id) return;
     hoveredNodeRef.current = node;
     setTooltipNode(node);
   }, []);
@@ -140,8 +148,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
       const isDimmed = highlightedRef.current.size > 0 && !isHighlighted && !isHovered;
       const isRoadmap = node.type === "roadmap";
       const isDangling = !isRoadmap && node.confidence === 0;
-      const rawBase = isRoadmap ? 3.5 : isDangling ? 3 : 4 + (node.confidence || 0) * 1.2;
-      const baseSize = Number.isFinite(rawBase) && rawBase > 0 ? rawBase : 4;
+      const baseSize = calcNodeBaseSize(node.confidence, isRoadmap ? "roadmap" : undefined, isDangling);
       const isActive = isHovered || isHighlighted;
       const size = isActive ? baseSize * 1.5 : baseSize;
 
@@ -241,7 +248,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
     (node: GraphNode & { x: number; y: number }, color: string, ctx: CanvasRenderingContext2D) => {
       if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
       const confidence = node.confidence ?? 0;
-      const size = confidence === 0 ? 3 : 4 + confidence * 1.2;
+      const size = calcNodeBaseSize(confidence, undefined, confidence === 0);
       ctx.beginPath();
       ctx.arc(node.x, node.y, size + 6, 0, Math.PI * 2);
       ctx.fillStyle = color;
