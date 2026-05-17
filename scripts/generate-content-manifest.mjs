@@ -13,6 +13,7 @@ const OUTPUT_FILE = path.join(
 );
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 function avgConfidence(items) {
   if (items.length === 0) return 0;
@@ -176,8 +177,12 @@ function main() {
       console.warn(`   ${d.from} → ${d.to}`)
     );
     // Add gray placeholder nodes for dangling connections
-    const danglingTargets = new Set(danglingConnections.map((d) => d.to));
-    for (const target of danglingTargets) {
+    const danglingByTarget = new Map();
+    for (const d of danglingConnections) {
+      if (!danglingByTarget.has(d.to)) danglingByTarget.set(d.to, []);
+      danglingByTarget.get(d.to).push(d);
+    }
+    for (const [target, dangling] of danglingByTarget) {
       nodes.push({
         id: target,
         label: target.split("/").pop().replace(/-/g, " "),
@@ -185,8 +190,7 @@ function main() {
         confidence: 0,
         description: "아직 작성되지 않은 엔트리",
       });
-      // Still add the edge
-      for (const d of danglingConnections.filter((x) => x.to === target)) {
+      for (const d of dangling) {
         edges.push({ source: d.from, target });
       }
     }
@@ -238,7 +242,7 @@ function main() {
     for (let i = 1; i < dates.length; i++) {
       const prev = new Date(dates[i - 1]);
       const curr = new Date(dates[i]);
-      const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
+      const diffDays = Math.round((curr - prev) / MS_PER_DAY);
       if (diffDays === 1) {
         streak++;
       } else if (diffDays > 1) {
