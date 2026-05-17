@@ -1,6 +1,6 @@
 # TODOS
 
-## [P0] R6 대기 — git BRANCHED 재발 N=110 (cycle 623 진단, local 146 / origin 67)
+## [P0] R6 대기 — git BRANCHED 재발 N=111 (cycle 624 진단, local 149 / origin 67)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
 현재 상태: local 146개 ahead, origin 67개 ahead (cycle 622 대비 local +1 / origin ±0).
