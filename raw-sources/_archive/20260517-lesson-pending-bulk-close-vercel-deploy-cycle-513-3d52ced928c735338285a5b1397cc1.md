@@ -1,0 +1,50 @@
+---
+date: "2026-05-17"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "3d52ced928c735338285a5b1397cc16a1e688784"
+---
+
+
+subtype: lesson
+fingerprint: lesson-pending-bulk-close-v2
+cycle: 513
+chain: fix-incident (lite)
+
+## 박제
+
+cycle 487 정책 (`lesson-pending CI flake reminder bulk close`, commit 8ae0ac2) 의 외부 요인 close path 를 vercel-deploy fingerprint 류 까지 명시적 확장.
+
+## evidence
+
+cycle 513 진단 시점 open lesson-pending issue 65건:
+- CI flake (`fp:ci-*`) 62건 — cycle 487 정책 직접 적용
+- vercel-deploy (`fp:vercel-deploy-*`) 3건 (#596 #592 #585) — 본 cycle 확장 박제
+
+모두 동일 외부 요인 패턴:
+- 일시적 실패 (CI flake / vercel side incident)
+- workers 코드 변경 없이 사라지는 회수 불가능 신호
+- D5 cron 의 3일 dead-letter reminder = 운영 noise
+
+## 정책 일반화 (외부 요인 fingerprint family)
+
+다음 fingerprint family 는 reminder bulk close 권장 (lesson 박제 없이 외부 요인 close):
+- `fp:ci-*` (CI flake — env / network / transient 실패)
+- `fp:vercel-deploy-*` (vercel side incident — platform 외부)
+
+회수 가능 incident (code bug / config 오류 / 우리 책임) 는 본 path 적용 X — 정상 lesson 박제 + reminder close.
+
+## 본 cycle 작업
+
+- 62 CI flake reminder bulk close
+- 3 vercel-deploy reminder close (확장 적용)
+- 0 open lesson-pending 도달 (cleanup 완료)
+- 코드 변경 X (운영 cleanup only)
+
+## 다음
+
+- 다음 D5 cron 이 동일 fingerprint 류 새로 reminder 박을 경우 본 정책 즉시 close path 적용
+- 회수 가능 fingerprint family (Sentry 류 / 사용자 신고 류) reminder 발생 시 lesson 박제 path 유지
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
