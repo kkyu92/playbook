@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.4] — 2026-05-17
+
+### Changed
+- review-code cycle 599 — nodePointerAreaPaint roadmap type 누락 수정 (hit-test area 불일치 버그). /health 10/10 확인. /simplify + /review adversarial clean. TODOS BRANCHED N=88→89 갱신 (local 111/origin 53). SE Trigger-5 마커 X (window 579-598: SE=8/20=40%≥40% → B_PASS → cycle 600 skip 예정). (N=380 batch ~205/380)
+- curate cycle 600 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.4 bump. TODOS BRANCHED N=89 갱신 (local 113/origin 53). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE 마커 평가: window 580-599 SE=7/20=35%<40% → B_FAIL 재평가 예정. (N=380 batch ~206/380)
+
 ## [0.7.3] — 2026-05-17
 
 ### Changed
