@@ -213,7 +213,7 @@ function GrowthChart({ entries, today }: { entries: ReturnType<typeof getManifes
         <span>{days[29]}</span>
       </div>
       <div className={styles.legendInline}>
-        {(["scout", "gap-pull", "manual"] as const).map((src) => (
+        {(Object.keys(SOURCE_MAP) as Array<keyof typeof SOURCE_MAP>).map((src) => (
           <span key={src}><span style={{ ...DOT_STYLE, background: SOURCE_MAP[src].cssVar }} />{src}</span>
         ))}
       </div>
@@ -263,7 +263,7 @@ function SourceMix({ sourceMix, total }: { sourceMix: { scout: number; "gap-pull
           )}
         </svg>
         <div className={styles.donutLegend}>
-          {(["scout", "gap-pull", "manual"] as const).map((src) => {
+          {(Object.keys(SOURCE_MAP) as Array<keyof typeof SOURCE_MAP>).map((src) => {
             const count = sourceMix[src];
             return (
               <div key={src} className="row" style={{ display: "flex", justifyContent: "space-between", padding: "4px 0" }}>

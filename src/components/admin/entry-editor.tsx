@@ -172,14 +172,9 @@ export function EntryEditor({
   }
 
   function toggleConnection(s: string) {
-    if (fm.connections.includes(s)) {
-      updateFm(
-        "connections",
-        fm.connections.filter((c) => c !== s)
-      );
-    } else {
-      updateFm("connections", [...fm.connections, s]);
-    }
+    updateFm("connections", fm.connections.includes(s)
+      ? fm.connections.filter((c) => c !== s)
+      : [...fm.connections, s]);
   }
 
   async function handleSave() {

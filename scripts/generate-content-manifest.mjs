@@ -255,9 +255,15 @@ function main() {
     dailyEntries[d] = (dailyEntries[d] || 0) + 1;
   }
 
+  const byCategory = new Map();
+  for (const e of entries) {
+    const cat = e.frontmatter.category;
+    if (!byCategory.has(cat)) byCategory.set(cat, []);
+    byCategory.get(cat).push(e);
+  }
   const categoryStats = {};
   for (const cat of CATEGORIES) {
-    const catEntries = entries.filter((e) => e.frontmatter.category === cat);
+    const catEntries = byCategory.get(cat) || [];
     categoryStats[cat] = {
       count: catEntries.length,
       avgConfidence: avgConfidence(catEntries),
