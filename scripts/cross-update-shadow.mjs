@@ -18,7 +18,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { readFileSync, writeFileSync } from "fs";
 import { execSync } from "child_process";
 import matter from "gray-matter";
-import { findMdxFiles } from "./lib/fs-helpers.mjs";
+import { loadMdxEntries } from "./lib/fs-helpers.mjs";
 
 const MERGED_FILE = process.env.MERGED_FILE;
 const PR_NUMBER = process.env.PR_NUMBER;
@@ -35,7 +35,6 @@ if (!GEMINI_API_KEY) {
 
 const SYSTEM_PROMPT = readFileSync("prompts/cross-update.md", "utf-8");
 
-// 머지된 entry 읽기
 const mergedRaw = readFileSync(MERGED_FILE, "utf-8");
 const merged = matter(mergedRaw);
 console.log(`Merged entry: ${MERGED_FILE}`);
@@ -43,25 +42,20 @@ console.log(`  title: ${merged.data.title}`);
 console.log(`  category: ${merged.data.category}`);
 console.log(`  tags: ${(merged.data.tags || []).join(", ")}`);
 
-// INDEX.md
 const index = readFileSync("INDEX.md", "utf-8");
 
-const allEntries = findMdxFiles("content")
-  .map((path) => {
-    const fm = matter(readFileSync(path, "utf-8")).data;
-    const slug = path.replace(/^content\//, "").replace(/\.mdx$/, "");
-    return {
-      slug,
-      title: fm.title,
-      category: fm.category,
-      description: fm.description,
-      tags: fm.tags || [],
-      confidence: fm.confidence || 1,
-      status: fm.status || "draft",
-      connections: fm.connections || [],
-    };
-  })
-  .filter((e) => `content/${e.slug}.mdx` !== MERGED_FILE);
+const allEntries = loadMdxEntries("content")
+  .filter(({ slug }) => `content/${slug}.mdx` !== MERGED_FILE)
+  .map(({ slug, frontmatter: fm }) => ({
+    slug,
+    title: fm.title,
+    category: fm.category,
+    description: fm.description,
+    tags: fm.tags || [],
+    confidence: fm.confidence || 1,
+    status: fm.status || "draft",
+    connections: fm.connections || [],
+  }));
 
 console.log(`All entries (excluding merged): ${allEntries.length}`);
 
@@ -154,7 +148,6 @@ if (!response) {
 const responseText = response.response.text();
 const usage = response.response.usageMetadata || {};
 
-// JSON parse — responseSchema 강제라 거의 항상 OK
 let parsed = null;
 let parseError = null;
 try {
