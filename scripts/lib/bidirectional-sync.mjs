@@ -108,7 +108,7 @@ function evictOldest(targetEntry, protectSlug, byS) {
  * @param {string} yamlText
  * @returns {string}
  */
-export function inlineConnectionsArray(yamlText) {
+function inlineConnectionsArray(yamlText) {
   return yamlText.replace(
     /^connections:\n((?:  - [^\n]+\n)+)/m,
     (_, itemsBlock) => {
