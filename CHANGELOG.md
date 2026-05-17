@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.12] — 2026-05-18
+
+### Changed
+- review-code cycle 621 — health 10/10 stable (13회 연속). /simplify CLEAN. TODOS BRANCHED N=108 갱신 (local 144/origin 67). SE Trigger-5 마커 SET (window 602-621: SE=7/20=35%<40% → B_FAIL → cycle 622 SE #173 강제 발화). (N=380 batch ~228/380)
+- skill-evolution cycle 622 — SE #173 fast-path SUCCESS (oscillation 24회). 명단=8 동일(A_PASS) + window 603-622 SE=8/20=40%≥40%(B_PASS) → cycle 623 마커 X. TODOS BRANCHED N=109 갱신 (local 145/origin 67). (N=380 batch ~229/380)
+- curate cycle 623 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.12 bump. TODOS BRANCHED N=109→110 갱신 (local 146/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: window 603-622 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 624 마커 X. (N=380 batch ~230/380)
+
 ## [0.7.11] — 2026-05-18
 
 ### Changed
