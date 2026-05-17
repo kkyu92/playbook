@@ -227,7 +227,6 @@ export function EntryEditor({
 
   return (
     <div>
-      {/* Top bar */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl font-black text-text">
           {mode === "new" ? "새 엔트리" : "엔트리 수정"}
@@ -260,7 +259,6 @@ export function EntryEditor({
       )}
 
       <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
-        {/* Left: Frontmatter form */}
         <div className="space-y-4">
           {/* Title */}
           <div>
@@ -454,7 +452,6 @@ export function EntryEditor({
           </div>
         </div>
 
-        {/* Right: MDX editor */}
         <div
           className="min-h-[600px]"
           data-color-mode="dark"
@@ -473,7 +470,6 @@ export function EntryEditor({
             visibleDragbar={false}
             {...(editorCmds ? { commands: editorCmds.toolbar as never[] } : {})}
           />
-          {/* Resize handle */}
           <div
             className="flex items-center justify-center h-3 cursor-ns-resize group hover:bg-surface/80 rounded-b-[var(--radius-md)] transition-colors"
             onMouseDown={(e) => {

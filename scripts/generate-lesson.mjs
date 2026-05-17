@@ -13,10 +13,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
-import matter from "gray-matter";
 
 import { generateStructured } from "./lib/gemini-client.mjs";
-import { findMdxFiles } from "./lib/fs-helpers.mjs";
+import { loadMdxEntries } from "./lib/fs-helpers.mjs";
 import { validateConnections, MAX_CONNECTIONS, stringifyPreservingOrder } from "./lib/bidirectional-sync.mjs";
 import { analyzeCoverage } from "./coverage-analyzer.mjs";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
@@ -87,12 +86,7 @@ function addBacklinksWithCap(workingMap, newEntry) {
 }
 
 function loadAllEntryFiles() {
-  return findMdxFiles(CONTENT_DIR).map((full) => {
-    const slug = path.relative(CONTENT_DIR, full).replace(/\.mdx$/, "");
-    const raw = fs.readFileSync(full, "utf8");
-    const parsed = matter(raw);
-    return { slug, path: full, raw, frontmatter: parsed.data, body: parsed.content };
-  });
+  return loadMdxEntries(CONTENT_DIR);
 }
 
 /**

@@ -19,28 +19,16 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import matter from "gray-matter";
 import { validateConnections, MAX_CONNECTIONS, stringifyPreservingOrder } from "./lib/bidirectional-sync.mjs";
-import { findMdxFiles } from "./lib/fs-helpers.mjs";
+import { loadMdxEntries } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const DRY_RUN = process.argv.includes("--dry-run");
 
-// ─── 1. 모든 MDX entry 로드 ─────────────────────────────────────────
-
-function loadAllEntries() {
-  return findMdxFiles(CONTENT_DIR).map((full) => {
-    const slug = path.relative(CONTENT_DIR, full).replace(/\.mdx$/, "");
-    const raw = fs.readFileSync(full, "utf8");
-    const parsed = matter(raw);
-    return { slug, path: full, raw, frontmatter: parsed.data, body: parsed.content };
-  });
-}
-
-// ─── 2. Backfill 적용 ────────────────────────────────────────────
+// ─── 1. Backfill 적용 ────────────────────────────────────────────
 
 function run() {
-  const entries = loadAllEntries();
+  const entries = loadMdxEntries(CONTENT_DIR);
   console.log(`📦 로드: ${entries.length} entries`);
 
   const allSlugs = entries.map((e) => e.slug);
