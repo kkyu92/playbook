@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.15] — 2026-05-18
+
+### Changed
+- curate cycle 631 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.15 bump. TODOS BRANCHED N=116→117 갱신 (local 159/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가 예정 (cycle 631 retro). (N=380 batch ~237/380)
+
 ## [0.7.14] — 2026-05-18
 
 ### Changed
