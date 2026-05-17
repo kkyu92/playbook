@@ -1,5 +1,7 @@
 # TODOS
 
+## [P0-SE] SE #177 마커 SET — cycle 634 skill-evolution 강제 발화 예정 (JSON tail-20 window 613-632 SE=7/20=35%<40% → B_FAIL)
+
 ## [P0] R6 대기 — git BRANCHED 재발 N=119 (cycle 633 진단, local 162 / origin 67)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
