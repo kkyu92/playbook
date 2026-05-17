@@ -1,10 +1,10 @@
 # TODOS
 
-## [P0] R6 대기 — git BRANCHED 재발 N=62+ (cycle 569 진단, local 59 / origin 49)
+## [P0] R6 대기 — git BRANCHED 재발 N=63+ (cycle 570 진단, local 60 / origin 49)
 
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local 59개 ahead, origin 49개 ahead (cycle 568 대비 local 58→59 증가, origin 48→49 증가).
-재발 evidence: cycle 371 / 463 / 493 / 494 / 502 / 504 / 505 / 507 / 509 / 511 / 512 / 513 / 514 / 516 / 517 / 518 / 519 / 520 / 522 / 523 / 524 / 526 / 527 / 528 / 529 / 530 / 531 / 532 / 533 / 534 / 535 / 536 / 537 / 538 / 539 / 540 / 541 / 542 / 543 / 544 / 545 / 546 / 547 / 548 / 549 / 551 / 552 / 553 / 554 / 555 / 556 / 557 / 558 / 559 / 560 / 561 / 562 / 563 / 564 / 565 / 566 / 567 / 568 / 569 (N=62). batch 직후 반복 패턴.
+현재 상태: local 60개 ahead, origin 49개 ahead (cycle 569 대비 local 59→60 증가, origin 49 유지).
+재발 evidence: cycle 371 / 463 / 493 / 494 / 502 / 504 / 505 / 507 / 509 / 511 / 512 / 513 / 514 / 516 / 517 / 518 / 519 / 520 / 522 / 523 / 524 / 526 / 527 / 528 / 529 / 530 / 531 / 532 / 533 / 534 / 535 / 536 / 537 / 538 / 539 / 540 / 541 / 542 / 543 / 544 / 545 / 546 / 547 / 548 / 549 / 551 / 552 / 553 / 554 / 555 / 556 / 557 / 558 / 559 / 560 / 561 / 562 / 563 / 564 / 565 / 566 / 567 / 568 / 569 / 570 (N=63). batch 직후 반복 패턴.
 **근본 패턴 의심**: matrix push race + moneyball auto-ingest 동시 ingest → 매 cycle 자동 origin commit + 본 cycle 자동 local commit = batch 5+ cycle 마다 diverged 재발. solution `ci-github-actions/2026-05-12-push-race-branched-fix-blocked` 박제 evidence 누적. 자동 batch push hook 또는 N% pull rebase 자동화 검토 필요 (R6 영역, 사용자 결정).
 
 ## [DONE 2026-05-13] worker-incident-triage — moneyball inbound 10건 CLOSED + [P1] RESOLVED (cycle 480)
