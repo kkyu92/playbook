@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.6] — 2026-05-17
+
+### Changed
+- review-code cycle 577 — loadMdxEntries 공유 util 추출 (backfill.mjs + generate-lesson.mjs DRY fix), JSX 구조 주석 4개 제거. health 10/10 STABLE. SE Trigger-5 마커 SKIP (window 558-577: JSON=7/20=35%, corrected 8/20=40%≥40%, 명단=8 동일 → skip 조건 A+B 충족). TODOS BRANCHED N=69→70 갱신 (local 75/origin 51).
+- curate cycle 578 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 0건). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). CHANGELOG 0.6.6 bump. TODOS BRANCHED N=70→71 갱신 (local 77/origin 51). memory 2건 갱신. (N=380 batch ~184/380)
+
 ## [0.6.5] — 2026-05-17
 
 ### Changed
