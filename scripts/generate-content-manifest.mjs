@@ -238,7 +238,7 @@ function main() {
     for (let i = 1; i < dates.length; i++) {
       const prev = new Date(dates[i - 1]);
       const curr = new Date(dates[i]);
-      const diffDays = (curr - prev) / (1000 * 60 * 60 * 24);
+      const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
       if (diffDays === 1) {
         streak++;
       } else if (diffDays > 1) {
@@ -322,10 +322,10 @@ function main() {
   );
 
   // ── Generate INDEX.md ──
-  generateIndex(entries, edges);
+  generateIndex(entries, edges, byCategory);
 }
 
-function generateIndex(entries, edges) {
+function generateIndex(entries, edges, byCategory) {
   const INDEX_FILE = path.join(process.cwd(), "INDEX.md");
 
   const now = new Date().toISOString();
@@ -339,16 +339,8 @@ function generateIndex(entries, edges) {
   lines.push(`## 엔트리 (${entries.length}개)`);
   lines.push("");
 
-  // Group entries by category
-  const byCategory = {};
-  for (const e of entries) {
-    const cat = e.frontmatter.category;
-    if (!byCategory[cat]) byCategory[cat] = [];
-    byCategory[cat].push(e);
-  }
-
   for (const cat of CATEGORIES) {
-    const catEntries = byCategory[cat];
+    const catEntries = byCategory.get(cat);
     if (!catEntries || catEntries.length === 0) continue;
     const label = CATEGORY_LABELS[cat] || cat;
     lines.push(`### ${label}`);
