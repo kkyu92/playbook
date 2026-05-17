@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.9] — 2026-05-17
+
+### Changed
+- curate cycle 614 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.9 bump. TODOS BRANCHED N=102 갱신 (local 134/origin 65). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 마커 X (window 594-613: SE=8/20=40%≥40% → B_PASS + 명단=8 동일 → A_PASS → cycle 615 skip 예정). (N=380 batch ~219/380)
+- skill-evolution cycles 612/613 — SE #169/#170 fast-path SUCCESS (oscillation 20/21회). TODOS BRANCHED N=100→102 갱신 (local 131→134/origin 64→65).
+
 ## [0.7.8] — 2026-05-17
 
 ### Changed
