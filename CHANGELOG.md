@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.7] — 2026-05-17
+
+### Changed
+- curate cycle 609 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. stale SE marker (cycle 607) 삭제 확인 (cycle 608 fast-path 미삭제 버그 해소). CHANGELOG 0.7.7 bump. TODOS BRANCHED N=97→98 갱신 (local 126/origin 61). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 마커 X (window 589-608: SE=8/20=40%≥40% → B_PASS + 명단=8 동일 → A_PASS → cycle 610 skip 예정). (N=380 batch ~216/380)
+
 ## [0.7.6] — 2026-05-17
 
 ### Changed
