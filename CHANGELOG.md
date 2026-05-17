@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.8] — 2026-05-17
+
+### Changed
+- curate cycle 611 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.8 bump. TODOS BRANCHED N=99→100 갱신 (local 130/origin 63). SE Trigger-5 마커 X (window 592-611: SE=8/20=40%≥40% → B_PASS + 명단=8 동일 → A_PASS → cycle 612 skip 예정).
+- review-code cycle 610 — generate-content-manifest MS_PER_DAY 상수 추출 + danglingConnections O(n²)→O(n) fix. TODOS BRANCHED N=98→99 갱신 (local 129/origin 62).
+
 ## [0.7.7] — 2026-05-17
 
 ### Changed
