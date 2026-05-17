@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.13] — 2026-05-18
+
+### Changed
+- review-code cycle 624 — health 10/10 stable (14회 연속). generate-content-manifest loadMdxEntries 재사용 + matter 데드 임포트 제거 (refactor). SE Trigger-5 마커 SET (window 605-624: SE=7/20=35%<40% → B_FAIL → cycle 625 SE #174 강제 발화). TODOS BRANCHED N=110→111 갱신 (local 149/origin 67). (N=380 batch ~231/380)
+- skill-evolution cycle 625 — SE #174 fast-path SUCCESS (oscillation 25회). 명단=8 동일(A_PASS) + window 606-625 SE=8/20=40%≥40%(B_PASS) → cycle 626 마커 X. TODOS BRANCHED N=111→112 갱신 (local 150/origin 67). (N=380 batch ~232/380)
+- curate cycle 626 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). memory 2건 갱신 (bidirectional: cycle 615-625 진행 로그 추가 / develop_cycle_skill_family: cycle 625 + SE #174 반영). SE Trigger-5 평가: window 606-625 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 627 마커 X. TODOS BRANCHED N=112 갱신. (N=380 batch ~232/380)
+
 ## [0.7.12] — 2026-05-18
 
 ### Changed
