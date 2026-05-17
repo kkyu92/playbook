@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
 import { CATEGORIES, CATEGORY_LABELS } from "./lib/categories.mjs";
-import { findMdxFiles } from "./lib/fs-helpers.mjs";
+import { loadMdxEntries } from "./lib/fs-helpers.mjs";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const OUTPUT_FILE = path.join(
@@ -105,9 +104,9 @@ function validateFrontmatter(data, filePath) {
 function main() {
   console.log("📦 Generating content manifest...");
 
-  const mdxFiles = findMdxFiles(CONTENT_DIR);
+  const rawEntries = loadMdxEntries(CONTENT_DIR);
 
-  if (mdxFiles.length === 0) {
+  if (rawEntries.length === 0) {
     console.log("   No MDX files found. Writing empty manifest.");
     const emptyManifest = { entries: [], graph: { nodes: [], edges: [] } };
     fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
@@ -118,19 +117,14 @@ function main() {
   const entries = [];
   let hasErrors = false;
 
-  for (const filePath of mdxFiles) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const { data, content: _content } = matter(raw);
-
+  for (const { slug, frontmatter: data, path: filePath } of rawEntries) {
     const relativePath = path.relative(CONTENT_DIR, filePath);
-    const slug = relativePath.replace(/\.mdx$/, "").replace(/\\/g, "/");
 
     if (!validateFrontmatter(data, relativePath)) {
       hasErrors = true;
       continue;
     }
 
-    // Defaults
     data.confidence = data.confidence || 1;
     data.connections = data.connections || [];
     data.status = data.status || "draft";
