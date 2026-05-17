@@ -122,6 +122,7 @@ function checkUnusedEntries(entries) {
 
   const hits = hitsData.hits || {};
   return entries
+    .filter((e) => !e.frontmatter.series)  // journal/series entries are series-read, not JIT-retrieved
     .map((e) => ({ slug: e.slug, days: daysSince(e.frontmatter.date), count: hits[e.slug] || 0 }))
     .filter((e) => e.days >= UNUSED_WARN_DAYS && e.count === 0)
     .map(({ slug, days }) => ({ slug, days }));

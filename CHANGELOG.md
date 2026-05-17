@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.5] — 2026-05-17
+
+### Changed
+- curate cycle 576 — CHANGELOG 0.6.5 bump. wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 0건). lint-content.mjs fix: journal series entries excluded from JIT Unused check (false positive 차단 — series entries are series-read, not JIT-retrieved). TODOS BRANCHED N=68→69 갱신 (local 70→72/origin 50→51, cycle 576). memory 2건 갱신. SE 마커 없음 (JSON tail-20 SE=7/20=35%, known undercount cycle 568 watch.sh kill → corrected=8/20=40%≥40% → B PASS + 명단=8 동일 → skip). scan-promotions: 승격 후보 없음. (N=380 batch ~183/380)
+
 ## [0.6.4] — 2026-05-17
 
 ### Changed
