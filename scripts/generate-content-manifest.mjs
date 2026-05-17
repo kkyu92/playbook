@@ -206,14 +206,14 @@ function main() {
   }
 
   // Calculate streak — sorted ascending; .at(-1) = most recent
-  const dates = [...new Set(entries.map((e) => e.frontmatter.date))].sort();
+  const dateSet = new Set(entries.map((e) => e.frontmatter.date));
+  const dates = [...dateSet].sort();
   let currentStreak = 0;
   let longestStreak = 0;
 
   if (dates.length > 0) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const dateSet = new Set(dates);
 
     let checkDate = new Date(today);
     const todayStr = checkDate.toISOString().split("T")[0];
@@ -304,7 +304,7 @@ function main() {
     dailyEntries,
     stats: {
       totalEntries: entries.length,
-      totalComplete: entries.filter((e) => e.frontmatter.status === "complete").length,
+      totalComplete: Object.values(categoryStats).reduce((s, c) => s + c.complete, 0),
       avgConfidence: avgConfidence(entries),
       categoryStats,
       weeklyStats,
