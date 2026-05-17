@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-17T13:23:37.345Z
+Updated: 2026-05-17T13:47:21.558Z
 
-## 엔트리 (176개)
+## 엔트리 (177개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -112,6 +112,7 @@ Updated: 2026-05-17T13:23:37.345Z
 - [Playbook Journal 041 — silent drift family prevention spec (cycle 471)](wiki/journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471) — confidence: 3, status: in-progress
 - [Playbook Journal 042 — lesson-pending CI flake reminder bulk close 정책 (cycle 487)](wiki/journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-) — confidence: 3, status: in-progress
 - [Playbook Journal 043 — lesson-pending bulk close 정책 vercel-deploy 확장 (cycle 513)](wiki/journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513) — confidence: 3, status: in-progress
+- [Playbook Journal 044 — W22 마감 Sat reversion 60% (cycle 516)](wiki/journal/playbook-journal-044-w22-sat-reversion-60-cycle-516) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -888,6 +889,7 @@ Updated: 2026-05-17T13:23:37.345Z
 - journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle- ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513 ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-044-w22-sat-reversion-60-cycle-516 ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
