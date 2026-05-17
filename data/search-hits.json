@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 28,
+  "totalInvocations": 29,
   "skipped": 6,
-  "searched": 22,
+  "searched": 23,
   "hit": 7,
-  "noMatch": 15,
-  "lastUpdated": "2026-05-17T11:40:22.409Z",
+  "noMatch": 16,
+  "lastUpdated": "2026-05-17T12:10:13.917Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -61,5 +61,5 @@
     "harness-engineering/drift-detection-methodology": 1,
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 1
   },
-  "totalQueries": 72
+  "totalQueries": 73
 }

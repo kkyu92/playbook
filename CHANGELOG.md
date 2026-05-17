@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.0] — 2026-05-17
+
+### Changed
+- review-code cycle 588 — cross-update-shadow.mjs: loadMdxEntries 재사용 DRY 리팩터 + 주석 3개 제거 (health 10/10 STABLE 유지). TODOS BRANCHED N=79 갱신 (local 93/origin 53). SE Trigger-5 마커 SKIP (window 569-588: SE=8/20=40%≥40%, 명단=8 동일 → skip 조건 A+B 충족). (N=380 batch ~194/380)
+- curate cycle 589 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.0 bump. TODOS BRANCHED N=79→80 갱신 (local 95/origin 53). memory 2건 갱신. SE 마커 없음 (skip 조건 A+B 충족 지속). (N=380 batch ~195/380)
+
 ## [0.6.9] — 2026-05-17
 
 ### Changed
