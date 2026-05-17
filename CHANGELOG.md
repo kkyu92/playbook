@@ -4,6 +4,15 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.2] — 2026-05-17
+
+### Changed
+- curate cycle 571 — CHANGELOG 0.6.2 bump (cycles 567-570 누적). wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 4건 journal series append-only 정상). TODOS BRANCHED N=63→64 갱신 (local 60→62/origin 49, cycle 570 대비 2 commits 추가). memory 2건 갱신 (project_bidirectional/develop_cycle_skill_family cycle 570→571, BRANCHED N=63→64). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). SE 마커 없음 (skip 조건 A+B 충족 — window 550-570 SE=8/20=40%≥40%, 명단=8 동일 → cycle 571 skip). (N=380 batch ~178/380)
+- review-code cycle 567 — CONFIDENCE_RANGE 중앙화 (schema.ts export + 6파일 DRY fix) + health 10/10 STABLE + SE Trigger-5 마커 SET (window 548-567: SE=7/20=35%, 명단=8 동일 → cycle 568 SE #151 강제 발화).
+- skill-evolution SE #151 cycle 568 — 갭 메커니즘 확인 (outgoing cycle SE 여부 의존). watch.sh kill로 cycle 568 JSON chain='unknown' 박제 (실제 SE #151 완료됨). MIGRATION-PATH.md #151 append.
+- skill-evolution SE #152 cycle 569 — watch.sh kill undercount 확인 (JSON rate 30%/실제 35%). SE #151 예측 보정: 547(SE) drop됨 → window 549-569 JSON 7/20=35% → B fail → SE #153 마커 박제. MIGRATION-PATH.md #152 append.
+- skill-evolution SE #153 cycle 570 — **oscillation 4회 dogfood 완료 + skip 복귀 확인**. 사후 window 550-570 SE=8/20=40% → B PASS + 명단=8 동일(A PASS) → SE #154 마커 박제 X. cycle 571 skip. MIGRATION-PATH.md #153 append.
+
 ## [0.6.1] — 2026-05-16
 
 ### Changed
