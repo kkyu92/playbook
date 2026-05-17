@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.1] — 2026-05-17
+
+### Changed
+- review-code cycle 590 — toggleConnection 단순화 + SOURCE_MAP 키 재사용 + categoryStats N+1→Map 리팩터. TODOS BRANCHED N=80→81 갱신 (local 98/origin 53). SE Trigger-5 마커 SET (window 571-590 SE=7/20=35% B FAIL → cycle 591 SE #161 강제 발화). (N=380 batch ~196/380)
+- skill-evolution SE #161 cycle 591 — oscillation 12회 fast-path. MIGRATION-PATH.md #161 append. 명단=8 동일. TODOS BRANCHED N=81→82 갱신 (local 99/origin 53). SE 마커 SET → cycle 592 SE #162 강제 발화. (N=380 batch ~197/380)
+- skill-evolution SE #162 cycle 592 — oscillation 13회 fast-path. MIGRATION-PATH.md #162 append. 명단=8 동일. TODOS BRANCHED N=82→83 갱신 (local 100/origin 53). 사후 window 573-592 SE=8/20=40%≥40% → skip 조건 A+B 충족 → cycle 593 skip 예정. (N=380 batch ~198/380)
+- curate cycle 593 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.1 bump. TODOS BRANCHED N=83→84 갱신 (local 101/origin 53). memory 2건 갱신. SE 마커 없음 (skip 조건 A+B 충족 지속). (N=380 batch ~199/380)
+
 ## [0.7.0] — 2026-05-17
 
 ### Changed
