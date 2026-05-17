@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.11] — 2026-05-18
+
+### Changed
+- review-code cycle 619 — health 10/10 stable (12회 연속). /simplify CLEAN. TODOS BRANCHED N=106→107 갱신 (local 141→142/origin 67). SE Trigger-5 마커 X (window 600-619: SE=8/20=40%≥40% → B_PASS → cycle 620 skip). (N=380 batch ~226/380)
+- curate cycle 620 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.11 bump. TODOS BRANCHED N=106→107 갱신 (local 142/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: window 601-620 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 621 마커 X. (N=380 batch ~227/380)
+
 ## [0.7.10] — 2026-05-17
 
 ### Changed
