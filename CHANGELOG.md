@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.9] — 2026-05-17
+
+### Changed
+- skill-evolution SE #159 cycle 585 — oscillation 10회 fast-path (명단 동일 + oscillation_n≥5 → MIGRATION-PATH append + TODOS update → retro-only). TODOS BRANCHED N=76→77 갱신 (local 89/origin 53). SE Trigger-5 마커 SKIP → SET 패턴: window 566-585 SE=7/20=35% B FAIL → cycle 586 SE #160 강제 발화. (N=380 batch ~191/380)
+- skill-evolution SE #160 cycle 586 — oscillation 11회 fast-path. TODOS BRANCHED N=77→78 갱신 (local 90/origin 53). 사후 window 567-586 SE=8/20=40% → skip 조건 A+B 충족 → cycle 587 skip 예정. MIGRATION-PATH.md #159/#160 append. (N=380 batch ~192/380)
+- curate cycle 587 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale, JIT Unused 0건). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). CHANGELOG 0.6.9 bump. TODOS BRANCHED N=78→79 갱신 (local 91/origin 53). memory 2건 갱신. SE 마커 없음 (skip 조건 A+B 충족 지속). (N=380 batch ~193/380)
+
 ## [0.6.8] — 2026-05-17
 
 ### Changed
