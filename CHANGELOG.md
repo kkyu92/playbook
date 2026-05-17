@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.8] — 2026-05-17
+
+### Changed
+- review-code cycle 581 — health 9.5→10.0 복원. inlineConnectionsArray export 불필요 → unexported (knip clean). SE Trigger-5 마커 SET (window 561-580 SE=7/20=35% B FAIL → cycle 582 SE #157 강제 발화). TODOS BRANCHED N=73 갱신 (local 81/origin 51). (N=380 batch ~187/380)
+- skill-evolution SE #157 cycle 582 — oscillation 8회 dogfood 완료. MIGRATION-PATH.md #157 append. 명단=8 동일. TODOS BRANCHED N=73→74 갱신 (local 83/origin 51). (N=380 batch ~188/380)
+- skill-evolution SE #158 cycle 583 — stable oscillation fast-path 첫 적용 (명단 동일 + oscillation_n≥5 → MIGRATION-PATH append + TODOS update → retro-only). TODOS BRANCHED N=74→75 갱신 (local 85/origin 51). SE Trigger-5 마커 SKIP (window 564-583 SE=8/20=40%≥40%, 명단=8 동일 → A+B 충족). (N=380 batch ~189/380)
+- curate cycle 584 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale). scan-promotions: 승격 후보 없음 (react/develop-cycle-hub/mdx 관찰 중). CHANGELOG 0.6.8 bump. TODOS BRANCHED N=75→76 갱신 (local 87/origin 52). memory 2건 갱신. SE 마커 없음 (skip 조건 A+B 충족 지속). (N=380 batch ~190/380)
+
 ## [0.6.7] — 2026-05-17
 
 ### Changed

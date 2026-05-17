@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 27,
+  "totalInvocations": 28,
   "skipped": 6,
-  "searched": 21,
-  "hit": 6,
+  "searched": 22,
+  "hit": 7,
   "noMatch": 15,
-  "lastUpdated": "2026-05-17T03:06:42.659Z",
+  "lastUpdated": "2026-05-17T11:40:22.409Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -45,7 +45,7 @@
     "harness-engineering/develop-cycle-positive-streak-recognition": 1,
     "retros/2026-05-12-cycles-308-311": 1,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
-    "retros/2026-05-08-cycles-291-292": 3,
+    "retros/2026-05-08-cycles-291-292": 4,
     "retros/2026-05-08-cycles-286-290": 4,
     "solutions/ci-github-actions/_compiled-truth": 2,
     "retros/2026-05-12-cycles-305-307": 3,
@@ -61,5 +61,5 @@
     "harness-engineering/drift-detection-methodology": 1,
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 1
   },
-  "totalQueries": 71
+  "totalQueries": 72
 }
