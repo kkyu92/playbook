@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.6.7] — 2026-05-17
+
+### Changed
+- skill-evolution cycle 579 (SE #156) — steady-state oscillation 7회 dogfood 완료. window 559-578 SE=7/20=35% B FAIL → 마커 강제 발화. 사후 window 560-579 SE=8/20=40% → skip 조건 A+B 충족. TODOS BRANCHED N=71→72 갱신 (local 78/origin 51). (N=380 batch ~185/380)
+- curate cycle 580 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale). scan-promotions: 승격 후보 없음. CHANGELOG 0.6.7 bump. TODOS BRANCHED N=72→73 갱신 (local 80/origin 51). memory 2건 갱신. (N=380 batch ~186/380)
+
 ## [0.6.6] — 2026-05-17
 
 ### Changed
