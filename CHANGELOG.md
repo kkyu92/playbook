@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.14] — 2026-05-18
+
+### Changed
+- review-code cycle 627 — health 10/10 stable (15회 연속). generate-content-manifest dateSet 이중 생성 제거 + totalComplete redundant filter 제거 (refactor). SE Trigger-5 평가: window 608-627 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 628 마커 X. TODOS BRANCHED N=113→114 갱신 (local 154/origin 67). (N=380 batch ~233/380)
+- curate cycle 628 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). CHANGELOG 0.7.14 bump. TODOS BRANCHED N=114 갱신 (local 155/origin 67). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: window 608-627 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 629 마커 X. (N=380 batch ~234/380)
+
 ## [0.7.13] — 2026-05-18
 
 ### Changed
