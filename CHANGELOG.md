@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.32] — 2026-05-18
+
+### Changed
+- curate cycle 675 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.32 bump. TODOS BRANCHED N=157→158 갱신 (local 222/origin 87). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). search-hits totalQueries=99. SE Trigger-5 평가: JSON tail-20 window 655-674: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 675 SE #197 마커 박제 X. (N=380 batch ~281/380)
+- review-code cycle 672 — health 10/10 stable (28+회 연속). simplify 2 fixes: generate-content-manifest byCategory 단일 패스 통합 + lint-content checkPatterns 4-pass→1-pass.
+- skill-evolution cycles 673-674 — SE #195/#196 fast-path SUCCESS (oscillation 42회). fast-path: 명단=8 동일(A_PASS) + window SE rate oscillation → MIGRATION-PATH append + 마커 삭제.
+
 ## [0.7.31] — 2026-05-18
 
 ### Changed
