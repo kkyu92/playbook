@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.48] — 2026-05-18
+
+### Changed
+- curate cycle 704 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). search-hits totalQueries=109 (+1). CHANGELOG 0.7.48 bump. TODOS BRANCHED N=186→187 갱신 (local 266/origin 109). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). (N=380 batch ~310/380)
+
 ## [0.7.47] — 2026-05-18
 
 ### Changed
