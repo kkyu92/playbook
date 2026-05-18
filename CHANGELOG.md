@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.47] — 2026-05-18
+
+### Changed
+- curate cycle 703 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). search-hits totalQueries=108 (+1). CHANGELOG 0.7.47 bump. TODOS BRANCHED N=185 갱신 (local 264/origin 109). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 684-703: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 704 마커 박제 X. oscillation 55회 dogfood. (N=380 batch ~309/380)
+
 ## [0.7.46] — 2026-05-18
 
 ### Changed
