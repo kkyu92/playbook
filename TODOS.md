@@ -1,5 +1,12 @@
 # TODOS
 
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 724 진단, local 1 / origin 1)
+origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
+현재 상태: local 1개 ahead (bd8f5d5 cycle 723 retro), origin 1개 ahead (65b353e moneyball cycle 595).
+```bash
+git pull origin main --no-rebase && git push origin main
+```
+
 ## [DONE 2026-05-18] R6 대기 — git BRANCHED 재발 N=203 (cycle 722 진단) → cycle 723 RESOLVED
 
 **상태**: ✅ DONE — cycle 723 진단 시 `git rev-list --left-right --count origin/main...main` = `0 0`. merge commit `53fd280 Merge remote-tracking branch 'origin/main'` 가 diverged 완전 해소.
