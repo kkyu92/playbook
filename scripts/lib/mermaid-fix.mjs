@@ -18,6 +18,8 @@
  *    라벨 문자 클래스에서 `"` 제외로 수정됨.
  */
 
+const CYLINDER_SHAPE_RE = /^\(.*\)$/;
+
 /**
  * Mermaid 코드 블록을 받아 자동 수정 + 유효성 검증.
  *
@@ -84,12 +86,7 @@ export function fixAndValidateMermaid(code, _filename) {
   const fixedLines = fixed.split("\n");
   const fixedContent = fixed;
 
-  // 수정된 내용이 원본과 다르면 기록
-  if (fixedContent !== code) {
-    return { fixed: fixedContent, autoFixed: true, errors: [] };
-  }
-
-  // 수정 후 유효성 검증 (남은 에러만)
+  // 수정 후 유효성 검증 (auto-fix 여부와 무관하게 항상 실행)
   fixedLines.forEach((line, i) => {
     const trimmed = line.trim();
     const lineNum = i + 1;
@@ -120,7 +117,7 @@ export function fixAndValidateMermaid(code, _filename) {
     for (const m of nodeBracketMatches) {
       const label = m[1];
       // Mermaid cylinder shape [(text)] or [("text")] — valid syntax, skip
-      const isCylinderShape = /^\(.*\)$/.test(label);
+      const isCylinderShape = CYLINDER_SHAPE_RE.test(label);
       if (/[()]/.test(label) && !label.startsWith('"') && !label.endsWith('"') && !isCylinderShape) {
         errors.push({
           line: lineNum,
@@ -139,5 +136,5 @@ export function fixAndValidateMermaid(code, _filename) {
     }
   });
 
-  return { fixed: fixedContent, autoFixed: false, errors };
+  return { fixed: fixedContent, autoFixed: fixedContent !== code, errors };
 }

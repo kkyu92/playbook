@@ -106,6 +106,15 @@ describe("fixAndValidateMermaid — 정규식 단위 동작", () => {
     expect(fixed).toBe(code);
   });
 
+  it("Case 8: auto-fix + 남은 validation error 동시 — errors 누락 X", () => {
+    // auto-fix(괄호 라벨) + 미수정 에러(화살표 라벨 괄호) 동시 존재 시 둘 다 반환해야 함
+    const code = `graph LR\n  A --> B[label (with parens)]\n  X-->|bad (parens)| Y\n`;
+    const { fixed, autoFixed, errors } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(true);
+    expect(fixed).toContain('B["label (with parens)"]');
+    expect(errors.length).toBeGreaterThan(0); // 화살표 라벨 에러 누락 X
+  });
+
   it("Case 1 (unit): 괄호 포함 라벨은 따옴표로 감싸짐", () => {
     const code = `graph LR\n  A --> B[label (with parens)]\n`;
     const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");
