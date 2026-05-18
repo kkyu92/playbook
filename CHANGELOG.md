@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.50] — 2026-05-18
+
+### Changed
+- review-code cycle 706 — health 10/10 (tsc+eslint CLEAN, vitest 93/93). simplify 5 fixes: generate-lesson loadAllEntryFiles() wrapper 제거 (loadMdxEntries 직접 호출); generate-content-manifest while(true)+break → 명시적 조건 loop; scan-promotions isAlreadyPromoted existsSync+readFileSync → try/catch (TOCTOU 제거), extractPatterns readFileSync loop try/catch 추가, suggestPromotionType if/else chain → PROMOTION_MAP lookup table, promotedCache overThreshold 이후 빌드 (N disk read 절감). commit 23e55f8. CHANGELOG 0.7.50 bump. TODOS BRANCHED N=188→189 갱신 (local 271/origin 110). memory 2건 갱신. SE Trigger-5 평가: JSON tail-20 사후 window 687-706: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 707 마커 박제 X. oscillation 55회 dogfood. (N=380 batch ~310/380)
+
 ## [0.7.49] — 2026-05-18
 
 ### Changed
