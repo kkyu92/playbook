@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-18T08:31:26.408Z
+Updated: 2026-05-18T09:19:52.896Z
 
 ## 엔트리 (182개)
 
@@ -934,3 +934,4 @@ Updated: 2026-05-18T08:31:26.408Z
 - reports/week-2026-19 ↔ reports/week-2026-18
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
+- reports/week-2026-21 ↔ reports/week-2026-20

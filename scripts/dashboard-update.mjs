@@ -79,6 +79,8 @@ function buildMetrics(cycles) {
   const lessonCount = countDispatch("lesson");
   const metaPatternCount = countDispatch("meta-pattern");
   const chainEvolutionCount = countDispatch("chain-evolution");
+  const recentMetaBody = git(`git log --all --grep "subtype: meta-pattern" --format="%B" -10`);
+  const t4met = recentMetaBody.includes("SKILL 갱신 필요");
   const lastN = 20;
   const chainPool = [
     "fix-incident", "explore-idea", "polish-ui", "review-code", "curate",
@@ -96,7 +98,7 @@ function buildMetrics(cycles) {
     1: { current: chainEvolutionCount, threshold: 5, met: chainEvolutionCount >= 5 },
     2: { current: "N/A", threshold: 5, met: false },
     3: { current: lastCycle.cycle_n, threshold: 50, met: lastCycle.cycle_n % 50 === 0 && lastCycle.cycle_n > 0 },
-    4: { current: 0, threshold: 1, met: false }, // body grep needs review
+    4: { current: t4met ? "감지됨" : "없음", threshold: 1, met: t4met },
     5: { current: zeroChains.length, threshold: "자율", met: zeroChains.length > 0 },
   };
 
@@ -173,8 +175,6 @@ Source: \`~/.develop-cycle-hub/cycles/*.json\` + \`git log --grep "subtype: ..."
 
 Reference:
 - develop-cycle-hub SKILL spec — chain pool + dispatch 채널
-- cycle 35 meta-pattern dispatch — chain pool 분포 26 사이클 누적
-- cycle 39~42 expand-scope — 본 dashboard 도입 spec
 `;
 }
 
@@ -185,7 +185,7 @@ function triggerLabel(n) {
     "같은 chain 5회 연속 fail",
     "`cycle_n % 50 == 0` (milestone)",
     "`meta-pattern` body \"SKILL 갱신 필요\"",
-    "0회 chain × 직전 20 + meta-pattern 1+",
+    "0회 chain (직전 20) + skip 조건 미충족",
   ][n];
 }
 
