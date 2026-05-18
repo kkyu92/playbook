@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.61] — 2026-05-19
+
+### Changed
+- curate cycle 739 — wiki lint CLEAN (182 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. CHANGELOG 0.7.61 bump. TODOS BRANCHED N=202+ 갱신 (local 26/origin 55). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: tail-20 window 720-739 SE=7/20=35% < 40% → B FAIL. 명단=7 동일(A PASS). Skip 조건 A+B 미충족 → cycle 740 SE #222 마커 SET. oscillation 68회 dogfood 예정. (N=380 batch ~340/380)
+
 ## [0.7.60] — 2026-05-18
 
 ### Changed
