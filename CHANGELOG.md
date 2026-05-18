@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.64] — 2026-05-19
+
+### Changed
+- curate cycle 749 — wiki lint CLEAN (182 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=130 (+4). memory 2건 갱신 (project_develop_cycle_skill_family cycle 747→749 + SE oscillation 72→73회 + BRANCHED 36/57→39/57 / project_bidirectional_compound_growth_goal description cycle 746→748 + ~348→~349/380). TODOS BRANCHED N=202+ (local 39/origin 57). SE Trigger-5 평가: tail-20 window 730-749 SE=8/20=40%≥40% → B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 750 마커 박제 X. oscillation 73회 stable steady-state. (N=380 batch ~349/380)
+
 ## [0.7.63] — 2026-05-19
 
 ### Changed
