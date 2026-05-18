@@ -17,6 +17,7 @@ import path from "path";
 
 const INDEX_FILE = path.join(process.cwd(), "public", "embeddings.json");
 const CONTENT_DIR = path.join(process.cwd(), "content");
+const MIN_SCORE = 0.5;
 
 function cosineSimilarity(a, b) {
   let dot = 0;
@@ -39,9 +40,7 @@ function parseFrontmatter(content) {
 function addConnectionToFile(filePath, newSlug) {
   if (!fs.existsSync(filePath)) return false;
   const content = fs.readFileSync(filePath, "utf-8");
-  // 이미 연결돼 있으면 skip
   if (content.includes(newSlug)) return false;
-  // inline array 형식만 처리
   if (/^connections: \[\]$/m.test(content)) {
     const updated = content.replace(/^connections: \[\]$/m, `connections: [${newSlug}]`);
     fs.writeFileSync(filePath, updated);
@@ -100,7 +99,7 @@ async function main() {
   const seen = new Set();
   const topSlugs = [];
   for (const r of scored) {
-    if (!seen.has(r.slug) && r.score >= 0.5) {
+    if (!seen.has(r.slug) && r.score >= MIN_SCORE) {
       seen.add(r.slug);
       topSlugs.push({ slug: r.slug, category: r.category, score: r.score });
       if (topSlugs.length >= topK) break;
@@ -108,7 +107,7 @@ async function main() {
   }
 
   if (topSlugs.length === 0) {
-    console.log("⚠️ 유사도 ≥ 0.5 connections 없음 — connections: [] 유지");
+    console.log(`⚠️ 유사도 ≥ ${MIN_SCORE} connections 없음 — connections: [] 유지`);
     process.exit(0);
   }
 
