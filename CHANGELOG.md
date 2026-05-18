@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.54] — 2026-05-18
+
+### Changed
+- curate cycle 713 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=115 (+2). CHANGELOG 0.7.54 bump. TODOS BRANCHED N=194→195 갱신 (local 283/origin 118). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 694-713: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 714 SE #211 마커 박제 X. oscillation 57회 dogfood. (N=380 batch ~319/380)
+
 ## [0.7.53] — 2026-05-18
 
 ### Changed
