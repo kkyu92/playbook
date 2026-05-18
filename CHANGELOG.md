@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.58] — 2026-05-18
+
+### Changed
+- curate cycle 729 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=125 (+9). CHANGELOG 0.7.58 bump. TODOS BRANCHED N=201→202 갱신 (local 9/origin 6). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 710-729: SE=9/19=47%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 730 마커 박제 X. oscillation 65회 dogfood 유지. (N=380 batch ~335/380)
+
 ## [0.7.57] — 2026-05-18
 
 ### Changed
