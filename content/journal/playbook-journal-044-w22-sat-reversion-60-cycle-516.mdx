@@ -1,0 +1,58 @@
+---
+title: "Playbook Journal 044 — W22 마감 Sat reversion 60% (cycle 516)"
+category: harness-engineering
+date: "2026-05-17"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: W22 마감 Sat reversion 60% (cycle 516) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260517-w22-sat-reversion-60-cycle-516-a01dd08632ee30631ef9e83838f5af.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+lesson_file: docs/lessons/2026-05-17-w22-saturday-recovery.md
+
+W22 (5/12~5/17) 5/16 Sat 5건 추가 verify → n=25, 9/25 = 36.0% (cycle 490 30%→+6%p).
+
+scoring_rule:
+  - v1.7-revert: 2/5 (40.0%, 변동 X)
+  - v1.8: 7/20 (35.0%, cycle 490 26.7%→+8.3%p)
+
+요일별:
+  - Tue 2/5 (40.0%) Wed 3/5 (60.0%) Thu 0/5 (0.0%) Fri 1/5 (20.0%) Sat 3/5 (60.0%)
+  - Sat 누적 12/22 = 54.5% (안정 reversion)
+
+누적: n=114, 53/114 = 46.5%, Brier 0.2473.
+
+5/17 Sun 10건 verify 대기 (cron 23:00 KST). cycle 517 후속 측정.
+
+가중치 결정: cycle 490 No-go gate 유지. n=20 binomial CI ±21.5%p — v1.7-revert 53.1% 와 통계적 분리 X.
+v2.0 임계 n=150 까지 36건 잔여. W23~W24 도달 가능.
+
+🤖 Generated with Claude Code
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
