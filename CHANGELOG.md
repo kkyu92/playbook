@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.62] — 2026-05-19
+
+### Changed
+- curate cycle 741 — wiki lint CLEAN (182 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. memory 2건 갱신 (project_develop_cycle_skill_family cycle 733→741 + SE oscillation 65→68회 + BRANCHED 17/6→29/57 / project_bidirectional_compound_growth_goal description cycle 739→740 + BRANCHED 갱신). SE Trigger-5 평가: cycle 740 skip 조건 A+B 충족 → cycle 741 마커 박제 X (oscillation 68회 stable steady-state). TODOS BRANCHED N=202+ (local 29/origin 57). (N=380 batch ~341/380)
+
 ## [0.7.61] — 2026-05-19
 
 ### Changed
