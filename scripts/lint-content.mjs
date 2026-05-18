@@ -76,19 +76,18 @@ function checkStale(entries) {
 
 function checkPatterns(entries) {
   // journal 시리즈 안에서 메타 태그 제외하고 빈도 카운트
-  const journals = entries.filter((e) => e.frontmatter.series === "playbook-journal");
-  const nonJournals = entries.filter((e) => e.frontmatter.series !== "playbook-journal");
   const tagCount = {};
-  for (const e of journals) {
-    for (const tag of e.frontmatter.tags || []) {
-      if (NOISE_TAGS.has(tag)) continue;
-      tagCount[tag] = (tagCount[tag] || 0) + 1;
-    }
-  }
   const tagToSlug = new Map();
-  for (const e of nonJournals) {
-    for (const tag of e.frontmatter.tags || []) {
-      if (!tagToSlug.has(tag)) tagToSlug.set(tag, e.slug);
+  for (const e of entries) {
+    if (e.frontmatter.series === "playbook-journal") {
+      for (const tag of e.frontmatter.tags || []) {
+        if (NOISE_TAGS.has(tag)) continue;
+        tagCount[tag] = (tagCount[tag] || 0) + 1;
+      }
+    } else {
+      for (const tag of e.frontmatter.tags || []) {
+        if (!tagToSlug.has(tag)) tagToSlug.set(tag, e.slug);
+      }
     }
   }
   return Object.entries(tagCount)

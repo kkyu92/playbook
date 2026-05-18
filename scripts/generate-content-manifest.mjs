@@ -190,10 +190,17 @@ function main() {
     }
   }
 
+  // Build byCategory Map once — reused for empty-category placeholders and categoryStats
+  const byCategory = new Map();
+  for (const e of entries) {
+    const cat = e.frontmatter.category;
+    if (!byCategory.has(cat)) byCategory.set(cat, []);
+    byCategory.get(cat).push(e);
+  }
+
   // Add placeholder nodes for empty categories (shown as grey in graph)
-  const categoriesWithEntries = new Set(entries.map((e) => e.frontmatter.category));
   for (const cat of CATEGORIES) {
-    if (!categoriesWithEntries.has(cat)) {
+    if (!byCategory.has(cat)) {
       const nodeId = `__empty__${cat}`;
       nodes.push({
         id: nodeId,
@@ -253,12 +260,6 @@ function main() {
     dailyEntries[d] = (dailyEntries[d] || 0) + 1;
   }
 
-  const byCategory = new Map();
-  for (const e of entries) {
-    const cat = e.frontmatter.category;
-    if (!byCategory.has(cat)) byCategory.set(cat, []);
-    byCategory.get(cat).push(e);
-  }
   const categoryStats = {};
   for (const cat of CATEGORIES) {
     const catEntries = byCategory.get(cat) || [];
