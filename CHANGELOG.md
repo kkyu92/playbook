@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.53] — 2026-05-18
+
+### Changed
+- curate cycle 711 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=113 (+2). CHANGELOG 0.7.53 bump. TODOS BRANCHED N=193 갱신 (local 280/origin 118). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 692-711: SE=7/20=35%<40% → B_FAIL + 명단=8 동일(A_PASS) → 조건 A+B 미충족 → cycle 712 SE #210 강제 발화 예정. oscillation 56회 dogfood. (N=380 batch ~317/380)
+
 ## [0.7.52] — 2026-05-18
 
 ### Changed
