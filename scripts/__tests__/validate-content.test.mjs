@@ -90,6 +90,22 @@ describe("fixAndValidateMermaid — 정규식 단위 동작", () => {
     expect(fixed).toBe(code);
   });
 
+  it("Case 6: Mermaid cylinder shape [(text)] 은 에러 없음", () => {
+    const code = `graph LR\n  ImageService --> ImageModel[("Image Model")]\n`;
+    const { fixed, autoFixed, errors } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(errors).toHaveLength(0);
+    expect(fixed).toBe(code);
+  });
+
+  it("Case 7: cylinder shape 변형 [(bare)] 도 에러 없음", () => {
+    const code = `graph LR\n  A --> DB[(Database)]\n`;
+    const { fixed, autoFixed, errors } = fixAndValidateMermaid(code, "x");
+    expect(autoFixed).toBe(false);
+    expect(errors).toHaveLength(0);
+    expect(fixed).toBe(code);
+  });
+
   it("Case 1 (unit): 괄호 포함 라벨은 따옴표로 감싸짐", () => {
     const code = `graph LR\n  A --> B[label (with parens)]\n`;
     const { fixed, autoFixed } = fixAndValidateMermaid(code, "x");

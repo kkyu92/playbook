@@ -33,8 +33,10 @@ export function fixAndValidateMermaid(code, _filename) {
   // 패턴: A[label (with parens)] → A["label (with parens)"]
   // ⚠️ 이미 따옴표가 있는 라벨은 건너뛰어야 함 (negative lookahead `(?!")`).
   //    안 그러면 매 실행마다 따옴표가 누적: D["x"] → D[""x""] → D["""x"""] ...
+  // ⚠️ (?<!\w): 다중 문자 ID 내부 대문자 오매칭 방지 (예: DB[(x)] 에서 B 매칭 차단).
+  // ⚠️ (?!\([\w"]): 실린더 shape [(text)] / [("text")] 은 유효 Mermaid 문법 — 건너뜀.
   fixed = fixed.replace(
-    /([A-Z]\d*)\[(?!")([^\[\]"]*\([^\[\]"]*\)[^\[\]"]*)\]/g,
+    /(?<!\w)([A-Z]\d*)\[(?!")(?!\([\w"])([^\[\]"]*\([^\[\]"]*\)[^\[\]"]*)\]/g,
     '$1["$2"]',
   );
 
@@ -117,7 +119,9 @@ export function fixAndValidateMermaid(code, _filename) {
     const nodeBracketMatches = trimmed.matchAll(/\[([^\]]+)\]/g);
     for (const m of nodeBracketMatches) {
       const label = m[1];
-      if (/[()]/.test(label) && !label.startsWith('"') && !label.endsWith('"')) {
+      // Mermaid cylinder shape [(text)] or [("text")] — valid syntax, skip
+      const isCylinderShape = /^\(.*\)$/.test(label);
+      if (/[()]/.test(label) && !label.startsWith('"') && !label.endsWith('"') && !isCylinderShape) {
         errors.push({
           line: lineNum,
           message: `노드 라벨에 괄호 사용: "${label}". 수정: ["${label}"]`,
