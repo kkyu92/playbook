@@ -1,8 +1,8 @@
 # TODOS
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 727 진단, local 6 / origin 5)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 728 진단, local 8 / origin 6)
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local 6개 ahead, origin 5개 ahead.
+현재 상태: local 8개 ahead, origin 6개 ahead.
 ```bash
 git pull origin main --no-rebase && git push origin main
 ```
