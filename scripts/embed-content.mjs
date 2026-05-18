@@ -1,32 +1,7 @@
 #!/usr/bin/env node
-/**
- * Layer 3 (JIT Retrieval) POC Phase 1 — 임베딩 인덱서
- *
- * content/**\/*.mdx → 섹션(H2) 단위 청킹 → 로컬 임베딩 → JSON 인덱스
- *
- * 사용:
- *   node scripts/embed-content.mjs
- *
- * 산출물:
- *   public/embeddings.json (gitignore)
- *
- * 설계 결정:
- *  - 모델: @xenova/transformers + Xenova/multilingual-e5-small
- *    · 100% 로컬, 외부 API 0, 94 언어 지원, 384차원
- *    · Phase 2b 벤치마크(benchmark-models.mjs)에서 3모델 비교 → 한국어 Top-1 3/5 승리
- *    · 첫 실행 시 ~120MB 모델 다운로드 후 ./node_modules/.cache 에 캐시
- *  - 청킹: H2 (`## `) 단위. 한 .mdx → N 청크
- *    · POC 엔트리 §10 안티패턴 "단일 전체 .mdx 임베딩" 회피
- *    · 청크가 너무 작으면 (< 100자) 다음 H2 와 합침
- *  - 메타: slug · title · category · tags · date · confidence · h2_title · chunk_text
- *  - 벡터 저장: 단순 JSON. 106 문서 × ~5 청크/문서 ≈ 500 벡터 × 384 float = ~750KB
- *  - 거리 함수: 코사인 유사도 (모델 출력이 이미 정규화됐지만 검색 시 명시적 계산)
- *
- * 향후 확장 (Phase 2+):
- *  - 인덱싱 자동화 (pre-commit hook 또는 CI)
- *  - 쿼리 라우터 + 섀도우 모드
- *  - 임베딩 모델 비교 (Voyage · OpenAI text-embedding-3-small)
- */
+// 임베딩 인덱서: content/**/*.mdx + docs/solutions/** + docs/retros/**
+// → H2 단위 청킹 → Xenova/multilingual-e5-small (100% 로컬, benchmark-models.mjs 검증) → public/embeddings.json
+// 사용: node scripts/embed-content.mjs
 
 import fs from "fs";
 import path from "path";
@@ -34,6 +9,7 @@ import matter from "gray-matter";
 import { findFilesByExt } from "./lib/fs-helpers.mjs";
 
 const OUTPUT_FILE = path.join(process.cwd(), "public", "embeddings.json");
+const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
 
 // Phase 2 (Journal 025의 발견): docs/solutions, docs/retros 도 인덱싱.
 // "에러 메시지 → 과거 솔루션" JIT 검색의 핵심 high-value 자산.
@@ -44,18 +20,9 @@ const SOURCES = [
   { dir: "docs/retros", source_type: "retro", slug_prefix: "retros", ext: ".md" },
 ];
 
-// 청크 최소 크기 (이보다 작으면 다음 H2 와 합침)
 const MIN_CHUNK_LEN = 200;
-// 청크 최대 크기 (너무 길면 모델 윈도우 초과 + 신호 희석)
 const MAX_CHUNK_LEN = 2000;
 
-
-/**
- * MDX 본문을 H2 단위로 청킹.
- * - 첫 H2 이전 텍스트(서두) 는 별도 청크
- * - 짧은 청크는 다음 청크와 합침
- * - 너무 긴 청크는 자른 후 잔여를 새 청크로
- */
 function chunkByH2(content) {
   const lines = content.split("\n");
   const chunks = [];
@@ -125,11 +92,7 @@ function chunkByH2(content) {
   return final.filter((c) => c.text.length >= 50); // 너무 짧은 잔여물 제거
 }
 
-/**
- * 임베딩 텍스트 구성:
- *  - h2 제목 + 본문 (제목이 핵심 시그널이라 포함)
- *  - frontmatter title 도 포함 (엔트리 주제 컨텍스트)
- */
+// h2 제목을 텍스트에 포함 — 섹션 주제가 핵심 검색 시그널
 function buildEmbeddingText(entryTitle, h2, text) {
   const parts = [];
   if (entryTitle) parts.push(`# ${entryTitle}`);
@@ -138,18 +101,25 @@ function buildEmbeddingText(entryTitle, h2, text) {
   return parts.join("\n\n");
 }
 
+function deriveSlug(source, parts, basename) {
+  if (source.source_type === "entry") {
+    const category = parts[1];
+    return { category, slug: `${category}/${basename}` };
+  }
+  if (source.source_type === "solution") {
+    const category = parts[2] || "uncategorized";
+    return { category, slug: `${source.slug_prefix}/${category}/${basename}` };
+  }
+  return { category: "retro", slug: `${source.slug_prefix}/${basename}` };
+}
+
 async function main() {
-  console.log("📦 Loading embedding model (Xenova/multilingual-e5-small)...");
+  console.log(`📦 Loading embedding model (${EMBEDDING_MODEL})...`);
   console.log("   첫 실행 시 ~120MB 다운로드 (이후 캐시)");
 
-  // dynamic import — top-level await 회피
   const { pipeline } = await import("@xenova/transformers");
-  const extractor = await pipeline(
-    "feature-extraction",
-    "Xenova/multilingual-e5-small",
-  );
+  const extractor = await pipeline("feature-extraction", EMBEDDING_MODEL);
 
-  // Multi-source: content/ + docs/solutions/ + docs/retros/
   const allChunks = [];
   let totalChunks = 0;
   const sourceCounts = {};
@@ -165,25 +135,9 @@ async function main() {
       const raw = fs.readFileSync(file, "utf-8");
       const { data, content } = matter(raw);
 
-      // slug 도출
-      // entry: content/<category>/<filename>.mdx → "<category>/<filename>"
-      // solution: docs/solutions/<category>/<filename>.md → "solutions/<category>/<filename>"
-      // retro: docs/retros/<filename>.md → "retros/<filename>"
       const parts = rel.split(path.sep);
       const basename = parts[parts.length - 1].slice(0, -source.ext.length);
-      let category, slug;
-      if (source.source_type === "entry") {
-        category = parts[1];
-        slug = `${category}/${basename}`;
-      } else if (source.source_type === "solution") {
-        // docs/solutions/<category>/<filename>.md
-        category = parts[2] || "uncategorized";
-        slug = `${source.slug_prefix}/${category}/${basename}`;
-      } else {
-        // retro: docs/retros/<filename>.md
-        category = "retro";
-        slug = `${source.slug_prefix}/${basename}`;
-      }
+      const { category, slug } = deriveSlug(source, parts, basename);
 
       const chunks = chunkByH2(content);
       totalChunks += chunks.length;
@@ -191,7 +145,7 @@ async function main() {
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         allChunks.push({
-          source: source.source_type,  // "entry" | "solution" | "retro"
+          source: source.source_type,
           slug,
           category,
           title: data.title || basename,
@@ -224,9 +178,8 @@ async function main() {
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`\n   완료 (${elapsed}s)`);
 
-  // 인덱스 저장
   const index = {
-    model: "Xenova/multilingual-e5-small",
+    model: EMBEDDING_MODEL,
     dim: allChunks[0]?.vector?.length || 0,
     created_at: new Date().toISOString(),
     chunks: allChunks,

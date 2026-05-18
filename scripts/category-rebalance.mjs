@@ -181,12 +181,11 @@ function analyze() {
 
     let bestOther = null;
     let bestOtherSim = -1;
-    for (const [cat, members] of byCategory) {
+    for (const [cat, catMean] of catMeanVec) {
       if (cat === e.category) continue;
-      if (members.length < GATE_CLUSTER) continue;
-      let s = 0;
-      for (const m of members) s += cosine(e.vector, m.vector);
-      s /= members.length;
+      const catMembers = byCategory.get(cat) ?? [];
+      if (catMembers.length < GATE_CLUSTER) continue;
+      const s = cosine(e.vector, catMean);
       if (s > bestOtherSim) {
         bestOtherSim = s;
         bestOther = cat;
