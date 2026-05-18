@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.34] — 2026-05-18
+
+### Changed
+- curate cycle 680 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.34 bump. TODOS BRANCHED N=162→163 갱신 (local 229/origin 92). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). search-hits totalQueries=101 (변화 없음). SE #200 마커 유지 (R3 안전장치 발동 — 직전 3 cycle 677/678/679 모두 skill-evolution → 회피, 마커 cycle 681 carry-over). (N=380 batch ~285/380)
+
 ## [0.7.33] — 2026-05-18
 
 ### Changed
