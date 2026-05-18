@@ -43,10 +43,11 @@ function regenerateManifest() {
 }
 
 function loadManifest() {
-  if (!fs.existsSync(MANIFEST_PATH)) {
+  try {
+    return JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
+  } catch {
     return { entries: [], graph: { nodes: [], edges: [] } };
   }
-  return JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf-8"));
 }
 
 // ─── 양방향 파일 write ──────────────────────────────────────────
@@ -367,12 +368,11 @@ export async function generateCustomEntry({ topicText, category, extraContext, s
   console.log(`   Connections: ${payload.connections.length} → ${validConnections.length} (validated)`);
 
   // Slug: Gemini payload.slug 우선, 실패/충돌 시 fallback
-  let topicSlug = (payload.slug || "").toLowerCase().replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  let topicSlug = (payload.slug || "").toLowerCase().replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 60).replace(/-$/, "");
   // Category prefix 중복 방지 — Gemini 가 프롬프트 무시하고 slug 에 category 포함한 경우 strip.
   // 관찰된 오염: "harness-engineeringresponsible-vibe-coding-with-claude-harne" (붙어서 prefix, 60자 truncate 로 뒤 잘림)
   topicSlug = stripCategoryPrefix(topicSlug, cat);
   if (!topicSlug || topicSlug.length < 3) topicSlug = slugifyTitle(payload.title);
-  if (topicSlug.length > 60) topicSlug = topicSlug.slice(0, 60).replace(/-$/, "");
 
   // Collision handling
   if (existingSlugs.includes(`${cat}/${topicSlug}`)) {
