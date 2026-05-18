@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.65] — 2026-05-19
+
+### Changed
+- curate cycle 751 — wiki lint CLEAN (182 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=131 (+1). memory 2건 갱신 (project_develop_cycle_skill_family cycle 749→751 + SE oscillation 73→74회 + BRANCHED 39/57→42/57 / project_bidirectional_compound_growth_goal description 749+→750+ + ~349→~358/380). SE Trigger-5 평가: tail-20 window 731-750 SE=8/20=40%≥40% → B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 752 마커 박제 X. oscillation 74회 steady-state. (N=380 batch ~358/380)
+
 ## [0.7.64] — 2026-05-19
 
 ### Changed

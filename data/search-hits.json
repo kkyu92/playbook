@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 86,
-  "skipped": 20,
+  "totalInvocations": 87,
+  "skipped": 21,
   "searched": 66,
   "hit": 14,
   "noMatch": 52,
-  "lastUpdated": "2026-05-18T22:34:04.171Z",
+  "lastUpdated": "2026-05-18T22:49:18.965Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -67,5 +67,5 @@
     "harness-engineering/zero-touch-develop-cycle-session-management": 1,
     "project-ops/claude-code-cost-optimization-strategies": 1
   },
-  "totalQueries": 130
+  "totalQueries": 131
 }
