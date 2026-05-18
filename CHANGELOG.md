@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.51] — 2026-05-18
+
+### Changed
+- curate cycle 707 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). 의미 중복 감지: fine-tuning 4 entry 클러스터 (llm-fine-tuning-*) 모두 draft/confidence 1, 외부 연결 20+건 복잡도로 이번 cycle 병합 skip — 전용 dedupe 사이클 후보 기록. scan-promotions: 승격 후보 없음. search-hits totalQueries=110 (+0). CHANGELOG 0.7.51 bump. TODOS BRANCHED N=189→190 갱신 (local 273/origin 113). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 687-706: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 708 마커 박제 X. oscillation 55회 dogfood. (N=380 batch ~311/380)
+
 ## [0.7.50] — 2026-05-18
 
 ### Changed
