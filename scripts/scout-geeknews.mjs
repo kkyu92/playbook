@@ -157,6 +157,16 @@ ${wrappedArticles}
   });
 }
 
+// ─── Article lookup ───────────────────────────────────────────
+
+function resolveArticle(articles, index, label) {
+  const article = articles[index - 1];
+  if (!article) {
+    console.warn(`   ⚠️ ${label} skip — article_index ${index} 가 articles 배열 (length ${articles.length}) 범위 밖. Gemini 환각 가능성`);
+  }
+  return article;
+}
+
 // ─── moneyballscore Issue dispatch (기존 유지) ────────────────
 
 function createDispatchIssue(match, article) {
@@ -285,11 +295,8 @@ async function main() {
   console.log(`3️⃣ playbook entry 생성: ${playbookHigh.length}개`);
   const entriesCreated = [];
   for (const m of playbookHigh) {
-    const article = articles[m.article_index - 1];
-    if (!article) {
-      console.warn(`   ⚠️ playbook entry skip — article_index ${m.article_index} 가 articles 배열 (length ${articles.length}) 범위 밖. Gemini 환각 가능성`);
-      continue;
-    }
+    const article = resolveArticle(articles, m.article_index, "playbook entry");
+    if (!article) continue;
     console.log(`\n   🎓 ${m.action_title}`);
     if (dryRun) {
       console.log("   [DRY] skip entry 생성");
@@ -321,11 +328,8 @@ ${m.action_plan}`;
   console.log(`\n4️⃣ moneyballscore Issue dispatch: ${moneyballMatches.length}개 매칭`);
   let moneyballDispatched = 0;
   for (const m of moneyballMatches) {
-    const article = articles[m.article_index - 1];
-    if (!article) {
-      console.warn(`   ⚠️ moneyball dispatch skip — article_index ${m.article_index} 가 articles 배열 (length ${articles.length}) 범위 밖. Gemini 환각 가능성`);
-      continue;
-    }
+    const article = resolveArticle(articles, m.article_index, "moneyball dispatch");
+    if (!article) continue;
     createDispatchIssue(m, article);
     moneyballDispatched++;
   }

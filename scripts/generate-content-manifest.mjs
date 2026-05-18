@@ -13,6 +13,12 @@ const OUTPUT_FILE = path.join(
 
 const REQUIRED_FIELDS = ["title", "category", "date", "tags", "description"];
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
+const EMPTY_NODE_PREFIX = "__empty__";
+
+function writeJsonFile(filePath, data) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
 
 function avgConfidence(items) {
   if (items.length === 0) return 0;
@@ -109,8 +115,7 @@ function main() {
   if (rawEntries.length === 0) {
     console.log("   No MDX files found. Writing empty manifest.");
     const emptyManifest = { entries: [], graph: { nodes: [], edges: [] } };
-    fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
-    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(emptyManifest, null, 2));
+    writeJsonFile(OUTPUT_FILE, emptyManifest);
     return;
   }
 
@@ -201,7 +206,7 @@ function main() {
   // Add placeholder nodes for empty categories (shown as grey in graph)
   for (const cat of CATEGORIES) {
     if (!byCategory.has(cat)) {
-      const nodeId = `__empty__${cat}`;
+      const nodeId = `${EMPTY_NODE_PREFIX}${cat}`;
       nodes.push({
         id: nodeId,
         label: CATEGORY_LABELS[cat] || cat,
@@ -308,8 +313,7 @@ function main() {
     },
   };
 
-  fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
-  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(manifest, null, 2));
+  writeJsonFile(OUTPUT_FILE, manifest);
 
   console.log(
     `✅ Manifest generated: ${entries.length} entries, ${nodes.length} nodes, ${edges.length} edges`
@@ -352,7 +356,7 @@ function generateIndex(entries, edges, byCategory) {
   for (const edge of edges) {
     // Skip roadmap/placeholder edges
     if (edge.source.startsWith("roadmap/") || edge.target.startsWith("roadmap/")) continue;
-    if (edge.source.startsWith("__empty__") || edge.target.startsWith("__empty__")) continue;
+    if (edge.source.startsWith(EMPTY_NODE_PREFIX) || edge.target.startsWith(EMPTY_NODE_PREFIX)) continue;
     const key = [edge.source, edge.target].sort().join(" <-> ");
     if (seen.has(key)) continue;
     seen.add(key);
