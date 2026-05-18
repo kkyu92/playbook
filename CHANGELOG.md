@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.52] — 2026-05-18
+
+### Changed
+- curate cycle 709 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=111 (+0). CHANGELOG 0.7.52 bump. TODOS BRANCHED N=191→192 갱신 (local 277/origin 115). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 사후 window 689-708: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 709 마커 박제 X. oscillation 56회 dogfood. (N=380 batch ~316/380)
+
 ## [0.7.51] — 2026-05-18
 
 ### Changed
