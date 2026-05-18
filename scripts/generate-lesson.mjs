@@ -342,8 +342,8 @@ function buildFrontmatter({ payload, category, connections, source }) {
  * @param {"scout"|"gap-pull"|"manual"} [opts.source="manual"]
  * @returns {Promise<{slug: string, path: string, evictions: Array}>}
  */
-export async function generateCustomEntry({ topicText, category, extraContext, source = "manual" }) {
-  regenerateManifest();
+export async function generateCustomEntry({ topicText, category, extraContext, source = "manual", skipRegen = false }) {
+  if (!skipRegen) regenerateManifest();
   const manifest = loadManifest();
   const existingSlugs = manifest.entries.map((e) => e.slug);
   const cat = category || inferCategoryFromText(topicText);
@@ -496,13 +496,14 @@ async function auto() {
   const topics = await suggest();
   console.log("\n🚀 auto 모드 — 2개 주제 자동 생성 시작\n");
   const results = [];
-  for (const t of topics) {
+  for (const [i, t] of topics.entries()) {
     try {
       const r = await generateCustomEntry({
         topicText: t.topic_text,
         category: t.category,
         extraContext: `갭 분석: ${t.rationale}`,
         source: "gap-pull",
+        skipRegen: i === 0,
       });
       results.push(r);
     } catch (err) {
