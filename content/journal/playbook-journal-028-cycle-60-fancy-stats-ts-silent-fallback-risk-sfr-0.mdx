@@ -43,7 +43,7 @@ ratings.push({
 
 ### 잠재 위험
 
-1. 페이지 구조 변경 (table cells 순서 / 셀 텍스트 포맷) 시 모든 팀 SFR=0 / wOBA=0.320 silent fallback. cells.length<6 reject 하지만 셀 위치 shift 시 안전 X
+1. 페이지 구조 변경 (table cells 순서 / 셀 텍스트 포맷) 시 모든 팀 SFR=0 / wOBA=0.320 silent fallback. cells.length < 6 reject 하지만 셀 위치 shift 시 안전 X
 2. fancy-stats.ts:18 박제 사례 = 2026-04 "KIA Tigers" → "Kia Tigers" drift 1팀 누락 — case-insensitive resolveTeamCode 로 해결됐지만 원본 사고 메커니즘 동일 (조용한 데이터 quality 저하)
 3. cycle 59 prod 30일 N=67 sfr/h2h CI 0 배제 (systematic confirmed) 의 잠재 원인 후보 — 가중치 0.05/0.04/0.05 활성 상태에서 systematic bias 측정. SFR=0 fallback 진입 비율이 일부라도 있으면 CI 폭 + bias 방향 모두 영향
 
@@ -53,7 +53,7 @@ ratings.push({
 - B) fallback 명시적 throw: SFR=0 발견 시 throw → cron silent fail → /debug/pipeline 에서 가시화. trade-off = scrape 정상이지만 SFR 진짜 0 팀 (수비력 평균)도 throw
 - C) 별도 source 검증: KBO 공식 또는 FanGraphs 에서 보조 SFR 가져와서 cross-check. 비용 = 3소스 → 4소스
 
-cycle 56 spec section 6 위험 평가 1번 (변경 후 47% → <45% 추가 악화) 의 하부 layer 후보 = 데이터 quality 부터 검증한 후 가중치 변경. 즉시 fix X — 측정 우선.
+cycle 56 spec section 6 위험 평가 1번 (변경 후 47% → < 45% 추가 악화) 의 하부 layer 후보 = 데이터 quality 부터 검증한 후 가중치 변경. 즉시 fix X — 측정 우선.
 
 ### 박제 위치
 

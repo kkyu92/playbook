@@ -139,9 +139,19 @@ jobs:
 
           # 2. Schema 검증 (A0-2) — fail-loud, visible fallback
           # 2a. 필수 field
-          if [ -z "$SOURCE_REPO" ] || [ -z "$TITLE" ] || [ -z "$BODY" ]; then
-            echo "::error::필수 필드 누락 (source_repo / title / body)"
+          if [ -z "$SOURCE_REPO" ] || [ -z "$TITLE" ]; then
+            echo "::error::필수 필드 누락 (source_repo / title)"
             exit 1
+          fi
+          # worker-lesson: body optional — title IS the lesson (retro summary / self-policy)
+          if [ -z "$BODY" ]; then
+            if [ "$EVENT_TYPE" = "worker-lesson" ]; then
+              BODY="$TITLE"
+              echo "worker-lesson body empty → title fallback"
+            else
+              echo "::error::필수 필드 누락 (body)"
+              exit 1
+            fi
           fi
 
           # 2b. event_type 화이트리스트
