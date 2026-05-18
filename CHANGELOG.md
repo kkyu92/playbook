@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.21] — 2026-05-18
+
+### Changed
+- curate cycle 646 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.21 bump. TODOS BRANCHED N=131→132 갱신 (local 181/origin 68). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 window 626-645 SE=7/20=35%<40% → B_FAIL + 명단=8 동일(A_PASS) → cycle 647 SE #185 마커 박제. (N=380 batch ~251/380)
+
 ## [0.7.20] — 2026-05-18
 
 ### Changed
