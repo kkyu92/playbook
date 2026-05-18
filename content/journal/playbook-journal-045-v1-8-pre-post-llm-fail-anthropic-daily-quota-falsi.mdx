@@ -1,0 +1,55 @@
+---
+title: "Playbook Journal 045 — v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567)"
+category: harness-engineering
+date: "2026-05-18"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260518-v1-8-pre-post-llm-fail-anthropic-daily-quota-falsi-97b7cc6ba3dd5f9562612a460d2e82.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+context: cycle 567 operational-analysis (lite) — n=119 baseline 재측정 + 신규 차원 발견
+finding:
+  - v1.8 verified 25건 중 conf=0.300 (pre-game credit-fail sentinel) 15건 = 100% 평일 (Wed 5/13 / Thu 5/14 / Fri 5/15)
+  - 같은 25건 post-game judge fail marker ('사후 분석 LLM 실패' in reasoning.judgeReasoning) = 0건
+  - 평일 credit-fail 게임도 post-game LLM 정상 작동 (real reasoning text 생성)
+  - pre-game predict cron (오후 KST) vs post-game postview cron (저녁 KST) — 같은 날 두 cron 결과 디커플링
+hypothesis:
+  - cycle 557 H3 (Anthropic daily quota) FALSIFIED — daily quota 라면 post-game 도 같은 날 fail 해야 함. quota 가설 반박 evidence.
+  - cycle 549 H4 (16:30 KST cron timing specific Anthropic API 문제) REINFORCED — post-game (저녁 시간) 은 정상이므로 특정 cron timing 만 문제.
+  - 가능 원인: (a) Anthropic API 평일 오후 KST 시간대 throttling / (b) Cloudflare Worker cron timing 의 함수 콜드 스타트 race / (c) 5 게임 동시 호출 rate limit (대기 후 retry 미작동) — H5 검증 미해결
+data_evidence:
+  - predict path conf=0.300 sentinel = pre-game credit-fail 단일 source of truth (predictions schema 에 debate_status 컬럼 부재)
+  - reasoning JSONB = post-game postview blob (homePostview / awayPostview / factorErrors / judgeReasoning) — pre-game reasoning 아님
+  - 5/16~5/17 (Sat/Sun) 10건 conf 0.498~0.562 = real-debate 정상 동작 / 50% 적중률
+recommendation:
+  - 다음 op-analysis 또는 fix-incident 사이클 — 16:30 KST cron 시점 (07:30 UTC) Anthropic API status / Cloudflare Worker 콜드 스타트 metric 측정
+  - n=150 v2.0 임계 달성 (잔여 31건) 까지 v1.8 평일 credit-fail 비율 추적
+  - 코드 변경 X (외부 API 영역) — 가설 검증 데이터 누적 필요
+박제 위치: develop-cycle cycle 567 retro + 본 lesson commit body
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
