@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.66] — 2026-05-19
+
+### Fixed
+- PR #882 Mermaid cylinder shape CI failure: `ImageModel[("Image Model")]` → `ImageModel["Image Model"]` (3줄 변경). origin/main 에 CYLINDER_SHAPE_RE fix (6c90597) 미반영으로 구 validator 가 cylinder shape 오탐. fix 커밋 `56faadf` — branch `fix/pr882-mermaid-cylinder-752`, push 후 CI 재실행 필요.
+
+### Changed
+- curate cycle 752 — wiki lint CLEAN (182 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음. search-hits totalQueries=131 (unchanged). TODOS BRANCHED N=202+ (local 45/origin 57). PR #882 daily ingest 4 new entries — CI UNSTABLE (Mermaid fix commit 완료, push 대기). SE Trigger-5 평가: skip 조건 A+B 충족 유지 → cycle 752 마커 박제 X. oscillation 74회 steady-state. (N=380 batch ~359/380)
+
 ## [0.7.65] — 2026-05-19
 
 ### Changed

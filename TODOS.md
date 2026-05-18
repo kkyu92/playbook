@@ -1,8 +1,9 @@
 # TODOS
 
-## [P0] R6 대기 — git BRANCHED 재발 (cycle 751 진단, local 43 / origin 57)
+## [P0] R6 대기 — git BRANCHED 재발 (cycle 752 진단, local 45 / origin 57)
 origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
-현재 상태: local 43개 ahead, origin 57개 ahead.
+현재 상태: local 45개 ahead, origin 57개 ahead.
+**부록**: PR #882 Mermaid fix (fix/pr882-mermaid-cylinder-752 local branch) — push 후 CI 재실행 → 자동 머지 가능. batch push 시 함께 push 필요.
 ```bash
 git pull origin main --no-rebase && git push origin main
 ```
