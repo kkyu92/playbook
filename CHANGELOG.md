@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.37] — 2026-05-18
+
+### Changed
+- review-code cycle 684 retro-only — health 10/10 PERFECT (tsc clean, eslint clean, 93/93 tests pass, wiki lint CLEAN 164 entries). No simplification targets after cycle 672 refactor. TODOS BRANCHED N=166→167 갱신 (local 236/origin 96). SE Trigger-5 평가: JSON tail-20 window 665-684: SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → 조건 A+B 충족 → cycle 685 SE 강제 발화 X. (N=380 batch ~288/380)
+
 ## [0.7.36] — 2026-05-18
 
 ### Changed
