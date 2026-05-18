@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 79,
+  "totalInvocations": 80,
   "skipped": 18,
-  "searched": 61,
-  "hit": 13,
+  "searched": 62,
+  "hit": 14,
   "noMatch": 48,
-  "lastUpdated": "2026-05-18T08:34:05.333Z",
+  "lastUpdated": "2026-05-18T08:42:27.810Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -26,9 +26,9 @@
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
     "reports/closed-loop-health": 10,
     "journal/playbook-journal-001-drift-greenfield": 1,
-    "harness-engineering/guard-test-pattern": 3,
+    "harness-engineering/guard-test-pattern": 4,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 4,
-    "context-engineering/nextjs-instrumentation-location": 1,
+    "context-engineering/nextjs-instrumentation-location": 2,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 3,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 1,
@@ -52,7 +52,7 @@
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 2,
     "retros/2026-05-13-cycles-452-455": 2,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 3,
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 4,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
     "retros/2026-05-13-cycles-482-485": 2,
@@ -67,5 +67,5 @@
     "harness-engineering/zero-touch-develop-cycle-session-management": 1,
     "project-ops/claude-code-cost-optimization-strategies": 1
   },
-  "totalQueries": 123
+  "totalQueries": 124
 }
