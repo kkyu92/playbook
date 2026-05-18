@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.24] — 2026-05-18
+
+### Changed
+- curate cycle 653 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.24 bump. TODOS BRANCHED N=138→139 갱신 (local 191/origin 69). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 window 634-653 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 654 SE #188 마커 박제 X. (N=380 batch ~254/380)
+
 ## [0.7.23] — 2026-05-18
 
 ### Changed
