@@ -154,7 +154,7 @@ async function main() {
   scored.sort((a, b) => b.score - a.score);
   const elapsed = Date.now() - start;
 
-  const SCORE_THRESHOLD = 0.88;
+  const SCORE_THRESHOLD = 0.87;
   const top = scored.filter((c) => c.score >= SCORE_THRESHOLD).slice(0, topK);
 
   // 히트 카운트 기록 (unique slugs만)
