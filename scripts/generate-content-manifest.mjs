@@ -229,14 +229,9 @@ function main() {
       checkDate.setHours(0, 0, 0, 0);
     }
 
-    while (true) {
-      const dateStr = checkDate.toISOString().split("T")[0];
-      if (dateSet.has(dateStr)) {
-        currentStreak++;
-        checkDate.setDate(checkDate.getDate() - 1);
-      } else {
-        break;
-      }
+    while (dateSet.has(checkDate.toISOString().split("T")[0])) {
+      currentStreak++;
+      checkDate.setDate(checkDate.getDate() - 1);
     }
 
     let streak = 1;

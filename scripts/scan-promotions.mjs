@@ -63,10 +63,12 @@ function isAlreadyPromoted(category) {
   // gap: gates 디렉토리 매칭 (llm-gen-validate.mjs vs llm-generation) 은 fuzzy 라 unreliable.
   // _compiled-truth.md 의 명시 marker 가 source of truth.
   const compiledTruthPath = path.join(SOLUTIONS_DIR, category.name, "_compiled-truth.md");
-  if (!fs.existsSync(compiledTruthPath)) return false;
-
-  const content = fs.readFileSync(compiledTruthPath, "utf-8");
-  return /\*\*코드 게이트 승격\*\*:\s*✅/.test(content);
+  try {
+    const content = fs.readFileSync(compiledTruthPath, "utf-8");
+    return /\*\*코드 게이트 승격\*\*:\s*✅/.test(content);
+  } catch {
+    return false;
+  }
 }
 
 function checkExistingGates() {
@@ -93,7 +95,13 @@ function extractPatterns(category) {
   };
 
   for (const file of category.files) {
-    const content = fs.readFileSync(file.path, "utf-8");
+    let content;
+    try {
+      content = fs.readFileSync(file.path, "utf-8");
+    } catch {
+      console.warn(`⚠️ 읽기 실패: ${file.path}`);
+      continue;
+    }
 
     const words = content.match(/`[^`]+`/g) || [];
     for (const word of words) {
@@ -125,42 +133,20 @@ function extractPatterns(category) {
   return { topKeywords, topFiles, errorSample: patterns.errorPatterns.slice(0, 5) };
 }
 
+const PROMOTION_MAP = {
+  "mdx":                { type: "auto-fix validator",  location: "scripts/lib/mdx-fix.mjs",                                    reason: "문법/빌드 에러는 자동 수정 가능 + idempotent 보장 용이" },
+  "build-errors":       { type: "auto-fix validator",  location: "scripts/lib/build-errors-fix.mjs",                           reason: "문법/빌드 에러는 자동 수정 가능 + idempotent 보장 용이" },
+  "llm-generation":     { type: "slash command + lib", location: ".claude/commands/validate-ai-output.md + scripts/lib/llm-validate.mjs", reason: "LLM 출력 검증은 multi-step (schema + compile + retry) — 커맨드 형태 + 공용 lib" },
+  "ai-pipeline":        { type: "slash command + lib", location: ".claude/commands/validate-ai-output.md + scripts/lib/llm-validate.mjs", reason: "LLM 출력 검증은 multi-step (schema + compile + retry) — 커맨드 형태 + 공용 lib" },
+  "ci-github-actions":  { type: "slash command",       location: ".claude/commands/ci-github-actions-guard.md",                reason: "워크플로우 패턴은 multi-step 검증 + 맥락 판단 필요 — 커맨드가 적합" },
+  "workflow":           { type: "slash command",       location: ".claude/commands/workflow-guard.md",                         reason: "워크플로우 패턴은 multi-step 검증 + 맥락 판단 필요 — 커맨드가 적합" },
+  "next-patterns":      { type: "warning-only detector", location: "scripts/lib/next-patterns-check.mjs",                     reason: "프레임워크 패턴은 false positive 위험 — warning-only로 시작" },
+  "framework":          { type: "warning-only detector", location: "scripts/lib/framework-check.mjs",                         reason: "프레임워크 패턴은 false positive 위험 — warning-only로 시작" },
+};
+
 function suggestPromotionType(category) {
   const name = category.name;
-
-  if (name === "mdx" || name === "build-errors") {
-    return {
-      type: "auto-fix validator",
-      location: `scripts/lib/${name}-fix.mjs`,
-      reason: "문법/빌드 에러는 자동 수정 가능 + idempotent 보장 용이",
-    };
-  }
-
-  if (name === "llm-generation" || name === "ai-pipeline") {
-    return {
-      type: "slash command + lib",
-      location: `.claude/commands/validate-ai-output.md + scripts/lib/llm-validate.mjs`,
-      reason: "LLM 출력 검증은 multi-step (schema + compile + retry) — 커맨드 형태 + 공용 lib",
-    };
-  }
-
-  if (name === "ci-github-actions" || name === "workflow") {
-    return {
-      type: "slash command",
-      location: `.claude/commands/${name}-guard.md`,
-      reason: "워크플로우 패턴은 multi-step 검증 + 맥락 판단 필요 — 커맨드가 적합",
-    };
-  }
-
-  if (name === "next-patterns" || name === "framework") {
-    return {
-      type: "warning-only detector",
-      location: `scripts/lib/${name}-check.mjs`,
-      reason: "프레임워크 패턴은 false positive 위험 — warning-only로 시작",
-    };
-  }
-
-  return {
+  return PROMOTION_MAP[name] ?? {
     type: "warning-only detector",
     location: `scripts/lib/${name}-check.mjs`,
     reason: "기본: warning-only 시작, 충분한 데이터 축적 후 auto-fix 전환 검토",
@@ -170,9 +156,9 @@ function suggestPromotionType(category) {
 function main() {
   const categories = scanCategories();
   const gates = checkExistingGates();
-  const promotedCache = new Map(categories.map((c) => [c.name, isAlreadyPromoted(c)]));
-  const promoted = (c) => promotedCache.get(c.name);
   const overThreshold = categories.filter((c) => c.count >= THRESHOLD);
+  const promotedCache = new Map(overThreshold.map((c) => [c.name, isAlreadyPromoted(c)]));
+  const promoted = (c) => promotedCache.get(c.name) ?? false;
   const alreadyPromoted = overThreshold.filter(promoted);
   const promotable = overThreshold.filter((c) => !promoted(c));
   const below = categories.filter((c) => c.count < THRESHOLD && c.count > 0);

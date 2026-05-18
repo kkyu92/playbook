@@ -85,10 +85,6 @@ function addBacklinksWithCap(workingMap, newEntry) {
   return evictions;
 }
 
-function loadAllEntryFiles() {
-  return loadMdxEntries(CONTENT_DIR);
-}
-
 /**
  * @param {object} newEntry — { slug, category, topicSlug, frontmatter, body }
  * @returns {{ newPath: string, updatedFiles: string[], evictions: Array }}
@@ -111,7 +107,7 @@ function persistNewEntryWithSync(newEntry) {
   );
   fs.writeFileSync(newPath, newRaw);
 
-  const allEntries = loadAllEntryFiles();
+  const allEntries = loadMdxEntries(CONTENT_DIR);
   const workingMap = new Map(allEntries.map((e) => [e.slug, {
     slug: e.slug,
     original: e,
