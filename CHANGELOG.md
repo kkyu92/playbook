@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.20] — 2026-05-18
+
+### Changed
+- skill-evolution cycle 643 — SE #184 fast-path SUCCESS (oscillation 32회). 명단=8 동일(A_PASS) + window 624-643 SE=8/20=40%≥40%(B_PASS) → cycle 644 SE #185 마커 박제 X. TODOS BRANCHED N=128→129 갱신 (local 177/origin 68). MIGRATION-PATH #184 append. (N=380 batch ~249/380)
+- curate cycle 644 — wiki lint CLEAN (164 entries, 0 orphan/isolated/stale/JIT-unused). scan-promotions: 승격 후보 없음 (react 2건, develop-cycle-hub 1건, mdx 1건). gstack learnings 0건. CHANGELOG 0.7.20 bump. TODOS BRANCHED N=129→130 갱신 (local 178→179/origin 68). memory 2건 갱신 (bidirectional/develop_cycle_skill_family). SE Trigger-5 평가: JSON tail-20 window 625-644 SE=8/20=40%≥40% → B_PASS + 명단=8 동일(A_PASS) → cycle 645 마커 X. (N=380 batch ~250/380)
+
 ## [0.7.19] — 2026-05-18
 
 ### Changed
