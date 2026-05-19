@@ -4,6 +4,41 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.8.5] — 2026-05-19
+
+### Changed
+- cycle 810 curate — wiki lint CLEAN (203 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 804→810, SE oscillation 97→101회, wiki 202→203 entries, BRANCHED 37/23→45/28, N=9→3 batch). CHANGELOG 6 cycles backfill (0.7.99-0.8.4). scan-promotions: 승격 후보 없음. TODOS BRANCHED 갱신 (local 45 / origin 28).
+
+## [0.8.4] — 2026-05-19
+
+### Changed
+- cycle 809 skill-evolution SE #250 SUCCESS — stable oscillation fast-path 101회. SE Trigger-5: JSON tail-20 window 789-808 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH append. 사후 window 790-809: SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 810 마커 박제 X. TODOS BRANCHED 갱신 (local 44/origin 27).
+
+## [0.8.3] — 2026-05-19
+
+### Changed
+- cycle 808 skill-evolution SE #249 SUCCESS — stable oscillation fast-path 100회 milestone. SE Trigger-5: JSON tail-20 window 788-807 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → cycle 809 SE #250 마커 박제. TODOS BRANCHED 갱신 (local 43/origin 27).
+
+## [0.8.2] — 2026-05-19
+
+### Changed
+- cycle 807 skill-evolution SE #248 SUCCESS — stable oscillation fast-path 99회. SE Trigger-5: JSON tail-20 window 787-806 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → cycle 808 SE #249 마커 박제. TODOS BRANCHED 갱신 (local 42/origin 26).
+
+## [0.8.1] — 2026-05-19
+
+### Changed
+- cycle 806 skill-evolution SE #247 SUCCESS — stable oscillation fast-path 98회. SE Trigger-5: JSON tail-20 window 787-806 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → cycle 807 SE #248 마커 박제. TODOS BRANCHED 갱신 (local 41/origin 26).
+
+## [0.8.0] — 2026-05-19
+
+### Added
+- cycle 805 explore-idea — 에이전트 멀티-주파수 지식 파이프라인 패턴 신설 (wiki entry #203). LLM 에이전트가 다양한 주파수(일간/주간/월간)로 지식을 습득/통합하는 파이프라인 설계 패턴. TODOS BRANCHED 갱신 (local 39/origin 24).
+
+## [0.7.99] — 2026-05-19
+
+### Changed
+- cycle 804 curate — wiki lint CLEAN (202 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 800→804, SE oscillation 95→97회, wiki 201→202 entries, BRANCHED 31/20→38/23, N=13→9 batch). CHANGELOG 3 cycles backfill (0.7.96-0.7.98). scan-promotions: 승격 후보 없음. TODOS BRANCHED 갱신 (local 37→38 / origin 23).
+
 ## [0.7.98] — 2026-05-19
 
 ### Changed
