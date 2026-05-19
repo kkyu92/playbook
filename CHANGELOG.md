@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.83] — 2026-05-19
+
+### Changed
+- cycle 780 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). gstack learnings 0건. scan-promotions: 승격 후보 없음 (관찰 중 3건: react/develop-cycle-hub/mdx). TODOS BRANCHED 갱신 (local 40 / origin 1). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family 779→780, BRANCHED 39→40, SE oscillation 87회 steady). SE Trigger-5: JSON tail-20 window 761-780 SE=7/20=35% B FAIL. 명단=8 (vs SE #236 명단=7) → A FAIL (명단 변화: fix-incident window 이탈, 비활성화 신호) → skip 조건 미충족 → cycle 781 SE #237 마커 박제.
+
 ## [0.7.82] — 2026-05-19
 
 ### Changed
