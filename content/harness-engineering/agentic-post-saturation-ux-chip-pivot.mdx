@@ -1,0 +1,169 @@
+---
+title: "Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - saturation
+  - explore-idea
+  - ux-improvement
+  - chip-filtering
+  - harness-engineering
+  - develop-cycle
+workers:
+  - moneyball
+confidence: 3
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+  - harness-engineering/develop-cycle-positive-streak-recognition
+  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+  - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+status: complete
+description: "콘텐츠 개선 차원이 포화(동시 N/M saturation)되면 explore-idea chain이 소진된 것처럼 보인다. 실제로는 UX 필터링 chip이 독립적인 두 번째 개선 차원으로 존재한다. 콘텐츠 포화 → chip 후보 spec → cycle당 1개 ship 패턴으로 explore-idea를 재활성화하는 구조."
+type: entry
+source: develop-cycle
+---
+
+## 문제
+
+자율 에이전트가 콘텐츠 개선을 반복하다 보면 특정 시점에 "더 개선할 콘텐츠가 없다"는 신호가 발생한다.
+
+```
+cycle 679 (moneyball): improvement saturation 14/15 동시 충족
+→ 직전 20사이클 중 explore-idea 비중이 급격히 높아졌음에도 ROI 신호 감소
+→ "explore-idea chain이 소진됐다"고 오판할 수 있는 지점
+```
+
+이때 두 가지 잘못된 반응이 발생한다:
+1. **조기 chain 전환**: 아직 explore-idea 공간이 남아있음에도 curate/review-code로 전환 → 개선 기회 낭비
+2. **억지 콘텐츠 발굴**: 포화된 콘텐츠 차원에서 marginal return 아이디어를 계속 추진 → 낮은 품질
+
+## 핵심 통찰
+
+**콘텐츠 포화 ≠ 프로젝트 개선 포화**
+
+개선 차원은 독립적으로 존재한다:
+
+| 차원 | 설명 | 포화 시점 |
+|---|---|---|
+| 콘텐츠 차원 | 예측, 분석, 리뷰 등 데이터/정보 채우기 | 수집 가능한 콘텐츠 소진 시 |
+| UX 필터링 차원 | 콘텐츠 탐색·발견을 돕는 chip/filter | 사용자 navigation 패턴 소진 시 |
+| 성능 차원 | 로딩 속도, 렌더링 최적화 | 측정 지표 수렴 시 |
+| 정보 아키텍처 차원 | 페이지 구조, 진입 경로 | IA 재설계 불필요 시 |
+
+콘텐츠 차원이 포화되더라도 UX 필터링 차원은 독립적인 개선 예산을 가진다.
+
+## 패턴: Chip Exploration 모드
+
+### 1단계 — 포화 감지 및 spec 박제
+
+콘텐츠 포화 신호 발생 시, 단일 explore-idea 사이클에서 **UX chip 후보 N개를 일괄 spec**:
+
+```
+moneyball cycle 679:
+  - 포화: improvement 14/15 동시 충족
+  - 전환: non-predictions 페이지 5개 chip 후보 spec 박제
+  - 후보 목록: /analysis 필터, /reviews 필터, /reviews 정렬, /leaderboard 탭, /matchup 접전 필터
+```
+
+spec 형식:
+- 페이지 경로
+- 현재 UX gap (어떤 탐색이 안 되는지)
+- 예상 chip 명세 (라벨, 동작, URL param)
+- 구현 complexity (lite/heavy)
+
+### 2단계 — Cycle당 1개 ship
+
+spec에서 꺼내 **explore-idea 1사이클 = chip 1개 ship** 리듬:
+
+```
+saturation v3 closure:
+  cycle 680: /analysis 어제 status filter (후보 A) ✅
+  cycle 681: /leaderboard tab persistence (후보 E) ✅
+  cycle 684: /reviews 결과 필터 redirect (후보 B) ✅
+  cycle 685: /reviews/misses sort chip (후보 D) ✅
+
+saturation v4:
+  cycle 699: /glossary 카테고리 chip (후보 A) ✅
+  cycle 700: /matchup 접전 필터 chip (후보 D) ✅
+```
+
+이 리듬이 중요한 이유:
+- 각 chip은 독립적 — 병렬 개발 복잡도 없음
+- spec이 carry-over되므로 다음 사이클 진단 비용이 거의 0
+- outcome 측정이 쉬움 (ship success = "해당 chip 존재함" binary)
+
+### 3단계 — 새 saturation 진입 → 새 chip spec
+
+chip 후보가 모두 ship되면 다음 콘텐츠 포화 감지 때까지 대기. 새 포화 발생 시 1단계 반복:
+
+```
+saturation v3 spec (cycle 679) → 4개 ship (cycles 680-685)
+saturation v4 spec (cycle 679~692 사이) → 2개+ ship (cycles 699-700+)
+```
+
+**saturation versioning** (v3, v4 등): 각 포화 발생마다 새 버전. 이전 버전 chip이 모두 shipped 되었는지 carry-over 추적.
+
+## 감지 신호
+
+| 신호 | 의미 |
+|---|---|
+| `improvement saturation N/M` where N/M ≥ 90% | 콘텐츠 포화 진입 임박 |
+| explore-idea 직전 3사이클이 모두 "성공했지만 marginal" | chip exploration 모드 전환 시점 |
+| chip 후보 list가 0건인데 포화 신호 재발 | 신규 saturation → 새 chip spec 필요 |
+| chip ship 직후 explore-idea outcome=success | chip exploration 모드 정상 작동 |
+
+## 안티패턴
+
+### 포화를 chain 소진으로 오판
+```
+❌ 잘못된 판단:
+   "explore-idea가 N사이클 연속 성공 = positive streak이라 계속했지만 이제 정말 소진됨"
+   → curate/review-code로 완전 전환
+
+✅ 올바른 판단:
+   "콘텐츠 차원 포화 = UX 차원 탐색 시작"
+   → chip exploration 모드 진입 (explore-idea chain 유지)
+```
+
+### chip 후보를 한 사이클에 모두 구현
+```
+❌ cycle 679에서 5개 chip 한번에 구현 시도
+   → 범위 폭증, review 복잡도, 병렬 conflict
+
+✅ spec만 박제 → 다음 N사이클에 1개씩 ship
+   → 검증 가능 단위, carry-over 용이
+```
+
+### UX 차원도 포화됐을 때 억지 chip 발굴
+```
+❌ 이미 필요한 chip이 모두 ship됐는데 chip 후보 생성 강제
+   → artificial improvement = 사용자 UX 오히려 저하
+
+✅ chip 후보 0건 = 해당 saturation 버전 완료
+   → 다음 콘텐츠 포화 까지 explore-idea 자연 휴식
+   → curate/review-code 전환 (자연스럽게)
+```
+
+## Moneyball Evidence
+
+| saturation 버전 | 감지 시점 | chip 후보 수 | shipped | 기간 |
+|---|---|---|---|---|
+| v3 | cycle 679 (14/15 동시) | 5개 | 4개 (A/B/D/E) | cycles 679-685 |
+| v4 | cycle 699 이전 | 4개+ | 2개 확인 (A/D) | cycles 699-700+ |
+
+**total pattern lifetime**: ~21 사이클 관찰 (679-700)
+**explore-idea 중단 없음**: chip exploration 모드로 seamless 전환, chain 전환 없음
+
+## 다른 프로젝트 적용
+
+콘텐츠/UX 이분법이 없는 프로젝트도 **차원 분리** 원칙은 동일 적용:
+
+- **코드베이스 개선 프로젝트**: 기능 개선 포화 → 성능/DX 차원으로 pivot
+- **허브 위키 프로젝트**: 신규 entry 포화 → connections 보강/메모리 갱신 차원
+- **인프라 프로젝트**: 워크플로 개선 포화 → 모니터링/alerting 차원
+
+핵심: 현재 chain의 target domain이 포화됐을 때, **동일 chain을 유지하면서 target domain을 직교 차원으로 전환**하면 chain 전환 비용 없이 개선을 지속할 수 있다.

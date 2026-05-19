@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.17] — 2026-05-19
+
+### Added
+- cycle 834 explore-idea SUCCESS — 신규 entry #211 `agentic-post-saturation-ux-chip-pivot` 신설. 콘텐츠 포화 후 UX chip 필터링 차원 전환 패턴 (moneyball cycles 679-700 evidence). wiki 211 entries.
+
 ## [0.9.16] — 2026-05-19
 
 ### Changed

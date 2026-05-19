@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T09:59:47.440Z
+Updated: 2026-05-19T11:05:38.846Z
 
-## 엔트리 (210개)
+## 엔트리 (211개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -24,13 +24,14 @@ Updated: 2026-05-19T09:59:47.440Z
 
 ### Harness Engineering
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
-- [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
+- [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
+- [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/harness-engineering/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
@@ -748,6 +749,9 @@ Updated: 2026-05-19T09:59:47.440Z
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/drift-detection-methodology
@@ -763,15 +767,21 @@ Updated: 2026-05-19T09:59:47.440Z
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
+- harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/prompt-model-version-management-large-scale-ai
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
-- harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
-- harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/drift-detection-methodology
@@ -1121,7 +1131,3 @@ Updated: 2026-05-19T09:59:47.440Z
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
-
-- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/zero-touch-develop-cycle-session-management
-- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
-- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/hub-worker-compounding-pattern
