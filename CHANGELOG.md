@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.8.8] — 2026-05-19
+
+### Added
+- cycle 813 explore-idea — wiki entry #205 신설: 자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어 (moneyball cycles 683-691 evidence). wiki lint CLEAN (205 entries). TODOS BRANCHED 갱신 (local 51 / origin 35).
+
 ## [0.8.7] — 2026-05-19
 
 ### Changed

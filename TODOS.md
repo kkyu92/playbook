@@ -1,11 +1,11 @@
 # TODOS
 
-## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 812 갱신, local 49 / origin 31)
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 813 갱신, local 51 / origin 35)
 
-**상태**: local main 49 commits ahead / origin main 31 commits ahead (양방향 diverged). force-push / merge / rebase 중 선택 필요.
+**상태**: local main 51 commits ahead / origin main 35 commits ahead (양방향 diverged). force-push / merge / rebase 중 선택 필요.
 **해소 path 후보**: `git pull --rebase origin main` (히스토리 정리) 또는 `git merge origin/main` (merge commit).
 **CI 영향**: `4a1054b` (dashboard SOURCE_MAP undefined TypeError fix) 로컬만 존재. cycle 795: PR #908 CI fix → PR MERGED (06:52 KST). dashboard fix는 origin에도 push됨 (PR branch 직접). BRANCHED 해소 시 완전 로컬 반영.
-**이력**: cycle 782 stale 43/1 → cycle 784 실측 2/1 → cycle 785 실측 4/2 → cycle 786 실측 6/3 → cycle 787 실측 7/4 → cycle 788 실측 8/5 → cycle 789 실측 9/5 → cycle 790 실측 11/6 → cycle 791 실측 13/8 → cycle 792 실측 15/10 → cycle 793 실측 16/11 → cycle 794 실측 18/11 → cycle 795 실측 21/14 → cycle 796 실측 24/15 → cycle 797 실측 26/16 → cycle 798 실측 28/17 → cycle 799 실측 30/19 → cycle 800 실측 31/20 → cycle 801 실측 34/21 → cycle 802 실측 35/22 → cycle 803 실측 36/22 → cycle 804 실측 38/23 → cycle 805 실측 39/24 → cycle 806 실측 41/26 → cycle 807 실측 42/26 → cycle 808 실측 43/27 → cycle 809 실측 44/27 → cycle 810 실측 45/28 → cycle 811 실측 47/29 → cycle 812 실측 49/31
+**이력**: cycle 782 stale 43/1 → cycle 784 실측 2/1 → cycle 785 실측 4/2 → cycle 786 실측 6/3 → cycle 787 실측 7/4 → cycle 788 실측 8/5 → cycle 789 실측 9/5 → cycle 790 실측 11/6 → cycle 791 실측 13/8 → cycle 792 실측 15/10 → cycle 793 실측 16/11 → cycle 794 실측 18/11 → cycle 795 실측 21/14 → cycle 796 실측 24/15 → cycle 797 실측 26/16 → cycle 798 실측 28/17 → cycle 799 실측 30/19 → cycle 800 실측 31/20 → cycle 801 실측 34/21 → cycle 802 실측 35/22 → cycle 803 실측 36/22 → cycle 804 실측 38/23 → cycle 805 실측 39/24 → cycle 806 실측 41/26 → cycle 807 실측 42/26 → cycle 808 실측 43/27 → cycle 809 실측 44/27 → cycle 810 실측 45/28 → cycle 811 실측 47/29 → cycle 812 실측 49/31 → cycle 813 실측 51/35
 
 ## [DONE 2026-05-19] PR #882 Mermaid fix — c3f50bf 에 포함됨
 `fix/pr882-mermaid-cylinder-752` 의 Mermaid 수정이 PR #882 squash merge (`c3f50bf`) 안에 포함되어 origin/main 에 머지 완료. 로컬 브랜치 push 불필요. BRANCHED 해소 시 자동 반영.

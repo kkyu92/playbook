@@ -1,0 +1,130 @@
+---
+title: "자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - chain-pool
+  - execution-depth
+  - lite-heavy
+  - harness-engineering
+  - worker-lesson
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/hub-worker-compounding-pattern
+status: complete
+description: "자율 에이전트가 같은 chain을 lite(스캔만) 또는 lite→heavy(스캔+실행) 두 단계로 실행하는 게이트 패턴. lite 스캔이 실질적 문제를 발견하면 heavy 실행으로 진입, 아니면 retro-only로 종료. 불필요한 heavy 실행을 제거해 사이클당 비용을 최소화."
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+자율 루프의 특정 chain (review-code, polish-ui, fix-incident 등)은 매 사이클 실행해도 아무것도 없는 경우가 많다. 매번 heavy 실행(full scan + PR ship)을 강제하면:
+
+- **불필요한 비용**: 아무것도 없는 상태에서 deep analysis 실행 → token + 시간 낭비
+- **False action**: 발견 없음에도 "무언가 해야 한다"는 압박 → 불필요한 cleanup PR
+- **Burnout 패턴**: heavy chain이 빈손 retro를 반복하면 chain 자체의 신뢰도 하락
+
+반대로 lite만 실행하면 실제 문제를 발견해도 행동 없이 관찰만 하는 **silent accumulation** 위험.
+
+## Lite-First 게이트 패턴
+
+```
+chain 진입
+  ↓
+[Lite Phase] 빠른 스캔 — 범위 탐색, 이슈 존재 여부만 확인
+  ↓
+발견 있음? ─── No ──→ retro-only 종료 (코드 변경 X)
+  │
+  Yes
+  ↓
+[Heavy Phase] 실행 — 발견된 이슈에 대한 실제 수정 + PR ship
+  ↓
+outcome = success
+```
+
+핵심: **lite 스캔이 heavy 진입 게이트**다. 발견 없으면 heavy 실행 없이 사이클 종료.
+
+## 실측 증거 (moneyball develop-cycle 2026-05)
+
+| 사이클 | 표기 | outcome | 행동 |
+|---|---|---|---|
+| cycle 689 | fix-incident (lite) retro-only | success | gap=20 점검, incident 0건 확인 → 코드 변경 X |
+| cycle 690 | polish-ui (lite) retro-only | success | design token 점검, 균열 없음 → PR X |
+| cycle 683 | review-code (lite, heavy 모드) | success | lite scan → silent drift 감지 → heavy 실행 → PR #971 |
+| cycle 687 | review-code (lite, heavy 모드) | success | lite scan → Header NAV drift → heavy 실행 → PR #975 |
+| cycle 691 | review-code (lite, heavy 모드) | success | lite scan → CLAUDE.md sync 9건 → heavy 실행 → PR #977 |
+
+패턴: lite scan이 "발견 없음"이면 retro-only, "발견 있음"이면 lite+heavy 합성 실행.
+
+## Lite Phase 설계 기준
+
+Lite 스캔은 **범위 추정**에 집중:
+
+```
+git log --oneline -30                     # 최근 drift source 탐색
+pnpm lint / grep / find                   # 이슈 존재 여부 (숫자만)
+gh run list --status failure --limit 5   # CI 실패 존재 여부
+gh issue list --state open --limit 5     # 인바운드 신호
+```
+
+Lite 스캔 소요: 5~15초. 발견 수 N을 출력하고 `N > 0` 이면 heavy 진입 결정.
+
+## Heavy Phase 조건
+
+| Lite 발견 | Heavy 진입 기준 |
+|---|---|
+| drift N건 | N ≥ 1 (한 건이라도 있으면 heavy) |
+| CI 실패 M건 | M ≥ 1 |
+| 이슈 K건 | K ≥ 1 |
+| 발견 0건 전부 | heavy X, retro-only |
+
+단, **N이 너무 크면 scope 제한**: heavy는 N 전부가 아닌 "이번 사이클 처리 가능 범위"만 실행. 나머지는 carry-over (TODOS 또는 다음 사이클 진단 input).
+
+## cycle_state 표기 관례
+
+```json
+"chain_selected": "review-code",
+"execution": {
+  "mode": "lite+heavy",   // lite-only | lite+heavy
+  "lite_findings": 9,      // lite 스캔 발견 건수
+  "heavy_scope": 9,        // heavy 실행 실제 범위
+  "outcome": "success"
+}
+```
+
+`"mode": "lite-only"` = retro-only, `"mode": "lite+heavy"` = PR ship.
+
+## 허브 적용 예시
+
+| Chain | Lite Phase | Heavy 진입 조건 | Lite-only 조건 |
+|---|---|---|---|
+| review-code | `pnpm lint` 경고 수 / dead import grep | 경고 1건+ | 경고 0 |
+| curate | `pnpm lint` orphan count | orphan 1건+ | 위키 CLEAN |
+| fix-incident | `gh run list` CI 실패 / open issue | 실패 또는 이슈 1건+ | 청정 |
+| closed-loop-design | 4차원(input/process/output/feedback) 결손 체크 | 결손 1개+ | 전부 존재 |
+
+## 분석 전용 chain과의 차이
+
+| | `agentic-loop-analytical-chain-lite-mode` | Lite-First 게이트 |
+|---|---|---|
+| 정의 | **별도 chain**: 코드 변경 X, 측정만 | **같은 chain** 내 두 단계 |
+| 목적 | 측정 이벤트 cycle_state 박제 | heavy 실행 여부 게이팅 |
+| 코드 변경 | 항상 없음 | lite-only면 없음, lite+heavy면 있음 |
+| chain 선택 | pool에서 analytical chain 선택 | action chain이 내부에서 깊이 결정 |
+
+Analytical chain lite mode = "측정 chain 따로 운영"  
+Lite-First 게이트 = "action chain이 스스로 깊이 결정"
+
+## 핵심 원칙
+
+> **Lite 스캔 비용 < Heavy 실행 비용 < 불필요한 Heavy 실행 비용**
+
+Lite-First 게이트는 이 비용 순서를 항상성으로 구현한다. 발견이 없으면 비용 최소화(lite-only), 발견이 있으면 정확한 깊이로 실행(lite+heavy).

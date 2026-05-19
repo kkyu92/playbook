@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T08:29:57.374Z
+Updated: 2026-05-19T09:00:07.364Z
 
-## 엔트리 (204개)
+## 엔트리 (205개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -26,6 +26,7 @@ Updated: 2026-05-19T08:29:57.374Z
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
+- [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
@@ -738,6 +739,10 @@ Updated: 2026-05-19T08:29:57.374Z
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/zerostack-rust-agent-harness-extension
+- harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
+- harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ reports/closed-loop-health
