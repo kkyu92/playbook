@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T09:20:02.153Z
+Updated: 2026-05-19T09:45:46.153Z
 
-## 엔트리 (206개)
+## 엔트리 (208개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -29,6 +29,7 @@ Updated: 2026-05-19T09:20:02.153Z
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
+- [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
@@ -75,6 +76,7 @@ Updated: 2026-05-19T09:20:02.153Z
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement) — confidence: 2, status: complete
+- [Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴](wiki/harness-engineering/worker-lesson-velocity-signal) — confidence: 2, status: complete
 - [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/harness-engineering/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
 - [Zerostack 통합 — Rust 기반 코딩 에이전트를 활용한 AI 하네스 기능 확장](wiki/harness-engineering/zerostack-rust-agent-harness-extension) — confidence: 1, status: draft
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: done
@@ -754,6 +756,11 @@ Updated: 2026-05-19T09:20:02.153Z
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-gap-trigger-chain-health-check
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
@@ -936,6 +943,10 @@ Updated: 2026-05-19T09:20:02.153Z
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/worker-lesson-velocity-signal ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/worker-lesson-velocity-signal ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/worker-lesson-velocity-signal ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/worker-lesson-velocity-signal ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/zero-touch-develop-cycle-session-management ↔ harness-engineering/agentic-chain-saturation-detection
