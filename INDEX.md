@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T14:45:20.360Z
+Updated: 2026-05-19T14:58:13.497Z
 
-## 엔트리 (221개)
+## 엔트리 (222개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -35,6 +35,7 @@ Updated: 2026-05-19T14:45:20.360Z
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
+- [자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴](wiki/harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
@@ -790,6 +791,9 @@ Updated: 2026-05-19T14:45:20.360Z
 - harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
+- harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+- harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ reports/closed-loop-health

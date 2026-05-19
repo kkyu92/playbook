@@ -1,0 +1,131 @@
+---
+title: "자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - autonomous-loop
+  - human-in-the-loop
+  - carry-over
+  - r6-boundary
+  - develop-cycle
+  - harness-engineering
+  - automation-boundary
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/drift-detection-methodology
+status: complete
+description: "자율 에이전트 시스템의 TODOS.md 에 수십~수백 사이클 동안 PENDING 상태로 남는 carry-over 항목은 시스템 결함이 아니라 자동화 경계(human checkpoint)가 올바르게 작동하는 신호다. 누적 자체가 R6 영역(사용자 결정 필요) 의 정확한 식별을 나타낸다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 시스템을 운영하다 보면 TODOS.md 에 수십~수백 사이클 동안 해소되지 않는 항목이 쌓인다. 직관적으로 이는 "시스템이 이 문제를 처리하지 못하고 있다"는 실패처럼 보인다.
+
+**실측 사례 (허브 cycle 782→868+)**:
+```
+[PENDING] R6 대기 — git BRANCHED 재발
+local main 141 commits ahead / origin main 59 commits ahead
+force-push / merge / rebase 중 선택 필요.
+```
+
+이 항목은 cycle 782 에서 처음 등장했고 cycle 868 현재도 PENDING. 86+ 사이클(약 수주 분량)이 지나도 해소되지 않았다. 시스템이 고장난 것인가?
+
+## 핵심 관점: carry-over = 자동화 경계 표지판
+
+이 패턴은 **자율 에이전트 시스템이 자동화 가능 영역과 인간 결정 영역을 정확히 분리하고 있다는 증거**다.
+
+### 자동화 가능 영역 vs 인간 결정 영역 (R6)
+
+```
+[자동화 구역] — 에이전트 자율 처리
+  ✓ 위키 entry 생성/수정
+  ✓ 메모리 갱신
+  ✓ 코드/스크립트 수정
+  ✓ workflow yaml 수정 (로컬 GH_PAT 세션)
+  ✓ 자동 commit (main 직접)
+  ✓ scan-promotions 실행
+  ✓ lint 수정
+
+[R6 체크포인트 구역] — 반드시 사용자 결정
+  × force-push / git rebase / merge (git 히스토리 재작성)
+  × 외부 SaaS 결제 / 요금제 변경
+  × 큰 architecture 결정
+  × secrets 생성/변경
+  × Cloudflare worker 변경
+```
+
+BRANCHED carry-over 가 장기간 남아 있는 이유:
+- force-push → 불가역 작업 (잘못하면 origin 히스토리 파괴)
+- merge/rebase → git 히스토리 선택 결정 (사용자가 전략 선택해야)
+- 자율 시스템이 이 결정을 내리면 안전 보장 X
+
+장기 carry-over = 에이전트가 **올바르게** R6 경계를 인식하고 있다는 신호.
+
+## 진단: 누적이 건강한가 vs 병적인가
+
+### 건강한 carry-over 누적 (정상)
+
+| 특성 | 판단 |
+|---|---|
+| 항목이 R6 영역 (force-push / secrets / SaaS billing) | ✓ 정상 — 인간 결정 대기 |
+| 누적에도 불구하고 사이클이 계속 돌아감 | ✓ 정상 — carry-over가 블로킹 X |
+| 각 항목이 명확한 "해소 path 후보" 를 포함 | ✓ 정상 — 에이전트가 선택지 제공 |
+| 같은 항목이 쌓이지 않고 동일 항목 업데이트만 | ✓ 정상 — 중복 없는 단일 추적 |
+
+### 병적인 carry-over 누적 (이상)
+
+| 특성 | 판단 |
+|---|---|
+| 자동화 가능 영역인데 PENDING 으로 남김 | ✗ 이상 — 에이전트 자가 검열 패턴 |
+| carry-over 로 인해 사이클이 진행 안 됨 | ✗ 이상 — 잘못된 블로킹 |
+| 항목에 "해소 방법 모름" 상태 | ✗ 이상 — 진단 부족 |
+| 동일 항목이 복수 라인으로 중복 추적 | ✗ 이상 — 관리 비용 낭비 |
+
+## 실제 동작 패턴
+
+허브 사이클은 BRANCHED 141/59 상태에서도 정상 작동:
+
+```
+cycle 782: [PENDING] BRANCHED carry-over 박제
+cycle 783: wiki entry #205 생성 (explore-idea)
+cycle 784: curate (lint clean)
+...
+cycle 868: BRANCHED 여전히 PENDING, wiki entry #222 생성 예정
+```
+
+**carry-over 는 블로킹이 아닌 "적절한 시점 대기"**. 사용자가 git 전략을 결정하는 시점(배포 필요 / merge 편한 시점)이 오면 자연스럽게 해소.
+
+## 잘못된 해석과 대응
+
+### 오류 패턴 1: "carry-over = 에이전트가 못 하는 것"
+
+→ 교정: R6 항목은 에이전트가 **하면 안 되는** 것. carry-over = 올바른 설계.
+
+### 오류 패턴 2: "TODOS 가 길다 = 시스템 문제"
+
+→ 교정: TODOS 길이보다 **항목 분류 품질** 이 핵심. R6 항목만 PENDING 이면 정상.
+
+### 오류 패턴 3: "carry-over 강제 해소를 위해 자동화 확장"
+
+→ 교정: R6 영역을 자동화하면 불가역 작업 실수 위험 증가. 경계 유지가 올바름.
+
+## carry-over 품질 지표
+
+매 curate cycle 에서 TODOS 검토 시 확인:
+
+1. **각 PENDING 항목이 R6 영역인가?** 아니면 에이전트 자율 처리 가능한데 미뤄진 것인가?
+2. **해소 path 후보가 명시되어 있는가?** 사용자 결정 시점에 즉시 행동할 수 있도록
+3. **중복 항목이 없는가?** 같은 carry-over 가 여러 TODOS 라인에 중복 추적되면 정리
+
+## connections
+
+- `agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt`: BRANCHED 상태가 설계 신호인 이유
+- `zero-touch-develop-cycle-session-management`: 자율 사이클이 carry-over 와 무관하게 지속 회전하는 메커니즘
+- `drift-detection-methodology`: R6 대기 항목의 현황을 매 사이클 Level 0 에서 기계적으로 확인

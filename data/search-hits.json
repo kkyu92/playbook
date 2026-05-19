@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 261,
+  "totalInvocations": 270,
   "skipped": 25,
-  "searched": 236,
-  "hit": 74,
-  "noMatch": 162,
-  "lastUpdated": "2026-05-19T14:42:26.780Z",
+  "searched": 245,
+  "hit": 75,
+  "noMatch": 170,
+  "lastUpdated": "2026-05-19T14:56:50.995Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 20,
+    "reports/closed-loop-health": 21,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 1,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 4,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 5,
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -110,5 +110,5 @@
     "retros/2026-05-12-cycles-299-301": 1,
     "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 2
   },
-  "totalQueries": 305
+  "totalQueries": 314
 }
