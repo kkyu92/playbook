@@ -1,0 +1,121 @@
+---
+title: "자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - chain-selection
+  - diagnosis
+  - harness-engineering
+  - develop-cycle
+  - bias-prevention
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "자율 에이전트의 체인 선택 편중은 진단 소스 편중에서 시작된다. 각 체인은 특정 진단 소스에서 자연 trigger되므로, 진단 단계에서 다양한 소스를 균형 있게 탐색해야 체인 다양성이 유지된다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 develop-cycle 에이전트가 매 사이클 진단을 수행할 때, **특정 소스만 반복 탐색**하면 체인 선택이 편중된다:
+
+- GH issues + wiki lint만 보면 → curate / explore-idea 반복
+- CI 실패 로그를 안 보면 → fix-incident 미발화
+- TODOS "Next-Up"을 안 보면 → expand-scope 미발화
+- Vercel deploy 로그를 안 보면 → closed-loop-design 미발화
+
+결과: 체인 pool에 11개 있지만 실제 선택은 2~3개로 수렴.
+
+## 소스-체인 친화도 구조
+
+각 chain은 특정 진단 소스에서 자연스럽게 trigger된다:
+
+| Chain | 자연 trigger 소스 |
+|---|---|
+| `fix-incident` | GH issues (bug 류) / CI silent skip / `git log` debug 연속 |
+| `explore-idea` | GH issues (idea 류) / TODOS Next-Up / 사용자 ideation |
+| `polish-ui` | GH issues (UI 류) / 모바일 layout 리포트 |
+| `review-code` | ESLint output / 복잡도 큰 파일 / health score |
+| `curate` | wiki lint output / scan-promotions / orphan 목록 |
+| `worker-incident-triage` | `hub-dispatch` label issues / 워커 PR |
+| `closed-loop-design` | `gh run list --status skipped` / silent-skip-tracker |
+| `expand-scope` | TODOS Next-Up 4주+ 미진행 / meta-pattern 누적 |
+| `design-system` | DESIGN.md 부재 / 컴포넌트 균열 |
+
+소스를 안 보면 해당 chain의 trigger 조건을 발견할 수 없다.
+
+## 편중 발생 메커니즘
+
+```
+진단 단계 소스 탐색:
+  [A] GH issues → 0건 → (fix/explore/worker-triage 미발화)
+  [B] wiki lint → CLEAN → (curate 미발화)
+  [C] CI runs → 확인 안 함 → (closed-loop-design 미발화)
+  [D] review-code 소스 → 확인 안 함 → (review-code 미발화)
+
+결과:
+  탐색한 소스 = 신호 없음 + 안 탐색한 소스 = 신호 불명
+  → dimension-cycle (폴백) 자동 선택
+  → 반복되면 retro-only streak 형성
+```
+
+## 실전 증거 — dimension-cycle RETRO-ONLY 13회 streak
+
+허브 cycle 86~98: 13 사이클 연속 `dimension-cycle` + `outcome=retro-only`.
+
+원인 추적:
+- 해당 기간 진단이 wiki lint (CLEAN) + GH issues (0건) 두 소스만 반복
+- fix-incident, review-code, closed-loop-design 소스는 탐색 안 됨
+- 진단 결과 = "아무 문제 없음" → 폴백 chain 반복
+
+대응: streak guard (3회 연속 dimension-cycle retro-only → curate 강제 진입). 이 guard는 증상을 억제하지만 근본 원인(소스 탐색 편중)은 해결하지 않는다.
+
+## 소스 다양성 확보 방법
+
+진단 단계에서 주요 source 카테고리를 **균형 있게** 스캔:
+
+```bash
+# 1. GH issues (fix/explore/worker-triage trigger)
+gh issue list --repo kkyu92/playbook --state open --limit 20
+
+# 2. CI 상태 (fix-incident/closed-loop-design trigger)
+gh run list --limit 10
+gh run list --status failure --limit 5
+
+# 3. wiki lint (curate trigger)
+node scripts/lint-content.mjs
+
+# 4. TODOS Next-Up (expand-scope/explore-idea trigger)
+grep -A 5 "Next-Up" TODOS.md
+
+# 5. ESLint/복잡도 (review-code trigger)
+pnpm lint 2>&1 | head -20
+
+# 6. DESIGN.md 갱신일 (design-system trigger)
+git log -1 --format="%ar" -- DESIGN.md
+```
+
+모든 소스를 깊이 파기보다 **빠른 스캔 후 신호 유무**만 확인. 신호 있는 소스에서 key_findings 추출.
+
+## 설계 원칙
+
+**진단 소스 다양성 = 체인 선택 다양성**
+
+- 체인 pool 크기는 진단 소스 탐색 범위가 결정
+- 소스 탐색 순서보다 **커버리지**가 중요
+- streak guard 같은 강제 장치는 편중의 증상 치료 — 예방은 소스 균형 탐색
+- 새 chain 추가 시 해당 chain의 "자연 trigger 소스"를 명시적으로 정의해야 실제 발화 가능
+
+## 연결
+
+- [agentic-content-cycle-production-maintenance-oscillation](/wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation): explore/curate 교번도 소스 편중의 표현 (lint만 보면 curate, idea 소스만 보면 explore)
+- [agentic-trigger-skip-dual-condition-homeostasis](/wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis): skill-evolution trigger도 소스 기반 (0회 chain 탐색)
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): 1세션 1사이클로 진단 소스 편중이 세션 경계에서 부분 리셋
