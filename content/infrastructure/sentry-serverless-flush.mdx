@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [infrastructure/sentry-pii-scrubbing-beforesend, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs]
+connections: [infrastructure/sentry-pii-scrubbing-beforesend, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs, harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, context-engineering/ambient-knowledge-injection, harness-engineering/hub-worker-compounding-pattern]
 status: complete
 description: Vercel 서버리스 환경에서 Sentry.captureException() 호출 후 Response 반환 즉시 function 종료 → 백그라운드 send 중이던 이벤트 유실. await Sentry.flush(2000) 으로 강제 flush 후 응답해야 안전. 기본 중 기본이지만 Sentry Next.js SDK 가이드에 잘 부각 안 됨.
 type: entry
