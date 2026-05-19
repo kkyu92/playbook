@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 98,
+  "totalInvocations": 100,
   "skipped": 21,
-  "searched": 77,
+  "searched": 79,
   "hit": 19,
-  "noMatch": 58,
-  "lastUpdated": "2026-05-19T03:30:49.210Z",
+  "noMatch": 60,
+  "lastUpdated": "2026-05-19T03:53:55.937Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -73,5 +73,5 @@
     "retros/2026-05-12-cycles-377-378": 1,
     "infrastructure/sentry-serverless-flush": 1
   },
-  "totalQueries": 142
+  "totalQueries": 144
 }
