@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.82] — 2026-05-19
+
+### Changed
+- cycle 778 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 1건 보관 (sentry-serverless-flush — totalInvocations=98 unchanged, keep). scan-promotions: 승격 후보 없음 (관찰 중 3건: react/develop-cycle-hub/mdx). TODOS BRANCHED 갱신 (local 37 / origin 1). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family 776→778, BRANCHED 35→37, SE oscillation 85→86회). SE Trigger-5: JSON tail-20 window 759-778 — 계산 예정.
+
 ## [0.7.81] — 2026-05-19
 
 ### Changed
