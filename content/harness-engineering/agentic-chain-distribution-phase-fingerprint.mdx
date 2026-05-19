@@ -1,0 +1,191 @@
+---
+title: 자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - chain-pool
+  - project-phase
+  - maturity
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-gap-trigger-chain-health-check
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/develop-cycle-positive-streak-recognition
+status: complete
+description: 자율 에이전트 루프에서 직전 20 사이클 체인 분포를 "위상 지문"으로 읽으면 프로젝트 현재 단계를 진단할 수 있다. 분포 이상이 없는 건강한 시스템도 고정된 지문을 갖는다.
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 루프를 운영하다 보면 "왜 특정 체인이 거의 안 쓰이지?" 라는 의문이 생긴다.
+
+직관적으로는 미사용 체인을 강제 발화해야 할 것 같지만, 이 판단이 틀릴 때가 많다. 체인의 발화 빈도는 프로젝트가 실제로 필요로 하는 작업 유형을 반영하기 때문이다.
+
+**문제**: 체인 분포를 "이상"으로 해석해 강제 교정하면 자연스러운 작업 흐름을 파괴한다. 반대로 고착된 분포를 방치하면 실제 이상을 놓친다.
+
+두 판단 오류를 막으려면 **프로젝트 단계별로 예상되는 정상 분포(위상 지문)**를 미리 알아야 한다.
+
+## 위상 지문 개념
+
+각 프로젝트 단계는 자연스럽게 수렴하는 체인 분포를 갖는다.
+
+```
+위상 지문 = {직전 20 사이클의 chain_selected 분포}
+
+        예시 (허브 cycle 821~840):
+          curate         : 8/20 = 40%
+          skill-evolution: 6/20 = 30%
+          explore-idea   : 4/20 = 20%
+          기타           : 2/20 = 10%
+
+        예시 (머니볼 cycle 670~689):
+          review-code    : 9/20 = 45%
+          explore-idea   : 6/20 = 30%
+          기타           : 5/20 = 25%
+```
+
+같은 에이전트 루프라도 프로젝트 단계에 따라 지문이 달라진다.
+
+## 단계별 지문 패턴
+
+### 1단계 — 초기 구축 (cycle 1~50)
+
+**특징**: 인프라·콘텐츠 신규 구축이 주 작업.
+
+```
+explore-idea: 40~60%
+fix-incident: 20~30%
+curate: 10~20%
+```
+
+신규 항목이 많고 인시던트가 자주 발생하는 시기. 다양한 체인이 자연스럽게 발화.
+
+### 2단계 — 안정화 (cycle 50~200)
+
+**특징**: 기본 인프라 완성 후 패턴 정착.
+
+```
+curate: 30~40%
+explore-idea: 25~35%
+review-code: 15~25%
+```
+
+콘텐츠·코드 품질 관리(curate/review-code)와 지식 확장(explore-idea)이 균형.
+
+### 3단계 — 성숙 반복 (cycle 200+)
+
+**특징**: 도메인이 안정화되어 유지·보완이 주 작업.
+
+```
+허브 패턴:
+  curate + skill-evolution: ~70%
+  explore-idea: ~20%
+  기타: ~10%
+
+머니볼 패턴:
+  review-code + explore-idea: ~75%
+  기타: ~25%
+```
+
+에이전트마다 고유한 지문 수렴. **0회 체인이 6~8개가 되는 것이 정상**.
+
+## 0회 체인 = 결손 X, 단계 정합
+
+성숙 단계에서 특정 체인이 20 사이클 연속 0회인 것은 **정상 신호**다:
+
+- `fix-incident` 0회: 시스템이 건강해서 인시던트가 없음
+- `worker-incident-triage` 0회: 워커 inbound가 적음
+- `design-system` 0회: 현재 공개 대비 우선순위가 낮음
+
+**오류**: 0회 체인을 발견하면 강제 발화 = 필요 없는 작업 생성.
+**정합**: 0회 체인이 "gap trigger 임계값"을 초과했을 때만 안전망 점검.
+
+## 지문 이상 감지
+
+정상 지문을 알면 **이상 지문**도 알 수 있다:
+
+| 이상 신호 | 패턴 | 의미 |
+|---|---|---|
+| 단일 체인 독점 | 1개 체인 ≥ 80% | saturation 또는 체인 선택 편향 |
+| 갑작스러운 지문 변화 | 20 사이클 내 분포 급변 | 외부 환경 변화 (대규모 incident, 사용자 요청 급증) |
+| fix-incident gap 과도 | fix-incident 0회 + gap ≥ 임계값 | 안전망 체인 억제 (→ gap-trigger 발화) |
+| explore-idea 0회 지속 | 10+ 사이클 연속 0회 | 지식 성장 정체 신호 |
+
+## 지문 활용 — 진단 루틴
+
+매 사이클 진단 시 위상 지문을 병렬 체크:
+
+```bash
+# 직전 20 사이클 체인 분포 계산
+ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -20 | while read f; do
+  python3 -c "import json
+d=json.load(open('$HOME/.develop-cycle-hub/cycles/$f'))
+print(d.get('chain_selected','unknown'))" 2>/dev/null
+done | sort | uniq -c | sort -rn
+```
+
+출력 예:
+```
+8 curate
+6 skill-evolution
+4 explore-idea
+2 review-code
+```
+
+이 분포가 프로젝트의 현재 단계 기대 지문과 일치하는지 비교. 크게 벗어나면 원인 탐색.
+
+## 실증 데이터
+
+### 허브 (playbook) cycle 821~840
+
+```
+curate         8회 (40%)
+skill-evolution 6회 (30%)
+explore-idea   4회 (20%)
+기타            2회 (10%)
+
+0회 체인: fix-incident, worker-incident-triage, polish-ui, 
+         review-code, closed-loop-design, expand-scope, design-system (7개)
+```
+
+SE trigger-5에서 0회 명단 8개 → skip 조건 충족 (명단 안정 + SE 점유율 40%). **지문 안정 = 성숙 단계 정상**.
+
+### 머니볼 (moneyball) cycle 670~689
+
+```
+review-code    9회 (45%)
+explore-idea   6회 (30%)
+기타            5회 (25%)
+
+0회 체인: fix-incident(gap=20 → trigger 7 단발 점검), worker-incident-triage,
+         info-architecture-review(gap→30-cycle 주기 발화)
+```
+
+fix-incident gap 20 → 강제 단발 점검(retro-only) = 지문 내 예외 처리. 지문은 유지하되 gap-trigger로 안전망 확보.
+
+## 설계 함의
+
+**체인 pool 설계 시**:
+- 체인마다 "이 단계에서 예상 발화율" 명시가 도움이 됨
+- 0회 체인 = pool에서 제거 X, 단계 전환 시 재활성화 가능성 보존
+- gap trigger threshold = 단계별 기대 지문 기반으로 조정
+
+**운영 시**:
+- 지문이 안정 → 정상. 개입 불필요.
+- 지문이 급변 → 원인 탐색. 외부 환경 변화 or 체인 선택 로직 버그.
+- 0회 체인 + gap 초과 → gap-trigger 발화. 지문 유지하며 안전망 확보.
+
+## 관련
+
+- [Agentic Chain Saturation Detection](./agentic-chain-saturation-detection): 단일 체인 포화 감지 (지문 이상의 특수 케이스)
+- [Gap-Trigger 체인 헬스 점검](./agentic-gap-trigger-chain-health-check): 0회 체인 gap 임계값 초과 시 단발 점검
+- [Trigger-Skip 자가 오실레이션](./agentic-trigger-skip-dual-condition-homeostasis): SE 발화율 40% homeostasis (지문 내 meta 조절)
+- [Positive Streak 보호](./develop-cycle-positive-streak-recognition): 정상 지문 내 연속 성공 보호

@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.22] — 2026-05-19
+
+### Added
+- cycle 841 explore-idea SUCCESS — 신규 entry #213 `agentic-chain-distribution-phase-fingerprint` 신설. 자율 에이전트 직전 20 사이클 체인 분포를 "위상 지문"으로 읽어 프로젝트 단계 진단하는 패턴. 허브 cycle 821~840 + 머니볼 cycle 670~689 evidence. wiki 213 entries. TODOS BRANCHED 갱신 (local 97/origin 39).
+
 ## [0.9.21] — 2026-05-19
 
 ### Changed
