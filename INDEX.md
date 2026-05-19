@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T12:33:59.965Z
+Updated: 2026-05-19T21:47:00.000Z
 
-## 엔트리 (214개)
+## 엔트리 (215개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -26,6 +26,7 @@ Updated: 2026-05-19T12:33:59.965Z
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
+- [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
@@ -785,6 +786,11 @@ Updated: 2026-05-19T12:33:59.965Z
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/worker-lesson-velocity-signal
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-gap-trigger-chain-health-check

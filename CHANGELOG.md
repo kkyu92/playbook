@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.26] — 2026-05-19
+
+### Added
+- cycle 845 explore-idea SUCCESS — 신규 entry #215 `agentic-content-cycle-production-maintenance-oscillation` 신설. 콘텐츠 중심 자율 에이전트 시스템에서 생산(explore-idea)↔유지보수(curate) 체인 쌍이 self-reinforcing 피드백 루프로 안정 교번하는 stable attractor 패턴. hub cycle 782~845 (63+ cycles) evidence. wiki 215 entries.
+
 ## [0.9.25] — 2026-05-19
 
 ### Changed

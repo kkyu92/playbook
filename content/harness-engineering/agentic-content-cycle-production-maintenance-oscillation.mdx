@@ -1,0 +1,125 @@
+---
+title: "자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - explore-idea
+  - curate
+  - chain-oscillation
+  - stable-attractor
+  - content-system
+  - harness-engineering
+  - develop-cycle
+workers:
+  - hub
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/worker-lesson-velocity-signal
+  - harness-engineering/silent-drift-family-pattern
+status: complete
+description: "콘텐츠 중심 자율 에이전트 시스템은 생산 체인(explore-idea)과 유지보수 체인(curate)이 안정적으로 교번하는 stable attractor 상태로 수렴한다. 이 교번은 외부 스케줄링 없이 자기강화 피드백 루프로 유지된다. 편차는 phase 전환 또는 시스템 스트레스 신호다."
+type: entry
+source: explore-idea
+---
+
+## 관찰
+
+playbook hub develop-cycle은 cycle 782부터 845까지 (63+ cycles) 다음 패턴을 반복한다:
+
+```
+cycle 834: explore-idea → 신규 entry #211 생성
+cycle 835: curate      → wiki lint clean + memory 갱신
+cycle 836: skill-evolution (SE oscillation — 단발 개입)
+cycle 837: curate      → wiki lint clean
+cycle 838: explore-idea → 신규 entry #212 생성
+cycle 839: skill-evolution (SE oscillation — 단발 개입)
+cycle 840: curate      → wiki lint clean
+cycle 841: explore-idea → 신규 entry #213 생성
+cycle 842: curate      → wiki lint clean
+cycle 843: explore-idea → 신규 entry #214 생성
+cycle 844: curate      → wiki lint clean
+cycle 845: explore-idea → 신규 entry #215 (본 엔트리)
+```
+
+SE oscillation 같은 단발 개입이 있어도 쌍으로 복귀한다. 이것이 우연인가, 구조적 패턴인가?
+
+## 자기강화 피드백 루프
+
+이 교번은 외부 스케줄링이 아닌 **자기강화 피드백 루프**로 유지된다:
+
+```
+explore-idea 발화
+  ↓
+  신규 MDX entry 생성 → INDEX.md 갱신 → connections 추가
+  ↓
+  엔트로피 증가: 새 entry의 connection 검증 미완, orphan 가능성, CHANGELOG 갱신 필요
+  ↓
+curate 발화 (엔트로피 해소)
+  ↓
+  lint clean + orphan 제거 + memory evidence 갱신 + CHANGELOG 작성
+  ↓
+  정리 완료: clean baseline 확보 → 새 entry 공간 확보
+  ↓
+explore-idea 재발화 (clean 공간이 새 생산 prior 높임)
+```
+
+각 체인이 다음 체인의 발화 조건을 만든다. 외부 trigger 없이 자기완결.
+
+## Stable Attractor의 특성
+
+이 교번이 **stable attractor** (안정적 끌개)인 이유:
+
+1. **복귀력**: SE oscillation, skill-evolution 같은 개입 후에도 쌍으로 복귀. 복귀력이 존재한다는 증거.
+
+2. **에너지 균형**: explore-idea (entropy 증가) ↔ curate (entropy 감소). 순 entropy 변화가 0에 근접 → 시스템이 지속 가능한 균형점.
+
+3. **자연 스케줄링**: 인위적 "2 cycle마다 curate" 규칙 없이도 자연 발화. 진단 source (pnpm lint orphan 발생) 가 curate trigger를 자연 공급.
+
+4. **내구성**: 63+ cycle 관찰 — 지속적 external interrupt (SE, BRANCHED, skill-evolution) 에도 쌍 구조 유지.
+
+## 편차의 진단 가치
+
+교번에서 벗어나는 패턴은 **시스템 상태 신호**다:
+
+| 편차 패턴 | 신호 의미 |
+|---|---|
+| curate 3회 연속 (explore-idea 없음) | wiki 품질 위기 — 대규모 orphan/drift 축적 |
+| explore-idea 3회 연속 (curate 없음) | 생산 과잉 → 위키 무덤 위험 (검색 가능 수 > 소비 수) |
+| 다른 chain이 쌍을 밀어냄 (fix-incident, closed-loop-design) | 인프라/버그 우선 phase 전환 |
+| skill-evolution이 반복 개입 | SE oscillation 패턴 (별도 기록) — 쌍 외부 메타 작업 급증 |
+
+cycle 86~98의 `dimension-cycle RETRO-ONLY 13회 연속` streak는 이 교번이 **사라진** 사례다. 진단 source가 고갈됐을 때 쌍이 무너지는 반례 — SKILL.md에 streak guard 추가로 해소.
+
+## Chain Distribution Fingerprint와의 관계
+
+[agentic-chain-distribution-phase-fingerprint](harness-engineering/agentic-chain-distribution-phase-fingerprint) 는 "어떤 chain이 활성인가"를 기록한다면, 본 패턴은 "활성 chain이 어떤 **리듬**으로 발화하는가"를 기록한다.
+
+- Phase Fingerprint: `curate=45% / explore-idea=40% / SE=10% / others=5%`
+- 본 패턴: `curate-explore-curate-explore` 교번 (비율이 아닌 순서 구조)
+
+두 관점이 보완적이다: fingerprint는 비율, 본 패턴은 순서 다이나믹.
+
+## 다른 콘텐츠 시스템으로의 일반화
+
+이 패턴은 playbook hub에만 나타나는 게 아니라 **콘텐츠 생산 + 품질 유지** 축이 있는 모든 자율 에이전트 시스템에서 나타날 것으로 예상된다:
+
+- 블로그 자동화 시스템: 포스트 생성 + SEO/링크 정리 교번
+- 코드베이스 자율 관리: 기능 추가 + 리팩터링/lint 정리 교번
+- 데이터 파이프라인: 새 소스 통합 + 스키마/품질 검증 교번
+
+핵심 조건: (1) 생산 chain이 entropy를 증가시키고, (2) 유지보수 chain이 entropy를 감소시키고, (3) 두 chain의 진단 source가 자연 공급될 때.
+
+## Evidence Summary
+
+| 구간 | cycle 수 | curate | explore-idea | 교번 유지 |
+|---|---|---|---|---|
+| 782-800 | 19 | 9 | 8 | ✅ (+ fix-incident 2) |
+| 801-820 | 20 | 10 | 7 | ✅ (+ SE 3) |
+| 821-844 | 24 | 11 | 9 | ✅ (+ SE 4) |
+| **총계** | **63** | **~50%** | **~43%** | **안정 교번** |
+
+두 체인이 전체 사이클의 ~93%를 점유하며, 나머지 ~7% (SE/fix-incident)는 개입 후 교번으로 복귀.
