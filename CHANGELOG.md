@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.8.7] — 2026-05-19
+
+### Changed
+- cycle 812 curate — wiki lint CLEAN (204 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 810→812, BRANCHED 45/28→49/31, wiki 203→204 entries, SE oscillation 101회 steady-state 확인). TODOS BRANCHED 갱신 (local 49 / origin 31). scan-promotions: 승격 후보 없음.
+
 ## [0.8.6] — 2026-05-19
 
 ### Added

@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 150,
+  "totalInvocations": 151,
   "skipped": 25,
-  "searched": 125,
-  "hit": 40,
+  "searched": 126,
+  "hit": 41,
   "noMatch": 85,
-  "lastUpdated": "2026-05-19T08:26:39.184Z",
+  "lastUpdated": "2026-05-19T08:36:11.942Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -93,7 +93,8 @@
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1,
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 1,
-    "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1
+    "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 1
   },
-  "totalQueries": 194
+  "totalQueries": 195
 }
