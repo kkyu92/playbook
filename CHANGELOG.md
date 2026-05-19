@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.75] — 2026-05-19
+
+### Changed
+- cycle 763 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 1건 보관 (sentry-serverless-flush — confidence 3, connections 8개, archive 불필요). scan-promotions: 승격 후보 없음 (관찰 중 3건). search-hits totalQueries=138 (unchanged). TODOS BRANCHED 갱신 (local 14→16 / origin 1). memory 2건 갱신 (project_bidirectional 762→763 / project_develop_cycle_skill_family 762→763). SE Trigger-5: JSON tail-20 window 744-763 SE=7/20=35% B FAIL (cycle 743 SE 이탈 + cycle 763 curate 진입). 명단=7 동일(A PASS). skip 조건 미충족 → cycle 764 마커 박제. SE #231 강제 발화 예정. oscillation 79회 steady-state.
+
 ## [0.7.74] — 2026-05-19
 
 ### Changed
