@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 89,
+  "totalInvocations": 91,
   "skipped": 21,
-  "searched": 68,
-  "hit": 15,
-  "noMatch": 53,
-  "lastUpdated": "2026-05-19T01:27:51.588Z",
+  "searched": 70,
+  "hit": 16,
+  "noMatch": 54,
+  "lastUpdated": "2026-05-19T01:46:20.377Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -22,7 +22,7 @@
     "solutions/llm-generation/2026-04-20-post-gen-validation-loop": 1,
     "solutions/README.md/README": 2,
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 2,
-    "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 1,
+    "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
     "reports/closed-loop-health": 10,
     "journal/playbook-journal-001-drift-greenfield": 1,
@@ -69,5 +69,5 @@
     "retros/2026-05-13-cycles-441-442": 1,
     "retros/2026-05-13-cycles-457-458": 1
   },
-  "totalQueries": 133
+  "totalQueries": 135
 }

@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.72] — 2026-05-19
+
+### Fixed
+- cycle 758 fix-incident — PR #882 Daily Ingest CI 차단 해소. multimodal-ai-model-serving-architecture-patterns.mdx Mermaid cylinder shape [("label")] → ["label"] 변환 (3건). AUTO-FIX #1 regex camelCase ID 미매치 버그 우회. INDEX.md rebase 충돌 해소 (타임스탬프 라인 1건). 4 신규 entries 머지 완료 (총 188 entries on origin/main). SE Trigger-5 평가: tail-20 window 739-758 SE=8/20=40% B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 759 마커 박제 X. oscillation 77회 steady-state.
+
 ## [0.7.71] — 2026-05-19
 
 ### Changed
