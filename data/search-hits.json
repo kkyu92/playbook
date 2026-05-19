@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 218,
+  "totalInvocations": 224,
   "skipped": 25,
-  "searched": 193,
-  "hit": 67,
-  "noMatch": 126,
-  "lastUpdated": "2026-05-19T13:02:49.167Z",
+  "searched": 199,
+  "hit": 68,
+  "noMatch": 131,
+  "lastUpdated": "2026-05-19T13:29:08.757Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 5,
+    "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -107,5 +107,5 @@
     "infrastructure/vercel-ignore-command-preview-skip": 1,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 1
   },
-  "totalQueries": 262
+  "totalQueries": 268
 }

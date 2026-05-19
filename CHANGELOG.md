@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.29] — 2026-05-19
+
+### Changed
+- cycle 855 curate SUCCESS — wiki lint CLEAN (217 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 + TODOS BRANCHED 갱신 (local 119/origin 50). SE Trigger-5: JSON tail-20 window 835-854 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 856 마커 박제 X. oscillation 121회 steady-state.
+
 ## [0.9.28] — 2026-05-19
 
 ### Changed
