@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.19] — 2026-05-19
+
+### Changed
+- cycle 836 skill-evolution SE #260 fast-path SUCCESS — oscillation 112회 steady-state. SE Trigger-5: JSON tail-20 window 816-835 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 817-836 SE=8/20=40%≥40% B PASS + 명단=8 동일 A PASS → cycle 837 마커 박제 X. TODOS BRANCHED 갱신 (local 90/origin 39).
+
 ## [0.9.18] — 2026-05-19
 
 ### Changed

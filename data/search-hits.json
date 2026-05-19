@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 194,
+  "totalInvocations": 195,
   "skipped": 25,
-  "searched": 169,
+  "searched": 170,
   "hit": 62,
-  "noMatch": 107,
-  "lastUpdated": "2026-05-19T11:09:20.876Z",
+  "noMatch": 108,
+  "lastUpdated": "2026-05-19T11:20:15.106Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 4,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -106,5 +106,5 @@
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 1
   },
-  "totalQueries": 238
+  "totalQueries": 239
 }
