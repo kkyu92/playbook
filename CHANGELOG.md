@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.87] — 2026-05-19
+
+### Changed
+- cycle 791 curate — android-ai 6 entries (aicore·gemini-nano·firebase-ai-logic·on-device-llm-quantization·ml-kit·mediapipe) 에 `android-ai-edge-vs-cloud-decision-framework` 역방향 connections 추가. wiki lint CLEAN (199 entries). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 789→791, wiki 198→199, BRANCHED 9/5→13/8, N=24→22 batch). TODOS BRANCHED 갱신 (cycle 790→791, local 11→13 / origin 6→8).
+
 ## [0.7.86] — 2026-05-19
 
 ### Added

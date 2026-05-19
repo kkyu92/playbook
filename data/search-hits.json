@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 105,
+  "totalInvocations": 107,
   "skipped": 21,
-  "searched": 84,
+  "searched": 86,
   "hit": 21,
-  "noMatch": 63,
-  "lastUpdated": "2026-05-19T06:14:21.266Z",
+  "noMatch": 65,
+  "lastUpdated": "2026-05-19T06:21:17.196Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -79,5 +79,5 @@
     "harness-engineering/llm-scalable-service-architecture-patterns": 1,
     "evaluation/multi-persona-llm-output-validation-enhancement": 1
   },
-  "totalQueries": 149
+  "totalQueries": 151
 }
