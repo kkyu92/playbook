@@ -151,7 +151,8 @@ function RecentAdditions({ entries, today }: { entries: ReturnType<typeof getMan
               <div className={styles.recentEmpty}>no entries added</div>
             ) : (
               items.map((e) => {
-                const src = (e.frontmatter.source || "manual") as "scout" | "gap-pull" | "manual";
+                const rawSrc = e.frontmatter.source || "manual";
+                const src = (rawSrc in SOURCE_MAP ? rawSrc : "manual") as keyof typeof SOURCE_MAP;
                 return (
                   <div key={e.slug} className={styles.recentItem}>
                     <Link href={`/wiki/${e.slug}`} className={styles.recentItemTitle}>
@@ -159,7 +160,7 @@ function RecentAdditions({ entries, today }: { entries: ReturnType<typeof getMan
                     </Link>
                     <div className={styles.recentItemMeta}>
                       <span>{e.frontmatter.category}</span>
-                      <span className={`${styles.sourceTag} ${SOURCE_MAP[src].className}`}>{src}</span>
+                      <span className={`${styles.sourceTag} ${SOURCE_MAP[src].className}`}>{rawSrc}</span>
                     </div>
                   </div>
                 );
