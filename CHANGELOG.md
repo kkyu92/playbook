@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.35] — 2026-05-19
+
+### Changed
+- cycle 861 curate SUCCESS — wiki lint CLEAN (219 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 (project_bidirectional_compound_growth_goal / project_develop_cycle_skill_family, cycle 860→861, SE 122→123회, wiki 218→219) + TODOS BRANCHED 갱신 (local 129/origin 54). SE Trigger-5: JSON tail-20 window 841-860 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 862 마커 박제 X. oscillation 123회 steady-state.
+
+## [0.9.34] — 2026-05-19
+
+### Changed
+- cycle 860 skill-evolution SE #269 fast-path SUCCESS — oscillation 123회. JSON tail-20 window 840-859 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → fast-path 적용 → MIGRATION-PATH #269 appended. 사후 window 841-860: SE=8/20=40% B PASS. 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 861 마커 박제 X.
+
+## [0.9.33] — 2026-05-19
+
+### Added
+- cycle 859 explore-idea SUCCESS — 신규 entry #219 `agentic-feature-saturation-sequential-batch-delivery` 신설. 자율 에이전트 피처 포화 상태에서 sequential batch delivery 패턴이 predictable outcome과 steady-state oscillation 유지에 기여. hub cycle 839~859 evidence. wiki 219 entries.
+
 ## [0.9.32] — 2026-05-19
 
 ### Changed

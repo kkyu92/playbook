@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 241,
+  "totalInvocations": 247,
   "skipped": 25,
-  "searched": 216,
-  "hit": 73,
-  "noMatch": 143,
-  "lastUpdated": "2026-05-19T13:52:57.803Z",
+  "searched": 222,
+  "hit": 74,
+  "noMatch": 148,
+  "lastUpdated": "2026-05-19T14:11:28.877Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -108,7 +108,7 @@
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 1,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
-    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 1
+    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 2
   },
-  "totalQueries": 285
+  "totalQueries": 291
 }
