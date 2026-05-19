@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 138,
+  "totalInvocations": 143,
   "skipped": 24,
-  "searched": 114,
-  "hit": 35,
-  "noMatch": 79,
-  "lastUpdated": "2026-05-19T07:48:47.707Z",
+  "searched": 119,
+  "hit": 36,
+  "noMatch": 83,
+  "lastUpdated": "2026-05-19T07:57:31.225Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -30,7 +30,7 @@
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 5,
     "context-engineering/nextjs-instrumentation-location": 2,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
-    "context-engineering/agentic-cycle-state-json-carry-over-design": 3,
+    "context-engineering/agentic-cycle-state-json-carry-over-design": 4,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 2,
     "reports/mid-review-2026-04-28": 2,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 4,
@@ -90,7 +90,8 @@
     "harness-engineering/llm-agent-artifact-first-diagnosis": 1,
     "harness-engineering/deepseek-v4-pro-llm-backend-integration": 1,
     "harness-engineering/post-ship-meta-documentation-drift": 2,
-    "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1
+    "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1,
+    "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1
   },
-  "totalQueries": 182
+  "totalQueries": 187
 }
