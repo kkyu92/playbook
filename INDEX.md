@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T01:16:08.304Z
+Updated: 2026-05-19T03:06:35.519Z
 
 ## 엔트리 (184개)
 
@@ -805,6 +805,10 @@ Updated: 2026-05-19T01:16:08.304Z
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-003-drift-silent-bugs
+- infrastructure/sentry-serverless-flush ↔ harness-engineering/drift-detection-methodology
+- infrastructure/sentry-serverless-flush ↔ harness-engineering/guard-test-pattern
+- infrastructure/sentry-serverless-flush ↔ context-engineering/ambient-knowledge-injection
+- infrastructure/sentry-serverless-flush ↔ harness-engineering/hub-worker-compounding-pattern
 - infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/vercel-ignore-command-preview-skip ↔ harness-engineering/hub-worker-compounding-pattern
 - infrastructure/vercel-ignore-command-preview-skip ↔ agents/llm-agent-goal-achievement-planning-patterns

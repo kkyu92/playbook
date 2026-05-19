@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.79] — 2026-05-19
+
+### Changed
+- cycle 773 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 1건 보관 (sentry-serverless-flush — keep 결정 유지). scan-promotions: 승격 후보 없음 (관찰 중 3건). INDEX.md 수정 반영 (sentry-serverless-flush +4 connections). TODOS BRANCHED 갱신 (local 29→30 / origin 1). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family 772→773, BRANCHED 29→30). search-hits totalInvocations=96 (+1, JIT hit: retros/2026-05-12-cycles-331-332 curate pattern). SE Trigger-5: JSON tail-20 window 753-772 SE=8/20=40% B PASS. 명단=7 동일(A PASS) → skip 조건 A+B 충족 → cycle 774 마커 박제 X. oscillation 85회 steady-state.
+
 ## [0.7.78] — 2026-05-19
 
 ### Changed

@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 95,
+  "totalInvocations": 96,
   "skipped": 21,
-  "searched": 74,
-  "hit": 17,
+  "searched": 75,
+  "hit": 18,
   "noMatch": 57,
-  "lastUpdated": "2026-05-19T02:41:19.671Z",
+  "lastUpdated": "2026-05-19T03:11:45.079Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -63,12 +63,14 @@
     "harness-engineering/fail-loud-partial-adoption-escape-hatch-trap": 2,
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
     "retros/2026-05-12-cycles-334-341": 1,
-    "retros/2026-05-12-cycles-331-332": 1,
+    "retros/2026-05-12-cycles-331-332": 2,
     "harness-engineering/zero-touch-develop-cycle-session-management": 1,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 1,
     "retros/2026-05-13-cycles-457-458": 1,
-    "infrastructure/sentry-pii-scrubbing-beforesend": 1
+    "infrastructure/sentry-pii-scrubbing-beforesend": 1,
+    "retros/2026-05-12-cycles-327-330": 1,
+    "retros/2026-05-12-cycles-377-378": 1
   },
-  "totalQueries": 139
+  "totalQueries": 140
 }
