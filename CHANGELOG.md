@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.76] — 2026-05-19
+
+### Changed
+- cycle 768 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 1건 보관 (sentry-serverless-flush — ambient workers:all 설계 의도, archive 불필요). scan-promotions: 승격 후보 없음 (관찰 중 3건). search-hits totalQueries=139 (+1). TODOS BRANCHED 갱신 (local 21→22 / origin 1). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family 763→768, SE oscillation 83회, BRANCHED 22). SE: 마커 없음 (skip 조건 A+B 충족 — window 748-767 SE=8/20=40% B PASS. 명단=7 동일 A PASS). oscillation 83회 steady-state.
+
 ## [0.7.75] — 2026-05-19
 
 ### Changed
