@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 195,
+  "totalInvocations": 201,
   "skipped": 25,
-  "searched": 170,
-  "hit": 62,
-  "noMatch": 108,
-  "lastUpdated": "2026-05-19T11:20:15.106Z",
+  "searched": 176,
+  "hit": 64,
+  "noMatch": 112,
+  "lastUpdated": "2026-05-19T11:39:06.556Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 4,
+    "harness-engineering/hub-worker-compounding-pattern": 5,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 16,
+    "reports/closed-loop-health": 17,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -98,7 +98,7 @@
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
-    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 6,
+    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 7,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 1,
@@ -106,5 +106,5 @@
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 1
   },
-  "totalQueries": 239
+  "totalQueries": 245
 }

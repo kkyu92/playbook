@@ -4,6 +4,12 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.21] — 2026-05-19
+
+### Changed
+- cycle 839 skill-evolution SE #261 fast-path SUCCESS — oscillation 113회 steady-state. SE Trigger-5: JSON tail-20 window 819-838 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 820-839 SE=8/20=40%≥40% B PASS + 명단=8 동일 A PASS → cycle 840 마커 박제 X. TODOS BRANCHED 갱신 (local 95/origin 39).
+- cycle 840 curate SUCCESS — wiki lint CLEAN (212 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 + TODOS BRANCHED 갱신 (local 95/origin 39).
+
 ## [0.9.20] — 2026-05-19
 
 ### Added
