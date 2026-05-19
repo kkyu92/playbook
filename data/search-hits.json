@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 96,
+  "totalInvocations": 97,
   "skipped": 21,
-  "searched": 75,
+  "searched": 76,
   "hit": 18,
-  "noMatch": 57,
-  "lastUpdated": "2026-05-19T03:11:45.079Z",
+  "noMatch": 58,
+  "lastUpdated": "2026-05-19T03:25:13.945Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -72,5 +72,5 @@
     "retros/2026-05-12-cycles-327-330": 1,
     "retros/2026-05-12-cycles-377-378": 1
   },
-  "totalQueries": 140
+  "totalQueries": 141
 }

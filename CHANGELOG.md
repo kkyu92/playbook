@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.80] — 2026-05-19
+
+### Changed
+- cycle 775 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 1건 보관 (sentry-serverless-flush — JIT search no match, confidence 3, connections 8개, false alarm 확인 → keep). scan-promotions: 승격 후보 없음 (관찰 중 3건). TODOS BRANCHED 갱신 (local 33 / origin 1). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family 774→775, BRANCHED 30→33). SE Trigger-5: JSON tail-20 window 754-773 SE=8/20=40% B PASS. 명단=7 동일(A PASS) → skip 조건 A+B 충족 → cycle 776 마커 박제 X. oscillation 85회 steady-state.
+
 ## [0.7.79] — 2026-05-19
 
 ### Changed
