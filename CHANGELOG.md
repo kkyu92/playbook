@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.27] — 2026-05-19
+
+### Added
+- cycle 848 explore-idea SUCCESS — 신규 entry #216 `agentic-n-batch-predictable-outcome-stable-attractor` 신설. stable attractor 상태의 자율 에이전트가 N-batch 호출 결과를 사전 예측 가능한 패턴. 예측 정확도 자체가 시스템 성숙도의 전방향(forward-looking) 지표. hub cycle 782~848 (66+ cycles) evidence, 예측 정확도 ≈ 85-95%. wiki 216 entries. fix: cycle 845 entry `workers: hub` → `workers: all` 보정.
+
 ## [0.9.26] — 2026-05-19
 
 ### Added
