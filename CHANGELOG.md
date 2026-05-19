@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.71] — 2026-05-19
+
+### Changed
+- cycle 757 skill-evolution SE #228 fast-path — window 737-756 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → fast-path 적용. oscillation 74회(77회 예정치에서 실 계산 74회). MIGRATION-PATH #228 append. 사후 window 738-757: SE=8/20=40% B PASS. 명단=7 동일(A PASS) → skip 조건 A+B 충족 → cycle 758 마커 박제 X.
+
 ## [0.7.70] — 2026-05-19
 
 ### Changed
