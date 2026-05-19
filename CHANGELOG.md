@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.20] — 2026-05-19
+
+### Added
+- cycle 838 explore-idea SUCCESS — 신규 entry #212 `agentic-local-commit-batch-deploy-rate-management` 신설. 배포 한도 보존 local-first commit 전략 패턴 (허브 cycle 782~838 evidence, local 92 commit 누적 검증). wiki 212 entries. TODOS BRANCHED 갱신 (local 92/origin 39).
+
 ## [0.9.19] — 2026-05-19
 
 ### Changed

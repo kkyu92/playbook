@@ -29,6 +29,7 @@ Updated: 2026-05-19T11:05:38.846Z
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
+- [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
@@ -1131,3 +1132,6 @@ Updated: 2026-05-19T11:05:38.846Z
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
+- harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-local-commit-batch-deploy-rate-management ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns

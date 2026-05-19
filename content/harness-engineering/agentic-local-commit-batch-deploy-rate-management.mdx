@@ -1,0 +1,118 @@
+---
+title: Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - automation
+  - vercel
+  - github-actions
+  - deploy
+  - cost-optimization
+  - agentic-harness
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/agentic-chain-saturation-detection
+  - infrastructure/llm-prompt-caching-cost-optimization-patterns
+status: complete
+description: 자율 에이전트가 매 사이클 자유롭게 commit하되 push는 명시적 사용자 요청 시만 batch로 실행하는 전략. Vercel free tier 100 deploy/day 한도를 소진하지 않으면서 commit 이력의 세밀도를 유지하는 설계 패턴.
+type: entry
+source: manual
+---
+
+## 문제
+
+자율 에이전트 시스템이 매 사이클 commit을 생성하면, 만약 commit = push라면 하루 수십~수백 회의 Vercel 배포가 발생한다. Vercel free/hobby tier는 100 deploy/day 한도를 초과하면 배포 자체가 차단된다.
+
+반대로 배포 한도를 아끼려고 commit 자체를 줄이면, 사이클 단위 변경 이력이 사라져 디버깅·rollback 비용이 급증한다. "commit을 줄여서 push 빈도를 낮춘다"는 접근은 세밀도를 희생하는 잘못된 트레이드오프다.
+
+## 해결책: commit/push 의미론 분리
+
+```
+commit = "작업 단위 기록" (언제나 자유)
+push   = "origin에 발행 = Vercel 배포 트리거" (사용자 명시 시만)
+```
+
+에이전트 루프 안에서 commit은 매 사이클 자유롭게 박제하되, push는 사용자의 명시적 요청("push 해" / "deploy 해" / 회전 종료 시점)에만 실행한다.
+
+### 구현
+
+develop-cycle-hub SKILL의 Push 정책:
+
+```bash
+# 매 사이클: commit 자유 (origin 배포 X)
+git commit -m "feat: cycle N — {변경 요약}"
+
+# push는 명시 요청 시만 (사용자 호출 또는 회전 끝)
+# git push origin main  ← zero-touch 회전 중 자율 실행 금지
+```
+
+SKILL.md 명시 정책:
+- commit: 매 cycle 자유 박제 (한도 X)
+- push: 매 cycle 자동 push 금지. local commit 누적 → batch push 사용자 명시 시점만
+- PR 생성: zero-touch 회전 안에서는 금지
+
+## 실증 데이터 (hub cycle 782~838)
+
+| 지표 | 수치 |
+|------|------|
+| local main ahead | +92 commits (cycle 838 기준) |
+| origin main ahead | +39 commits (worker-lesson auto-ingest) |
+| 허브 일일 Vercel 배포 | 사용자 push 요청 시만 (0~수회/일) |
+| 사이클당 commit 수 | 2~4개 (chain commit + cycle-retro dispatch) |
+| 배포 한도 소진 사례 | 0건 (cycle 782 BRANCHED 누적 이후 기준) |
+
+56 사이클 동안 92개 commit이 로컬에만 쌓였지만 Vercel 배포 한도 위반은 0건이다.
+
+## 트레이드오프
+
+| 항목 | local-first | auto-push (비교) |
+|------|-------------|-----------------|
+| 배포 한도 | 보존 | 사이클당 1~4회 소진 |
+| CI 검증 | 없음 (local만) | 매 push마다 실행 |
+| 배포 미리보기 | 없음 | 매 PR마다 생성 |
+| origin 가시성 | 지연 (batch push 시) | 즉시 |
+| rollback 세밀도 | local git log로 가능 | origin에서도 가능 |
+| commit 이력 | 세밀 (매 사이클 박제) | 세밀 |
+
+CI 검증 부재는 실제 허브 운영에서 큰 문제가 아님: 허브 콘텐츠(MDX) + 메타데이터 변경이 주를 이루고, 빌드 실패 패턴은 TypeScript strict 위반(로컬 타입 체크로 검출 가능) 또는 MDX 파싱 오류(로컬 `pnpm build`로 검출 가능)이다.
+
+## 안티패턴
+
+**1. commit 줄이기 (push 압박 회피)**
+
+```bash
+# 잘못된 접근
+if [ "$NEEDS_PUSH" = "true" ]; then
+  git commit -m "batch of N cycles"  # N사이클을 1 commit으로
+fi
+```
+
+commit 세밀도 희생 → 사이클 단위 디버깅 불가. push 빈도는 낮아지지만 이력 가치가 사라진다.
+
+**2. push = save 혼동**
+
+push를 "저장" 개념으로 쓰는 조직 관습이 있을 때 에이전트가 이를 따라 자동 push를 디폴트로 설정. Vercel 연결 레포에서는 "push = 배포 트리거"임을 harness 설계 시 명시해야 한다.
+
+**3. 배포 한도 도달 후 commit 중단**
+
+배포 한도를 소진한 뒤 commit도 멈추는 에이전트는 이력이 사라진다. 한도 도달 = push 중단 신호이지 commit 중단 신호가 아니다.
+
+## 적용 범위
+
+이 패턴은 다음 조건에서 유효하다:
+- 배포 플랫폼이 push 이벤트에 트리거되는 rate-limited 배포를 수행할 때
+- 에이전트 루프가 높은 빈도(>10 cycles/day)로 실행될 때
+- 콘텐츠/메타데이터 변경 위주(빌드 실패 확률 낮음)일 때
+
+반대로, 코드 변경이 잦고 CI 검증이 필수인 시스템에서는 매 PR마다 CI를 통과시키는 auto-push 전략이 더 안전할 수 있다.
+
+## 연결
+
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): 회전 종료 시점의 batch push 트리거 시점 결정
+- [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): BRANCHED 상태가 발생하는 이유 (local 누적 + origin worker-lesson 누적)
+- [llm-prompt-caching-cost-optimization-patterns](/wiki/infrastructure/llm-prompt-caching-cost-optimization-patterns): 비슷한 "rate-limited resource 보존" 설계 철학
