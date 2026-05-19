@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.23] — 2026-05-19
+
+### Changed
+- cycle 842 curate SUCCESS — wiki lint CLEAN (213 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 + TODOS BRANCHED 갱신 (local 99/origin 39). SE Trigger-5: JSON tail-20 window 821-840 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 843 마커 박제 X. oscillation 113회 steady-state. worker-lesson auto-ingest 오늘 3회+ 성공 (09:29/09:32/09:39 KST).
+
 ## [0.9.22] — 2026-05-19
 
 ### Added

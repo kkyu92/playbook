@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 201,
+  "totalInvocations": 207,
   "skipped": 25,
-  "searched": 176,
-  "hit": 64,
-  "noMatch": 112,
-  "lastUpdated": "2026-05-19T11:39:06.556Z",
+  "searched": 182,
+  "hit": 65,
+  "noMatch": 117,
+  "lastUpdated": "2026-05-19T11:49:44.076Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 5,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -58,7 +58,7 @@
     "retros/2026-05-13-cycles-482-485": 3,
     "retros/2026-05-13-cycles-410-411": 2,
     "retros/2026-05-12-cycles-302-303": 1,
-    "harness-engineering/drift-detection-methodology": 2,
+    "harness-engineering/drift-detection-methodology": 3,
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 1,
     "harness-engineering/fail-loud-partial-adoption-escape-hatch-trap": 3,
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
@@ -89,7 +89,7 @@
     "infrastructure/npm-pnpm-supply-chain-security-enhancement": 1,
     "harness-engineering/llm-agent-artifact-first-diagnosis": 1,
     "harness-engineering/deepseek-v4-pro-llm-backend-integration": 1,
-    "harness-engineering/post-ship-meta-documentation-drift": 3,
+    "harness-engineering/post-ship-meta-documentation-drift": 4,
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1,
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 1,
@@ -106,5 +106,5 @@
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 1
   },
-  "totalQueries": 245
+  "totalQueries": 251
 }
