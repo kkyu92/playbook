@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.70] — 2026-05-19
+
+### Changed
+- curate cycle 756 — wiki lint CLEAN (184 entries, 0 orphan/isolated/stale; JIT Unused 2건 보관: sentry-pii-scrubbing-beforesend + sentry-serverless-flush — confidence 3 complete, connections 충분, archive 불필요). scan-promotions: 승격 후보 없음. search-hits totalQueries=133 (unchanged). PR #882 Daily Ingest 2026-05-19 (4 신규 entries): BRANCHED 방지 위해 머지 보류 — Mermaid fix (fix/pr882-mermaid-cylinder-752) push 선행 필요 (R6 대기). memory 2건 갱신 (project_bidirectional 755→756 / project_develop_cycle_skill_family 755→756). SE Trigger-5 평가: tail-20 window 736-755 SE=8/20=40%≥40% B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 757 마커 박제 X. oscillation 76회 steady-state.
+
 ## [0.7.69] — 2026-05-19
 
 ### Changed
