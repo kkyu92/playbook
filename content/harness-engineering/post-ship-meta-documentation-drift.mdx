@@ -1,0 +1,190 @@
+---
+title: Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - silent-drift
+  - documentation
+  - claude-md
+  - review-code
+  - post-ship
+  - meta-documentation
+  - anti-pattern
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/stale-temporal-comment-cleanup-policy
+  - harness-engineering/develop-cycle-positive-streak-recognition
+  - harness-engineering/agentic-chain-saturation-detection
+status: complete
+description: LLM 에이전트가 feature/fix를 ship한 후 CLAUDE.md(또는 동등한 메타 문서 파일)가 갱신되지 않는 시간적 drift 패턴. 구현은 완료됐지만 메타 문서가 뒤처지며, review-code 체인이 이를 주기적으로 탐지·동기화한다. moneyball 145 cycle 연속 streak 최대 evidence.
+type: entry
+source: agent-seed
+---
+
+## 문제
+
+LLM 에이전트가 `feat:` 또는 `fix:` 체인으로 코드를 ship한 후, 구현은 완료되지만 **CLAUDE.md 또는 프로젝트 추적 문서(Migrations 섹션, 설계 결정 로그, spec 박제 항목 등)** 가 갱신되지 않는 시간적 gap이 발생한다.
+
+```
+feature ship ─────────── code ✅
+                          tests ✅
+                          CI/CD ✅
+                          CLAUDE.md ❌ (박제 누락)
+```
+
+이 gap은:
+- **즉시 CI fail을 일으키지 않는다** — lint/test는 통과
+- **즉시 사용자가 인지하지 못한다** — 기능은 정상 동작
+- **다음 review-code 체인에서 발견된다** — 주기적 사후 탐지
+
+## 발생 원인
+
+### 1. LLM 집중 편향
+
+LLM 에이전트는 implementation task (코드 작성, 테스트 통과, CI 해결) 에 집중하는 경향이 있다. Ship 완료 후 CLAUDE.md 갱신은 "당연히 해야 하는 것" 처럼 보이지만, 체인 stop 조건이 "PR 생성 + CI green" 이면 그 시점에 세션이 종료되어 문서 갱신이 누락된다.
+
+### 2. 체인 경계의 책임 공백
+
+```
+explore-idea chain → 구현 → PR → auto-merge ─ 종료
+                                                ↓
+                         CLAUDE.md 갱신 = 다음 체인의 책임?
+```
+
+ship 체인이 끝난 뒤 CLAUDE.md 갱신을 어느 체인이 맡는지 명시되지 않으면, `review-code` 체인이 자연스럽게 이를 수거한다.
+
+### 3. 대규모 spec 박제 누락
+
+spec 다수 항목을 한 cycle에 구현할 때 (예: moneyball cycle 649 spec H 5가지 후보), 각 항목 구현 후 CLAUDE.md 에 해당 항목을 박제해야 하지만 cycle별로 누락이 누적된다. review-code 체인이 나중에 "cycle 649~672 구현 항목 6건 박제 누락" 같은 일괄 sync를 수행하는 이유다.
+
+## 패턴 evidence
+
+### moneyball: 145 cycle streak (cycle 471~673)
+
+가장 강한 evidence. moneyball develop-cycle의 `review-code (lite, heavy 모드)` 체인이 매 cycle마다 CLAUDE.md 관련 박제 누락 또는 stale 박제를 1건 이상 탐지·동기화:
+
+| cycle 범위 | streak count | 주요 동기화 내용 |
+|---|---|---|
+| 471~520 | 1~50 | silent drift family 첫 체계화 (review-code 패턴 정착) |
+| 521~620 | 51~150 | spec H 후보 구현 박제 누락 일괄 sync (F/I/G/J) |
+| 621~673 | 151~203 | CLAUDE.md Migrations 섹션 022~027 6건 누락, stale 박제 fix |
+
+streak 145 = 145 consecutive `review-code` cycles에서 각 1건 이상의 메타 문서 drift 탐지. **단 한 cycle도 빠지지 않은 자연 발화** = 구현-문서화 gap이 구조적 현상임을 입증.
+
+### 허브 (playbook): cycle 670~671 post-ship sync
+
+```
+cycle 670 — explore-idea (heavy): PredictionsSearchBox ship ✅
+cycle 671 — review-code (lite): "cycle 670 ship PredictionsSearchBox 사후
+                                  CLAUDE.md + cycle 649 spec H 박제 sync" ✅
+```
+
+ship 완료 → 다음 cycle review-code가 문서 동기화. 허브에서도 동일 패턴 자연 재현.
+
+## 감지 방법
+
+### review-code 체인 자연 탐지 (권장)
+
+별도 자동화 없이 `review-code (lite)` 체인이 주기적으로 CLAUDE.md 박제 누락을 탐지한다:
+
+```bash
+# CLAUDE.md 에서 최근 ship 항목 확인
+git log --oneline -20 | grep -E "^[a-f0-9]+ (feat|fix):"
+# 각 feat/fix commit 에 대응하는 CLAUDE.md 박제 항목 존재 여부 수동 확인
+```
+
+### grep 기반 사전 탐지
+
+```bash
+# 최근 N commit에서 feat/fix 항목 추출
+git log --oneline -10 | grep -E "feat|fix" | awk '{print $2}'
+
+# CLAUDE.md 에서 각 항목 존재 여부 확인
+grep -n "<commit_topic>" CLAUDE.md
+```
+
+결과가 없으면 박제 누락 후보.
+
+## 해소 전략
+
+### 전략 A: review-code 주기 단축 (현 기본값)
+
+**설명**: review-code 체인을 매 3~5 cycle마다 발화하게 하여 박제 누락 수거 주기를 단축한다.
+
+**적합**: 박제 누락이 1~2건 단위로 발생하는 프로젝트. 누락이 너무 많이 쌓이기 전에 처리.
+
+**한계**: 근본 원인 해소 X — 여전히 구현-문서화 gap이 발생하며, review-code가 수거할 뿐.
+
+### 전략 B: ship 체인 끝에 문서화 step 추가
+
+```
+explore-idea chain:
+  구현 → PR → CI green → CLAUDE.md 갱신 → commit → 종료
+```
+
+**적합**: 단일 feature per cycle. 다수 feature를 한 cycle에 ship하면 step이 반복됨.
+
+**구현**: `/ship` 또는 chain stop 조건 직전에 CLAUDE.md 갱신 step 명시.
+
+### 전략 C: post-ship 독립 commit (허브 패턴)
+
+```
+commit 1: feat(component): <feature description>
+commit 2: data(docs): CLAUDE.md <feature> 박제
+```
+
+별도 commit으로 분리. ship PR에 포함하거나 다음 cycle review-code에서 수행.
+
+**적합**: 박제 내용이 많거나 feature와 분리해서 검토하는 편이 좋은 경우.
+
+### 전략 D: CI 자동 검증 (실험적)
+
+```yaml
+# .github/workflows/ci.yml
+- name: CLAUDE.md freshness check
+  run: |
+    RECENT_FEAT=$(git log origin/main..HEAD --oneline | grep "feat:" | wc -l)
+    CLAUDE_UPDATES=$(git diff origin/main HEAD -- CLAUDE.md | grep "^+" | wc -l)
+    if [ "$RECENT_FEAT" -gt 0 ] && [ "$CLAUDE_UPDATES" -eq 0 ]; then
+      echo "⚠ feat: commit detected but CLAUDE.md not updated"
+      exit 1
+    fi
+```
+
+**한계**: 모든 feat commit이 CLAUDE.md를 요구하지 않을 수 있음 — false positive 주의.
+
+## 박제 누락의 장기 비용
+
+단기: 박제 누락 자체는 기능에 영향을 주지 않음.
+
+장기 누적 시:
+1. **LLM context 오염**: 다음 세션 LLM이 CLAUDE.md를 읽을 때 현재 상태를 잘못 파악
+2. **spec 추적 실패**: 어떤 항목이 ship됐는지 추적 불가 → 중복 구현 risk
+3. **review-code 비용 누적**: 박제 누락이 많을수록 review-code heavy 체인 비용 증가
+
+moneyball 145 cycle streak = 매 cycle 1건 이상 미탐지 누락이 누적됐다면 145건 이상의 stale doc이 누적됐을 것. review-code 자연 수거 없이는 빠르게 악화.
+
+## 박제 누락 분류
+
+review-code 탐지 시 다음 분류로 처리:
+
+| 유형 | 예시 | 처리 |
+|---|---|---|
+| **spec 박제 누락** | "cycle 649 spec H item F ship됐지만 CLAUDE.md Migrations 미박제" | 즉시 sync commit |
+| **설계 결정 누락** | "컴포넌트 X가 왜 이 구조인지 CLAUDE.md 미박제" | WHY 주석 또는 CLAUDE.md 추가 |
+| **stale 박제** | "cycle 670 ship 박제가 cycle 671 CLAUDE.md 에 stale 내용 포함" | fix + 갱신 |
+| **완전 누락** | "feature가 완전히 CLAUDE.md에 없음" | 전체 박제 추가 |
+
+[stale-temporal-comment-cleanup-policy](/wiki/harness-engineering/stale-temporal-comment-cleanup-policy) 와의 차이: stale 주석 정책은 코드 내 주석의 시간 참조 정리. 본 패턴은 CLAUDE.md 같은 프로젝트 문서 파일 자체의 갱신 누락.
+
+## 관련 패턴
+
+- [silent-drift-family-pattern](/wiki/harness-engineering/silent-drift-family-pattern): 메타 문서화 drift는 silent drift family의 문서화 sub-family. 코드 catch silent fail 이 아닌 **문서화 silent fail**.
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): Level 3 (완전성 드리프트) — 구현 완료 후 meta-doc 갱신 여부 체크.
+- [stale-temporal-comment-cleanup-policy](/wiki/harness-engineering/stale-temporal-comment-cleanup-policy): 코드 주석의 시간 참조 정리. 본 패턴의 코드 주석 버전.
+- [develop-cycle-positive-streak-recognition](/wiki/harness-engineering/develop-cycle-positive-streak-recognition): review-code 145 streak = 자연 발화 positive streak. chain dominance가 문서화 gap 수거 구조화.

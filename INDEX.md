@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T06:35:20.857Z
+Updated: 2026-05-19T07:13:31.872Z
 
-## 엔트리 (199개)
+## 엔트리 (201개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -60,6 +60,7 @@ Updated: 2026-05-19T06:35:20.857Z
 - [Multi-LLM Routing Patterns - 비용 효율적이고 성능 좋은 LLM 애플리케이션 디자인](wiki/harness-engineering/multi-llm-routing-design-patterns-cost-performance) — confidence: 1, status: draft
 - [Multimodal AI Serving Architectures — Efficient Deployment Patterns](wiki/harness-engineering/multimodal-ai-model-serving-architecture-patterns) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
+- [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/harness-engineering/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
@@ -168,6 +169,7 @@ Updated: 2026-05-19T06:35:20.857Z
 - [GitHub Actions Billing Block — 진단 및 복구 패턴](wiki/infrastructure/github-actions-billing-block-diagnosis-recovery) — confidence: 3, status: complete
 - [GoModel 기반 LLM 게이트웨이 도입 – 멀티 LLM 연동 및 성능 최적화 전략](wiki/infrastructure/gomodel-llm-gateway-introduction-strategy) — confidence: 1, status: draft
 - [LLM Orchestration: 지능형 게이트웨이를 통한 호출 안정성 및 효율성 강화](wiki/infrastructure/llm-call-orchestration-reliability-enhancement) — confidence: 1, status: draft
+- [LLM Prompt Caching: 비용 최적화 및 구현 패턴](wiki/infrastructure/llm-prompt-caching-cost-optimization-patterns) — confidence: 2, status: draft
 - [Next.js Security Hardening — Patching Vulnerabilities and Enhancing Defense](wiki/infrastructure/nextjs-security-patching-defense-logic-reinforcement) — confidence: 1, status: draft
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
@@ -881,6 +883,11 @@ Updated: 2026-05-19T06:35:20.857Z
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/stale-temporal-comment-cleanup-policy
+- harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/prompt-model-version-management-large-scale-ai ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
@@ -917,6 +924,11 @@ Updated: 2026-05-19T06:35:20.857Z
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ journal/playbook-journal-005-moneyballscore-playbook-e2e
 - infrastructure/gomodel-llm-gateway-introduction-strategy ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/llm-call-orchestration-reliability-enhancement ↔ project-ops/playbook-ai-integrated-logging-system
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ infrastructure/llm-call-orchestration-reliability-enhancement
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ prompt-engineering/prompt-versioning-and-testing
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ agents/multi-agent-collaboration-design-patterns
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ journal/playbook-journal-002-drift-existing-setup
