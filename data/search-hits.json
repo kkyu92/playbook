@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 216,
+  "totalInvocations": 218,
   "skipped": 25,
-  "searched": 191,
+  "searched": 193,
   "hit": 67,
-  "noMatch": 124,
-  "lastUpdated": "2026-05-19T12:47:02.235Z",
+  "noMatch": 126,
+  "lastUpdated": "2026-05-19T13:02:49.167Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 5,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -107,5 +107,5 @@
     "infrastructure/vercel-ignore-command-preview-skip": 1,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 1
   },
-  "totalQueries": 260
+  "totalQueries": 262
 }
