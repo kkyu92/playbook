@@ -1,8 +1,8 @@
 # TODOS
 
-## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 773 진단, local 30 / origin 1)
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 774 진단, local 32 / origin 1)
 
-**상태**: origin/main `c3f50bf` (Daily Ingest PR #882 squash merge, 4 신규 entries) — local main 미포함. local 30 commits ahead. force-push / merge / rebase 중 선택 필요.
+**상태**: origin/main `c3f50bf` (Daily Ingest PR #882 squash merge, 4 신규 entries) — local main 미포함. local 32 commits ahead. force-push / merge / rebase 중 선택 필요.
 **해소 path 후보**: `git pull --rebase origin main` (히스토리 정리) 또는 `git merge origin/main` (merge commit).
 
 ## [DONE 2026-05-19] PR #882 Mermaid fix — c3f50bf 에 포함됨
