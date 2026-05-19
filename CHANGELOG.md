@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.38] — 2026-05-20
+
+### Changed
+- cycle 870 curate SUCCESS — wiki lint CLEAN (222 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 (project_develop_cycle_skill_family / project_bidirectional_compound_growth_goal, cycle 868→870, SE 124→125회, BRANCHED 141/59→145/62) + TODOS BRANCHED 갱신 (local 145/origin 62). SE oscillation 125회 steady-state. scan-promotions: react/develop-cycle-hub/mdx 관찰 중 (N<3). 신규 승격 후보 없음.
+
 ## [0.9.37] — 2026-05-19
 
 ### Changed
