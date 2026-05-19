@@ -1,0 +1,208 @@
+---
+title: "에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - harness-engineering
+  - agentic-loop
+  - zero-touch
+  - process-management
+  - supervisor
+  - pid-liveness
+  - failure-modes
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary
+status: complete
+description: "watch.sh/launchd 같은 supervisor 프로그램이 LLM 세션의 생존을 감지할 때 발생하는 두 가지 대표 실패 모드 — ISO 8601 타임스탬프 파싱 오류(cycle 495)와 next_n=0 자기 종료 누락(cycle 642) — 의 원인, 파급 효과, 그리고 epoch 기반 3요소 계약 패턴."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+Supervisor 프로그램(watch.sh + launchd)이 LLM 세션을 관리할 때, "세션이 살아있고 작업 중인가"와 "세션이 죽었는가"를 구별해야 한다. LLM 작업은 45~60분까지 정상적으로 소요될 수 있어서, 단순 timeout 만으로는 오판을 피할 수 없다.
+
+잘못된 감지 = **FIRE_HANG 오판 → 강제 kill → cascade 재시작 → orphan JSON 아티팩트**.
+
+870+ 사이클 dogfood 에서 두 개의 distinct한 실패 모드가 발견되었다.
+
+---
+
+## 실패 모드 1: ISO 8601 타임스탬프 파싱 오류 (cycle 495)
+
+### 원인
+
+`active-cycle` 파일 3번째 줄에 `STARTED_AT` 을 ISO 8601 형식으로 박제:
+
+```
+871
+4728
+2026-05-20T00:17:09Z   ← 잘못된 형식
+```
+
+watch.sh의 `parse_active_cycle()` 함수는 이 값을 UNIX epoch (`1779203639` 같은 숫자)로 기대한다. 비숫자 문자 포함 → `expr` 또는 정수 비교 실패 → "malformed — discarding" 로그 + 해당 사이클 엔트리 버림.
+
+### 파급 효과
+
+```
+20:17:09 — LLM 세션 시작, active-cycle에 ISO 8601 박제
+20:17:09 — watch.sh: parse_active_cycle() malformed discard
+20:23:01 — watch.sh: FIRE_PENDING 없음 감지 → 새 fire 시도
+20:32:59 — FIRE_HANG (607s timeout): 두 번째 fire가 응답 없음 판정
+```
+
+하나의 타임스탬프 형식 오류가 cascade: discard → 재fire → 오판 kill 순서로 전파.
+
+### 수정
+
+```bash
+# 잘못된 형식 (ISO 8601)
+STARTED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+# 올바른 형식 (UNIX epoch)
+STARTED_AT=$(date +%s)
+```
+
+---
+
+## 실패 모드 2: next_n=0 세션 자기 종료 누락 (cycle 642)
+
+### 원인
+
+watch.sh는 signal 파일의 `next_n > 0` 일 때만 `/exit` slash command를 자동 발화한다. **마지막 사이클(next_n=0)에는 watch.sh가 LLM TUI를 종료하지 않는다** — 이것은 cascade 방지를 위한 의도된 설계다.
+
+따라서 **LLM 자신이** `/exit`를 발화해야 한다. 미발화 시:
+
+```
+cycle 642 — retro 정상 완료, signal next_n=0 박제
+(본 메인 /exit 미발화)
+02:44 — watch.sh hybrid timeout (idle 5m) KILL
+02:44 — 1.json (orphan) 박제: chain_selected='unknown'
+```
+
+watch.sh는 KILL 시 JSON을 박제하는데, next_n=0 인 경우 cycle 번호를 올바르게 식별하지 못해 `1.json` 같은 orphan 파일이 생성된다.
+
+### 수정
+
+사이클 회고 마지막 step:
+
+```bash
+# signal 박제 후
+if [ "$NEXT_N" = "0" ]; then
+  # watch.sh는 next_n=0 시 /exit 자동 발화 X — 본 메인이 자체 발화 의무
+  echo "/exit"
+fi
+```
+
+---
+
+## 3요소 생존 계약 (Liveness Contract)
+
+두 실패 모드를 방어하는 **supervisor-session 생존 계약**의 3요소:
+
+### 요소 1: FIRE_PENDING → 실 PID 전환
+
+세션 시작 직후, LLM이 진단 진입 전에 첫 step으로 실행:
+
+```bash
+ACTIVE=~/.develop-cycle-hub/active-cycle
+
+if grep -q "FIRE_PENDING" "$ACTIVE"; then
+  CYCLE_N_ARG=$(sed -n '1p' "$ACTIVE")
+  STARTED_AT=$(sed -n '3p' "$ACTIVE")   # epoch 형식 — watch.sh가 박은 그대로
+else
+  CYCLE_N_ARG=<N>
+  STARTED_AT=$(date +%s)   # epoch 강제
+fi
+
+CLAUDE_PID=$(pgrep -f "claude.*--dangerously-skip-permissions" 2>/dev/null | head -1)
+[ -z "$CLAUDE_PID" ] && CLAUDE_PID=$$
+
+printf '%s\n%s\n%s\n' "$CYCLE_N_ARG" "$CLAUDE_PID" "$STARTED_AT" > "$ACTIVE"
+```
+
+이후 watch.sh의 `check_timeout()` 이 `kill -0 $CLAUDE_PID` 로 생존 확인 → LLM 이 살아있는 한 FIRE_HANG 오판 없음.
+
+### 요소 2: UNIX epoch 형식 강제
+
+- active-cycle 3번째 줄 = `STARTED_AT` = **epoch 숫자만** (ISO 8601 포함 어떤 문자도 X)
+- watch.sh 가 박는 형식 = `$(date +%s)` → 동일 형식으로 일관성 보장
+- manual session 시 LLM 이 직접 epoch 박을 때도 `$(date +%s)` 사용
+
+### 요소 3: next_n=0 시 명시적 자기 종료
+
+```bash
+# 사이클 회고 마지막 step (signal 박제 직후)
+cat > ~/.develop-cycle-hub/signal <<EOF
+$CYCLE_N
+OK
+cycle $CYCLE_N retro 완료 — chain=$CHAIN_SELECTED
+$NEXT_N
+EOF
+
+if [ "$NEXT_N" = "0" ]; then
+  # 마지막 cycle: watch.sh 가 /exit 발화 X → 본 메인 자체 발화
+  echo "/exit"
+fi
+```
+
+---
+
+## Supervisor 관점: 왜 kill -0 인가
+
+```bash
+# PID 생존 확인 (kill -0 = 신호 전송 X, 생존 여부만 확인)
+if kill -0 "$pid" 2>/dev/null; then
+  echo "세션 살아있음"
+else
+  echo "세션 죽음 → FIRE_HANG 판정"
+fi
+```
+
+`kill -0`:
+- 프로세스에 신호를 전송하지 않음 — 생존 여부만 쿼리
+- 해당 PID가 없으면 non-zero exit code → 세션 죽음 판정
+- 경쟁 조건 없음 (read-only 감지)
+- POSIX 표준 — bash 추가 의존 없음
+
+---
+
+## 임계값 교정
+
+| 임계값 | 기본값 | 의미 |
+|---|---|---|
+| `FIRE_PENDING_THRESHOLD` | 10분 | FIRE_PENDING 상태에서 실 PID 전환 없으면 FIRE_HANG 판정 |
+| `CYCLE_SOFT` | 45분 | 이 시간 초과 시 soft 경고 (kill X) |
+| `CYCLE_HARD` | 60분 | 이 시간 초과 시 강제 kill (TIMEOUT_KILL) |
+| `IDLE_TIMEOUT` | 5분 | 마지막 출력 후 idle 지속 시 kill |
+
+허브 workload 기준 (위키 curate + explore-idea = 30~45분). 더 짧은 workload는 CYCLE_SOFT/CYCLE_HARD를 내려야 한다.
+
+---
+
+## 진단 체크리스트
+
+생존 계약 위반 징후:
+
+| 증상 | 원인 | 확인 |
+|---|---|---|
+| `malformed — discarding` watch.sh 로그 | ISO 8601 타임스탬프 | `sed -n '3p' ~/.develop-cycle-hub/active-cycle` — 숫자인가? |
+| `1.json` orphan 파일 | next_n=0 self-exit 누락 | cycle 회고 끝 `/exit` 발화 여부 |
+| 연속 FIRE_HANG 사건 | FIRE_PENDING 미전환 | 진단 첫 step 에 PID 박제 코드 존재 확인 |
+| cycle JSON `chain_selected: unknown` | watch.sh TIMEOUT_KILL 중단 | CYCLE_HARD 임계값 vs 실제 소요 시간 비교 |
+
+---
+
+## connections
+
+- `zero-touch-develop-cycle-session-management`: 전체 zero-touch 아키텍처 (watch.sh + launchd + tmux + signal 파일 설계)
+- `agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt`: 사이클 신호 vs 부채 구별 패턴
+- `drift-detection-methodology`: Level 0 — 매 사이클 진단 첫 step 에서 active-cycle 파일 형식 기계적 확인
+- `agentic-long-running-carryover-human-checkpoint-boundary`: R6 경계 — supervisor 가 인간 결정 영역을 자율 처리하면 안 되는 이유

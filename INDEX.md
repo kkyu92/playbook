@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T14:58:13.497Z
+Updated: 2026-05-19T15:20:52.329Z
 
-## 엔트리 (222개)
+## 엔트리 (223개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -43,6 +43,7 @@ Updated: 2026-05-19T14:58:13.497Z
 - [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/harness-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 자기 문서화 이중 시점 지식 축적 — 내부 cycle + 외부 worker 재귀 루프](wiki/harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation) — confidence: 2, status: complete
+- [에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드](wiki/harness-engineering/agentic-supervisor-session-liveness-contract) — confidence: 3, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/harness-engineering/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
@@ -829,6 +830,10 @@ Updated: 2026-05-19T14:58:13.497Z
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+- harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
