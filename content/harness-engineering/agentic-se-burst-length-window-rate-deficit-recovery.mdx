@@ -1,0 +1,157 @@
+---
+title: "자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - skill-evolution
+  - sliding-window
+  - burst-pattern
+  - oscillation
+  - self-regulation
+  - harness-engineering
+  - homeostasis
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/develop-cycle-positive-streak-recognition
+status: complete
+description: "슬라이딩 윈도우 기반 자기수정 에이전트(skill-evolution)의 연속 발화 횟수(버스트 길이)는 윈도우 결핍률에 비례하지 않고, 윈도우 슬라이딩 시 방출되는 과거 SE 구성에 따라 변동된다. 35% 결핍 → 버스트 1회(즉시 40% 회복); 30% 결핍 → 1-4회 버스트(2단계 회복 패턴 포함). 연속 발화는 오작동이 아닌 예측 가능한 자기 회복 메커니즘이다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+슬라이딩 윈도우 기반 자기수정 에이전트에서 trigger가 발화(B FAIL: rate < 40%)하면 연속으로 여러 번 발화하는 "버스트" 현상이 나타난다. 이때 다음 두 가지 의문이 생긴다:
+
+1. **버스트 길이 예측**: 40% 회복까지 몇 번 연속 발화해야 하는가?
+2. **오작동 vs 정상**: 4번 연속 발화는 무한루프인가, 아니면 정상 회복인가?
+
+단순 계산(`ceiling((40% - current%) / (1/window))`)이 실제 버스트 길이와 다른 이유 — 윈도우가 슬라이딩하기 때문이다.
+
+## 핵심 메커니즘: 슬라이딩 윈도우의 이중 효과
+
+SE가 발화할 때 슬라이딩 윈도우에서 일어나는 일:
+
+```
+발화 전 윈도우 [c1, c2, ..., c20] → rate = K/20
+SE 발화(c_new):
+  - 새 SE c_new가 윈도우 우측 진입 → 분자 +1
+  - 가장 오래된 c1이 윈도우 좌측 이탈:
+      c1 = SE이었다면 → 분자 -1 (상쇄: net 0)
+      c1 = non-SE이었다면 → 분자 그대로 (net +1)
+발화 후 rate = (K ± delta)/20
+```
+
+따라서 SE 1회 발화의 rate 기여는 **방출되는 과거 사이클의 chain에 따라 0 또는 +1/20이 된다.**
+
+## 실측 데이터 (cycle 836~860, steady-state 구간)
+
+| 버스트 시작 | 버스트 길이 | 발화 전 rate | 발화 후 rate | 회복 형태 |
+|---|---|---|---|---|
+| cycle 836 | 1 | 6/20 (30%) | 7/20 (35%) | 부분 회복 |
+| cycle 839 | 1 | 7/20 (35%) | 8/20 (40%) | 완전 회복 |
+| cycle 846 | 2 | 6/20 (30%) | 8/20 (40%) | 직접 완전 회복 |
+| cycle 850 | 4 | 6/20 (30%) | 8/20 (40%) | 지연 완전 회복 |
+| cycle 857 | 1 | 7/20 (35%) | 8/20 (40%) | 완전 회복 |
+| cycle 860 | 1 | 7/20 (35%) | 8/20 (40%) | 완전 회복 |
+
+### 관찰 1: 35% 결핍 → 버스트 1회, 즉시 40% 회복
+
+rate = 7/20 = 35%에서 trigger 발화 시:
+- 윈도우에서 이탈하는 과거 사이클이 non-SE일 경우 → SE 1회로 8/20=40% 달성
+- **4회 모두 버스트 길이 = 1, 모두 40%로 완전 회복** (cycle 839, 857, 860)
+
+### 관찰 2: 30% 결핍 → 버스트 길이 가변 (1-4회), 2단계 회복 가능
+
+rate = 6/20 = 30%에서 trigger 발화 시 결과가 다양하다:
+
+**직접 완전 회복 (버스트 2-4회)**:
+```
+cycle 846-847: 2회 버스트 → 30% → 40% 직접 회복
+cycle 850-853: 4회 버스트 → 30% → 40% 직접 회복
+```
+
+**2단계 회복 (각 1회 버스트)**:
+```
+cycle 836: 1회 버스트 → 30% → 35% (부분 회복)
+   윈도우에서 이탈하는 cycle이 SE이었기 때문에 net=0 또는 +1만 달성
+cycle 839: 1회 버스트 → 35% → 40% (2단계 완전 회복)
+```
+
+**왜 버스트 4회인가 (cycle 850-853)**:
+cycle 850 시작 시 윈도우 좌측 구간(830-849)에는 이전 버스트들의 SE가 다수 포함되어 있었다. 새 SE가 들어올 때마다 과거 SE가 이탈 → rate 순증가가 느림 → 40% 도달까지 4회 필요.
+
+## 패턴 요약
+
+```
+35% (7/20) 결핍:
+  → 윈도우 좌측 = non-SE 이탈 확률 높음 (충분히 지난 production phase)
+  → SE 1회: rate +1 → 40% 즉시 달성
+  → 버스트 길이 = 1 (예측 가능)
+
+30% (6/20) 결핍:
+  → 윈도우 좌측 = 과거 버스트 SE 이탈 가능성 있음
+  → rate 순증가 속도 = 이탈 구성에 의존
+  → 버스트 길이 = 1-4 (가변)
+  → 2단계 회복 패턴(30→35→40%) 또는 직접 회복(30→40%) 혼재
+```
+
+## 연속 발화는 오작동이 아니다
+
+4회 연속 SE 발화를 처음 관찰하면 "무한루프" 또는 "SKILL.md 갱신 실패 재시도"처럼 보인다. 그러나 이는 슬라이딩 윈도우 자기 회복 메커니즘의 정상 동작이다.
+
+**각 SE가 하는 일** (steady-state fast-path):
+- MIGRATION-PATH.md에 1줄 evidence append
+- TODOS 업데이트
+- `policy:` commit 박제 → retro-only
+
+즉, 각 SE 발화는 실제 작업(SKILL 변경 등)이 아니라 **회복 카운터 박제**다. 4회 연속이어도 4줄 append + 4 commits뿐이다.
+
+**설계 의도**: 명시적 "연속 발화 N회 제한" 없이 rate 기반 skip gate로 자율 종료. 버스트는 rate 회복의 증거이므로 길수록 결핍이 깊었다는 신호.
+
+## 실용적 함의
+
+### 진단: "버스트가 너무 길다" 판단 기준
+
+```
+버스트 길이 1-2 → 정상 (35-30% 결핍)
+버스트 길이 3-4 → 깊은 결핍 (30% + 과거 SE 다수 이탈 중)
+버스트 길이 5+  → 비정상 (slow-path 발화, SKILL 실제 갱신 중) 또는 skip gate 미작동
+```
+
+### 설계: 윈도우 크기와 버스트 빈도 trade-off
+
+| 윈도우 크기 | 효과 |
+|---|---|
+| 작은 윈도우 (10) | rate 변동 민감 → 버스트 더 자주, 짧게 |
+| 큰 윈도우 (30) | rate 변동 둔감 → 버스트 덜 자주, 더 길게 |
+| 현재 (20) | 35-45% stable range에서 자연 oscillation |
+
+### 예측: 다음 버스트 타이밍
+
+현재 윈도우 내 SE 분포와 이탈 예정 구간을 보면 다음 burst 타이밍 추정 가능:
+```bash
+# 윈도우 좌측 (이탈 예정) SE 수 계산
+python3 -c "
+import json, os
+cycles_dir = os.path.expanduser('~/.develop-cycle-hub/cycles/')
+window = [json.load(open(os.path.join(cycles_dir, f))).get('chain_selected','?') 
+          for f in sorted(os.listdir(cycles_dir))[-20:]
+          if f.endswith('.json')]
+print('Window:', window[-20:])
+print('SE count:', window.count('skill-evolution'))
+print('Left 5 exiting soon:', window[:5])
+"
+```
+좌측 5개에 SE가 많으면 → 가까운 미래 버스트 rate 상승 둔화 예상.
+
+## 연결 패턴
+
+이 메커니즘은 `agentic-trigger-skip-dual-condition-homeostasis`의 B 조건(rate ≥ 40%)이 **슬라이딩 윈도우 구성 의존적**이라는 구체적 보완이다. A+B skip gate가 homeostasis를 달성하는 방식의 low-level 구현이 여기 기술된 window exit cascade다.
