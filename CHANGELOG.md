@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.68] — 2026-05-19
+
+### Fixed
+- cycle 754 review-code — JSX escape fix 2건: `N<25`→`N&lt;25` (journal-018), `<0.55`→`&lt;0.55` (journal-025). MDX JSX parse 위험 제거.
+
+### Changed
+- sentry-serverless-flush connections 4→8 (parity with sibling sentry-pii-scrubbing-beforesend): drift-detection-methodology, guard-test-pattern, ambient-knowledge-injection, hub-worker-compounding-pattern 추가. health 9.8/10 → review 10/10 CLEAN. SE Trigger-5: tail-20 734-753 SE=8/20=40% B PASS. 명단=7 동일 A PASS. oscillation 76회 steady-state.
+
 ## [0.7.67] — 2026-05-19
 
 ### Changed
