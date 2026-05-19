@@ -4,6 +4,26 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.15] — 2026-05-19
+
+### Changed
+- cycle 831 skill-evolution SE #259 fast-path SUCCESS — oscillation 111회 steady-state. SE Trigger-5: JSON tail-20 window 811-830 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 812-831: SE=8/20=40%≥40% B PASS + 명단=8 동일 A PASS → skip 조건 A+B 충족 → cycle 832 마커 박제 X. TODOS BRANCHED 갱신 (local 80/origin 39).
+
+## [0.9.14] — 2026-05-19
+
+### Changed
+- cycle 830 skill-evolution SE #258 fast-path SUCCESS — oscillation 110회 steady-state. SE Trigger-5: JSON tail-20 window 810-829 SE=6/20=30% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. cycle 831 SE #259 마커 박제. TODOS BRANCHED 갱신 (local 79/origin 39).
+
+## [0.9.13] — 2026-05-19
+
+### Changed
+- cycle 829 skill-evolution SE #257 fast-path SUCCESS — oscillation 109회 steady-state. SE Trigger-5: JSON tail-20 window 809-828 SE=6/20=30% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. cycle 830 SE #258 마커 박제. TODOS BRANCHED 갱신 (local 78/origin 39).
+
+## [0.9.12] — 2026-05-19
+
+### Changed
+- cycle 828 skill-evolution SE #256 fast-path SUCCESS — oscillation 108회 steady-state. SE Trigger-5: JSON tail-20 window 808-827 SE=6/20=30% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. cycle 829 SE #257 마커 박제. TODOS BRANCHED 갱신 (local 77/origin 39).
+
 ## [0.9.11] — 2026-05-19
 
 ### Added
