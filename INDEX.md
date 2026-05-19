@@ -1,7 +1,7 @@
 # Playbook Wiki Index
 Updated: 2026-05-19T09:59:47.440Z
 
-## 엔트리 (209개)
+## 엔트리 (210개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -24,6 +24,7 @@ Updated: 2026-05-19T09:59:47.440Z
 
 ### Harness Engineering
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
+- [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
@@ -1120,3 +1121,7 @@ Updated: 2026-05-19T09:59:47.440Z
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
+
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
+- harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/hub-worker-compounding-pattern

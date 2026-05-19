@@ -1,0 +1,144 @@
+---
+title: "자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agent-design
+  - git-workflow
+  - distributed-systems
+  - hub-worker
+  - branched-state
+  - autonomous-loop
+confidence: 2
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agent-multi-frequency-knowledge-pipeline
+  - harness-engineering/hub-worker-compounding-pattern
+status: complete
+description: "분산 자율 에이전트 시스템에서 허브 local 이 origin 보다 앞서고 origin 도 local 보다 앞선 BRANCHED 상태는 설계 의도의 증거다. 이 패턴이 언제 설계 신호이고 언제 관리 부채인지 구분하는 기준을 정의한다."
+type: entry
+source: manual
+---
+
+## 문제
+
+git BRANCHED 상태 (local과 origin이 양방향으로 diverged) 를 발견하면 "해소해야 할 기술 부채" 로 반사적으로 분류하는 경향이 있다. 하지만 분산 자율 에이전트 시스템에서 이 상태는 **두 독립 commit 흐름이 정상 작동 중이라는 설계 신호**일 수 있다.
+
+**실측 사례 (허브 cycle 826)**: `local 73 commits ahead / origin 39 commits ahead`. git은 이를 "양방향 diverged — pull 권장" 으로 출력한다. 하지만 시스템은 826 사이클 동안 정상 작동 중이며, 두 흐름 모두 의도된 결과다.
+
+## 두 commit 흐름의 독립성
+
+BRANCHED 상태의 두 축은 완전히 다른 주체가 생성한다.
+
+### Local ahead (허브 → local)
+
+```
+주체: hub develop-cycle (zero-touch 자율 루프)
+경로: /develop-cycle-hub → chain 실행 → main 직접 commit → push 없음
+내용: wiki entry 신설 / curate / skill-evolution / 메모리 갱신
+트리거: watch.sh fire → 새 claude session → 1 cycle → signal 박제
+배포 영향: 없음 (push X = Vercel deploy X)
+```
+
+허브는 push 없이 local에 commit을 누적한다. 100회/일 Vercel deploy 한도 보호를 위한 의도적 결정 — 실험적 cycle이 매번 프로덕션 배포를 일으키지 않도록.
+
+### Origin ahead (워커 → origin)
+
+```
+주체: worker agents (moneyball, blog-autopilot 등)
+경로: worker lesson commit → submit-lesson.yml dispatch → auto-ingest workflow → origin/main push
+내용: 워커 사이클 retro data, lesson 커밋
+트리거: worker cycle 끝 → lesson commit → GH Actions auto-ingest
+배포 영향: 있음 (origin push = Vercel deploy 차감)
+```
+
+워커들은 GitHub Actions를 통해 origin에 직접 push한다. 허브 local 을 거치지 않는다.
+
+## 설계 의도 vs 관리 부채 구분 기준
+
+| 상태 | 설계 의도 | 관리 부채 |
+|---|---|---|
+| local N ahead, origin 0 ahead | ✅ 정상 — 허브 자율 작업 누적 중 | — |
+| local 0 ahead, origin M ahead | ✅ 정상 — 워커 lesson 수신 중 | — |
+| local N ahead, origin M ahead | ✅ 정상 — 두 흐름 동시 활성 | ⚠ N + M 이 수백 이상이면 merge conflict 위험 증가 |
+| N > 200 또는 M > 100 | — | ❌ 해소 필요 — 히스토리 병합 비용 급증 |
+| same file 양쪽 수정 evidence | — | ❌ 해소 필요 — conflict 내재 |
+| local debug commit 연속 + origin CI fail | — | ❌ 해소 필요 — 미해결 사고 신호 |
+
+**핵심 기준**: BRANCHED 자체가 아니라 **흐름의 의도성**과 **conflict 위험**이 판단 기준이다.
+
+## 설계 원칙
+
+### 원칙 1: BRANCHED는 R6지만 실패 신호가 아니다
+
+BRANCHED 해소 (force-push / merge / rebase) 는 사용자 결정 영역 (R6) 이다. 이유:
+- force-push는 origin 히스토리를 파괴할 수 있다
+- merge는 merge commit 이 필요하다  
+- rebase는 local commit hash 가 바뀐다
+
+하지만 이 결정이 필요하다는 것이 "시스템이 실패 중" 을 의미하지는 않는다. R6 = "사람이 판단해야 하는 포인트" 이지 "에러가 있다" 가 아니다.
+
+### 원칙 2: 두 흐름에 다른 배포 기준 적용
+
+```
+허브 local flow:   실험적, 배포 없음, 누적 가능
+워커 origin flow:  실시간, 배포 있음, auto-ingest 즉시
+```
+
+이 비대칭 배포 정책이 BRANCHED 상태를 자연스럽게 생성한다. 해소하지 않는 것이 의도적 선택이다.
+
+### 원칙 3: 해소 시점은 "배포 필요성"이 결정한다
+
+해소 트리거:
+- 사용자가 허브 local 작업을 프로덕션에 반영하고 싶을 때
+- CI가 BRANCHED 상태에서 충돌로 실패할 때
+- N + M 합산이 수백을 초과해 병합 비용이 커질 때
+
+해소 트리거 **아님**:
+- BRANCHED 상태 자체를 발견했을 때 (자동 해소 X)
+- 새 develop-cycle이 시작될 때 (매 cycle 해소 X)
+- CI가 정상일 때 (정상 상태 유지)
+
+## 실증 데이터 (허브 cycle 826)
+
+```
+BRANCHED 최초 발생: cycle 371 (2026-05-xx)
+현재 cycle: 826
+지속 기간: 455+ cycles
+local ahead 추이: cycle 782 43→ ... → cycle 826 73
+origin ahead 추이: cycle 782 1→ ... → cycle 826 39
+CI 상태: all success (worker-lesson auto-ingest 정상 작동)
+Vercel deploy: origin push 기준으로만 차감 (허브 local cycle은 0 차감)
+```
+
+455+ cycles 동안 BRANCHED 상태를 유지하며 시스템이 정상 작동했다. 이는 "설계 의도 신호" 해석의 경험적 근거다.
+
+## 안티패턴
+
+### 안티패턴 1: 매 사이클 BRANCHED 자동 해소
+
+```bash
+# 하지 말 것
+git pull --rebase origin main  # 매 develop-cycle 진단 시 자동 실행
+```
+
+매 사이클 rebase하면:
+- 허브 local commit hash 가 매 사이클 변경 (git history 오염)
+- 워커 origin commits 가 local 에 mix 되어 허브 작업 구분 어려움
+- Vercel deploy 불필요하게 유발될 가능성
+
+### 안티패턴 2: BRANCHED = 버그 분류
+
+TODOS.md 에 BRANCHED를 `[P0] 버그` 로 분류. 결과: 사용자가 "해결해야 할 문제"로 인식 → 매 세션 신경 쓰임 → 실제로는 정상 상태인 것에 주의 비용 소모.
+
+올바른 분류: `[PENDING] R6 대기 — 해소 시점 사용자 결정` (현재 허브 TODOS.md 방식).
+
+### 안티패턴 3: origin ahead = 워커 실패 신호
+
+origin이 local보다 앞선 상태를 "내가 뒤처졌다" 로 해석. 실제로는 워커들이 정상적으로 lesson을 기여하고 있다는 신호다.
+
+## 관련 패턴
+
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): 허브 local commit 흐름의 생성 메커니즘
+- [agent-multi-frequency-knowledge-pipeline](/wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline): 허브-워커 주파수 차이가 BRANCHED를 자연 생성하는 구조
+- [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 두 흐름이 복리 성장에 기여하는 방식

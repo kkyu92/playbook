@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.11] — 2026-05-19
+
+### Added
+- cycle 827 explore-idea — 자율 에이전트 허브-워커 비동기 commit 발산 패턴 신설 (entry #210). BRANCHED 설계 의도 신호 vs 관리 부채 구분 기준 문서화 (826 cycle 실증). INDEX 210개 갱신. TODOS BRANCHED 갱신 (local 75/origin 39 예상).
+
 ## [0.9.10] — 2026-05-19
 
 ### Changed
