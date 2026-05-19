@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.88] — 2026-05-19
+
+### Changed
+- cycle 793 curate — wiki lint CLEAN (199 entries, 0건 orphan/isolated/stale). manifest CLEAN (1415 edges). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 791→793, SE #242→#243/oscillation 93→94회, BRANCHED 13/8→16/11, N=22→20 batch). TODOS BRANCHED 갱신 (cycle 792→793, local 15→16 / origin 10→11). moneyball worker-lesson auto-ingest 활발 (cycle 668, 5회/20분 burst). origin diff 확인: raw-sources/_archive 11건만 추가 (위키 entry 변경 없음).
+
 ## [0.7.87] — 2026-05-19
 
 ### Changed
