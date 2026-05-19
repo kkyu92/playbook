@@ -1,0 +1,102 @@
+---
+title: "자율 에이전트 장기 운영 단계 전이 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - long-run
+  - phase-transition
+  - steady-state
+  - harness-engineering
+  - develop-cycle
+confidence: 3
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+  - harness-engineering/agentic-gap-trigger-chain-health-check
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "자율 에이전트 시스템이 수백 사이클 운영되면 초기 설계 전제가 달라진다. 탐색→안정화→항구화 3단계를 거치며 chain pool 구성, 오실레이션 패턴, 증거 밀도가 모두 변한다. 각 단계에서 최적 전략이 다르고, 전이 신호를 무시하면 불필요한 메타 개입이 발생한다."
+type: entry
+source: develop-cycle
+---
+
+## 문제
+
+자율 에이전트 시스템을 설계할 때 설계자는 초기 운영 상황을 기준으로 전략을 정한다. 그러나 시스템이 수백 사이클을 거치면 운영 환경이 근본적으로 달라진다:
+
+- 과거의 설계 결정이 이미 최적화되어 "고칠 것"이 줄어든다
+- 운영 데이터가 쌓여 패턴 인식이 정교해진다
+- Chain pool이 자연 수렴해 발화 빈도가 안정된다
+
+이 변화를 인식하지 못하면 두 가지 오류가 발생한다:
+
+1. **과잉 개입**: 이미 안정된 시스템에 계속 fix-incident나 explore-idea를 주입 → 불필요한 엔트로피
+2. **과소 개입**: 단계 전이 신호를 무시하고 기존 전략 유지 → 효율 정체
+
+## 3단계 전이 패턴
+
+### 단계 1 — 탐색 (N=1~100)
+
+**특성**:
+- Chain pool 발화가 다양하다 (fix-incident, review-code, explore-idea, curate 모두 발화)
+- chain-evolution dispatch가 빈번하다 (새 chain 후보 발견)
+- 설계 오류 수정이 주요 작업이다 (fix-incident 비중 ↑)
+- skill-evolution trigger가 빈번하다 (20사이클 0회 chain 명단이 계속 바뀜)
+
+**신호**: distinct chain 수가 매 20사이클마다 변동, 0회 chain 명단 불안정
+
+**최적 전략**: explore-idea, fix-incident 우선. curate는 explore-idea 2회당 1회 균형.
+
+### 단계 2 — 안정화 (N=100~500)
+
+**특성**:
+- Chain pool이 수렴한다 (fix-incident, polish-ui 발화 감소)
+- skill-evolution 오실레이션이 시작된다 (trigger-skip 이중 조건 첫 관찰)
+- curate/explore-idea 교차 패턴이 출현한다
+- 0회 chain 명단이 안정되기 시작한다
+
+**신호**: SE 오실레이션 첫 10회 관찰, 0회 chain 명단 3사이클 이상 동일
+
+**최적 전략**: curate/explore-idea 교차 default. fix-incident는 실제 인시던트 발생 시만.
+
+### 단계 3 — 항구화 (N=500+)
+
+**특성**:
+- 소수 chain이 주도한다 (허브: curate/explore-idea/skill-evolution 3-chain 체계)
+- SE 오실레이션이 steady-state에 진입한다 (명단 고정, 점유율 35~45% 구간 반복)
+- 0회 chain 명단이 항구적으로 안정된다
+- 새 chain-evolution dispatch가 거의 없다 (chain pool 설계 완성)
+- 증거 밀도가 높아져 의사결정 비용이 낮아진다
+
+**신호**: SE 오실레이션 50회+, 0회 chain 명단 10사이클 이상 동일, chain-evolution dispatch 간격 ↑
+
+**최적 전략**: 3-chain 주도 유지. 새 chain trigger 신호에 선별적 반응 (과잉 추가 X). SKILL 갱신은 evidence 변화 시만.
+
+## 전이 신호 감지
+
+| 신호 | 탐색→안정화 | 안정화→항구화 |
+|---|---|---|
+| SE 오실레이션 | 첫 발화 | 30회+ steady-state 진입 |
+| 0회 chain 명단 | 안정 시작 (3사이클 동일) | 항구화 (10사이클+ 동일) |
+| chain-evolution dispatch | 빈번 | 거의 없음 |
+| distinct chain (rolling 20) | 변동 | 안정 (±1 수준) |
+| fix-incident 비중 | 높음 | 매우 낮음 (인시던트 없으면 0) |
+
+## 함정: 단계 역행 오인
+
+항구화 단계에서 단기 anomaly가 발생하면 탐색 단계로 역행한 것처럼 보일 수 있다:
+
+- **false alarm**: 워커 inbound 버스트로 worker-incident-triage가 일시적으로 활성화 → 실제로는 항구화 내부 이벤트
+- **true regression**: 인프라 교체, 새 워커 추가, 허브 리아키텍처 → 탐색 단계 국소 재진입
+
+구분 기준: 전체 chain pool 중 **새 chain이 추가되었는가?** 새 chain 없이 기존 chain이 일시 활성화 = false alarm.
+
+## 실전 evidence (허브 cycle 1~822)
+
+- **탐색 단계 (1~100)**: chain-evolution dispatch 다수, fix-incident/review-code 발화 포함
+- **안정화 단계 (100~500)**: curate/explore-idea 교차 출현, SE 오실레이션 시작
+- **항구화 단계 (500~822)**: curate/explore-idea/skill-evolution 3-chain 주도, SE 오실레이션 103회 steady-state, 0회 chain 명단 8개 항구화, fix-incident dormancy 건강한 전문화 확정
+
+822 사이클 기준 항구화 단계 지속 중. distinct chain (rolling 20) = 3개(curate/explore-idea/skill-evolution) ± minimal variation.
