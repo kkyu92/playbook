@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.95] — 2026-05-19
+
+### Changed
+- cycle 800 curate — wiki lint CLEAN (201 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 797→800, SE #243→#244 cycle 792→799, wiki 200→201, BRANCHED 26/16→31/20, N=16→13 batch). TODOS BRANCHED 갱신 (local 30→31 / origin 19→20). scan-promotions: 승격 후보 없음 (관찰 중 react/develop-cycle-hub/mdx). 새 journal 5건 auto-ingest (10:52-53, moneyball worker-lessons).
+
+## [0.7.94] — 2026-05-19
+
+### Changed
+- cycle 799 skill-evolution SE #244 SUCCESS — stable oscillation fast-path 95회. 직전 20 cycle window 780-799 SE=8/20=40% B PASS + 명단 변화 6→7 (review-code 신규 진입) A FAIL → skip 조건 미충족 → 마커 강제 발화. 사후 window 780-799 SE=8/20=40% + 명단=7 동일 A PASS → cycle 800 마커 박제 X. TODOS BRANCHED 갱신 (local 30/origin 19).
+
+## [0.7.93] — 2026-05-19
+
+### Added
+- cycle 798 explore-idea — Post-Ship 메타 문서화 Drift 패턴 신설 (wiki #201). 배포 후 공식 문서가 구현 코드 반영 못 하고 뒤처지는 "문서 유령 효과" 패턴. TODOS BRANCHED 갱신 (local 28/origin 17).
+
 ## [0.7.92] — 2026-05-19
 
 ### Changed
