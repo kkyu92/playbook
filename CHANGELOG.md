@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.36] — 2026-05-19
+
+### Changed
+- cycle 865 curate SUCCESS — wiki lint CLEAN (220 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 (project_develop_cycle_skill_family / project_bidirectional_compound_growth_goal, cycle 864→865, SE 123→124회, wiki 219→220, BRANCHED 134/59→135/59) + TODOS BRANCHED 갱신 (local 135/origin 59). origin/main: android-ai 카테고리 10 entries 신규 (신규 도메인, 로컬 중복 없음). SE Trigger-5: 사후 window 845-864 SE=9/20=45% B PASS + 명단=7 동일(A PASS) → cycle 865 마커 박제 X. oscillation 124회 steady-state.
+
 ## [0.9.35] — 2026-05-19
 
 ### Changed
