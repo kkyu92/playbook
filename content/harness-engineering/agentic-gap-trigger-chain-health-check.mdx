@@ -1,0 +1,108 @@
+---
+title: 자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - chain-pool
+  - gap-trigger
+  - health-check
+  - harness-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/develop-cycle-positive-streak-recognition
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+status: complete
+description: 자율 에이전트 루프에서 지배 체인이 특정 체인의 발화를 억제할 때, 마지막 발화 이후 N 사이클 gap이 임계값을 초과하면 강제 단발 헬스 체크를 수행하는 패턴. retro-only 결과가 성공이다.
+type: entry
+source: worker-lesson
+---
+
+## 문제
+
+자율 에이전트 루프에서 `review-code`, `explore-idea` 같은 체인이 지속적으로 우세하면 `fix-incident` 같은 안전망 체인이 장기간 발화하지 않는 구간이 생긴다.
+
+**문제**: 지배 체인 억제 기간에 실제 인시던트가 쌓이고 있어도 진단 단계에서 "open issue 0건"이 나타나면 trigger가 없어 계속 suppressed 상태가 된다.
+
+단순 "trigger source 없음 → 발화 X"는 안전하지 않다. trigger가 없다는 것이 곧 시스템이 건강하다는 증거가 아니기 때문이다.
+
+## Gap-Trigger 패턴
+
+### 동작 원리
+
+```
+GAP_THRESHOLD = 마지막 발화 이후 최대 허용 사이클 수 (예: 20)
+
+각 사이클 진단 시:
+  gap = current_cycle - last_fire_cycle[target_chain]
+  
+  IF gap >= GAP_THRESHOLD:
+    → 강제 단발 헬스 점검 발화 (lite 모드)
+    → 인시던트 없으면 retro-only (코드 변경 없음)
+    → 인시던트 있으면 fix-incident 정상 실행
+    → last_fire_cycle 갱신 → 다음 gap 카운트 리셋
+```
+
+### 핵심 원칙: retro-only = 성공
+
+gap-trigger로 발화된 헬스 점검에서 "코드 변경 없음"은 **실패가 아니라 성공**이다.
+
+- 변경 0 = 시스템 건강 확인 = 목적 달성
+- 변경 0인데도 chain을 발화한 것 = 의도된 "맹점 방어"
+
+이 관점이 없으면 "아무것도 안 했으니 다음엔 발화 안 해도 되겠지"라는 잘못된 학습이 생긴다.
+
+## 실증 데이터 (moneyball develop-cycle)
+
+| 발화 사이클 | gap (직전 발화 대비) | 맥락 | 결과 |
+|---|---|---|---|
+| cycle 257 | 최초 박제 | fix-incident gap trigger 7 첫 설계 | 패턴 박제 |
+| cycle 596 | ~20+ | review-code/explore-idea 지배 구간 | retro-only (변경 0) |
+| cycle 628 | ~32 | 동일 | retro-only (변경 0) |
+| cycle 648 | ~20 | 동일 | retro-only (변경 0) |
+| cycle 669 | ~21 | 동일 | retro-only (변경 0) |
+| cycle 689 | 20 (gap=20 exactly) | review-code/explore-idea 15/20 = 75% 지배 | retro-only (변경 0) |
+
+**cycle 689 상세**: 진단 결과 "git log 30일 debug commit 0 / CI 최근 10건 all success / GH Actions 정상 / Vercel Deploy Error 0 / open hub-dispatch issue 0" → 5종 소스 모두 청정 확인. 변경 없음이 의도된 결과.
+
+5회 자연 redirect 모두 동일 패턴: 지배 체인 75%+ 구간에서 gap 20이 충족되면 자동 점검 발화, 변경 없음이 정상 결과.
+
+## 다른 pool 조정 패턴과의 관계
+
+| 패턴 | 감지 단위 | 목적 | 결과 |
+|---|---|---|---|
+| [chain saturation](./agentic-chain-saturation-detection) | 윈도우 내 비율 ≥ 임계값 | 지배 체인 포화 → pool 재조정 | skill-evolution 발화 |
+| [positive streak](./develop-cycle-positive-streak-recognition) | 연속 N회 성공 | 강제 다양화 차단 | 계속 |
+| [homeostasis (SE)](./agentic-trigger-skip-dual-condition-homeostasis) | SE 발화율 40% | 자기수정 빈도 조절 | skip/fire 교대 |
+| **본 패턴 (gap-trigger)** | 마지막 발화 이후 경과 N | 안전망 체인 맹점 방어 | 단발 헬스 점검 |
+
+네 패턴은 직교(orthogonal)하고 각자 독립 작동한다. chain saturation은 "explore-idea가 너무 많다"를 감지하고, gap-trigger는 "fix-incident가 너무 적다"를 감지한다.
+
+## 설계 시 고려사항
+
+**GAP_THRESHOLD 설정**:
+- 너무 짧음 (예: 5): 안전망 체인이 불필요하게 자주 발화 → 지배 체인 리듬 교란
+- 너무 김 (예: 50): 맹점 구간이 너무 길어짐
+- 권장: 20 사이클 (moneyball evidence 기반). 약 2-4주 운영 주기에 해당.
+
+**lite 모드 결합**:
+- gap-trigger 발화 = 가능하면 lite 모드 (진단 only, 구현 X)
+- 인시던트 발견 시 자연스럽게 heavy 모드 전환
+- lite 결과가 retro-only여도 gap은 리셋됨
+
+**허브 적용 고려**:
+- 현재 허브 pool에 gap-trigger 없음
+- fix-incident는 open GH issue에만 의존 → issue 0건이면 영구 억제 가능
+- 허브 chain pool에서 `fix-incident`의 직전 20 사이클 내 발화 횟수를 진단 source에 추가하면 gap-trigger 자연 구현 가능
+
+## 관련
+
+- [Agentic Chain Saturation Detection](./agentic-chain-saturation-detection): 비율 기반 지배 감지 (본 패턴의 pair)
+- [Develop-Cycle Positive Streak Recognition](./develop-cycle-positive-streak-recognition): 연속 성공 보호 (gap-trigger와 orthogonal)
+- [Trigger-Skip 자가 오실레이션](./agentic-trigger-skip-dual-condition-homeostasis): SE 발화율 조절 (meta-pool 레벨)
+- [Analytical Chain Lite Mode](./agentic-loop-analytical-chain-lite-mode): 헬스 점검 실행 패턴
