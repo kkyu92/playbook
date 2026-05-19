@@ -40,7 +40,8 @@ const PROJECTS = [
 - JIT 의미 검색 (Xenova multilingual-e5-small, 로컬 임베딩)
 - 드리프트 감지 (4-Level: 메모리 / 존재 / 작동 / 완전성)
 - Next.js 16 + MDX + Tailwind + Vercel + GitHub Actions + Gemini
-관심: AI 에이전트 하네스, 지식 그래프, prompt engineering, 가드 테스트, 자동화 워크플로`,
+- Android AI 생태계 (신규 카테고리 android-ai, 2026-05-19 시드 10 entry)
+관심: AI 에이전트 하네스, 지식 그래프, prompt engineering, 가드 테스트, 자동화 워크플로, Android AI 개발 (Gemini Nano, AICore, MediaPipe, ML Kit, Jetpack Compose AI, Genkit, on-device LLM 양자화, Android Studio AI, Firebase AI Logic)`,
   },
   {
     id: "moneyballscore",
