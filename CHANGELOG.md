@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.98] — 2026-05-19
+
+### Changed
+- cycle 803 skill-evolution SE #246 SUCCESS — stable oscillation fast-path 97회. SE Trigger-5: JSON tail-20 window 783-802 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → 마커 강제 발화. MIGRATION-PATH 1줄 append. 사후 window 784-803: SE=8/20=40% B PASS + 명단=7 A PASS → cycle 804 마커 박제 X. TODOS BRANCHED 갱신 (local 36/origin 22).
+
+## [0.7.97] — 2026-05-19
+
+### Changed
+- cycle 802 skill-evolution SE #245 SUCCESS — stable oscillation fast-path 97회 (oscillation 96→97회). SE Trigger-5: window 783-802 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → cycle 803 SE #246 마커 박제. TODOS BRANCHED 갱신 (local 35/origin 22).
+
+## [0.7.96] — 2026-05-19
+
+### Added
+- cycle 801 explore-idea — 위키 지식 ROI 3축 측정 패턴 신설 (wiki #202). lint CLEAN + 생산 과잉 상태에서 소비 메커니즘 부재 = 무덤 진단 패턴. search-hits.json 기반 3축 (검색 사용률/hit rate/결정 변경률) 측정 방법론. TODOS BRANCHED 갱신 (local 34/origin 21).
+
 ## [0.7.95] — 2026-05-19
 
 ### Changed

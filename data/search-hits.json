@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 137,
-  "skipped": 23,
+  "totalInvocations": 138,
+  "skipped": 24,
   "searched": 114,
   "hit": 35,
   "noMatch": 79,
-  "lastUpdated": "2026-05-19T07:32:06.773Z",
+  "lastUpdated": "2026-05-19T07:48:47.707Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -92,5 +92,5 @@
     "harness-engineering/post-ship-meta-documentation-drift": 2,
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1
   },
-  "totalQueries": 181
+  "totalQueries": 182
 }
