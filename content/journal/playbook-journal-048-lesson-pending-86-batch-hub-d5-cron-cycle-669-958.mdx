@@ -1,0 +1,58 @@
+---
+title: "Playbook Journal 048 — lesson-pending 86건 batch — hub D5 cron 주간 재발 패턴 (cycle 669) (#958)"
+category: harness-engineering
+date: "2026-05-19"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: lesson-pending 86건 batch — hub D5 cron 주간 재발 패턴 (cycle 669) (#958) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260519-lesson-pending-86-batch-hub-d5-cron-cycle-669-958-297c1c805caf9f4f40e6fbff991401.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+
+cycle 669 fix-incident lite (gap=21 trigger 7 ≥20 충족).
+
+## 관찰
+lesson-pending label open issue 86건 누적 (#842~#927). spot check:
+- ci-develop-cycle-skill-evoluti → PR #807/#933/#483 MERGED
+- ci-develop-cycle-retro-301-c0a → PR #291 MERGED
+- ci-develop-cycle-pick-vs-ai-29 → #740 CLOSED + #927 OPEN (재발 evidence)
+
+86건 모두 워커 PR 머지 + CI green 자연 회복 완료 = stale.
+
+## 원인
+cycle 434 (2026-05-15) 동일 패턴 첫 박제 + 15건 batch close 후 4일 만 86건 누적.
+hub incident-followup.yml D5 cron 이 동일 fingerprint 의 closed worker issue 재발 차단 X.
+주간 단위 reminder 재생성 추정.
+
+## 결론
+batch close + hub workflow 개선 carry-over.
+
+상세 lesson: docs/lessons/2026-05-19-lesson-pending-86-batch-recurring-hub-d5-limit.md
+
+Co-authored-by: Claude Opus 4.7 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
