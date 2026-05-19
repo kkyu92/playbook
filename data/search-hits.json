@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 87,
+  "totalInvocations": 88,
   "skipped": 21,
-  "searched": 66,
-  "hit": 14,
+  "searched": 67,
+  "hit": 15,
   "noMatch": 52,
-  "lastUpdated": "2026-05-18T22:49:18.965Z",
+  "lastUpdated": "2026-05-19T01:08:34.340Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -51,7 +51,7 @@
     "retros/2026-05-12-cycles-305-307": 4,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 2,
-    "retros/2026-05-13-cycles-452-455": 2,
+    "retros/2026-05-13-cycles-452-455": 3,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 4,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
@@ -65,7 +65,9 @@
     "retros/2026-05-12-cycles-334-341": 1,
     "retros/2026-05-12-cycles-331-332": 1,
     "harness-engineering/zero-touch-develop-cycle-session-management": 1,
-    "project-ops/claude-code-cost-optimization-strategies": 1
+    "project-ops/claude-code-cost-optimization-strategies": 1,
+    "retros/2026-05-13-cycles-441-442": 1,
+    "retros/2026-05-13-cycles-457-458": 1
   },
-  "totalQueries": 131
+  "totalQueries": 132
 }

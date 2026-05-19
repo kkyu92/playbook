@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.67] — 2026-05-19
+
+### Changed
+- curate cycle 753 — wiki lint CLEAN (184 entries, 0 orphan/isolated/stale; JIT unused 2건 보관: sentry-pii-scrubbing-beforesend + sentry-serverless-flush — break-glass 참조형). scan-promotions: 승격 후보 없음 (react=2, develop-cycle-hub=1, mdx=1). search-hits totalQueries=132 (+1). TODOS BRANCHED [P0] DONE (cycle 753 git pull fast-forward 0/0 해소). PR #882 Mermaid fix branch [PENDING] 분리 (push R6). SE Trigger-5 평가: tail-20 733-752 SE=8/20=40%≥40% B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 754 마커 박제 X. oscillation 75회 steady-state.
+
 ## [0.7.66] — 2026-05-19
 
 ### Fixed
