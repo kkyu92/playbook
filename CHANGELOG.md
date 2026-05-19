@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.24] — 2026-05-19
+
+### Added
+- cycle 843 explore-idea — 신규 entry #214 agentic-review-code-baseline-null-hypothesis-verification 신설. review-code chain의 heavy mode (drift hunt) vs baseline mode (null-hypothesis, 0 drift = success) 이중 모드 패턴. moneyball cycles 692-693 evidence (kbo-pitcher.ts/kbo-live.ts 0건 retro-only). TODOS BRANCHED 갱신 (local 101/origin 40).
+
 ## [0.9.23] — 2026-05-19
 
 ### Changed

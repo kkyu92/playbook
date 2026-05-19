@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 207,
+  "totalInvocations": 213,
   "skipped": 25,
-  "searched": 182,
-  "hit": 65,
-  "noMatch": 117,
-  "lastUpdated": "2026-05-19T11:49:44.076Z",
+  "searched": 188,
+  "hit": 67,
+  "noMatch": 121,
+  "lastUpdated": "2026-05-19T12:32:23.015Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 5,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 17,
+    "reports/closed-loop-health": 18,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -33,7 +33,7 @@
     "context-engineering/agentic-cycle-state-json-carry-over-design": 6,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 3,
     "reports/mid-review-2026-04-28": 2,
-    "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 5,
+    "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
     "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 2,
     "harness-engineering/agentic-chain-saturation-detection": 5,
@@ -84,7 +84,7 @@
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "harness-engineering/debug-page-silent-drift-trap": 1,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
-    "retros/2026-05-12-cycles-350-355": 3,
+    "retros/2026-05-12-cycles-350-355": 4,
     "infrastructure/nextjs-security-patching-defense-logic-reinforcement": 1,
     "infrastructure/npm-pnpm-supply-chain-security-enhancement": 1,
     "harness-engineering/llm-agent-artifact-first-diagnosis": 1,
@@ -104,7 +104,8 @@
     "retros/2026-05-12-cycles-342-346": 1,
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 2,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
-    "infrastructure/vercel-ignore-command-preview-skip": 1
+    "infrastructure/vercel-ignore-command-preview-skip": 1,
+    "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 1
   },
-  "totalQueries": 251
+  "totalQueries": 257
 }

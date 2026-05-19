@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T11:46:49.239Z
+Updated: 2026-05-19T12:33:59.965Z
 
-## 엔트리 (213개)
+## 엔트리 (214개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -34,6 +34,7 @@ Updated: 2026-05-19T11:46:49.239Z
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
+- [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/harness-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/harness-engineering/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
@@ -784,6 +785,10 @@ Updated: 2026-05-19T11:46:49.239Z
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-lite-first-scan-gate-execution-pattern
+- harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-gap-trigger-chain-health-check
+- harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline

@@ -1,0 +1,142 @@
+---
+title: "자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - review-code
+  - baseline-mode
+  - null-hypothesis
+  - quality-assurance
+  - drift-detection
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/agentic-lite-first-scan-gate-execution-pattern
+  - harness-engineering/agentic-gap-trigger-chain-health-check
+  - harness-engineering/drift-detection-methodology
+status: complete
+description: "review-code chain에는 두 가지 대립 모드가 있다: drift를 찾기 위한 heavy mode (drift 발견이 성공)와 clean을 확인하기 위한 baseline mode (0 drift가 성공). baseline mode가 'retro-only'를 반환하는 것은 낭비가 아니라 null-hypothesis 검증 완료다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 루프에서 review-code chain이 실행됐지만 아무것도 발견하지 못하고 `outcome=success retro-only`로 끝날 때, 직관적으로는 "낭비"처럼 보인다.
+
+```
+cycle 692 (moneyball): review-code (lite, baseline 모드) SUCCESS retro-only
+  — scrapers/kbo-pitcher.ts 129 line 점검 → silent drift 0건
+
+cycle 693 (moneyball): review-code (lite, baseline 모드) SUCCESS retro-only
+  — scrapers/kbo-live.ts 179 line 점검 → silent drift 0건
+```
+
+"drift를 찾는 chain이 아무것도 못 찾으면 실패 아닌가?" — 이 오해가 baseline mode를 억제하거나 heavy mode로 강제 전환하는 잘못된 판단을 만든다.
+
+## 두 가지 가설 프레임
+
+review-code chain은 실행 목적에 따라 **대립하는 두 가설**로 동작한다:
+
+```
+Heavy Mode (drift hunt)
+  H₀: 이 파일에 drift가 없다
+  H₁: drift가 있다 ← 실제 기대 (drift 발견이 성공)
+  실행 결과: H₁ 채택 (drift 발견) = 명시적 commit
+             H₀ 유지 (0 drift) = 예상 밖 → 다음 영역 전환
+
+Baseline Mode (null-hypothesis check)
+  H₀: 이 파일은 현재 clean하다 ← 실제 기대 (clean이 성공)
+  H₁: drift가 있다
+  실행 결과: H₀ 유지 (0 drift) = SUCCESS retro-only (베이스라인 확인 완료)
+             H₁ 채택 (drift 발견) = 예상 밖 → heavy mode로 즉시 전환
+```
+
+두 모드는 동일한 chain을 다른 prior(사전 기대)로 실행한다. 성공/실패 기준이 반전된다.
+
+## Baseline Mode가 발화하는 조건
+
+### 1. Heavy Mode 직후 인접 파일 점검
+
+```
+cycle 683: review-code heavy — CLAUDE.md Migrations 5건 sync (streak 150th)
+cycle 688: review-code heavy — CLAUDE.md cycles 680-687 PR sync (streak 156th)
+cycle 691: review-code heavy — Header NAV/Footer 컴포넌트 9건 sync (streak 156th)
+
+→ cycle 692: review-code baseline — scrapers/kbo-pitcher.ts (128 lines) ← 인접 영역
+→ cycle 693: review-code baseline — scrapers/kbo-live.ts (179 lines)
+```
+
+인접 영역이 heavy mode fix로 영향받았을 가능성이 있을 때, baseline으로 "전염"되지 않았는지 확인한다.
+
+### 2. 오래 검토되지 않은 중요 파일
+
+마지막 review-code 발화 이후 해당 파일을 건드린 PR이 없으면 baseline check 발화 prior가 높아진다.
+"이 파일은 아마 clean할 것이지만 오랫동안 확인하지 않았다" → baseline mode.
+
+### 3. 파일 크기/복잡도가 heavy mode 대상으로 삼기에 큰 단일 파일
+
+scraper 하나가 129/179 lines — heavy mode는 여러 파일에 걸쳐 패턴을 찾고,
+baseline mode는 단일 파일의 현재 상태를 점검하는 데 더 적합하다.
+
+## retro-only가 성공인 이유
+
+```
+Heavy Mode 발화 비용  ≈ baseline mode 발화 비용 (동일)
+Heavy Mode 성공 기준  = drift 발견 + commit
+Baseline Mode 성공 기준 = 0 drift + retro-only
+
+"retro-only = 아무 변화 없음 = 시간 낭비" 오해의 근거:
+  변화(commit) = 가치의 척도
+
+실제 가치 계산:
+  baseline retro-only = 해당 파일이 지금 clean하다는 확인 = 미래 debug 비용 절감
+  "이 파일은 문제 없다" 지식 = 인시던트 발생 시 해당 파일 수사에서 제외 가능
+```
+
+Baseline mode의 ROI는 **commit 수**가 아니라 **수사 범위 축소**에 있다.
+
+## Heavy Mode와 Baseline Mode의 연결 구조
+
+```
+Heavy Mode streak (148→149→150→156번째 — moneyball cycles 677-691)
+  ↓
+  각 cycle마다 catch 1~9건 → commit → 해당 영역 clean
+  ↓
+  heavy mode가 커버한 영역의 인접 파일 → baseline mode 자연 발화
+  ↓
+  Baseline Mode: 0 drift retro-only (2 cycles 연속)
+  ↓
+  heavy mode streak에서 빠져나와 다른 chain으로 자연 전환 신호
+```
+
+Heavy mode streak의 끝이 baseline mode 발화로 확인된다: "인접 파일도 clean" = 현재 영역에서 drift가 소진됐다는 신호.
+
+## 모드 선택 가이드
+
+| 상황 | 권장 모드 |
+|---|---|
+| "이 영역에 drift가 있을 것" (prior 높음) | Heavy mode |
+| "이 파일이 clean한지 확인" (prior 낮음) | Baseline mode |
+| Heavy mode streak 후 인접 파일 | Baseline mode |
+| Heavy mode가 0건으로 끝났을 때 | 영역 전환 또는 baseline mode |
+| 오래 점검하지 않은 중요 단일 파일 | Baseline mode |
+
+## Evidence
+
+| Cycle | 모드 | 대상 | 결과 | 의미 |
+|---|---|---|---|---|
+| 677 | Heavy | CLAUDE.md + glossary | drift 148번째 catch | heavy mode streak 진행 중 |
+| 678 | Heavy | CLAUDE.md L164 | drift 149번째 catch | heavy mode streak 진행 중 |
+| 683 | Heavy | CLAUDE.md Migrations | drift 150번째 catch (5건) | heavy mode streak 고밀도 |
+| 688 | Heavy | CLAUDE.md PR sync | drift 156번째 catch (6건) | heavy mode streak 고밀도 |
+| 691 | Heavy | 컴포넌트/lib | drift 156번째 catch (9건) | heavy mode streak 고밀도 |
+| 692 | **Baseline** | scrapers/kbo-pitcher.ts | **0 drift** | 인접 파일 clean 확인 |
+| 693 | **Baseline** | scrapers/kbo-live.ts | **0 drift** | 인접 파일 clean 확인 |
+
+cycles 692-693: heavy mode streak (677-691)의 마지막 인접 영역 확인 → 0건 retro-only 2회 연속 → 해당 영역의 drift 소진 확인 완료.
