@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.37] — 2026-05-19
+
+### Changed
+- cycle 867 curate SUCCESS — wiki lint CLEAN (221 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 (project_develop_cycle_skill_family / project_bidirectional_compound_growth_goal, cycle 865→867, N=8→6, wiki 220→221, BRANCHED 135/59→139/59) + TODOS BRANCHED 갱신 (local 139/origin 59). SE Trigger-5: JSON tail-20 window 847-866 SE=9/20=45% B PASS + 명단=7 동일(A PASS) → skip 조건 A+B 충족 → cycle 867 마커 박제 X. oscillation 124회 steady-state.
+
 ## [0.9.36] — 2026-05-19
 
 ### Changed
