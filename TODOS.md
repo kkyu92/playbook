@@ -1,10 +1,12 @@
 # TODOS
 
-## [PENDING] PR #882 Mermaid fix — push 대기 (R6)
-`fix/pr882-mermaid-cylinder-752` 로컬 브랜치 (commit 56faadf) push 필요 → CI 재실행 → 자동 머지.
-```bash
-git push origin fix/pr882-mermaid-cylinder-752
-```
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 759 진단, local 10 / origin 1)
+
+**상태**: origin/main `c3f50bf` (Daily Ingest PR #882 squash merge, 4 신규 entries) — local main 미포함. local 10 commits ahead. force-push / merge / rebase 중 선택 필요.
+**해소 path 후보**: `git pull --rebase origin main` (히스토리 정리) 또는 `git merge origin/main` (merge commit).
+
+## [DONE 2026-05-19] PR #882 Mermaid fix — c3f50bf 에 포함됨
+`fix/pr882-mermaid-cylinder-752` 의 Mermaid 수정이 PR #882 squash merge (`c3f50bf`) 안에 포함되어 origin/main 에 머지 완료. 로컬 브랜치 push 불필요. BRANCHED 해소 시 자동 반영.
 
 ## [DONE 2026-05-19] R6 대기 — git BRANCHED 재발 (cycle 752 진단) → cycle 753 RESOLVED
 

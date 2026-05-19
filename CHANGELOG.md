@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.73] — 2026-05-19
+
+### Changed
+- cycle 759 curate — wiki lint CLEAN (184 entries local, 188 on origin/main; BRANCHED 상태). JIT Unused 2건 보관 (sentry-pii-scrubbing-beforesend + sentry-serverless-flush — confidence 3, connections 충분, archive 불필요). scan-promotions: 승격 후보 없음 (관찰 중 3건). search-hits totalQueries=137. TODOS 갱신: PR #882 [PENDING] → DONE (c3f50bf 포함) + 신규 BRANCHED R6 항목. memory 2건 갱신 (project_bidirectional 758→759 / project_develop_cycle_skill_family 758→759). SE Trigger-5: JSON tail-20 window 740-759 SE=7/20=35% B FAIL (cycle 758 retro JSON 실측 = 7, 39-758 retro 8/20 언더카운트 보정). 명단=7 동일(A PASS). skip 조건 미충족 → cycle 760 마커 박제. SE #229 강제 발화 예정. oscillation 78회.
+
 ## [0.7.72] — 2026-05-19
 
 ### Fixed

@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 91,
+  "totalInvocations": 93,
   "skipped": 21,
-  "searched": 70,
-  "hit": 16,
-  "noMatch": 54,
-  "lastUpdated": "2026-05-19T01:46:20.377Z",
+  "searched": 72,
+  "hit": 17,
+  "noMatch": 55,
+  "lastUpdated": "2026-05-19T02:01:16.180Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -67,7 +67,8 @@
     "harness-engineering/zero-touch-develop-cycle-session-management": 1,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 1,
-    "retros/2026-05-13-cycles-457-458": 1
+    "retros/2026-05-13-cycles-457-458": 1,
+    "infrastructure/sentry-pii-scrubbing-beforesend": 1
   },
-  "totalQueries": 135
+  "totalQueries": 137
 }
