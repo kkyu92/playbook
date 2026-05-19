@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.84] — 2026-05-19
+
+### Fixed
+- cycle 785 curate — android-ai 10개 entry connections 중복 경로 수정 (category/category/slug → category/slug, 79개 패턴 + 5개 미해결 orphan 제거). wiki lint CLEAN (198 entries, 0건 orphan). TODOS BRANCHED 갱신 (local 4 / origin 2, CI 차단 명시). 로컬 validate-content + lint 모두 PASS.
+
 ## [0.7.83] — 2026-05-19
 
 ### Changed

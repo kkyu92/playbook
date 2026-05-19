@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 100,
+  "totalInvocations": 101,
   "skipped": 21,
-  "searched": 79,
-  "hit": 19,
+  "searched": 80,
+  "hit": 20,
   "noMatch": 60,
-  "lastUpdated": "2026-05-19T03:53:55.937Z",
+  "lastUpdated": "2026-05-19T05:36:12.446Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -71,7 +71,10 @@
     "infrastructure/sentry-pii-scrubbing-beforesend": 1,
     "retros/2026-05-12-cycles-327-330": 1,
     "retros/2026-05-12-cycles-377-378": 1,
-    "infrastructure/sentry-serverless-flush": 1
+    "infrastructure/sentry-serverless-flush": 1,
+    "retros/2026-05-12-cycles-320-322": 1,
+    "retros/2026-05-12-cycles-314-319": 1,
+    "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 1
   },
-  "totalQueries": 144
+  "totalQueries": 145
 }
