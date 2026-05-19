@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 247,
+  "totalInvocations": 261,
   "skipped": 25,
-  "searched": 222,
+  "searched": 236,
   "hit": 74,
-  "noMatch": 148,
-  "lastUpdated": "2026-05-19T14:11:28.877Z",
+  "noMatch": 162,
+  "lastUpdated": "2026-05-19T14:42:26.780Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -110,5 +110,5 @@
     "retros/2026-05-12-cycles-299-301": 1,
     "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 2
   },
-  "totalQueries": 291
+  "totalQueries": 305
 }

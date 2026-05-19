@@ -1,0 +1,143 @@
+---
+title: "자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - chain-pool
+  - dormancy
+  - phase-detection
+  - skill-evolution
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery
+status: complete
+description: "자율 개발 사이클에서 '발화하지 않은 체인 목록(명단)'은 프로젝트의 현재 운영 페이즈를 나타내는 지도다. 명단 안정 = 페이즈 안정, 명단 변화 = 페이즈 전환 신호. SE trigger-5 는 이 분포를 20 사이클마다 측정하는 자동 페이즈 감지기다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+체인 풀 11개를 가진 자율 개발 사이클에서 모든 체인이 균등하게 발화하지 않는다. 어떤 체인은 수십 사이클 동안 0회 발화하는 "휴면" 상태가 된다. 이를 어떻게 해석해야 하는가?
+
+1. **결함인가**: 체인 설계가 잘못되어 발화 조건이 너무 엄격한 것인가?
+2. **우연인가**: 진단 소스를 더 열심히 훑으면 발화할 수 있었던 것인가?
+3. **신호인가**: 현재 프로젝트 상태가 반영된 자연스러운 결과인가?
+
+## 핵심 관점: 휴면 분포 = 페이즈 지도
+
+자율 개발 사이클의 체인 선택은 진단 소스(GH issues, 위키 lint, 워커 inbound, TODOS)에 반응한다. 이는 곧 **체인 발화 분포가 현재 프로젝트가 어떤 작업 환경에 있는지를 반영**한다는 의미다.
+
+```
+체인 풀을 페이즈 별로 분류:
+
+[위키 성장 + 하네스 유지 페이즈]
+활성: curate / explore-idea / skill-evolution
+휴면: polish-ui / design-system / closed-loop-design / expand-scope
+
+[UI 확장 페이즈]
+활성: polish-ui / design-system / explore-idea
+휴면: worker-incident-triage / closed-loop-design
+
+[인시던트 처리 페이즈]
+활성: fix-incident / worker-incident-triage
+휴면: explore-idea / design-system / polish-ui
+
+[자동화 인프라 구축 페이즈]
+활성: closed-loop-design / fix-incident / expand-scope
+휴면: curate / polish-ui / design-system
+```
+
+허브(playbook)는 2026년 5월 기준 "위키 성장 + 하네스 유지" 페이즈:
+- 220 개 위키 엔트리 누적 (curate/explore-idea 주도)
+- 124회 SE 안정 oscillation (skill-evolution 주도)
+- UI 공개 전 (polish-ui/design-system 자연 dormant)
+- 인시던트 최소화 단계 (워크플로 안정, worker-incident-triage 자연 dormant)
+
+## SE Trigger-5: 자동 페이즈 감지기
+
+`skill-evolution` 체인의 Trigger-5 조건("직전 20 사이클 동안 체인 1개가 0회 발화")은 **페이즈 감지기**다:
+
+```bash
+# 직전 20 사이클의 체인 발화 분포 측정
+ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -20 | while read f; do
+  python3 -c "import json; d=json.load(open('$HOME/.develop-cycle-hub/cycles/$f')); \
+    print(d.get('chain_selected','?'))" 2>/dev/null
+done | sort | uniq -c | sort -rn
+```
+
+이 출력이 페이즈 지도다:
+```
+9 skill-evolution       ← SE 다수 = 자기수정 활성
+4 curate                ← 위키 유지 활성
+4 explore-idea          ← 신규 entry 생성 활성
+1 worker-incident-triage ← 워커 인바운드 최소
+0 polish-ui             ← UI 미공개 (정상 dormant)
+0 design-system         ← UI 미공개 (정상 dormant)
+0 closed-loop-design    ← 자동화 인프라 안정 (정상 dormant)
+0 expand-scope          ← 확장 보류 (정상 dormant)
+0 fix-incident          ← 인시던트 0 (정상 dormant)
+```
+
+## 명단 안정 vs 명단 변화: 페이즈 상태 진단
+
+| 명단 상태 | 해석 | SE trigger 반응 |
+|---|---|---|
+| 명단 안정 (N회 연속 동일) | 현재 페이즈 안정 | skip 조건 충족 → SE 발화 중단 |
+| 명단 변화 (진입/탈퇴 발생) | 페이즈 전환 시작 | skip 조건 불충족 → SE 발화 재개 |
+| 명단 전면 교체 | 급격한 페이즈 전환 | 다음 20 사이클 동안 새 명단으로 수렴 |
+
+실제 사례:
+- SE #264 (cycle 848): 명단=8 안정 → A PASS → B PASS → skip
+- SE #270 (cycle 864): `worker-incident-triage` 탈퇴 (8→7) = 페이즈 전환 신호 → A FAIL → SE 강제 발화 → MIGRATION-PATH 갱신 → 사후 명단=7 안정 복귀
+
+## 휴면 체인 강제 발화는 안티패턴
+
+자연 소스 trigger 없이 휴면 체인을 강제 발화하면:
+
+1. **진단 소스 왜곡**: "할 게 없는데 억지로 찾기" → 낮은 ROI 작업 선택
+2. **페이즈 신호 오염**: 명단에서 해당 체인이 빠지면 "페이즈 전환 없음"으로 오독
+3. **빈도 가드 소모**: 메타 체인(expand-scope/design-system)은 직전 outcome 성공 시만 재발화 허용 → 강제 발화 후 다음 정상 발화 막힘
+
+**올바른 대응**: 휴면 명단을 그대로 기록, 명단 변화만 감지.
+
+## 체인 풀 설계 지침
+
+새 체인 추가 시 trigger 조건이 실제 발생할 소스와 연결되어야 한다:
+
+```
+올바른 trigger: "GH issue에 XXX label" / "pnpm lint에 XXX 경고" / "사용자 발화 키워드"
+잘못된 trigger: "항상" / "N사이클마다 강제" / "chain이 오래 안 발화하면"
+```
+
+자율 소스 없는 trigger = 강제 발화 = 명단 오염 = 페이즈 지도 왜곡.
+
+## 실측 데이터 (cycle 846-865, 허브 fork)
+
+| chain | 발화 수 | 비율 | 페이즈 판단 |
+|---|---|---|---|
+| skill-evolution | 9 | 45% | 자기수정 활성 |
+| curate | 4 | 20% | 위키 유지 활성 |
+| explore-idea | 4 | 20% | 신규 entry 생성 |
+| worker-incident-triage | 2 | 10% | 워커 처리 최소 |
+| review-code | 1 | 5% | 코드 점검 산발 |
+| fix-incident | 0 | 0% | 인시던트 0 → 정상 |
+| polish-ui | 0 | 0% | UI 미공개 → 정상 |
+| design-system | 0 | 0% | UI 미공개 → 정상 |
+| closed-loop-design | 0 | 0% | 자동화 안정 → 정상 |
+| expand-scope | 0 | 0% | 확장 보류 → 정상 |
+| dimension-cycle | 0 | 0% | fallback 불필요 → 정상 |
+
+**결론**: 11개 체인 중 5개만 활성 = "위키 성장 + 하네스 자기수정" 페이즈 안정.
+
+## 연결 패턴
+
+`agentic-diagnosis-source-diversity-chain-selection-balance`의 "진단 소스 균형" 원칙과 짝이다: 다양한 소스를 균형 있게 훑어도 특정 페이즈에서는 일부 체인이 자연 휴면하는 것이 정상이며, 이를 무리하게 해소하려는 시도가 오히려 왜곡이다.

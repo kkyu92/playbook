@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T14:21:01.637Z
+Updated: 2026-05-19T14:45:20.360Z
 
-## 엔트리 (220개)
+## 엔트리 (221개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -25,6 +25,7 @@ Updated: 2026-05-19T14:21:01.637Z
 ### Harness Engineering
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
+- [자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도](wiki/harness-engineering/agentic-chain-dormancy-phase-map) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
@@ -745,6 +746,10 @@ Updated: 2026-05-19T14:21:01.637Z
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance
+- harness-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-chain-saturation-detection ↔ context-engineering/agentic-cycle-state-json-carry-over-design
