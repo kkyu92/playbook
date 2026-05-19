@@ -107,9 +107,9 @@ graph TD
     Gateway --> TextService["Text Inference Service"]
     Gateway --> AudioService["Audio Inference Service"]
 
-    ImageService -- Image Inference --> ImageModel[("Image Model")]
-    TextService -- Text Inference --> TextModel[("Text Model")]
-    AudioService -- Audio Inference --> AudioModel[("Audio Model")]
+    ImageService -- Image Inference --> ImageModel["Image Model"]
+    TextService -- Text Inference --> TextModel["Text Model"]
+    AudioService -- Audio Inference --> AudioModel["Audio Model"]
 
     ImageModel --> GatewayResult(Result Aggregation)
     TextModel --> GatewayResult
