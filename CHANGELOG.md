@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.86] — 2026-05-19
+
+### Added
+- cycle 790 explore-idea — android-ai 신규 entry: Android AI Edge vs Cloud 결정 프레임워크 (199 entries). 온디바이스·클라우드·하이브리드 4축 결정 기준 + 결정 순서도 + 하이브리드 fallback 패턴. wiki lint CLEAN. TODOS BRANCHED 갱신 (cycle 789→790, local 9→11 / origin 5→6).
+
 ## [0.7.85] — 2026-05-19
 
 ### Changed

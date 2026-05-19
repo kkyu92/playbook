@@ -1,0 +1,115 @@
+---
+title: "Android AI Edge vs Cloud 결정 프레임워크 — 온디바이스·클라우드·하이브리드 선택 기준"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - edge-computing
+  - on-device
+  - cloud-api
+  - decision-framework
+confidence: 2
+connections: [android-ai/aicore, android-ai/gemini-nano, android-ai/firebase-ai-logic-android-client-sdk, android-ai/on-device-llm-quantization-patterns-android, android-ai/ml-kit, android-ai/mediapipe, harness-engineering/llm-api-dependency-risk-mitigation-strategy, harness-engineering/llm-scalable-service-architecture-patterns]
+status: draft
+description: "Android 앱에서 AI 기능 구현 시 온디바이스(Gemini Nano·LiteRT·ML Kit·MediaPipe)와 클라우드 API(Firebase AI Logic·Vertex AI)를 선택하는 결정 기준과 하이브리드 아키텍처 패턴을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+Android AI 기능 구현 시 가장 먼저 결정해야 하는 것은 **온디바이스 추론** vs **클라우드 API 호출** vs **하이브리드** 중 무엇을 선택할 것인가입니다. 틀린 선택은 배포 후 변경 비용이 크기 때문에 — 온디바이스는 모델 크기로 앱이 무거워지고, 클라우드는 오프라인·비용·지연 문제가 발생합니다 — 초기 아키텍처 결정 단계에서 4가지 축(지연·비용·프라이버시·모델 품질)을 정량 평가해야 합니다.
+
+## 핵심 개념
+
+### 결정 4축
+
+| 축 | 온디바이스 | 클라우드 API |
+|----|-----------|------------|
+| **지연 (첫 토큰)** | 50–200ms (Pixel 8 Pro 기준) | 500–2,000ms (네트워크 포함) |
+| **비용 (규모 확장)** | 0원/req (추론 후 고정) | API 토큰 비례 과금 |
+| **프라이버시** | 데이터 기기 내 처리 | 클라우드 전송 필요 |
+| **모델 품질** | 소형 (1–7B 파라미터) | 대형 (Gemini Pro·Flash) |
+
+### 온디바이스가 유리한 조건
+
+- 오프라인 필수 (항공·지하·제조 현장)
+- 민감 데이터 (의료기록·금융·사진)
+- 반복 단순 추론 (DAU 100만+ → 클라우드 비용 임계 초과)
+- UX 반응성 최우선 (키보드 자동완성·실시간 카메라 분석)
+
+### 클라우드 API가 유리한 조건
+
+- 최신 대형 모델 품질 필요 (복잡 추론·코드 생성·멀티모달)
+- 앱 업데이트 없이 모델 교체 필요
+- 프로토타입·MVP (개발 속도 우선)
+- 영상·대용량 이미지 처리 (온디바이스 메모리 한계)
+
+## 주요 기능
+
+### Android 플랫폼별 선택지 매핑
+
+| 시나리오 | 추천 선택지 | 비고 |
+|---------|-----------|------|
+| 텍스트 요약·완성 (소규모) | Gemini Nano via AICore | Android 14+ Pixel/Samsung 한정 |
+| 이미지 분류·객체 감지 | ML Kit / MediaPipe | 모델 번들링 없이 Google Play Services 활용 |
+| 커스텀 소형 LLM | LiteRT + MediaPipe GenAI | GGUF Q4_K_M 또는 TFLite 포맷 |
+| 복잡 추론·멀티턴 대화 | Firebase AI Logic (Gemini Pro) | 네트워크 필수, 비용 모니터링 필요 |
+| 오프라인 + 고품질 | 하이브리드 (온디바이스 fallback) | 아래 하이브리드 패턴 참조 |
+
+### 앱 크기 트레이드오프
+
+온디바이스 모델 크기 (Gemini Nano 미포함, 직접 번들링 기준):
+- GGUF Q4_K_M 1B 모델: ~700MB
+- GGUF Q4_K_M 3B 모델: ~1.7GB
+- TFLite Gemma 2B INT4: ~1.3GB
+
+Google Play Asset Delivery (Fast Follow / On Demand) 로 설치 후 다운로드 전략을 쓰면 초기 앱 크기 영향을 줄일 수 있습니다. 단, 첫 실행 시 수 분 다운로드 UX를 설계해야 합니다.
+
+## 활용 사례
+
+### 하이브리드 패턴 — 온디바이스 우선 + 클라우드 fallback
+
+```kotlin
+class HybridAiClient(
+    private val onDeviceClient: OnDeviceLlm?,   // null if device not supported
+    private val cloudClient: FirebaseAiLogicClient
+) {
+    suspend fun generate(prompt: String): String {
+        // 온디바이스 가능 + 오프라인 시 우선
+        if (onDeviceClient != null && isOnDeviceEligible(prompt)) {
+            return runCatching { onDeviceClient.generate(prompt) }
+                .getOrElse { cloudClient.generate(prompt) }  // fallback
+        }
+        return cloudClient.generate(prompt)
+    }
+
+    private fun isOnDeviceEligible(prompt: String): Boolean =
+        prompt.length < 2_000 && !requiresLatestKnowledge(prompt)
+}
+```
+
+### 결정 순서도
+
+```
+[AI 기능 요구사항 정의]
+        ↓
+오프라인 필수? ──YES──→ 온디바이스 (Gemini Nano / LiteRT)
+        ↓ NO
+민감 데이터? ──YES──→ 온디바이스 또는 On-premise
+        ↓ NO
+DAU × 추론 비용 > $X/월? ──YES──→ 온디바이스 검토
+        ↓ NO
+최신 대형 모델 필요? ──YES──→ 클라우드 API (Firebase AI Logic)
+        ↓ NO
+→ 클라우드 API (비용·복잡도 낮음)
+```
+
+## 실전 체크리스트
+
+- [ ] **DAU × 예상 API 호출 수 × 단가** 계산 후 온디바이스 손익분기 추정 (일반적으로 DAU 50만+ 시 검토)
+- [ ] 대상 기기 스펙 분포 확인 — RAM 4GB 미만 기기는 3B+ 모델 실행 불안정
+- [ ] Gemini Nano 지원 기기 리스트 (`isFeatureSupported(GENERATIVE_AI)`) 사전 확인, 미지원 기기 fallback 설계
+- [ ] 온디바이스 선택 시 Play Asset Delivery 또는 앱 내 다운로드 UX 설계 (진행 상태 표시 필수)
+- [ ] 클라우드 API 선택 시 월별 비용 상한 알림 설정 (Firebase Budget Alerts)
+- [ ] 하이브리드 시 네트워크 불안정 구간 E2E 테스트 (기내 모드 전환 시나리오)
+- [ ] 프라이버시 정책 업데이트 — 클라우드 전송 데이터 명시 의무
+- [ ] 모델 교체 주기 고려 — 온디바이스는 앱 업데이트 필요 (Play Store 심사 2–3일 포함)
