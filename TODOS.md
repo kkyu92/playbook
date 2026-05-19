@@ -1,11 +1,11 @@
 # TODOS
 
-## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 791 갱신, local 13 / origin 8)
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 792 갱신, local 15 / origin 10)
 
-**상태**: local main 13 commits ahead / origin main 8 commits ahead (양방향 diverged). force-push / merge / rebase 중 선택 필요.
+**상태**: local main 15 commits ahead / origin main 10 commits ahead (양방향 diverged). force-push / merge / rebase 중 선택 필요.
 **해소 path 후보**: `git pull --rebase origin main` (히스토리 정리) 또는 `git merge origin/main` (merge commit).
 **CI 영향**: `6f543b9` (on-device-llm-quantization-patterns-android.mdx `<400ms` fix) 로컬만 존재 → origin CI 차단 중. BRANCHED 해소 시 CI 자동 회복.
-**이력**: cycle 782 stale 43/1 → cycle 784 실측 2/1 → cycle 785 실측 4/2 → cycle 786 실측 6/3 → cycle 787 실측 7/4 → cycle 788 실측 8/5 → cycle 789 실측 9/5 → cycle 790 실측 11/6 → cycle 791 실측 13/8
+**이력**: cycle 782 stale 43/1 → cycle 784 실측 2/1 → cycle 785 실측 4/2 → cycle 786 실측 6/3 → cycle 787 실측 7/4 → cycle 788 실측 8/5 → cycle 789 실측 9/5 → cycle 790 실측 11/6 → cycle 791 실측 13/8 → cycle 792 실측 15/10
 
 ## [DONE 2026-05-19] PR #882 Mermaid fix — c3f50bf 에 포함됨
 `fix/pr882-mermaid-cylinder-752` 의 Mermaid 수정이 PR #882 squash merge (`c3f50bf`) 안에 포함되어 origin/main 에 머지 완료. 로컬 브랜치 push 불필요. BRANCHED 해소 시 자동 반영.
