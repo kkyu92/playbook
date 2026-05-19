@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T13:53:15.798Z
+Updated: 2026-05-19T14:03:19.462Z
 
-## 엔트리 (218개)
+## 엔트리 (219개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -29,6 +29,7 @@ Updated: 2026-05-19T13:53:15.798Z
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
+- [자율 에이전트 기능 포화 순차 배치 배포 패턴 — Spec-Fire-Audit 3단계 구조](wiki/harness-engineering/agentic-feature-saturation-sequential-batch-delivery) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
@@ -764,6 +765,10 @@ Updated: 2026-05-19T13:53:15.798Z
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+- harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-post-saturation-ux-chip-pivot
+- harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis

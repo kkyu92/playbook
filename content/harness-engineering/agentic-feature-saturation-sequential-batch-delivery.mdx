@@ -1,0 +1,131 @@
+---
+title: "자율 에이전트 기능 포화 순차 배치 배포 패턴 — Spec-Fire-Audit 3단계 구조"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - agentic-loop
+  - develop-cycle
+  - feature-delivery
+  - saturation
+  - batch-pattern
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-post-saturation-ux-chip-pivot
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+status: complete
+description: "같은 도메인에서 N개의 관련 기능 개선이 필요할 때, Spec(후보 열거+ROI 랭킹) → Fire(후보별 1 사이클) → Audit(클로저) 3단계 구조로 배포하면 사이클 범위를 제한하면서 예측 가능한 납기를 달성한다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+같은 UI 도메인(예: 필터 칩, 정렬 칩)에서 N개의 유사한 기능 개선이 동시에 필요할 때, 어떻게 사이클에 배분해야 하는가?
+
+세 가지 나쁜 접근이 있다:
+
+1. **Ad-hoc**: 매 사이클 즉흥적으로 하나씩 선택 → ROI 랭킹 없음, 배포 누락 위험
+2. **Batch-fire**: 한 사이클에 N개 전부 구현 → 범위 초과, 중간 reject 불가
+3. **Endless spec**: 후보만 계속 추가, 실제 구현 없음 → 아이디어 무덤
+
+## 해결책: Spec-Fire-Audit 3단계 패턴
+
+```
+사이클 K:   [Spec] — 도메인 조사 + N 후보 열거 + ROI 랭킹 + 사전 reject
+사이클 K+1: [Fire-A] — 후보 A 구현 (ship 또는 reject)
+사이클 K+2: [Fire-B] — 후보 B 구현 (ship 또는 reject)
+...
+사이클 K+N: [Audit] — 최종 후보 처리 + 시리즈 클로저
+```
+
+### 단계별 책임
+
+**Spec 사이클**
+- 도메인 전체를 조사해 개선 가능한 후보 N개 목록 작성
+- ROI 기준으로 A > B > C 순위 결정
+- 구현 전 명백히 부적합한 후보 조기 reject (계산 낭비 방지)
+- 결과: 최종 fire 목록 + 순서 + reject 사유
+
+**Fire 사이클** (후보별 1 사이클)
+- 범위: 후보 1개만
+- 구현 후 ship 또는 개별 reject 결정
+- 이전 사이클 결과와 독립적으로 진행 가능
+
+**Audit/클로저 사이클**
+- 남은 후보(주로 마지막 1~2개) 최종 처리
+- 시리즈 전체 감사: 목표 달성 여부 확인
+- 공식적인 series close — 이 사이클 없으면 시리즈가 영구 미결
+
+## 실증 데이터 (Moneyball develop-cycle)
+
+### Saturation v4 (cycles 699–708)
+
+| 사이클 | 역할 | 내용 |
+|---|---|---|
+| 699 | Spec | /picks, /standings, /teams, /matchup, /glossary — 5 후보 A>B>C>D>E, 3개 사전 reject |
+| 700 | Fire-A | /glossary 카테고리 칩 → ship (PR #978) |
+| 702 | Fire-B | /matchup 접전 필터 칩 → ship (PR #979) |
+| 703 | Fire-C | /reviews/weekly 정렬 칩 → ship (PR #982) |
+| 704 | Fire-D | /teams/[code] 기록 필터 칩 → ship (PR #983) |
+| 708 | Audit | /accuracy 필터 칩 → reject (ROI 불충분) |
+
+결과: 4/5 ship, 1 reject, 범위 초과 0건.
+
+### Saturation v5 (cycles 711–716)
+
+| 사이클 | 역할 | 내용 |
+|---|---|---|
+| 711 | Spec | /picks, /picks weekly, /standings, /seasons — 5 후보 A>B>C>D>E, 3개 사전 reject (F/G/H) |
+| 712 | Fire-A | /picks 상태 필터 칩 → ship (PR #986) |
+| 713 | Fire-B | /picks 정렬 칩 → ship (PR #987) |
+| 714 | Fire-C | /picks WeeklyHistory 정렬 칩 → ship (PR #988) |
+| 715 | Fire-D | /standings teamAccuracy 정렬 칩 → ship (PR #989) |
+| 716 | Audit | /seasons 정렬 칩 → reject |
+
+결과: 4/5 ship, 1 reject, 범위 초과 0건.
+
+## 패턴 특성
+
+**1 reject per batch 비율**
+
+v4와 v5 모두 최종 후보 5개 중 4 ship + 1 reject. 이 비율은 Spec 단계의 ROI 랭킹이 잘 작동하고 있음을 나타낸다 — 명백히 나쁜 후보는 Spec에서 걸러지고, 경계선 후보는 Audit에서 최종 판단된다.
+
+**사이클 간 독립성**
+
+각 Fire 사이클은 다른 Fire 사이클과 독립적이다. Fire-B가 실패해도 Fire-C는 진행 가능. 이는 전통적인 waterfall과 다르다.
+
+**Audit 없이는 시리즈가 닫히지 않는다**
+
+공식적인 클로저 사이클 없이는 "Fire-D까지 했는데 E는 어떻게 됐지?" 라는 미결 상태가 지속된다. Audit 사이클은 accountable closure를 제공한다.
+
+## 적용 조건
+
+다음 조건이 모두 충족될 때 사용:
+
+- 같은 도메인에서 독립적으로 배포 가능한 기능 후보가 **N ≥ 3** 개
+- 각 후보가 **서로 의존성 없이** 개별 구현 가능
+- 전체 N개를 한 사이클에 처리하면 **범위 초과** 위험
+
+N < 3이면 그냥 ad-hoc으로 처리하는 게 낫다.
+
+## 안티패턴
+
+| 안티패턴 | 증상 | 문제 |
+|---|---|---|
+| Spec 없이 바로 Fire | 매 사이클 "오늘 뭐 할까?" | ROI 랭킹 없음, 중요 후보 누락 |
+| Batch-fire | 한 사이클에 N개 전부 | 범위 초과, 중간 reject 불가 |
+| Audit 생략 | 시리즈 미결 | 과거 미처리 후보 debt 누적 |
+| 무한 Spec | 후보 추가만 반복 | 실제 구현 없음 = 아이디어 무덤 |
+| Fire 순서 무시 | ROI 낮은 것 먼저 | 높은 가치 후보 미처리 위험 |
+
+## 다음 단계
+
+시리즈가 완전히 끝난 후 (Audit 완료):
+- 해당 도메인 포화 여부 재평가 → `agentic-chain-saturation-detection` 참조
+- 포화 이후 새로운 pivot 탐색 → `agentic-post-saturation-ux-chip-pivot` 참조
