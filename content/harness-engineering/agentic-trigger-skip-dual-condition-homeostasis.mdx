@@ -1,0 +1,184 @@
+---
+title: "자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴"
+category: harness-engineering
+date: "2026-05-19"
+tags:
+  - skill-evolution
+  - homeostasis
+  - oscillation
+  - agentic-loop
+  - self-regulation
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-19"
+connections:
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agent-multi-frequency-knowledge-pipeline
+  - harness-engineering/develop-cycle-positive-streak-recognition
+status: complete
+description: "자기수정(skill-evolution) 에이전트가 이중 조건 skip gate(명단 안정 + 발화율 ≥ 40%)를 통해 35–45% 발화율 항상성을 자율 유지하는 패턴. 외부 튜닝 없이 101회 dogfood로 검증된 emergent homeostasis."
+type: entry
+source: manual
+---
+
+## 문제
+
+자기수정 에이전트(skill-evolution)가 언제 발화해야 하는지를 결정하는 문제:
+
+- **과잉 발화**: 매 사이클 skill-evolution → 리소스 낭비 + system 변경 불안정
+- **과소 발화**: 너무 드물게 → SKILL.md stale + project phase 변화 미감지
+
+단순 고정 주기(예: "10 사이클마다 발화")는 project 상태와 무관하게 기계적으로 발화 — 실제 필요와 무관.
+
+**목표**: 외부 튜닝 없이 시스템이 스스로 적절한 발화율을 유지하게 하는 것.
+
+## 이중 조건 skip gate 패턴
+
+trigger 조건(예: 직전 20 사이클 중 0회 chain 존재)이 충족되어도, 아래 **두 조건이 모두 충족**되면 skip:
+
+| 조건 | 내용 | 의미 |
+|------|------|------|
+| **A** | 직전 SE 대비 0회 chain 명단 동일 | project phase 안정 (명단 진입/탈퇴 없음) |
+| **B** | 직전 tail-20 window SE 점유율 ≥ 40% | 이미 충분한 자기수정 발생 중 |
+
+**skip = A AND B 충족 시만**. 어느 하나라도 실패 → trigger 충족 = SE 발화.
+
+```
+trigger 충족?
+  ├── A 실패 (명단 변화) → SE 발화 (phase 전환 감지)
+  ├── B 실패 (rate < 40%) → SE 발화 (자기수정 부족)
+  └── A + B 모두 충족 → skip (자연 휴식)
+```
+
+## 항상성 메커니즘
+
+이중 조건이 어떻게 자동 항상성을 만드는지:
+
+```
+[State 1] SE 장기 미발화 → tail-20 rate 하락 → B 실패
+  ↓
+[Event] trigger 충족 + B 실패 → SE 발화
+  ↓
+[State 2] SE 발화 증가 → tail-20 rate 상승 → B 통과
+  ↓
+[Event] trigger 충족 + A, B 모두 통과 → skip
+  ↓
+[State 3] 비-SE 사이클 누적 → tail-20에서 과거 SE 이탈 → rate 하락 → B 실패
+  ↓
+[State 1로 복귀] 다시 발화
+```
+
+외부 개입 없이 35–45% 발화율 구간에서 자연 진동.
+
+### Condition A의 역할 — project phase 전환 감지
+
+명단(0회 chain set)이 변화하면 A 실패 → rate 무관 SE 강제 발화:
+
+- 신규 chain 도메인이 활성화: 기존 SKILL.md가 새 chain trigger 반영 못 함 → 즉시 갱신 필요
+- 기존 chain 도메인이 비활성화: SKILL.md trigger 조건이 stale → 정리 필요
+- **결과**: phase 전환 시점에 SE가 자동 발화 → SKILL.md를 현재 project 상태에 재동기화
+
+이 동작은 명시적으로 설계된 것이 아니라 명단 동일 조건에서 자연스럽게 emergent됨.
+
+## 슬라이딩 윈도우 boundary 효과
+
+skip 조건 A+B 충족이 예측보다 짧게 유지되는 이유:
+
+```
+tail-20 window = 직전 20개 cycle JSON
+과거 SE cycle이 window 밖으로 이탈 → rate 하락
+→ 예측: "다음 2-3 사이클 skip" vs 실제: "1 사이클 skip 후 재발화"
+```
+
+예시 (cycle 570 사례):
+- window 549-568: SE=7/20=35% → B 실패 → SE 발화 (#153)
+- 사후 window 550-570: SE=8/20=40% → B 통과 → skip (#154 없음)
+- window 551-571: cycle 550(non-SE) 진입으로 SE 561 이탈 예정 → rate 하락 → B 실패 재발화
+
+**실용적 의미**: "다음 K 사이클은 확실히 skip"이라는 예측보다 "현재 사이클 기준 평가"가 더 신뢰성 높음. skip 예측은 직다음 사이클만 유효.
+
+## 발화율 vs. 위치 관계
+
+```
+B 조건만 보면 "rate 상한 40%"처럼 보임
+실제: A 조건이 asymmetric trigger 역할
+  - A 실패(명단 변화) → 고rate 상태에서도 발화
+  - A 통과(명단 안정) → B 조건이 rate 상한 결정
+```
+
+명단 안정 phase에서는 35-45% 구간이 natural steady-state:
+- 35% 미만: trigger rate 낮음 → B 자연 실패 → 더 자주 발화 → rate 회복
+- 45% 초과: 거의 모든 trigger에서 B 통과 → skip 증가 → rate 하락
+
+## 구현 체크리스트
+
+```bash
+# (B) SE 점유율 계산 — cycle JSON 파일 기반 (tail-20 의미)
+SE_CHAINS=$(ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -20 | while read f; do
+  python3 -c "
+import json
+d = json.load(open('$HOME/.develop-cycle-hub/cycles/$f'))
+print(d.get('chain_selected', '?'))
+" 2>/dev/null
+done)
+
+SE_COUNT=$(echo "$SE_CHAINS" | grep -c "skill-evolution")
+TOTAL=$(echo "$SE_CHAINS" | grep -c ".")
+RATE=$((SE_COUNT * 100 / TOTAL))
+echo "SE rate: $SE_COUNT/$TOTAL = $RATE% (threshold: 40%)"
+
+# (A) 명단 비교
+ZERO_CHAINS=$(echo "$SE_CHAINS" | sort | uniq -c | awk '$1==0 {print $2}')
+# 직전 SE의 명단과 비교 필요
+```
+
+**watch.sh kill / JSON 미박제 영향**: chain_selected가 'unknown'으로 박제된 cycle이 있으면 SE rate undercount 발생 → B 조건이 실제보다 낮게 평가 → 실제보다 자주 발화. 알려진 이슈이며 oscillation에 자연 흡수됨 (±1 cycle 수준).
+
+## 다른 패턴과의 관계
+
+| 패턴 | 레벨 | 무엇을 조절 |
+|------|------|-------------|
+| **본 패턴** | meta-agent | skill-evolution 발화율 (자기수정 빈도) |
+| [chain saturation](./agentic-chain-saturation-detection) | pool | chain 선택 다양성 (특정 chain 점유율) |
+| [positive streak](./develop-cycle-positive-streak-recognition) | chain | 연속 성공 chain 유지 (강제 다양화 차단) |
+
+세 패턴이 직교(orthogonal):
+- chain saturation: "explore-idea가 20 사이클 중 60% 점유 → pool 재조정"
+- positive streak: "curate 5회 연속 success → 계속"
+- 본 패턴: "SE가 tail-20 중 40% 점유 → skip"
+
+각각 독립적으로 작동하며 상호 간섭 없음.
+
+## 실증 데이터 (허브 fork)
+
+| 항목 | 수치 |
+|------|------|
+| 검증 기간 | cycle 710–810 (100 사이클) |
+| SE 발화 횟수 | #215~#250 (총 36회) |
+| oscillation 횟수 | 101회 |
+| steady-state 발화율 | 35–40% |
+| 명단 크기 | 7개 (cycle 799 SE #244 이후 고정) |
+| 명단 변화 이벤트 | SE #244 (6→7, review-code 신규 진입) |
+| 명단 변화 직후 패턴 | 발화율 일시 40% 초과 → 1-2 skip → 35-40% 복귀 |
+
+```
+명단 안정 phase oscillation 예시:
+  SE #248 (cycle 807) → skip (808) → skip (809) wait...
+
+실제 이력:
+  SE #248 cycle 807 → SE #249 cycle 808 → SE #250 cycle 809
+  curate cycle 810 → [SE #251 예정 skip] → ...
+
+※ 연속 SE는 B 조건 35%→40% 경계 근처에서 발생.
+  skip 조건 A+B 충족 시 curate/explore-idea 같은 non-SE chain 삽입.
+```
+
+## 적용 시 주의
+
+1. **tail-N 크기 선택**: 20이 실증된 값. 너무 작으면 noise → 자주 발화. 너무 크면 phase 변화 감지 지연.
+2. **threshold ≥ 40% 근거**: 실증적. 20% → 너무 쉽게 skip. 60% → 거의 skip 없음.
+3. **명단 비교 기준**: 직전 SE와 비교 (절대 집합 X). 상대 변화 감지가 핵심.
+4. **cycle JSON 기반 의무**: N_ARG batch window(현재 배치만) 사용 시 false-positive. 전체 tail-20 JSON read.

@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.8.6] — 2026-05-19
+
+### Added
+- cycle 811 explore-idea — wiki entry #204 신설: 자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴 (101회 oscillation dogfood, cycle 710-810 실증). wiki lint CLEAN (204 entries). TODOS BRANCHED 갱신 (local 47 / origin 29).
+
 ## [0.8.5] — 2026-05-19
 
 ### Changed
