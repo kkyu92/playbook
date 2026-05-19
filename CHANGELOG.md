@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.32] — 2026-05-19
+
+### Changed
+- cycle 858 curate SUCCESS — wiki lint CLEAN (218 entries, 0건 orphan/isolated/stale) + memory 2건 갱신 (develop-cycle skill family / MEMORY.md index). SE Trigger-5: JSON tail-20 window 838-857 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 859 마커 박제 X. oscillation 122회 steady-state.
+
+## [0.9.31] — 2026-05-19
+
+### Changed
+- cycle 857 skill-evolution SE #268 fast-path SUCCESS — oscillation 122회. JSON tail-20 window 837-856 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → fast-path 적용 → MIGRATION-PATH #268 appended. 사후 window 838-857: SE=8/20=40% B PASS. skip 조건 A+B 충족 → cycle 858 마커 박제 X.
+
+## [0.9.30] — 2026-05-19
+
+### Added
+- cycle 856 explore-idea SUCCESS — 신규 entry #218 `agentic-diagnosis-source-diversity-chain-selection-balance` 신설. 자율 에이전트 진단 단계에서 source 다양성 확보가 chain 선택 균형에 직접 영향. 허브 cycle 839~856 evidence. wiki 218 entries.
+
 ## [0.9.29] — 2026-05-19
 
 ### Changed
