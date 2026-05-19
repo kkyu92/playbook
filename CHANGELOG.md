@@ -4,6 +4,26 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.3] — 2026-05-19
+
+### Added
+- cycle 818 explore-idea — wiki entry #207 신설: 멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 fix-incident dormancy와 moneyball fix-incident gap-trigger 동시 발생을 단일 entry로 포착. 허브 메타 수렴 / 워커 도메인 순환 자연 분업 구조 최초 문서화. wiki lint CLEAN (207 entries). TODOS BRANCHED 갱신 (local 60/origin 36). SE: B PASS + A PASS → skip.
+
+## [0.9.2] — 2026-05-19
+
+### Changed
+- cycle 817 skill-evolution SE #252 SUCCESS — 명단 7→8 변화(fix-incident 진입) evidence 박제. oscillation 103회 steady-state. fix-incident 자연 dormancy (window 797-816 curate 6회/explore-idea 6회/SE 8회 3-chain 수렴). 사후 window 798-817: SE=9/20=45%≥40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 818 마커 박제 X. TODOS BRANCHED 갱신 (local 58/origin 36).
+
+## [0.9.1] — 2026-05-19
+
+### Added
+- cycle 816 explore-idea — wiki entry #206 신설: Gap-Trigger 체인 헬스 점검 패턴 — moneyball cycles 688-692 워커 lesson 5회 auto-ingest 분석에서 fix-incident gap=20 trigger 패턴 발견. 6회 evidence (257/596/628/648/669/689). wiki lint CLEAN (206 entries). TODOS BRANCHED 갱신 (local 56/origin 36). SE Trigger-5: window 797-816 SE=8/20=40% B PASS + 명단 7→8 변화(A FAIL) → skip 조건 미충족 → cycle 817 SE #252 마커 박제.
+
+## [0.9.0] — 2026-05-19
+
+### Changed
+- cycle 815 curate — wiki lint CLEAN (205 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 812→815, SE 102회, wiki 205, BRANCHED 55/36). CHANGELOG 1 cycle backfill (0.8.9 for SE #251). search-hits.json commit. TODOS BRANCHED 갱신 (local 55/origin 36). scan-promotions: 승격 후보 없음.
+
 ## [0.8.9] — 2026-05-19
 
 ### Changed

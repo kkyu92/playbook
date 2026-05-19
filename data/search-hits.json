@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 166,
+  "totalInvocations": 174,
   "skipped": 25,
-  "searched": 141,
-  "hit": 49,
-  "noMatch": 92,
-  "lastUpdated": "2026-05-19T09:17:48.141Z",
+  "searched": 149,
+  "hit": 52,
+  "noMatch": 97,
+  "lastUpdated": "2026-05-19T09:31:38.983Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 4,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -62,9 +62,9 @@
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 1,
     "harness-engineering/fail-loud-partial-adoption-escape-hatch-trap": 3,
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
-    "retros/2026-05-12-cycles-334-341": 1,
+    "retros/2026-05-12-cycles-334-341": 2,
     "retros/2026-05-12-cycles-331-332": 2,
-    "harness-engineering/zero-touch-develop-cycle-session-management": 4,
+    "harness-engineering/zero-touch-develop-cycle-session-management": 5,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 2,
     "retros/2026-05-13-cycles-457-458": 1,
@@ -98,9 +98,11 @@
     "retros/2026-05-19-cycles-801-804": 1,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 1,
     "reports/week-2026-21": 1,
-    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 2,
+    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 4,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
-    "retros/2026-05-08-cycles-265-280": 1
+    "retros/2026-05-08-cycles-265-280": 1,
+    "retros/2026-05-12-cycles-342-346": 1,
+    "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 1
   },
-  "totalQueries": 210
+  "totalQueries": 218
 }
