@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.85] — 2026-05-19
+
+### Changed
+- cycle 789 curate — wiki lint CLEAN (198 entries, 0건 orphan/stale). memory 3건 갱신 (project_bidirectional + project_develop_cycle_skill_family + MEMORY.md 인덱스 — cycle 785→789, SE oscillation 90→93회, N=28→24 batch, BRANCHED 4/2→9/5). TODOS BRANCHED 갱신 (cycle 788→789, local 8→9 ahead). SE Trigger-5: 마커 없음 (cycle 788 retro 마커 박제 X — A+B 충족 skip 확인). moneyball worker-lesson auto-ingest 활발 (cycle 660-662, GH runs all success).
+
 ## [0.7.84] — 2026-05-19
 
 ### Fixed
