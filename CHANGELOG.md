@@ -4,6 +4,26 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.92] — 2026-05-19
+
+### Changed
+- cycle 797 curate — wiki lint CLEAN (200 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 793→797, SE oscillation 94→95회, wiki 199→200 entries, BRANCHED 16/11→26/16, N=20→16 batch). TODOS BRANCHED 갱신 (cycle 796→797, local 24→26 / origin 15→16). search-hits.json commit (totalQueries 159).
+
+## [0.7.91] — 2026-05-19
+
+### Added
+- cycle 796 explore-idea — LLM Prompt Caching 비용 최적화 패턴 신설 (wiki #200 milestone). Claude/OpenAI/Gemini 캐싱 비교 + stable prefix 원칙 + ROI 계산 + 멀티에이전트 캐싱 패턴. lint CLEAN. TODOS BRANCHED 갱신 (local 24/origin 15).
+
+## [0.7.90] — 2026-05-19
+
+### Fixed
+- cycle 795 fix-incident — PR #908 CI unblock: dashboard SOURCE_MAP undefined TypeError fix (agent-seed/worker-lesson source fallback). lint CLEAN. TODOS BRANCHED 갱신 (local 21/origin 14).
+
+## [0.7.89] — 2026-05-19
+
+### Fixed
+- cycle 794 fix-incident — on-device-llm-quantization <400ms 렌더 fix (PR #958 CI unblock). lint CLEAN. TODOS BRANCHED 갱신 (local 18/origin 11).
+
 ## [0.7.88] — 2026-05-19
 
 ### Changed
