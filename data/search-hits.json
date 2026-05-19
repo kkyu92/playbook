@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 151,
+  "totalInvocations": 158,
   "skipped": 25,
-  "searched": 126,
-  "hit": 41,
-  "noMatch": 85,
-  "lastUpdated": "2026-05-19T08:36:11.942Z",
+  "searched": 133,
+  "hit": 42,
+  "noMatch": 91,
+  "lastUpdated": "2026-05-19T09:09:01.599Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 2,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -94,7 +94,8 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 1,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 1
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 2,
+    "retros/2026-05-19-cycles-801-804": 1
   },
-  "totalQueries": 195
+  "totalQueries": 202
 }

@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.8.9] — 2026-05-19
+
+### Changed
+- cycle 814 skill-evolution SE #251 SUCCESS — stable oscillation fast-path 102회. SE Trigger-5: JSON tail-20 window 794-813 SE=7/20=35% B FAIL + 명단=7 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 795-814: SE=8/20=40% B PASS + 명단=7 동일 A PASS → skip 조건 A+B 충족 → cycle 815 마커 박제 X. TODOS BRANCHED 갱신 (local 53/origin 36).
+
 ## [0.8.8] — 2026-05-19
 
 ### Added
