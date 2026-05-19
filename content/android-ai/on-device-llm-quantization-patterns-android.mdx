@@ -82,7 +82,7 @@ val session = OrtEnvironment.getEnvironment().createSession(modelBytes, options)
 
 ## 한계 및 고려사항
 
-- **합성 벤치마크 함정**: tokens/sec 평균값이 아니라 **첫 토큰까지 시간(target <400ms)**, **P95 지연**, **지속 추론 후 thermal throttle 회복 시간**을 측정해야 함
+- **합성 벤치마크 함정**: tokens/sec 평균값이 아니라 **첫 토큰까지 시간(target &lt;400ms)**, **P95 지연**, **지속 추론 후 thermal throttle 회복 시간**을 측정해야 함
 - **메모리 압박 동시 측정**: 다른 앱이 백그라운드에 있을 때 실 사용 메모리 측정 필수
 - **모델 다운로드 UX**: 1-3GB 모델을 어떻게 다운로드/업데이트할지 (WorkManager + UNMETERED 제약 조합 권장 — 본 위키 [WorkManager 항목](#) 참조)
 - **발열·배터리**: 지속 추론 1-2분 후 throttle 진입, 짧은 burst 작업으로 분할 권장
