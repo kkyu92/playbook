@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.10] — 2026-05-19
+
+### Changed
+- cycle 825 skill-evolution SE #254 fast-path SUCCESS — oscillation 106회 steady-state. SE Trigger-5: JSON tail-20 window 805-824 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 806-825: SE=8/20=40% B PASS + 명단=8 동일 A PASS → skip 조건 A+B 충족 → cycle 826 마커 박제 X. TODOS BRANCHED 갱신 (local 72/origin 39).
+
+## [0.9.9] — 2026-05-19
+
+### Changed
+- cycle 824 skill-evolution SE #253 fast-path SUCCESS — oscillation 105회 steady-state. SE Trigger-5: JSON tail-20 window 804-823 SE=6/20=30% B FAIL + 명단=8 동일(A PASS) → skip 조건 미충족 → fast-path 적용. MIGRATION-PATH 1줄 append. 사후 window 805-824: SE=7/20=35% B FAIL → 명단=8 동일 A PASS → cycle 825 SE #254 마커 박제. TODOS BRANCHED 갱신 (local 71/origin 39).
+
+## [0.9.8] — 2026-05-19
+
+### Changed
+- cycle 823 curate — wiki lint CLEAN (209 entries, 0건 orphan/isolated/stale). connections 보강 2건. memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 821→823, wiki 208→209, BRANCHED 65/39→69/39). CHANGELOG 1 cycle backfill (0.9.7). TODOS BRANCHED 갱신 (local 69/origin 39). scan-promotions: 승격 후보 없음. SE Trigger-5: window 803-822 SE=7/20=35% B FAIL + 명단=8 동일(A PASS) → 마커 박제 (cycle 824 SE #253 강제).
+
 ## [0.9.7] — 2026-05-19
 
 ### Added
