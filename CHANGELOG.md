@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.7.69] — 2026-05-19
+
+### Changed
+- curate cycle 755 — wiki lint CLEAN (184 entries, 0 orphan/isolated/stale; JIT Unused 2건 보관: sentry-pii-scrubbing-beforesend + sentry-serverless-flush — confidence 3 complete, connections 충분, archive 불필요). scan-promotions: 승격 후보 없음. search-hits totalQueries=133 (unchanged). memory 2건 갱신 (project_bidirectional 754+ cycle 수치 갱신 / project_develop_cycle_skill_family 754→755 state 갱신). SE Trigger-5 평가: tail-20 window 735-754 SE=8/20=40%≥40% B PASS. 명단=7 동일(A PASS). skip 조건 A+B 충족 → cycle 756 마커 박제 X. oscillation 76회 steady-state.
+
 ## [0.7.68] — 2026-05-19
 
 ### Fixed
