@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 174,
+  "totalInvocations": 177,
   "skipped": 25,
-  "searched": 149,
+  "searched": 152,
   "hit": 52,
-  "noMatch": 97,
-  "lastUpdated": "2026-05-19T09:31:38.983Z",
+  "noMatch": 100,
+  "lastUpdated": "2026-05-19T09:49:15.766Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 4,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -104,5 +104,5 @@
     "retros/2026-05-12-cycles-342-346": 1,
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 1
   },
-  "totalQueries": 218
+  "totalQueries": 221
 }

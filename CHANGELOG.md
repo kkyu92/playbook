@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.6] — 2026-05-19
+
+### Changed
+- cycle 821 curate — wiki lint CLEAN (208 entries, 0건 orphan/isolated/stale). connections 보강 2건 (entry 204→206 단방향 결손 수정, entry 208→207 상호 미연결 해소). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 819→821, wiki 207→208, BRANCHED 61/38→65/39). TODOS BRANCHED 갱신 (local 65/origin 39). scan-promotions: 승격 후보 없음.
+
+## [0.9.5] — 2026-05-19
+
+### Added
+- cycle 820 explore-idea — wiki entry #208 신설: Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴 (Burst/Drizzle/Zero 3단계 분류, GH Actions auto-ingest 로그 기반). wiki lint CLEAN (208 entries). TODOS BRANCHED 갱신 (local 63/origin 39). SE Trigger-5: window 800-819 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 821 마커 박제 X.
+
+## [0.9.4] — 2026-05-19
+
+### Changed
+- cycle 819 curate — wiki lint CLEAN (207 entries, 0건 orphan/isolated/stale). memory 2건 갱신 (project_bidirectional + project_develop_cycle_skill_family — cycle 815→819, SE 103회, wiki 207, BRANCHED 55/36→61/38). CHANGELOG 4 cycles backfill (0.9.0-0.9.3). TODOS BRANCHED 갱신 (local 61/origin 38). scan-promotions: 승격 후보 없음.
+
 ## [0.9.3] — 2026-05-19
 
 ### Added
