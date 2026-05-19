@@ -1,0 +1,76 @@
+---
+title: "MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - MediaPipe
+  - GoogleAIEdge
+  - OnDevice
+confidence: 1
+connections: [frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation, project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns, harness-engineering/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop, harness-engineering/harness-engineering/llm-input-output-data-pipeline-design-patterns, infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy, project-ops/project-ops/mlops-pipeline-design-ai-model-deployment-monitoring, harness-engineering/harness-engineering/llm-scalable-service-architecture-patterns, agents/agents/multi-tool-ai-agent-design-patterns-orchestration]
+status: draft
+description: "MediaPipe 는 Vision/Audio/Text/GenAI 4 도메인의 사전 학습 모델과 실시간 미디어 처리 파이프라인을 Android·iOS·Web·Python 에 통일 API 로 제공하는 Google AI Edge 의 핵심 컴포넌트다."
+type: entry
+source: agent-seed
+---
+
+## 핵심 개념
+
+**MediaPipe** 는 Google AI Edge 우산 아래 위치한 **온디바이스 ML 파이프라인 프레임워크 + 솔루션 라이브러리** 다. 원래 영상/오디오 같은 시계열 미디어를 모듈러 그래프로 처리하는 low-level 프레임워크로 출발했고, 이제는 그 위에 **MediaPipe Solutions** 라는 high-level cross-platform API 가 얹혀 있다.
+
+구조는 4 계층:
+- **MediaPipe Framework** — low-level 그래프 (calculator + stream) 빌더, C++ 코어
+- **MediaPipe Tasks** — Android/iOS/Web/Python 통일 API
+- **MediaPipe Models** — pre-trained 모델 (다운로드 즉시 사용)
+- **MediaPipe Model Maker** — 자체 데이터로 모델 fine-tune
+- (보조) **MediaPipe Studio** — 브라우저 기반 즉시 데모/벤치마크
+
+차별 포인트는 "한 번 코드 → Android·iOS·Web·Python·C++ 모두 동작" 의 cross-platform 동등성과, CPU·GPU·TPU end-to-end 가속이다.
+
+## 주요 기능
+
+도메인별 Task 카탈로그:
+
+- **Vision** — Object Detection, Image Classification, Image Segmentation, Hand/Face/Pose Landmark, Gesture Recognition, Image Embedding, Image Generation
+- **Audio** — Audio Classification
+- **Text** — Text Classification, Text Embedding, Language Detection
+- **GenAI** — LLM Inference API (on-device LLM 추론), RAG, Function Calling
+
+특히 **LLM Inference API** 는 Gemma·Phi·Falcon 같은 open model 을 `.task` 번들 포맷으로 패키징해 phone/web 에서 fully on-device 로 실행한다. cloud round-trip 없는 텍스트 생성·문서 요약·정보 검색이 가능하다.
+
+## 활용 사례
+
+- **실시간 카메라 효과** — Hand landmark + Gesture recognition 으로 AR 필터/제스처 컨트롤
+- **피트니스/헬스** — Pose landmark 로 운동 자세 분석 (offline)
+- **접근성** — 실시간 화자/언어 감지 후 자막 생성
+- **챗봇/요약 앱** — LLM Inference API 로 on-device Gemma 운용
+- **이미지 검색** — Image Embedding 으로 갤러리 의미 검색 인덱스
+
+```kotlin
+// Android Hand Landmarker 예시
+val baseOptions = BaseOptions.builder()
+    .setModelAssetPath("hand_landmarker.task")
+    .build()
+val options = HandLandmarker.HandLandmarkerOptions.builder()
+    .setBaseOptions(baseOptions)
+    .setRunningMode(RunningMode.LIVE_STREAM)
+    .setNumHands(2)
+    .setResultListener { result, _ -> onResult(result) }
+    .build()
+val landmarker = HandLandmarker.createFromOptions(context, options)
+```
+
+## 한계 및 고려사항
+
+- **모델 크기 vs 디바이스 자원** — LLM Inference API 의 경우 모델 파일이 수백 MB ~ 수 GB. APK 분리 배포·런타임 다운로드 전략 필요
+- **GPU 가속 디바이스 편차** — Android GPU delegate 호환성은 디바이스별 차이. CPU fallback 경로 항상 준비
+- **Solution 별 플랫폼 격차** — 모든 Task 가 4 플랫폼에 다 있지는 않음 (특히 GenAI 는 일부 플랫폼 한정)
+- **모델 커스터마이즈는 Model Maker 한정 범위** — Vision classification/object detection 등은 잘 지원되나, 완전 자유로운 fine-tune 은 별도 (TFLite 직접 활용)
+- **버전 호환성** — `.task` 파일과 runtime 버전이 매칭되어야 함. CI 에 모델/SDK 버전 lock 필요
+
+## 참고 자료
+
+- [MediaPipe Solutions guide | Google AI Edge](https://ai.google.dev/edge/mediapipe/solutions/guide)
+- [MediaPipe Tasks | Google AI Edge](https://ai.google.dev/edge/mediapipe/solutions/tasks)
+- [google-ai-edge/mediapipe GitHub](https://github.com/google-ai-edge/mediapipe)

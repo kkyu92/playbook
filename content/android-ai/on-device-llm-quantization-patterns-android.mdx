@@ -1,0 +1,97 @@
+---
+title: "On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - quantization
+  - GGUF
+  - on-device LLM
+confidence: 1
+connections: [harness-engineering/harness-engineering/on-device-llm-inference-efficiency-patterns, harness-engineering/harness-engineering/llm-scalable-service-architecture-patterns, reports/reports/mid-review-2026-04-28, harness-engineering/harness-engineering/llm-api-dependency-risk-mitigation-strategy, harness-engineering/harness-engineering/llm-workflow-orchestration-business-logic-patterns, harness-engineering/harness-engineering/hub-worker-compounding-pattern, infrastructure/infrastructure/llm-call-orchestration-reliability-enhancement, frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation]
+status: draft
+description: "Android 온디바이스 LLM 배포 시 GGUF(Q4_K_M)·ONNX·TFLite/LiteRT 양자화 포맷의 성능·메모리 트레이드오프와 NNAPI/CPU 위임 전략, 실측 토큰 처리량 기준을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+Android 에서 LLM 을 온디바이스로 실행하려면 모델 크기·메모리·발열 세 가지 제약을 동시에 만족해야 합니다. 2026 년 기준 가장 성숙한 선택지는 **GGUF Q4_K_M + llama.cpp/MediaPipe** 또는 **ONNX Runtime + NNAPI**, 그리고 **TensorFlow Lite/LiteRT** 입니다. 어떤 포맷이 정답이라기보다, 모델 크기·하드웨어·UX 요구(첫 토큰 지연 vs 총 처리량)에 따라 다른 선택지가 최적입니다.
+
+## 핵심 개념
+
+양자화(quantization)는 모델 가중치의 정밀도를 FP16/FP32 → INT8/INT4 로 낮춰 크기·메모리·연산 비용을 줄이는 기법입니다. 모바일에서는 단순 비트 수가 아니라 **mixed-precision(중요 레이어만 고정밀 유지)** 이 핵심이며, GGUF Q4_K_M 이 사실상 표준입니다 — 평균 4bit, 핵심 레이어는 6/8bit 로 품질 손실을 최소화합니다.
+
+세 가지 주요 포맷:
+
+- **GGUF** — llama.cpp 생태계, HuggingFace 에 13.5만+ 모델, mmap 로 메모리 효율적
+- **ONNX** — ONNX Runtime + NNAPI delegate, GPTQ/AWQ INT4 지원, 다양한 HW 백엔드
+- **TFLite/LiteRT** — Google 표준, MediaPipe GenAI Tasks, Gemini Nano 와 결합 자연스러움
+
+## 주요 기능
+
+GGUF Q4_K_M 실측 (Pixel 8 Pro, LLaMA 3B):
+
+| 포맷 | 모델 크기 | RAM | tokens/sec |
+|------|----------|------|-----------|
+| Q4_K_M | 1.7 GB | 2.1 GB | 11.2 |
+| Q4_0   | 1.5 GB | 1.9 GB | 12.8 (품질 저하 체감) |
+| FP16   | 6.4 GB | 7.0 GB | 2.2 (실사용 어려움) |
+
+Q4_K_M 은 FP16 대비 **5배 처리량 + 8.5% perplexity 증가**로 균형이 가장 좋습니다. Q4_0 이 약간 빠르지만 사용자 체감 품질이 명확히 떨어집니다.
+
+NNAPI GPU 위임은 칩셋별 편차가 큽니다:
+- Snapdragon 8 Gen 2, Tensor G3: 지연 변동 ±12-15% (수용 가능)
+- Exynos 2400: ±52% (예측 불가, CPU 위임 권장)
+
+따라서 GPU 위임은 **칩셋 allowlist** 로 운용하고 기본값은 CPU 가 안전합니다.
+
+## 활용 사례
+
+llama.cpp Android 바인딩 예 (JNI 호출):
+
+```kotlin
+class OnDeviceLlm(modelPath: String) {
+    init { System.loadLibrary("llama") }
+    external fun loadModel(path: String): Long
+    external fun generate(handle: Long, prompt: String, maxTokens: Int): String
+
+    private val handle = loadModel(modelPath)
+
+    suspend fun summarize(text: String): String = withContext(Dispatchers.Default) {
+        generate(handle, "Summarize: $text", 256)
+    }
+}
+```
+
+ONNX Runtime + NNAPI:
+
+```kotlin
+val options = OrtSession.SessionOptions().apply {
+    addNnapi() // 단, 칩셋 allowlist 확인 후 enable
+}
+val session = OrtEnvironment.getEnvironment().createSession(modelBytes, options)
+```
+
+메모리 운영 패턴 3가지(Android 디바이스 63% 가 6GB RAM 이하):
+
+1. **mmap 로딩** — GGUF 의 mmap 지원으로 모델 파일을 페이지 캐시로 처리
+2. **onTrimMemory 모니터링** — 시스템 압박 시 KV 캐시 즉시 해제
+3. **선택적 pre-warming** — 앱 시작이 아니라 **특정 기능 진입 시점**에 모델 로드
+
+실 사용 사례: 오프라인 요약, 노트 자동 태깅, 메시지 스마트 답장(연락처 노출 X), 음성 명령 의도 분류.
+
+## 한계 및 고려사항
+
+- **합성 벤치마크 함정**: tokens/sec 평균값이 아니라 **첫 토큰까지 시간(target <400ms)**, **P95 지연**, **지속 추론 후 thermal throttle 회복 시간**을 측정해야 함
+- **메모리 압박 동시 측정**: 다른 앱이 백그라운드에 있을 때 실 사용 메모리 측정 필수
+- **모델 다운로드 UX**: 1-3GB 모델을 어떻게 다운로드/업데이트할지 (WorkManager + UNMETERED 제약 조합 권장 — 본 위키 [WorkManager 항목](#) 참조)
+- **발열·배터리**: 지속 추론 1-2분 후 throttle 진입, 짧은 burst 작업으로 분할 권장
+- **모델 라이선스**: Llama·Gemma 등 라이선스 조건(상업 사용·attribution) 사전 검토
+- **양자화 손실 평가**: 도메인 특화 평가셋으로 Q4_K_M ↔ FP16 비교, blanket 적용 금지
+
+## 참고 자료
+
+- [Running LLMs On-Device in Android: GGUF Models, NNAPI, and the Real Performance Tradeoffs — DEV.to](https://dev.to/software_mvp-factory/running-llms-on-device-in-android-gguf-models-nnapi-and-the-real-performance-tradeoffs-5bfc)
+- [GGUF Quantization Explained: Q4_K_M vs Q8_0 vs F16](https://vucense.com/dev-corner/gguf-quantization-explained-q4-k-m-vs-q8-0-vs-f16-2026/)
+- [Deploying LLM models on Mobile device using Google LiteRT — Medium](https://kednaik.medium.com/deploying-llm-models-on-mobile-device-using-google-litert-c0ec5be4bab9)
+- [awesome-mobile-ai (GitHub)](https://github.com/umitkacar/awesome-mobile-ai)

@@ -1,0 +1,83 @@
+---
+title: "Genkit — Google OSS GenAI 프레임워크와 Android 백엔드 통합 패턴"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - Genkit
+  - GenAI framework
+  - backend integration
+confidence: 1
+connections: [frontend-ai/frontend-ai/user-behavior-prediction-ai-model-integration, infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy, harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns, prompt-engineering/prompt-engineering/prompt-versioning-and-testing, harness-engineering/harness-engineering/recurring-file-bug-accumulator-pattern, frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns, harness-engineering/harness-engineering/zero-touch-develop-cycle-session-management, retro/retros/2026-05-08]
+status: draft
+description: "Google Genkit OSS 프레임워크의 핵심 개념과 JS/Go/Python 백엔드를 Android 클라이언트와 연결하는 통합 패턴, 모델 추상화·플로우·RAG 등 주요 기능을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+Genkit 은 Google 이 오픈소스로 공개한 GenAI 풀스택 프레임워크로, JavaScript/TypeScript·Go·Python(Preview)·Dart(Preview) 4개 언어 SDK 를 일관된 API 로 제공합니다. Android 앱 개발자 입장에서 Genkit 은 클라이언트 SDK 라기보다 **서버 사이드 AI 백엔드를 빠르게 구성하는 도구**이며, Android Kotlin 클라이언트는 HTTP/Firebase Callable Function 등을 통해 Genkit flow 를 호출하는 구조가 표준입니다.
+
+## 핵심 개념
+
+Genkit 의 설계 철학은 "모델 공급자 추상화 + 타입 안전한 플로우 + 관찰 가능성" 입니다. Google Gemini, OpenAI, Anthropic Claude, AWS Bedrock, Azure AI Foundry 등 여러 모델을 단일 API 로 다루며, 입력/출력 스키마를 정의해 LLM 응답을 구조화된 객체로 받습니다. 이는 Android 클라이언트가 JSON 응답을 그대로 데이터 클래스로 매핑할 수 있게 해주며, 모델 교체 시에도 클라이언트 변경 없이 백엔드만 갱신하면 됩니다.
+
+플로우(flow)는 Genkit 의 1급 시민이며, 단순 LLM 호출부터 도구 호출(tool calling), RAG, 멀티 에이전트 오케스트레이션까지 동일한 패턴으로 작성합니다. 각 플로우는 자체 trace 가 자동 기록되어 Genkit Developer UI 에서 입출력·지연·토큰 사용량을 추적할 수 있습니다.
+
+## 주요 기능
+
+- **모델 추상화**: 단일 `generate()` API 로 텍스트·이미지·구조화 출력 모두 처리
+- **타입 안전한 구조화 출력**: Zod(JS)/Pydantic(Python) 스키마로 응답 검증
+- **도구 호출(Tool calling)**: 외부 API/DB 를 LLM 이 자율 호출하는 에이전트 패턴
+- **Dotprompt**: 프롬프트를 별도 파일로 분리·버전 관리 (프롬프트와 코드 분리)
+- **RAG 프리미티브**: retriever, embedder, indexer 추상화로 벡터 검색 손쉽게 구성
+- **영속 채팅 세션**: 대화 컨텍스트 자동 저장/복원
+- **배포 유연성**: Firebase Cloud Functions, Cloud Run, AWS Lambda, Azure Functions 등 어떤 서버리스/컨테이너 환경에도 배포
+
+## 활용 사례
+
+Android 앱에서 Genkit 을 활용하는 전형적 구조:
+
+```kotlin
+// Android (Kotlin) — Genkit flow 를 Firebase Callable 로 호출
+val functions = Firebase.functions
+val result = functions
+    .getHttpsCallable("summarizeNotesFlow")
+    .call(mapOf("notes" to userNotes))
+    .await()
+val summary = result.data as Map<String, Any?>
+```
+
+서버 측 Genkit 플로우(Node.js 예):
+
+```typescript
+import { defineFlow, generate } from '@genkit-ai/flow';
+import { gemini15Flash } from '@genkit-ai/googleai';
+
+export const summarizeNotesFlow = defineFlow(
+  { name: 'summarizeNotesFlow', inputSchema, outputSchema },
+  async (input) => {
+    const result = await generate({
+      model: gemini15Flash,
+      prompt: `Summarize: ${input.notes}`,
+      output: { schema: outputSchema },
+    });
+    return result.output();
+  },
+);
+```
+
+이 패턴은 (1) 모델 키를 클라이언트에 노출하지 않고, (2) 프롬프트/모델 교체 시 앱 재배포 불필요하며, (3) Genkit trace 로 운영 관찰성을 확보하는 세 가지 이점을 동시에 줍니다. RAG 기반 사내 위키 Q&A, 음성 메모 요약, 사진 캡션 생성, 챗봇 에이전트 등 LLM 백엔드가 필요한 거의 모든 Android 시나리오에 적용 가능합니다.
+
+## 한계 및 고려사항
+
+- **Kotlin/Native Android SDK 부재**: 현재(2026-05) Genkit 은 Android 측 1급 SDK 가 없습니다. Firebase AI Logic SDK 또는 표준 HTTP/Callable 로 연결해야 하며, 모델 추론을 디바이스 내에서 직접 수행하는 용도는 아닙니다.
+- **콜드 스타트 비용**: 서버리스 환경 콜드 스타트 + LLM 첫 토큰 지연이 합산되어 사용자 체감 지연이 길어질 수 있어, 스트리밍 응답 + skeleton UI 가 필수입니다.
+- **모델 비용 모니터링**: 백엔드에서 호출하므로 사용자별 quota·rate limit 을 클라이언트가 아닌 서버에서 강제해야 합니다.
+- **Dart SDK Preview**: Flutter 통합 SDK 가 정식 GA 가 아니므로 production 사용 전 호환성 검토 필요.
+
+## 참고 자료
+
+- [Genkit 공식 문서 — Overview](https://genkit.dev/docs/overview/)
+- [genkit-ai/genkit GitHub](https://github.com/genkit-ai/genkit)
+- [Firebase — Genkit 가이드](https://firebase.google.com/docs/genkit/overview)
+- [Announcing Genkit Go 1.0 — Google Developers Blog](https://developers.googleblog.com/en/announcing-genkit-go-10-and-enhanced-ai-assisted-development/)

@@ -1,0 +1,130 @@
+---
+title: "Android 백그라운드 AI 워크플로 — WorkManager 로 추론 스케줄링하기"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - WorkManager
+  - background inference
+  - scheduling
+confidence: 1
+connections: [frontend-ai/frontend-ai/ai-inference-visualization-design-patterns, harness-engineering/harness-engineering/hub-worker-compounding-pattern, harness-engineering/harness-engineering/llm-workflow-orchestration-business-logic-patterns, agents/agents/multi-tool-ai-agent-design-patterns-orchestration, agents/agents/llm-agent-goal-achievement-planning-patterns, harness-engineering/harness-engineering/ai-model-serving-harness-enterprise-deployment-management, journal/journal/playbook-journal-031-w20-20-calibration-cycle-308, context-engineering/context-engineering/ai-agent-context-window-optimization-session-longevity]
+status: draft
+description: "WorkManager 의 OneTime/Periodic/Expedited Work 와 제약·체이닝을 활용해 모델 다운로드·주기적 요약·배치 임베딩 같은 AI 추론 작업을 Doze 모드 친화적으로 스케줄링하는 패턴을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+온디바이스 LLM·임베딩 같은 AI 작업은 **무겁고·간헐적이며·실패 가능**합니다. Android 의 Doze 모드, 앱 강제 종료, 디바이스 재부팅을 견디면서 안정적으로 실행하려면 WorkManager 가 사실상 유일한 표준입니다. 직접 `Service` 나 `JobScheduler` 를 호출하는 대신 WorkManager 에 위임해 시스템 정책 준수와 영속성을 동시에 얻습니다.
+
+## 핵심 개념
+
+WorkManager 는 앱과 Android 시스템 스케줄러 사이의 다리이며, 작업 큐와 진행 상태를 **내부 SQLite 에 영속**합니다. 그래서 앱 프로세스가 죽거나 디바이스가 재부팅되어도 작업이 이어집니다. AI 워크로드에 특히 유용한 이유는:
+
+- **제약(Constraints)**: 네트워크(UNMETERED)·충전·배터리·디바이스 idle 조건 만족 시에만 실행 → 대용량 모델 다운로드/배치 임베딩에 이상적
+- **체이닝(Chaining)**: 모델 다운로드 → 데이터 전처리 → 추론 → 결과 저장 파이프라인을 선언적으로 구성
+- **재시도 정책**: `BackoffPolicy.EXPONENTIAL` 로 일시적 실패(네트워크·OOM)에 자동 대응
+- **CoroutineWorker**: `suspend fun doWork()` 로 비동기 추론 코드를 자연스럽게 작성
+
+세 가지 Work 유형:
+- `OneTimeWorkRequest` — 단발 실행 (모델 다운로드, 일회성 요약)
+- `PeriodicWorkRequest` — 최소 15분 간격 반복 (주기적 인덱싱)
+- `Expedited` — 사용자 체감 중요한 즉시 실행 (다운로드 진행 알림과 함께)
+
+## 주요 기능
+
+WorkManager 가 자동 처리하는 영역:
+- Doze 모드/Standby 버킷 준수 (별도 코드 불필요)
+- 디바이스 재부팅 후 작업 복원
+- 동일 이름 작업 중복 방지 (`enqueueUniqueWork`)
+- 태그 기반 그룹 취소/모니터링
+- 작업 결과 `LiveData`/`Flow` 관찰
+
+## 활용 사례
+
+**1. 모델 다운로드 — Expedited + UNMETERED 제약**
+
+```kotlin
+val downloadWorker = OneTimeWorkRequestBuilder<ModelDownloadWorker>()
+    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED)
+    .setConstraints(
+        Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED) // WiFi 만
+            .build()
+    )
+    .addTag("model_download")
+    .build()
+
+WorkManager.getInstance(context).enqueueUniqueWork(
+    "model_download",
+    ExistingWorkPolicy.KEEP,
+    downloadWorker,
+)
+```
+
+**2. 배치 임베딩 — idle + 충전 + 배터리 충분 시**
+
+```kotlin
+val embeddingWorker = OneTimeWorkRequestBuilder<BatchEmbeddingWorker>()
+    .setConstraints(
+        Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
+            .setRequiresDeviceIdle(true)
+            .setRequiresCharging(true)
+            .build()
+    )
+    .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+    .build()
+```
+
+**3. AI 파이프라인 체이닝**
+
+```kotlin
+WorkManager.getInstance(context)
+    .beginUniqueWork(
+        "ai_pipeline",
+        ExistingWorkPolicy.REPLACE,
+        OneTimeWorkRequest.from(ModelDownloadWorker::class.java),
+    )
+    .then(OneTimeWorkRequest.from(PreprocessWorker::class.java))
+    .then(OneTimeWorkRequest.from(InferenceWorker::class.java))
+    .enqueue()
+```
+
+**4. CoroutineWorker 내부 추론**
+
+```kotlin
+class BatchEmbeddingWorker(ctx: Context, params: WorkerParameters)
+    : CoroutineWorker(ctx, params) {
+
+    override suspend fun doWork(): Result = withContext(Dispatchers.Default) {
+        try {
+            val embeddings = inferenceEngine.generateEmbeddings(inputData.keyValueMap)
+            Result.success(workDataOf("count" to embeddings.size))
+        } catch (e: OutOfMemoryError) {
+            Result.retry()
+        } catch (e: Exception) {
+            Result.failure()
+        }
+    }
+}
+```
+
+실 사용 사례: 야간 충전 시 사진 라이브러리 자동 태깅, 1일 1회 노트 요약 인덱스 갱신, 임베딩 벡터 DB 점진 빌드, 사용자 활동 기반 추천 모델 재학습 트리거, 메신저 메시지 분류 백그라운드 처리.
+
+## 한계 및 고려사항
+
+- **PeriodicWork 최소 간격 15분**: 더 빠른 주기가 필요하면 Foreground Service 검토 (단, 사용자 알림 의무 + 배터리 비용 증가)
+- **Expedited Work quota**: 시스템이 quota 를 부여하므로 무분별 사용 시 거부됨. `RUN_AS_NON_EXPEDITED` 폴백 항상 준비
+- **OOM/thermal 처리**: 추론 중 OOM 은 `Result.retry()` 로 다음 기회에 재시도, 단 무한 재시도 방지 위해 `runAttemptCount` 체크 필요
+- **메모리 누수**: `CoroutineWorker` 내부에서 모델 인스턴스를 정적으로 보관하면 다음 워크 실행 시 누수. `doWork()` 종료 시 해제 또는 약참조 활용
+- **Doze 모드 지연**: 제약 조건이 충족되어도 Doze 윈도우까지 대기할 수 있어 "정확한 시각" 요구엔 부적합. 알람 + 단발 Worker 조합 검토
+- **Foreground Service 강제 전환**: 10분 초과 작업은 Android 가 강제 종료 가능, `setForeground()` 로 명시적 전환 필요
+
+## 참고 자료
+
+- [WorkManager — Android Developers (Task scheduling)](https://developer.android.com/develop/background-work/background-tasks/persistent)
+- [Getting started with WorkManager — Android Developers](https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started)
+- [Inside WorkManager: How Android Really Runs Your Background Tasks — Medium](https://medium.com/@mahesh31.ambekar/inside-workmanager-how-android-really-runs-your-background-tasks-3d3d95dda882)
+- [Profiling Android WorkManager for Mobile App Performance Optimization](https://www.appxiom.com/blogs/profiling-kotlin-android-background-execution-using-workmanager/)

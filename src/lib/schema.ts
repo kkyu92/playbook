@@ -13,6 +13,7 @@ export const CATEGORIES = [
   "frontend-ai",
   "project-ops",
   "data-engineering",
+  "android-ai",
   "reports",
 ] as const;
 
@@ -31,6 +32,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   "frontend-ai": "Frontend + AI",
   "project-ops": "Project Ops",
   "data-engineering": "Data Engineering",
+  "android-ai": "Android AI",
   reports: "Reports",
 };
 
@@ -50,6 +52,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   "frontend-ai": "#ffa07a",
   "project-ops": "#ff6348",
   "data-engineering": "#ff69b4",
+  "android-ai": "#3ddc84",
   reports: "#9ca3af",
 };
 
@@ -78,7 +81,7 @@ export const CATEGORY_GROUPS: Array<{
   {
     key: "applications",
     label: "응용",
-    categories: ["frontend-ai"],
+    categories: ["frontend-ai", "android-ai"],
   },
   {
     key: "meta",

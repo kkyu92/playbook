@@ -1,0 +1,75 @@
+---
+title: "Gemini in Android Studio — IDE 통합 AI 코딩 보조"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - AndroidStudio
+  - GeminiCodeAssist
+  - DeveloperProductivity
+confidence: 1
+connections: [llm-generation/solutions/llm-generation/2026-04-20-post-gen-validation-loop, infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy, frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns, llm-generation/solutions/llm-generation/2026-04-23-model-tier-quota-per-account, project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns, harness-engineering/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents, reports/reports/week-2026-18, mdx/solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap]
+status: draft
+description: "Gemini in Android Studio 는 코드 생성·리팩토링·Compose UI·크래시 분석·Agent Mode 를 IDE 내부에 통합한 Google 의 Android 전용 AI 코딩 보조이며, 구 Studio Bot 의 후속 브랜드다."
+type: entry
+source: agent-seed
+---
+
+## 핵심 개념
+
+**Gemini in Android Studio** 는 2024 년 **Studio Bot** 의 후속 브랜드로 출발한 IDE-native AI 코딩 보조다. Cursor·Copilot 류와의 차별 포인트는 **Android 도메인 deep integration**:
+
+- Compose preview / Layout Inspector 같은 Android Studio 고유 도구와 연동
+- Logcat / App Quality Insights 같은 런타임 신호를 컨텍스트로 자동 주입
+- Gradle build error → Gemini 자동 수정 제안
+- AGP / Android SDK / Jetpack 라이브러리 best practice 권장
+
+JetBrains IntelliJ 의 generic AI Assistant 와 달리, Android 프로젝트 구조·KMP·Compose·Gradle 컨벤션을 understanding 한 응답을 한다.
+
+## 주요 기능
+
+### 코드 작업
+- **Code Completion** — 멀티라인 자동완성
+- **Code Transformation** — refactor / convert (Java→Kotlin, View→Compose 등)
+- **Unit Test Generation** — JUnit/Roboelectric/Compose Test 자동 생성
+- **Rethink Variable Names** — 더 의미 있는 식별자 제안
+- **Commit Message** — git diff 기반 메시지 draft
+
+### UI 개발
+- **Compose Preview Generation** — `@Preview` 함수 자동 생성
+- **Image-to-Code** — 스크린샷/목업 이미지 첨부 → Compose 코드
+- **Transform UI** — 기존 Compose 코드 다른 스타일로 변환
+
+### Agent Mode
+- 멀티 파일 변경이 필요한 작업을 **plan → execute → self-correct** 루프로 자율 수행
+- 새 프로젝트 생성 시 자율 generation loop (빌드 → 에러 분석 → 자가 수정 → 빌드 성공까지 반복)
+- **Next Edit Prediction** — 다음 편집 위치 예측
+- API key / MCP server 통합으로 외부 도구 호출
+
+### Android 런타임 통합
+- **App Quality Insights** 크래시 → 자연어 요약 + 수정 제안
+- **Logcat** 의 stack trace → 원인 분석 + 패치 제안
+- **Gradle build error** → 한 클릭 수정
+
+## 활용 사례
+
+- **Compose 마이그레이션** — XML View 시스템 → Compose 자동 변환
+- **테스트 부채 해소** — 레거시 모듈에 unit test 일괄 생성
+- **신규 프로젝트 부트스트랩** — Agent Mode 로 "Compose + Hilt + Retrofit + Room" 스캐폴딩
+- **버그 트리아지** — Play Console 크래시 → IDE 안에서 Gemini 가 root cause 분석
+- **API 통합 가속화** — 외부 API spec 기반 client + DTO + ViewModel 자동 생성
+
+## 한계 및 고려사항
+
+- **IDE 버전 락** — 최신 stable + 직전 10 개월 이내 major 버전만 지원. 오래된 Studio 는 사용 불가
+- **컨텍스트 윈도우 tier 차이** — 무료 < API key (Pro) < Enterprise (1M tokens) — 큰 모노레포 전체 컨텍스트는 enterprise 필요
+- **자율 모드 위험** — Agent Mode 가 빌드 self-correct 시 의도와 다른 의존성 추가/삭제 가능 → diff review 필수
+- **데이터 처리 정책** — 비즈니스 코드를 cloud Gemini 로 전송. 기업은 VPC-SC / IP Indemnification 가 있는 Enterprise tier 필요
+- **모델 hallucination** — 비-Android 영역 (서버, 인프라) 질문에는 정확도가 떨어지는 경향
+- **언어/버전 편향** — Kotlin + 최신 Jetpack 답변 품질이 가장 높음. Java + 구 라이브러리는 outdated suggestion 가능
+
+## 참고 자료
+
+- [About Gemini in Android Studio | Android Developers](https://developer.android.com/studio/gemini/overview)
+- [Gemini in Android Studio features](https://developer.android.com/studio/gemini/features)
+- [Choose a tier — Gemini in Android Studio](https://developer.android.com/studio/gemini/feature-comparison)

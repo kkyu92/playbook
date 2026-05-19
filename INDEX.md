@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T03:54:04.768Z
+Updated: 2026-05-19T05:27:13.045Z
 
-## 엔트리 (184개)
+## 엔트리 (194개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -200,6 +200,18 @@ Updated: 2026-05-19T03:54:04.768Z
 - [Production Database 보안 강화 - AI 에이전트 가드레일 설계 및 구현](wiki/data-engineering/production-db-ai-agent-guardrails) — confidence: 1, status: draft
 - [RAG 시스템 임베딩 업데이트 파이프라인 — 실시간 정보 반영 및 성능 유지 전략](wiki/data-engineering/rag-embedding-update-pipeline-realtime-strategies) — confidence: 1, status: draft
 - [Vector DB: 임베딩 데이터 최적화 패턴과 RAG 성능 향상 전략](wiki/data-engineering/vector-db-embedding-data-optimization-patterns) — confidence: 1, status: draft
+
+### Android AI
+- [AICore — Android 시스템 레벨 AI 모델 런타임](wiki/android-ai/aicore) — confidence: 1, status: draft
+- [Android 백그라운드 AI 워크플로 — WorkManager 로 추론 스케줄링하기](wiki/android-ai/android-background-ai-workflow-workmanager) — confidence: 1, status: draft
+- [Firebase AI Logic (구 Vertex AI in Firebase) — Android 클라이언트 SDK 통합](wiki/android-ai/firebase-ai-logic-android-client-sdk) — confidence: 1, status: draft
+- [Gemini in Android Studio — IDE 통합 AI 코딩 보조](wiki/android-ai/gemini-in-android-studio) — confidence: 1, status: draft
+- [Gemini Nano — Android 온디바이스 파운데이션 모델](wiki/android-ai/gemini-nano) — confidence: 1, status: draft
+- [Genkit — Google OSS GenAI 프레임워크와 Android 백엔드 통합 패턴](wiki/android-ai/genkit-android-backend-genai-framework) — confidence: 1, status: draft
+- [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
+- [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
+- [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
+- [On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준](wiki/android-ai/on-device-llm-quantization-patterns-android) — confidence: 1, status: draft
 
 ### Reports
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
@@ -943,3 +955,83 @@ Updated: 2026-05-19T03:54:04.768Z
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
+- android-ai/aicore ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/gemini-in-android-studio ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/gemini-nano ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/genkit-android-backend-genai-framework ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/mediapipe ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/ml-kit ↔ infrastructure/infrastructure/gomodel-llm-gateway-introduction-strategy
+- android-ai/aicore ↔ harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- android-ai/genkit-android-backend-genai-framework ↔ harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- android-ai/ml-kit ↔ harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- android-ai/aicore ↔ project-ops/project-ops/agile-sprint-planning-execution-ai-projects
+- android-ai/aicore ↔ reports/reports/week-2026-18
+- android-ai/gemini-in-android-studio ↔ reports/reports/week-2026-18
+- android-ai/aicore ↔ agents/agents/google-agents-cli-agent-development-acceleration
+- android-ai/firebase-ai-logic-android-client-sdk ↔ agents/agents/google-agents-cli-agent-development-acceleration
+- android-ai/aicore ↔ project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/gemini-in-android-studio ↔ project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/gemini-nano ↔ project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/mediapipe ↔ project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/ml-kit ↔ project-ops/project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/aicore ↔ harness-engineering/harness-engineering/ai-model-serving-harness-enterprise-deployment-management
+- android-ai/android-background-ai-workflow-workmanager ↔ harness-engineering/harness-engineering/ai-model-serving-harness-enterprise-deployment-management
+- android-ai/gemini-nano ↔ harness-engineering/harness-engineering/ai-model-serving-harness-enterprise-deployment-management
+- android-ai/aicore ↔ frontend-ai/frontend-ai/user-behavior-prediction-ai-model-integration
+- android-ai/gemini-nano ↔ frontend-ai/frontend-ai/user-behavior-prediction-ai-model-integration
+- android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/frontend-ai/user-behavior-prediction-ai-model-integration
+- android-ai/android-background-ai-workflow-workmanager ↔ frontend-ai/frontend-ai/ai-inference-visualization-design-patterns
+- android-ai/android-background-ai-workflow-workmanager ↔ harness-engineering/harness-engineering/hub-worker-compounding-pattern
+- android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/harness-engineering/hub-worker-compounding-pattern
+- android-ai/android-background-ai-workflow-workmanager ↔ harness-engineering/harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- android-ai/android-background-ai-workflow-workmanager ↔ agents/agents/multi-tool-ai-agent-design-patterns-orchestration
+- android-ai/firebase-ai-logic-android-client-sdk ↔ agents/agents/multi-tool-ai-agent-design-patterns-orchestration
+- android-ai/mediapipe ↔ agents/agents/multi-tool-ai-agent-design-patterns-orchestration
+- android-ai/android-background-ai-workflow-workmanager ↔ agents/agents/llm-agent-goal-achievement-planning-patterns
+- android-ai/android-background-ai-workflow-workmanager ↔ journal/journal/playbook-journal-031-w20-20-calibration-cycle-308
+- android-ai/android-background-ai-workflow-workmanager ↔ context-engineering/context-engineering/ai-agent-context-window-optimization-session-longevity
+- android-ai/firebase-ai-logic-android-client-sdk ↔ harness-engineering/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
+- android-ai/gemini-in-android-studio ↔ harness-engineering/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
+- android-ai/firebase-ai-logic-android-client-sdk ↔ harness-engineering/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
+- android-ai/firebase-ai-logic-android-client-sdk ↔ infrastructure/infrastructure/claude-interaction-security-guidelines-endpoint-protection
+- android-ai/firebase-ai-logic-android-client-sdk ↔ infrastructure/infrastructure/vercel-env-oauth-security-enhancement
+- android-ai/firebase-ai-logic-android-client-sdk ↔ infrastructure/infrastructure/claude-api-key-security-audit-usage-pattern-validation
+- android-ai/firebase-ai-logic-android-client-sdk ↔ frontend-ai/frontend-ai/claude-code-session-web-mobile-monitoring-implementation
+- android-ai/gemini-in-android-studio ↔ llm-generation/solutions/llm-generation/2026-04-20-post-gen-validation-loop
+- android-ai/gemini-in-android-studio ↔ frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns
+- android-ai/gemini-nano ↔ frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns
+- android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns
+- android-ai/gemini-in-android-studio ↔ llm-generation/solutions/llm-generation/2026-04-23-model-tier-quota-per-account
+- android-ai/ml-kit ↔ llm-generation/solutions/llm-generation/2026-04-23-model-tier-quota-per-account
+- android-ai/gemini-in-android-studio ↔ mdx/solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap
+- android-ai/gemini-nano ↔ agents/agents/ai-agent-remote-management-ux-persistent-web-terminals
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ agents/agents/ai-agent-remote-management-ux-persistent-web-terminals
+- android-ai/gemini-nano ↔ evaluation/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- android-ai/gemini-nano ↔ frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/mediapipe ↔ frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/ml-kit ↔ frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/on-device-llm-quantization-patterns-android ↔ frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/genkit-android-backend-genai-framework ↔ prompt-engineering/prompt-engineering/prompt-versioning-and-testing
+- android-ai/genkit-android-backend-genai-framework ↔ harness-engineering/harness-engineering/recurring-file-bug-accumulator-pattern
+- android-ai/genkit-android-backend-genai-framework ↔ harness-engineering/harness-engineering/zero-touch-develop-cycle-session-management
+- android-ai/genkit-android-backend-genai-framework ↔ retro/retros/2026-05-08
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ harness-engineering/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
+- android-ai/mediapipe ↔ harness-engineering/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ agents/agents/multi-llm-agent-workload-partitioning-patterns
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ harness-engineering/harness-engineering/gstack-framework-ai-agent-collaboration-architecture
+- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ prompt-engineering/prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
+- android-ai/mediapipe ↔ harness-engineering/harness-engineering/llm-input-output-data-pipeline-design-patterns
+- android-ai/mediapipe ↔ project-ops/project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- android-ai/mediapipe ↔ harness-engineering/harness-engineering/llm-scalable-service-architecture-patterns
+- android-ai/ml-kit ↔ harness-engineering/harness-engineering/llm-scalable-service-architecture-patterns
+- android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/harness-engineering/llm-scalable-service-architecture-patterns
+- android-ai/ml-kit ↔ evaluation/evaluation/generative-ai-hallucination-automated-detection-evaluation
+- android-ai/ml-kit ↔ harness-engineering/harness-engineering/on-device-llm-inference-efficiency-patterns
+- android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/harness-engineering/on-device-llm-inference-efficiency-patterns
+- android-ai/on-device-llm-quantization-patterns-android ↔ reports/reports/mid-review-2026-04-28
+- android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/harness-engineering/llm-api-dependency-risk-mitigation-strategy
+- android-ai/on-device-llm-quantization-patterns-android ↔ infrastructure/infrastructure/llm-call-orchestration-reliability-enhancement

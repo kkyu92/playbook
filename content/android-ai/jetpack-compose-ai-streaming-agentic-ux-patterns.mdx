@@ -1,0 +1,94 @@
+---
+title: "Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - Jetpack Compose
+  - streaming UI
+  - agentic UX
+confidence: 1
+connections: [harness-engineering/harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop, agents/agents/multi-llm-agent-workload-partitioning-patterns, frontend-ai/frontend-ai/llm-interactive-ui-frontend-implementation, frontend-ai/frontend-ai/generative-ai-ui-ux-design-patterns, harness-engineering/harness-engineering/gstack-framework-ai-agent-collaboration-architecture, harness-engineering/harness-engineering/realtime-ai-model-deployment-monitoring-patterns, agents/agents/ai-agent-remote-management-ux-persistent-web-terminals, prompt-engineering/prompt-engineering/multi-turn-prompt-design-complex-intent-clarification]
+status: draft
+description: "Jetpack Compose 로 LLM 스트리밍 응답을 효율적으로 렌더링하고, Google A2UI 같은 에이전트 UI 표준을 활용해 동적 생성 인터페이스를 안전하게 표시하는 패턴을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+LLM 기반 Android 앱의 UX 는 두 가지 새로운 도전을 던집니다: (1) **토큰 단위로 들어오는 스트리밍 응답을 60fps 유지하며 렌더하기**, (2) **에이전트가 동적으로 생성하는 UI 를 안전하게 표시하기**. Jetpack Compose 의 선언적 재구성(recomposition) 모델과 새로 등장한 Google A2UI 표준을 조합하면 두 문제를 구조적으로 풀 수 있습니다.
+
+## 핵심 개념
+
+**스트리밍 UI** 는 LLM 의 `Flow<Chunk>` 출력을 `mutableStateOf` 또는 `snapshotFlow` 로 받아 Compose 의 자동 재구성에 위임하는 패턴입니다. 핵심은 **chunk 단위로 큰 문자열을 매번 재할당하지 않는 것** — `StringBuilder` 를 별도 보관하거나 `derivedStateOf` 로 파생 상태를 캐싱해 recomposition 폭증을 막아야 합니다.
+
+**A2UI(Agent-to-UI)** 는 Google 이 2026 년 공개한 오픈소스 에이전트 UI 표준입니다. 에이전트가 실행 가능한 코드가 아니라 **사전 승인된 컴포넌트 카탈로그를 참조하는 선언적 JSON** 으로 UI 를 기술하므로, "데이터처럼 안전하면서 코드처럼 표현력 있는" UI 를 받을 수 있습니다. ID 참조 평면 리스트 구조라 LLM 이 점진적으로 생성하기 쉽고, 동일 페이로드를 Flutter·React·SwiftUI·**Jetpack Compose(로드맵)** 가 각자 네이티브 위젯으로 렌더합니다.
+
+## 주요 기능
+
+- **toCharArray 청크 처리**: Flow 의 각 chunk 를 누적 StringBuilder 로 보관, `mutableStateOf<String>` 에는 `.toString()` 결과만 할당
+- **derivedStateOf 로 파생 캐싱**: 마크다운 파싱 결과 등 비싼 변환을 재구성당 1회로
+- **LazyColumn + key 안정성**: 메시지 리스트는 각 메시지에 stable `id` key 부여, 새 chunk 가 마지막 메시지만 갱신하도록
+- **A2UI JSON → Compose 매퍼**: 평면 컴포넌트 트리를 `when` 분기로 Compose 위젯에 매핑, 사전 정의된 카탈로그만 렌더
+- **Cancellation 안전성**: 화면 이탈 시 `LaunchedEffect` 자동 취소로 stream 누수 방지
+
+## 활용 사례
+
+스트리밍 채팅 메시지 (안티 패턴 회피):
+
+```kotlin
+@Composable
+fun StreamingMessage(stream: Flow<String>) {
+    val buffer = remember { StringBuilder() }
+    var rendered by remember { mutableStateOf("") }
+
+    LaunchedEffect(stream) {
+        stream.collect { chunk ->
+            buffer.append(chunk)
+            rendered = buffer.toString()  // 1회 할당, 재구성 1회
+        }
+    }
+    // 마크다운 파싱은 derivedStateOf 로 캐싱
+    val parsed by remember { derivedStateOf { parseMarkdown(rendered) } }
+    MarkdownText(parsed)
+}
+```
+
+A2UI 응답 렌더 (개념적 매퍼):
+
+```kotlin
+@Composable
+fun A2UIRenderer(spec: A2UISpec) {
+    spec.components.forEach { c ->
+        when (c.type) {
+            "text"   -> Text(c.props["value"] as String)
+            "button" -> Button(onClick = { onAction(c.id) }) {
+                Text(c.props["label"] as String)
+            }
+            "image"  -> AsyncImage(c.props["url"] as String, null)
+            // 사전 승인된 카탈로그 외 type 은 무시 (안전성)
+        }
+    }
+}
+```
+
+실 사용 사례:
+- ChatGPT 식 대화형 어시스턴트 (스트리밍 + 마크다운 + 코드 블록)
+- 에이전트 동적 폼 (사용자 응답에 따라 다음 질문 UI 를 LLM 이 생성)
+- 실시간 데이터 대시보드 (LLM 이 차트 종류·축을 선택해 A2UI 로 반환)
+- 보이스 어시스턴트 응답을 시각적 카드로 점진 렌더
+
+## 한계 및 고려사항
+
+- **재구성 폭증**: 매 chunk 마다 거대한 위젯 트리가 재구성되면 60fps 가 깨짐. `LazyColumn` 의 stable key + 갱신 영역 격리가 필수
+- **마크다운 파싱 비용**: 매 token 마다 전체 문자열 재파싱하면 메인 스레드 정체. **incremental parser** 또는 일정 간격(예: 50ms throttle) 으로 파싱 제한
+- **A2UI 성숙도**: v0.8 public preview 단계, Jetpack Compose 렌더는 로드맵상 예정 — 직접 매퍼 구현 필요할 수 있음
+- **에이전트 UI 보안**: 카탈로그 외 컴포넌트 무시 + 액션 핸들러 화이트리스트 필수. 사용자 입력을 그대로 다른 에이전트 호출에 넣지 않도록 격리
+- **Glimmer 같은 신규 폼팩터**: AI 글래스용 Jetpack Compose Glimmer 가 등장 — 평면 UI 와 다른 공간 UI 패턴 학습 필요
+- **접근성**: 스트리밍 텍스트는 TalkBack 이 매 chunk 마다 읽지 않도록 `liveRegion` 모드를 polite 로 설정
+
+## 참고 자료
+
+- [Google A2UI (GitHub)](https://github.com/google/A2UI)
+- [Jetpack Compose in 2026 — Everything You Need to Know (Medium)](https://medium.com/@androidlab/jetpack-compose-in-2026-everything-you-need-to-know-8975d48ad2a0)
+- [Jetpack Compose Meets AI: Creating Smart Android Apps with Agents (Medium)](https://sharmaricha7724.medium.com/jetpack-compose-meets-ai-creating-smart-android-apps-with-agents-558c588fb89a)
+- [Jetpack Compose Glimmer — AI Glasses UI (MarkTechPost)](https://www.marktechpost.com/2026/02/18/google-introduces-jetpack-compose-glimmer-a-new-spatial-ui-framework-designed-specifically-for-the-next-generation-of-ai-glasses/)

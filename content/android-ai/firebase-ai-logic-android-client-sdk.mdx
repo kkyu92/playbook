@@ -1,0 +1,99 @@
+---
+title: "Firebase AI Logic (구 Vertex AI in Firebase) — Android 클라이언트 SDK 통합"
+category: android-ai
+date: "2026-05-19"
+tags:
+  - AndroidAI
+  - Firebase
+  - Vertex AI
+  - Gemini
+confidence: 1
+connections: [harness-engineering/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents, harness-engineering/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security, agents/agents/google-agents-cli-agent-development-acceleration, infrastructure/infrastructure/claude-interaction-security-guidelines-endpoint-protection, infrastructure/infrastructure/vercel-env-oauth-security-enhancement, agents/agents/multi-tool-ai-agent-design-patterns-orchestration, infrastructure/infrastructure/claude-api-key-security-audit-usage-pattern-validation, frontend-ai/frontend-ai/claude-code-session-web-mobile-monitoring-implementation]
+status: draft
+description: "Firebase AI Logic SDK(firebase-ai)를 Android Kotlin 프로젝트에 통합하는 방법과 firebase-vertexai 에서의 마이그레이션, App Check 보호·스트리밍·멀티모달 활용 패턴을 정리합니다."
+type: entry
+source: agent-seed
+---
+
+Firebase AI Logic SDK 는 Vertex AI in Firebase(firebase-vertexai)의 후속 패키지로, Android 앱에서 Gemini·Imagen 등 Google AI 모델을 직접 호출할 수 있게 해줍니다. 핵심 가치는 **모델 API 키를 앱에 노출하지 않고도** Firebase 인증·App Check 를 통해 안전하게 LLM 을 호출할 수 있다는 점입니다. 자체 백엔드 없이 모바일 단독으로 GenAI 기능을 출시할 때 가장 빠른 선택지입니다.
+
+## 핵심 개념
+
+기존 `firebase-vertexai` 패키지는 deprecated 되었고, 2026 년 기준 `firebase-ai` 가 표준입니다. 둘은 동일 능력을 갖되 API 설계가 개선되었으며, 신규 기능은 `firebase-ai` 에만 추가됩니다. SDK 는 두 가지 백엔드를 선택적으로 사용합니다:
+
+- **Gemini Developer API** — 무료 quota 제공, 빠른 프로토타이핑용
+- **Vertex AI Gemini API** — 빌링 필요, 엔터프라이즈 SLA·리전 지정 가능
+
+Kotlin 메서드 대부분이 `suspend` 함수이므로 Coroutine 스코프에서 호출하며, 스트리밍 응답은 `Flow` 로 받습니다.
+
+## 주요 기능
+
+- **멀티모달 입력**: 이미지·PDF·비디오·오디오를 텍스트와 함께 프롬프트로 전달
+- **스트리밍 응답**: `generateContentStream()` 으로 토큰 단위 수신 → Compose UI 점진 렌더
+- **구조화 출력(JSON)**: responseSchema 로 LLM 응답을 데이터 클래스에 즉시 매핑
+- **함수 호출(Function calling)**: 앱 내 함수를 LLM 이 호출하는 에이전트 패턴
+- **App Check 통합**: Play Integrity·DeviceCheck 로 API 남용 방어
+- **Imagen 이미지 생성**: 텍스트→이미지 생성 모델 직접 호출 가능
+
+## 활용 사례
+
+설치:
+
+```kotlin
+// app/build.gradle.kts
+implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+implementation("com.google.firebase:firebase-ai")
+```
+
+기본 호출:
+
+```kotlin
+val model = Firebase.ai(backend = GenerativeBackend.googleAI())
+    .generativeModel("gemini-3-flash-preview")
+
+val response = model.generateContent("Write a story about a magic backpack.")
+println(response.text)
+```
+
+스트리밍 + Compose UI:
+
+```kotlin
+val partialText = remember { mutableStateOf("") }
+LaunchedEffect(prompt) {
+    model.generateContentStream(prompt).collect { chunk ->
+        partialText.value += chunk.text.orEmpty()
+    }
+}
+Text(partialText.value)
+```
+
+멀티모달(이미지 + 텍스트):
+
+```kotlin
+val content = content {
+    image(bitmap)
+    text("이 사진에 무엇이 보이나요?")
+}
+val response = model.generateContent(content)
+```
+
+실 사용 사례:
+- 사진 기반 식단 분석 (이미지 → 영양 정보 JSON)
+- 노트 자동 요약 (스트리밍 응답 → ChatGPT 식 UI)
+- 음성 메모 트랜스크립트 + 액션 아이템 추출
+- 이미지 생성 기능 (Imagen) 으로 사용자 아바타·콘텐츠 생성
+
+## 한계 및 고려사항
+
+- **마이그레이션 의무**: `firebase-vertexai` 사용 앱은 `firebase-ai` 로 이전해야 신규 모델·기능 사용 가능. 패키지명/일부 클래스명이 변경됨.
+- **App Check 필수**: App Check 없이 배포하면 API 키 도용·과금 폭탄 위험. Play Integrity 토큰 검증을 production 출시 전에 활성화해야 함.
+- **모델 수명주기 주의**: Gemini 2.0 Flash 는 2026-06-01, Imagen 일부 모델은 2026-06-24 retire 예정. 모델 ID 를 하드코딩하지 말고 Remote Config 로 주입 권장.
+- **리전 quota**: Vertex AI 백엔드 사용 시 리전별 quota·지연 차이 존재. 한국 사용자 대상 앱은 `asia-northeast3` 사용 검토.
+- **온디바이스 모델 아님**: 네트워크 호출 기반이므로 오프라인 시나리오엔 별도 ML Kit GenAI / Gemini Nano 필요.
+
+## 참고 자료
+
+- [Vertex AI Gemini API — Android Developers](https://developer.android.com/ai/vertex-ai-firebase)
+- [Firebase AI Logic — Get started (Android)](https://firebase.google.com/docs/vertex-ai/get-started?platform=android)
+- [Migrate to Firebase AI Logic SDKs (from GA firebase-vertexai)](https://firebase.google.com/docs/ai-logic/migrate-to-latest-sdk)
+- [AI Powering your Android Apps with Firebase Vertex AI — Medium](https://euryperez.dev/ai-powering-your-android-apps-with-firebase-vertex-ai-364cdb006515)
