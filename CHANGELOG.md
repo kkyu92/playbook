@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.7] — 2026-05-19
+
+### Added
+- cycle 822 explore-idea — wiki entry #209 신설: 자율 에이전트 장기 운영 단계 전이 패턴 — 탐색→안정화→항구화 3단계 전이, 각 단계별 최적 전략 및 전이 신호 식별. wiki lint CLEAN (209 entries). TODOS BRANCHED 갱신 (local 67/origin 39). SE Trigger-5: JSON tail-20 window 802-821 SE=8/20=40% B PASS + 명단=8 동일(A PASS) → skip 조건 A+B 충족 → cycle 823 마커 박제 X. oscillation 104회 steady-state.
+
 ## [0.9.6] — 2026-05-19
 
 ### Changed

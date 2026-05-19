@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 177,
+  "totalInvocations": 178,
   "skipped": 25,
-  "searched": 152,
-  "hit": 52,
+  "searched": 153,
+  "hit": 53,
   "noMatch": 100,
-  "lastUpdated": "2026-05-19T09:49:15.766Z",
+  "lastUpdated": "2026-05-19T10:04:17.587Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 4,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -55,8 +55,8 @@
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 4,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
-    "retros/2026-05-13-cycles-482-485": 2,
-    "retros/2026-05-13-cycles-410-411": 1,
+    "retros/2026-05-13-cycles-482-485": 3,
+    "retros/2026-05-13-cycles-410-411": 2,
     "retros/2026-05-12-cycles-302-303": 1,
     "harness-engineering/drift-detection-methodology": 1,
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 1,
@@ -79,7 +79,7 @@
     "harness-engineering/llm-scalable-service-architecture-patterns": 1,
     "evaluation/multi-persona-llm-output-validation-enhancement": 1,
     "journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs-": 1,
-    "retros/2026-05-13-cycles-486-487": 2,
+    "retros/2026-05-13-cycles-486-487": 3,
     "evaluation/claude-code-generation-validation-pipeline-extension": 1,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "harness-engineering/debug-page-silent-drift-trap": 1,
@@ -104,5 +104,5 @@
     "retros/2026-05-12-cycles-342-346": 1,
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 1
   },
-  "totalQueries": 221
+  "totalQueries": 222
 }
