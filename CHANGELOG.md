@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.56] — 2026-05-21
+
+### Changed
+- cycles 937~945. cycles 937~939: SE #304~#306 fast-path 3연속 (oscillation 154→156회, window 918-937 SE=6/20=30% → recovery). cycle 940: explore-idea SUCCESS — 신규 entry #249 agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check (갭 타이머: 이벤트 부재 chain의 주기적 베이스라인 점검 패턴, harness-engineering). cycles 941~942: SE #307~#308 fast-path 2연속 (oscillation 157→158회, B FAIL 연속 → cycle 943 SE#309 마커 박제). cycle 943: SE #309 fast-path SUCCESS + **사용자 옵션 A 두 번째 머지 (`5904827`)** (워커 23건 흡수 249→253 entries, embed 1938 chunks) + TODOS R6 [DONE 2026-05-21] 박제. oscillation 159회 steady-state. cycle 944: worker-incident-triage SUCCESS — issue #1034 Daily ingest 부분 실패 트리아지/CLOSED (appendGithubOutput multi-line YAML title → GITHUB_OUTPUT invalid format 에러 fix `7b2326f`). cycle 945: explore-idea SUCCESS — 신규 entry #254 llm-output-system-boundary-sanitization-pipeline (cycle 944 incident 즉각 위키화, LLM 출력 시스템 경계 포맷 충돌 패턴 구조화). TODOS BRANCHED 266/0 갱신 (cycle 943 머지 후 local-only phase). wiki 254 entries. SE oscillation 159회 steady-state.
+
+### Fixed
+- `appendGithubOutput` 다중 줄 값 sanitize — GITHUB_OUTPUT multi-line title → invalid format. fix: newline→space 치환 (`7b2326f`, cycle 944).
+
 ## [0.9.55] — 2026-05-20
 
 ### Changed
