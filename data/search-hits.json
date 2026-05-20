@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 473,
+  "totalInvocations": 476,
   "skipped": 26,
-  "searched": 447,
+  "searched": 450,
   "hit": 118,
-  "noMatch": 329,
-  "lastUpdated": "2026-05-20T14:11:10.173Z",
+  "noMatch": 332,
+  "lastUpdated": "2026-05-20T23:48:00.346Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -133,5 +133,5 @@
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
     "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 1
   },
-  "totalQueries": 517
+  "totalQueries": 520
 }
