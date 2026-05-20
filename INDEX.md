@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T02:38:55.209Z
+Updated: 2026-05-20T03:04:36.145Z
 
-## 엔트리 (230개)
+## 엔트리 (231개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -32,8 +32,8 @@ Updated: 2026-05-20T02:38:55.209Z
 - [CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴](wiki/harness-engineering/agentic-claude-md-line-reference-silent-drift) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
-- [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
+- [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [자율 에이전트 기능 포화 순차 배치 배포 패턴 — Spec-Fire-Audit 3단계 구조](wiki/harness-engineering/agentic-feature-saturation-sequential-batch-delivery) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
@@ -45,6 +45,7 @@ Updated: 2026-05-20T02:38:55.209Z
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
+- [Push 무기한 유예 + 동시 origin 쓰기 → 쌍방향 divergence 침묵 누적](wiki/harness-engineering/agentic-push-defer-divergence-concurrent-writes) — confidence: 3, status: complete
 - [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/harness-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 자기 문서화 이중 시점 지식 축적 — 내부 cycle + 외부 worker 재귀 루프](wiki/harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation) — confidence: 2, status: complete
@@ -791,13 +792,13 @@ Updated: 2026-05-20T02:38:55.209Z
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
-- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
-- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
-- harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-post-saturation-ux-chip-pivot
@@ -846,6 +847,10 @@ Updated: 2026-05-20T02:38:55.209Z
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/agentic-local-commit-batch-deploy-rate-management
+- harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-gap-trigger-chain-health-check

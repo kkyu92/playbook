@@ -1,0 +1,147 @@
+---
+title: "Push 무기한 유예 + 동시 origin 쓰기 → 쌍방향 divergence 침묵 누적"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - git
+  - divergence
+  - push-defer
+  - zero-touch
+  - agentic-harness
+  - develop-cycle
+  - r6-boundary
+  - todos-escalation
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-local-commit-batch-deploy-rate-management
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/agentic-chain-saturation-detection
+status: complete
+description: "자율 에이전트가 push를 무기한 유예(local-commit-batch 전략)하면서 동시에 외부 프로세스(worker-lesson auto-ingest 등)가 origin에 쓰면, 쌍방향 divergence가 사이클마다 침묵하며 누적된다. 에이전트는 CI 통과·작업 계속 여부로 이를 인지하지 못하고, TODOS [P0] 에스컬레이션만이 유일한 가시성 메커니즘이다."
+type: entry
+source: explore-idea
+---
+
+## 관찰
+
+자율 에이전트 허브 develop-cycle은 두 가지 설계 결정을 동시에 적용한다:
+
+1. **Push 무기한 유예** — Vercel 배포 한도(100/일) 보존을 위해 매 사이클 commit만 박제, push는 사용자 명시 시점까지 대기
+2. **외부 동시 origin 쓰기** — worker-lesson auto-ingest 워크플로가 main branch에 독립적으로 commit+push
+
+두 결정의 조합이 **쌍방향 divergence 침묵 누적**을 만든다.
+
+**cycle 892 시점 실측**:
+```
+local branch: 180 commits ahead of origin/main
+origin/main:   92 commits ahead of local
+→ git rev-list --left-right --count origin/main...main → 92 | 180
+```
+
+이 상태는 단순 fast-forward merge가 불가능한 **true divergence**다. 해소하려면 force-push / merge / rebase 중 선택이 필요하며, 모두 사용자 결정(R6) 영역이다.
+
+## 침묵성 — 왜 에이전트가 모르는가
+
+divergence가 누적되는 동안 에이전트는 다음 신호를 받는다:
+
+| 신호 | 상태 | 의미 |
+|---|---|---|
+| `git status` | "nothing to commit" | 로컬 작업 정상 |
+| `git log` | 최근 commit 보임 | 로컬 이력 정상 |
+| CI (GH Actions) | success | 워크플로 정상 |
+| worker-lesson | success | 외부 자동화 정상 |
+| Vercel | 배포 없음 (push 안 했으므로) | 한도 절약 정상 |
+
+모든 신호가 "정상"으로 보인다. `git fetch` 후 `git rev-list --left-right --count`를 실행해야만 divergence를 감지할 수 있다. develop-cycle SKILL의 매 사이클 진단 단계가 이 명령을 의무 실행하는 이유다.
+
+## 누적 메커니즘
+
+```
+사이클 k 시작:  local=N ahead, origin=M ahead
+  ├── 에이전트 1 commit 박제 (로컬)
+  ├── worker-lesson 1-3 commit 박제 (origin)
+사이클 k 끝:  local=(N+1) ahead, origin=(M+1~3) ahead
+```
+
+매 사이클마다 양쪽이 동시에 증가한다. N 사이클 후:
+- local ahead ≈ N (에이전트 사이클 수)
+- origin ahead ≈ N × worker-lesson 빈도
+
+develop-cycle의 경우 worker-lesson이 하루 수십 회 fire되므로, origin이 local보다 빠르게 앞서게 된다. (실측: local 180 / origin 92 = 에이전트 사이클 대비 origin이 0.51배)
+
+## TODOS [P0] 에스컬레이션 — 유일한 가시성 메커니즘
+
+에이전트는 divergence를 직접 해소할 수 없으므로(R6 영역), TODOS.md에 [P0] 항목으로 박제한다:
+
+```markdown
+## [P0] R6 대기 — git 병합 필요 (BRANCHED N=8)
+origin/main 과 local 양방향 diverged. force-push / merge / rebase 중 선택 필요.
+현재 상태: local 180개 ahead, origin 92개 ahead.
+```
+
+이것이 유일한 에이전트→사용자 통신 채널이다. 사용자가 TODOS.md를 확인하지 않으면 divergence는 계속 누적된다.
+
+**BRANCHED 횟수(N)**는 해소되지 않은 채 같은 상태가 몇 사이클 지속됐는지 나타낸다. N이 클수록 병합 복잡도가 증가한다.
+
+## 실제 영향
+
+short-term (N < 10 사이클):
+- 에이전트 작업 무영향. 로컬 이력 정상.
+- 가시성 부재가 유일한 문제.
+
+mid-term (N = 10~50 사이클):
+- 병합 충돌 가능성 증가. 특히 동일 파일을 양쪽에서 수정한 경우.
+- `git log --oneline -20`만으로는 origin 이력을 볼 수 없어 병합 복잡도 과소 추정 위험.
+
+long-term (N > 50 사이클):
+- 사실상 fork 상태. cherry-pick 또는 재구축이 현실적 해결책.
+- INDEX.md, CHANGELOG, embeddings.json 같은 자동 생성 파일이 양쪽에서 독립 진화 → 병합 불가 충돌 위험.
+
+## 설계 트레이드오프
+
+| 전략 | 배포 한도 | divergence 위험 | 사용자 개입 빈도 |
+|---|---|---|---|
+| 매 사이클 push | 높음 (100/일 소진 위험) | 없음 | 없음 |
+| 주기적 push (N 사이클마다) | 중간 | 낮음 (N이 작을수록) | N/배포한도 빈도 |
+| push 완전 유예 (현 전략) | 낮음 (한도 절약) | 높음 (시간 비례) | 사용자 명시 시점만 |
+
+현재 전략은 **배포 한도 절약을 최우선**으로 하는 선택이다. 단, "push 완전 유예"가 동시 origin 쓰기 환경에서 장기적으로 지속 가능하려면 정기적 사용자 개입이 설계에 포함돼야 한다.
+
+## 대응 패턴
+
+### 예방: 정기 배치 push 스케줄링
+
+사용자가 명시적 batch push를 TODOS에 사전 예약:
+```
+## [P1] 배치 push 예약 — 매 50사이클 또는 금요일
+local commits 누적 → 리뷰 후 merge/rebase + push
+```
+
+### 탐지: 매 사이클 diverge 수치 모니터
+
+```bash
+git rev-list --left-right --count origin/main...main
+# left (origin-only): 외부 쓰기 누적 속도
+# right (local-only): 에이전트 사이클 속도
+```
+
+두 수치 비율로 **origin 쓰기 속도**를 파악. 비율 > 1 = origin이 더 빠르게 앞서는 중.
+
+### 해소: TODOS [P0] → 사용자 행동
+
+에이전트가 TODOS에 박제 → 사용자가 다음 중 선택:
+- **rebase**: 로컬을 origin 위로 올림 (이력 선형화, 충돌 해소 필요)
+- **merge**: 두 이력 합침 (merge commit 생성)
+- **force-push**: 로컬이 정본 (origin이 손실되므로 worker-lesson 이력 증발)
+
+일반적으로 **rebase가 최적**이나, INDEX.md/CHANGELOG 같은 자동 생성 파일의 충돌 해소가 수작업을 요구할 수 있다.
+
+## 핵심 인사이트
+
+> Push 무기한 유예 전략은 단일 writer 환경에서는 안전하다. 하지만 외부 동시 writer가 origin에 존재하는 순간, divergence는 에이전트의 인지 없이 매 사이클 복리로 누적된다.
+
+이것은 설계 버그가 아니라 **트레이드오프의 숨겨진 비용**이다. 비용을 인식하고 TODOS [P0] 에스컬레이션 + 정기 배치 push 스케줄링으로 관리하면 전략은 지속 가능하다.
