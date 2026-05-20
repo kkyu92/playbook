@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 419,
+  "totalInvocations": 430,
   "skipped": 26,
-  "searched": 393,
-  "hit": 108,
-  "noMatch": 285,
-  "lastUpdated": "2026-05-20T12:29:54.942Z",
+  "searched": 404,
+  "hit": 109,
+  "noMatch": 295,
+  "lastUpdated": "2026-05-20T12:43:09.335Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 25,
+    "reports/closed-loop-health": 26,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -84,7 +84,7 @@
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "harness-engineering/debug-page-silent-drift-trap": 1,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
-    "retros/2026-05-12-cycles-350-355": 6,
+    "retros/2026-05-12-cycles-350-355": 7,
     "infrastructure/nextjs-security-patching-defense-logic-reinforcement": 1,
     "infrastructure/npm-pnpm-supply-chain-security-enhancement": 1,
     "harness-engineering/llm-agent-artifact-first-diagnosis": 1,
@@ -126,8 +126,8 @@
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 2,
-    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 1,
+    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 2,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1
   },
-  "totalQueries": 463
+  "totalQueries": 474
 }
