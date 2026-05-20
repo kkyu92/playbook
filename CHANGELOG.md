@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.48] — 2026-05-20
+
+### Changed
+- cycle 912 curate SUCCESS — wiki lint CLEAN (237 entries) + 0건 all clear (orphan/isolated/stale/long-in-progress/JIT unused) + scan-promotions 신규 후보 없음 (react/develop-cycle-hub/mdx 관찰 중 N<3) + JIT search 선행: pnpm-builtin-collision (#237) 중복 없음 확인 (npm-pnpm-supply-chain-security = 다른 도메인) + memory 2건 갱신 (project_bidirectional_compound_growth_goal + project_develop_cycle_skill_family: 912+, BRANCHED 212/112, SE oscillation 143회, wiki 237) + TODOS BRANCHED 갱신 (local 212/origin 112). 직전 cycles: 909 curate + 910 explore-idea entry #237 + 911 SE#292 fast-path. SE oscillation 143회 steady-state (skip: window 891-910 SE=8/20=40% B PASS + 명단=8 A PASS → cycle 912 마커 박제 X).
+
 ## [0.9.47] — 2026-05-20
 
 ### Changed
