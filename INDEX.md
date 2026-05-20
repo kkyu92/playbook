@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T03:56:10.066Z
+Updated: 2026-05-20T08:19:00.498Z
 
-## 엔트리 (233개)
+## 엔트리 (235개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -31,6 +31,7 @@ Updated: 2026-05-20T03:56:10.066Z
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴](wiki/harness-engineering/agentic-claude-md-line-reference-silent-drift) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
+- [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
@@ -38,6 +39,7 @@ Updated: 2026-05-20T03:56:10.066Z
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
+- [JIT 위키 검색 근-임계값 false negative — 카테고리 ls 폴백 패턴](wiki/harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
 - [자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴](wiki/harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary) — confidence: 2, status: complete
@@ -789,6 +791,9 @@ Updated: 2026-05-20T03:56:10.066Z
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/zerostack-rust-agent-harness-extension
+- harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+- harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
@@ -817,6 +822,9 @@ Updated: 2026-05-20T03:56:10.066Z
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback ↔ harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+- harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-lite-first-scan-gate-execution-pattern ↔ harness-engineering/drift-detection-methodology

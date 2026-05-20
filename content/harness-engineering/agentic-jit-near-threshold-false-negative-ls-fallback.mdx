@@ -1,0 +1,100 @@
+---
+title: "JIT 위키 검색 근-임계값 false negative — 카테고리 ls 폴백 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - jit-search
+  - explore-idea
+  - false-negative
+  - wiki-management
+  - semantic-search
+  - harness-engineering
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+status: complete
+description: "JIT semantic search가 'no match'를 반환해도 threshold 바로 아래 점수(near-threshold)는 정보가 모호하다. 기존 entry가 존재하지만 terminology mismatch로 score가 threshold를 미달하는 false negative 상황에서 카테고리 ls 스캔을 2차 검증 게이트로 활용하는 패턴."
+type: entry
+source: explore-idea
+---
+
+## 현상
+
+JIT 시맨틱 검색이 "no match"를 반환할 때 두 가지 해석이 가능하다.
+
+1. **진짜 gap**: 위키에 해당 토픽 entry가 없음 → 새 entry 생성 적합
+2. **false negative**: 기존 entry가 존재하지만 terminology mismatch로 semantic score가 threshold를 미달
+
+threshold 바로 아래 점수(예: threshold=0.87, best score=0.86)는 이 두 경우를 구분하지 못한다.
+
+## 근-임계값 false negative 메커니즘
+
+```
+Query (영어): "zero-touch automation infrastructure watch launchd tmux"
+                              ↓ embedding
+                     semantic distance 계산
+                              ↓
+       Existing entry: "Zero-Touch Develop Cycle Session Management..."
+       (한국어 제목 + 한국어 본문)
+                              ↓
+         Score: 0.8608   Threshold: 0.87
+                              ↓
+              "no match" → 실제로는 중복
+```
+
+**주요 원인**:
+- **언어 불일치**: 쿼리(영어) vs. entry title/description(한국어) → 임베딩 공간에서 거리 증가
+- **추상화 레벨 차이**: "fire cascade mechanics" vs. "session management" — 같은 시스템, 다른 관점
+- **threshold 설정 목적**: false positive 방지용 보수적 임계값 → 일부 false negative 허용
+
+## 2차 검증 패턴: 카테고리 ls 폴백
+
+JIT "no match" 후 **핵심 인프라 토픽**에 해당하면 수동 2차 검증을 수행한다.
+
+```bash
+# 1단계: JIT 검색 (기존 절차)
+node scripts/search.mjs "<query>" 3
+
+# "no match" 결과 + 핵심 인프라 토픽 → 2단계: 카테고리 ls
+ls content/<most-likely-category>/ | grep -i "<keyword>"
+
+# 파일명 후보 발견 시 → 3단계: 앞부분 확인
+head -10 content/harness-engineering/<candidate>.mdx
+```
+
+**언제 적용**:
+- best score가 threshold-0.05 이상인 경우 (근-임계값)
+- 토픽이 기존 카테고리의 핵심 인프라(watch.sh, launchd, session 등)인 경우
+- 쿼리가 영어인데 위키가 주로 한국어인 경우
+
+**언제 skip**:
+- score가 threshold-0.15 미만인 경우 (충분히 낮음 → 진짜 gap 가능성 높음)
+- 신규 도메인 토픽 (기존 카테고리 파일 스캔 의미 없음)
+
+## 결과별 처리
+
+| ls 스캔 결과 | 처리 |
+|---|---|
+| 후보 없음 | 진짜 gap 확정 → 새 entry 생성 진행 |
+| 후보 있음 + 읽어보니 다른 주제 | 진짜 gap 확정 → 새 entry 생성 진행 |
+| 후보 있음 + 동일 주제 확인 | 중복 → 아이디어 피벗 또는 curate chain으로 기존 entry 보강 |
+
+## 실전 증거 (cycle 906)
+
+- **쿼리**: "zero-touch automation infrastructure watch launchd tmux"
+- **JIT 결과**: no match (score=0.8608, threshold=0.87, delta=0.0092)
+- **ls 스캔**: `ls content/harness-engineering/ | grep zero-touch`
+- **발견**: `zero-touch-develop-cycle-session-management.mdx`
+- **확인**: 해당 entry가 watch.sh + launchd + FIRE_PENDING + signal protocol 전체를 커버
+- **처리**: 중복 확정 → 아이디어 피벗 → 본 entry 생성
+
+## 탐색 마찰 entry와의 관계
+
+[agentic-explore-idea-topic-discovery-friction-coverage-signal](agentic-explore-idea-topic-discovery-friction-coverage-signal)는 "쿼리를 여러 번 돌려야 gap을 찾는" 마찰 전체를 다룬다. 본 패턴은 그 안의 특정 실패 모드 — **threshold 직하 near-miss**에서 발생하는 false negative — 에 집중한다.
+
+탐색 마찰 entry의 "나쁜 마찰 원인 B: 쿼리 언어 불일치"가 이 패턴의 직접 원인이다.
