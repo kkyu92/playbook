@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.49] — 2026-05-20
+
+### Changed
+- cycle 918 curate SUCCESS — wiki lint CLEAN (242 entries) + 0건 all clear (orphan/isolated/stale/long-in-progress/JIT unused) + scan-promotions 신규 후보 없음 (react/develop-cycle-hub/mdx 관찰 중 N<3) + /learn 0 learnings + memory 2건 갱신 (project_bidirectional_compound_growth_goal + project_develop_cycle_skill_family: 918+, BRANCHED 221/4, SE oscillation 145회, wiki 242) + TODOS BRANCHED 갱신 (local 221/origin 4). 직전 cycles: 913 curate (머지 112건+6 entries) + 914 fix-incident (incident-followup dedup fix) + 915~917 SE#293~#295 fast-path (명단 8→7 안정). SE oscillation 145회 steady-state (skip: window 898-917 SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 918 SE#296 마커 박제 X).
+
 ## [0.9.48] — 2026-05-20
 
 ### Changed
