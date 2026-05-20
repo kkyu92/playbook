@@ -1,0 +1,124 @@
+---
+title: "Agentic Knowledge System Chain Economics — Creation vs Maintenance at Scale"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - agentic-workflow
+  - develop-cycle
+  - chain-pool
+  - wiki-management
+  - harness-engineering
+  - knowledge-economics
+  - curate
+  - skill-evolution
+workers:
+  - all
+confidence: 4
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-skill-evolution-convergence-maturity-signal
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/hub-worker-compounding-pattern
+---
+
+## 관찰
+
+924 사이클, 243 wiki 항목, 911개의 cycle_state JSON을 가진 허브 시스템에서 chain 발화 빈도를 집계하면:
+
+| Chain | 발화 수 | 비율 | 역할 |
+|---|---|---|---|
+| `curate` | 313 | 34% | 지식 유지보수 |
+| `skill-evolution` | 286 | 31% | 시스템 자가 교정 |
+| `review-code` | 112 | 12% | 코드 품질 유지 |
+| `explore-idea` | 65 | 7% | 신규 지식 생성 |
+| `worker-incident-triage` | 50 | 5% | 외부 입력 처리 |
+| 기타 | 85 | 9% | — |
+
+**핵심 수치**: maintenance + self-calibration(`curate` + `skill-evolution`) = **65%**, creation(`explore-idea`) = **7%**.
+
+직관적 기대와 정반대다. "위키 시스템은 지식을 생성하는 곳"이라는 전제가 틀렸다. 대부분의 에너지는 기존 지식을 **유지하고 시스템을 교정**하는 데 쓰인다.
+
+## 메커니즘
+
+### 왜 curate가 지배적인가
+
+위키가 성장할수록 신규 entry ROI는 감소하고 유지보수 비용은 증가한다:
+
+```
+entry 수 증가 →
+  ├── orphan / stale / 중복 발생률 ↑  →  curate 필요성 ↑
+  ├── connections 갱신 필요 entry ↑   →  curate 필요성 ↑
+  └── 신규 entry 대비 기존 update ROI ↑ → explore-idea 선택 빈도 ↓
+```
+
+lint CLEAN 상태를 유지하려면 창작이 아니라 정원 관리가 필요하다.
+
+### 왜 skill-evolution이 2위인가
+
+자가 진화 트리거(trigger-5: 직전 20 사이클에서 0회 chain 감지)가 `curate` 발화 이후 sliding window에서 `skill-evolution` 비율을 30~40%로 유지한다. curate 우세 phase에서 SE 트리거는 주기적으로 발화되며, fast-path(명단 동일 + oscillation≥5) 조건으로 빠르게 처리된다.
+
+curate와 SE는 **공생 관계**: curate가 많으면 SE 트리거 조건(0회 chain 감지)이 자주 충족 → SE 발화 → fast-path → curate로 복귀.
+
+### Phase 전환 데이터
+
+```
+Early (첫 100 사이클): curate 25%, review-code 19%, dimension-cycle 12%, explore-idea 7%
+Mid  (400~500 사이클): skill-evolution 39%, curate 32%, review-code 13%
+Late (최근 100 사이클): skill-evolution 40%, curate 29%, explore-idea 29%
+```
+
+Late phase에서 explore-idea가 29%로 반등한 이유: 위키가 충분히 성숙하면 주기적으로 "새 관점의 패턴"이 등장 → 신규 entry 가치가 일시 회복.
+
+## 실무 함의
+
+### 1. explore-idea 처리량을 최적화하면 안 된다
+
+explore-idea는 전체의 7%. 이 chain을 빠르게 만들어도 시스템 처리량에 미치는 영향이 작다.
+
+실제 병목:
+- curate 품질 (lint false positive / orphan 기준)
+- SE fast-path 판단 정확도 (명단 동일 조건 캘리브레이션)
+
+### 2. "아무것도 안 만드는 날"은 정상이다
+
+curate + SE만 발화하는 사이클 = 시스템이 건강하게 작동하는 증거. explore-idea 0회 = "생산성 없음"이 아니라 "유지보수 phase 중".
+
+### 3. explore-idea 비율로 wiki 상태 진단
+
+| explore-idea 비율 | 해석 |
+|---|---|
+| < 5% | 신규 패턴 고갈 또는 curate 과잉 — wiki gap 점검 필요 |
+| 5~15% | 정상 성숙 phase |
+| 15~30% | 새 도메인 개척 중 또는 phase 전환 |
+| > 30% | 초기 구축 phase 또는 major scope 확장 |
+
+## 측정 방법
+
+```bash
+python3 -c "
+import json, os, glob
+files = sorted(glob.glob(os.path.expanduser('~/.develop-cycle-hub/cycles/*.json')))
+counts = {}
+for f in files:
+    try:
+        d = json.load(open(f))
+        c = d.get('chain_selected', 'unknown')
+        # 접두사 정규화
+        if c.startswith('curate'): c = 'curate'
+        if c.startswith('explore'): c = 'explore-idea'
+        if c.startswith('skill'): c = 'skill-evolution'
+        if c.startswith('review'): c = 'review-code'
+        counts[c] = counts.get(c, 0) + 1
+    except: pass
+total = sum(counts.values())
+print(f'총 {total} 사이클')
+for k, v in sorted(counts.items(), key=lambda x: -x[1]):
+    print(f'  {k}: {v} ({v*100//total}%)')
+"
+```
+
+## 연결
+
+이 패턴은 [wiki-knowledge-roi-3axis-measurement](wiki-knowledge-roi-3axis-measurement)의 "소비 메커니즘 부재 = 무덤" 논리를 보완한다: 소비(검색 hit)와 생산(explore-idea) 비율보다, **유지보수(curate) 비율**이 wiki 건강의 더 직접적인 신호다.
+
+[skill-evolution convergence maturity signal](agentic-skill-evolution-convergence-maturity-signal)과 함께 읽으면: SE가 왜 31%인지 이해할 수 있다 — curate 우세 phase에서의 자연스러운 공생 결과.

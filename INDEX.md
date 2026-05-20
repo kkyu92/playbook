@@ -41,6 +41,7 @@ Updated: 2026-05-20T11:12:04.241Z
 - [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [JIT 위키 검색 근-임계값 false negative — 카테고리 ls 폴백 패턴](wiki/harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback) — confidence: 2, status: complete
+- [Agentic Knowledge System Chain Economics — Creation vs Maintenance at Scale](wiki/harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance) — confidence: 4, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
 - [자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴](wiki/harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary) — confidence: 2, status: complete
@@ -914,6 +915,9 @@ Updated: 2026-05-20T11:12:04.241Z
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ harness-engineering/agentic-skill-evolution-convergence-maturity-signal
+- harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-meta-chain-fast-path-streak-guard
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management

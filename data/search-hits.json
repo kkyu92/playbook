@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 409,
+  "totalInvocations": 419,
   "skipped": 26,
-  "searched": 383,
-  "hit": 104,
-  "noMatch": 279,
-  "lastUpdated": "2026-05-20T12:06:42.923Z",
+  "searched": 393,
+  "hit": 108,
+  "noMatch": 285,
+  "lastUpdated": "2026-05-20T12:29:54.942Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -108,7 +108,7 @@
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
-    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 5,
+    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 6,
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
@@ -121,11 +121,13 @@
     "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 1,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1,
-    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 1,
+    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 2,
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
-    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
-    "harness-engineering/agentic-git-commit-body-dispatch-transport": 1
+    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
+    "harness-engineering/agentic-git-commit-body-dispatch-transport": 2,
+    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 1,
+    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1
   },
-  "totalQueries": 453
+  "totalQueries": 463
 }
