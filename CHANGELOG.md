@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.45] — 2026-05-20
+
+### Changed
+- cycle 901 curate SUCCESS — wiki lint CLEAN (232 entries) + scan-promotions 신규 후보 없음 (react/develop-cycle-hub/mdx 관찰 중 N<3) + /learn 0 learnings + TODOS BRANCHED 갱신 (local 192/origin 100). 직전 cycles: 898 SE#283 fast-path + 899 SE#284 fast-path + 900 SE#285 fast-path (3연속). SE oscillation 139회 steady-state (skip: window 881-900 SE=9/20=45% B PASS + 명단=8 A PASS).
+
 ## [0.9.44] — 2026-05-20
 
 ### Changed
