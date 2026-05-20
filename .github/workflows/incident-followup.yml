@@ -5,7 +5,7 @@ name: "🔔 Incident Follow-up Pressure"
 # 매일 1회 실행 (Cloudflare worker 가 dispatch). 최근 7일 worker-incident Issue 중
 # 같은 fingerprint 의 lesson (Journal PR or self-policy Issue) 이 3일 후에도 없으면
 # 워커 repo 에 'lesson-pending' reminder Issue 생성. 같은 fingerprint reminder
-# 이미 열려 있으면 skip (dedup).
+# 14일 이내 생성된 경우 (open 또는 closed) skip (dedup — 재발 차단).
 #
 # 패턴 참조: gemini-key-health.yml (cron + Issue API), weekly-triage.yml (jq 검색).
 # cron 신뢰성: GH Actions silent drop → Cloudflare worker 가 timing 책임.
@@ -144,10 +144,14 @@ jobs:
             REMINDER_TITLE="🔔 Lesson pending: incident [fp:${FP}] 후 3+일 무대응"
 
             # dedup — 같은 fingerprint 의 lesson-pending Issue 가 이미 워커 repo 에 있으면 skip
+            # --state all: closed reminder 재생성 방지 (batch-close 후 무한 재발 차단)
+            # 14일 creation filter: 오래된 closed reminder 는 새 incident 허용
+            DEDUP_SINCE=$(date -u -d '14 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-14d +%Y-%m-%d)
             EXISTING=$(gh issue list \
               --repo "$SOURCE_REPO" \
-              --state open \
+              --state all \
               --label "lesson-pending" \
+              --search "created:>=${DEDUP_SINCE}" \
               --limit 50 \
               --json number,title \
               2>/dev/null \

@@ -582,7 +582,7 @@ jobs:
           PREND
           )
             gh pr create \
-              --title "📓 Auto-Ingest: Journal ${NEXT_NUM} — ${TITLE}" \
+              --title "📓 Auto-Ingest: Journal ${NEXT_NUM} — ${TITLE} [fp:${FP_SHORT}]" \
               --body "$PR_BODY" \
               --base main \
               --head "$BRANCH" \

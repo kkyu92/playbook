@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 389,
+  "totalInvocations": 396,
   "skipped": 26,
-  "searched": 363,
-  "hit": 96,
-  "noMatch": 267,
-  "lastUpdated": "2026-05-20T11:27:42.709Z",
+  "searched": 370,
+  "hit": 98,
+  "noMatch": 272,
+  "lastUpdated": "2026-05-20T11:36:22.350Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -51,7 +51,7 @@
     "retros/2026-05-12-cycles-305-307": 6,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 4,
-    "retros/2026-05-13-cycles-452-455": 4,
+    "retros/2026-05-13-cycles-452-455": 5,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 5,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
@@ -105,7 +105,7 @@
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 2,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 1,
-    "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 1,
+    "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
     "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 4,
@@ -125,5 +125,5 @@
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2
   },
-  "totalQueries": 433
+  "totalQueries": 440
 }
