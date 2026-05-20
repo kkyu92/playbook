@@ -1,0 +1,153 @@
+---
+title: "자율 에이전트 Retro Soft Scheduling — next_recommended_chain 비강제 신호 전파 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - retro
+  - soft-scheduling
+  - chain-selection
+  - signal-propagation
+  - emergent-rhythm
+  - develop-cycle
+  - harness-engineering
+  - session-boundary
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - context-engineering/agentic-cycle-state-json-carry-over-design
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "자율 에이전트 루프의 cycle retro가 next_recommended_chain 필드를 통해 다음 사이클 chain 선택에 비강제 편향(soft bias)을 주입한다. 파일/규칙 기반 hard scheduling과 달리, 이 신호는 git/JSON을 통해 세션 경계를 넘어 전파되되 자연 감쇠(3 사이클)하며 상위 신호(마커, 이슈, streak guard)에 의해 무해하게 오버라이드된다. 결과: 중앙 스케줄러 없이 explore-idea↔curate 교번 리듬이 창발한다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 루프에서 "다음 사이클에 무엇을 할지" 결정하는 방법:
+
+1. **하드 스케줄러** (cron/calendar): 외부 시간 기반 — 시스템 상태와 무관하게 기계적 발화
+2. **규칙 기반** (streak guard, marker): 특정 조건 충족 시 강제 개입 — 오버라이드용
+3. **완전 자율**: 매 사이클 진단 결과만 보고 chain 선택 — 과거 컨텍스트 손실
+
+어느 방법도 단독으로 충분하지 않다. 규칙 기반은 평상시 기준선 부재, 완전 자율은 세션 경계에서 컨텍스트 단절.
+
+**목표**: 중앙 스케줄러 없이 이전 사이클의 의도를 다음 사이클로 전달하는 경량 메커니즘.
+
+## Soft Scheduling 패턴
+
+cycle retro가 `next_recommended_chain` 필드를 cycle_state JSON에 박제:
+
+```json
+{
+  "cycle_n": 927,
+  "retro": {
+    "next_recommended_chain": "explore-idea",
+    "next_recommended_reason": "wiki 245 entries, 생산 부족 — 신규 entry 추가 적기"
+  }
+}
+```
+
+다음 사이클 진단 단계에서 직전 3 cycle_state 읽기:
+
+```bash
+for n in 927 926 925; do
+  cat ~/.develop-cycle-hub/cycles/$n.json | python3 -c \
+    "import json,sys; d=json.load(sys.stdin); \
+     print(d['cycle_n'], '->', d.get('retro',{}).get('next_recommended_chain','?'))"
+done
+# 927 -> explore-idea
+# 926 -> curate
+# 925 -> explore-idea
+```
+
+이 결과가 chain 선택의 **soft input**이 된다 — 강제 X, 편향 부여 O.
+
+## 4-layer 우선순위 계층
+
+신호 강도 순서:
+
+```
+[Hard]  skill-evolution 마커 파일   → 강제 발화, 자율 X
+        open GH issues              → issue 체인으로 강제 매핑
+        streak guard                → 3× retro-only → curate 강제 진입
+[Soft]  next_recommended_chain      → soft bias, override 가능
+```
+
+상위 신호가 없으면 soft signal이 기준선 역할. 상위 신호 존재 시 soft signal은 조용히 무시.
+
+이 계층이 중요한 이유: cycle 928에서 SE marker가 발화 → soft signal(explore-idea 권고)이 override됨 → SE 완료 후 cycle 929에서 다시 soft signal(explore-idea) 복귀. 리듬 방해 → 자연 복귀.
+
+## 세션 경계 전파
+
+soft signal이 강력한 이유는 **세션 경계를 무해하게 넘기** 때문이다:
+
+```
+사이클 n 세션 (Claude TUI A)
+  retro → next_recommended_chain = "curate"
+  JSON write → ~/.develop-cycle-hub/cycles/n.json
+  signal → next_n (watch.sh pickup)
+  TUI A 종료
+
+사이클 n+1 세션 (Claude TUI B — 완전 새 인스턴스)
+  진단 → cat ~/.develop-cycle-hub/cycles/n.json
+  "curate 권고" 읽음
+  chain 선택 시 curate 편향
+```
+
+cycle_state JSON이 세션 메모리 역할. git commit body에도 retro 요약이 박제되어 있으므로 JSON 손상 시에도 `git log --grep "next_recommended"` 로 복원 가능.
+
+## 자연 감쇠
+
+직전 **3 사이클만** 읽는 설계가 핵심:
+
+- 3 사이클 전 권고: weight ≈ 1/3
+- 6 사이클 전 권고: weight = 0 (읽지 않음)
+
+이 감쇠가 없으면 오래된 권고가 고착화 → 시스템 상태 변화 미반영. 감쇠가 있으면:
+- 최근 권고가 현재 상태 반영
+- 오래된 권고는 자연 소멸
+- 연속 N회 같은 권고 → 편향 강화 (1/3 × N, N≤3 에서 최대)
+
+## 창발적 리듬 증거
+
+cycles 924–929:
+
+| cycle | chain | retro 권고 |
+|-------|-------|------------|
+| 924 | explore-idea | curate |
+| 925 | curate | explore-idea |
+| 926 | explore-idea | curate |
+| 927 | curate | explore-idea |
+| 928 | skill-evolution (marker override) | explore-idea |
+| 929 | explore-idea | (이번 사이클) |
+
+- explore↔curate 교번이 soft signal로 유지됨
+- SE 개입(928)이 리듬을 끊었지만, SE retro도 explore-idea 권고 → 복귀
+- 중앙 스케줄러 없이 교번 리듬 창발
+
+## Hard vs Soft scheduling 설계 원칙
+
+| 기준 | Hard scheduling | Soft scheduling |
+|------|-----------------|-----------------|
+| 메커니즘 | 파일/규칙 강제 | JSON 필드 편향 |
+| 용도 | 예외적 개입 (SE, streak) | 평상시 기준선 |
+| 오버라이드 | 상위 규칙만 | 어떤 신호로도 |
+| 세션 경계 | 파일 지속 | JSON/git 지속 |
+| 감쇠 | 없음 (조건 충족까지 유지) | 3 사이클 |
+| 잡음 | 적음 (조건 명확) | 적음 (non-binding) |
+
+설계 원칙: **Hard = 예외 처리 / Soft = 기준선 제공**. 두 계층이 함께 있어야 평상시 자율성 + 비상시 정확한 개입이 동시에 가능.
+
+## 실패 모드
+
+**soft signal 미박제 시**: next_recommended_chain 없으면 next cycle의 chain 선택이 진단 결과만으로 결정 — 세션 컨텍스트 손실. 항상 retro에 박제 의무.
+
+**signal 고착화**: 3 사이클 연속 같은 chain 권고 → 실질적으로 편향 = 1.0 → 사실상 hard scheduling 화. 진단 결과가 다른 chain을 강하게 지시하면 soft signal 무시 가능.
+
+**SE marker + soft signal 충돌**: SE marker가 발화하면 soft signal은 완전 무시 → SE 완료 후 복귀. 정상 동작.
