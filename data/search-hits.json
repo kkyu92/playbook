@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 387,
+  "totalInvocations": 389,
   "skipped": 26,
-  "searched": 361,
+  "searched": 363,
   "hit": 96,
-  "noMatch": 265,
-  "lastUpdated": "2026-05-20T09:02:47.423Z",
+  "noMatch": 267,
+  "lastUpdated": "2026-05-20T11:27:42.709Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -125,5 +125,5 @@
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2
   },
-  "totalQueries": 431
+  "totalQueries": 433
 }
