@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 463,
+  "totalInvocations": 473,
   "skipped": 26,
-  "searched": 437,
-  "hit": 116,
-  "noMatch": 321,
-  "lastUpdated": "2026-05-20T13:47:40.063Z",
+  "searched": 447,
+  "hit": 118,
+  "noMatch": 329,
+  "lastUpdated": "2026-05-20T14:11:10.173Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -26,7 +26,7 @@
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
     "reports/closed-loop-health": 26,
     "journal/playbook-journal-001-drift-greenfield": 1,
-    "harness-engineering/guard-test-pattern": 5,
+    "harness-engineering/guard-test-pattern": 6,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
     "context-engineering/nextjs-instrumentation-location": 3,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
@@ -82,7 +82,7 @@
     "retros/2026-05-13-cycles-486-487": 3,
     "evaluation/claude-code-generation-validation-pipeline-extension": 1,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
-    "harness-engineering/debug-page-silent-drift-trap": 1,
+    "harness-engineering/debug-page-silent-drift-trap": 2,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
     "retros/2026-05-12-cycles-350-355": 7,
     "infrastructure/nextjs-security-patching-defense-logic-reinforcement": 1,
@@ -102,7 +102,7 @@
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 1,
-    "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 2,
+    "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 3,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 2,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
@@ -133,5 +133,5 @@
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
     "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 1
   },
-  "totalQueries": 507
+  "totalQueries": 517
 }

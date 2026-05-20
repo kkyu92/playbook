@@ -1,0 +1,165 @@
+---
+title: "자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - agentic-loop
+  - chain-pool
+  - gap-timer
+  - dormancy
+  - lite-heavy
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-lite-first-scan-gate-execution-pattern
+  - harness-engineering/agentic-chain-dormancy-phase-map
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+status: complete
+description: "이벤트 기반 chain 선택만으로는 일부 chain이 무기한 휴면할 수 있다. 갭 타이머 트리거는 각 chain의 마지막 발화 이후 경과 사이클 수(gap)를 추적하고, 임계값 초과 시 lite 모드로 주기적 베이스라인 점검을 강제한다. 이벤트가 없어도 chain이 정기적으로 '살아있음'을 확인하는 메커니즘."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 개발 루프의 chain 선택은 이벤트 기반이다. GH issue가 없으면 `worker-incident-triage`가 안 뜨고, lint가 clean이면 `curate`가 안 뜨고, UI 신고가 없으면 `polish-ui`가 안 뜬다. 이는 합리적이다 — **없는 일을 만들어내는 것보다 이벤트에 반응하는 게 낫다**.
+
+하지만 이 구조는 한 가지 맹점을 만든다:
+
+> 이벤트가 **오랫동안 발생하지 않으면**, 그 chain이 정말 필요 없는 것인지, 아니면 **탐지 자체가 실패한 것인지** 구분할 수 없다.
+
+예시:
+- `fix-incident`: GH issue가 없지만 사실 워크플로가 조용히 silently skip되고 있을 수 있다
+- `info-architecture-review`: 새 진단 source가 없지만 architecture debt이 20 사이클 동안 조용히 누적됐을 수 있다
+- `polish-ui`: 사용자 신고가 없지만 모바일 레이아웃이 특정 뷰포트에서 깨져있을 수 있다
+
+**이벤트 기반 chain 선택 = "발견된 문제에만 반응"**이라면, **갭 타이머 = "발견 자체가 제대로 되는지 확인"**이다.
+
+## 갭 타이머 트리거 패턴
+
+### 핵심 변수
+
+```
+gap = current_cycle_n - last_fired_cycle_n  # 마지막 발화 이후 경과 사이클 수
+gap_threshold = chain별로 설정 (체인 중요도/빈도에 따라 다름)
+trigger_count = 갭 타이머가 발화한 누적 횟수 (별도 카운터)
+```
+
+### 발화 조건
+
+```
+매 사이클 진단 단계에서:
+for each chain in pool:
+  gap = current_cycle_n - chain.last_fired_cycle_n
+  if gap >= gap_threshold[chain]:
+    flag chain for gap-timer consideration
+
+이벤트 트리거 존재하면 이벤트 우선
+이벤트 없고 gap-flagged chain 존재하면 gap-timer 트리거
+발화 모드: 항상 lite (강제 heavy X)
+```
+
+### 임계값 설계 원칙
+
+| chain 유형 | 권장 gap_threshold | 이유 |
+|---|---|---|
+| `fix-incident` | 15~25 사이클 | incident 는 숨어있을 수 있음. 주기적 silent check 필요 |
+| `worker-incident-triage` | 10~15 사이클 | 워커 inbound 는 빠른 처리가 건강한 피드백 루프 |
+| `info-architecture-review` | 25~35 사이클 | 아키텍처 debt 는 누적이 느림. 정기 점검으로 충분 |
+| `curate` | 5~10 사이클 | lint 가 clean 이어도 orphan/stale 점검 가치 있음 |
+| `review-code` | 15~20 사이클 | silent drift 는 주기적 sweep 이 더 효과적 |
+| `operational-analysis` | 10~15 사이클 | carry-over 지표 측정은 주기적으로 해야 의미 있음 |
+| `polish-ui` / `design-system` | 30~50 사이클 | 외부 source 부재 시 강제 점검 가치 낮음 |
+
+## 실측 증거 (moneyball develop-cycle 2026-05)
+
+moneyball 워커에서 gap 기반 trigger 가 실제로 발화한 증거:
+
+| 사이클 | chain | 표기 | outcome | 메모 |
+|---|---|---|---|---|
+| cycle 786 | operational-analysis | `lite, gap=11` | retro-only | carry-over 측정 cycle 775 이후 11 사이클 경과 |
+| cycle 788 | info-architecture-review | `lite, gap=30 trigger 9 정기 점검` | retro-only | architecture 30 사이클 미점검, trigger 9번째 발화 |
+| cycle 793 | fix-incident | `lite, gap=24 trigger 7 baseline` | retro-only | incident 0건 확인. 24 사이클 gap 후 baseline 점검 |
+| cycle 689 | fix-incident | `lite, gap=20` | retro-only | incident 0건 확인. 코드 변경 없음 |
+| cycle 690 | polish-ui | `lite` | retro-only | design token 점검, 균열 없음 |
+
+공통 패턴:
+1. **gap 임계값 초과** → lite 모드 진입
+2. **lite 점검 결과 = 이슈 없음** → retro-only 종료 (PR 없음)
+3. **`trigger N` 카운터** → 해당 chain 의 gap 트리거 누적 발화 횟수 추적
+
+## Lite-First 게이트와의 통합
+
+갭 타이머 트리거와 [Lite-First 게이트](harness-engineering/agentic-lite-first-scan-gate-execution-pattern)는 계층을 이룬다:
+
+```
+[갭 타이머] → WHEN to fire a dormant chain
+      ↓
+[Lite-First 게이트] → HOW DEEP to execute once fired
+```
+
+갭 타이머가 chain 을 발화시키면, 해당 chain 은 자동으로 lite 스캔부터 시작한다. lite 스캔에서 실질적 문제를 발견하면 heavy 실행으로 진입; 없으면 retro-only 종료.
+
+```
+갭 타이머 트리거 발화
+  ↓
+[Lite Phase] 빠른 스캔 — 이슈 존재 여부 확인
+  ↓
+이슈 없음 ───→ retro-only (trigger_count++, last_fired_cycle 갱신)
+  │
+  이슈 있음
+  ↓
+[Heavy Phase] 실행 → PR ship → outcome = success
+```
+
+**핵심**: 갭 타이머로 발화된 chain 의 대부분 outcome = `retro-only (success)`. 이것이 **의도된 동작**이다. "아무것도 없음을 확인한 것"이 곧 베이스라인 점검의 가치다.
+
+## trigger_count 카운터의 의미
+
+`trigger N` 표기 (예: `trigger 9 정기 점검`) 는 해당 chain 의 갭 타이머가 몇 번째 발화했는지 추적한다.
+
+```
+trigger_count 활용:
+- 낮음 (1~5): chain 이 gap threshold 를 최근에야 넘기 시작 → 임계값 조정 검토
+- 중간 (5~15): chain 이 정기적으로 베이스라인 점검 중 → 정상 steady-state
+- 높음 (15+): chain 이 gap 트리거로만 발화 → 이벤트 source 재검토 필요
+```
+
+trigger_count 가 계속 증가하는데 outcome 이 항상 `retro-only` 이면:
+→ 해당 chain 의 이벤트 source 자체가 부재한 것 (chain dormancy 페이즈)
+→ [chain dormancy phase map](harness-engineering/agentic-chain-dormancy-phase-map) 으로 페이즈 진단
+
+## 이벤트 트리거 vs 갭 타이머 우선순위
+
+```
+매 사이클 진단:
+
+1. [P0] unprocessed plan (expiry 임박)
+2. [P1] open GH issues (hub-dispatch)
+3. [P2] open GH issues (전체)
+4. [P3] 이벤트 트리거 (lint, silent-skip-tracker, scan-promotions 등)
+5. [P4] gap 타이머 트리거 (이벤트 없는 chain 의 주기 점검)
+6. [P5] fallback: dimension-cycle
+```
+
+갭 타이머는 **가장 낮은 우선순위**다. 이벤트가 있으면 이벤트 chain 을 먼저 처리하고, 해당 사이클에 이벤트 chain 이 없을 때만 gap 타이머 chain 이 선택된다.
+
+## anti-pattern: 갭 타이머 강제 heavy 실행
+
+갭 타이머로 발화한 chain 을 heavy 실행으로 강제하면:
+
+```
+// 잘못된 예시
+gap_timer_fires(fix-incident) → full investigate → PR → PR review
+```
+
+- 이슈가 없는데 heavy 실행하면 불필요한 비용 (token + 시간 + CI run)
+- "무언가 해야 한다"는 압박에서 forced action 생성 → 불필요한 cleanup PR
+- Lite-first 없이 heavy 강제 = [chain saturation](harness-engineering/agentic-chain-saturation-detection) 위험
+
+**올바른 패턴**: gap 타이머 → 항상 lite 진입 → 이슈 발견 시만 heavy 진입.
