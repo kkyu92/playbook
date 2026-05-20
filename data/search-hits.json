@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 299,
+  "totalInvocations": 304,
   "skipped": 25,
-  "searched": 274,
-  "hit": 78,
-  "noMatch": 196,
-  "lastUpdated": "2026-05-20T01:45:42.537Z",
+  "searched": 279,
+  "hit": 79,
+  "noMatch": 200,
+  "lastUpdated": "2026-05-20T01:59:15.032Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 21,
+    "reports/closed-loop-health": 22,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -98,7 +98,7 @@
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
-    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 8,
+    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 9,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 1,
@@ -114,5 +114,5 @@
     "retros/2026-05-13-cycles-408-409": 1,
     "harness-engineering/worker-lesson-velocity-signal": 1
   },
-  "totalQueries": 343
+  "totalQueries": 348
 }

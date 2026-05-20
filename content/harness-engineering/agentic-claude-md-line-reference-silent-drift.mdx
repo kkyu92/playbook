@@ -1,0 +1,124 @@
+---
+title: "CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - silent-drift
+  - documentation
+  - claude-md
+  - review-code
+  - line-reference
+  - coordinate-drift
+  - anti-pattern
+  - grep-verify
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/post-ship-meta-documentation-drift
+  - harness-engineering/stale-temporal-comment-cleanup-policy
+  - harness-engineering/question-own-defaults
+status: complete
+description: "CLAUDE.md(또는 메타 문서)에 하드코딩된 file:line 좌표(예: live.ts:274, daily.ts:529)가 코드 변경 후 조용히 stale해지는 패턴. grep-verify 없이 박제된 좌표는 +5~+20 라인 drift가 발생해도 에이전트가 잘못된 위치를 신뢰하게 된다. moneyball 3회 재발(cycles 732/735/741) evidence."
+type: entry
+source: agent-seed
+---
+
+## 문제
+
+LLM 에이전트가 CLAUDE.md에 구체적인 코드 좌표를 박제하는 습관이 있다:
+
+```
+# 참조 위치
+live.ts:274 — 주간 성적 집계 로직
+daily.ts:529 — 일별 quota 차감
+```
+
+이 좌표들은 박제 시점엔 정확하다. 하지만 코드는 계속 변한다:
+- 새 함수 추가 → 라인 시프트 (+5~+20)
+- 리팩토링 → 로직 이동
+- dead code 제거 → 번호 압축
+
+CLAUDE.md는 업데이트되지 않는다. 에이전트는 박제된 좌표를 신뢰한다. 잘못된 위치를 "정확한 참조"로 활용해 엉뚱한 코드를 수정하거나, 올바른 로직을 찾지 못하고 환각한다.
+
+**이 실패가 silent한 이유**: CI green / lint pass / test pass — 좌표 stale은 테스트로 잡히지 않는다.
+
+## Evidence (moneyball, 3회 재발)
+
+| 재발 # | Cycle | 파일 | Drift | 처리 |
+|--------|-------|------|-------|------|
+| 1 | 732 | `src/lib/Leaderboard.ts` 관련 | migration 026 line 222 박제 → 코드 변경 후 stale | grep verify + CLAUDE.md 1-file edit |
+| 2 | 735 | `src/lib/SeasonStandings.ts` 관련 | 동일 migration 라인 +5 drift | grep verify + fix |
+| 3 | 741 | `live.ts:274 / daily.ts:529` | 코드 갱신 후 각각 +8 / +5 drift | grep verify 후 CLAUDE.md edit + PR #1084 머지 |
+
+3회 모두 **review-code chain**이 탐지. fix-incident chain은 0회 (에이전트가 코드 실행 중 자연 발견 X — review가 아니면 silent).
+
+## 메커니즘
+
+```
+[박제 시점]  live.ts:274  → 정확
+[+3 cycle]   live.ts:282  → +8 drift (함수 2개 추가)
+[에이전트]   live.ts:274 읽음 → 엉뚱한 로직 수정 → silent wrong fix
+```
+
+drift 진행은 **점진적** (cycle당 +1~3 라인). 단기엔 감지 불가. review-code 주기적 실행 시에만 누적 drift 표면화.
+
+## 안전한 좌표 박제 패턴
+
+### 나쁜 패턴 (line number hardcoding)
+```
+# CLAUDE.md
+live.ts:274 — 주간 집계. 변경 시 참조할 것.
+```
+
+### 좋은 패턴 1 — 심볼 참조
+```
+# CLAUDE.md
+`weeklyAggregator()` in live.ts — 주간 집계. 변경 시 참조할 것.
+```
+
+### 좋은 패턴 2 — grep anchor 박제
+```
+# CLAUDE.md
+live.ts `// QUOTA_WEEKLY_ANCHOR` 주석 근처 — 주간 집계.
+```
+코드에 `// QUOTA_WEEKLY_ANCHOR` 주석 1줄 추가 → 라인 변경 불변 앵커.
+
+### grep-verify 패턴 (review-code chain 선행 step)
+```bash
+# CLAUDE.md 안 file:line 패턴 추출
+grep -oE '[a-zA-Z_-]+\.(ts|tsx|js|mjs):[0-9]+' CLAUDE.md | while read ref; do
+  file=$(echo "$ref" | cut -d: -f1)
+  line=$(echo "$ref" | cut -d: -f2)
+  actual=$(grep -n "" "$(find . -name "$file" -not -path "*/node_modules/*" | head -1)" 2>/dev/null | wc -l)
+  echo "$ref → file has $actual lines"
+done
+```
+
+## 탐지 trigger
+
+review-code chain 진입 시 CLAUDE.md file:line 패턴 grep-verify를 선행 step으로 추가:
+
+1. `grep -oE '[a-zA-Z_-]+\.(ts|tsx):[0-9]+' CLAUDE.md` — 좌표 목록 추출
+2. 각 좌표에 대해 실 파일 라인 수 vs 박제 라인 비교
+3. ±10 라인 이상 drift = flag + CLAUDE.md 갱신 PR
+
+## 다른 패턴과의 관계
+
+| 패턴 | 공통점 | 차이점 |
+|------|--------|--------|
+| [silent-drift-family](./silent-drift-family-pattern) | silent fail | 코드 내 empty catch vs 문서 내 좌표 |
+| [post-ship-meta-documentation-drift](./post-ship-meta-documentation-drift) | CLAUDE.md 부패 | ship 후 누락 vs 기존 박제 좌표 stale |
+| [stale-temporal-comment-cleanup-policy](./stale-temporal-comment-cleanup-policy) | stale 참조 | 코드 주석 vs 문서 좌표 |
+| [drift-detection-methodology](./drift-detection-methodology) | drift 감지 | 레벨 3(머지 전) 완전성 드리프트의 sub-case |
+
+## 예방 원칙
+
+**좌표 박제 = 채무 박제.** 박제 직후엔 정확하지만, 모든 관련 코드 변경이 CLAUDE.md 동기 업데이트를 의무로 만든다. 이 의무는 빠르게 잊힌다.
+
+→ **심볼 참조 > 라인 번호**. 심볼은 리팩토링에도 살아남는다.
+→ **앵커 주석** = 코드-문서 양방향 인덱스. 유지 비용 최소.
+→ **review-code chain grep-verify** = 3회 재발 차단 메커니즘.
