@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.50] — 2026-05-20
+
+### Changed
+- cycles 919~922 — explore-idea + SE oscillation 3연속. cycle 919: explore-idea SUCCESS — 신규 entry #238 agentic-git-commit-body-dispatch-transport (git commit body = agentic self-dispatch IPC 패턴). cycle 920: SE#296 fast-path (명단=7 동일, oscillation 147회). cycle 921: SE#297 fast-path (oscillation 148회, 사후 window 900-919 SE=6/20=30% → cycle 922 SE#298 마커 박제). cycle 922: SE#298 fast-path (oscillation 149회, 사후 window 903-922 SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 923 SE#299 마커 박제 X). wiki 243 entries (워커 auto-ingest 지속). BRANCHED 228/8 (R6 대기 지속).
+
 ## [0.9.49] — 2026-05-20
 
 ### Changed

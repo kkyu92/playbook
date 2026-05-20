@@ -1,6 +1,6 @@
 # TODOS
 
-## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 922 갱신, local 227 / origin 8)
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 923 갱신, local 228 / origin 8)
 
 **상태**: cycle 913 사용자가 옵션 A (`git pull --no-rebase`) 머지 결정 → INDEX.md conflict 1건 script regen 으로 해소 → merge commit `9c1589d` 박제. 머지 직후 origin 에 워커 auto-ingest 2건 추가 push (cycle 776 retro + 1건) → 즉시 215/2 재발. 다음 사용자 결정 시점 재머지 또는 누적 유지.
 **해소 path 후보**: `git pull --no-rebase origin main` (반복 머지) 또는 batch 사용자 영역.
