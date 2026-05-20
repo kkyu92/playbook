@@ -1,0 +1,91 @@
+---
+title: "병렬 에이전트 생태계 통합 지연과 커밋 밀도 비대칭"
+description: "허브-워커 병렬 생태계에서 BRANCHED local/origin divergence 수치가 통합 지연(integration lag) 스냅샷임을 설명. 커밋 밀도 비대칭(hub 소규모 다수 vs worker 고밀도 소수)과 burst ingest 패턴이 raw 수치를 생산성 비율로 읽는 오류를 만드는 이유를 분석."
+date: "2026-05-20"
+category: "harness-engineering"
+tags: ["agentic-system", "develop-cycle", "worker-lesson", "integration", "branched", "commit-density"]
+confidence: 2
+connections:
+  - worker-lesson-velocity-signal
+  - zero-touch-develop-cycle-session-management
+---
+
+## 문제 프레이밍
+
+허브-워커 병렬 개발 생태계에서는 두 개의 비동기 커밋 스트림이 동시에 증가한다.
+
+- **Hub stream**: 매 사이클마다 retro/policy/content/lesson/compound 커밋 5-7개 생성
+- **Worker stream**: 매 worker 사이클마다 auto-ingest 커밋 1개 생성 (= 전체 엔지니어링 사이클의 압축 결과)
+
+이 두 스트림이 독립적으로 성장하면 `git rev-list --left-right --count origin/main...main` 수치가 계속 벌어진다. 예: `local 243 / origin 17`.
+
+이 수치를 "243이 17보다 14배 많으니 hub가 worker보다 14배 활발하다"고 읽으면 **오독**이다.
+
+## 커밋 밀도 비대칭
+
+hub와 worker의 커밋은 밀도(density)가 근본적으로 다르다.
+
+| 스트림 | 커밋/사이클 | 커밋 1개의 의미 |
+|--------|------------|----------------|
+| Hub | 5-7개 | retro 메모, policy 노트, 위키 entry 1개, lesson 1개 — 각 수십 줄 |
+| Worker | 1개 | 전체 사이클 (기획 → 구현 → 테스트 → ship → retro) 결과 압축 |
+
+`local 243 commits ≠ worker 17 commits의 14배 생산성`.
+
+BRANCHED 수치는 **각 스트림의 커밋 빈도 × 경과 사이클 수**를 반영할 뿐이다.
+
+## 통합 지연은 설계된 특성
+
+BRANCHED divergence가 증가하는 이유:
+
+1. **Push-defer 정책**: hub는 매 사이클 local commit을 누적하고 push는 사용자 요청 시점에만 (Vercel 100회/일 한도 보호)
+2. **R6 사용자 결정권**: merge/rebase는 destructive operation → 사용자 명시 시점만
+3. **Worker auto-ingest**: origin/main은 CI/CD trigger → worker lesson push 시 자동 ingest
+
+결과: merge 이벤트 없이는 **통합 지연이 단조 증가(monotonically increasing)**한다. 이는 버그가 아니라 두 스트림이 독립 진화를 허용하는 설계 선택이다.
+
+## Burst Ingest 패턴
+
+Worker lesson ingest는 연속적 스트림이 아니라 **burst** 패턴으로 도착한다.
+
+- Evidence (2026-05-20): 12:45, 12:56, 12:57, 13:02, 13:09 — 25분 내 5회
+- 원인: Cloudflare cron이 여러 worker 사이클을 누적 후 일괄 fire
+- 결과: origin/main은 짧은 시간에 M개 커밋이 한꺼번에 증가
+
+Burst 타이밍이 hub cycle 진행 중과 겹칠 경우 BRANCHED origin 수치가 갑자기 높아 보일 수 있다. 이것도 integration lag snapshot의 정상 현상이다.
+
+## BRANCHED 수치 올바르게 읽기
+
+```
+local N / origin M
+```
+
+- **N (local ahead)**: 마지막 merge 이후 hub 사이클 수 × 사이클당 평균 커밋 수
+- **M (origin ahead)**: 마지막 merge 이후 worker-lesson ingest 횟수 (≈ worker 사이클 수)
+- **N/M 비율**: hub 커밋 빈도 / worker ingest 빈도 (생산성 비율 X)
+- **M의 절대값**: "몇 개의 worker 사이클이 흡수 대기 중인가" → 진짜 backlog
+
+진단에 유용한 질문:
+1. M이 급격히 증가했나? → worker가 여러 사이클을 한꺼번에 push한 burst
+2. N이 비정상적으로 높나? → hub가 오랫동안 push 없이 사이클을 누적
+3. 두 값 모두 0인가? → 최근 merge 완료 (일시적 동기화 상태)
+
+## 실측 예시 (2026-05-20 cycle 931)
+
+- merge 이후 경과: cycle 914 ~ cycle 931 = 약 17 사이클
+- local 243개 = ~17 hub 사이클 × 14.3 커밋/사이클
+- origin 17개 = ~17 worker-lesson ingest = moneyball cycle 780-789 (10사이클) + α
+- 해석: hub 17사이클 동안 worker 10+ 사이클이 흡수 대기 → worker도 활발히 진행 중
+
+## 핵심 요약
+
+1. **BRANCHED = integration lag snapshot, not failure signal**
+2. **raw commit count ≠ productivity ratio** — 커밋 밀도 비대칭 인지 필수
+3. **burst ingest pattern** = worker cron 타이밍으로 인한 구조적 현상
+4. **integration lag monotonically grows** between merges — 설계된 속성
+5. **M의 절대값** (origin ahead) = 실제 흡수 대기 worker 사이클 수 → 의미 있는 backlog 지표
+
+## Connections
+
+- [worker-lesson-velocity-signal](/wiki/harness-engineering/worker-lesson-velocity-signal): worker lesson 수신 속도가 생태계 건강 신호인 이유. 이 entry는 그 신호의 **해석 오류 방지** 보완
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): hub push-defer 정책이 BRANCHED 증가의 설계적 원인

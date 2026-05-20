@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 430,
+  "totalInvocations": 439,
   "skipped": 26,
-  "searched": 404,
-  "hit": 109,
-  "noMatch": 295,
-  "lastUpdated": "2026-05-20T12:43:09.335Z",
+  "searched": 413,
+  "hit": 110,
+  "noMatch": 303,
+  "lastUpdated": "2026-05-20T13:16:51.412Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -126,8 +126,9 @@
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 2,
-    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 2,
-    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1
+    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 3,
+    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1,
+    "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 1
   },
-  "totalQueries": 474
+  "totalQueries": 483
 }
