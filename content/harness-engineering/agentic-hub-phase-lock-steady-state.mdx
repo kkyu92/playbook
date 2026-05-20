@@ -1,0 +1,119 @@
+---
+title: "자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - harness-engineering
+  - chain-pool
+  - steady-state
+  - phase-lock
+  - attractor
+  - agentic-loop
+  - develop-cycle
+  - monitoring
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-skill-evolution-convergence-maturity-signal
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-sliding-window-threshold-natural-oscillation
+  - harness-engineering/hub-worker-compounding-pattern
+status: complete
+description: "자율 에이전트 루프가 수백 사이클 이상 운영되면, chain pool 발화 분포가 특정 3-chain triad로 수렴 안정화(phase-lock)된다. 이를 saturation으로 오진하면 잘못된 강제 개입이 발생한다. Phase-lock은 project phase의 자연 attractor 상태 — 개입보다 유지가 최적이다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 루프가 수백 사이클을 넘어서면, chain pool의 발화 분포가 처음 설계와 달리 특정 subset으로 자연 수렴한다. 이때 두 가지 오진이 가능하다:
+
+1. **Phase-lock을 saturation으로 오진** → 잘 작동 중인 triad에 강제 chain 교체 → 작동 중단
+2. **Saturation을 phase-lock으로 오진** → marginal return 구간에서 같은 chain 계속 발화 → resource 낭비
+
+두 신호의 분리 기준이 필요하다.
+
+## Phase-Lock vs Saturation
+
+| 차원 | Phase-Lock | Saturation |
+|---|---|---|
+| 분포 | **3-4 chain 집중** (합계 ≥ 80%) | 단일 chain 지배 (≥ 60%) |
+| 나머지 chain dormancy | trigger-source 부재 (open issue 0 등) | domain 소진 (trigger 있으나 output 없음) |
+| 개입 필요성 | ❌ 정상 운영 — 유지 | ✅ pool 재조정 필요 |
+| 성과 추세 | 지속 success, output 신선도 유지 | 점진적 marginal return 하락 |
+| chain 간 인과 | 이전 chain이 다음 chain trigger 생성 | 인과 없음 — 동일 trigger 반복 |
+
+## 허브 phase-lock 구조 (2026-05, cycle 902 기준)
+
+허브의 **big-3 triad**:
+
+- **curate**: wiki lint 정리 → 항목 정리 → 새 항목 수용 공간 확보
+- **explore-idea**: 신규 entry 추가 → wiki 성장 → lint debt 생성
+- **skill-evolution**: SE oscillation → SKILL.md 갱신 → triad 품질 유지
+
+이 세 chain은 서로를 trigger하는 인과 루프를 형성한다:
+
+```
+curate (lint clean)
+  └─→ explore-idea (새 항목 생성)
+        └─→ SE window 내 non-SE 진입 → rate 하락 → SE trigger
+              └─→ skill-evolution (SKILL 갱신)
+                    └─→ curate 주기 재활성화 (다음 lint 준비)
+```
+
+## 나머지 chain의 dormancy는 정상
+
+tail-20 분석에서 fix-incident / polish-ui / review-code / worker-incident-triage 등이 0회인 이유:
+
+- open GH issues: 0건 (`gh issue list --state open` 기준)
+- CI silent skip: 0건 (모든 run success)
+- UI 신고: 없음
+- worker inbound: 없음
+
+**trigger-source 부재 = chain dormancy 정상화**. Saturation처럼 강제 발화할 이유 없다. 강제 발화 시 오히려 잡음 생성 (trigger 없는 chain의 "결과 없음" 박제만 누적).
+
+## 감지 기준
+
+```
+Phase-Lock 판정 (모두 충족):
+1. Tail-20 상위 3 chain 합계 ≥ 80%
+2. 각 chain 발화 사이 trigger 인과관계 존재 (git log / cycle_state로 추적 가능)
+3. 나머지 chain의 trigger-source가 실제 부재 (open issue 0 / CI green)
+4. 각 chain outcome = success (marginal return 하락 없음)
+
+Saturation 판정 (아래 중 2개 이상):
+1. 단일 chain ≥ 60% (phase-lock은 3 chain ≥ 80%)
+2. trigger-source 동일 주제 반복 (explore-idea → 동일 카테고리 3회 이상)
+3. 발화 당 신규 output 감소 추세 (entry quality / commit size 하락)
+4. skill-evolution이 "target domain 소진" meta-pattern 감지
+```
+
+## 개입 결정 프레임
+
+```
+Phase-lock 확인 시:
+  → 현 triad 유지
+  → 나머지 chain trigger-source 주기 모니터 (source 재활성 시 자연 진입)
+
+아래 발생 시 재평가 trigger:
+  - open issue 급증 → fix-incident / worker-incident-triage 자연 진입
+  - explore-idea topic 소진 조짐 (JIT search "no match" 연속 3+ 사이클) → saturation 전환 의심
+  - 새 project phase (공개 준비 등) → polish-ui / design-system source 활성화
+  - review-code health score 하락 → review-code source 재활성화
+```
+
+## 실증 evidence
+
+| 기간 | Window | Big-3 구성 | 비율 |
+|---|---|---|---|
+| cycles 142–161 (2026-05-07) | 20 사이클 | curate 40% + dimension-cycle 20% + review-code 15% | 75% |
+| cycles 882–901 (2026-05-20) | 20 사이클 | SE 45% + explore-idea 30% + curate 25% | 100% |
+
+cycles 142→901 (760 사이클): big-3 구성원이 교체됨 (dimension-cycle 탈락 → skill-evolution 대두) — **그러나 "3 chain triad" 구조 자체는 유지**. Project phase 전환 시 구성원만 바뀌고 attractor 형태는 보존된다.
+
+## 연결 패턴
+
+이 패턴은 [agentic-chain-saturation-detection](agentic-chain-saturation-detection)의 "포화 신호" 와 대칭적이다 — 포화는 단일 chain 과사용의 문제이고, phase-lock은 triad 수렴의 정상 성숙 신호다. [agentic-trigger-skip-dual-condition-homeostasis](agentic-trigger-skip-dual-condition-homeostasis)의 A+B 이중 조건 메커니즘이 phase-lock 트리거 제어의 기반이 된다.

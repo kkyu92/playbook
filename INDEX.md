@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T03:27:59.606Z
+Updated: 2026-05-20T03:56:10.066Z
 
-## 엔트리 (232개)
+## 엔트리 (233개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -36,6 +36,7 @@ Updated: 2026-05-20T03:27:59.606Z
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [자율 에이전트 기능 포화 순차 배치 배포 패턴 — Spec-Fire-Audit 3단계 구조](wiki/harness-engineering/agentic-feature-saturation-sequential-batch-delivery) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
+- [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [자율 에이전트 Lite-First 스캔 게이트 실행 패턴 — 두 단계 깊이 제어](wiki/harness-engineering/agentic-lite-first-scan-gate-execution-pattern) — confidence: 2, status: complete
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
@@ -808,6 +809,11 @@ Updated: 2026-05-20T03:27:59.606Z
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
+- harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-skill-evolution-convergence-maturity-signal
+- harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-sliding-window-threshold-natural-oscillation
+- harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ harness-engineering/hub-worker-compounding-pattern
