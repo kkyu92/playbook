@@ -1,0 +1,134 @@
+---
+title: "자율 에이전트 메타-체인 fast-path streak guard — domain chain positive streak과의 비대칭 처리"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - agentic-loop
+  - skill-evolution
+  - streak-guard
+  - meta-chain
+  - chain-pool
+  - harness-engineering
+  - fast-path
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/develop-cycle-positive-streak-recognition
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+status: complete
+description: "자율 에이전트 루프에서 domain chain 연속 성공 streak은 계속해야 하지만, meta-chain(skill-evolution) 연속 fast-path success는 N=3 이후 강제 중단해야 한다. outcome 레이블은 같아도 내부 작업량이 질적으로 다르기 때문이다."
+type: entry
+source: manual
+---
+
+## 문제
+
+자율 에이전트 루프의 streak 처리에는 잘 알려진 규칙이 있다:
+
+> **Positive streak(domain chain + outcome=success N회 연속) = 계속 진행** — 작동 중인 chain을 인위 중단하지 않는다.
+
+([agentic-positive-streak-recognition](develop-cycle-positive-streak-recognition) 패턴)
+
+그런데 skill-evolution chain이 3회 연속 `outcome=success`를 보고하면서도 강제 중단이 필요한 상황이 발생한다. **outcome 레이블이 같아도 내부 작업 내용이 질적으로 다르기 때문이다.**
+
+## 두 종류의 success outcome
+
+| 구분 | chain 예시 | success 의미 | 반복 시 ROI |
+|---|---|---|---|
+| **domain-chain success** | explore-idea, curate, fix-incident | 실제 새 작업 완료 (entry 생성 / lint fix / bug fix) | 반복할수록 누적 가치 ↑ |
+| **meta-chain fast-path success** | skill-evolution (fast-path) | 실제 변경 없음, evidence 1줄 append만 | 반복해도 추가 가치 거의 0 |
+
+**fast-path success**는 skill-evolution chain 안에서 다음 조건 충족 시 발화한다:
+- (A) 0회 chain 명단이 직전 SE 대비 동일 (project phase 변화 없음)
+- oscillation_n ≥ 5 (이미 충분한 반복 evidence 누적)
+
+fast-path는 MIGRATION-PATH.md에 한 줄 append + TODOS BRANCHED 갱신만 하고 cycle outcome=`success`를 보고한다. SKILL.md 내용 변경은 없다.
+
+## 왜 비대칭 처리가 필요한가
+
+```
+도메인 chain 연속 success (e.g., explore-idea × 3):
+  cycle 1: entry A 생성 → 새 지식 박제
+  cycle 2: entry B 생성 → 새 지식 박제
+  cycle 3: entry C 생성 → 새 지식 박제
+  → 누적 ROI ↑. 계속할 이유 명확.
+
+meta-chain 연속 fast-path success (e.g., skill-evolution × 3):
+  cycle 1: MIGRATION-PATH 1줄 append → 이미 알고 있는 사실 재확인
+  cycle 2: MIGRATION-PATH 1줄 append → 동일
+  cycle 3: MIGRATION-PATH 1줄 append → 동일
+  → 추가 ROI ≈ 0. 다른 domain chain이 놓여 있는 동안 meta-loop에 stuck.
+```
+
+**핵심 비대칭**: domain chain의 success는 매회 새 artifact를 만들지만, meta-chain의 fast-path success는 매회 동일한 최소 동작(1줄 append)만 반복한다.
+
+## R3 guard 설계 원칙
+
+**N=3 연속 meta-chain 실행 후 강제 중단**:
+
+1. **N 선택 이유**: 1회 = 다음 사이클 rate 변화 불확실. 2회 = fast-path 패턴 아직 미확정. 3회 = 동일 fast-path 3회 = 안정 oscillation 확정, 다음 domain cycle 필요.
+
+2. **강제 중단 시 처리**: 마커 파일 삭제 (`skill-evolution-pending` 제거) → 정상 chain 선택 로직 복귀. 이번 cycle의 trigger-5 재평가는 cycle 끝 retro에서 정상 수행.
+
+3. **마커 재박제 조건**: R3 guard 발동 후 non-meta cycle 1+ 완료 → retro에서 trigger-5 재평가 → 조건 충족 시 마커 재박제 가능. (oscillation 지속이면 다음 SE에서 또 fast-path, 또 3회 후 R3 guard 발동 — 정상 패턴)
+
+```
+skill-evolution-pending 마커 존재
+  + 직전 3 cycle 모두 skill-evolution
+  → 마커 삭제 + 다른 chain 선택
+  → 이번 cycle domain work
+  → retro: trigger-5 재평가 → 마커 재박제 가능
+```
+
+## 실증 데이터
+
+허브 develop-cycle cycle 872~874:
+- cycle 872: skill-evolution, outcome=success (fast-path #272)
+- cycle 873: skill-evolution, outcome=success (fast-path #273)
+- cycle 874: skill-evolution, outcome=success (fast-path #274)
+- **cycle 875**: R3 guard 발동 → 마커 삭제 → explore-idea (domain chain) 실행
+
+3회 모두 MIGRATION-PATH.md 1줄 append + TODOS BRANCHED 갱신만 수행. SKILL.md 변경 없음. outcome=success 레이블에도 불구하고 domain work 부재 3회.
+
+SE oscillation steady-state에서 이 패턴이 반복적으로 나타난다: 슬라이딩 윈도우 rate < 40% → 마커 박제 → fast-path SE × 2-3회 → R3 guard → domain chain 1회 → 마커 재박제 → 반복.
+
+## 구현 시 고려사항
+
+### fast-path success vs full success 명시적 구분
+
+더 명확한 구현은 outcome 자체에 fast-path 여부를 표기하는 것이다:
+
+```json
+// 현재 (단순)
+"outcome": "success"
+
+// 개선안 (fast-path 명시)
+"outcome": "success",
+"outcome_type": "fast_path"  // 또는 "full"
+```
+
+`outcome_type: fast_path`인 경우 streak guard threshold를 domain chain success(N=∞, 강제 중단 없음)와 다르게 적용 가능.
+
+### 적용 범위: meta-chain vs domain chain 구분
+
+chain pool에서 meta-chain(자기수정 또는 시스템 메타 조정)을 명시적으로 분류하면 streak guard를 자동 적용할 수 있다:
+
+| chain 종류 | 예시 | success streak 처리 |
+|---|---|---|
+| domain chain | explore-idea, curate, fix-incident, review-code, polish-ui | 계속 진행 (positive streak) |
+| meta-chain | skill-evolution | N=3 fast-path 연속 시 강제 중단 |
+
+## 안티패턴
+
+**안티패턴 1: fast-path success도 positive streak으로 취급**
+- 결과: meta-chain이 domain work를 장기간 block. 허브 cycle 872~874가 3연속이 되기 전에 중단하지 않았으면 4~5회 연속으로 이어질 수 있었다.
+
+**안티패턴 2: meta-chain 연속 실행을 버그로 취급**
+- 결과: 정상 oscillation 패턴을 오진단. fast-path 2회까지는 정상 (rate B 확인 중). 3회 이후만 guard 필요.
+
+**안티패턴 3: R3 guard를 general streak guard와 동일하게 취급**
+- 결과: domain positive streak도 3회에서 중단 → 작동 중인 domain chain 인위 교란.

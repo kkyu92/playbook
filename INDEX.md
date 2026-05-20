@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-19T15:20:52.329Z
+Updated: 2026-05-20T01:01:22.591Z
 
-## 엔트리 (223개)
+## 엔트리 (224개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -37,6 +37,7 @@ Updated: 2026-05-19T15:20:52.329Z
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
 - [자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴](wiki/harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
+- [자율 에이전트 메타-체인 fast-path streak guard — domain chain positive streak과의 비대칭 처리](wiki/harness-engineering/agentic-meta-chain-fast-path-streak-guard) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
@@ -801,6 +802,10 @@ Updated: 2026-05-19T15:20:52.329Z
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization ↔ harness-engineering/agentic-gap-trigger-chain-health-check
