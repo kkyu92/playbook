@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 363,
+  "totalInvocations": 382,
   "skipped": 26,
-  "searched": 337,
-  "hit": 90,
-  "noMatch": 247,
-  "lastUpdated": "2026-05-20T08:06:39.209Z",
+  "searched": 356,
+  "hit": 94,
+  "noMatch": 262,
+  "lastUpdated": "2026-05-20T08:41:37.163Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 24,
+    "reports/closed-loop-health": 25,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -84,7 +84,7 @@
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "harness-engineering/debug-page-silent-drift-trap": 1,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
-    "retros/2026-05-12-cycles-350-355": 5,
+    "retros/2026-05-12-cycles-350-355": 6,
     "infrastructure/nextjs-security-patching-defense-logic-reinforcement": 1,
     "infrastructure/npm-pnpm-supply-chain-security-enhancement": 1,
     "harness-engineering/llm-agent-artifact-first-diagnosis": 1,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 2,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 5,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 6,
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -112,7 +112,7 @@
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
-    "harness-engineering/worker-lesson-velocity-signal": 4,
+    "harness-engineering/worker-lesson-velocity-signal": 5,
     "agents/external-tool-integration-for-ai-agents": 1,
     "retros/2026-05-13-cycles-392-394": 1,
     "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 1,
@@ -120,7 +120,9 @@
     "harness-engineering/agentic-content-cycle-production-maintenance-oscillation": 1,
     "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 1,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
-    "agents/multi-agent-collaboration-design-patterns": 1
+    "agents/multi-agent-collaboration-design-patterns": 1,
+    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 1,
+    "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1
   },
-  "totalQueries": 407
+  "totalQueries": 426
 }

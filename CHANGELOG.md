@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.47] — 2026-05-20
+
+### Changed
+- cycle 909 curate SUCCESS — wiki lint CLEAN (236 entries) + 0건 all clear (orphan/isolated/stale/long-in-progress/JIT unused) + pattern candidate 'drift' 이미 승격 확인 + JIT search 중복 없음 (#235/#236) + memory 2건 갱신 (project_bidirectional_compound_growth_goal / project_develop_cycle_skill_family: BRANCHED 207/112, SE oscillation 142회) + TODOS BRANCHED 갱신 (local 207/origin 112). 직전 cycles: 906 explore-idea entry #235 + 907 SE#291 fast-path + 908 explore-idea entry #236. SE oscillation 142회 steady-state (skip: window 888-907 SE=8/20=40% B PASS + 명단=8 A PASS).
+
 ## [0.9.46] — 2026-05-20
 
 ### Changed

@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T08:19:00.498Z
+Updated: 2026-05-20T08:37:44.217Z
 
-## 엔트리 (235개)
+## 엔트리 (236개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -20,6 +20,7 @@ Updated: 2026-05-20T08:19:00.498Z
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 - [Claude Code 컨텍스트 지속성: CTX 플러그인 통합 — 에이전트 효율성 및 지식 활용 증대](wiki/context-engineering/claude-code-ctx-plugin-context-persistence) — confidence: 1, status: draft
+- [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/context-engineering/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
 - [Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패](wiki/context-engineering/nextjs-instrumentation-location) — confidence: 3, status: complete
 
@@ -550,6 +551,10 @@ Updated: 2026-05-20T08:19:00.498Z
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
+- context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ context-engineering/ambient-knowledge-injection
+- context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
+- context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ context-engineering/nextjs-instrumentation-location
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/vector-db-embedding-data-optimization-patterns
