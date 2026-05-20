@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 442,
+  "totalInvocations": 463,
   "skipped": 26,
-  "searched": 416,
-  "hit": 113,
-  "noMatch": 303,
-  "lastUpdated": "2026-05-20T13:33:56.732Z",
+  "searched": 437,
+  "hit": 116,
+  "noMatch": 321,
+  "lastUpdated": "2026-05-20T13:47:40.063Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -98,7 +98,7 @@
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
-    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 10,
+    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 11,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 1,
@@ -129,7 +129,9 @@
     "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 3,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1,
     "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 1,
-    "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 1
+    "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 1,
+    "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
+    "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 1
   },
-  "totalQueries": 486
+  "totalQueries": 507
 }
