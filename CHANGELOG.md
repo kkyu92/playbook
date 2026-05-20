@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.44] — 2026-05-20
+
+### Changed
+- cycle 897 curate SUCCESS — wiki lint CLEAN (232 entries) + scan-promotions 신규 후보 없음 (react/develop-cycle-hub/mdx 관찰 중 N<3) + memory 2건 갱신 (project_develop_cycle_skill_family / project_bidirectional_compound_growth_goal) + TODOS BRANCHED 갱신 (local 187/origin 97). 직전 cycles: 895 SE#282 fast-path + 896 explore-idea entry #232 (agentic-r6-boundary-cumulative-tracking-patience-ledger). SE oscillation 136회 steady-state (skip: window 876-895 SE=8/20=40% B PASS + 명단=8 A PASS).
+
 ## [0.9.43] — 2026-05-20
 
 ### Changed
