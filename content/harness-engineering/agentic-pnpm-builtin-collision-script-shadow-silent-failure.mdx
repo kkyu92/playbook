@@ -1,0 +1,125 @@
+---
+title: "pnpm 빌트인 명령어 충돌 — 에이전트 JIT 검색 스크립트 무음 실패 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - pnpm
+  - package-manager
+  - script-invocation
+  - silent-failure
+  - jit-search
+  - harness-engineering
+  - debug
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+  - harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "pnpm의 빌트인 명령어(search, test, start 등)는 같은 이름의 package.json 스크립트를 silent하게 shadow한다. 에이전트가 `pnpm search <쿼리>`를 실행하면 위키 임베딩 검색 대신 npm 레지스트리를 쿼리한다. 에이전트는 출력 형식 불일치로 인해 이를 'no match'로 해석하고 계속 진행한다 — 실제 검색은 한 번도 실행되지 않은 채로."
+type: entry
+source: explore-idea
+---
+
+## 관찰 (cycle 910 evidence)
+
+허브 develop-cycle의 JIT 검색 계약은 CLAUDE.md에 다음과 같이 명시되어 있었다:
+
+```bash
+pnpm search "<질문>" 3 --inject   # 관련 청크만 inject 모드로 출력
+```
+
+cycle 910 진단 중 이 명령을 실행했을 때 위키 검색 결과 대신 npm 레지스트리 패키지 목록이 반환됐다:
+
+```
+contentful-batch-libs
+Library modules used by contentful batch utility CLI tools.
+...
+batch
+Simple async batch with concurrency control...
+```
+
+원인: `pnpm search` 는 pnpm v10의 **빌트인 명령어** (npm 레지스트리 검색)다. 프로젝트의 `package.json`에 정의된 `search` 스크립트(`node scripts/search.mjs`)가 빌트인에 의해 shadow됐다.
+
+올바른 실행 검증:
+
+```bash
+pnpm run search "zero touch signal" 2 --inject
+# → <!-- JIT: no match (threshold=0.87, best=0.8545) -->  ✅ 위키 검색 결과
+
+node scripts/search.mjs "zero touch signal" 2 --inject
+# → 동일 결과  ✅
+```
+
+## 패턴: 빌트인 충돌 무음 실패
+
+npm / pnpm / yarn 은 빌트인 명령어를 package.json 스크립트보다 우선 실행한다. 충돌이 발생해도 **경고 없이 빌트인이 실행**된다.
+
+### 충돌 위험 스크립트 이름
+
+| package.json 스크립트명 | 충돌하는 빌트인 | 에이전트 영향 |
+|---|---|---|
+| `search` | `pnpm search`, `npm search` | 위키 검색 → npm 레지스트리 검색 |
+| `test` | `npm test` | 프로젝트 테스트 실행 실패 |
+| `start` | `npm start` | 잘못된 시작 스크립트 |
+| `install` | `npm install`, `pnpm install` | 패키지 설치 트리거 |
+| `publish` | `npm publish` | 실수 배포 위험 |
+| `run` | `pnpm run`, `npm run` | 재귀 실행 |
+
+`test` / `start` 의 경우 npm은 빌트인 실행 전 package.json 스크립트를 우선하므로 `npm test` = `npm run test`. 하지만 `search` 같은 순수 빌트인은 스크립트를 shadow한다.
+
+## 에이전트에게 특히 위험한 이유
+
+에이전트는 출력 형식을 신뢰한다. `pnpm search` 의 npm 레지스트리 출력은:
+- 위키 검색 형식(`<!-- JIT: no match... -->` 또는 청크 마크다운)과 다름
+- 에이전트는 이를 wiki search 실패나 "no match"로 해석하지 않고 **예기치 않은 출력**으로 처리하거나 무시
+- 결과적으로 JIT 중복 확인 없이 계속 진행
+
+이는 `agentic-explore-idea-topic-discovery-friction-coverage-signal` 의 "나쁜 마찰 — 원인 D: 인프라 명령어 충돌"에 해당한다 (당시 entry에서 명시되지 않은 원인).
+
+### 무음 실패 진단 체크리스트
+
+JIT 검색이 이상하게 느껴질 때:
+
+```bash
+# 1. 빌트인 vs 스크립트 충돌 확인
+pnpm run search "test query" 1    # pnpm run = 스크립트 강제 실행
+node scripts/search.mjs "test query" 1  # 직접 실행 (가장 안전)
+
+# 2. 두 결과가 다르면 충돌 발생 중
+# pnpm search <args> → npm 레지스트리 결과 (충돌)
+# pnpm run search <args> → 위키 임베딩 결과 (정상)
+```
+
+## 수정 방법
+
+**옵션 A: 직접 스크립트 실행 (권장)**
+```bash
+node scripts/search.mjs "<질문>" 3 --inject
+```
+빌트인 충돌 위험 없음. 경로가 명확해 에이전트가 실수할 여지 최소화.
+
+**옵션 B: `pnpm run` 명시**
+```bash
+pnpm run search "<질문>" 3 --inject
+```
+`run` 키워드가 package.json 스크립트를 강제 실행하도록 지시.
+
+**옵션 C: 스크립트 이름 변경 (근본 해결)**
+package.json에서 `search` → `wiki-search` 로 변경하면 충돌 자체가 사라짐. 단, CLAUDE.md, skill 파일 등 참조처 모두 갱신 필요.
+
+이 entry 작성 시 허브는 옵션 A를 채택: CLAUDE.md를 `pnpm search` → `node scripts/search.mjs` 로 패치.
+
+## 일반화: 에이전트 스크립트 명명 가이드
+
+에이전트가 사용하는 스크립트는 충돌 가능한 이름을 피하거나 항상 `node scripts/<name>.mjs` 형태로 직접 호출한다:
+
+```
+위험: pnpm search / pnpm test / pnpm start / pnpm publish
+안전: node scripts/search.mjs / node scripts/test-runner.mjs
+```
+
+CLAUDE.md 등 에이전트 instruction 파일에 스크립트 호출을 박제할 때는 **항상 `node scripts/` 형태를 사용**한다. `pnpm <name>` 단축 형태는 빌트인 충돌 여부를 검증한 경우에만 허용.

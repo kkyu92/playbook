@@ -48,7 +48,7 @@
 위키 지식이 필요할 때 **MDX 파일을 직접 읽지 말고** 검색을 먼저 실행:
 
 ```bash
-pnpm search "<질문>" 3 --inject   # 관련 청크만 inject 모드로 출력
+node scripts/search.mjs "<질문>" 3 --inject   # 관련 청크만 inject 모드로 출력
 ```
 
 청크만 반환되므로 context 절감 (전체 위키 → 관련 2~3 청크).
