@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.41] — 2026-05-20
+
+### Changed
+- cycle 884 curate SUCCESS — wiki lint CLEAN (227 entries) + journal 040/041/042/043/044/047 status in-progress→published (6건) + TODOS BRANCHED 갱신 (local 166/origin 82). scan-promotions: 신규 승격 후보 없음. SE oscillation 131회 steady-state.
+
 ## [0.9.40] — 2026-05-20
 
 ### Changed
