@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 439,
+  "totalInvocations": 442,
   "skipped": 26,
-  "searched": 413,
-  "hit": 110,
+  "searched": 416,
+  "hit": 113,
   "noMatch": 303,
-  "lastUpdated": "2026-05-20T13:16:51.412Z",
+  "lastUpdated": "2026-05-20T13:33:56.732Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -64,7 +64,7 @@
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
     "retros/2026-05-12-cycles-334-341": 3,
     "retros/2026-05-12-cycles-331-332": 3,
-    "harness-engineering/zero-touch-develop-cycle-session-management": 9,
+    "harness-engineering/zero-touch-develop-cycle-session-management": 10,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 2,
     "retros/2026-05-13-cycles-457-458": 1,
@@ -104,7 +104,7 @@
     "retros/2026-05-12-cycles-342-346": 1,
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 2,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
-    "infrastructure/vercel-ignore-command-preview-skip": 1,
+    "infrastructure/vercel-ignore-command-preview-skip": 2,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
@@ -112,7 +112,7 @@
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
-    "harness-engineering/worker-lesson-velocity-signal": 5,
+    "harness-engineering/worker-lesson-velocity-signal": 6,
     "agents/external-tool-integration-for-ai-agents": 1,
     "retros/2026-05-13-cycles-392-394": 1,
     "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 1,
@@ -128,7 +128,8 @@
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 2,
     "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 3,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1,
-    "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 1
+    "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 1,
+    "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 1
   },
-  "totalQueries": 483
+  "totalQueries": 486
 }
