@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 349,
+  "totalInvocations": 351,
   "skipped": 25,
-  "searched": 324,
+  "searched": 326,
   "hit": 89,
-  "noMatch": 235,
-  "lastUpdated": "2026-05-20T03:54:03.177Z",
+  "noMatch": 237,
+  "lastUpdated": "2026-05-20T04:00:49.598Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -122,5 +122,5 @@
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1
   },
-  "totalQueries": 393
+  "totalQueries": 395
 }
