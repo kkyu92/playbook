@@ -1,0 +1,166 @@
+---
+title: "자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - self-dispatch
+  - commit-body
+  - subtype-transport
+  - zero-infrastructure
+  - agentic-loop
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+source: explore-idea
+---
+
+## 핵심 인사이트
+
+에이전트가 자기 자신에게 신호를 보낼 때 HTTP 엔드포인트나 workflow_dispatch 같은 별도 인프라가 필요 없다. git commit body 에 `subtype:` 필드를 박으면 git history 자체가 내구성 있는 메시지 큐가 된다.
+
+## 문제 상황
+
+자율 에이전트 루프가 사이클 간 정보를 전달해야 할 때:
+
+- 다음 사이클에게 "retro 결과 읽어라" 신호
+- N 사이클 누적 패턴 발견 시 SKILL 갱신 trigger
+- 새 chain 후보 아이디어 → 미래 skill-evolution 발화
+
+이 신호들을 별도 webhook, queue, 파일 기반 pub/sub 로 구현하면 인프라 비용이 발생한다. 에이전트가 이미 매 사이클 commit 을 만들고 있다면 그 commit 이 transport 역할을 할 수 있다.
+
+## 패턴
+
+### commit body 구조
+
+```
+<prefix>: <commit title>
+
+subtype: <channel-slug>
+<channel-specific payload>
+```
+
+- `<prefix>`: CLAUDE.md 표준 (feat / fix / data / content / refactor / policy / memory / lesson)
+- `subtype:` 필드: dispatch 채널 식별자
+- payload: 채널별 구조화 데이터 (YAML-like 또는 마크다운)
+
+### reader 패턴
+
+```bash
+# 특정 채널의 메시지 목록
+git log --all --grep "subtype: cycle-retro" --oneline
+
+# 마지막 N개 cycle-retro 읽기
+git log --all --grep "subtype: cycle-retro" --oneline | head -N
+
+# 특정 채널 누적 count
+git log --all --grep "subtype: chain-evolution" --oneline | wc -l
+```
+
+## 허브 dispatch 채널 4종
+
+| 채널 | subtype 값 | commit prefix | 내용 | trigger |
+|---|---|---|---|---|
+| `cycle-retro` | `subtype: cycle-retro` | `policy:` | cycle_n / chain_selected / outcome / retro.summary / next_recommended_chain | 매 사이클 강제 1회 |
+| `lesson` | `subtype: lesson` | `lesson:` | 학습 사례 / 원인 / 대응 / 박제 위치 | 자율 (사이클 내 발견 시) |
+| `meta-pattern` | `subtype: meta-pattern` | `memory:` | 패턴 description + 증거 (cycle_n list) + 추천 행동 | N≥5 누적 패턴 발견 시 |
+| `chain-evolution` | `subtype: chain-evolution` | `memory:` | 신규 chain spec (slug / trigger / 시퀀스 / stop 조건) | 자율 chain 후보 판단 시 |
+
+### cycle-retro commit 예시
+
+```
+policy: cycle 904 retro — explore-idea SUCCESS
+
+subtype: cycle-retro
+cycle_n: 904
+chain_selected: explore-idea
+outcome: success
+retro.summary: 신규 entry agentic-commit-body-subtype-dispatch-transport 박제
+next_recommended_chain: curate
+next_recommended_reason: explore→curate 교번 패턴 유지
+```
+
+### chain-evolution commit 예시
+
+```
+memory: chain-evolution security-audit chain 후보
+
+subtype: chain-evolution
+slug: security-audit
+trigger:
+  - GH issue body 에 security/audit/CVE 키워드
+  - dependabot vulnerability alert
+sequence: /cso → /security-review → spec write → /ship
+stop: security PR 박제 또는 retro-only
+evidence:
+  - cycle 12: fix-incident 로 처리됐지만 cso 시야 부재
+recommendation: chain pool 추가 가치
+```
+
+## dispatch taxonomy
+
+### 자기 dispatch (self-dispatch) — commit body subtype
+
+- **방향**: 에이전트 → 자기 자신 (동일 루프 미래 사이클)
+- **인프라**: git history 그 자체 (별도 infra X)
+- **내구성**: git history = append-only log. 절대 소실 X
+- **순서 보장**: totally-ordered (commit timestamp)
+- **멱등성**: `git log --grep` 읽기는 부작용 없음
+- **적용**: develop-cycle 자기 개선 loop, retro 결과 이월, SKILL trigger
+
+### 외부 dispatch (external-dispatch) — workflow_dispatch
+
+- **방향**: 에이전트 A → 에이전트 B (다른 레포 / 다른 루프)
+- **인프라**: GitHub Actions workflow_dispatch event
+- **내구성**: GH Actions event log (7일 만료 주의)
+- **적용**: 워커 → 허브 inbound (hub-dispatch label issue 생성), 허브 → 워커 작업 배분
+
+**결정 기준**: 수신자가 자기 자신 (동일 git 레포 미래 사이클) 이면 commit body. 수신자가 다른 에이전트 / 다른 레포 이면 workflow_dispatch.
+
+## 주요 속성
+
+**Durable**: git history 는 append-only. 메시지 소실 불가. DB/queue 장애 없음.
+
+**Zero-infrastructure**: 새 서비스, webhook, 큐 불필요. git 이 이미 있음.
+
+**Audit-native**: `git log --grep "subtype:"` 로 전체 dispatch history 즉시 조회. 별도 audit log 불필요.
+
+**Totally-ordered**: commit timestamp 보장. 메시지 순서 역전 없음.
+
+**Idempotent reads**: 읽기 = 부작용 없음. 같은 쿼리 N회 실행해도 상태 변화 없음.
+
+**Low-bandwidth**: commit body 는 텍스트. 대용량 데이터 전달엔 부적합 (file path 참조 사용).
+
+## 적용 조건
+
+commit body subtype dispatch 가 맞는 경우:
+
+- 자율 에이전트 루프 (매 사이클 commit 생성)
+- 수신자 = 동일 레포 미래 사이클
+- 신호 크기 < 4KB (commit message 한도)
+- 실시간성 불필요 (다음 사이클에 처리 OK)
+
+HTTP/queue 가 맞는 경우:
+
+- 실시간 알림 필요
+- 크로스 레포 / 크로스 팀 통신
+- 구조화 JSON payload 5KB 초과
+- 구독자 N명 fan-out
+
+## 검증 증거
+
+허브 develop-cycle 사이클 1~904 (900+ 사이클) 에서 매 사이클 `cycle-retro` 채널 발화. 단 한 건의 메시지 소실 없음. git history 에서 `git log --grep "subtype: cycle-retro" --oneline | wc -l` = 사이클 수 일치.
+
+`chain-evolution` 채널은 cycle 47+ 부터 산발 발화. 5건 누적 시 `skill-evolution` trigger 자동 발화 — SKILL 자가 갱신 메커니즘.
+
+## 관련 패턴
+
+- **[agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt](harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt)**: commit 이 signal vs debt 인지 판단 기준
+- **[zero-touch-develop-cycle-session-management](harness-engineering/zero-touch-develop-cycle-session-management)**: zero-touch 루프 전체 아키텍처 (이 패턴이 루프 내 사이클 간 통신 담당)
+- **[agentic-content-cycle-production-maintenance-oscillation](harness-engineering/agentic-content-cycle-production-maintenance-oscillation)**: cycle-retro dispatch 가 explore↔curate 교번 안정화에 기여하는 메커니즘
