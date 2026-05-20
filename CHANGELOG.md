@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.54] — 2026-05-20
+
+### Changed
+- cycles 930~932 + cycle 933 진행 중. cycle 930: curate SUCCESS — wiki lint CLEAN (246 entries) + 0건 all clear + /learn 0 learnings + memory 2건 갱신 + compound 문서화 (cycles 928~929) + TODOS BRANCHED 242/16 갱신. cycle 931: explore-idea SUCCESS — 신규 entry #247 agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry (허브-워커 병렬 생태계 BRANCHED divergence = 통합 지연 스냅샷, 커밋 밀도 비대칭 분석) + TODOS BRANCHED 243/17 갱신. cycle 932: SE #300 fast-path SUCCESS — window 912-931 SE=7/20=35% B FAIL + 명단=7 동일 A PASS → skip 조건 미충족 → 마커 발화 → fast-path (MIGRATION-PATH 1줄 append). 사후 window 913-932 SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 933 SE#301 마커 박제 X. oscillation 153회 steady-state. cycle 933 (진행 중): curate — entry #247 connections orphan fix (category prefix 누락 harness-engineering/ 추가) → lint CLEAN (0 orphans). BRANCHED 246/20 (R6 대기 지속). wiki 247 entries.
+
+### Fixed
+- entry #247 connections slug orphan — connections 필드에 category prefix 없이 단순 slug 사용 → lint "Orphan Links" 2건. harness-engineering/ prefix 추가로 해소. 재발 방지: connections 항목은 반드시 category/slug 형식 사용.
+
 ## [0.9.53] — 2026-05-20
 
 ### Changed
