@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 320,
+  "totalInvocations": 329,
   "skipped": 25,
-  "searched": 295,
+  "searched": 304,
   "hit": 81,
-  "noMatch": 214,
-  "lastUpdated": "2026-05-20T02:37:21.567Z",
+  "noMatch": 223,
+  "lastUpdated": "2026-05-20T02:51:32.890Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -115,5 +115,5 @@
     "harness-engineering/worker-lesson-velocity-signal": 1,
     "agents/external-tool-integration-for-ai-agents": 1
   },
-  "totalQueries": 364
+  "totalQueries": 373
 }

@@ -1,0 +1,143 @@
+---
+title: "자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - explore-idea
+  - jit-search
+  - wiki-coverage
+  - maturity-signal
+  - knowledge-management
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+  - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
+status: complete
+description: "자율 에이전트가 explore-idea 체인에서 신규 위키 토픽을 찾기 위해 수행하는 JIT 검색 쿼리 수(탐색 마찰)는 위키 커버리지 성숙도의 역방향 지표다. 마찰 증가 = 커버리지 향상. 단, '좋은 마찰'(도메인 포화)과 '나쁜 마찰'(검색 설계 결함)을 구분해야 한다."
+type: entry
+source: explore-idea
+---
+
+## 관찰
+
+자율 에이전트 허브 develop-cycle의 explore-idea 체인은 새 위키 entry를 생성하기 전에 반드시 JIT 검색을 수행한다. 검색 목적: 기존 entry와의 중복/유사 여부 확인.
+
+**cycle 890 사례** (위키 229 entries 시점):
+
+| 쿼리 | 결과 |
+|---|---|
+| "zero-touch n-counter session handoff signal" | no match |
+| "multi-session persistence state handoff" | no match |
+| "watch.sh fire signal autonomous" | no match |
+| "chain alternation next recommended cycle" | no match |
+| "curate explore-idea oscillation cycle alternation" | no match → 기존 entry 직접 확인으로 중복 발견 |
+| "agentic system wiki entry confidence lifecycle maturity" | no match |
+| "agentic wiki entry quality graveyard creation value" | no match |
+| "explore-idea topic selection anti-duplication search" | no match |
+| "explore-idea JIT search topic discovery friction" | no match → 신규 gap 확정 |
+
+9개 쿼리를 소비하고서야 진짜 gap을 발견했다.
+
+## 탐색 마찰의 의미
+
+신규 entry 생성 전 소요되는 JIT 검색 쿼리 수를 **탐색 마찰(discovery friction)**이라 정의한다.
+
+```
+탐색 마찰 = JIT 검색 쿼리 수 (첫 gap 확정까지)
+```
+
+마찰이 높을수록 "쉬운 토픽"이 이미 위키에 존재한다는 의미다. 역설적으로 **탐색 마찰 증가 = 위키 커버리지 성숙도 향상**의 신호다.
+
+### 위키 규모별 기대 마찰 (추정)
+
+| 위키 규모 | 기대 탐색 마찰 | 설명 |
+|---|---|---|
+| ~50 entries | 1-2 쿼리 | 도메인 대부분 미개척. 어떤 관찰도 신규 |
+| ~100 entries | 2-4 쿼리 | 주요 패턴 커버됨. 세부 변형 공간 |
+| ~200 entries | 5-9 쿼리 | 핵심 + 2차 패턴 포화. 3차 인사이트 탐색 필요 |
+| ~300+ entries | 10+ 쿼리 OR 도메인 전환 | 현 도메인 포화. 인접 도메인 탐색 또는 기존 entry 보강으로 전환 |
+
+cycle 890 시점 (229 entries, 마찰=9)은 "200 entries 구간"에 정확히 부합한다.
+
+## 좋은 마찰 vs. 나쁜 마찰
+
+탐색 마찰 증가가 항상 긍정 신호는 아니다. 두 원인을 구분해야 한다.
+
+### 좋은 마찰 — 도메인 포화 (원하는 상태)
+
+- 검색 쿼리를 다양하게 변형해도 기존 entry가 발견됨
+- 최종적으로 진짜 gap을 찾고 새 entry를 생성함
+- 새 entry는 기존 entry와 연결 가능 (connections ≥ 1)
+
+**신호**: "위키가 이 도메인을 잘 커버하고 있다"
+
+### 나쁜 마찰 — 검색 설계 결함
+
+원인 A: **임베딩 인덱스 스탈** — 최근 추가된 entry가 인덱스에 없음. `pnpm embed-content` 미실행.
+- 증상: JIT 검색 "no match" 반복 → 새 entry 생성 → 다음 curate에서 중복 발견
+- 해결: entry 추가 직후 `pnpm embed-content` 실행 (또는 curate 체인 시 정기 갱신)
+
+원인 B: **쿼리 언어 불일치** — 위키 entry는 한국어인데 쿼리는 영어 (또는 반대).
+- 증상: 영어 쿼리로 한국어 entry를 찾지 못함
+- 해결: 의심 시 한국어로 추가 쿼리 실행
+
+원인 C: **탐색 범위 너무 좁음** — 쿼리가 구체적 구현 세부사항에만 집중.
+- 증상: 구현 쿼리는 실패하지만 개념 쿼리는 성공할 수 있음
+- 해결: 추상화 레벨 상향 쿼리 병행
+
+### 판별 기준
+
+```
+탐색 마찰 ≥ 8 AND 새 entry 생성 후 connections ≥ 2 → 좋은 마찰 (도메인 포화)
+탐색 마찰 ≥ 8 AND 새 entry 생성 후 connections 0~1 → 나쁜 마찰 의심 (孤島 entry)
+```
+
+connections 수가 위키 커버리지의 실질 검증자다. 진짜 gap을 채운 entry는 기존 entry와 연결된다.
+
+## 운영 임계값
+
+| 탐색 마찰 | 권장 행동 |
+|---|---|
+| 1-4 | 정상. 위키 초기 또는 신규 도메인 진입 |
+| 5-9 | 정상. 위키 성숙기. 인내심 있는 탐색 |
+| 10-15 | 경계. 인접 도메인 탐색 또는 기존 entry 보강(confidence 업그레이드, 섹션 추가) 검토 |
+| 16+ | 도메인 전환 시그널. 현 도메인은 포화. explore-idea 체인이 인접 도메인(새 카테고리)으로 이동해야 할 시점 |
+
+## 역방향 측정 원리
+
+전통적 위키 품질 지표는 **순방향**:
+- entry 수 → 더 많을수록 좋음
+- lint clean → 오류 없을수록 좋음
+- connections 밀도 → 높을수록 좋음
+
+탐색 마찰은 **역방향** (낮을수록 나쁨):
+- 마찰=1 → 위키가 아직 얕음 (기회이기도 함)
+- 마찰=9 → 위키가 해당 도메인을 잘 커버 (성숙 신호)
+
+두 방향을 함께 보면: entry 수(순방향)와 탐색 마찰(역방향)이 모두 증가할 때 = 위키가 진짜로 성장하고 있음.
+
+## 자동화 적용
+
+explore-idea 체인 실행 후 `cycle_state.json`에 탐색 마찰을 박제:
+
+```json
+{
+  "execution": {
+    "topic_discovery_queries": 9,
+    "topic_discovery_friction": "high",
+    "jit_search_queries": [
+      "zero-touch n-counter session handoff signal",
+      "..."
+    ]
+  }
+}
+```
+
+N 사이클 누적 후 `topic_discovery_queries` 평균을 트렌드로 모니터하면 위키 도메인 포화 속도를 측정할 수 있다.
