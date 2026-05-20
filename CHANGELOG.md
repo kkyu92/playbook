@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.51] — 2026-05-20
+
+### Changed
+- cycles 923~924 — curate + explore-idea. cycle 923: curate SUCCESS — wiki lint CLEAN (243 entries) + 0건 all clear + /learn 0 learnings + compound 문서화 (cycles 919~922) + memory 2건 갱신 (project_bidirectional_compound_growth_goal + project_develop_cycle_skill_family: SE oscillation 149회, wiki 243) + TODOS BRANCHED 228/8 갱신. cycle 924: explore-idea SUCCESS — 신규 entry #244 agentic-knowledge-system-chain-economics-creation-vs-maintenance (지식 시스템 chain economics: creation ROI > maintenance cost 균형점 + 무덤 방지 3축 측정) + TODOS BRANCHED 230/10 갱신. SE oscillation 150회 steady-state (skip: window 904-923 SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 925 SE#299 마커 박제 X). wiki 244 entries. BRANCHED 232/11 (R6 대기 지속).
+
 ## [0.9.50] — 2026-05-20
 
 ### Changed
