@@ -28,7 +28,10 @@ const MANIFEST_PATH = path.join(process.cwd(), "src", "generated", "content-mani
 
 export function appendGithubOutput(entries) {
   if (!process.env.GITHUB_OUTPUT) return;
-  const lines = Object.entries(entries).map(([k, v]) => `${k}=${v}\n`).join("");
+  const lines = Object.entries(entries).map(([k, v]) => {
+    const str = String(v).replace(/[\r\n]+/g, " ").trim();
+    return `${k}=${str}\n`;
+  }).join("");
   fs.appendFileSync(process.env.GITHUB_OUTPUT, lines);
 }
 
