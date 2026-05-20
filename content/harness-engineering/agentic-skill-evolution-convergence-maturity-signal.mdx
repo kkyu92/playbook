@@ -1,0 +1,169 @@
+---
+title: "자율 에이전트 Skill Evolution 수렴 궤적 — fast-path 비율이 말해주는 시스템 성숙 신호"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - skill-evolution
+  - convergence
+  - maturity-signal
+  - fast-path
+  - oscillation
+  - agentic-loop
+  - calibration
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-sliding-window-threshold-natural-oscillation
+  - harness-engineering/agentic-meta-chain-fast-path-streak-guard
+  - harness-engineering/agentic-chain-dormancy-phase-map
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+status: complete
+description: "자율 에이전트 시스템의 skill-evolution chain은 초기 고빈도 skill 변경에서 출발해 oscillation 누적과 함께 fast-path 비율이 자연 상승하며 수렴한다. fast-path 비율(~85%)과 oscillation 횟수가 시스템 성숙도의 객관적 proxy다."
+type: entry
+source: explore-idea
+---
+
+## 관찰
+
+playbook hub develop-cycle의 skill-evolution(SE) chain 발화 이력을 보면 명확한 수렴 패턴이 있다:
+
+```
+초기 (SE #1~#30, cycles ~555~650):
+  → 매 SE 발화 시 SKILL.md 실질 변경
+  → office-hours → spec write → Edit → smoke → PR 전 시퀀스 실행
+
+중기 (SE #30~#100, cycles ~650~800):
+  → fast-path 비율 상승 (50~70%)
+  → 명단 변화(phase 전환) 시만 heavy 시퀀스
+
+성숙기 (SE #100+, cycles ~800~888):
+  → fast-path 비율 ~85%
+  → heavy 시퀀스는 명단 변화 감지 시만 (5건 / 333 cycles)
+  → SKILL.md 실질 변경 = 희소 이벤트
+```
+
+**현재 실측 (cycle 888 기준)**:
+- 총 oscillation 횟수: 132회 (SE #147~#278)
+- 검증 기간: cycles 555~888 (333 cycle span)
+- fast-path 적용 비율: ~85%
+- 명단 변화 사례 (heavy 발화): 5건 (SE #23/#146/#148/#270/#278)
+
+## 수렴 메커니즘
+
+### 수렴의 원인
+
+```
+SE 발화 → SKILL.md 변경 → 다음 사이클 개선된 chain selection
+  ↓
+개선된 chain selection → 더 적절한 trigger 발화 → 잘못된 발화 감소
+  ↓
+잘못된 발화 감소 → "새로 고칠 것" 감소 → fast-path 비율 상승
+  ↓
+fast-path 비율 상승 → SE 실질 기여 감소 → heavy 시퀀스 필요성 희소화
+```
+
+이것은 ML의 학습률 감쇠(learning rate decay)와 동일한 구조다:
+- 초기: 큰 오차 → 큰 업데이트
+- 후기: 작은 오차 → 작은 업데이트 → 수렴
+
+LLM 기반 agentic loop에서 이 수렴은 **명시적 설계 없이도 자연 발생**한다. 슬라이딩 윈도우 trigger가 SE를 일정 비율로 발화시키고, 발화 결과(fast-path)가 "변경 불필요"를 누적하면서 시스템이 스스로 "이미 충분히 calibrated"임을 확인한다.
+
+### 수렴 rate의 수학적 직관
+
+```
+change_rate(n) ≈ C / (oscillation_n + K)
+
+n=1:   change_rate ≈ C/K     (높음 — 모든 SE가 SKILL 변경)
+n=30:  change_rate ≈ C/30K   (중간)
+n=100: change_rate ≈ C/100K  (낮음 — fast-path 지배)
+n=132: change_rate ≈ C/132K  (현재 허브 상태)
+```
+
+이 감쇠는 시스템이 "더 이상 배울 것이 없어서"가 아니라 **현재 project phase에서의 최적 skill이 확립됐기 때문**이다. Project phase 전환(명단 변화) 시 change_rate가 일시 상승 후 재수렴한다.
+
+## Fast-path 비율을 성숙 신호로 읽기
+
+| fast-path 비율 | 해석 | 권장 행동 |
+|---|---|---|
+| 0~30% | 초기 학습 phase — skill이 빠르게 변하는 중 | heavy 시퀀스 정상. 변경 내용 CHANGELOG 기록 |
+| 30~60% | 중기 안정화 — major 이슈 해소, fine-tuning 중 | 변경 영역 집중 모니터링 |
+| 60~80% | 성숙 진입 — steady-state 근접 | fast-path 조건(A+B) 운영 시작 |
+| 80~90% | 성숙 phase — 현 project phase 최적 skill 확립 | fast-path default. 명단 변화만 heavy |
+| 90%+ | 완전 수렴 또는 skill 화석화 주의 | skip 조건 재검토. "진짜 아무것도 안 변하나?" 자가 감사 |
+
+**화석화 주의**: fast-path 100% 지속 → skill이 project 변화를 반영 못 할 수 있음. 분기마다 "현 skill이 여전히 유효한가?" manual 감사 권장.
+
+## Phase 전환 감지기로서의 SE
+
+수렴 상태에서 heavy 시퀀스가 발화한다는 것 = **project phase가 전환됐다는 신호**:
+
+```
+stable oscillation 중 명단 변화 (A FAIL) 감지
+  → heavy SE 발화
+  → 새 phase에 맞는 skill 갱신
+  → 새 stable attractor로 재수렴
+```
+
+허브 사례:
+| SE # | Phase 전환 내용 | 이후 처리 |
+|---|---|---|
+| #23 | 초기 chain pool 완성 | SKILL 갱신 + 재수렴 |
+| #146 | worker-incident-triage 활성화 | SKILL 갱신 + 재수렴 |
+| #148 | dimension-cycle 완전 휴면 | SKILL 갱신 + 재수렴 |
+| #270 | (phase 전환 기록) | MIGRATION-PATH 갱신 |
+| #278 | worker-incident-triage 재휴면 | fast-path (명단=8 marker 동일 + oscillation≥5) |
+
+5건 모두 **명단 변화**(어떤 chain이 dormant인지 변화) 로 감지됐다. 명단 = 현재 project phase의 domain fingerprint.
+
+## 실전 운영 가이드
+
+### 새 agentic loop 시작 시
+
+초기 SE 발화가 많고 SKILL 변경이 잦은 것은 **정상이자 필수** — 이 단계를 조기 차단하면 system이 충분히 calibrate되지 않는다.
+
+```
+oscillation_n < 10: heavy 시퀀스 모두 허용
+oscillation_n 10~30: fast-path 조건 도입 검토
+oscillation_n 30+: fast-path default
+```
+
+### 수렴 감지 체크리스트
+
+```bash
+# oscillation 횟수 확인
+grep "chain_selected.*skill-evolution" ~/.develop-cycle-hub/cycles/*.json | wc -l
+
+# fast-path 비율 계산
+python3 -c "
+import json, os, glob
+files = sorted(glob.glob(os.path.expanduser('~/.develop-cycle-hub/cycles/*.json')))
+se_total = 0; fast = 0
+for f in files:
+    d = json.load(open(f))
+    if d.get('chain_selected') == 'skill-evolution':
+        se_total += 1
+        summary = d.get('retro', {}).get('summary', '')
+        if 'fast-path' in summary:
+            fast += 1
+print(f'SE total={se_total}, fast-path={fast}, ratio={fast/se_total:.0%}' if se_total else 'no SE yet')
+"
+```
+
+### 재수렴 필요 신호
+
+이 중 하나라도 해당되면 heavy SE 감수하고 SKILL 재정비:
+- fast-path 비율이 갑자기 40% 이하로 하락 (phase급 변화)
+- 명단이 3개 이상 동시 변화
+- 직전 10 사이클 outcome=fail 이 5건 이상
+
+## Connections
+
+- [슬라이딩 윈도우 oscillation 메커니즘](/wiki/harness-engineering/agentic-sliding-window-threshold-natural-oscillation): SE 발화 trigger 상세
+- [fast-path 스트릭 가드](/wiki/harness-engineering/agentic-meta-chain-fast-path-streak-guard): fast-path 판정 기준 상세
+- [chain dormancy 지도](/wiki/harness-engineering/agentic-chain-dormancy-phase-map): 명단 = phase fingerprint
+- [chain 분포 phase 지문](/wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint): 수렴 phase 식별

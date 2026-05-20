@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 305,
+  "totalInvocations": 320,
   "skipped": 25,
-  "searched": 280,
-  "hit": 79,
-  "noMatch": 201,
-  "lastUpdated": "2026-05-20T02:05:32.173Z",
+  "searched": 295,
+  "hit": 81,
+  "noMatch": 214,
+  "lastUpdated": "2026-05-20T02:37:21.567Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,13 +24,13 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 22,
+    "reports/closed-loop-health": 23,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 5,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
     "context-engineering/nextjs-instrumentation-location": 3,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
-    "context-engineering/agentic-cycle-state-json-carry-over-design": 7,
+    "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 3,
     "reports/mid-review-2026-04-28": 2,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
@@ -92,7 +92,7 @@
     "harness-engineering/post-ship-meta-documentation-drift": 4,
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1,
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
-    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 1,
+    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 2,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
     "harness-engineering/wiki-knowledge-roi-3axis-measurement": 5,
     "retros/2026-05-19-cycles-801-804": 2,
@@ -112,7 +112,8 @@
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
-    "harness-engineering/worker-lesson-velocity-signal": 1
+    "harness-engineering/worker-lesson-velocity-signal": 1,
+    "agents/external-tool-integration-for-ai-agents": 1
   },
-  "totalQueries": 349
+  "totalQueries": 364
 }
