@@ -1,0 +1,144 @@
+---
+title: "자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - skill-evolution
+  - trigger
+  - false-positive
+  - opt-out
+  - self-modification
+  - chain-pool
+  - harness-engineering
+  - meta-pattern
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/agentic-chain-dormancy-phase-map
+  - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/agentic-meta-chain-fast-path-streak-guard
+status: complete
+description: "self-modification trigger(trigger-5)가 구조적 false positive를 반복 생성할 때, 조건부 skip(A+B)으로 해결할 수 없는 영구 면제 패턴. 머니볼 6-layer opt-out vs 허브 151회 conditional skip — 두 메커니즘이 상호보완적으로 필요한 이유."
+type: entry
+source: manual
+---
+
+## 문제
+
+자기수정 에이전트가 trigger-5 (직전 20 사이클 중 0회 chain 존재) 같은 자동 trigger를 가질 때, false positive가 두 종류로 나뉜다:
+
+**Type 1 — 일시적 false positive (transient)**
+- 현재 project phase에서 해당 chain이 dormant
+- 하지만 phase가 전환되면 다시 활성화될 수 있음
+- 예: `polish-ui` chain이 현재 내부 도구라 0회이지만, 공개 전환 시 활성화 예정
+
+**Type 2 — 구조적 false positive (structural)**  
+- 해당 chain이 이 project에서 근본적으로 불필요
+- phase가 아무리 바뀌어도 true positive가 될 수 없음
+- 예: `operational-analysis` chain이 사용자 metric 비공개 정책으로 설계상 제외됨
+
+**기존 조건부 skip(A+B)이 Type 2에 실패하는 이유**:
+- A(명단 동일) + B(rate ≥ 40%) → 충족 시 skip
+- 하지만 명단이 안정된 순간에는 Type 2도 skip됨 — 단순 지연일 뿐
+- 다음 window shift로 rate 변화 → 다시 trigger → 또 평가 → 반복
+- Type 2는 영구적으로 false positive이므로 매번 재평가가 낭비
+
+## 두 메커니즘의 분리
+
+```
+self-modification trigger 발화
+  ├── Type 1 (transient) → 조건부 skip (A+B gate)
+  │     - 조건 충족 시: 이번 skip
+  │     - 다음 사이클: 재평가 (phase 전환 감지 유지)
+  │     - 비용: 매 사이클 평가 연산 + 잦은 발화
+  │
+  └── Type 2 (structural) → 영구 opt-out list
+        - 한 번 등록: 이후 trigger 평가 자체 제외
+        - 재평가 없음: list 갱신 시만 변경
+        - 비용: opt-out 등록 의사결정 1회
+```
+
+### 영구 opt-out 패턴 구현
+
+opt-out list를 별도 파일로 관리:
+
+```
+# skill-evolution-optout.txt (or SKILL.md 섹션)
+# 형식: <chain-slug> | <reason> | <cycle-registered>
+operational-analysis | user metrics 비공개 정책 — 영구 비활성 | cycle 774
+external-blog-autopilot | billing 미해소 — 조건부 재활성 검토 | cycle 612
+```
+
+trigger-5 평가 시:
+```
+직전 20 사이클 0회 chain 목록
+  → opt-out list 교차 검증
+  → opt-out 제외
+  → 나머지만 trigger 평가
+```
+
+## Evidence: 두 시스템의 대조
+
+### 허브 (playbook) — 조건부 skip 151회 oscillation
+
+| 지표 | 값 |
+|------|-----|
+| 메커니즘 | A+B 이중 조건 skip (cycle-level 평가) |
+| 발화 pattern | trigger → A+B 평가 → skip or fire |
+| oscillation 회수 | 151회 steady-state (2026-05-20 기준) |
+| 명단 | 7개 chain (fix-incident 등 일시 진입/탈퇴) |
+| 효과 | 35~45% rate 자율 유지 |
+
+**허브가 조건부 skip만 쓰는 이유**: 현재 7개 dormant chain 모두 project phase 변화 시 활성화 가능 — Type 1. 영구 opt-out 불필요.
+
+### 머니볼 (moneyball) — 영구 opt-out 6-layer
+
+| 지표 | 값 |
+|------|-----|
+| 메커니즘 | opt-out list 누적 (cycle 774 기준 6개) |
+| 발화 pattern | trigger → opt-out 제외 → 나머지 평가 |
+| opt-out 누적 | 6 layers (trigger 5 false positive 차단 iteration) |
+| 동기 | "chain pool 신규 chain 즉시 영구 opt-out" meta-pattern |
+| 효과 | trigger-5 평가 대상 집합 정제 → false positive 차단 |
+
+**머니볼이 영구 opt-out을 쓰는 이유**: `operational-analysis` 같이 설계상 비활성인 chain이 trigger-5를 반복 발화 → 6번째 layer에서 "즉시 영구 면제" meta-pattern 확립.
+
+## 의사결정 기준 — 언제 어떤 메커니즘을 쓸 것인가
+
+```
+이 chain이 현 project에서 0회인 이유는?
+  │
+  ├── "지금 phase가 아님, 나중에 필요" → Type 1 → 조건부 skip
+  │    예: design-system (공개 전환 시 활성화)
+  │        polish-ui (외부 사용자 생기면 활성화)
+  │        explore-idea (아이디어 재고 고갈 시 감소)
+  │
+  └── "이 project 설계상 불필요" → Type 2 → 영구 opt-out
+       예: operational-analysis (사용자 metric 비공개 = 정책)
+           결제 요구 chain (billing 미해소 = 구조적 제약)
+           외부 dependency 없이 작동 불가 chain
+```
+
+**주의**: Type 2 판정은 보수적으로. "지금은 이유가 없다"는 Type 1. "영구적으로 이유가 없다"만 Type 2. 잘못된 Type 2 판정 → 진짜 필요한 발화 영구 차단.
+
+## Fail-safe: opt-out list 갱신 규칙
+
+영구 opt-out은 비가역적이라 아래 안전장치 필요:
+
+1. **opt-out 등록 = meta-pattern commit 의무** (git history 추적)
+2. **재활성 path 명시**: `billing 해소 시 재검토` 같은 조건 기록
+3. **주기적 review**: 10 milestone마다 opt-out list 유효성 확인
+4. **신규 project phase 진입 시 전체 재평가**: phase 전환 = Type 2 재분류 기회
+
+## 요약: 상호보완적 2-tier 설계
+
+| 계층 | 메커니즘 | 대상 | 비가역성 |
+|------|----------|------|---------|
+| Tier 1 | 조건부 skip (A+B) | Type 1 transient | 가역 (매 사이클 재평가) |
+| Tier 2 | 영구 opt-out list | Type 2 structural | 비가역 (명시적 갱신 시만) |
+
+trigger-5 같은 자동화된 자기수정 trigger는 두 tier가 모두 있어야 false positive를 완전히 제어할 수 있다. 하나만 쓰면: Tier 1만 → structural false positive 무한 반복. Tier 2만 → transient false positive가 영구 차단될 위험.
