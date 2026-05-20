@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 351,
-  "skipped": 25,
-  "searched": 326,
-  "hit": 89,
-  "noMatch": 237,
-  "lastUpdated": "2026-05-20T04:00:49.598Z",
+  "totalInvocations": 363,
+  "skipped": 26,
+  "searched": 337,
+  "hit": 90,
+  "noMatch": 247,
+  "lastUpdated": "2026-05-20T08:06:39.209Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -112,7 +112,7 @@
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
-    "harness-engineering/worker-lesson-velocity-signal": 3,
+    "harness-engineering/worker-lesson-velocity-signal": 4,
     "agents/external-tool-integration-for-ai-agents": 1,
     "retros/2026-05-13-cycles-392-394": 1,
     "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 1,
@@ -122,5 +122,5 @@
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1
   },
-  "totalQueries": 395
+  "totalQueries": 407
 }
