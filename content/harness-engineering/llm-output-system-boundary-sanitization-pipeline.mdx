@@ -1,0 +1,141 @@
+---
+title: LLM Output System Boundary Sanitization — 파이프라인 경계 형식 정합성 보장
+category: harness-engineering
+date: "2026-05-21"
+tags:
+  - harness-engineering
+  - github-actions
+  - sanitization
+  - llm-output
+  - pipeline
+  - boundary
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-21"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/zero-touch-develop-cycle-session-management, harness-engineering/superagent-harness-architecture-long-running-task-orchestrat]
+status: complete
+description: LLM이 생성한 텍스트가 GitHub Actions GITHUB_OUTPUT, 환경변수, YAML 등 시스템 경계를 넘을 때 발생하는 포맷 충돌 패턴과 경계별 정제 전략.
+type: entry
+source: manual
+---
+
+## 문제
+
+LLM이 생성한 텍스트는 기본적으로 **다중 줄(multi-line)** 이다. 제목, 설명, 레이블 등 단순해 보이는 필드도 LLM은 개행을 포함한 텍스트를 반환할 수 있다.
+
+이 텍스트가 CI/CD 파이프라인의 시스템 경계(GitHub Actions `GITHUB_OUTPUT`, 환경변수, YAML 프론트매터)를 넘을 때, **경계마다 서로 다른 포맷 규칙**과 충돌한다.
+
+### 실 발생 패턴 (cycle 944 evidence)
+
+```bash
+# GitHub Actions GITHUB_OUTPUT 경계
+# appendGithubOutput이 YAML title을 그대로 GITHUB_OUTPUT에 씀
+title=$(extract_yaml_field "$response" "title")  
+echo "title=$title" >> $GITHUB_OUTPUT
+```
+
+LLM이 `title: "1줄\n2줄"` 형식으로 반환하면:
+- `GITHUB_OUTPUT` 파서가 `\n` 이후를 새 key-value 쌍으로 해석
+- `Invalid entry in GITHUB_OUTPUT: '2줄'` 에러
+- 워크플로우가 silently 실패하거나 잘못된 값 전파
+
+## 경계별 충돌 원인
+
+| 경계 | 포맷 규칙 | LLM 출력 충돌 지점 |
+|------|-----------|------------------|
+| `GITHUB_OUTPUT` | `key=value\n` 행 기반 | `value` 안 개행 → 다음 키로 오해석 |
+| 환경변수 (shell) | 따옴표 미처리 시 단어 분리 | 따옴표·백슬래시·`$` → 셸 확장 |
+| YAML 프론트매터 | 콜론·따옴표·들여쓰기 구조 | 값에 포함된 `:` → 키로 오해석 |
+| JSON payload | 문자열 리터럴 규칙 | 백슬래시·제어문자 → parse 에러 |
+| SQL / 파라미터 | 이스케이프 필수 | 단따옴표·세미콜론 → injection |
+
+## 해결 패턴: 경계에서 정제, 소스에서 X
+
+**원칙**: LLM 출력을 시스템 경계에서 명시적으로 정제한다. LLM 프롬프트에 "개행 없이 써라" 지시는 신뢰도 낮음.
+
+### 경계별 정제 전략
+
+```bash
+# GITHUB_OUTPUT — 개행 → 공백 치환
+sanitize_for_github_output() {
+  local value="$1"
+  echo "${value//$'\n'/ }" | tr -d '\r'
+}
+
+# 사용
+title=$(sanitize_for_github_output "$(extract_yaml_field "$response" "title")")
+echo "title=$title" >> $GITHUB_OUTPUT
+```
+
+```typescript
+// TypeScript 경계별 정제 템플릿
+function sanitizeForBoundary(
+  value: string,
+  boundary: 'github-output' | 'shell-env' | 'yaml-value' | 'json-string'
+): string {
+  switch (boundary) {
+    case 'github-output':
+      return value.replace(/\r?\n/g, ' ').trim();
+    case 'shell-env':
+      return value.replace(/['"\\$`]/g, '\\$&').replace(/\r?\n/g, ' ');
+    case 'yaml-value':
+      // YAML double-quoted string escape
+      return JSON.stringify(value);
+    case 'json-string':
+      return JSON.stringify(value).slice(1, -1); // 따옴표 제거
+  }
+}
+```
+
+### YAML 파싱 시 올바른 추출
+
+```bash
+# 잘못된 방법: 정규식으로 raw 추출
+title=$(echo "$response" | grep "^title:" | sed 's/title: //')
+
+# 올바른 방법: YAML 파서로 추출 후 경계 정제
+title=$(echo "$response" | python3 -c "
+import sys, yaml
+data = yaml.safe_load(sys.stdin)
+title = str(data.get('title', ''))
+print(title.replace('\n', ' ').strip())
+")
+```
+
+## 검증 레이어 추가
+
+정제 후에도 경계 형식이 맞는지 검증하는 단계를 파이프라인에 추가:
+
+```bash
+validate_github_output_value() {
+  local key="$1"
+  local value="$2"
+  if echo "$value" | grep -q $'\n'; then
+    echo "ERROR: $key contains newline after sanitization" >&2
+    return 1
+  fi
+  if [ ${#value} -gt 65536 ]; then
+    echo "WARN: $key exceeds GITHUB_OUTPUT safe length, truncating" >&2
+    value="${value:0:65536}"
+  fi
+  echo "$key=$value" >> $GITHUB_OUTPUT
+}
+```
+
+## 정신 모델
+
+> LLM 출력을 **외부 입력(untrusted input)** 으로 취급하라 — 웹 XSS 방어와 동일한 규율을 LLM 하네스 파이프라인에 적용.
+
+시스템 경계를 넘는 모든 LLM 생성 값은:
+1. **정제(sanitize)**: 목적 경계의 규칙 위반 문자 제거/치환
+2. **검증(validate)**: 정제 후 형식 확인
+3. **잘라내기(truncate)**: 길이 한도 초과 시 안전하게 자름
+
+이 3단계가 경계마다 적용되면, LLM 출력의 다형성이 파이프라인 전체로 전파되지 않는다.
+
+## Connections
+
+- **silent-drift-family-pattern**: GITHUB_OUTPUT 개행 충돌은 silent drift의 변형 — 에러가 명확히 표면화되지 않고 잘못된 값이 downstream으로 전파됨
+- **zero-touch-develop-cycle-session-management**: develop-cycle 하네스는 LLM 텍스트가 다수의 GH Actions 단계를 넘나드는 구조 — 각 단계 전환이 경계 정제 지점
+- **superagent-harness-architecture-long-running-task-orchestrat**: 멀티스텝 에이전트 작업에서 중간 LLM 출력이 시스템 경계를 넘는 빈도가 높음 — 경계 정제를 아키텍처 레이어로 명시
