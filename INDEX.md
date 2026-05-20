@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T03:04:36.145Z
+Updated: 2026-05-20T03:27:59.606Z
 
-## 엔트리 (231개)
+## 엔트리 (232개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -46,6 +46,7 @@ Updated: 2026-05-20T03:04:36.145Z
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
 - [Push 무기한 유예 + 동시 origin 쓰기 → 쌍방향 divergence 침묵 누적](wiki/harness-engineering/agentic-push-defer-divergence-concurrent-writes) — confidence: 3, status: complete
+- [자율 에이전트 R6 경계 누적 추적 — 해소 불가 이슈의 patience ledger 패턴](wiki/harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger) — confidence: 3, status: complete
 - [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/harness-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 자기 문서화 이중 시점 지식 축적 — 내부 cycle + 외부 worker 재귀 루프](wiki/harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation) — confidence: 2, status: complete
@@ -851,6 +852,10 @@ Updated: 2026-05-20T03:04:36.145Z
 - harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-push-defer-divergence-concurrent-writes ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger ↔ harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary
+- harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger ↔ harness-engineering/agentic-push-defer-divergence-concurrent-writes
+- harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-review-code-baseline-null-hypothesis-verification ↔ harness-engineering/agentic-gap-trigger-chain-health-check

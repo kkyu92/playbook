@@ -1,0 +1,209 @@
+---
+title: "자율 에이전트 R6 경계 누적 추적 — 해소 불가 이슈의 patience ledger 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - harness-engineering
+  - r6-boundary
+  - todos-escalation
+  - carry-over
+  - patience-ledger
+  - develop-cycle
+  - agentic-loop
+  - monitoring
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary
+  - harness-engineering/agentic-push-defer-divergence-concurrent-writes
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+status: complete
+description: "자율 에이전트가 R6 경계(사용자 결정 필요) 이슈를 발견했을 때, '반복 알람' / '무시' / '중단' 세 가지 안티패턴 대신 매 사이클 상태를 정밀 누적하는 'patience ledger' 패턴이 최적이다. TODOS.md의 BRANCHED 카운터(cycle 782→895, 113 사이클)가 이 패턴의 실증 사례다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+자율 에이전트 시스템이 R6 경계 이슈(사용자 결정 필요, 에이전트 자율 해소 불가)를 발견했을 때, 매 사이클마다 어떻게 대응해야 하는가?
+
+**실증 사례 (허브 develop-cycle)**:
+- cycle 782: BRANCHED diverge 첫 발견 (`local 2 ahead / origin 1 ahead`)
+- cycle 895: 동일 이슈 미해소 (`local 185 ahead / origin 94 ahead`)
+- 113 사이클 동안 에이전트가 이슈를 해소하지 못하면서도 자동화는 계속 정상 운영됨
+
+이 상황에서 에이전트가 선택할 수 있는 전략은 무엇이고, 어떤 게 최적인가?
+
+---
+
+## 세 가지 안티패턴
+
+### 안티패턴 1: 반복 알람 (repeat alarm)
+
+**행동**: 매 사이클 동일한 경고를 출력하거나 이슈를 생성
+
+**문제점**:
+- 100번 같은 경고 = 사용자 fatigue → 경고 무시 패턴 형성
+- 경고 빈도가 정보 가치를 희석시킴
+- "언제부터 이 상태인가" / "상태가 변했는가" 추적 불가
+
+```
+❌ 매 사이클: "WARNING: BRANCHED detected. Please resolve."
+   → 사용자가 113번째 동일 경고를 무시하게 됨
+```
+
+### 안티패턴 2: 무시 (silent ignore)
+
+**행동**: 해소 불가 이슈는 진단에서 제외
+
+**문제점**:
+- 상태 변화 감지 불가 (악화/개선 모두)
+- velocity 측정 불가 (gap이 얼마나 빠르게 커지는가)
+- 임계값 도달 시 re-escalation 메커니즘 없음
+
+```
+❌ 사이클마다: diverge 체크 skip
+   → cycle 782 (local 2) vs cycle 895 (local 185): 차이를 모름
+```
+
+### 안티패턴 3: 자동화 중단 (halt)
+
+**행동**: R6 이슈 해소 전까지 에이전트 작동 중지
+
+**문제점**:
+- 자동화 목적 자체를 상실
+- 관련 없는 영역(위키 entry 생성, 코드 수정 등)도 함께 중단
+- BRANCHED는 에이전트 작업 품질에 직접 영향 없음 — 로컬 작업 계속 가능
+
+```
+❌ "BRANCHED가 해소될 때까지 사이클 중단"
+   → 113 사이클 × 에이전트 작업 = 113회 위키 entry 미생성, curate 미실행
+```
+
+---
+
+## patience ledger 패턴
+
+**핵심 원칙**: 해소 불가 이슈는 매 사이클 정밀하게 추적하되, 자동화는 계속 운영한다.
+
+### Ledger 형식
+
+단순 플래그(`BRANCHED: true`) 대신 **상태 히스토리**를 누적:
+
+```markdown
+## [PENDING] R6 대기 — git BRANCHED (cycle 895 갱신)
+
+상태: local 185 commits ahead / origin 94 commits ahead
+해소 path 후보: git pull --rebase 또는 git merge origin/main
+
+이력:
+cycle 782 실측 2/1 → cycle 784 실측 2/1 → cycle 785 실측 4/2
+→ cycle 786 실측 6/3 → ... → cycle 895 실측 185/94
+```
+
+이 형식이 제공하는 정보:
+1. **최초 발생 시점** — cycle 782 (언제부터인가)
+2. **현재 상태** — 185/94 (지금 얼마나 심각한가)
+3. **velocity** — 이력 보면 약 2 commit/사이클씩 증가 (얼마나 빠르게 악화되는가)
+4. **해소 gap** — 병합 필요 commit 수 (해소 비용 예측)
+
+### 핵심 특성 세 가지
+
+**1. 모노토닉 (monotonic) 갱신**
+
+매 사이클 동일 TODOS 항목을 덮어쓰지 않고, 이력 라인에 새 상태를 append한다:
+
+```
+→ cycle 894 실측 183/94 → cycle 895 실측 185/94
+```
+
+히스토리가 자동으로 생성됨. 사용자가 언제든 trajectory를 확인 가능.
+
+**2. velocity 신호 내포**
+
+이력만 봐도 증가 속도를 계산할 수 있다:
+- local ahead: 약 +2/사이클 (에이전트 사이클당 1~2 commit)
+- origin ahead: 가끔 +1~2 (worker-lesson auto-ingest 빈도)
+- 비율: origin ≈ local × 0.51 (실측 cycle 895 기준)
+
+velocity 스파이크 감지 가능: 특정 구간에서 갑자기 +10이 됐다면 외부 batch push 발생 신호.
+
+**3. 임계값 기반 re-escalation**
+
+이력 패턴에서 re-escalation 트리거를 자동화할 수 있다:
+
+```python
+# 의사 코드
+if delta_local > 50 in recent 10 cycles:  # velocity 급증
+    priority = "P0"
+elif total_local > 200:  # 절대 크기 임계
+    add_re_escalation_note()
+```
+
+---
+
+## 실증 증거 — BRANCHED 113 사이클
+
+허브 develop-cycle이 이 패턴의 살아있는 증거다:
+
+| 지표 | 값 |
+|---|---|
+| 최초 발견 | cycle 782 (2026-05-17 경) |
+| 마지막 기록 | cycle 895 (2026-05-20) |
+| 경과 사이클 | 113 사이클 |
+| local ahead 증가 | 2 → 185 (+183) |
+| origin ahead 증가 | 1 → 94 (+93) |
+| 에이전트 작업 중단 여부 | 없음 (위키 entry 생성, curate, SE 계속) |
+| 사용자 fatigue 발생 여부 | 없음 (ledger 형식이 반복 알람 대체) |
+
+113 사이클 동안 에이전트가 매 사이클 상태를 갱신했고, 사용자는 TODOS.md를 보면 현재 상태와 전체 trajectory를 즉시 파악할 수 있다.
+
+---
+
+## 적용 조건
+
+patience ledger 패턴이 적합한 경우:
+
+| 조건 | 설명 |
+|---|---|
+| 에이전트 자율 해소 불가 | R6 영역 (git 병합, 결제, SaaS 변경) |
+| 자동화 지속 가능 | 이슈가 현재 사이클 작업 품질에 직접 영향 없음 |
+| 상태가 동적 | 이슈 상태가 매 사이클 변하므로 추적 가치가 있음 |
+| 사용자 가시성 필요 | 언제가 됐든 사용자가 TODOS.md를 볼 때 즉시 파악 가능해야 함 |
+
+patience ledger **부적합** 경우:
+
+| 조건 | 대안 |
+|---|---|
+| 현재 작업을 직접 블로킹 | 즉시 사이클 중단 + 사용자 알림 |
+| 이슈가 정적 (상태 변화 없음) | 1회 기록 후 감지 skip |
+| 에이전트가 자율 해소 가능 | 그냥 해소 (R6 체크 불필요) |
+
+---
+
+## TODOS.md 작성 가이드
+
+patience ledger 항목을 TODOS.md에 박제할 때:
+
+```markdown
+## [PENDING] R6 대기 — {이슈 제목} ({갱신 사이클} 갱신, local {X} / origin {Y})
+
+**상태**: {현재 상태 수치}
+**해소 path 후보**: {사용자가 선택 가능한 옵션들}
+**이력**: cycle {n} 실측 {a}/{b} → cycle {m} 실측 {c}/{d} → ...
+```
+
+- 매 사이클 `갱신 사이클`과 현재 수치만 업데이트
+- 이력 라인은 append (이전 항목 삭제 X)
+- 해소 path 후보는 사용자가 즉시 행동 가능한 구체 명령으로
+
+---
+
+## 핵심 인사이트
+
+> 반복 알람은 신호를 노이즈로 만들고, 무시는 상태 변화를 가린다. patience ledger는 이슈를 기록하되 자동화를 멈추지 않으면서, 사용자가 언제든 정확한 상태와 trajectory를 파악할 수 있는 유일한 메커니즘이다.
+
+이 패턴이 성립하는 이유: R6 이슈의 해소 시점은 에이전트가 아닌 사용자가 결정한다. 에이전트의 역할은 해소하는 것이 아니라, 사용자가 결정할 때 필요한 정보를 최대한 준비해두는 것이다.
