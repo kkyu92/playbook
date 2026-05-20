@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.55] — 2026-05-20
+
+### Changed
+- cycles 934~935. cycle 934: worker-incident-triage SUCCESS — issue #1032 moneyball Vercel deploy failure CLOSED (transient: dispatch 시점 실패 → 트리아지 도달 시점 CI 이미 통과 → 자동 분류 close). TODOS BRANCHED 248/22 갱신. cycle 935: explore-idea SUCCESS — 신규 entry #248 agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification (dispatch-to-triage 시간 간격 = transient/structural 자동 판별 신호; "현재 CI 상태" 기준 분류 방법론) + chain-economics description fix + TODOS BRANCHED 249/22 갱신. SE #302/#303 skip 조건 A+B 충족(window 914-933/916-935 SE=8/20=40% B PASS + 명단=7 동일 A PASS) → 마커 박제 X. oscillation 153회 steady-state. wiki 248 entries. BRANCHED 251/22 (R6 대기 지속).
+
 ## [0.9.54] — 2026-05-20
 
 ### Changed
