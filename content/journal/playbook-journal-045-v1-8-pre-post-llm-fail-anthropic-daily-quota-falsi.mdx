@@ -5,7 +5,7 @@ date: "2026-05-18"
 tags: [playbook-journal, auto-ingest, lesson, moneyball]
 confidence: 3
 connections: [journal/playbook-journal-000-bootstrap]
-status: in-progress
+status: published
 description: "자동 수집: v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567) (from kkyu92/moneyballscore)"
 type: entry
 series: playbook-journal
@@ -44,12 +44,18 @@ recommendation:
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+v1.8 25건 중 conf=0.300 sentinel(pre-game credit-fail) 15건이 모두 평일 집중(5/13 Wed, 5/14 Thu, 5/15 Fri). 동일 날짜의 post-game cron(저녁 KST)은 LLM 정상 동작 → Anthropic daily quota(H3) 완전 반박. quota라면 post-game도 같은 날 fail해야 하는데 그렇지 않았음.
+
+pre-game cron(오후 KST) vs post-game cron(저녁 KST) 같은 날 결과 디커플링 확인. H4(16:30 KST 특정 시간대 API 문제) 강화 evidence. 주말(5/16-17) 동일 기간 10건은 conf 0.498~0.562로 정상(50% 적중) → 평일 오후 KST 특정 패턴.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+1. **pre/post 디커플링 = daily quota 즉시 배제 조건**: 두 cron path가 같은 날 반대 결과를 보이면 daily quota 가설은 충분조건 미충족으로 배제 가능. 두 path 동시 실패만이 daily quota 충분조건
+2. **가설 계층화 강제**: H3(daily quota) → H4(시간대 throttling) → H5(동시 호출 rate limit) 순 narrowing. 각 단계 "충분조건이 뭔가?" 질문으로 falsification
+3. **평일/주말 분리 집계 의무**: 동일 타임슬롯 분석 시 요일 변수가 confounding factor — 자동 분리 집계
 
 ## 적용
 
-_TODO: 다음 액션_
+- 다음 H4 검증: 07:30 UTC(16:30 KST) Anthropic API status + Cloudflare Worker 콜드 스타트 metric 직접 수집
+- v1.8 credit-fail 비율 추적 지속 (n=150 v2.0 임계 달성 전까지)
+- 코드 변경 X — 외부 API 영역, 데이터 누적 후 재평가

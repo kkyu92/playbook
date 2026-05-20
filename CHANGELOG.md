@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.40] — 2026-05-20
+
+### Changed
+- cycle 880 curate SUCCESS — wiki lint CLEAN (225 entries) + journal 045/046 status in-progress→published (분석/교훈/적용 섹션 채움: H3 daily quota falsification + H5 rate limit falsification + validator hallucination family) + TODOS BRANCHED 갱신 (local 159/origin 77). JIT unused entry 1건 (frontend-ai-response-safety-net) — cycle 878에서 유지 결정 확인. SE oscillation 131회 steady-state.
+
 ## [0.9.39] — 2026-05-20
 
 ### Changed

@@ -5,7 +5,7 @@ date: "2026-05-18"
 tags: [playbook-journal, auto-ingest, lesson, moneyball]
 confidence: 3
 connections: [journal/playbook-journal-000-bootstrap]
-status: in-progress
+status: published
 description: "자동 수집: cycle 607 H5 (rate limit + 동시 호출) falsification + validator hallucination family 정량화 (from kkyu92/moneyballscore)"
 type: entry
 series: playbook-journal
@@ -46,12 +46,23 @@ related:
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+H5(동시 5호출 rate limit) 반박: v1.8 silent fallback 17건 ground truth 전수 분류 결과 rate_limit_error/server_error/timeout = 0. 동시 호출 가설 완전 배제.
+
+진짜 failure family 3종 정량화:
+- **validator hallucinated_number:hard** 7건 (5/16-17 team-agent path) — validator가 BASE_PROMPT 외부 수치를 환각 생성
+- **credit_exhausted** 5건 (5/15 잔재) — API credit 소진 sentinel
+- **no_agentError null path** 5건 (5/14 schema parity 부재) — null 케이스 미처리
+
+cycle 605 spec Step B "cron stagger 30s sleep"은 H5 반박으로 직접 가치 없음. Step B 정정 대상.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+1. **ground truth 전수 분류 전 mitigation spec 금지**: "동시 호출 문제"라는 가설로 30s sleep spec 작성했으나 데이터가 완전 반박. 분류 먼저, spec 나중
+2. **validator hallucination = LLM 응답 실패와 별도 family**: 같은 "LLM fail" 버킷으로 묶으면 root cause 혼동. 분리 추적 의무
+3. **spec 사후 정정 패턴 자연**: cycle 605 Step B → cycle 607 정정. spec은 "가설 → 데이터 → 검증 → 재spec" 순환이 정상
 
 ## 적용
 
-_TODO: 다음 액션_
+- mitigation A(BASE_PROMPT "inject 외 수치 인용 금지" 단일 line) = low risk, 다음 fix-incident 후보
+- 강등 라벨 세분화(v1.8-vfail/credit/other) = zero-risk observability, 먼저 적용 검토
+- v2.0 backtest 진입 시 real-debate 10건만 v2.0 가중치 source 사용 (sub-cohort 명시 의무)
