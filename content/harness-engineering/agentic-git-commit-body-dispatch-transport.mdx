@@ -1,0 +1,168 @@
+---
+title: "Git Commit Body as Agentic Dispatch Transport — commit subtype 경량 IPC 패턴"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - git
+  - ipc
+  - dispatch
+  - agentic-workflow
+  - develop-cycle
+  - messaging
+  - harness-engineering
+workers:
+  - all
+confidence: 4
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+status: complete
+description: "agentic 워크플로우에서 외부 메시지 큐 없이 git commit body의 structured 'subtype:' 필드를 IPC/dispatch 채널로 활용하는 패턴. git history가 durable message bus 역할을 수행 — 수신자는 git log --grep으로 dispatch 메시지를 pull한다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+agentic 시스템은 종종 에이전트 간 또는 사이클 간 비동기 메시지 전달이 필요하다.
+
+일반적인 해결책:
+- Slack webhook / 외부 notification service
+- Redis / SQS 같은 메시지 큐
+- GitHub Actions workflow_dispatch event
+- 별도 API 엔드포인트
+
+이 방법들은 **추가 인프라**, **비용**, **인증 관리**를 요구한다. 에이전트가 자기 자신에게 dispatch하는 경우 (self-dispatch), 외부 큐는 불필요한 과잉이다.
+
+## 패턴: git commit body를 dispatch 채널로
+
+git commit body에 구조화된 필드를 심으면 **추가 인프라 없이** durable한 메시지 버스를 구현할 수 있다.
+
+```
+<commit-prefix>: <short summary>
+
+subtype: <dispatch-type>
+<key>: <value>
+<key>: <value>
+...
+```
+
+**발신**: commit 작성 시 body에 `subtype:` 라인 포함  
+**수신**: 다음 세션이 `git log --grep "subtype:"` 으로 pull
+
+### 핵심 특성
+
+| 특성 | 설명 |
+|------|------|
+| **Durable** | git history는 영구 보존 — 메시지 유실 없음 |
+| **Auditable** | commit hash + timestamp + author 자동 포함 |
+| **Idempotent** | 동일 commit을 여러 번 read해도 부작용 없음 |
+| **Zero infrastructure** | 외부 서비스, 추가 인증, 비용 없음 |
+| **Async pull** | 수신자가 준비됐을 때 읽음 (push-not-pull 아님) |
+| **Scope-limited** | git repo 범위 내 self-dispatch에 최적 |
+
+## develop-cycle-hub 구현 사례
+
+허브의 4개 dispatch 채널이 이 패턴을 사용한다:
+
+### 채널 1: `cycle-retro` (매 사이클 강제)
+
+```
+policy: cycle 919 retro — explore-idea SUCCESS
+
+subtype: cycle-retro
+cycle_n: 919
+chain_selected: explore-idea
+outcome: success
+retro.summary: 신규 entry #238 git-commit-body-dispatch-transport 작성
+next_recommended_chain: curate
+```
+
+수신: 다음 사이클 진단 시 `cat ~/.develop-cycle-hub/cycles/919.json` + git log 대조.
+
+### 채널 2: `lesson` (자율)
+
+```
+lesson: IPC pattern with git commit body
+
+subtype: lesson
+context: ...
+```
+
+### 채널 3: `meta-pattern` (N≥5 누적)
+
+```
+memory: meta-pattern explore-idea curate cycle rotation steady
+
+subtype: meta-pattern
+pattern: ...
+evidence: [cycle_n list]
+```
+
+### 채널 4: `chain-evolution` (신규 chain 후보)
+
+```
+memory: chain-evolution security-audit 후보
+
+subtype: chain-evolution
+slug: security-audit
+trigger: ...
+```
+
+## 수신 패턴
+
+```bash
+# 특정 subtype 메시지 검색
+git log --all --grep "subtype: lesson" --oneline | tail -10
+
+# body 전체 읽기
+git log --all --grep "subtype: meta-pattern" --format="%H%n%B%n---" | head -100
+
+# 최근 N 사이클 chain_selected 추출
+ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -20 | while read f; do
+  python3 -c "import json; d=json.load(open('$HOME/.develop-cycle-hub/cycles/$f')); print(d.get('chain_selected','?'))" 2>/dev/null
+done
+```
+
+cycle_state JSON 파일과 병행 사용:
+- **commit body**: transport (git history = 영구 audit trail)
+- **cycle JSON**: structured state (machine-readable, fast lookup)
+
+## 대안 비교
+
+| 방법 | 장점 | 단점 |
+|------|------|------|
+| **git commit body** | 인프라 0, durable, auditable | 실시간 X, push 불가 |
+| GitHub workflow_dispatch | 즉시 trigger 가능 | 외부 repo→repo dispatch (워크플로 필요) |
+| 파일 기반 (JSON flag) | 간단 | volatile (push 전까지 remote 미도달) |
+| GitHub Issues | UI 가시성 높음 | API rate limit, pull-based overhead |
+| Redis/SQS | 실시간, 고처리량 | 비용, 운영 복잡도 |
+
+**선택 기준**: self-dispatch (같은 repo, 다음 세션이 읽음) + async OK + 인프라 최소 → git commit body.  
+외부 repo 간 dispatch (워커→허브) → GitHub `workflow_dispatch` event.
+
+## 구현 가이드라인
+
+**적합한 케이스**:
+- 자기 자신에게 보내는 async 메시지 (다음 세션 pickup)
+- 감사 로그가 중요한 메시지 (commit hash = 자동 tamper-evident)
+- 저빈도 (사이클당 max 2-3 dispatch)
+
+**부적합한 케이스**:
+- 실시간 trigger 필요 (→ workflow_dispatch)
+- 고빈도 (수십 건/분) 메시지 (git history 오염)
+- 민감 데이터 포함 (git history = 영구 노출)
+
+**body 형식 규칙**:
+1. 첫 줄: commit subject (PR title 등 표준 사용)
+2. 빈 줄
+3. `subtype: <type>` (수신자 필터 키)
+4. 이후: key-value 또는 자유 텍스트
+
+## 관련 패턴
+
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): 이 패턴을 사용하는 orchestration 전체 구조
+- [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 워커→허브 방향은 workflow_dispatch 사용 (cross-repo 이유)
+- [agentic-trigger-skip-dual-condition-homeostasis](/wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis): cycle-retro dispatch 데이터로 구동되는 SE 발화율 조절 패턴

@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 396,
+  "totalInvocations": 409,
   "skipped": 26,
-  "searched": 370,
-  "hit": 98,
-  "noMatch": 272,
-  "lastUpdated": "2026-05-20T11:36:22.350Z",
+  "searched": 383,
+  "hit": 104,
+  "noMatch": 279,
+  "lastUpdated": "2026-05-20T12:06:42.923Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -42,7 +42,7 @@
     "retros/2026-05-12-cycles-293-298": 1,
     "evaluation/prediction-model-calibration-inversion-detection": 3,
     "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 1,
-    "harness-engineering/develop-cycle-positive-streak-recognition": 2,
+    "harness-engineering/develop-cycle-positive-streak-recognition": 3,
     "retros/2026-05-12-cycles-308-311": 4,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
     "retros/2026-05-08-cycles-291-292": 4,
@@ -64,7 +64,7 @@
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
     "retros/2026-05-12-cycles-334-341": 3,
     "retros/2026-05-12-cycles-331-332": 3,
-    "harness-engineering/zero-touch-develop-cycle-session-management": 8,
+    "harness-engineering/zero-touch-develop-cycle-session-management": 9,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 2,
     "retros/2026-05-13-cycles-457-458": 1,
@@ -98,7 +98,7 @@
     "retros/2026-05-19-cycles-801-804": 2,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
-    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 9,
+    "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 10,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 1,
@@ -108,7 +108,7 @@
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
-    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 4,
+    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 5,
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
@@ -123,7 +123,9 @@
     "agents/multi-agent-collaboration-design-patterns": 1,
     "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 1,
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
-    "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2
+    "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
+    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
+    "harness-engineering/agentic-git-commit-body-dispatch-transport": 1
   },
-  "totalQueries": 440
+  "totalQueries": 453
 }
