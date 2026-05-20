@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T02:04:11.174Z
+Updated: 2026-05-20T02:21:49.579Z
 
-## 엔트리 (227개)
+## 엔트리 (228개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -47,6 +47,7 @@ Updated: 2026-05-20T02:04:11.174Z
 - [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/harness-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 자기 문서화 이중 시점 지식 축적 — 내부 cycle + 외부 worker 재귀 루프](wiki/harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation) — confidence: 2, status: complete
+- [자율 에이전트 슬라이딩 윈도우 임계값 — 메타 체인 자연 oscillation 생성 메커니즘](wiki/harness-engineering/agentic-sliding-window-threshold-natural-oscillation) — confidence: 5, status: complete
 - [에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드](wiki/harness-engineering/agentic-supervisor-session-liveness-contract) — confidence: 3, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
@@ -138,14 +139,14 @@ Updated: 2026-05-20T02:04:11.174Z
 - [Playbook Journal 037 — pnpm-lock.yaml 미동기화 → CI frozen-lockfile 연쇄 실패 패턴](wiki/journal/playbook-journal-037-pnpm-lock-yaml-ci-frozen-lockfile) — confidence: 3, status: in-progress
 - [Playbook Journal 038 — cycle 378 weekly-review — n=99 / v1.8 첫 60% / Sun 14.3% 최약](wiki/journal/playbook-journal-038-cycle-378-weekly-review-n-99-v1-8-60-sun-14-3) — confidence: 3, status: in-progress
 - [Playbook Journal 039 — cycle 383 — v1.8 era ANTHROPIC credit silent fallback 발견](wiki/journal/playbook-journal-039-cycle-383-v1-8-era-anthropic-credit-silent-fallbac) — confidence: 3, status: in-progress
-- [Playbook Journal 040 — 2026-05-08 type/lint 회귀 incidents 15건 batch resolved (cycle 434) (#471)](wiki/journal/playbook-journal-040-2026-05-08-type-lint-incidents-15-batch-resolved-c) — confidence: 3, status: in-progress
-- [Playbook Journal 041 — silent drift family prevention spec (cycle 471)](wiki/journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471) — confidence: 3, status: in-progress
-- [Playbook Journal 042 — lesson-pending CI flake reminder bulk close 정책 (cycle 487)](wiki/journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-) — confidence: 3, status: in-progress
-- [Playbook Journal 043 — lesson-pending bulk close 정책 vercel-deploy 확장 (cycle 513)](wiki/journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513) — confidence: 3, status: in-progress
-- [Playbook Journal 044 — W22 마감 Sat reversion 60% (cycle 516)](wiki/journal/playbook-journal-044-w22-sat-reversion-60-cycle-516) — confidence: 3, status: in-progress
+- [Playbook Journal 040 — 2026-05-08 type/lint 회귀 incidents 15건 batch resolved (cycle 434) (#471)](wiki/journal/playbook-journal-040-2026-05-08-type-lint-incidents-15-batch-resolved-c) — confidence: 3, status: published
+- [Playbook Journal 041 — silent drift family prevention spec (cycle 471)](wiki/journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471) — confidence: 3, status: published
+- [Playbook Journal 042 — lesson-pending CI flake reminder bulk close 정책 (cycle 487)](wiki/journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-) — confidence: 3, status: published
+- [Playbook Journal 043 — lesson-pending bulk close 정책 vercel-deploy 확장 (cycle 513)](wiki/journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513) — confidence: 3, status: published
+- [Playbook Journal 044 — W22 마감 Sat reversion 60% (cycle 516)](wiki/journal/playbook-journal-044-w22-sat-reversion-60-cycle-516) — confidence: 3, status: published
 - [Playbook Journal 045 — v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567)](wiki/journal/playbook-journal-045-v1-8-pre-post-llm-fail-anthropic-daily-quota-falsi) — confidence: 3, status: published
 - [Playbook Journal 046 — cycle 607 H5 (rate limit + 동시 호출) falsification + validator hallucination family 정량화](wiki/journal/playbook-journal-046-cycle-607-h5-rate-limit-falsification-validator-ha) — confidence: 3, status: published
-- [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: in-progress
+- [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: published
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -852,6 +853,11 @@ Updated: 2026-05-20T02:04:11.174Z
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-meta-chain-fast-path-streak-guard
+- harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
 - harness-engineering/agentic-supervisor-session-liveness-contract ↔ harness-engineering/drift-detection-methodology
