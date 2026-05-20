@@ -1,0 +1,154 @@
+---
+title: "자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프"
+category: harness-engineering
+date: "2026-05-20"
+tags:
+  - agentic-loop
+  - session-design
+  - context-isolation
+  - zero-touch
+  - signal-protocol
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - context-engineering/agentic-cycle-state-json-carry-over-design
+  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+  - harness-engineering/agentic-local-commit-batch-deploy-rate-management
+status: complete
+description: "자율 개발 루프에서 '1세션 안에서 N사이클 돌리기'와 'N개의 신선한 세션 각각 1사이클씩'은 근본적으로 다른 LLM 컨텍스트 품질을 만든다. 880+ 사이클 실증에서 캐스케이드(N세션) 설계의 우위를 확인했다."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+`/develop-cycle-hub 32`처럼 N회 반복을 요청받은 자율 에이전트 루프는 두 가지 구현 방법이 있다.
+
+**방법 A — 배치(Batch)**: 한 세션이 N번 반복하며 끝까지 진행
+
+```
+[claude session] → cycle 1 → cycle 2 → ... → cycle N → 종료
+```
+
+**방법 B — 캐스케이드(Cascade)**: N개의 신선한 세션이 각각 1사이클씩 담당
+
+```
+[session 1] → cycle 1 → signal(next=N-1) → 종료
+[session 2] → cycle 2 → signal(next=N-2) → 종료
+...
+[session N] → cycle N → signal(next=0)   → 종료
+```
+
+두 방법의 결과가 같아 보이지만, LLM이 각 사이클에서 사용하는 컨텍스트 품질이 근본적으로 다르다.
+
+## 배치 방법의 구조적 문제
+
+### 1. 컨텍스트 압축 누적
+
+LLM 세션이 길어질수록 대화 히스토리가 압축된다. 사이클 10에서 사이클 1의 진단 결과를 참조할 때, 원본 데이터가 아닌 압축된 요약을 읽는다.
+
+```
+사이클  1: 진단 결과 → 신선한 git log 20줄 + 전체 issue 목록
+사이클  5: 진단 결과 → 압축된 초기 컨텍스트 참조
+사이클 20: 진단 결과 → 더 많이 압축된 context + 증가한 토큰 비용
+```
+
+**결과**: chain 선택 근거가 점점 현재 상태가 아닌 "세션 초기 기억"에 의존한다.
+
+### 2. 드리프트 누적
+
+배치 세션의 LLM은 "내가 지금까지 해온 것"의 무게를 지고 결정한다. 사이클 15의 chain 선택이 사이클 5의 컨텍스트 잔여물에 영향받는다. 이것은 [silent drift family pattern](harness-engineering/silent-drift-family-pattern)의 세션 단위 버전이다.
+
+### 3. 단일 충돌점(Single Point of Failure)
+
+사이클 10에서 세션이 크래시하면 사이클 11~N은 모두 사라진다. 재시작 시 "어디서 멈췄는가"를 외부에서 알기 어렵다.
+
+## 캐스케이드 방법의 설계
+
+### 신선한 컨텍스트 보장
+
+매 세션은 이전 세션의 메모리를 완전히 비운 상태로 시작한다. 사이클 20의 진단은 사이클 1처럼 신선하다:
+
+```bash
+# 매 세션 첫 step: ground truth 읽기
+git fetch origin --quiet
+git log --oneline -20
+git status
+gh issue list --state open --limit 20
+```
+
+LLM의 판단 근거가 항상 "git history"와 "현재 GH 상태"다. 이전 세션의 추론 과정이 영향을 주지 않는다.
+
+### 상태 연속성 — cycle_state JSON
+
+신선한 컨텍스트가 상태 손실을 의미하지 않는다. 연속성은 파일로 보장된다:
+
+```
+~/.develop-cycle-hub/cycles/<n>.json  ← 매 사이클의 chain/outcome/retro 박제
+~/.develop-cycle-hub/signal           ← 잔여 사이클 수 (next_n)
+```
+
+신규 세션은 이전 3개 cycle_state JSON을 읽어 패턴을 파악한다. LLM 메모리가 아닌 파일이 연속성을 담당한다.
+
+### signal 4줄 프로토콜
+
+캐스케이드를 가능하게 하는 최소 IPC:
+
+```
+881        ← 방금 끝난 사이클 번호
+OK         ← OK | FAIL
+cycle 881 retro 완료 — chain=explore-idea outcome=success
+31         ← next_n: watch.sh가 이 수를 새 세션 argv로 전달
+```
+
+watch.sh는 signal의 4번째 줄(`next_n`)을 읽어 0이면 종료, 아니면 새 claude 세션을 `/develop-cycle-hub $next_n`으로 launch한다. 루프 로직이 LLM 밖(watch.sh)에 있으므로 LLM은 "다음 세션이 있는지"를 알 필요가 없다.
+
+### 충돌 격리
+
+사이클 10 세션이 크래시해도 watch.sh의 FIRE_HANG 감지가 사이클 11을 새 세션으로 자동 재시작한다:
+
+```
+CYCLE_SOFT 45분 초과 → warn
+CYCLE_HARD 60분 초과 → kill → 새 세션 fire
+```
+
+손실은 해당 사이클 1개뿐이다. cycle_state JSON이 부재하면 `input_from_prev_cycles=[]`로 처리하고 진행한다.
+
+## 실증 비교
+
+| 차원 | 배치 (1세션 N사이클) | 캐스케이드 (N세션 1사이클) |
+|---|---|---|
+| 진단 신뢰도 | 사이클이 늘수록 하락 | 매 사이클 동일 |
+| 컨텍스트 비용 | 누적 증가 | 사이클당 일정 |
+| 충돌 복구 | 전체 손실 | 1 사이클 손실 |
+| 상태 연속성 | LLM 메모리 의존 | 파일(JSON) 의존 |
+| 디버깅 가시성 | 낮음 (긴 세션 내 어딘가) | 높음 (cycle_state JSON + signal) |
+| 구현 복잡도 | 낮음 (단순 loop) | 높음 (watch.sh + IPC) |
+
+허브 develop-cycle: 880+ 사이클 무중단 캐스케이드 검증. 사이클당 진단 품질 저하 없음 확인. 캐스케이드 설계의 복잡도 overhead가 LLM 컨텍스트 품질 이득으로 충분히 정당화됨.
+
+## 언제 배치를 써야 하는가
+
+캐스케이드가 기본값이지만 배치가 더 나은 경우:
+
+1. **대화형 디버깅**: 사용자가 사이클 사이에 개입해 방향을 조정하는 경우. 신선한 세션보다 연속 대화가 중요.
+2. **소수 사이클(N≤3)**: 캐스케이드 overhead(watch.sh 설정)가 이득보다 크다.
+3. **탐색적 실험**: 여러 chain 선택지를 비교하며 수동 제어가 필요한 경우.
+
+```
+N ≤ 3, 대화형  → 배치 (manual session)
+N > 3, 자율    → 캐스케이드 (zero-touch)
+```
+
+## 설계 원칙
+
+> **LLM은 "지금 상태"를 판단하는 엔진이다. 연속성은 파일이 담당한다.**
+
+배치 설계는 LLM에게 "이전 상태를 기억하라"고 요구한다. 캐스케이드 설계는 LLM에게 "지금 파일을 읽어라"고 요구한다. 후자가 LLM의 강점(추론)을 사용하고 약점(장기 기억)을 회피한다.
+
+이 원칙은 [agentic-cycle-state-json-carry-over-design](context-engineering/agentic-cycle-state-json-carry-over-design)의 "상태를 메모리가 아닌 파일로"와 동일한 철학이다.

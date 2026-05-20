@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T01:30:17.000Z
+Updated: 2026-05-20T01:48:49.533Z
 
-## 엔트리 (225개)
+## 엔트리 (226개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -25,6 +25,7 @@ Updated: 2026-05-20T01:30:17.000Z
 
 ### Harness Engineering
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
+- [자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프](wiki/harness-engineering/agentic-batch-vs-cascade-session-context-isolation) — confidence: 3, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도](wiki/harness-engineering/agentic-chain-dormancy-phase-map) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
@@ -102,8 +103,8 @@ Updated: 2026-05-20T01:30:17.000Z
 - [Playbook Journal 003 — 머지됐지만 죽어있는 코드 드리프트](wiki/journal/playbook-journal-003-drift-silent-bugs) — confidence: 5, status: complete
 - [Playbook Journal 004 — 반쪽짜리 작동 드리프트](wiki/journal/playbook-journal-004-drift-half-working) — confidence: 5, status: complete
 - [Playbook Journal 005 — moneyballscore ↔ playbook 연동 E2E 테스트](wiki/journal/playbook-journal-005-moneyballscore-playbook-e2e) — confidence: 4, status: complete
-- [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: in-progress
-- [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: in-progress
+- [Playbook Journal 006 — Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망](wiki/journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr) — confidence: 3, status: published
+- [Playbook Journal 007 — Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답](wiki/journal/playbook-journal-007-sentry-sensitive-fields-beforesend) — confidence: 3, status: published
 - [Playbook Journal 008 — GitHub repo rename 시 self-hosted runner 재설정 절차](wiki/journal/playbook-journal-008-github-repo-rename-self-hosted-runner) — confidence: 3, status: stable
 - [Playbook Journal 009 — claude CLI hang 진단 + paperclip 안정성 복원 4-step 회수](wiki/journal/playbook-journal-009-claude-cli-hang-paperclip-4-step) — confidence: 3, status: in-progress
 - [Playbook Journal 010 — title outdated 연도 사고 + title 연도 정책 B 도입](wiki/journal/playbook-journal-010-title-outdated-title-b) — confidence: 3, status: in-progress
@@ -141,8 +142,8 @@ Updated: 2026-05-20T01:30:17.000Z
 - [Playbook Journal 042 — lesson-pending CI flake reminder bulk close 정책 (cycle 487)](wiki/journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-) — confidence: 3, status: in-progress
 - [Playbook Journal 043 — lesson-pending bulk close 정책 vercel-deploy 확장 (cycle 513)](wiki/journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513) — confidence: 3, status: in-progress
 - [Playbook Journal 044 — W22 마감 Sat reversion 60% (cycle 516)](wiki/journal/playbook-journal-044-w22-sat-reversion-60-cycle-516) — confidence: 3, status: in-progress
-- [Playbook Journal 045 — v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567)](wiki/journal/playbook-journal-045-v1-8-pre-post-llm-fail-anthropic-daily-quota-falsi) — confidence: 3, status: in-progress
-- [Playbook Journal 046 — cycle 607 H5 (rate limit + 동시 호출) falsification + validator hallucination family 정량화](wiki/journal/playbook-journal-046-cycle-607-h5-rate-limit-falsification-validator-ha) — confidence: 3, status: in-progress
+- [Playbook Journal 045 — v1.8 pre/post LLM fail 디커플링 — Anthropic daily quota 가설 falsification (cycle 567)](wiki/journal/playbook-journal-045-v1-8-pre-post-llm-fail-anthropic-daily-quota-falsi) — confidence: 3, status: published
+- [Playbook Journal 046 — cycle 607 H5 (rate limit + 동시 호출) falsification + validator hallucination family 정량화](wiki/journal/playbook-journal-046-cycle-607-h5-rate-limit-falsification-validator-ha) — confidence: 3, status: published
 - [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
@@ -751,6 +752,10 @@ Updated: 2026-05-20T01:30:17.000Z
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+- harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/agentic-local-commit-batch-deploy-rate-management
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
