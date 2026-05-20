@@ -1,0 +1,132 @@
+---
+title: "JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지"
+category: context-engineering
+date: "2026-05-20"
+tags:
+  - jit-search
+  - embedding
+  - context-engineering
+  - rag
+  - wiki-management
+  - semantic-search
+  - scale
+  - context-budget
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-20"
+connections:
+  - context-engineering/ambient-knowledge-injection
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
+  - evaluation/rag-search-performance-evaluation-metrics-design
+status: complete
+description: "위키 entry 수가 N개로 성장해도 임베딩 기반 JIT 검색이 쿼리당 K개 청크만 inject하므로 컨텍스트 비용은 O(K)로 고정된다. full-load O(N) 대비 규모에 무관한 일정 비용을 실현하는 아키텍처 패턴."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+지식 기반이 성장할수록 LLM 컨텍스트 로드 비용이 선형 증가한다.
+
+```
+full-load 전략:
+  N = 100 entries  → ~50K tokens 로드
+  N = 235 entries  → ~120K tokens 로드
+  N = 1000 entries → ~500K+ tokens 로드 (context window 초과 가능)
+```
+
+매 작업마다 전체 위키를 context에 밀어넣으면 두 가지 문제가 생긴다.
+1. **비용**: 토큰 수 × LLM 단가 = N에 비례해 증가
+2. **품질 저하**: 무관한 내용이 context를 오염 → 관련 정보 희석
+
+## 해결: JIT 임베딩 검색
+
+작업 시점(just-in-time)에 쿼리를 던져 관련 청크 K개만 inject한다.
+
+```
+JIT 전략:
+  N = 235 entries → 1742 chunks (chunk화)
+  쿼리 → 임베딩 → cosine similarity → top-K (threshold 이상만)
+  inject = K chunks × chunk_size = ~300-500 tokens × K
+```
+
+K는 쿼리당 고정값(보통 3)이므로 N과 무관하게 **O(K) 컨텍스트 비용**이 유지된다.
+
+## 실전 구현 (playbook hub)
+
+| 구성요소 | 값 |
+|---|---|
+| 위키 entry 수 | 235개 |
+| 총 chunk 수 | 1742개 |
+| 임베딩 차원 | 384d (Xenova/multilingual-e5-small) |
+| 임계값 (threshold) | 0.87 |
+| 쿼리당 반환 청크 | 최대 3개 |
+| 검색 latency | ~2ms (로컬 메모리 내) |
+| 누적 쿼리 수 | 409회 (2026-05-20 기준) |
+
+```bash
+# 사용 패턴
+node scripts/search.mjs "<질문>" 3 --inject
+
+# --inject: 청크를 markdown 블록으로 출력 → context에 직접 삽입
+# threshold 미달: "no match" → context 추가 0
+```
+
+## 스케일 불변성 증명
+
+```
+entry 100 → 235 → 500 → 1000 증가 시:
+  full-load context 비용: ×2.35 → ×5 → ×10 증가
+  JIT search context 비용: K=3 고정 (불변)
+
+인덱스 파일(embeddings.json) 크기: ×2.35 → ×5 → ×10 (디스크)
+  → 검색 latency 는 chunk 수에 준선형 증가 (현재 2ms, 1742 chunks)
+  → 1000+ entries에서도 20ms 이하 예측 (로컬 메모리 내 계산)
+```
+
+스케일에 따른 trade-off:
+
+| 지표 | full-load | JIT 검색 |
+|---|---|---|
+| context 비용 | O(N) | O(K), K 고정 |
+| 정확도 | 100% recall (모두 로드) | threshold 의존 |
+| 인덱스 갱신 | 불필요 | content 변경 시 `pnpm embed-content` |
+| 쿼리 품질 의존성 | 없음 | 있음 (쿼리 부정확 → 누락) |
+
+## threshold 게이트의 역할
+
+threshold=0.87은 두 오류 사이의 균형점이다.
+
+- **낮추면** (예: 0.80): 낮은 관련성 청크까지 inject → context 오염 증가 (false positive ↑)
+- **높이면** (예: 0.92): 관련 entry도 미달 처리 → 정보 누락 (false negative ↑)
+
+"no match" 반환 시 두 가지 해석이 가능하다:
+1. **진짜 gap**: 위키에 해당 토픽 없음 → 신규 entry 생성 신호
+2. **false negative**: 존재하지만 threshold 미달 → ls 폴백으로 2차 확인
+
+이 구분 메커니즘은 [JIT 근-임계값 false negative 패턴](agentic-jit-near-threshold-false-negative-ls-fallback)에서 상세 다룬다.
+
+## 오프라인 인덱스 갱신 비용
+
+JIT 검색의 유일한 운영 오버헤드는 **content 변경 후 인덱스 재생성**이다.
+
+```bash
+pnpm embed-content
+# content/ 또는 docs/solutions/ 변경 시 실행
+# 235 entries → 1742 chunks 재임베딩 → embeddings.json 갱신
+```
+
+이 비용은 검색 시점이 아닌 인덱싱 시점에 발생하므로 실시간 작업에 영향 없다.
+GH Actions `embed-on-push.yml`이 content push 시 자동 실행한다.
+
+## 적용 조건
+
+JIT 검색이 full-load보다 유리한 조건:
+
+1. **N ≥ 50 entries**: 소규모에서는 full-load도 허용 범위 (50 entries × 500 tokens = 25K)
+2. **쿼리가 명확할 때**: 쿼리 품질이 낮으면 recall 저하 → full-load 대비 열위
+3. **반복 질문이 없을 때**: 같은 entry를 여러 작업에서 반복 참조 → 한 번 로드가 효율적
+
+playbook hub (N=235)는 세 조건을 모두 충족하므로 JIT 검색이 기본 전략이다.
