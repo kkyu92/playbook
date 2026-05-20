@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.39] — 2026-05-20
+
+### Changed
+- cycle 878 curate SUCCESS — wiki lint CLEAN (224 entries) + journal 006/007 status in-progress→published (분석/교훈/적용 섹션 채움) + memory 2건 갱신 (project_develop_cycle_skill_family / MEMORY.md, wiki 222→224, SE oscillation 125→130회, BRANCHED 145/62→155/74) + TODOS BRANCHED 갱신 (local 155/origin 74). JIT unused entry 1건 (frontend-ai-response-safety-net) 역방향 연결 6건 확인 → 아카이브 X 유지. scan-promotions: 신규 승격 후보 없음. SE oscillation 130회 steady-state.
+
 ## [0.9.38] — 2026-05-20
 
 ### Changed

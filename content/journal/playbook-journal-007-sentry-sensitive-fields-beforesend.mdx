@@ -13,7 +13,7 @@ tags:
 confidence: 3
 last_verified: "2026-04-19"
 connections: [infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr, harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security, infrastructure/vercel-env-oauth-security-enhancement, infrastructure/npm-pnpm-supply-chain-security-enhancement]
-status: in-progress
+status: published
 description: "자동 수집: Sentry 대시보드 Sensitive Fields 깊이 매칭 한계 — beforeSend 훅이 정답 (from kkyu92/moneyballscore)"
 type: entry
 series: playbook-journal
@@ -49,12 +49,12 @@ source: manual
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+Sentry 대시보드 "Additional Sensitive Fields" UI는 `request.data`와 `@password/@ip/@bearer` 패턴에만 매칭. `user / contexts / tags / extras`의 커스텀 필드는 사실상 스크럽 안 됨. UI 설정에 의존하면 PII가 Sentry에 RAW로 도착 — 30+ 항목 등록해도 실제 차단은 일부.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+Sentry PII 스크러빙은 반드시 코드 레벨 `beforeSend` 훅으로 구현. `SENSITIVE_KEYS Set + 재귀 walk` 패턴이 신뢰할 수 있는 유일한 방법. 부수 교훈: Vercel 서버리스에서 `Sentry.captureException` 후 `await Sentry.flush(2000~3000)` 누락 시 함수 종료로 이벤트 유실.
 
 ## 적용
 
-_TODO: 다음 액션_
+`src/sentry-scrub.ts` 작성 → `instrumentation.ts` + `instrumentation-client.ts` 양쪽 `Sentry.init`에 `beforeSend: scrubSentryEvent` 훅 추가. 가드 B 테스트로 검증.

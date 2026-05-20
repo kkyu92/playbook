@@ -13,7 +13,7 @@ tags:
 confidence: 3
 last_verified: "2026-04-19"
 connections: [context-engineering/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, frontend-ai/claude-code-session-web-mobile-monitoring-implementation]
-status: in-progress
+status: published
 description: "자동 수집: Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망 (from kkyu92/moneyballscore)"
 type: entry
 series: playbook-journal
@@ -46,12 +46,12 @@ source: manual
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+Next.js 16의 `src/app` 구조에서 instrumentation.ts 위치 규칙이 변경됨. 프로젝트 루트가 아닌 `src/` 내부에 위치해야 Next.js가 자동 감지·로드. CI/빌드/클라이언트 Sentry는 모두 통과했으나 서버 사이드만 silent 사망 — 관측 인프라의 부분 실패는 전체 시스템 통과로 오해될 수 있음.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+마이그레이션 커밋이 CI/빌드/클라이언트 통과해도 서버 observability는 독립적으로 검증해야 함. 관측 인프라 배선은 의도적 테스트 이벤트 수신 확인 짝이 필수. 가드 B (PII 스크러빙 검증) 테스트 이벤트가 Sentry에 미표시 → `Sentry.getClient()` undefined 확인 방식으로 탐지.
 
 ## 적용
 
-_TODO: 다음 액션_
+instrumentation.ts 이전 시 `src/instrumentation.ts` + `src/instrumentation-client.ts` 동시 이동. Sentry.init = 모듈스코프 + register() 양쪽 호출 (dynamic import 의존 제거).
