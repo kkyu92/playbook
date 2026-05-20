@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.52] — 2026-05-20
+
+### Changed
+- cycles 925~926 — curate + explore-idea. cycle 925: curate SUCCESS — wiki lint CLEAN (244 entries) + 0건 all clear + /learn 0 learnings + compound 문서화 (cycles 923~924) + memory 2건 갱신 + TODOS BRANCHED 232/11 갱신. cycle 926: explore-idea SUCCESS — 신규 entry #245 agentic-trigger-permanent-optout-structural-false-positive (harness-engineering: trigger-5 구조적 false positive 영구 면제 패턴 — 머니볼 6-layer opt-out vs 허브 151회 conditional skip 상호보완) + TODOS BRANCHED 234/12 갱신. SE oscillation 151회 steady-state (skip: window 906-925 SE=8/20=40% B PASS + 명단=7 동일 A PASS → cycle 927 SE#299 마커 박제 X). wiki 245 entries. BRANCHED 236/13 (R6 대기 지속).
+
 ## [0.9.51] — 2026-05-20
 
 ### Changed
