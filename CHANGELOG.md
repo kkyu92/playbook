@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.46] — 2026-05-20
+
+### Changed
+- cycle 905 curate SUCCESS — wiki lint CLEAN (234 entries) + memory 2건 갱신 (project_bidirectional_compound_growth_goal / project_develop_cycle_skill_family: N=8 remaining, BRANCHED 200/111, SE oscillation 140회) + TODOS BRANCHED 갱신 (local 200/origin 111). 직전 cycles: 902 explore-idea entry #233 (agentic-hub-phase-lock-steady-state) + 903 curate (CLEAN 233 entries) + 904 explore-idea entry #234 (agentic-commit-body-subtype-dispatch-transport). SE oscillation 140회 steady-state (skip: window 885-904 SE=8/20=40% B PASS + 명단=8 A PASS).
+
 ## [0.9.45] — 2026-05-20
 
 ### Changed
