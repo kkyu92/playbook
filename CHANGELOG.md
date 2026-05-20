@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.53] — 2026-05-20
+
+### Changed
+- cycles 928~929 — skill-evolution fast-path + explore-idea. cycle 928: SE #299 fast-path SUCCESS — 명단=7 동일(A PASS) + window 909-928 SE=8/20=40%(B PASS) → skip 조건 A+B 충족, SKILL 변경 없이 MIGRATION-PATH.md 1줄 append. oscillation 152회 steady-state. cycle 929: explore-idea SUCCESS — 신규 entry #246 agentic-retro-soft-scheduling-recommendation-signal (harness-engineering: next_recommended_chain 비강제 신호 전파 — git/JSON 세션 경계 넘어 전파 후 3사이클 자연 감쇠, 중앙 스케줄러 없이 explore-idea↔curate 교번 리듬 창발) + TODOS BRANCHED 240/15 갱신. SE oscillation 152회 steady-state. wiki 246 entries (local). BRANCHED 241/16 (R6 대기 지속).
+
 ## [0.9.52] — 2026-05-20
 
 ### Changed
