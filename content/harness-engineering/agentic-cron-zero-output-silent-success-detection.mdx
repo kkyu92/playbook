@@ -1,0 +1,147 @@
+---
+title: "Cron 성공 + 출력 0 = Silent Failure — 파이프라인 output count 게이트 패턴"
+category: harness-engineering
+date: "2026-05-21"
+tags:
+  - silent-drift
+  - observability
+  - cron
+  - pipeline
+  - monitoring
+  - zero-output
+  - health-gate
+workers:
+  - moneyball
+confidence: 3
+last_verified: "2026-05-21"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, evaluation/prediction-model-calibration-inversion-detection]
+status: complete
+description: "cron job이 exit code 0으로 성공 보고하지만 predictions_generated=0 / rows_inserted=0 으로 실제 의미 있는 출력이 없는 패턴. 코드 레벨 silent catch (silent-drift-family) 와 직교하는 파이프라인 레벨 silent failure. moneyball predict 2일간 preds=0 (사례 11 후보, cycles 775~812). 탐지 gate = success boolean X, output count."
+type: entry
+source: manual
+---
+
+## 문제
+
+```
+pipeline_runs 5/20 mode=predict: 10 success + 6 error, 모두 preds=0
+pipeline_runs 5/21 mode=predict/announce: 모두 preds=0
+cycle 775 baseline n=124 / cycle 812 verified n=124 — 2일 동일
+```
+
+cron이 매시간 실행됐다. 일부는 성공, 일부는 에러. 하지만 **48시간 동안 predictions_generated=0**.
+
+표준 모니터링은 이를 감지하지 못한다. success 비율, 에러율, 실행 시간 — 모두 정상 범위. "출력이 있어야 하는데 없는 경우"를 감지하는 게이트가 없기 때문이다.
+
+## 두 종류의 Silent Failure
+
+| 레벨 | 패턴 | 증거 |
+|---|---|---|
+| **코드 레벨** | `try { ... } catch {}` 빈 catch, `.error` 미체크 | [silent-drift-family-pattern](/wiki/harness-engineering/silent-drift-family-pattern) — 허브 13 fork |
+| **파이프라인 레벨** | cron success + output_count=0 | 본 entry — moneyball predict 사례 11 후보 |
+
+코드 레벨 silent failure는 `grep "catch" + 가시화` 로 해소. 파이프라인 레벨은 코드가 완벽해도 발생한다 — 상류 데이터 fetch 실패, 조건 window 미충족, prerequisite 부재 등.
+
+## moneyball predict preds=0 evidence (사례 11 후보)
+
+**타임라인**:
+- 2026-05-19 KST 16:19 마지막 verified row (5/19 pre_game 5건 모두 verified, 4/5 적중)
+- 2026-05-20 KBO pre_game 0건 scheduled / predict hourly cron: 10 success + 6 error → **preds=0 전부**
+- 2026-05-21 predict + announce cron → **preds=0 전부**
+- cycle 812 검증: n=124 / acc=47.6% = cycle 775 baseline과 **literally 동일** (2일간 0건 증가)
+
+**의심 root cause 후보**:
+1. 사례 8 (KBO Referer 봇 차단) 후속 — `/ws/Main.asmx` fix (PR #1101) 후 다른 endpoint 봇 차단 재발
+2. `shouldPredictGame` window 0~3h 조건 silent skip (cycle 800 이후 측정 부재)
+3. SP(선발투수) 미확정 → 모든 game skip
+4. KBO 5/20 휴식일 + 5/21 일정 fetch silent fail (사례 8 패턴 반복)
+
+어떤 원인이든 공통점: **cron은 돌았고 예외는 없었다. 출력만 없었다.**
+
+## 사례 패밀리 — 10+ 증거
+
+moneyball silent drift family (cycles 775~812 context):
+
+| 사례 | 날짜 | 유형 |
+|---|---|---|
+| 3 | 2026-04-15 | model_version VARCHAR overflow |
+| 4 | 2026-04-15 | retro.ts homeCode 하드코딩 |
+| 6 | 2026-04-19 | Sentry 5건 동시 폭로 |
+| 7 | 2026-04-17~19 | 필드 매핑 fix가 숨은 구조 노출 |
+| 8 | 2026-05-20 | KBO Referer 봇 차단 |
+| 9 | 2026-05-20 | Vercel .gitignore silent skip |
+| 10 | 2026-05-21 | twitter-image runtime re-export |
+| **11 후보** | **2026-05-20~21** | **predict preds=0 (본 entry)** |
+
+사례 3~7 = 코드/스키마/구조 레벨. 사례 8~11 = 런타임/환경/외부 의존 레벨. 두 레벨 모두 "작동 중인 것처럼 보이지만 의미 있는 작업이 없는" 구조.
+
+## 탐지 패턴
+
+**Bad (표준 모니터링)**:
+```sql
+-- cron job health
+SELECT mode, status, COUNT(*) 
+FROM pipeline_runs 
+WHERE created_at > NOW() - INTERVAL '24h'
+GROUP BY mode, status;
+-- 결과: predict|success|10, predict|error|6 → "정상"
+```
+
+**Good (output count gate)**:
+```sql
+-- 의미 있는 출력 발생 여부
+SELECT 
+  date_trunc('day', created_at) as day,
+  SUM(predictions_generated) as total_preds,
+  COUNT(*) as run_count
+FROM pipeline_runs 
+WHERE mode = 'predict'
+  AND created_at > NOW() - INTERVAL '48h'
+GROUP BY 1;
+-- 기대: total_preds > 0
+-- 실제 (사례 11): total_preds = 0, run_count = 16 → ALERT
+```
+
+핵심: `status = 'success'` 와 `output_count > 0` 는 독립 조건. 둘 다 게이트해야 한다.
+
+## 예방 — post-cron output count assertion
+
+```typescript
+// predict cron 후처리
+const result = await runPredictPipeline();
+
+// 표준: 에러만 체크
+if (result.error) throw result.error;
+
+// 강화: output count gate
+if (result.predictionsGenerated === 0) {
+  // 경기가 없는 날(휴식일)은 정상 — context 필요
+  const gamesScheduled = await fetchScheduledGames(today);
+  if (gamesScheduled.length > 0) {
+    await alert({
+      type: 'zero-output-warning',
+      context: { mode: 'predict', gamesScheduled, predictionsGenerated: 0 }
+    });
+  }
+}
+```
+
+**트레이드오프**: 휴식일/오프시즌 = 정상 preds=0 이므로 무조건 alert X. `gamesScheduled > 0 && preds === 0` 조합이 실제 gate 조건.
+
+## 탐지 비용 비교
+
+| 방법 | 탐지 시점 | 비용 |
+|---|---|---|
+| 표준 모니터링 (success/fail) | 탐지 불가 | — |
+| 수동 확인 (cycle 812) | 2일 후 | 전체 탐지 누락 |
+| output count 알림 | 첫 발생 시 (수 시간 내) | 알림 1건 |
+| daily baseline diff | 24h 후 | 배치 비교 |
+
+output count gate를 post-cron에 박으면 48시간 → 수 시간으로 탐지 간격 단축.
+
+## [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) Level 2 정합
+
+"작동 드리프트 #3 — 머지 후 프로덕션 확인" 의 구체적 실행:
+- `DB upsert/insert 결과 .error 체크` → **output count 게이트로 확장**
+- 코드 fix가 아니라 **cron 출력 0 자체가 drift 신호**
+- Level 2 체크리스트에 추가 후보: `pipeline_runs WHERE output_count=0 AND games_scheduled>0 → alert`

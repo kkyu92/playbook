@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 514,
+  "totalInvocations": 525,
   "skipped": 26,
-  "searched": 488,
-  "hit": 126,
-  "noMatch": 362,
-  "lastUpdated": "2026-05-21T03:59:12.616Z",
+  "searched": 499,
+  "hit": 128,
+  "noMatch": 371,
+  "lastUpdated": "2026-05-21T04:22:06.642Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 27,
+    "reports/closed-loop-health": 28,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 7,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -126,9 +126,9 @@
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 3,
-    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 3,
+    "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1,
-    "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 1,
+    "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 2,
     "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 1,
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
     "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 2,
@@ -136,7 +136,8 @@
     "evaluation/llm-document-integrity-validation-pipeline-enhancement": 1,
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 1,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
-    "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 1
+    "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 1,
+    "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 1
   },
-  "totalQueries": 558
+  "totalQueries": 569
 }
