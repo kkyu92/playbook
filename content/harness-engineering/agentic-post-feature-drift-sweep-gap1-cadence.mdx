@@ -1,0 +1,74 @@
+---
+title: Agentic Post-Feature Drift Sweep Gap=1 Cadence — explore-idea 직후 review-code 즉시 발화 패턴
+category: harness-engineering
+date: "2026-05-21"
+tags:
+  - silent-drift
+  - review-code
+  - explore-idea
+  - cadence
+  - quality-maintenance
+  - gap-1
+  - develop-cycle
+  - agentic-systems
+  - chain-alternation
+confidence: 2
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, harness-engineering/zero-touch-develop-cycle-session-management, harness-engineering/agentic-ci-deploy-budget-batch-push-policy]
+status: complete
+description: 자율 에이전트가 신규 기능(explore-idea)을 구현한 직후 사이클에 review-code(silent drift sweep)를 gap=1로 즉시 발화하는 품질 유지 cadence. 기능 구현 후 1 사이클 이내 드리프트를 차단해 품질 부채 복리 누적 방어. moneyball 사이클 796~804 연속 4회 evidence.
+type: entry
+source: harness-engineering
+---
+
+## 문제
+
+자율 에이전트가 기능을 빠르게 구현(explore-idea)할수록, 각 기능 추가 직후 발생하는 조용한 드리프트(CLAUDE.md 싱크 누락, 테스트 커버리지 하락, 타입 안전성 균열)가 다음 기능 사이클까지 묻힌다. 기능 5개를 연속 구현한 뒤 한꺼번에 sweep하면:
+
+1. 드리프트 원인이 어느 기능인지 추적 불가
+2. 수정 비용이 복리로 누적 (기능 간 얽힘)
+3. "마지막에 한꺼번에 정리" 미루기 패턴 → 사실상 정리 X
+
+## 패턴: gap=1 cadence
+
+**explore-idea 사이클 N → review-code 사이클 N+1 (gap=1)**
+
+```
+사이클 796: explore-idea — v12-F sitemap priority audit (기능 구현)
+사이클 797: review-code  — silent drift family sweep 21, gap=1 (즉시 sweep)
+
+사이클 799: explore-idea — v13-A not-found 7 dynamic routes (기능 구현)
+사이클 800: review-code  — silent drift family sweep 22, gap=1 (즉시 sweep)
+
+사이클 803: explore-idea — v13-B changelog page (기능 구현)
+사이클 804: review-code  — silent drift family sweep 23, gap=1 (즉시 sweep)
+```
+
+gap=1의 의미: 기능 구현 직후 1 사이클 이내에 sweep. "다음 기능 전에 반드시 sweep."
+
+## 왜 gap=1인가
+
+- **기억 신선도**: 기능 구현 직후 리뷰 → 의도·근거 선명. 2+ cycle 지연 시 context 손실
+- **drift 격리**: 새 drift = 직전 기능에서 발생 (다른 기능 drift 미포함). 원인 추적 즉각
+- **품질 채무 zero-carry**: 다음 explore-idea 시작 전 항상 clean slate. 채무 이월 X
+
+## sweep에서 확인하는 항목
+
+1. **CLAUDE.md sync** — 새 기능이 요구하는 규칙 반영 여부
+2. **테스트 커버리지** — 새 코드 경로에 테스트 존재 여부
+3. **타입 안전성** — `any` 사용, nullable 미처리, 불완전한 타입 경계
+4. **dead code / import** — 기능 구현 과정에서 남긴 개발용 잔재
+5. **silent fail catch** — 에러 무시, `.error` 미체크, 빈 catch block
+
+## sweep 번호 누적의 가치
+
+```
+sweep 20 → sweep 21 → sweep 22 → sweep 23 ...
+```
+
+번호 박제 = 진척 tracking + 역방향 추적 가능. "sweep 21에서 발견한 타입 drift" = 796 기능 구현에서 발생 확정. 번호 없이 sweep만 하면 origin 추적 불가.
+
+## 경계 조건
+
+- **매우 짧은 explore-idea (retro-only/lite)**: 실질 코드 변경 없으면 gap=1 sweep skip 가능. `git diff HEAD~1 --stat` 코드 파일 변경 없으면 skip
+- **연속 explore-idea 2사이클 이상**: 두 번째 explore-idea 전에 반드시 1회 sweep 삽입. gap=2 이상 허용 X
+- **review-code가 find-nothing**: 드리프트 없음 확인 = sweep 성공. retro-only outcome도 sweep 완료 인정

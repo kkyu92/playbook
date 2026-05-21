@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-21T02:55:59.984Z
+Updated: 2026-05-21T03:08:00.150Z
 
-## 엔트리 (257개)
+## 엔트리 (258개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -58,6 +58,7 @@ Updated: 2026-05-21T02:55:59.984Z
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
 - [병렬 에이전트 생태계 통합 지연과 커밋 밀도 비대칭](wiki/harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry) — confidence: 2, status: draft
 - [pnpm 빌트인 명령어 충돌 — 에이전트 JIT 검색 스크립트 무음 실패 패턴](wiki/harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure) — confidence: 2, status: complete
+- [Agentic Post-Feature Drift Sweep Gap=1 Cadence — explore-idea 직후 review-code 즉시 발화 패턴](wiki/harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence) — confidence: 2, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/harness-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
 - [Push 무기한 유예 + 동시 origin 쓰기 → 쌍방향 divergence 침묵 누적](wiki/harness-engineering/agentic-push-defer-divergence-concurrent-writes) — confidence: 3, status: complete
 - [자율 에이전트 R6 경계 누적 추적 — 해소 불가 이슈의 patience ledger 패턴](wiki/harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger) — confidence: 3, status: complete
@@ -938,6 +939,10 @@ Updated: 2026-05-21T02:55:59.984Z
 - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure ↔ harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
 - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure ↔ harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
 - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/agentic-ci-deploy-budget-batch-push-policy
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
