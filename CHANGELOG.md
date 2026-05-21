@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.60] — 2026-05-21
+
+### Changed
+- cycles 957~967. cycle 957: curate SUCCESS — wiki lint CLEAN (257 entries, 2 stale lazy-enrichment 유지) + /learn 0 learnings + compound 문서화 (cycles 952~956) + CHANGELOG [0.9.59] 추가 + TODOS BRANCHED 286/16 갱신. SE #319 skip (A+B 충족). cycle 958: explore-idea SUCCESS — 신규 entry #258 agentic-post-feature-drift-sweep-gap1-cadence (moneyball v13 gap=1 explore→review cadence 4-consecutive evidence, post-feature drift sweep 패턴). SE #320 마커 박제 (window 939-958 SE=6/20=30% B FAIL). cycles 959/960/961: skill-evolution SE #320/#321/#322 fast-path 3연속 (oscillation 166→168회 steady-state, B FAIL 연속 → cycle 962 SE#323 마커 박제). cycle 962: worker-incident-triage SUCCESS — R3 guard 발동 (959/960/961 SE 3연속 → SE 회피) + issue #1053 blog-autopilot CI 실패 CLOSED (d4418db health-signal/apt-signal author box 무조건부 주입 → editor.test.ts assertion fail, solution doc #9 4th recurrence 갱신). cycles 963/964/965: skill-evolution SE #323/#324/#325 fast-path 3연속 (oscillation 169→171회 steady-state, B FAIL/FAIL → cycle 966 SE#326 마커 박제 X). cycle 966: explore-idea SUCCESS — R3 guard 발동 (963/964/965 SE 3연속 → SE 회피) + 신규 entry #259 nextjs-segment-level-notfound-trust-signal-systematic-coverage (moneyball v13-A 7 세그먼트 not-found.tsx 신뢰 신호 패턴). TODOS BRANCHED 299/20 갱신. SE #326 skip (A+B 충족). cycle 967: worker-incident-triage SUCCESS — issue #1056 blog-autopilot CI 실패 CLOSED (feat(molit) 5b10a35 → editor.ts 미수정, d4418db broken tests 방치 재노출, solution doc #9 5th recurrence 갱신). TODOS BRANCHED 300/24 갱신. SE #327 skip (A+B 충족). wiki 259 entries. SE oscillation 171회 steady-state.
+
+### Fixed
+- blog-autopilot editor.test.ts author box recurrence pattern solution doc #9 갱신 (4th/5th recurrence 체계화, cycles 962+967). broken tests 방치 → 다른 PR trigger 시 재노출 메커니즘 확인.
+
 ## [0.9.59] — 2026-05-21
 
 ### Changed
