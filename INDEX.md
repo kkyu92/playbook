@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T21:05:02.327Z
+Updated: 2026-05-21T10:42:59.761Z
 
-## 엔트리 (207개)
+## 엔트리 (208개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -125,6 +125,7 @@ Updated: 2026-05-20T21:05:02.327Z
 - [Playbook Journal 046 — cycle 607 H5 (rate limit + 동시 호출) falsification + validator hallucination family 정량화](wiki/journal/playbook-journal-046-cycle-607-h5-rate-limit-falsification-validator-ha) — confidence: 3, status: in-progress
 - [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: in-progress
 - [Playbook Journal 048 — lesson-pending 86건 batch — hub D5 cron 주간 재발 패턴 (cycle 669) (#958)](wiki/journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958) — confidence: 3, status: in-progress
+- [Playbook Journal 049 — cycle 835 operational-analysis (lite) — TODOS.md cycle 387 stale vs CLAUDE.md cycle 775 권위 drift (silent stale family 신규 layer)](wiki/journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -1009,6 +1010,7 @@ Updated: 2026-05-20T21:05:02.327Z
 - journal/playbook-journal-046-cycle-607-h5-rate-limit-falsification-validator-ha ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958 ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
