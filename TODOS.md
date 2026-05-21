@@ -6,7 +6,7 @@
 **머지 이력**: cycle 913 `9c1589d` (112건 흡수, +6 entries) → cycle 943 `5904827` (23건 흡수, +4 entries). 누적 워커 lesson 흡수 = 135건.
 **재발 패턴 확정**: BRANCHED steady-state — 워커 auto-ingest 4-6/일 + 허브 cycle 1-2 commits/cycle = 양방향 발산 구조. 사용자 batch 머지 시점만 0 해소, 직후 즉시 재발.
 
-## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 965 갱신, local 297 / origin 19)
+## [PENDING] R6 대기 — git BRANCHED 재발 (cycle 966 갱신, local 299 / origin 20)
 
 **상태**: cycle 913 사용자가 옵션 A (`git pull --no-rebase`) 머지 결정 → INDEX.md conflict 1건 script regen 으로 해소 → merge commit `9c1589d` 박제. 머지 직후 origin 에 워커 auto-ingest 2건 추가 push (cycle 776 retro + 1건) → 즉시 215/2 재발. 다음 사용자 결정 시점 재머지 또는 누적 유지.
 **해소 path 후보**: `git pull --no-rebase origin main` (반복 머지) 또는 batch 사용자 영역.
@@ -214,3 +214,5 @@ Phase 5 ship 으로 비전 완성 — 4b 측정 게이트 의미 상실. E2/E3 �
 - **[DONE 2026-04-27]** T6 운영 noise 재평가 → 4 채널 정상 운영 확인
 - **[DONE 2026-04-23]** Pull (b) Level 3 에러 → Journal 자동화 채널 GA (auto-ingest e2e 검증)
 - **[DONE 2026-04-22]** T5 품질 검증 → PR #27 (자기 점검 제거 + query-router 14 키워드 + agents 2 entries)
+
+<!-- BRANCHED [P0] R6 대기 갱신: cycle 966 -->
