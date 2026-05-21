@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 513,
+  "totalInvocations": 514,
   "skipped": 26,
-  "searched": 487,
-  "hit": 125,
+  "searched": 488,
+  "hit": 126,
   "noMatch": 362,
-  "lastUpdated": "2026-05-21T03:45:17.624Z",
+  "lastUpdated": "2026-05-21T03:59:12.616Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -26,7 +26,7 @@
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
     "reports/closed-loop-health": 27,
     "journal/playbook-journal-001-drift-greenfield": 1,
-    "harness-engineering/guard-test-pattern": 6,
+    "harness-engineering/guard-test-pattern": 7,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
     "context-engineering/nextjs-instrumentation-location": 3,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 1,
@@ -135,7 +135,8 @@
     "harness-engineering/llm-agent-tool-call-reliability-forge-guardrails": 1,
     "evaluation/llm-document-integrity-validation-pipeline-enhancement": 1,
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 1,
-    "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2
+    "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
+    "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 1
   },
-  "totalQueries": 557
+  "totalQueries": 558
 }
