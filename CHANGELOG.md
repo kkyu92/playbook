@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.61] — 2026-05-21
+
+### Changed
+- cycles 968~970. cycle 968: curate SUCCESS — wiki lint CLEAN (259 entries, 2 stale lazy-enrichment 유지) + /learn 0 learnings + compound 문서화 (cycles 957~967) + CHANGELOG [0.9.60] 추가 + TODOS BRANCHED 302/26 갱신. SE #327 skip (A+B 충족). cycle 969: explore-idea SUCCESS — 신규 entry #260 agentic-feature-page-incremental-layer-decomposition (moneyball v13 /changelog 4-layer decomposition: structure→metadata→data processing→syndication, cycles 803~810 evidence) + TODOS BRANCHED 305/26 갱신. SE #328 skip (A+B 충족). cycle 970: explore-idea SUCCESS — 신규 entry #261 agentic-cron-zero-output-silent-success-detection (moneyball predict preds=0 2일간 사례 11 후보: cron success + output 0 = silent failure 파이프라인 레벨 패턴, output count gate 탐지) + TODOS BRANCHED 307/27 갱신. SE #329 skip (A+B 충족). wiki 261 entries. SE oscillation 171회 steady-state.
+
 ## [0.9.60] — 2026-05-21
 
 ### Changed

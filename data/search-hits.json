@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 525,
+  "totalInvocations": 528,
   "skipped": 26,
-  "searched": 499,
-  "hit": 128,
-  "noMatch": 371,
-  "lastUpdated": "2026-05-21T04:22:06.642Z",
+  "searched": 502,
+  "hit": 129,
+  "noMatch": 373,
+  "lastUpdated": "2026-05-21T04:31:59.149Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -137,7 +137,8 @@
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 1,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 1,
-    "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 1
+    "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 1,
+    "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1
   },
-  "totalQueries": 569
+  "totalQueries": 572
 }
