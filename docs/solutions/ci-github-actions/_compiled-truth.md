@@ -4,10 +4,10 @@
 
 ## 종합 (9건, 최종 갱신 2026-05-21)
 
-- **재발 횟수**: 23건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건 + knip cleanup lockfile drift 1건 + worker unconditional inject test mismatch 3건)
+- **재발 횟수**: 24건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건 + knip cleanup lockfile drift 1건 + worker unconditional inject test mismatch 4건)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
 - **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
-- **마지막 발생**: 2026-05-21 (blog-autopilot chore(adsense) dbfd881 author box 무조건부 주입 → editor.test.ts assertion fail, hub issue #1049, hub cycle 955)
+- **마지막 발생**: 2026-05-21 (blog-autopilot d4418db health-signal/apt-signal author box 무조건부 주입 → editor.test.ts assertion fail, hub issue #1053, hub cycle 962)
 
 ### 주요 교훈 요약
 
@@ -21,7 +21,7 @@
 | 6 | push_main_with_retry 레이스 — BRANCHED로 수정 origin 미배포 → 재발 루프 | origin 즉시 push (R6). CI-critical workflow 수정 시 batch push 즉시 실행 | 5회 (cycle 29→47→354→357→359) |
 | 7 | compareModels-shadow test sync gap — 리팩터 상수 rename 후 테스트 기댓값 미동기 (string literal mismatch) | 리팩터 커밋 시 테스트 파일 동시 grep 후 동기화. workaround: TypeScript 타입이 잡지 못하는 경우 수동 확인 필수 | 1회 (hub issue #548, moneyball cycle 349 fix, 2026-05-13) |
 | 8 | knip cleanup 후 pnpm-lock.yaml 미갱신 — dependency 제거 후 lockfile stale → `ERR_PNPM_OUTDATED_LOCKFILE` | knip 실행 후 반드시 `pnpm install` + lockfile diff 확인 + 함께 커밋. LLM이 typecheck/test 통과해도 lockfile 별도 확인 의무 | 1회 (hub issues #552/#553/#555, moneyball cycle 353, 2026-05-13) |
-| 9 | 워커 신규 inject 기능 무조건부 활성 → 기존 `undefined` 기대 테스트 assertion fail | 신규 inject 추가 시 관련 테스트 toBeUndefined 케이스 동시 grep + 조건부 주입 또는 테스트 갱신. 워커 자체 fix 필요 (R6) | 3회 재발 (blog-autopilot hub issues #1045/#1046/#1049, cycles 952/953/955, 2026-05-21) |
+| 9 | 워커 신규 inject 기능 무조건부 활성 → 기존 `undefined` 기대 테스트 assertion fail | 신규 inject 추가 시 관련 테스트 toBeUndefined 케이스 동시 grep + 조건부 주입 또는 테스트 갱신. 워커 자체 fix 필요 (R6) | 4회 재발 (blog-autopilot hub issues #1045/#1046/#1049/#1053, cycles 952/953/955/962, 2026-05-21) |
 
 ### 메타 패턴
 

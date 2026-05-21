@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 503,
+  "totalInvocations": 509,
   "skipped": 26,
-  "searched": 477,
+  "searched": 483,
   "hit": 125,
-  "noMatch": 352,
-  "lastUpdated": "2026-05-21T02:54:21.273Z",
+  "noMatch": 358,
+  "lastUpdated": "2026-05-21T03:06:04.022Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -137,5 +137,5 @@
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 1,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2
   },
-  "totalQueries": 547
+  "totalQueries": 553
 }
