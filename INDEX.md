@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-21T03:08:00.150Z
+Updated: 2026-05-21T04:15:07.623Z
 
-## 엔트리 (258개)
+## 엔트리 (260개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -41,6 +41,7 @@ Updated: 2026-05-21T03:08:00.150Z
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
+- [Agentic Feature Page Incremental Layer Decomposition — 복잡한 기능 페이지를 N개 원자 레이어로 분해해 순차 구현하는 패턴](wiki/harness-engineering/agentic-feature-page-incremental-layer-decomposition) — confidence: 2, status: complete
 - [자율 에이전트 기능 포화 순차 배치 배포 패턴 — Spec-Fire-Audit 3단계 구조](wiki/harness-engineering/agentic-feature-saturation-sequential-batch-delivery) — confidence: 2, status: complete
 - [자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검](wiki/harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
@@ -242,8 +243,8 @@ Updated: 2026-05-21T03:08:00.150Z
 - [Claude Code 세션 관제 — 웹/모바일 기반 개발 워크플로우 효율화](wiki/frontend-ai/claude-code-session-web-mobile-monitoring-implementation) — confidence: 1, status: draft
 - [Generative AI UI/UX Patterns — Crafting Adaptive Frontend Experiences](wiki/frontend-ai/generative-ai-ui-ux-design-patterns) — confidence: 1, status: draft
 - [LLM 기반 인터랙티브 UI 개발: 프론트엔드 전략 및 구현](wiki/frontend-ai/llm-interactive-ui-frontend-implementation) — confidence: 1, status: draft
-- [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 - [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
+- [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 
 ### Project Ops
 - [AI 프로젝트 애자일 스프린트 — 불확실성 관리 및 반복 개발 주기 확보](wiki/project-ops/agile-sprint-planning-execution-ai-projects) — confidence: 1, status: draft
@@ -823,6 +824,9 @@ Updated: 2026-05-21T03:08:00.150Z
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/guard-test-pattern
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
+- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/generative-ai-ui-ux-design-patterns
+- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence
+- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/agentic-chain-saturation-detection
@@ -875,6 +879,9 @@ Updated: 2026-05-21T03:08:00.150Z
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
+- harness-engineering/agentic-feature-page-incremental-layer-decomposition ↔ harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence
+- harness-engineering/agentic-feature-page-incremental-layer-decomposition ↔ harness-engineering/agentic-feature-saturation-sequential-batch-delivery
+- harness-engineering/agentic-feature-page-incremental-layer-decomposition ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-feature-saturation-sequential-batch-delivery ↔ harness-engineering/agentic-post-saturation-ux-chip-pivot
@@ -944,9 +951,6 @@ Updated: 2026-05-21T03:08:00.150Z
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/agentic-ci-deploy-budget-batch-push-policy
-- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage
-- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/generative-ai-ui-ux-design-patterns
-- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern

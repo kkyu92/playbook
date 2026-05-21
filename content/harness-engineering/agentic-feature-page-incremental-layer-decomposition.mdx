@@ -1,0 +1,93 @@
+---
+title: Agentic Feature Page Incremental Layer Decomposition — 복잡한 기능 페이지를 N개 원자 레이어로 분해해 순차 구현하는 패턴
+category: harness-engineering
+date: "2026-05-21"
+tags:
+  - explore-idea
+  - incremental-delivery
+  - feature-decomposition
+  - atomic-layer
+  - develop-cycle
+  - agentic-systems
+  - nextjs
+  - moneyball
+confidence: 2
+connections: [harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence, harness-engineering/agentic-feature-saturation-sequential-batch-delivery, harness-engineering/silent-drift-family-pattern]
+status: complete
+description: 자율 에이전트가 복잡한 기능 페이지(예:/changelog)를 "구조 → 메타데이터 → 데이터처리 → 배포/연동" 4개 원자 레이어로 분해해 순차적으로 구현하는 패턴. 각 레이어는 독립적으로 shippable, testable, reviewable. moneyball v13 /changelog 시리즈(v13-B~E, cycles 803~810) 4연속 evidence.
+type: entry
+source: harness-engineering
+---
+
+## 문제
+
+복잡한 기능 페이지(콘텐츠 피드, 대시보드, 섹션 랜딩 등)는 여러 기능이 얽혀 있어 단일 PR로 구현하면:
+
+1. **리뷰 부담 과중** — 구조 + 메타데이터 + 데이터처리 + 연동이 한 PR에 섞여 개별 판단 불가
+2. **중간 실패 비용 ↑** — 레이어 4에서 실패 시 레이어 1~3 코드가 리뷰 없이 머지될 위험
+3. **테스트 설계 어려움** — 모든 레이어를 동시에 테스트하면 어느 레이어에서 버그가 발생했는지 추적 불가
+4. **롤백 단위 거침** — 전체 기능을 롤백해야 하므로 일부 동작하는 레이어도 함께 되돌려짐
+
+## 패턴: 4-레이어 순차 분해
+
+**Structure → Metadata → Data Processing → Syndication/Distribution**
+
+```
+레이어 1: Structure    — 페이지 기본 구조, 파일 목록, 최소 렌더링
+레이어 2: Metadata     — OG 이미지, SEO 태그, JSON-LD, sitemap 등록
+레이어 3: Data Process — 콘텐츠 파싱, 변환, 유닛 테스트 작성
+레이어 4: Syndication  — RSS 피드, API 엔드포인트, 외부 연동
+```
+
+각 레이어는 독립적으로 가치를 제공 — 이전 레이어 없이는 다음 레이어 구현 불가.
+
+## Evidence — moneyball v13 /changelog 시리즈
+
+```
+v13-B (cycle 803): explore-idea — /changelog 페이지 기본 구조 (MDX 파일 목록 + 최소 렌더링)
+v13-C (cycle 805): explore-idea — /changelog opengraph-image.tsx (메타데이터 레이어)
+v13-D (cycle 808): explore-idea — /changelog parseMarkdown + renderMarkdown + 유닛 테스트
+v13-E (cycle 810): explore-idea — /changelog entries RSS 피드 (배포/연동 레이어)
+```
+
+각 사이클은 독립적 explore-idea → PR → merge. 선행 레이어가 실패해도 다음 레이어 착수 X.
+
+## 왜 이 순서인가
+
+- **Structure 선행**: 페이지가 존재해야 메타데이터를 붙일 수 있음
+- **Metadata는 데이터처리보다 먼저**: OG 이미지는 static 생성 가능, 콘텐츠 파싱 완료 전에도 배포 가능
+- **Data Processing이 Syndication 전**: RSS 피드는 파싱된 콘텐츠 구조에 의존
+- **Syndication 마지막**: 내부 로직이 안정된 후에야 외부 노출
+
+이 순서를 어기면 후반 레이어 구현 중 앞 레이어 재작업이 발생.
+
+## 레이어 분해 기준
+
+복잡한 기능 페이지를 설계할 때 분해 적용 기준:
+
+| 분해 대상 | 레이어 1 | 레이어 2 | 레이어 3 | 레이어 4 |
+|---|---|---|---|---|
+| 콘텐츠 피드 페이지 | 기본 UI + 더미 데이터 | OG/SEO 메타 | 실 데이터 fetch + 파싱 | RSS/Atom 피드 |
+| 대시보드 | 레이아웃 + 빈 컴포넌트 | 로딩/에러 상태 | 데이터 fetch + 집계 | 알림/웹훅 연동 |
+| 섹션 랜딩 | 페이지 구조 + 정적 내용 | 이미지 최적화 + 메타 | 인터랙션 + 애니메이션 | A/B 테스트 연동 |
+
+## gap=1 cadence와의 관계
+
+이 패턴은 [gap=1 cadence](harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence)와 독립적이지만 상호보완:
+
+- **이 패턴**: 기능 내부를 어떻게 분해할 것인가 (decomposition strategy)
+- **gap=1 cadence**: 각 기능 레이어 구현 후 리뷰-코드 sweep을 언제 실행할 것인가 (timing strategy)
+
+두 패턴이 결합되면:
+```
+레이어 1 구현 → review-code sweep → 레이어 2 구현 → review-code sweep → ...
+```
+
+단, 매 레이어마다 sweep은 과잉 — v13 시리즈에서는 2~3 레이어 묶음 후 1회 sweep이 실제 패턴.
+
+## 경계 조건
+
+- **2개 레이어 이하**: 단순 페이지는 분해 불필요. 단일 PR이 더 효율적
+- **레이어 간 강한 결합**: 데이터처리와 UI가 분리 불가능하면 묶어서 한 레이어로 처리
+- **레이어 3 유닛 테스트 의무**: 파싱/변환 로직은 반드시 유닛 테스트 포함 — v13-D가 이 패턴을 명시적으로 박제
+- **레이어 4 조기 착수 위험**: RSS/API 연동을 레이어 1~2 단계에서 구현하면 인터페이스 변경 시 두 곳을 동시에 수정해야 함
