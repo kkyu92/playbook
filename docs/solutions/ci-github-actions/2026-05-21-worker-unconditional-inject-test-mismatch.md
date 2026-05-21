@@ -2,8 +2,8 @@
 
 **날짜**: 2026-05-21
 **발생 파일**: `src/lib/editor.ts`, `src/lib/__tests__/editor.test.ts` (blog-autopilot)
-**관련 PR/커밋**: issue #1045 (feat(adsense) commit, cycle 952), issue #1046 (chore(adsense) f6e1abd, cycle 953), issue #1049 (chore(adsense) dbfd881, cycle 955), issue #1053 (d4418db, health-signal/apt-signal, cycle 962)
-**재발 여부**: 4th 재발 (blog-autopilot CI → 허브 dispatch 4회)
+**관련 PR/커밋**: issue #1045 (feat(adsense) commit, cycle 952), issue #1046 (chore(adsense) f6e1abd, cycle 953), issue #1049 (chore(adsense) dbfd881, cycle 955), issue #1053 (d4418db, health-signal/apt-signal, cycle 962), issue #1056 (feat(molit) 5b10a35, cycle 967)
+**재발 여부**: 5th 재발 (blog-autopilot CI → 허브 dispatch 5회)
 
 ## 문제
 
@@ -17,6 +17,8 @@ AssertionError: expected '<p>본문 내용</p><div style="margin-top:40…' to b
 워커가 새 commit (chore(adsense): About 페이지 업데이트) 푸시 후에도 동일 테스트 suite CI 실패. 허브에 incident #1045 → #1046 재발 dispatch.
 
 **4th recurrence (2026-05-21, cycle 962)**: commit `d4418db` — health-signal/apt-signal author box inject 추가 → `editor.test.ts:300` (health-signal), `editor.test.ts:276` (apt-signal) `toBeUndefined()` fail. 패턴 동일.
+
+**5th recurrence (2026-05-21, cycle 967)**: commit `5b10a35` (`feat(molit)` 국토교통부 실거래가 API 연동) — editor.ts 자체 미수정. 4th recurrence(d4418db) 미수정 broken tests가 새 CI run에 재노출. 동일 lines:276/300 fail. 워커가 broken tests 방치한 채 신규 feature 계속 push 중.
 
 ## 원인
 
@@ -55,4 +57,5 @@ grep -c "author.box\|inject" src/lib/editor.ts
 - issue #1046 (cycle 953 worker-incident-triage — 2nd dispatch)
 - issue #1049 (cycle 955 worker-incident-triage — 3rd dispatch, chore(adsense) dbfd881)
 - issue #1053 (cycle 962 worker-incident-triage — 4th dispatch, d4418db, health-signal/apt-signal)
+- issue #1056 (cycle 967 worker-incident-triage — 5th dispatch, feat(molit) 5b10a35, pre-existing broken tests 재노출)
 - `docs/solutions/ci-github-actions/_compiled-truth.md`
