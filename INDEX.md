@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-21T02:06:35.151Z
+Updated: 2026-05-21T02:19:18.532Z
 
-## 엔트리 (255개)
+## 엔트리 (256개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -33,6 +33,7 @@ Updated: 2026-05-21T02:06:35.151Z
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도](wiki/harness-engineering/agentic-chain-dormancy-phase-map) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
+- [Agentic CI/CD Deploy Budget Economy — Batch Push Policy](wiki/harness-engineering/agentic-ci-deploy-budget-batch-push-policy) — confidence: 4, status: complete
 - [CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴](wiki/harness-engineering/agentic-claude-md-line-reference-silent-drift) — confidence: 2, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
@@ -836,6 +837,10 @@ Updated: 2026-05-21T02:06:35.151Z
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
+- harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance
+- harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/post-ship-meta-documentation-drift
