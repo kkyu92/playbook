@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.58] — 2026-05-21
+
+### Changed
+- cycles 948~950. cycle 948: curate SUCCESS — wiki lint CLEAN (255 entries, 2 stale lazy-enrichment 유지) + /learn 0 learnings + memory 2건 갱신 + compound 문서화 (cycles 946~947) + CHANGELOG [0.9.57] 추가 + TODOS BRANCHED 271/7 갱신. SE #313 skip (A+B 충족). cycle 949: explore-idea SUCCESS — 신규 entry #256 agentic-ci-deploy-budget-batch-push-policy (harness-engineering: Vercel 100 deploy/일 한도 기반 CI push 예산 설계, batch-push 정책 구조화) + TODOS BRANCHED 274/7 갱신. SE #314 마커 박제 (window 929-948 SE=7/20=35% B FAIL + 명단=7 동일 A PASS → skip 조건 미충족). cycle 950: skill-evolution SE #314 fast-path SUCCESS — 명단=7 동일(A PASS) + oscillation 160회 steady-state. MIGRATION-PATH 1줄 append + TODOS update. 사후 window 931-950 SE=8/20=40% B PASS → cycle 951 SE #315 마커 박제 X. wiki 256 entries. SE oscillation 160회 steady-state.
+
 ## [0.9.57] — 2026-05-21
 
 ### Changed
