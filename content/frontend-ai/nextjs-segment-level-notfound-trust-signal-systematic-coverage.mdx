@@ -1,0 +1,149 @@
+---
+title: "Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계"
+category: frontend-ai
+date: "2026-05-21"
+tags:
+  - Next.js
+  - App Router
+  - not-found
+  - AdSense
+  - SEO
+  - dynamic-routes
+  - trust-signals
+  - UX
+  - frontend-ai
+confidence: 3
+connections: [frontend-ai/generative-ai-ui-ux-design-patterns, harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence, frontend-ai/ai-powered-ux-frontend-design-patterns]
+status: draft
+description: Next.js App Router 동적 라우트 세그먼트별 not-found.tsx를 통해 AdSense UX trust signal, LLM scraper context, 사용자 retention을 동시에 달성하는 패턴. Moneyball v13-A (7 세그먼트, 482 insertions) 실전 검증.
+type: entry
+source: evidence
+---
+
+Next.js App Router에서 동적 라우트(`[id]`, `[date]`, `[year]` 등)에 접근했을 때 해당 리소스가 없으면 기본 Next.js 404 페이지가 표시된다. 이 기본 동작은 세 가지 측면에서 취약하다: AdSense 심사 기준 미충족, LLM/크롤러의 사이트 구조 추론 불능, 잘못된 URL 진입 시 사용자 이탈.
+
+세그먼트별 `not-found.tsx` 패턴은 단순한 404 커스텀이 아니라 **도메인 신호 전달 채널**이다.
+
+## 배경: AdSense UX Trust 기준
+
+Google AdSense 심사에서 주요 통과 기준 중 하나는 "사용자가 사이트 내에서 자연스럽게 이동 가능한가"이다. 특히 동적 콘텐츠 중심 사이트(스포츠 예측, 뉴스, 리뷰 등)에서:
+
+- 잘못된 팀 코드(`/teams/INVALID`)로 접근 시 → 팀 목록으로 유도 링크 없으면 탈락
+- 잘못된 날짜 형식(`/predictions/20260521`)으로 접근 시 → 올바른 형식 안내 없으면 탈락
+- 크롤러가 404 페이지에서 사이트 구조를 파악 불가 → 콘텐츠 품질 점수 하락
+
+## 핵심 패턴: 5요소 구조
+
+각 세그먼트별 `not-found.tsx`는 다음 5요소를 포함해야 한다.
+
+```tsx
+// app/predictions/[date]/not-found.tsx
+import { Metadata } from 'next'
+import Link from 'next/link'
+
+export const metadata: Metadata = {
+  robots: 'noindex',          // (1) robots noindex — 검색 결과 오염 방지
+}
+
+export default function NotFound() {
+  return (
+    <main>
+      <h1>예측을 찾을 수 없습니다</h1>   {/* (2) 404 헤더 (도메인별) */}
+
+      {/* (3) URL format guide — 올바른 형식 안내 */}
+      <p>
+        예측 URL 형식: <code>/predictions/YYYY-MM-DD</code>
+        (예: <code>/predictions/2026-05-21</code>)
+      </p>
+
+      {/* (4) Domain navigation — 섹션 내 대안 경로 */}
+      <nav>
+        <Link href="/predictions">전체 예측 목록</Link>
+        <Link href="/predictions/today">오늘의 예측</Link>
+      </nav>
+
+      {/* (5) Hub link — 사이트 루트 귀환 */}
+      <Link href="/">홈으로 돌아가기</Link>
+    </main>
+  )
+}
+```
+
+**왜 5요소 모두 필요한가:**
+
+| 요소 | AdSense | LLM/크롤러 | 사용자 |
+|------|---------|-----------|--------|
+| `robots: 'noindex'` | ✅ 품질 신호 분리 | ✅ 인덱싱 노이즈 차단 | — |
+| 404 헤더 (도메인별) | ✅ 페이지 목적 명확 | ✅ 페이지 타입 분류 | ✅ 현재 상황 인식 |
+| URL format guide | ✅ 사용성 신호 | ✅ URL 구조 학습 | ✅ 재시도 가능 |
+| Domain navigation | ✅ 내부 링크 구조 | ✅ 섹션 간 관계 | ✅ 이탈 방지 |
+| Hub link | ✅ 사이트 연결성 | ✅ 계층 구조 | ✅ 복구 경로 |
+
+## 세그먼트별 URL Format Guide 작성 원칙
+
+각 동적 세그먼트의 URL 형식은 실제 파라미터 규격을 명시해야 한다:
+
+```tsx
+// 날짜 파라미터: /predictions/[date]
+// URL format: /predictions/YYYY-MM-DD
+const dateExample = '/predictions/2026-05-21'
+
+// ID 파라미터: /teams/[code]
+// URL format: /teams/TEAM_CODE (대문자 2-3자)
+const teamExample = '/teams/LAD'
+
+// 주 파라미터: /reviews/weekly/[week]
+// URL format: /reviews/weekly/YYYY-WNN
+const weekExample = '/reviews/weekly/2026-W21'
+```
+
+공통 컴포넌트로 처리하면 이 URL 형식 정보를 세그먼트별로 다르게 제공할 수 없다. 세그먼트당 파일 1개 작성이 오버헤드처럼 보이지만, **URL format guide의 도메인 특수성** 때문에 분리가 필요하다.
+
+## 구현 절차: N 세그먼트 일괄 처리
+
+N개 동적 세그먼트를 한 번에 처리하는 순서:
+
+1. **세그먼트 목록 추출**: `find app -name '[[]'` 또는 `app/` 디렉토리 수동 확인
+2. **각 세그먼트별 URL 형식 정의**: 파라미터 타입 (날짜/ID/코드/숫자)에 따라
+3. **5요소 적용**: robots noindex + 도메인 헤더 + URL format + domain nav + hub link
+4. **일관성 검증**: 공통 네이밍 패턴 (`not-found.tsx`) + 동일 import 구조
+
+```
+app/
+├── teams/[code]/not-found.tsx        (팀 코드 형식 안내)
+├── players/[id]/not-found.tsx        (선수 ID 형식 안내)
+├── analysis/game/[id]/not-found.tsx  (게임 ID 형식 안내)
+├── predictions/[date]/not-found.tsx  (날짜 형식 안내)
+├── reviews/weekly/[week]/not-found.tsx
+├── reviews/monthly/[month]/not-found.tsx
+└── seasons/[year]/not-found.tsx      (연도 형식 안내)
+```
+
+## 검증 증거
+
+**Moneyball v13-A (cycle 799, 2026-05-21)**:
+- 7 동적 세그먼트 동시 처리
+- 482 insertions, 0 deletions, 7 신규 파일
+- type-check PASS / lint PASS / 431 tests PASS
+- PR squash merge: c690ddf (4분 완료)
+- 목적: AdSense 심사 phase UX trust 신호 + 사용자 retention + LLM scraper context
+
+v13-A는 v13 시리즈 7개 feature의 첫 번째 클로저로, 이후 시리즈에서 OG 이미지(v13-C), 단위 테스트(v13-D), RSS alternates(v13-F) 가 gap=1 cadence로 순차 추가되었다.
+
+## 공통 not-found vs 세그먼트별 not-found 선택 기준
+
+| 상황 | 선택 |
+|------|------|
+| 동적 파라미터 형식이 세그먼트마다 다름 | 세그먼트별 |
+| AdSense 심사 또는 SEO 품질 점수 중요 | 세그먼트별 |
+| 동적 라우트 5개+ | 세그먼트별 |
+| 단순 정적 페이지 404 커스텀 | 공통 `app/not-found.tsx` |
+| 프로토타입 / 내부 도구 | 공통 `app/not-found.tsx` |
+
+## 적용 타이밍 (Gap=1 Cadence)
+
+신규 동적 라우트 시리즈 ship 후 **1 사이클 안에** not-found.tsx 일괄 적용하는 것이 optimal. 지연 시:
+- 크롤러가 404 기본 페이지를 캐싱
+- AdSense 심사 진행 중 발견 시 수정 후 재심사 필요
+
+gap=1 cadence: 기능 ship → 다음 사이클에서 not-found.tsx + robots + URL guide 일괄 처리.

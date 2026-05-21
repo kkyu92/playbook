@@ -243,6 +243,7 @@ Updated: 2026-05-21T03:08:00.150Z
 - [Generative AI UI/UX Patterns — Crafting Adaptive Frontend Experiences](wiki/frontend-ai/generative-ai-ui-ux-design-patterns) — confidence: 1, status: draft
 - [LLM 기반 인터랙티브 UI 개발: 프론트엔드 전략 및 구현](wiki/frontend-ai/llm-interactive-ui-frontend-implementation) — confidence: 1, status: draft
 - [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
+- [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
 
 ### Project Ops
 - [AI 프로젝트 애자일 스프린트 — 불확실성 관리 및 반복 개발 주기 확보](wiki/project-ops/agile-sprint-planning-execution-ai-projects) — confidence: 1, status: draft
@@ -943,6 +944,9 @@ Updated: 2026-05-21T03:08:00.150Z
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ harness-engineering/agentic-ci-deploy-budget-batch-push-policy
+- harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage
+- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/generative-ai-ui-ux-design-patterns
+- frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-post-saturation-ux-chip-pivot ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
