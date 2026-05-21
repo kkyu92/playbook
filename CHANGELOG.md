@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.57] — 2026-05-21
+
+### Changed
+- cycles 946~947. cycle 946: curate SUCCESS — wiki lint CLEAN (254 entries, 2 stale confidence-1 lazy-enrichment 유지) + /learn 0 learnings + memory 2건 갱신 + compound 문서화 (cycles 937~945) + CHANGELOG [0.9.56] 추가 + TODOS BRANCHED 266/0 갱신. cycle 947 (1st fire): worker-incident-triage SUCCESS — orphan 26.json 정리 후 재시작 첫 cycle, 3 inbound issues batch close (#1035 blog-autopilot CI + #1036/#1038 moneyball Vercel — 워커 자체 처리 영역으로 분류, carry-over close). cycle 947 (2nd fire): explore-idea SUCCESS — 신규 entry #255 agentic-context-compaction-trigger-heuristics (context-engineering: 3티어 컨텍스트 모델, hybrid trigger 전략, develop-cycle-hub 패턴 연결) + gstack 1.40→1.42.1 자동 업그레이드 (browse binary build skip non-fatal). TODOS BRANCHED 270/7 갱신 (세션 중 origin 7 ahead 재발 — 워커 auto-ingest). wiki 255 entries. SE oscillation 159회 steady-state.
+
 ## [0.9.56] — 2026-05-21
 
 ### Changed
