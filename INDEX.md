@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-21T02:19:18.532Z
+Updated: 2026-05-21T02:55:59.984Z
 
-## 엔트리 (256개)
+## 엔트리 (257개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -17,6 +17,7 @@ Updated: 2026-05-21T02:19:18.532Z
 - [Agentic Context Compaction Trigger Heuristics — 장기 에이전트의 히스토리 압축 시점 결정 패턴](wiki/context-engineering/agentic-context-compaction-trigger-heuristics) — confidence: 2, status: draft
 - [Agentic Cycle State JSON — 멀티 세션 연속성을 위한 carry-over 설계](wiki/context-engineering/agentic-cycle-state-json-carry-over-design) — confidence: 3, status: complete
 - [Agentic 멀티 레이어 상태 지속성 — 5계층 결정 프레임워크](wiki/context-engineering/agentic-multi-layer-state-persistence-decision-framework) — confidence: 3, status: complete
+- [Agentic OOS 메모리 드리프트 — count_smoke 베이스라인으로 사실 일치성 검증](wiki/context-engineering/agentic-oos-memory-drift-count-smoke-baseline) — confidence: 2, status: draft
 - [AI Agent Context Optimization — Enhancing Session Longevity and Efficiency](wiki/context-engineering/ai-agent-context-window-optimization-session-longevity) — confidence: 1, status: draft
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
@@ -564,6 +565,11 @@ Updated: 2026-05-21T02:19:18.532Z
 - context-engineering/agentic-multi-layer-state-persistence-decision-framework ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/agentic-multi-layer-state-persistence-decision-framework ↔ harness-engineering/drift-detection-methodology
 - context-engineering/agentic-multi-layer-state-persistence-decision-framework ↔ agents/llm-agent-goal-achievement-planning-patterns
+- context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ context-engineering/agentic-multi-layer-state-persistence-decision-framework
+- context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ agents/autonomous-agent-long-term-memory-management
+- context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ harness-engineering/drift-detection-methodology
+- context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ harness-engineering/silent-drift-family-pattern
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ prompt-engineering/zero-few-shot-prompt-design-patterns-llm
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration

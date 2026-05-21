@@ -1,0 +1,108 @@
+---
+title: Agentic OOS 메모리 드리프트 — count_smoke 베이스라인으로 사실 일치성 검증
+category: context-engineering
+date: "2026-05-21"
+tags:
+  - Context Engineering
+  - LLM Agent
+  - Memory Drift
+  - Baseline Verification
+  - Agentic Systems
+  - Long Dormancy
+  - Silent Drift
+  - context-engineering
+confidence: 2
+connections: [context-engineering/agentic-cycle-state-json-carry-over-design, context-engineering/agentic-multi-layer-state-persistence-decision-framework, agents/autonomous-agent-long-term-memory-management, harness-engineering/drift-detection-methodology, harness-engineering/silent-drift-family-pattern]
+status: draft
+description: LLM 에이전트의 메모리 파일에 저장된 사실 설명이 현실과 조용히 어긋나는 OOS(out-of-sync) 드리프트 현상, count_smoke 베이스라인 실행으로 이를 감지하고 수정하는 패턴. 장기 휴면(30+ cycle gap) 후 재개 시 특히 중요.
+type: entry
+source: worker-lesson
+---
+
+LLM 에이전트의 지속 메모리(memory 파일, cycle_state JSON, 정책 문서)에는 특정 시점의 사실 주장이 포함된다. "현재 count = 1200", "status = 대기", "마지막 실행 = cycle 511". 이 주장들은 최초 박제 시점엔 정확하지만, 이후 시스템이 조용히 변화하면서 메모리는 갱신되지 않은 채 남는다 — **OOS(out-of-sync) 메모리 드리프트**.
+
+드리프트가 발생해도 에이전트는 알아채지 못한다. 메모리를 "사실"로 읽고 그 위에 추론을 쌓기 때문이다. 잘못된 베이스라인 위에 쌓인 모든 판단이 오염된다.
+
+## 언제 발생하는가
+
+**장기 휴면(long dormancy)** 이 OOS 드리프트를 악화시킨다. 에이전트가 30+ 사이클 동안 특정 도메인을 처리하지 않으면:
+
+- 외부 시스템은 변화를 계속한다 (count 증가, 파일 수정, 태그 갱신)
+- 에이전트의 메모리는 마지막 박제 시점에서 멈춰있다
+- 재개 시 에이전트는 자신의 메모리가 맞다고 가정하고 작업을 시작한다
+
+휴면이 짧으면 드리프트가 적다. 장기 휴면 후엔 "신뢰하되 검증하라" 원칙이 필수다.
+
+## count_smoke 베이스라인 패턴
+
+장기 휴면 후 복귀 시 첫 번째 작업은 **실제 계산을 다시 실행하여 현재 수치를 얻는 것**이다:
+
+```bash
+# 예: 규칙 파일 카운트 재계산
+count_smoke_result=$(./scripts/count_rules.sh --fresh)
+
+# 현재 수치: 256 rules / 5.46% 제거 / 유효 7,700,649 / 103.3s / 캐시 1224회차
+```
+
+이를 메모리에 저장된 수치와 비교한다:
+
+```
+# memory 파일 기록: "캐시 1200회차 / 유효 7,698,000"
+# count_smoke 실측: "캐시 1224회차 / 유효 7,700,649"
+# → 드리프트 감지: 24회 차이
+```
+
+**베이스라인 비교 → 드리프트 발견 → 메모리 수정** 순서로 진행한다. 코드나 로직을 변경하는 것이 아니라, 메모리 파일의 사실 주장만 현실에 맞게 갱신한다.
+
+## 실전 사례 (moneyball cycle 802 lotto chain)
+
+gap=30+ 사이클 후 lotto chain 첫 발화. count_smoke 베이스라인 실행 결과:
+
+**드리프트 발견 2건:**
+
+1. `memory/project_lotto_picks_2026_05_16.md` description 필드:
+   - 기록된 값: `"박제 대기"`
+   - 실제 상태: `"박제 완료 (cycle 511) — 5세트 평균 0.6 / 50세트 평균 0.84 / 5등 2건 (3매칭)"`
+   - 원인: cycle 511에서 박제가 완료됐지만 메모리 description이 갱신되지 않음
+
+2. `~/lotto_picks/2026-05-16-50sets.md` 보너스 수집 상태:
+   - 기록된 값: `"(보너스 미수집)"`
+   - 실제 상태: `"(보너스 28)"`
+   - 원인: 실제 회차 발표 후 파일이 갱신됐지만 메모리는 이전 상태 유지
+
+양쪽 모두 ship-able artifact가 없는(repo 외부) silent drift였다. count_smoke로 감지하고 메모리 파일만 수정하여 해소.
+
+## 패턴 일반화
+
+```
+장기 휴면 후 재개
+  ↓
+count_smoke 베이스라인 실행 (실제 계산 또는 상태 조회)
+  ↓
+실측값 vs 메모리 기록 비교
+  ↓
+차이 있음? → 메모리 수정 (code/logic 변경 X)
+차이 없음? → 메모리 신뢰 확인 후 진행
+```
+
+**핵심 원칙**: 메모리를 신뢰하기 전에 실측으로 확인한다. 특히:
+- 마지막 박제 이후 외부 시스템이 변화했을 수 있는 영역
+- 숫자/상태/완료 여부 같은 팩트형 주장
+- 30+ 사이클(또는 30일+) 이상 처리하지 않은 도메인
+
+## 드리프트 유형 분류
+
+| 유형 | 설명 | 감지 방법 |
+|---|---|---|
+| Count drift | 숫자가 달라짐 (count, 횟수, 용량) | 실측 count 재실행 |
+| Status drift | 상태가 달라짐 ("대기" → "완료") | 파일/DB 실제 상태 조회 |
+| Path drift | 파일 위치/이름이 달라짐 | `ls` / `find` 재확인 |
+| Content drift | 파일 내용이 달라짐 | 파일 읽기 + diff |
+
+count_smoke는 Count drift와 Status drift에 가장 효과적이다. Path drift와 Content drift는 더 구체적인 조회가 필요하다.
+
+## 연관 패턴
+
+- [Drift Detection Methodology](harness-engineering/drift-detection-methodology): 구현 vs 현실 감지 (이 entry는 메모리 vs 현실 감지)
+- [Silent Drift Family Pattern](harness-engineering/silent-drift-family-pattern): silent 드리프트의 일반 taxonomy
+- [Agentic Cycle State JSON](context-engineering/agentic-cycle-state-json-carry-over-design): 사이클 간 상태 carry-over 설계 (드리프트 발생 맥락)
