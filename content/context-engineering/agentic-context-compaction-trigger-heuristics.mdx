@@ -1,0 +1,159 @@
+---
+title: Agentic Context Compaction Trigger Heuristics — 장기 에이전트의 히스토리 압축 시점 결정 패턴
+category: context-engineering
+date: "2026-05-21"
+tags:
+  - Context Engineering
+  - LLM Agent
+  - Compaction
+  - Token Management
+  - Session Longevity
+  - Agentic Systems
+  - context-engineering
+confidence: 2
+connections: [context-engineering/ai-agent-context-window-optimization-session-longevity, context-engineering/agentic-cycle-state-json-carry-over-design, context-engineering/agentic-multi-layer-state-persistence-decision-framework, agents/autonomous-agent-long-term-memory-management, context-engineering/jit-embedding-retrieval-context-cost-scale-invariant]
+status: draft
+description: 장기 실행 LLM 에이전트가 언제, 어떻게 컨텍스트 컴팩션(대화 히스토리 압축)을 트리거해야 하는지에 대한 휴리스틱 패턴. Threshold/Event/Content 기반 트리거 전략과 보존/압축 우선순위 결정 방법론.
+type: entry
+source: harness-engineering
+---
+
+장기 실행 LLM 에이전트는 대화 히스토리, 도구 호출 결과, 탐색적 추론이 누적되면서 필연적으로 컨텍스트 윈도우 한계에 접근한다. **컨텍스트 컴팩션(context compaction)** — 히스토리를 요약하거나 압축하여 핵심 정보만 보존하는 작업 — 은 에이전트 장기 운영의 핵심 메커니즘이다. 그런데 "언제" 컴팩션을 트리거할지는 "어떻게" 압축할지만큼 중요하지만, 상대적으로 덜 논의되는 영역이다.
+
+컴팩션 타이밍이 나쁘면 두 가지 경로로 실패한다: (1) 너무 늦으면 컨텍스트 한계에 걸려 강제 중단되거나 후반 추론 품질이 저하되고, (2) 너무 자주 하면 아직 활성 상태인 컨텍스트를 버려 작업 연속성이 파괴된다.
+
+## 트리거 전략 분류
+
+### 1. Threshold 기반 (반응적)
+
+가장 단순한 전략: 토큰 사용량이 X%에 도달하면 컴팩션 실행.
+
+```
+if current_tokens / max_tokens >= 0.80:
+    trigger_compaction()
+```
+
+**실전 임계값**: 80~90% 구간이 일반적이다. 70% 이하는 과잉 컴팩션(유용한 컨텍스트 손실), 95% 이상은 위험 구간(도구 호출 결과가 임계값을 넘어버릴 수 있음).
+
+**약점**: 반응적이다. 컴팩션이 가장 불필요한 시점(대화 중간, 추론 중간)에 트리거될 수 있다.
+
+### 2. Event 기반 (선제적)
+
+작업 흐름의 자연스러운 경계점에 컴팩션을 연결한다.
+
+| 이벤트 | 설명 |
+|---|---|
+| 서브태스크 완료 | 현재 서브태스크가 끝나면 그 탐색 히스토리는 요약으로 대체 가능 |
+| 무거운 도구 호출 직전 | 대형 파일 로드, API 대량 응답 전에 기존 컨텍스트 압축 |
+| 새 태스크 진입 | 이전 태스크의 상세 히스토리는 구조화된 요약으로 전환 |
+| 세션 재시작 | 이전 세션의 raw 히스토리 대신 cycle_state JSON으로 진입 |
+
+**강점**: 작업 경계와 일치하여 유용한 컨텍스트를 최대한 보존한다.
+
+### 3. Content 기반 (적응적)
+
+히스토리 내용의 특성에 따라 트리거한다.
+
+- **도구 출력 누적 감지**: 지난 K 턴 중 도구 출력 토큰 비율이 P% 초과 → 도구 출력 요약
+- **탐색적 반복 감지**: 유사한 질문/답변 패턴이 N회 반복 → dead-end 탐색 압축
+- **오래된 결정 감지**: 현재 태스크와 관련 없는 N턴 이전 컨텍스트 → 슬라이딩 윈도우 적용
+
+```python
+def should_compact(history: List[Turn]) -> bool:
+    tool_output_ratio = sum(t.tokens for t in history if t.is_tool) / total_tokens(history)
+    if tool_output_ratio > 0.60:  # 도구 출력이 60% 초과
+        return True
+    if detect_repetitive_pattern(history[-10:]):  # 최근 10턴 반복 패턴
+        return True
+    return False
+```
+
+### 4. Hybrid (권장)
+
+단일 전략으로는 모든 케이스를 커버할 수 없다. **Threshold + Event 조합**이 실전에서 가장 강건하다.
+
+```
+Primary: event-based (task boundary at 작업 완료/새 태스크 진입)
+Safety net: threshold-based at 85% (event를 놓쳤을 때 대비)
+```
+
+Event 기반이 선제적으로 처리하고, Threshold가 안전망 역할을 한다.
+
+## 보존 vs 압축 우선순위
+
+컴팩션 실행 시 무엇을 보존하고 무엇을 압축할지가 품질을 결정한다.
+
+### 항상 보존 (절대 버리지 말 것)
+
+1. **사용자의 원래 태스크/목표** — 세션 전체의 북극성
+2. **내려진 결정과 그 근거** — "왜 이 방향인가"가 사라지면 다음 턴에 재탐색
+3. **발생한 에러와 해결 방법** — 같은 실수 반복 방지
+4. **현재 태스크 상태와 다음 예정 액션** — 재진입 포인트
+
+### 선택적 보존 (최근 K턴 슬라이딩 윈도우)
+
+- 최근 K턴의 상세 컨텍스트 (K = 3~10, 태스크 복잡도에 따라)
+- 현재 활성 상태인 도구 호출 결과
+
+### 압축 대상
+
+- **Dead-end 탐색**: 시도했지만 버린 방향의 상세 논의 → "X 방향 시도했으나 Y 이유로 기각"으로 요약
+- **장황한 도구 출력**: 1000라인 로그 파일 → 핵심 발견 3줄로 요약
+- **반복 시스템 컨텍스트**: 매 턴 반복되는 배경 설명 → 첫 번째 언급만 보존
+- **N턴 이전 탐색 과정**: 결론만 남기고 중간 과정 압축
+
+## 실전 구현 패턴: 3티어 컨텍스트
+
+```
+┌─────────────────────────────────────────┐
+│  HOT  (Last K turns, full fidelity)     │  ← 현재 작업 중인 컨텍스트
+├─────────────────────────────────────────┤
+│  WARM (Prev M turns, summarized)        │  ← 완료된 서브태스크 요약
+├─────────────────────────────────────────┤
+│  COLD (Structured JSON state)           │  ← 세션 재진입용 핵심 상태
+└─────────────────────────────────────────┘
+```
+
+**HOT**: LLM이 직접 접근하는 최근 K턴. 압축 없음, 풀 피델리티.
+
+**WARM**: 완료된 서브태스크의 요약. "3번 서브태스크 완료: A, B, C 결정, D 발견" 형태.
+
+**COLD**: 세션 간 carry-over용 구조화된 JSON. 히스토리 없음, 핵심 상태만.
+
+이 3티어 구조는 컴팩션을 "버리는 작업"이 아니라 "계층 이동 작업"으로 재정의한다.
+
+## Claude Code의 실제 동작 예시
+
+Claude Code는 컨텍스트 한계 접근 시 자동 컴팩션을 실행한다. 내부적으로:
+1. 현재 대화를 요약하여 "지금까지 한 작업" 스냅샷 생성
+2. 원본 히스토리 제거
+3. 요약을 시스템 컨텍스트로 주입하여 재시작
+
+이 패턴은 Threshold 기반이지만, 요약의 품질 (무엇을 보존하는가)이 컴팩션 이후 작업 연속성을 결정한다.
+
+## develop-cycle-hub 패턴과의 연결
+
+이 프로젝트의 develop-cycle-hub가 사용하는 `cycle_state JSON carry-over`는 위 3티어 구조의 COLD 티어 구현이다:
+
+- 매 사이클 끝 → `~/.develop-cycle-hub/cycles/<n>.json` 박제 (COLD)
+- 다음 사이클 진입 → 직전 3 cycle_state JSON 읽기 (HOT으로 승격)
+- 세션 간 raw 히스토리 전달 없음
+
+이는 **Event 기반 트리거 + Structured State Extraction** 전략의 실전 증명이다. 사이클 경계(이벤트)에 컴팩션을 묶고, raw 히스토리 대신 구조화된 JSON만 전달한다.
+
+## 트리거 전략 선택 가이드
+
+| 에이전트 유형 | 권장 전략 |
+|---|---|
+| 단발성 태스크 에이전트 | Threshold only (단순, 충분) |
+| 멀티스텝 코딩 에이전트 | Event (서브태스크 경계) + Threshold 안전망 |
+| 장기 실행 자동화 루프 | Event (사이클 경계) + COLD JSON carry-over |
+| 대화형 어시스턴트 | Sliding window + 주제 전환 감지 Event |
+| RAG 기반 QA 에이전트 | Content 기반 (도구 출력 비율) + Threshold |
+
+## 안티패턴
+
+1. **컴팩션 = 무조건 버리기**: 결정 근거 없이 단순 오래된 것 삭제 → 다음 턴에 같은 탐색 반복
+2. **컴팩션 = 단순 truncation**: 앞부분 자르기 → 사용자 목표, 초기 결정이 손실
+3. **과잉 압축**: 매 N턴마다 컴팩션 → 현재 활성 컨텍스트 손실, 추론 품질 저하
+4. **압축 없는 장기 운영**: 컴팩션 없이 슬라이딩 윈도우만 → 메모리 효율 최저, 비용 최고

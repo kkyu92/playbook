@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-20T23:50:25.765Z
+Updated: 2026-05-21T02:06:35.151Z
 
-## 엔트리 (254개)
+## 엔트리 (255개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -14,6 +14,7 @@ Updated: 2026-05-20T23:50:25.765Z
 - [Prompt Engineering: Zero-shot/Few-shot Design Patterns for LLMs](wiki/prompt-engineering/zero-few-shot-prompt-design-patterns-llm) — confidence: 1, status: draft
 
 ### Context Engineering
+- [Agentic Context Compaction Trigger Heuristics — 장기 에이전트의 히스토리 압축 시점 결정 패턴](wiki/context-engineering/agentic-context-compaction-trigger-heuristics) — confidence: 2, status: draft
 - [Agentic Cycle State JSON — 멀티 세션 연속성을 위한 carry-over 설계](wiki/context-engineering/agentic-cycle-state-json-carry-over-design) — confidence: 3, status: complete
 - [Agentic 멀티 레이어 상태 지속성 — 5계층 결정 프레임워크](wiki/context-engineering/agentic-multi-layer-state-persistence-decision-framework) — confidence: 3, status: complete
 - [AI Agent Context Optimization — Enhancing Session Longevity and Efficiency](wiki/context-engineering/ai-agent-context-window-optimization-session-longevity) — confidence: 1, status: draft
@@ -547,6 +548,11 @@ Updated: 2026-05-20T23:50:25.765Z
 - android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/hub-worker-compounding-pattern
 - android-ai/on-device-llm-quantization-patterns-android ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - android-ai/on-device-llm-quantization-patterns-android ↔ frontend-ai/llm-interactive-ui-frontend-implementation
+- context-engineering/agentic-context-compaction-trigger-heuristics ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
+- context-engineering/agentic-context-compaction-trigger-heuristics ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- context-engineering/agentic-context-compaction-trigger-heuristics ↔ context-engineering/agentic-multi-layer-state-persistence-decision-framework
+- context-engineering/agentic-context-compaction-trigger-heuristics ↔ agents/autonomous-agent-long-term-memory-management
+- context-engineering/agentic-context-compaction-trigger-heuristics ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ harness-engineering/hub-worker-compounding-pattern
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ harness-engineering/drift-detection-methodology
 - context-engineering/agentic-cycle-state-json-carry-over-design ↔ agents/llm-agent-goal-achievement-planning-patterns
