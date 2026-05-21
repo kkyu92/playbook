@@ -2,8 +2,8 @@
 
 **날짜**: 2026-05-21
 **발생 파일**: `src/lib/editor.ts`, `src/lib/__tests__/editor.test.ts` (blog-autopilot)
-**관련 PR/커밋**: issue #1045 (feat(adsense) commit, cycle 952), issue #1046 (chore(adsense) f6e1abd, cycle 953)
-**재발 여부**: 2nd 재발 (blog-autopilot CI → 허브 dispatch 2회)
+**관련 PR/커밋**: issue #1045 (feat(adsense) commit, cycle 952), issue #1046 (chore(adsense) f6e1abd, cycle 953), issue #1049 (chore(adsense) dbfd881, cycle 955)
+**재발 여부**: 3rd 재발 (blog-autopilot CI → 허브 dispatch 3회)
 
 ## 문제
 
@@ -51,4 +51,5 @@ grep -c "author.box\|inject" src/lib/editor.ts
 - Wiki entry: `harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification`
 - issue #1045 (cycle 952 worker-incident-triage — 1st dispatch)
 - issue #1046 (cycle 953 worker-incident-triage — 2nd dispatch)
+- issue #1049 (cycle 955 worker-incident-triage — 3rd dispatch, chore(adsense) dbfd881)
 - `docs/solutions/ci-github-actions/_compiled-truth.md`
