@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.59] — 2026-05-21
+
+### Changed
+- cycles 952~956. cycle 952: worker-incident-triage SUCCESS — issue #1045 blog-autopilot CI 실패 트리아지/CLOSED (feat(adsense) author box 무조건부 주입 → editor.test.ts 4건 실패, 워커 자체 fix 영역으로 분류). TODOS BRANCHED 278/11 갱신. SE #315 skip (A+B 충족). cycle 953: worker-incident-triage SUCCESS — issue #1046 blog-autopilot CI 실패 CLOSED (chore(adsense) f6e1abd → editor.test.ts author box 2nd recurrence, solution doc #9 박제). SE #316 마커 박제 (window 933-952 SE=7/20=35% B FAIL). cycle 954: skill-evolution SE #316 fast-path SUCCESS — 명단=7 동일(A PASS) + oscillation 161회 steady-state. MIGRATION-PATH append. 사후 window 935-954 SE=8/20=40% B PASS → cycle 955 SE #317 마커 박제 X. cycle 955: worker-incident-triage SUCCESS — issue #1049 blog-autopilot CI 실패 CLOSED (chore(adsense) dbfd881 → editor.test.ts author box 3rd recurrence, solution doc #9 갱신). TODOS BRANCHED 283/15 갱신. SE #317 skip (A+B 충족). cycle 956: explore-idea SUCCESS — 신규 entry #257 agentic-oos-memory-drift-count-smoke-baseline (context-engineering: moneyball cycle 802 lotto chain OOS memory drift fix + count_smoke baseline 검증 패턴). TODOS BRANCHED 285/15 갱신. SE #318 skip (A+B 충족). wiki 257 entries. SE oscillation 163회 steady-state.
+
+### Fixed
+- blog-autopilot editor.test.ts author box recurrence pattern solution doc #9 갱신 (3rd recurrence 체계화, cycles 953+955).
+
 ## [0.9.58] — 2026-05-21
 
 ### Changed
