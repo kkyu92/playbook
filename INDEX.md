@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-21T04:15:07.623Z
+Updated: 2026-05-21T05:36:20.225Z
 
-## 엔트리 (260개)
+## 엔트리 (261개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -39,6 +39,7 @@ Updated: 2026-05-21T04:15:07.623Z
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
+- [Cron 성공 + 출력 0 = Silent Failure — 파이프라인 output count 게이트 패턴](wiki/harness-engineering/agentic-cron-zero-output-silent-success-detection) — confidence: 3, status: complete
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [Agentic Feature Page Incremental Layer Decomposition — 복잡한 기능 페이지를 N개 원자 레이어로 분해해 순차 구현하는 패턴](wiki/harness-engineering/agentic-feature-page-incremental-layer-decomposition) — confidence: 2, status: complete
@@ -872,6 +873,9 @@ Updated: 2026-05-21T04:15:07.623Z
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ evaluation/prediction-model-calibration-inversion-detection
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/zero-touch-develop-cycle-session-management
