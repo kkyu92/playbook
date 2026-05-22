@@ -1,0 +1,113 @@
+---
+title: "Agentic Worker Ambient Context Rule Starvation — 재발 패턴이 shared-rules 에 박제되지 않아 워커 ambient context 전파 실패"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - ambient-context
+  - shared-rules
+  - closed-loop
+  - rule-propagation
+  - worker
+  - recurrence
+workers:
+  - blog-autopilot
+confidence: 2
+last_verified: "2026-05-22"
+connections: [harness-engineering/agentic-worker-dispatch-filter-registration-gap, harness-engineering/hub-worker-compounding-pattern, harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification]
+status: complete
+description: "워커 에이전트가 동일 버그를 수회 재발시키지만, 매 fix가 shared-rules에 박제되지 않아 다음 세션 ambient context에 전파되지 않는 현상. 인프라(shared-rules 디렉토리) 존재만으로는 재발 방지 불가 — 실제 rule이 작성·배치되어야 작동한다."
+type: entry
+source: manual
+---
+
+## 문제
+
+워커 에이전트는 매 세션 ambient context (CLAUDE.md + MEMORY.md + shared-rules) 를 읽고 시작한다. 허브는 `shared-rules/<worker>/` 디렉토리를 통해 학습된 패턴을 워커 ambient context에 전파하는 인프라를 갖춘다.
+
+**인프라가 존재해도 비어있으면 효과가 없다.**
+
+fix → session 종료 → "rule 박제" 단계 누락 → 다음 세션 ambient context 에 규칙 0개 → 동일 버그 재발.
+
+## 구조 (반복 루프)
+
+```
+발견 → fix → session 종료
+                 ↓
+       (shared-rule 박제 단계 생략)
+                 ↓
+       다음 세션: ambient context = rule 0개
+                 ↓
+       동일 패턴 재발 ←————————————┐
+                                   |
+       이슈 등록 → fix ————————————→┘
+```
+
+단절 지점: "이슈 close = 완료"로 인식, rule 코드화는 별도 의식적 단계로 인식.
+
+## Evidence — blog-autopilot editor.test.ts 6회 재발
+
+| 이슈 | 재발 메커니즘 | shared-rule 박제? |
+|---|---|---|
+| #1045 | editor.ts 신규 inject → toBeUndefined() fail | ❌ |
+| #1046 | 동일 | ❌ |
+| #1049 | 동일 | ❌ |
+| #1053 | 동일 | ❌ |
+| #1056 | 동일 | ❌ |
+| #1153 | 동일 | ❌ |
+
+**`shared-rules/blog-autopilot/` 파일 수: 0개** (6 사이클 동안)
+
+cycle 989 첫 명시적 감사 → 즉시 `feedback_editor_test_unconditional_inject.md` 생성 + symlink → 워커 ambient context 전달.
+
+**Rule propagation failure rate**: 6 재발 / 0 shared-rules = 100% 전파 실패
+
+## 왜 단계가 생략되는가
+
+1. **인지 종결**: 버그를 fix하면 "완료"로 인식 → rule 박제는 추가 작업으로 분류
+2. **인프라 비가시성**: 디렉토리가 비어 있어도 에러 없음 → silent failure
+3. **연결 부재**: "이슈 close" 이벤트가 "shared-rule 박제 체크" trigger와 연결 안 됨
+4. **curate chain 미감사**: 정기 큐레이션 시 shared-rules 파일 수 점검 없음
+
+## 탐지 방법
+
+```bash
+# 워커별 shared-rules 파일 수 감사
+for dir in shared-rules/*/; do
+  count=$(ls "$dir" 2>/dev/null | wc -l | tr -d ' ')
+  worker=$(basename "$dir")
+  echo "$worker: $count rules"
+done
+
+# 재발 이슈 수 vs rules 수 비교
+gh issue list --state closed --json title,number | \
+  jq '[.[] | select(.title | test("blog-autopilot"))] | length'
+```
+
+재발 이슈 N건 / shared-rule 0개 = rule starvation 신호 → 즉시 rule 생성 트리거.
+
+## 예방
+
+**즉각적**:
+- 동일 버그 **2회 재발 시** → shared-rule 박제 의무 (curate chain stop 조건 추가)
+- curate chain 안 shared-rules 디렉토리 감사 step: `ls shared-rules/*/` 파일 수 확인
+
+**구조적**:
+- 이슈 close event → "이 패턴을 shared-rule 로 박제했나?" 자가 체크 추가
+- closed-loop-design chain 진단 항목에 shared-rules 공백 감사 포함
+
+## 일반화 — 인프라 존재 ≠ 인프라 활용
+
+| 인프라 | 존재 감사 | 활용률 감사 |
+|---|---|---|
+| shared-rules/ | 디렉토리 존재 | 파일 수 ≥ 1 (워커 활성 기준) |
+| CI 파이프라인 | workflow 존재 | 테스트 수 ≥ 1 |
+| 메모리 시스템 | MEMORY.md 존재 | 항목 수 증가 추이 |
+| 임베딩 인덱스 | embeddings.json 존재 | 신규 콘텐츠 반영 최신 여부 |
+
+모든 closed-loop 인프라는 **존재 감사 + 활용률 감사** 두 단계가 필요.
+
+## 연결
+
+- [[agentic-worker-dispatch-filter-registration-gap]]: 다른 종류의 인프라 등록 누락 → 신규 워커 silent drop 패턴
+- [[hub-worker-compounding-pattern]]: 양방향 지식 흐름에서 "허브→워커" 축 실패 사례
+- [[agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification]]: 구조적 재발 vs 일회성 incident 분류 — rule starvation = 구조적 패턴
