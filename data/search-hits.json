@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 528,
+  "totalInvocations": 530,
   "skipped": 26,
-  "searched": 502,
-  "hit": 129,
-  "noMatch": 373,
-  "lastUpdated": "2026-05-21T04:31:59.149Z",
+  "searched": 504,
+  "hit": 130,
+  "noMatch": 374,
+  "lastUpdated": "2026-05-22T02:02:06.164Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -72,7 +72,7 @@
     "retros/2026-05-12-cycles-327-330": 1,
     "retros/2026-05-12-cycles-377-378": 1,
     "infrastructure/sentry-serverless-flush": 1,
-    "retros/2026-05-12-cycles-320-322": 2,
+    "retros/2026-05-12-cycles-320-322": 3,
     "retros/2026-05-12-cycles-314-319": 2,
     "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 1,
     "infrastructure/llm-call-orchestration-reliability-enhancement": 1,
@@ -82,7 +82,7 @@
     "retros/2026-05-13-cycles-486-487": 3,
     "evaluation/claude-code-generation-validation-pipeline-extension": 1,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
-    "harness-engineering/debug-page-silent-drift-trap": 2,
+    "harness-engineering/debug-page-silent-drift-trap": 3,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
     "retros/2026-05-12-cycles-350-355": 8,
     "infrastructure/nextjs-security-patching-defense-logic-reinforcement": 1,
@@ -138,7 +138,8 @@
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 1,
     "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 1,
-    "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1
+    "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
+    "retros/2026-05-12-cycles-323-326": 1
   },
-  "totalQueries": 572
+  "totalQueries": 574
 }
