@@ -1,0 +1,126 @@
+---
+title: "Git History as Ground Truth — Checkpoint Staleness Resilience"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - git-history
+  - checkpoint
+  - state-management
+  - resilience
+  - harness-engineering
+  - develop-cycle
+  - session-recovery
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-commit-body-subtype-dispatch-transport
+  - harness-engineering/agentic-git-commit-body-dispatch-transport
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/zero-touch-develop-cycle-session-management
+source: explore-idea
+description: "policy: 커밋이 cycle state 전체를 inline 박제 → checkpoint 파일 497 cycle 드리프트 상황에서도 git log 만으로 30초 내 완전 컨텍스트 복구 성공. git history = 불변 ground truth, checkpoint = optional optimization."
+---
+
+## 핵심 인사이트
+
+에이전트 시스템에서 "세션 재개" 를 checkpoint 파일에만 의존하면 파일이 stale 해지는 순간 컨텍스트 복구 불가 상태가 된다. **구조화된 커밋 메시지 (policy: prefix + inline state)** 가 있으면 git history 자체가 내구성 있는, 절대 stale 해지지 않는 state store 가 된다.
+
+## 문제 상황
+
+cycle 992 세션 시작 시 `/handoff load` 결과:
+
+```
+체크포인트 저장 시점: 2026-05-14 (cycle 494)
+현재 상태: 2026-05-22 (cycle 991 완료)
+드리프트: 1,381 commits / 497 cycles
+```
+
+checkpoint 파일의 모든 TODO, 다음 chain 추천, wiki entry 수, SE 카운터 등이 완전히 만료. 일반적인 체크포인트 기반 복구라면 "체크포인트가 너무 stale 합니다. 처음부터 시작하세요" 가 결론.
+
+## 복구 메커니즘
+
+**대신 git log 를 읽었다**:
+
+```bash
+git log --oneline -10
+```
+
+출력:
+```
+9a1185e policy: cycle 991 retro — skill-evolution SE #342 fast-path SUCCESS — 명단 변화 7→6 (closed-loop-design 탈퇴). MIGRATION-PATH append. 사후 window 972-991 SE=9/20=45% B PASS + 명단=6 동일(A PASS) → cycle 992 SE #343 마커 박제 X. oscillation 178회 steady-state. explore-idea 추천 next.
+cd3644a policy: cycle 990 retro — explore-idea SUCCESS — entry #270 ...
+```
+
+단 1회 `git log --oneline -10` 으로 복구된 정보:
+- 현재 cycle: 991 완료, 992 대기
+- SE 상태: oscillation 178회, #342 완료, 992 SE 마커 X
+- wiki 상태: 270 entries
+- 다음 추천 chain: explore-idea
+- 직전 체인 3개: skill-evolution → explore-idea → closed-loop-design
+
+**복구 소요 시간: < 30초.**
+
+## 패턴 원리
+
+policy: 커밋이 cycle state 전체를 inline 박제하는 구조:
+
+```
+policy: cycle N retro — {chain} {outcome} — {핵심 변경사항}. {SE 상태}. {wiki 수}. {다음 추천 chain}.
+```
+
+이 커밋 메시지 하나가 `~/.develop-cycle-hub/cycles/N.json` 과 사실상 동등한 정보를 담는다. 차이점:
+
+| | cycle JSON 파일 | policy: 커밋 메시지 |
+|---|---|---|
+| 위치 | 로컬 전용 (`~/.develop-cycle-hub/`) | git history (remote 포함) |
+| 수명 | 로컬 삭제 시 消滅 | git history 살아있는 한 영구 |
+| 가독성 | JSON 파싱 필요 | 단순 `git log --oneline` |
+| stale 가능 여부 | 파일 시스템 레벨에서 손상 가능 | append-only, 불변 |
+| 원격 접근 | 불가 | `git log origin/main` 가능 |
+
+## 설계 원칙
+
+### 1. Embed state in commit messages, not just in files
+
+`cycle N: chain=curate outcome=success wiki=271` 이 커밋 메시지에 있으면 JSON 파일이 없어도 git history 가 state store 다.
+
+### 2. Checkpoint = optimization, not dependency
+
+checkpoint / session save 는 cold-start 속도를 줄이는 optimization. critical path 에 의존하면 파일 손실 / 드리프트 시 catastrophic failure.
+
+### 3. Git history 기반 복구 프로토콜
+
+checkpoint 드리프트 >= 10 cycle 이면:
+```bash
+# 1단계: 최근 policy 커밋 추출
+git log --oneline --grep "^policy:" -20
+
+# 2단계: 직전 3 cycle 상태 파싱
+git log --oneline --grep "^policy:" -3 | grep -oP 'cycle \d+'
+
+# 3단계: SE 상태, wiki 수, 다음 chain 추출
+git log -1 --grep "^policy:" --format="%s"
+```
+
+### 4. Structured commit message = queryable persistent state
+
+```bash
+# wiki entry 수 추이
+git log --grep "^content:" --format="%s" | grep -oP 'wiki \d+ entries'
+
+# chain 분포 (직전 20 사이클)
+git log --grep "^policy:" --oneline -20 | grep -oP '— \w+[\w-]* (SUCCESS|FAIL)'
+```
+
+## 실패 모드
+
+**커밋 메시지만 있고 JSON 파일 없는 경우**: git log 로 macro state (cycle, chain, outcome) 복구 가능. micro state (execution.results 세부, skills_invoked 목록) 는 복구 불가. 허용 가능한 손실 — 세부 실행 결과는 다음 사이클 진단에서 재수집.
+
+**커밋 메시지 비구조화 (free-form) 인 경우**: grep 으로 파싱 불가. structured format 강제 필요.
+
+## 연관 관계
+
+- [commit-body-dispatch-transport](/wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport): commit body 의 또 다른 활용 — dispatch signal 박제 (state 저장이 아닌 signal 전송 용도)
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): 본 패턴은 Level 0 메모리 드리프트 복구 메커니즘의 구현체

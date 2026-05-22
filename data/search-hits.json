@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 540,
+  "totalInvocations": 546,
   "skipped": 26,
-  "searched": 514,
+  "searched": 520,
   "hit": 136,
-  "noMatch": 378,
-  "lastUpdated": "2026-05-22T02:22:46.442Z",
+  "noMatch": 384,
+  "lastUpdated": "2026-05-22T07:05:47.102Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -144,5 +144,5 @@
     "project-ops/agile-sprint-planning-execution-ai-projects": 1,
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1
   },
-  "totalQueries": 584
+  "totalQueries": 590
 }
