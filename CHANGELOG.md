@@ -6,6 +6,11 @@
 
 ## [0.9.65] — 2026-05-22
 
+## [0.9.67] — 2026-05-22
+
+### Changed
+- cycles 1005~1007. cycle 1005: curate SUCCESS — wiki lint CLEAN 278 entries, compound 1002~1004, CHANGELOG 0.9.66. cycle 1006: explore-idea SUCCESS — entry #279 agentic-wiki-connection-graph-health-metrics (278 entries: 78% zero connections, harness-engineering avg 1.75 vs others avg 0, cross-category connectivity ~0). SE A PASS + B FAIL (window 987-1006 SE=2/20=10%). cycle 1007: skill-evolution SE #344 fast-path — 명단=6 동일, MIGRATION-PATH append, oscillation 180회 steady-state.
+
 ## [0.9.66] — 2026-05-22
 
 ### Changed
