@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 530,
+  "totalInvocations": 533,
   "skipped": 26,
-  "searched": 504,
+  "searched": 507,
   "hit": 130,
-  "noMatch": 374,
-  "lastUpdated": "2026-05-22T02:02:06.164Z",
+  "noMatch": 377,
+  "lastUpdated": "2026-05-22T02:13:04.368Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -141,5 +141,5 @@
     "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
     "retros/2026-05-12-cycles-323-326": 1
   },
-  "totalQueries": 574
+  "totalQueries": 577
 }

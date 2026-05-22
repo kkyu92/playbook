@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.62] — 2026-05-22
+
+### Changed
+- cycles 971~976. cycle 971: curate SUCCESS — embeddings stale 2 entries 갱신 핵심 성과, 2 stale lazy-enrichment 유지. SE Trigger-5 7/20=35% B FAIL → SE #330 마커 박제. cycle 972: skill-evolution SE #330 fast-path SUCCESS — 명단=7 동일(A PASS) + 사후 window 953-972 SE=8/20=40% B PASS → cycle 973 마커 박제 X. oscillation 172회. cycle 973: worker-incident-triage SUCCESS — 20 OPEN inbound batch close (19 moneyball + 1 blog-autopilot CI 실패). SE Trigger-5 A+B PASS → 마커 박제 X. cycle 974: worker-incident-triage SUCCESS — 10 OPEN inbound batch close (5 moneyball CI transient + 2 stale branch + 1 Vercel deploy + 2 blog-autopilot CI). TODOS BRANCHED 갱신 (local 1/origin 21). SE A+B PASS → 마커 박제 X. cycle 975: skill-evolution SE #331 fast-path SUCCESS — 명단=7 동일(A PASS) + 사후 window 956-975 SE=8/20=40% B PASS → cycle 976 SE #332 마커 박제 X. oscillation 172회 steady-state. cycle 976: curate SUCCESS — question-own-defaults confidence 2→3 (CLAUDE.md 직접 참조 + workers:all 실전 검증), stale 6건 lazy-enrichment 유지, JIT unused kimi-k2 dormant 확인. BRANCHED local 2/origin 22 carry-over. wiki 266 entries.
+
 ## [0.9.61] — 2026-05-21
 
 ### Changed
