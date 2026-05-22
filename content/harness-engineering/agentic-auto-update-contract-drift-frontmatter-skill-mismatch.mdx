@@ -1,0 +1,93 @@
+---
+title: "Agentic Auto-Update Contract Drift — frontmatter 선언과 SKILL 구현 불일치"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - drift
+  - contract
+  - skill-integration
+  - auto-update
+  - harness-engineering
+  - silent-failure
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-context-compaction-commit-density-survival
+source: explore-idea
+description: "MDX frontmatter에 auto_updated: true를 선언해도 SKILL retro step에 구현이 없으면 458 cycles silent 갱신 중단 가능. closed-loop-health 2026-05-15~2026-05-22 458 cycles gap 직접 evidence. 자기선언과 자기구현의 불일치 탐지 프로토콜."
+---
+
+## 사건 컨텍스트
+
+`content/reports/closed-loop-health.mdx` frontmatter:
+```yaml
+auto_updated: true
+last_updated: '2026-05-15T23:00:55.128Z'
+last_cycle: 551
+description: "develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동 갱신."
+```
+
+**실제 상태 (2026-05-22, cycle 1010 탐지)**:
+- `auto_updated: true` 선언 존재
+- `last_cycle: 551` — cycles 552-1009 = **458 cycles 갱신 없음**
+- `dashboard-update.mjs` script = 정상 작동 (manual 실행 즉시 복구)
+- SKILL.md 사이클 단계 4 (회고) = `dashboard-update.mjs` 호출 **없음**
+
+## 왜 이 패턴이 위험한가
+
+### silent 계약 위반
+
+| 구성 요소 | 상태 |
+|---|---|
+| frontmatter 선언 `auto_updated: true` | ✅ 존재 |
+| 갱신 script `dashboard-update.mjs` | ✅ 존재, 정상 작동 |
+| SKILL retro step 에서의 호출 | ❌ 없음 |
+| 탐지 방법 | `last_cycle` 값과 현재 cycle 비교 |
+| 탐지 시점 | 458 cycles 경과 후 수동 발견 |
+
+lint는 이 불일치를 탐지하지 않는다. `orphan`, `stale`, `isolated` 검사는 MDX 파일의 링크와 confidence/날짜를 보지, frontmatter 선언과 SKILL 구현 정합성은 확인하지 않는다.
+
+### 허브 자기신뢰 손상
+
+`auto_updated: true`를 보고 "이 entry는 항상 최신"이라고 가정한 LLM agent는 458 cycles치 stale data를 기반으로 판단. dashboard가 보여주는 "마지막 사이클: 551"은 허위 현재 상태.
+
+## 탐지 프로토콜
+
+```bash
+# frontmatter auto_updated: true 선언 항목 목록
+grep -r "auto_updated: true" content/ --include="*.mdx" -l
+
+# 각 항목의 last_cycle과 현재 cycle 비교
+for f in $(grep -r "auto_updated: true" content/ --include="*.mdx" -l); do
+  last=$(grep "last_cycle:" "$f" | head -1 | grep -oP '\d+')
+  current_cycle=$(ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -1 | sed 's/.json//')
+  [ -n "$last" ] && [ -n "$current_cycle" ] && [ "$((current_cycle - last))" -gt 10 ] && \
+    echo "STALE: $f (last=$last current=$current_cycle gap=$((current_cycle - last)))"
+done
+```
+
+## 방지 원칙
+
+**1. 선언 = 구현 의무**: `auto_updated: true`를 frontmatter에 추가하면, 그 entry를 업데이트하는 script를 SKILL 혹은 workflow에 동시에 추가.
+
+**2. 구현 테스트**: 선언 추가 직후 해당 script가 실제로 entry를 업데이트하는지 dry-run으로 검증.
+
+**3. 정기 scan**: curate chain 실행 시 `auto_updated: true` 항목 scan + `last_cycle` vs 현재 cycle 비교. gap > 10 이면 경고.
+
+## 관련 드리프트 패턴과의 차이
+
+| 드리프트 유형 | 예시 | 탐지 |
+|---|---|---|
+| Level 0 (메모리 드리프트) | checkpoint vs git HEAD | `/handoff load` fingerprint |
+| Level 2 (작동 드리프트) | CI 통과 but prod silent fail | `gh run list` + prod 확인 |
+| **본 패턴 (선언↔구현 드리프트)** | `auto_updated: true` but SKILL 미포함 | `grep auto_updated` + cycle gap |
+
+공통점: **선언이 있어서 "올바르다"고 가정하지만, 구현이 빠져 silent failure**.
+
+## 관련 패턴
+
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): 4-level 드리프트 감지 프레임워크
+- [agentic-context-compaction-commit-density-survival](/wiki/harness-engineering/agentic-context-compaction-commit-density-survival): 커밋 밀도가 compaction 후 상태 복원에 미치는 영향
