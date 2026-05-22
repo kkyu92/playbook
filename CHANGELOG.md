@@ -6,6 +6,12 @@
 
 ## [0.9.65] — 2026-05-22
 
+## [0.9.66] — 2026-05-22
+
+### Changed
+- cycles 1000~1004. cycle 1000: skill-evolution SE #343 milestone fast-path — 허브 1000 사이클 달성, 명단=6 동일, oscillation 179회. cycle 1001: explore-idea SUCCESS — entry #276 1000-cycle-milestone-learnings (confidence 4, 5 핵심 패턴 + 5 안티패턴). cycle 1002: curate SUCCESS — wiki lint CLEAN 276 entries. compound 998~1001. cycle 1003: explore-idea SUCCESS — entry #277 agentic-wiki-confidence-lifecycle (confidence 1→4 lifecycle + lazy-enrichment). cycle 1004: explore-idea SUCCESS — entry #278 agentic-batch-session-context-budget (N 사이클 manual batch ctx 예산 관리).
+
+
 ### Changed
 - cycles 988~992. cycle 988: curate SUCCESS — wiki lint CLEAN (270 entries, 5 stale lazy-enrichment 유지), embeddings 2081→2091 chunks, compound 980-987 문서화. SE A+B PASS. oscillation 177회 steady-state. cycle 989: closed-loop-design SUCCESS — 자동화 루프 결손 2건 직접 수정 (kimi-k2 JIT Unused 무덤 삭제 + blog-autopilot editor.test.ts 6회 재발 shared-rule 박제). wiki 269 entries. SE A+B PASS. cycle 990: explore-idea SUCCESS — 신규 entry #270 agentic-worker-ambient-context-rule-starvation (shared-rules 비어있어 워커 ambient context 전파 0%, 6회 재발 evidence). wiki 270 entries. SE A FAIL(명단 7→6) → SE #342 마커 박제. oscillation 177회. cycle 991: skill-evolution SE #342 fast-path SUCCESS — closed-loop-design 탈퇴(명단 7→6), MIGRATION-PATH append. 사후 window 972-991 SE=9/20=45% B PASS + 명단=6 동일(A PASS) → SE #343 마커 박제 X. oscillation 178회 steady-state. cycle 992: explore-idea SUCCESS — 신규 entry #271 agentic-git-history-ground-truth-checkpoint-resilience (497 cycle checkpoint 드리프트 상황에서 git log policy: 커밋 30초 내 복구, git history = 불변 ground truth). wiki 271 entries. SE window 973-992 SE=8/20=40% B PASS + 명단=6 동일(A PASS) → SE #343 마커 박제 X.
 
