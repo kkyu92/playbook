@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 571,
+  "totalInvocations": 572,
   "skipped": 26,
-  "searched": 545,
-  "hit": 145,
+  "searched": 546,
+  "hit": 146,
   "noMatch": 400,
-  "lastUpdated": "2026-05-22T08:08:07.366Z",
+  "lastUpdated": "2026-05-22T08:09:13.970Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -63,13 +63,13 @@
     "harness-engineering/fail-loud-partial-adoption-escape-hatch-trap": 3,
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
     "retros/2026-05-12-cycles-334-341": 3,
-    "retros/2026-05-12-cycles-331-332": 3,
+    "retros/2026-05-12-cycles-331-332": 4,
     "harness-engineering/zero-touch-develop-cycle-session-management": 11,
     "project-ops/claude-code-cost-optimization-strategies": 1,
     "retros/2026-05-13-cycles-441-442": 2,
     "retros/2026-05-13-cycles-457-458": 1,
     "infrastructure/sentry-pii-scrubbing-beforesend": 1,
-    "retros/2026-05-12-cycles-327-330": 1,
+    "retros/2026-05-12-cycles-327-330": 2,
     "retros/2026-05-12-cycles-377-378": 1,
     "infrastructure/sentry-serverless-flush": 1,
     "retros/2026-05-12-cycles-320-322": 3,
@@ -146,7 +146,8 @@
     "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 1,
     "harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
-    "retros/2026-05-13-cycles-424-425": 1
+    "retros/2026-05-13-cycles-424-425": 1,
+    "retros/2026-05-12-cycles-361-362": 1
   },
-  "totalQueries": 615
+  "totalQueries": 616
 }

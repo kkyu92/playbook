@@ -6,6 +6,11 @@
 
 ## [0.9.65] — 2026-05-22
 
+## [0.9.69] — 2026-05-22
+
+### Changed
+- cycles 1010~1012. cycle 1010: dimension-cycle SUCCESS — closed-loop-health dashboard 458 cycles gap 복구 (cycle 551→1009). meta-pattern dispatch: auto_updated:true SKILL 미통합. cycle 1011: explore-idea SUCCESS — entry #281 agentic-auto-update-contract-drift-frontmatter-skill-mismatch (선언↔구현 불일치 = 458 cycle silent failure 패턴). cycle 1012: curate SUCCESS — wiki lint CLEAN 281 entries, compound 1006~1012, CHANGELOG 0.9.69. SE oscillation 180회 steady-state. N=20 batch (993~1012) 완료.
+
 ## [0.9.68] — 2026-05-22
 
 ### Changed
