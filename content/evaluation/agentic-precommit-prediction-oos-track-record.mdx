@@ -1,0 +1,98 @@
+---
+title: "Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜"
+category: evaluation
+date: "2026-05-22"
+tags:
+  - out-of-sample
+  - prediction
+  - track-record
+  - pre-commit
+  - lotto
+  - moneyball
+  - validation
+workers:
+  - moneyball
+confidence: 2
+last_verified: "2026-05-22"
+connections: [evaluation/agentic-cron-zero-output-silent-success-detection, harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift, context-engineering/agentic-cycle-state-json-carry-over-design]
+status: complete
+description: "LLM 에이전트가 이벤트 발생 전에 예측을 git commit으로 박제(lock)하고, 이벤트 발생 후 자동 검증하는 프로토콜. 사후 합리화 없는 진정한 OOS track record 구축."
+type: entry
+source: manual
+---
+
+## 문제: 백테스트 vs OOS 의 신뢰도 차이
+
+LLM 기반 예측 시스템에서 백테스트(과거 데이터 기반)는 항상 낙관적으로 나온다:
+- 파라미터 튜닝 시 과거 데이터에 암묵적으로 맞춰짐
+- "이 방법이 과거에 잘 됐다"는 사후 합리화 쉬움
+- 실제 배포 후 성능과 乖離
+
+진정한 OOS track record = 이벤트 **전에** 예측 박제 → 이벤트 **후에** 결과 대조.
+
+## 패턴: Pre-commit → Event → Validate
+
+### Step 1. 예측 사전 박제 (Pre-commit)
+
+이벤트 발생 전 예측을 git commit으로 고정:
+
+```bash
+# 예: lotto 1225회 추첨 전
+git commit -m "data: lotto 1225회 picks 박제 — [번호 목록]"
+# commit hash = 예측 시점 증명 (timestamp 조작 불가)
+```
+
+핵심: commit hash + timestamp = **변경 불가 증거**. 예측 후 번호를 바꿀 수 없음.
+
+### Step 2. 이벤트 발생 대기
+
+cron 또는 human trigger로 이벤트 완료 감지.
+
+### Step 3. 자동 검증 (Post-event Validate)
+
+이벤트 결과 수집 → 사전 박제 예측과 기계적 대조:
+
+```bash
+# 결과 vs picks 자동 비교
+# hit rate, rank, P&L 등 지표 자동 계산
+git commit -m "data: lotto 1225회 OOS 결과 — hit rate X/6, rank #N"
+```
+
+## 왜 commit 박제인가
+
+| 방법 | 변조 가능성 | 신뢰도 |
+|---|---|---|
+| 노트/기억 | 사후 수정 쉬움 | 낮음 |
+| DB 저장 | 관리자 수정 가능 | 중간 |
+| **git commit** | hash 기반 불변 | **높음** |
+| public github | 외부 감사 가능 | 최고 |
+
+LLM 에이전트가 자기 자신의 예측을 git commit으로 박제하면 사후 합리화 구조적 불가.
+
+## Track Record 누적 효과
+
+단발 OOS ≠ track record. N회 누적 시:
+
+```
+1225회: 예측 → 결과 (N=1)
+1226회: 예측 → 결과 (N=2)
+...
+1300회: 누적 75회 OOS track record
+```
+
+N이 커질수록 통계적 신뢰도 상승. LLM 예측 시스템의 실제 엣지(edge) 유무 판별 가능.
+
+## 자동화 포인트 (agentic workflow)
+
+1. **사전 박제 자동화**: 이벤트 D-7에 cron trigger → LLM이 picks 생성 + commit
+2. **결과 수집 자동화**: 이벤트 종료 후 cron → 공개 API/웹에서 결과 수집
+3. **검증 자동화**: picks commit + 결과 → 지표 계산 + commit
+4. **추세 분석 자동화**: N회 누적 track record → 시계열 분석 → 전략 갱신 신호
+
+각 단계가 git history에 박제 → 재현 가능, 감사 가능.
+
+## 실전 증거 (moneyball)
+
+- lotto 1225회: 2026-05-22 picks 박제 완료, 2026-05-23 추첨 후 OOS 검증 예정
+- KBO 예측: cycle 775+ n=32 (2026-05-21 기준), accuracy 43.8%, 누적 OOS track record 구축 중
+- 두 도메인 모두 동일 pre-commit → validate 패턴 적용
