@@ -4,7 +4,7 @@
  *
  * 설계 근거: CEO plan 2026-04-21-geeknews-pipeline-pivot (Task 2)
  * - playbook 매칭 high 관련도 2개 → generateCustomEntry 로 entry 자동 생성 (source="scout")
- * - moneyballscore 매칭 → 기존 hub-dispatch Issue 유지 (허브→워커 Push 축 보존)
+ * - 워커 매칭 (playbook 외 전체: moneyballscore / blog-autopilot) → hub-dispatch Issue (허브→워커 Push 축)
  * - RSS body 는 wrapExternalContent 로 감싸 prompt injection 방어
  * - Gemini 호출은 lib/gemini-client 의 generateStructured (responseSchema JSON 강제, 5 retry)
  *
@@ -168,7 +168,7 @@ function resolveArticle(articles, index, label) {
   return article;
 }
 
-// ─── moneyballscore Issue dispatch (기존 유지) ────────────────
+// ─── 워커 Issue dispatch (playbook 외 PROJECTS 전체) ─────────
 
 function createDispatchIssue(match, article) {
   const project = PROJECTS.find((p) => p.id === match.project_id);
@@ -242,9 +242,9 @@ ${match.action_plan}
 
 // ─── Summary ──────────────────────────────────────────────────
 
-function generateSummary(playbookEntriesCreated, moneyballMatches) {
+function generateSummary(playbookEntriesCreated, workerMatches) {
   let out = "## 🔭 긱뉴스 데일리 스카우트\n\n";
-  if (playbookEntriesCreated.length === 0 && moneyballMatches.length === 0) {
+  if (playbookEntriesCreated.length === 0 && workerMatches.length === 0) {
     out += "오늘은 프로젝트에 반영할 만한 기사가 없습니다.";
     return out;
   }
@@ -255,10 +255,10 @@ function generateSummary(playbookEntriesCreated, moneyballMatches) {
     }
     out += "\n";
   }
-  if (moneyballMatches.length > 0) {
-    out += `### moneyballscore dispatch (${moneyballMatches.length})\n\n`;
-    for (const m of moneyballMatches) {
-      out += `- ${m.action_title} (${m.relevance})\n`;
+  if (workerMatches.length > 0) {
+    out += `### 워커 dispatch (${workerMatches.length})\n\n`;
+    for (const m of workerMatches) {
+      out += `- ${m.project_id}: ${m.action_title} (${m.relevance})\n`;
     }
   }
   return out;
@@ -286,12 +286,12 @@ async function main() {
 
   // 분기:
   // - playbook high 관련도 상위 2개 → entry 자동 생성
-  // - moneyballscore (전체) → Issue dispatch
+  // - 워커 (playbook 외 전체: moneyballscore / blog-autopilot 등) → Issue dispatch
   // - playbook medium → drop (쿼터 절약, CEO plan "high 2개" 엄격)
   const playbookHigh = matches
     .filter((m) => m.project_id === "playbook" && m.relevance === "high")
     .slice(0, 2);
-  const moneyballMatches = matches.filter((m) => m.project_id === "moneyballscore");
+  const workerMatches = matches.filter((m) => m.project_id !== "playbook");
 
   console.log(`3️⃣ playbook entry 생성: ${playbookHigh.length}개`);
   const entriesCreated = [];
@@ -326,20 +326,20 @@ ${m.action_plan}`;
     }
   }
 
-  console.log(`\n4️⃣ moneyballscore Issue dispatch: ${moneyballMatches.length}개 매칭`);
-  let moneyballDispatched = 0;
-  for (const m of moneyballMatches) {
-    const article = resolveArticle(articles, m.article_index, "moneyball dispatch");
+  console.log(`\n4️⃣ 워커 Issue dispatch: ${workerMatches.length}개 매칭`);
+  let workerDispatched = 0;
+  for (const m of workerMatches) {
+    const article = resolveArticle(articles, m.article_index, "worker dispatch");
     if (!article) continue;
     createDispatchIssue(m, article);
-    moneyballDispatched++;
+    workerDispatched++;
   }
-  console.log(`   📤 실 dispatch: ${moneyballDispatched}/${moneyballMatches.length}`);
+  console.log(`   📤 실 dispatch: ${workerDispatched}/${workerMatches.length}`);
 
   // GitHub Actions outputs / summary
   const outputs = {
     entries_created: entriesCreated.length,
-    dispatch_count: moneyballMatches.length,
+    dispatch_count: workerMatches.length,
   };
   if (entriesCreated.length > 0) {
     outputs.entry_slugs = entriesCreated.map((e) => e.slug).join(",");
@@ -348,7 +348,7 @@ ${m.action_plan}`;
   if (process.env.GITHUB_STEP_SUMMARY) {
     fs.appendFileSync(
       process.env.GITHUB_STEP_SUMMARY,
-      generateSummary(entriesCreated, moneyballMatches),
+      generateSummary(entriesCreated, workerMatches),
     );
   }
 
