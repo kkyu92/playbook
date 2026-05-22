@@ -1,0 +1,77 @@
+---
+title: "Agentic Code Sweep — 동일 수치가 다른 시맨틱에 사용될 때 source-of-truth 결손 silent drift"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - silent-drift
+  - source-of-truth
+  - numeric-threshold
+  - agentic-sweep
+  - review-code
+  - moneyball
+workers:
+  - moneyball
+confidence: 2
+last_verified: "2026-05-22"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/agentic-worker-dispatch-filter-registration-gap, context-engineering/agentic-cron-zero-output-silent-success-detection]
+status: complete
+description: "동일 수치 임계값(예: 0.65)이 서로 다른 시맨틱 컨텍스트(win probability vs accuracy rate)에 중복 사용되고, 한 쪽만 source-of-truth 상수로 관리될 때 값이 분기하면 silent drift가 발생한다. agentic heavy sweep이 이 패턴을 탐지하는 유일한 방법."
+type: entry
+source: manual
+---
+
+## 문제
+
+ML 예측 시스템에서 수치 임계값이 여러 시맨틱 컨텍스트에 동시에 등장한다:
+
+- `WINNER_PROB_CONFIDENT = 0.65` — 승리 확률 "확신" 임계값 (source-of-truth 상수)
+- `accuracyRate >= 0.65` — 모델 정확도 "우수" 임계값 (raw hardcode)
+
+두 값이 **현재 같은 숫자**이지만 개념적으로 무관하다. 우연히 일치한 것이다.
+
+## 왜 위험한가
+
+source-of-truth 상수(`WINNER_PROB_CONFIDENT`)가 도메인 튜닝으로 0.67로 바뀌어도, `accuracyRate >= 0.65`는 자동으로 갱신되지 않는다. 컴파일 에러도, 테스트 실패도 없다. 두 임계값이 조용히 분기한다.
+
+반대로, 정확도 threshold를 0.70으로 올려도 win probability 분기는 그대로 남는다.
+
+## 패턴 예시 (moneyball cycles 879-881)
+
+| 위치 | 값 | 시맨틱 | source-of-truth? |
+|---|---|---|---|
+| `WeeklyTrendMini.tsx:32` `barColor` | 0.65 / 0.55 | accuracy rate 색상 분기 | ❌ raw |
+| `buildMonthlyReview.ts:91` | 0.65 | accuracy rate 요약 텍스트 | ❌ raw |
+| `WINNER_PROB_CONFIDENT` | 0.65 | 승리 확률 확신 경계 | ✅ 상수 |
+| `WINNER_PROB_LEAN` | 0.55 | 승리 확률 기울기 경계 | ✅ 상수 |
+| `1 - WINNER_PROB_LEAN = 0.45` | 0.45 | 반대 경계 mirror | ❌ raw (상수 미박제) |
+
+sweep 48~50 (cycles 879~881)에서 accuracy rate 3 인스턴스를 source-of-truth 상수로 통합했다.
+
+## 탐지 방법 — agentic heavy sweep
+
+일반 lint나 CI로는 탐지 불가능 (타입 에러 없음, 테스트 통과). agentic sweep만 탐지한다:
+
+```bash
+# 값 grep으로 동일 수치 다중 등장 찾기
+grep -rn "0\.65\|0\.55\|0\.45" src/ --include="*.ts" --include="*.tsx"
+# source-of-truth 상수 참조 여부 확인
+grep -rn "WINNER_PROB" src/ --include="*.ts" --include="*.tsx"
+```
+
+두 결과 비교: 상수 참조 없는 raw 숫자 = silent drift 후보.
+
+## 수정 전략
+
+1. **semantic 구분 먼저**: 값이 같아도 개념이 다르면 별도 상수 생성 (`ACCURACY_RATE_HIGH = 0.65`)
+2. **raw 제거**: 모든 raw 0.65 → 해당 상수로 교체
+3. **mirror boundary**: `1 - X` 패턴은 `X_LOWER = 1 - X` 또는 `ACCURACY_RATE_LOW = 0.45` 로 명시
+
+## source-of-truth 결손 mirror 특수 케이스
+
+`0.45 = 1 - WINNER_PROB_LEAN` 는 수학적 관계가 있으나 코드에서 관계를 표현하지 않으면 하드코딩으로 분류. sweep에서 발견 시 명시적 상수 또는 computed constant 박제.
+
+## 연결
+
+- [[silent-drift-family-pattern]]: 이 패턴이 속하는 상위 패턴 패밀리
+- [[agentic-worker-dispatch-filter-registration-gap]]: 다른 종류의 hardcode → silent drift 패턴
+- [[agentic-cron-zero-output-silent-success-detection]]: output 레벨 silent drift
