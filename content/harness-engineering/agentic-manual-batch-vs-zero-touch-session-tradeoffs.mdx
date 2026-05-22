@@ -1,0 +1,97 @@
+---
+title: "Manual Batch Session vs Zero-Touch — N 사이클 실행 전략 비교"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - session-management
+  - zero-touch
+  - batch
+  - manual
+  - develop-cycle
+  - harness-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/zero-touch-develop-cycle-session-management
+  - harness-engineering/agentic-batch-vs-cascade-session-context-isolation
+  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+source: explore-idea
+description: "사용자가 직접 /develop-cycle-hub N을 호출하는 manual batch 방식과 watch.sh 자동 fire zero-touch 방식의 실제 트레이드오프. context 누적 vs 신선도, 처리량 vs 품질, 운영 비용 vs 자율성. cycle 992~1011 20 사이클 manual batch 실전 evidence."
+---
+
+## 두 가지 실행 모드
+
+### Zero-Touch (자동 회전)
+
+```
+watch.sh → /develop-cycle-hub 1 → (1 cycle) → signal → watch.sh → 새 claude → ...
+```
+
+- 매 사이클 새 claude 세션 (context 초기화)
+- watch.sh + launchd 인프라 필요
+- 사용자 개입 없음 (완전 자율)
+- 사이클 간 컨텍스트 carry-over: cycle_state JSON + git history (파일 기반)
+
+### Manual Batch (직접 N 사이클)
+
+```
+사용자 /develop-cycle-hub 20 → 동일 세션에서 20 cycle 순차 실행
+```
+
+- 누적 컨텍스트 (첫 사이클의 정보가 마지막 사이클까지 남음)
+- 인프라 불필요
+- 사용자가 직접 제어 (중간 끼어들기 가능)
+- 컨텍스트 carry-over: 세션 메모리 (live) + cycle_state JSON
+
+## 비교
+
+| 차원 | Zero-Touch | Manual Batch |
+|---|---|---|
+| 컨텍스트 신선도 | 매 사이클 초기화 ✅ | 사이클 N에서 컨텍스트 누적 ⚠️ |
+| 처리량 | 1 사이클/세션 (느림) | N 사이클/세션 (빠름) ✅ |
+| 인프라 비용 | watch.sh + launchd 필요 | 없음 ✅ |
+| 진단 정확도 | git fetch + git log 필수 (stale 방지) | 이전 사이클 결과가 live — 더 정확 ✅ |
+| 사이클 간 carry-over | JSON 파일 의존 | live 메모리 + JSON 병행 ✅ |
+| 장시간 운영 | 무한 (sleep/wakeup cycle) ✅ | 세션 timeout 위험 |
+| 사용자 개입 | 불가 (완전 자율) | 언제든 가능 ✅ |
+| chain 선택 품질 | 매 사이클 cold start | 직전 사이클 live 결과 참조 ✅ |
+
+## 언제 어떤 모드를 쓰는가
+
+**Zero-Touch가 유리한 경우**:
+- 사용자가 자리를 비울 때 (야간 자율 운영)
+- 각 사이클이 독립적이고 컨텍스트 격리가 중요할 때
+- 50+ 사이클 장기 운영 (컨텍스트 천장 불필요)
+
+**Manual Batch가 유리한 경우**:
+- 사용자가 진행 상황을 모니터링하고 싶을 때
+- 연속 사이클에서 공통 컨텍스트를 공유해야 할 때 (e.g., 같은 feature 여러 사이클)
+- watch.sh 인프라를 사용할 수 없는 환경
+- N ≤ 20 정도의 집중 작업 세션
+
+## 컨텍스트 누적의 실제 영향
+
+**positive**: 직전 사이클에서 발견한 문제가 다음 사이클 진단에 자연스럽게 반영됨. 예: cycle 993에서 orphan 발견 → cycle 994에서 orphan cascade entry 생성 (zero-touch라면 cycle_state JSON에만 의존).
+
+**negative**: 사이클 20에 도달할 때 초반 사이클의 세부 내용이 컨텍스트에 잔류 → 불필요한 토큰 소비. 하지만 git history + cycle_state JSON이 있어 "완전히 잊어버리는" 상황은 없음.
+
+## 실전 evidence
+
+cycle 992~1011 (20 사이클 manual batch, 2026-05-22):
+- 사이클 간 chain 선택이 이전 사이클 live 결과 참조로 더 자연스럽게 연결됨
+- orphan cascade 발견 (cycle 993) → 즉시 entry 박제 (cycle 994) — zero-touch였다면 다음 세션 시작 시 git log 재스캔 필요
+- 20 사이클 후 컨텍스트 누적이 있지만 cycle_state JSON carry-over는 정상 작동
+
+## 하이브리드 패턴
+
+practical recommendation:
+- **평일 야간**: zero-touch 5~10 사이클 자율 운영
+- **집중 작업일 (사용자 재석)**: manual batch 10~20 사이클
+- **cycle % 50 milestone**: 둘 다 적용 가능 (trigger 3은 사이클 번호 기반)
+
+## 관련 패턴
+
+- [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): zero-touch 인프라 상세
+- [agentic-batch-vs-cascade-session-context-isolation](/wiki/harness-engineering/agentic-batch-vs-cascade-session-context-isolation): context isolation 상세
