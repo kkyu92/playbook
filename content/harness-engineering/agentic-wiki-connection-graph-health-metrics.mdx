@@ -1,0 +1,104 @@
+---
+title: "Wiki Connection Graph Health — 카테고리별 연결 희소성과 지식 사일로 패턴"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - wiki-maintenance
+  - connection-graph
+  - knowledge-silo
+  - harness-engineering
+  - metrics
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-wiki-entry-deletion-orphan-cascade
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+source: explore-idea
+description: "wiki 278 entries 실측 기준 connection graph 건강도 진단. harness-engineering만 평균 1.75 connections/entry — 나머지 11개 카테고리는 avg 0. JIT 의미 검색이 암묵적 그래프 역할 → 명시적 connections = 편집 큐레이션 마커로만 쓰임. 측정 기준 박제."
+---
+
+## 실측 데이터 (2026-05-22, 278 entries)
+
+| 카테고리 | 총 entries | 연결 있는 entries | 평균 connections |
+|---|---|---|---|
+| harness-engineering | 110 | 49 | **1.75** |
+| journal | 51 | 9 | 0.51 |
+| reports | 7 | 1 | 0.43 |
+| context-engineering | 12 | 1 | 0.33 |
+| infrastructure | 13 | 1 | 0.38 |
+| evaluation | 15 | 1 | 0.20 |
+| agents | 25 | 0 | 0.00 |
+| android-ai | 11 | 0 | 0.00 |
+| data-engineering | 9 | 0 | 0.00 |
+| frontend-ai | 9 | 0 | 0.00 |
+| project-ops | 8 | 0 | 0.00 |
+| prompt-engineering | 8 | 0 | 0.00 |
+| **전체** | **278** | **62** | **0.84** |
+
+**핵심 관찰**: 278개 entries 중 216개 (78%) 가 connections 0. harness-engineering 혼자 전체 연결의 대부분 점유.
+
+## 이것이 문제인가?
+
+### 문제 아닌 이유
+
+**JIT 의미 검색이 암묵적 그래프를 형성한다**. `node scripts/search.mjs "<query>"` 는 embeddings 기반 의미 유사성으로 카테고리 경계를 넘어 관련 chunks를 반환. agents/evaluation/context-engineering 간 명시적 연결이 0이어도 검색은 이들을 연결한다.
+
+즉, **connections frontmatter = 편집 큐레이션 마커** (사람이 "이 entry는 저 entry와 함께 읽어라"는 신호), **검색 = 실제 지식 그래프 traversal**.
+
+### 문제인 이유
+
+**cross-category 편집 큐레이션이 전무하다**. agents/evaluation/harness-engineering 간 명시적 연결 = 0건. 예:
+- `evaluation` entry가 `harness-engineering` 패턴을 증거로 인용해야 할 때 connection 부재
+- `agents` entry의 insight가 `harness-engineering` 설계에 영향줄 때 추적 불가
+
+편집 큐레이션이 없으면 wiki는 카테고리별 독립 파일 더미 → knowledge graph 아님.
+
+## Orphan Link 패턴
+
+deletion 시 역방향 연결 미정리 = orphan link 생성. 수동 체크:
+
+```bash
+python3 -c "
+import os, re, glob
+
+mdx_files = glob.glob('content/**/*.mdx', recursive=True)
+all_slugs = set(os.path.basename(f).replace('.mdx','') for f in mdx_files)
+
+for f in mdx_files:
+    content = open(f).read()
+    m = re.search(r'connections:\s*\n((?:\s*-\s*.+\n)*)', content)
+    if m:
+        for c in re.findall(r'-\s*(.+)', m.group(1)):
+            slug = c.strip().split('/')[-1]
+            if slug and slug not in all_slugs:
+                print(f'ORPHAN: {os.path.basename(f)} -> {slug}')
+"
+```
+
+2026-05-22 실측: 2건 (YAML 파싱 artifact 포함). `closed-loop-health` 은 3개 entry에서 참조되지만 해당 파일 부재 → 실제 orphan 1건.
+
+상세: [agentic-wiki-entry-deletion-orphan-cascade](/wiki/harness-engineering/agentic-wiki-entry-deletion-orphan-cascade)
+
+## 건강도 지표
+
+| 지표 | 2026-05-22 측정값 | 목표 |
+|---|---|---|
+| 전체 평균 connections/entry | 0.84 | ≥ 1.0 |
+| connections=0 비율 | 78% | ≤ 60% |
+| cross-category 연결 건수 | < 5 (추정) | ≥ 20 |
+| orphan link 건수 | 1 | 0 |
+| harness-engineering 편중도 | >90% | ≤ 70% |
+
+## curate 시 권장 행동
+
+1. **새 entry 생성 시**: connections 최소 1개 의무 (CLAUDE.md 규칙)
+2. **curate chain 실행 시**: cross-category connection 후보 1~2건 추가 (같은 카테고리 내 연결만 X)
+3. **orphan link 스캔**: 위 bash script로 삭제 entry 참조 정리
+4. **agents / evaluation / context-engineering**: 단발 entry 생성 시 harness-engineering 연결 1건 이상 추가 권장
+
+## 관련 패턴
+
+- [agentic-wiki-entry-deletion-orphan-cascade](/wiki/harness-engineering/agentic-wiki-entry-deletion-orphan-cascade): orphan 생성 메커니즘과 정리 프로토콜
+- [wiki-knowledge-roi-3axis-measurement](/wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement): 검색 사용률 + 히트율 + 결정 변경률
