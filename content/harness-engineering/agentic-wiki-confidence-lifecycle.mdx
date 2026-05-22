@@ -1,0 +1,95 @@
+---
+title: "Wiki Entry Confidence Lifecycle — Draft에서 검증까지"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - wiki-maintenance
+  - confidence
+  - lifecycle
+  - stale
+  - validation
+  - harness-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-wiki-entry-deletion-orphan-cascade
+  - harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings
+source: explore-idea
+description: "wiki entry confidence 1→4 lifecycle. confidence 1 draft는 즉시 검색에 잡히나 보강은 실사용 시점까지 지연. 30일+ confidence<3 = stale 감지. 승격 기준: 실전 검증 + 반증 없음. lazy-enrichment 원칙."
+---
+
+## Confidence 등급 정의
+
+| 등급 | 의미 | 최적 상태 |
+|---|---|---|
+| 1 | 초안 — 이론 기반, 실전 미검증 | source=scout/auto 자동 생성 |
+| 2 | 첫 실전 — 1~2회 적용 증거 | source=explore-idea 수동 작성 |
+| 3 | 반복 검증 — 3회+ 적용, 반증 없음 | 실제 문제 해결에 사용됨 |
+| 4 | 핵심 지식 — 시스템 설계에 반영됨 | CLAUDE.md 또는 SKILL.md에 영향 |
+
+## Lifecycle
+
+```
+[생성 confidence=2]
+    ↓ (JIT search hit + 결정 변경)
+[confidence=3: 실전 검증]
+    ↓ (CLAUDE.md 또는 SKILL 반영)
+[confidence=4: 시스템 내재화]
+
+또는:
+
+[생성 confidence=1 (scout/auto)]
+    ↓ (30일+ 미사용)
+[stale 감지 (lint ⚠️)]
+    ↓ (실사용 or 보강 or 아카이브)
+[confidence=2 또는 삭제]
+```
+
+## Lazy-Enrichment 원칙
+
+entry 생성 시점에 즉시 보강하지 않는다. 이유:
+
+- confidence 1 draft도 JIT search 인덱스에 잡힘 → 검색 결과 제공
+- 보강 비용 (시간, 토큰) vs 실사용 없이 발생하는 ROI 부재
+- "미래에 필요할 것 같아서" 보강 = 무덤 패턴의 전형
+
+**보강 trigger**: entry가 JIT search hit으로 실제 사용됨 → 그 시점에 보강.
+
+## Stale 감지 기준
+
+`lint-content.mjs` 기준:
+- confidence < 3 AND last_verified > 30일 → stale 경고
+- **stale = 즉시 삭제 아님**. 아카이브 또는 실사용 시 보강 신호
+
+stale 5건이 매 curate에서 반복 등장해도 실사용 없으면 유지 (lazy-enrichment). 강제 보강 = 노력 낭비.
+
+## 승격 기준
+
+**confidence 1 → 2 (수동 작성)**:
+- source=explore-idea 또는 manual
+- 최소 1개 real evidence (본문에 명시)
+
+**confidence 2 → 3 (실전 검증)**:
+- JIT search hit 1회+ AND 결정 변경 기여
+- 또는 curate에서 "실전 검증됨" 수동 판단
+
+**confidence 3 → 4 (시스템 반영)**:
+- CLAUDE.md 섹션에 인용
+- SKILL.md에 룰로 박제
+- 다른 entry 3개+ connections에 포함
+
+## 실제 사례
+
+| Entry | 현재 | 승격 이유 |
+|---|---|---|
+| drift-detection-methodology | confidence 4 | CLAUDE.md "드리프트 감지 프로토콜" 직접 반영 |
+| question-own-defaults | confidence 3 | curate cycle 976에서 실전 검증 확인 |
+| agentic-git-history-ground-truth | confidence 2 | 이번 세션 첫 실전 evidence (cycle 992) |
+| agentic-wiki-entry-deletion-orphan-cascade | confidence 3 | 13건 직접 해결 (동일 세션 evidence) |
+
+## 관련 패턴
+
+- [agentic-wiki-entry-deletion-orphan-cascade](/wiki/harness-engineering/agentic-wiki-entry-deletion-orphan-cascade): 삭제 cascade 방지
+- [agentic-develop-cycle-1000-cycle-milestone-learnings](/wiki/harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings): wiki ROI = JIT usage tracking
