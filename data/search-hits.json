@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 567,
+  "totalInvocations": 568,
   "skipped": 26,
-  "searched": 541,
-  "hit": 142,
+  "searched": 542,
+  "hit": 143,
   "noMatch": 399,
-  "lastUpdated": "2026-05-22T08:02:07.235Z",
+  "lastUpdated": "2026-05-22T08:05:15.547Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 28,
+    "reports/closed-loop-health": 29,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -147,5 +147,5 @@
     "harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1
   },
-  "totalQueries": 611
+  "totalQueries": 612
 }
