@@ -1,0 +1,44 @@
+---
+date: "2026-05-22"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "4ddc5ece59b6f9e18201ec61cf9f4376aa367070"
+---
+
+
+subtype: lesson
+
+운영 데이터 측정 (cycle 861, 2026-05-22, op-analysis lite, gap=86 cycle 미발화 trigger):
+
+# v1.8 cohort velocity (n=150 임계 추정)
+
+- n=32 (cycle 775 n=30 → +2건 in 9일, velocity ~0.22/day)
+- accuracy 43.8% (43.3% → +0.5pp), winner-centric Brier 0.4335
+- date range 2026-05-13 → 2026-05-21 (9일)
+- 05-18 (일요일) 0건 / 05-20 (사례 8 봇차단) 0건 / 05-21 2건 → 9일 expected 45 actual 32 = 13건 누락 (28.9% silent skip)
+- n=150 도달 추정 = 누락 가정 시 5~6주 (06월 말~07월 초)
+
+# pipeline_runs 운영 측정 (직전 7일 = 2026-05-15~22)
+
+- 106 runs, error 10 (9.4%), partial 7 (6.6%), success 89 (84.0%)
+- 사례 11 silent_drop (predict_final + games>0 + predictions=0) 6건
+- 05-20 error cluster 7건 = 사례 8 KBO 봇차단 (cycle 769 fix 시점 직전)
+- announce/error 1 + predict/error 9 = 사례 8 / 사례 9 family 분포 직접 evidence
+
+# agent_memory 4 type drift sync (silent drift 후보)
+
+memory file `content-architecture-agent-memory-wrong-only.md` 갱신:
+
+- 기존 "wrong-only filter 정확" 부분 유지 (실측 fits)
+- 신규 "memory_type 4 종 분류 박제" 추가 (실측 strength=6 / weakness=14 / matchup=2)
+- 기존 "strength 학습하려면 디자인 변경 필요" stale 정정 (이미 retro.ts:107 classifyMemoryType 박제됨)
+- "wrong-only filter = weakness-only memory" 오해 차단 가이드 박제
+
+# 다음 cycle 후속 후보
+
+- v1.8 cohort velocity 가속화 path 부재 인정 — n=150 도달 자연 시점 06월 말~07월 초 carry-over
+- agent_memory 4 type ROI 측정 carry-over (strength row 가 weakness row 와 다른 학습 신호 가치)
+- 사례 8 / 사례 11 family alert channel (cycle 838 deploy-drift-alert + cycle 819 silent-drift-alert) 자동 fire 검증 carry-over
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
