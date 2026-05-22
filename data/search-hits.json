@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 568,
+  "totalInvocations": 571,
   "skipped": 26,
-  "searched": 542,
-  "hit": 143,
-  "noMatch": 399,
-  "lastUpdated": "2026-05-22T08:05:15.547Z",
+  "searched": 545,
+  "hit": 145,
+  "noMatch": 400,
+  "lastUpdated": "2026-05-22T08:08:07.366Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -28,7 +28,7 @@
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
-    "context-engineering/nextjs-instrumentation-location": 3,
+    "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
@@ -115,10 +115,10 @@
     "harness-engineering/worker-lesson-velocity-signal": 6,
     "agents/external-tool-integration-for-ai-agents": 1,
     "retros/2026-05-13-cycles-392-394": 1,
-    "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 1,
+    "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 2,
     "harness-engineering/agentic-chain-distribution-phase-fingerprint": 1,
     "harness-engineering/agentic-content-cycle-production-maintenance-oscillation": 2,
-    "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 1,
+    "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 2,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1,
     "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 2,
@@ -137,7 +137,7 @@
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 1,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 3,
-    "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 1,
+    "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 2,
     "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
     "retros/2026-05-12-cycles-323-326": 1,
     "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1,
@@ -145,7 +145,8 @@
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1,
     "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 1,
     "harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
-    "harness-engineering/agentic-hub-phase-lock-steady-state": 1
+    "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
+    "retros/2026-05-13-cycles-424-425": 1
   },
-  "totalQueries": 612
+  "totalQueries": 615
 }
