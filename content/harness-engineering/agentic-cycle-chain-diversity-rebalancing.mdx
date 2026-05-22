@@ -1,0 +1,108 @@
+---
+title: "Agentic 사이클 Chain 다양성 관리 — 연속 streak 감지 + 순환 강제"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - chain-selection
+  - diversity
+  - streak
+  - rebalancing
+  - develop-cycle
+  - harness-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-chain-dormancy-phase-map
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+source: explore-idea
+description: "동일 chain 3회+ 연속 발화 시 강제 순환 메커니즘. explore-idea streak → review-code/curate 삽입, dimension-cycle retro-only streak → curate 강제 진입. N=13 streak evidence + 실시간 cycle 992~995 4회 explore-idea 연속 사례."
+---
+
+## 문제
+
+LLM 메인이 사이클마다 자유롭게 chain을 선택하도록 하면 **특정 chain으로 수렴하는 경향**이 있다.
+
+발생 원인:
+- 선택이 쉬운 chain (explore-idea: 새 entry 쓰기)이 diagnosis에서 항상 "유효"해 보임
+- 성공한 chain이 next_recommended_chain으로 전파 → 자기 강화
+- dimension-cycle은 "아무것도 없을 때 fallback"이라 retro-only로 수렴하면 streak 발생
+
+**실제 사례 (cycles 992~995)**:
+- cycle 992: explore-idea (entry #271)
+- cycle 993: curate (orphan fix — 자연 중단)
+- cycle 994: explore-idea (entry #272)
+- cycle 995: explore-idea (entry #273)
+- cycle 996: review-code (streak 감지 → 강제 순환)
+
+4 사이클 중 3회 explore-idea. curate 없었으면 4연속.
+
+**더 심각한 사례 (cycles 86~98)**:
+- dimension-cycle RETRO-ONLY 13회 연속
+- 매 사이클 "아무것도 없다" → dimension-cycle → retro-only → 반복
+- 실제로 curate/fix-incident 가 필요한 상황인데 선택 안 됨
+
+## 해결책: 계층적 diversity guard
+
+### Guard 1 — 소프트 (LLM 추론 input)
+
+직전 3 사이클이 같은 chain이면 다른 chain 우선 신호를 LLM에 전달:
+
+```python
+if len(set(prev_3_chains)) == 1 and prev_3_chains[0] == current_recommendation:
+    hint = f"직전 3사이클 모두 {prev_3_chains[0]} — 다른 chain 우선 고려 요청"
+```
+
+LLM이 힌트를 보고 자율적으로 다른 chain을 선택하도록 유도. 강제 X.
+
+### Guard 2 — 하드 (dimension-cycle streak only)
+
+**dimension-cycle retro-only 3회 연속** 시 `curate` 강제 진입:
+
+```bash
+# 직전 3 cycle JSON에서 패턴 확인
+STREAK=$(for n in $((N-1)) $((N-2)) $((N-3)); do
+  python3 -c "import json; d=json.load(open('cycles/$n.json')); \
+    print(d.get('chain_selected') + ':' + d.get('execution',{}).get('outcome','?'))"
+done)
+echo "$STREAK" | grep -c "dimension-cycle:retro-only"
+```
+
+3회 모두 "dimension-cycle:retro-only"이면 → curate 강제 선택. 이유: dimension-cycle retro-only는 "아무것도 안 함"의 반복이지만 curate는 항상 wiki/메모리 점검 실질적 작업이 있음.
+
+### Guard 3 — SE 전용 (skill-evolution 과잉 방지)
+
+직전 20 사이클 SE 점유율 ≥ 40% + 명단 변화 없으면 SE 마커 박제 skip:
+- SE 자체가 "meta 작업"이라 연속 발화 시 실질 콘텐츠/코드 작업이 차단됨
+- 40% 기준: SE 발화 4/10 수준 이상이면 휴식 (신호 #28 패턴)
+
+## 다양성 측정
+
+```bash
+# 직전 20 사이클 chain 분포
+ls -v ~/.develop-cycle-hub/cycles/ | sort -n | tail -20 | while read f; do
+  python3 -c "import json; d=json.load(open('$HOME/.develop-cycle-hub/cycles/$f')); \
+    print(d.get('chain_selected','?'))" 2>/dev/null
+done | sort | uniq -c | sort -rn
+```
+
+건강한 분포 (phase에 따라 다르지만 기준):
+- 단일 chain이 전체의 50% 초과 → streak 경고
+- 0회 chain이 5개 이상 → 자연 dormancy (강제 발화 X)
+- SE > 40% → skip trigger 검토
+
+## 실패 패턴
+
+**Pattern 1 — 소프트 가드만 사용**: LLM이 힌트를 무시하고 같은 chain 선택 계속. dimension-cycle streak N=13 evidence.
+
+**Pattern 2 — 하드 가드 남용**: 모든 chain에 강제 순환 적용 → 진단과 무관한 chain 강제 발화 → 품질 저하. dimension-cycle retro-only에만 적용하는 이유.
+
+**Pattern 3 — next_recommended_chain 자기 강화**: 성공한 chain이 "다음도 이 chain" 추천 → 추천 받아서 또 성공 → 더 강하게 추천. 소프트 가드가 이를 완화.
+
+## 관련 패턴
+
+- [agentic-chain-distribution-phase-fingerprint](/wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint): chain 분포로 project phase fingerprint
+- [agentic-chain-dormancy-phase-map](/wiki/harness-engineering/agentic-chain-dormancy-phase-map): 0회 chain = 자연 dormancy (강제 발화 X)
+- [agentic-hub-phase-lock-steady-state](/wiki/harness-engineering/agentic-hub-phase-lock-steady-state): 안정 phase에서 특정 chain 집중은 정상
