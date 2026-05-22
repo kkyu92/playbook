@@ -1,0 +1,106 @@
+---
+title: "다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - silent-drift
+  - multi-worker
+  - dispatch
+  - pipeline
+  - hardcode
+  - registration-gap
+workers:
+  - playbook
+confidence: 3
+last_verified: "2026-05-22"
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, harness-engineering/agentic-commit-body-subtype-dispatch-transport]
+status: complete
+description: "다중 워커 허브에서 PROJECTS 배열에 신규 워커를 등록해도 파이프라인 dispatch 필터 코드가 하드코딩된 기존 워커 ID만 처리할 때 신규 워커 dispatch가 silent drop된다. blog-autopilot scout dispatch 0건 (cycle 947 이후 30+ 사이클) — billing 문제가 아닌 scout filter hardcode bug. T8 Push 축 검증 미완의 실제 원인."
+type: entry
+source: manual
+---
+
+## 문제
+
+다중 워커 허브 파이프라인에는 두 가지 별개 관심사가 있다:
+
+1. **워커 등록** — `PROJECTS` 배열에 project_id, repo, label 등 메타데이터 추가
+2. **dispatch 필터** — 실제 이슈 생성 / API 호출 코드의 project_id 매칭 로직
+
+이 둘이 동기화되지 않으면 새 워커는 등록됐지만 dispatch가 dead-code가 된다.
+
+## blog-autopilot evidence (cycle 947 진단, 2026-05-22 수정)
+
+```
+PROJECTS 등록 상태: 3개 (playbook / moneyballscore / blog-autopilot)
+scout dispatch filter: match.project_id === 'moneyballscore'  ← hardcode
+결과: blog-autopilot 매칭 → filter 불통과 → silent drop
+```
+
+**타임라인**:
+- blog-autopilot PROJECTS 등록: Phase 4 (2026-04-28 이전)
+- cycle 947 진단: hub-dispatch label OPEN issue 0건 (blog-autopilot origin 분)
+- 원인 진단: scout-geeknews.mjs:294 filter 하드코딩 발견 (`090db11`)
+- 기존 진단: "T8 Push 축 미검증 = billing 문제" → **실제: filter bug**
+- 수정: moneyballMatches → workerMatches (non-playbook PROJECTS 전체)
+
+30+ 사이클 동안 billing 문제로 오진. 실제 원인은 1줄 hardcode.
+
+## 패턴 구조
+
+```
+신규 워커 추가 시 변경점:
+  ✅ PROJECTS.push({ id: 'blog-autopilot', ... })   ← 등록 완료
+  ❌ dispatch filter: project_id === 'moneyballscore'  ← 갱신 안 됨
+```
+
+등록과 필터는 다른 파일, 다른 함수에 있어 리뷰 시 놓치기 쉽다.
+
+## 수정 패턴
+
+```js
+// Before: hardcode
+const moneyballMatches = allMatches.filter(m => m.project_id === 'moneyballscore');
+
+// After: generic (PROJECTS 배열 기반)
+const workerMatches = allMatches.filter(m => m.project_id !== 'playbook');
+// 또는
+const workerMatches = allMatches.filter(m =>
+  PROJECTS.some(p => p.id === m.project_id && p.id !== 'playbook')
+);
+```
+
+핵심: PROJECTS 배열을 single source of truth로 — filter는 배열 참조, ID 하드코딩 X.
+
+## 예방 체크리스트
+
+신규 워커를 PROJECTS에 추가할 때:
+
+```bash
+# 1. 파이프라인 스크립트에서 기존 워커 ID 하드코딩 검색
+grep -rn "moneyballscore\|blog-autopilot" scripts/ --include="*.mjs" --include="*.ts"
+
+# 2. dispatch / filter / match 섹션에 신규 워커 포함 여부 확인
+grep -n "project_id\|filter\|match" scripts/scout-*.mjs
+
+# 3. 신규 워커 등록 후 즉시 test dispatch 검증
+# (hub-dispatch label OPEN issue 신규 워커 분 1건 이상 확인)
+```
+
+## 오진 방지 (billing vs filter bug)
+
+| 증상 | billing 문제 | filter hardcode |
+|---|---|---|
+| 워커 dispatch 0건 | ✅ 가능 | ✅ 가능 |
+| 기존 워커 dispatch 정상 | N/A | ✅ 기존 워커는 정상 |
+| 코드 수정 없이 재시도 | 해소 불가 | 해소 불가 |
+| PROJECTS 등록 직후 발생 | 시점 무관 | **시점 일치** |
+| grep으로 filter 확인 | — | **1줄 발견** |
+
+신규 워커 추가 직후 dispatch 0건이면 → billing X, filter grep 먼저.
+
+## 연결 패턴
+
+- [silent-drift-family-pattern](/wiki/harness-engineering/silent-drift-family-pattern): dead-code에 의한 silent failure 일반 패턴
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): Level 1 존재 드리프트 — 등록과 필터 불일치
+- [agentic-commit-body-subtype-dispatch-transport](/wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport): dispatch 채널 설계 원칙

@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-22T01:01:25.025Z
+Updated: 2026-05-22T02:24:31.427Z
 
 ## 엔트리 (267개)
 
@@ -73,6 +73,7 @@ Updated: 2026-05-22T01:01:25.025Z
 - [에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드](wiki/harness-engineering/agentic-supervisor-session-liveness-contract) — confidence: 3, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop](wiki/harness-engineering/agentic-worker-dispatch-filter-registration-gap) — confidence: 3, status: complete
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [Antigravity 2.0 & Managed Agents API — AI 에이전트 개발 및 오케스트레이션 가이드](wiki/harness-engineering/antigravity-managed-agents-api-integration-review) — confidence: 1, status: draft
@@ -117,7 +118,7 @@ Updated: 2026-05-22T01:01:25.025Z
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/harness-engineering/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
-- [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 2, status: complete
+- [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 3, status: complete
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
@@ -179,7 +180,6 @@ Updated: 2026-05-22T01:01:25.025Z
 - [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: published
 - [Playbook Journal 048 — lesson-pending 86건 batch — hub D5 cron 주간 재발 패턴 (cycle 669) (#958)](wiki/journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958) — confidence: 3, status: in-progress
 - [Playbook Journal 049 — cycle 835 operational-analysis (lite) — TODOS.md cycle 387 stale vs CLAUDE.md cycle 775 권위 drift (silent stale family 신규 layer)](wiki/journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle) — confidence: 3, status: in-progress
-- [Playbook Journal 050 — cycle 861 op-analysis lite — v1.8 cohort velocity + agent_memory 4 type drift sync](wiki/journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -1032,6 +1032,9 @@ Updated: 2026-05-22T01:01:25.025Z
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+- harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/hub-worker-compounding-pattern
@@ -1387,7 +1390,6 @@ Updated: 2026-05-22T01:01:25.025Z
 - journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
