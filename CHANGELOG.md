@@ -6,6 +6,11 @@
 
 ## [0.9.65] — 2026-05-22
 
+## [0.9.68] — 2026-05-22
+
+### Changed
+- cycles 1005~1009. cycle 1005: curate SUCCESS — wiki lint CLEAN 278 entries, compound 1002~1004, CHANGELOG 0.9.66. cycle 1006: explore-idea SUCCESS — entry #279 agentic-wiki-connection-graph-health-metrics (78% entries w/ 0 connections, harness-engineering avg 1.75 vs others 0). SE B FAIL → SE #344 마커 박제. oscillation 179회. cycle 1007: skill-evolution SE #344 fast-path — 명단=6 동일, MIGRATION-PATH append, oscillation 180회. cycle 1008: explore-idea SUCCESS — entry #280 agentic-context-compaction-commit-density-survival (LLM compaction 시 cycle-retro 커밋 구조가 요약 anchor 역할, 직접 evidence). cycle 1009: curate SUCCESS — wiki lint CLEAN 280 entries, cross-links #279↔#280 추가, compound 1005~1008. closed-loop-health missing entry 발견 (14 hits, explore-idea 후보).
+
 ## [0.9.67] — 2026-05-22
 
 ### Changed
