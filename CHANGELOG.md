@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.63] — 2026-05-22
+
+### Changed
+- cycles 977~979. cycle 977: explore-idea SUCCESS — 신규 entry #267 agentic-worker-dispatch-filter-registration-gap (blog-autopilot 30+ cycle silent drop 원인: multi-worker PROJECTS 등록 vs dispatch filter hardcode 불일치, T8 billing 오진 수정). TODOS BRANCHED local 5/origin 23 갱신. SE Trigger-5: window 958-977 SE=8/20=40% B PASS + 명단=7 동일(A PASS) → cycle 977 SE #333 마커 박제 X. oscillation 173회 steady-state. cycle 978: worker-incident-triage SUCCESS — BRANCHED 해소 후 진입 (git pull --rebase + INDEX.md 충돌 해소 + push 완료). issue #1153 blog-autopilot CI 실패 분석/close (feat(publish) 12→15 posts/day per-niche fixed slot → auto-publish.test.ts:266+301 깨짐, dedup-skip-advance + fixture mocking 근본 원인). 워커 액션 2건 박제. SE A+B PASS → 마커 박제 X. cycle 979: curate SUCCESS — wiki lint CLEAN (268 entries, 5 stale lazy-enrichment 유지, kimi-k2 JIT unused dormant 확인). memory evidence rot 자율 수정 (project_bidirectional_compound_growth_goal + project_develop_cycle_skill_family frontmatter cycle 948→979 갱신). BRANCHED 0/0 (해소 완료). SE A+B PASS → SE #334 마커 박제 X. oscillation 173회 steady-state. wiki 268 entries.
+
 ## [0.9.62] — 2026-05-22
 
 ### Changed
