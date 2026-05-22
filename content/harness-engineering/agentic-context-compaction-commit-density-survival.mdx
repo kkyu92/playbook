@@ -1,0 +1,105 @@
+---
+title: "LLM Context Compaction 생존 전략 — 커밋 메시지 밀도가 요약 품질을 결정"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - context-management
+  - commit-density
+  - session-management
+  - harness-engineering
+  - batch-session
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+  - harness-engineering/agentic-batch-session-context-budget
+source: explore-idea
+description: "LLM 세션 context compaction 발생 시 커밋 메시지에 박제된 구조화 상태(cycle_n, chain, entry#, commit hash)가 자동 요약의 핵심 anchor가 됨. 2026-05-22 N=20 배치 세션 직접 evidence. commit body 설계 원칙 박제."
+---
+
+## 발견 컨텍스트
+
+2026-05-22, N=20 사이클 manual batch 세션(993~1012) 실행 중 context window limit 도달 → 자동 compaction 발생. compaction 직전 상태: cycle 1005 완료, wiki 278 entries.
+
+**compaction 후 생성된 요약의 내용**:
+- 각 사이클의 chain 선택, outcome, 커밋 해시 (예: `98022b5`, `c9aa88e`)
+- 생성된 wiki entry 번호와 슬러그 (예: "entry #271 agentic-git-history-ground-truth", "entry #278")
+- 코드 변경 내역 (수정된 파일, 픽스 내용)
+- SE 마커 상태, 명단, oscillation 회수
+
+**결과**: compaction 이후 cycle 1006에서 완벽하게 재개. 커밋 메시지에서 추출된 정보로 모든 컨텍스트 복원.
+
+## 왜 컨텍스트가 살아남는가
+
+LLM context compaction 은 자동 요약기가 대화 기록을 압축한다. 이 요약기는 **명시적 구조화 데이터를 우선 추출**:
+
+```
+policy: cycle 1005 retro — curate SUCCESS — lint CLEAN 278 entries.
+subtype: cycle-retro
+cycle_n: 1005
+chain_selected: curate
+outcome: success
+next_recommended_chain: explore-idea
+```
+
+이런 커밋 메시지는:
+1. `cycle_n = 1005` → 다음 시작점 (cycle 1006) 즉시 계산 가능
+2. `outcome = success` → 중단점 X, 정상 진행 신호
+3. `next_recommended_chain = explore-idea` → 다음 chain 힌트
+4. `lint CLEAN 278 entries` → wiki 상태 기계적 박제
+
+반면 자연어 서술 ("오늘 위키를 정리했다") 은 compaction 시 손실 대상.
+
+## 커밋 메시지 밀도 설계 원칙
+
+### 반드시 포함
+
+```
+cycle_n: <n>                      # 다음 사이클 시작점 계산
+chain_selected: <chain>            # 이전 결정 재현
+outcome: success|fail|partial      # 재개 시 재시도 필요 여부
+next_recommended_chain: <chain>    # 체인 연속성
+```
+
+### 핵심 anchor 포함 (공간 허용 시)
+
+```
+wiki entries: <n>                  # 상태 machine 숫자
+SE oscillation: <n>회              # SE 주기 위치
+commit_hash: <hash>                # git 검증 anchor
+entry #<n>: <slug>                 # 생성된 entry 추적
+```
+
+### 피해야 할 것
+
+- 막연한 서술 ("좋은 session이었다")
+- 중간 과정만 기록 ("파일 3개 수정")
+- 결과 없는 과정 기록 ("조사 시작")
+
+## 검증: checkpoint vs compaction
+
+| 복구 메커니즘 | 의존 파일 | 신뢰도 | 복구 시간 |
+|---|---|---|---|
+| checkpoint resume | `.gstack/checkpoints/` 파일 | 파일 존재 시만 | 빠름 |
+| compaction 요약 | 자동 생성 요약 | 항상 존재 | 즉시 |
+| git log 수동 스캔 | git history | 불변 | 30초 |
+
+checkpoint 파일은 만료/드리프트 위험. compaction 요약은 context 안에 항상 존재. **둘 다 git history 의 커밋 메시지 품질에 의존**.
+
+→ 즉, **커밋 메시지 = 허브의 state persistence 레이어**.
+
+## Cycle-Retro Dispatch 채널과의 관계
+
+`cycle-retro` dispatch (`subtype: cycle-retro`) 커밋은 허브의 자기 자신 IPC다. 외부 서비스 X, 구독자 X — 오직 `git log --grep "subtype: cycle-retro"` 로 조회.
+
+compaction 요약기가 이 구조를 인식하는 이유:
+- 반복 패턴 (매 사이클 동일 형식) → 요약기의 패턴 인식 anchor
+- 명시적 key=value 형식 → 구조화 추출 용이
+- cycle_n 증가 시퀀스 → 타임라인 재구성 가능
+
+## 관련 패턴
+
+- [agentic-git-history-ground-truth-checkpoint-resilience](/wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience): git history = 불변 ground truth (checkpoint drift 복구)
+- [agentic-batch-session-context-budget](/wiki/harness-engineering/agentic-batch-session-context-budget): N-cycle batch 세션 컨텍스트 예산 전략
