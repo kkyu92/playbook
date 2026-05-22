@@ -1,0 +1,95 @@
+---
+title: "1000 사이클 Develop-Cycle Hub — 장기 운영 학습 요약"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - milestone
+  - develop-cycle
+  - longevity
+  - learnings
+  - harness-engineering
+  - meta
+workers:
+  - all
+confidence: 4
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs
+  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+source: explore-idea
+description: "허브 develop-cycle-hub 1000 사이클 완주 (2026-03-?? ~ 2026-05-22). skill-evolution 179회 oscillation, wiki 275 entries, chain pool 11개. 장기 운영에서 검증된 핵심 패턴과 실패 안티패턴 요약."
+---
+
+## 허브 1000 사이클 이정표
+
+2026-05-22, 허브(playbook) develop-cycle-hub가 사이클 1000을 완주했다.
+
+| 지표 | 값 |
+|---|---|
+| 총 사이클 수 | 1000 |
+| wiki entries | 275개 |
+| SE oscillation | 179회 |
+| chain pool | 11개 |
+| 0회 chain 명단 | 6개 (fix-incident/polish-ui/worker-incident-triage/dimension-cycle/expand-scope/design-system) |
+| 최근 100 사이클 chain 분포 | skill-evolution 우세, explore-idea/curate 주요 |
+
+## 1000 사이클에서 검증된 핵심 패턴
+
+### 1. Git history = 불변 state store (cycle 992 evidence)
+
+497 cycle 드리프트된 checkpoint에서도 `git log --oneline -20`으로 30초 내 완전 컨텍스트 복구. policy: 커밋 메시지가 cycle_state 역할을 수행.
+
+→ **설계 원칙**: 중요한 상태는 구조화된 커밋 메시지에 박제. 파일 기반 checkpoint는 optimization.
+
+### 2. Skill-Evolution steady-state oscillation (cycle 564+)
+
+SE trigger 5 (0회 chain 명단)가 안정화되면 SKIP-FIRE-SKIP 패턴이 자연적으로 형성. 명단 변화 없을 때 SE 점유율 ≥ 40% → skip. 슬라이딩 윈도우 기반 자동 조절.
+
+→ **설계 원칙**: 메타 작업(SE)도 phase 기반 자연 dormancy 허용. 강제 발화 = 잡음.
+
+### 3. Chain dormancy = project phase fingerprint
+
+고정된 0회 chain 명단 = 현재 프로젝트 도메인 반영. polish-ui/design-system이 0회인 이유는 공개 전 단계이기 때문. fix-incident/worker-incident-triage가 0회인 이유는 안정적인 인프라.
+
+→ **설계 원칙**: 0회 chain에 강제 발화 X. 자연 dormancy는 system health 신호.
+
+### 4. Wiki 무덤 방지 = 검색 사용률 추적
+
+lint CLEAN + JIT Unused 0건이 wiki ROI의 실증. 생산만 있고 소비 메커니즘 없으면 무덤. search-hits.json 기반 usage tracking이 실질적 지표.
+
+→ **설계 원칙**: entry 생성 후 JIT search hit 여부가 진짜 가치 측정.
+
+### 5. Curate = 연결 유지 작업
+
+explore-idea로 entry를 생성하면 orphan link, stale entry가 자연 발생. curate 주기적 실행이 graph 건강도 유지. 삭제 시 reverse-lookup 의무.
+
+→ **설계 원칙**: create/maintain 비율 ≈ 3:1 (3 explore-idea 후 1 curate).
+
+## 실패 안티패턴
+
+| 안티패턴 | 사례 | 해결 |
+|---|---|---|
+| Fake batch | 한 세션에 N cycle 모두 처리 (cycle 76~122) | 1-session-1-cycle 룰 |
+| Dimension-cycle retro-only streak | N=13 연속 (cycle 86~98) | curate 강제 진입 guard |
+| SE 과잉 발화 | 단 하나의 trigger로 매 사이클 SE | skip 조건 A+B |
+| Checkpoint staleness 맹신 | 체크포인트 만료 시 컨텍스트 없다 가정 | git log 기반 복구 프로토콜 |
+| Wiki 무덤 | 검색 사용 0%, 생산만 | JIT Unused 감지 + 정기 curate |
+
+## 다음 1000 사이클을 위한 관찰
+
+현재 phase (공개 전):
+- design-system/polish-ui dormant (공개 결정 전)
+- fix-incident/worker-incident-triage 낮은 빈도 (인프라 안정)
+- explore-idea/curate/skill-evolution 삼각 구도
+
+다음 phase 전환 신호:
+- 사용자 "공개 대비" 발화 → design-system/polish-ui 활성화
+- 외부 사용자 유입 → worker-incident-triage 빈도 증가
+- 큰 feature 추가 → fix-incident 빈도 증가
+
+## 관련 패턴
+
+- [agentic-hub-phase-lock-steady-state](/wiki/harness-engineering/agentic-hub-phase-lock-steady-state): 현재 phase 정의
+- [agentic-chain-distribution-phase-fingerprint](/wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint): chain 분포로 phase 진단
