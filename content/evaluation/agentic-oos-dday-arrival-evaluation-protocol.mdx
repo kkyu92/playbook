@@ -1,0 +1,143 @@
+---
+title: "OOS D-Day 도달 시 예측 평가 프로토콜"
+category: evaluation
+date: "2026-05-22"
+tags:
+  - out-of-sample
+  - evaluation
+  - validation
+  - track-record
+  - prediction
+  - protocol
+  - moneyball
+workers:
+  - moneyball
+confidence: 2
+last_verified: "2026-05-22"
+connections:
+  - evaluation/agentic-precommit-prediction-oos-track-record
+  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+  - harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift
+source: explore-idea
+description: "OOS D-Day (예측 검증 기간 시작일) 도달 시 agentic 시스템이 실행해야 할 평가 절차. 잠긴 git commit hash 찾기 → 실제 결과 조회 → hit/miss 판정 → confidence 갱신 → 사후 합리화 방지. lotto 1225회 OOS D-Day 2026-05-23 맥락."
+---
+
+## 언제 실행하는가
+
+`agentic-precommit-prediction-oos-track-record` 패턴으로 예측이 git commit에 박제된 후, 검증 이벤트가 실제로 발생했을 때.
+
+**트리거 조건**:
+- `prediction.oos_dday` ≤ 오늘 날짜
+- 해당 예측의 `evaluation_status: pending`
+
+**lotto 1225회 맥락**: entry #269 작성 시 (2026-05-22) 박제된 예측, OOS D-Day = 2026-05-23 (다음 날).
+
+## 평가 절차
+
+### Step 1. 잠긴 예측 조회
+
+```bash
+# git commit hash로 예측 내용 확인 (불변)
+git show <prediction_commit_hash> --stat
+git show <prediction_commit_hash>:path/to/prediction.json
+
+# 또는 git log grep으로 예측 커밋 찾기
+git log --all --grep "OOS D-Day" --format="%H %s"
+```
+
+예측 내용은 커밋 시점 이후 변경 불가. 이 단계에서 사후 수정이 일어나면 git blame으로 즉시 감지됨.
+
+### Step 2. 실제 결과 조회
+
+```bash
+# moneyball 예측 시스템의 경우
+node scripts/fetch-result.mjs --round <round_n>
+
+# 또는 공식 데이터 소스에서 수동 조회
+# 결과를 별도 파일로 저장 (예측과 독립)
+```
+
+결과 조회는 예측 파일과 분리된 별도 파일에 저장. 두 파일이 독립적으로 존재해야 "비교" 가 의미 있음.
+
+### Step 3. Hit/Miss 판정
+
+```bash
+# 예측 파일의 threshold와 결과 비교
+PREDICTED=$(jq '.prediction.value' prediction.json)
+ACTUAL=$(jq '.result.value' result.json)
+THRESHOLD=$(jq '.prediction.hit_threshold' prediction.json)
+
+# hit 조건은 예측 시점에 정의된 threshold 기준 (사후 변경 X)
+```
+
+**hit 정의는 예측 박제 시점에 명시해야 함**. "결과를 보고 나서 hit 기준을 조정"하면 백테스트와 동일한 오류.
+
+### Step 4. 결과 박제
+
+```bash
+# OOS 결과를 새 커밋으로 박제
+git commit -m "data: OOS result — round <n> — predicted=<X> actual=<Y> hit=<true/false>
+
+oos_evaluation:
+  prediction_commit: <hash>
+  round: <n>
+  predicted: <X>
+  actual: <Y>
+  hit: <true|false>
+  evaluation_date: 2026-05-23
+  notes: <사후 합리화 아닌 순수 결과 기록>"
+```
+
+예측 커밋 hash를 body에 명시 → 누구든 `git show <hash>`로 예측 내용 확인 가능.
+
+### Step 5. confidence 갱신
+
+```bash
+# 누적 hit rate 계산
+TOTAL=$(git log --all --grep "oos_evaluation:" --format="%H" | wc -l)
+HITS=$(git log --all --grep "hit: true" --format="%H" | wc -l)
+echo "OOS hit rate: $HITS / $TOTAL"
+```
+
+entry confidence 갱신 기준:
+- hit rate ≥ 60% (5회+): confidence 2 → 3
+- hit rate ≥ 70% (10회+): confidence 3 → 4
+- hit rate < 40%: 모델 재검토 trigger
+
+## 사후 합리화 방지 체크리스트
+
+- [ ] 예측 파일을 결과 조회 전에 별도로 저장했는가
+- [ ] hit threshold를 예측 박제 시점에 정의했는가
+- [ ] 결과를 보고 나서 threshold를 조정하지 않았는가
+- [ ] "惜しい(아까웠다)" 판정을 hit으로 인정하지 않았는가
+- [ ] git commit body에 예측 커밋 hash가 명시되었는가
+
+## 실패 패턴
+
+**Pattern 1 — 예측 내용 사후 수정**: `git commit --amend` 또는 파일 직접 수정으로 예측 조작. git blame으로 탐지 가능. 예방: read-only tag commit.
+
+**Pattern 2 — 유연한 hit 기준**: "대체로 맞았다"는 주관적 판단. 예방: hit 기준을 수치로 박제.
+
+**Pattern 3 — cherry-picking**: 좋은 결과만 평가에 포함. 예방: round 번호 연속성 검사.
+
+**Pattern 4 — 평가 지연**: D-Day 이후 수주간 평가 미실행 → 결과 기억 의존. 예방: D-Day cron trigger.
+
+## 자동화 패턴
+
+```yaml
+# .github/workflows/oos-evaluation.yml
+on:
+  schedule:
+    - cron: '0 9 23 5 *'  # 2026-05-23 09:00 KST = 00:00 UTC
+jobs:
+  evaluate:
+    steps:
+      - run: node scripts/evaluate-oos.mjs --auto
+```
+
+D-Day에 자동으로 평가 스크립트를 실행 → 결과를 커밋 → 사람이 보기 전에 평가 완료.
+
+## 관련 패턴
+
+- [agentic-precommit-prediction-oos-track-record](/wiki/evaluation/agentic-precommit-prediction-oos-track-record): 예측 박제 단계 (이 entry의 전제)
+- [agentic-git-history-ground-truth](/wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience): git history = 불변 증거 소스
