@@ -1,0 +1,85 @@
+---
+title: "Wiki Entry 삭제 시 Orphan Reference Cascade — 삭제 ≠ 참조 해제"
+category: harness-engineering
+date: "2026-05-22"
+tags:
+  - wiki-maintenance
+  - orphan
+  - cascade
+  - deletion
+  - curate
+  - harness-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-22"
+connections:
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+source: explore-idea
+description: "entry 삭제 시 해당 entry를 connections에 명시한 다른 entry들이 orphan link 상태가 됨. kimi-k2 entry 삭제 후 13건 orphan cascade 발생 (cycle 989 삭제 → cycle 993 curate에서 발견). 삭제 전 reverse-lookup 필수."
+---
+
+## 문제
+
+위키 entry를 삭제할 때, 삭제된 entry를 `connections`에 명시한 **다른 entry들은 자동으로 참조를 제거하지 않는다**. 이 참조들은 lint의 "Orphan Links" 항목으로만 뒤늦게 발견된다.
+
+**실제 사례**: cycle 989에서 `agents/kimi-k2-6-open-source-agentic-coding-exploration` entry를 JIT Unused 무덤으로 판정해 삭제. 삭제 시점에는 아무런 경고 없이 성공. cycle 993 curate에서 lint 실행 시 orphan 13건 발견 — 전부 이 entry를 가리키는 참조들.
+
+```
+Orphan Links (13건):
+  agents/google-agents-cli → agents/kimi-k2-6-...
+  agents/gpt-5-5-agent-model → agents/kimi-k2-6-...
+  agents/ouroboros-agent → agents/kimi-k2-6-...
+  agents/qwen3-6-max → agents/kimi-k2-6-...
+  frontend-ai/ai-inference-visualization → agents/kimi-k2-6-...
+  frontend-ai/claude-code-session → agents/kimi-k2-6-...
+  harness-engineering/gstack-framework → agents/kimi-k2-6-...
+  harness-engineering/hub-worker-compounding → agents/kimi-k2-6-...
+  prompt-engineering/lao-workflow → agents/kimi-k2-6-...
+  prompt-engineering/llm-prompt-optimization → agents/kimi-k2-6-...
+  prompt-engineering/prompt-versioning → agents/kimi-k2-6-...
+  reports/week-2026-18 → agents/kimi-k2-6-...
+  (evaluation/agentic-precommit → evaluation/agentic-cron... 경로 오류)
+```
+
+## 근본 원인
+
+wiki entry connections = **단방향 참조** 구조. A→B 링크를 추적하는 forward index만 있고, "B를 가리키는 entry 목록" reverse index가 없다.
+
+삭제 시 시스템이 할 수 있는 것:
+- `rm content/category/slug.mdx` → 파일 제거 성공
+- B가 없으면 A의 `connections`에 dangling ref 발생 → 다음 lint까지 invisible
+
+## 프로토콜: entry 삭제 전 reverse-lookup
+
+```bash
+# 삭제 전 reverse-lookup: 누가 이 entry를 참조하는지 확인
+TARGET="agents/kimi-k2-6-open-source-agentic-coding-exploration"
+grep -rl "$TARGET" content/ --include="*.mdx"
+```
+
+출력이 0건이면 안전하게 삭제. 출력이 N건이면 먼저 각 파일의 `connections`에서 해당 slug를 제거한 후 삭제.
+
+**이상적인 순서**:
+1. `grep -rl "<slug>" content/` — 역참조 파일 목록
+2. 각 파일에서 해당 connections 항목 제거
+3. entry 파일 삭제
+4. `pnpm run lint:wiki` — orphan 0 확인
+
+## 현재 /lint 의존 한계
+
+현재 `lint-content.mjs`는 orphan을 **사후 감지**만 한다. 삭제 시점에 경고를 발생시키지 않는다. 이상적으로는:
+- `scripts/delete-entry.mjs <slug>` 유틸리티: reverse-lookup → batch ref 제거 → 파일 삭제 → lint verify
+- 또는 curate chain이 삭제를 수행할 때 위 순서를 강제
+
+## 빈도 & 영향
+
+- kimi-k2 삭제로 4 cycles 후 orphan 13건 발견 → 1 curate cycle 소비
+- 참조 수가 많은 entry (허브 전체에서 참조되는 foundational entry) 일수록 cascade 크기↑
+- lint clean 상태에서 entry 삭제 → 즉시 lint dirty (orphan 수 = 역참조 수)
+
+## 관련 패턴
+
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): 삭제-참조 cascade = 완전성 드리프트 (#4) 의 한 형태
+- [agentic-git-history-ground-truth](/wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience): git log로 삭제 커밋 확인 → 당시 어떤 파일이 삭제됐는지 역추적 가능
