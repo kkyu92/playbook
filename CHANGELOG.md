@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.64] — 2026-05-22
+
+### Changed
+- cycles 980~987. cycle 980: explore-idea SUCCESS — 신규 entry #268 agentic-numeric-threshold-semantic-aliasing-drift (moneyball sweep 48-50: accuracy rate 0.65/0.55 + WINNER_PROB 동일 수치 시맨틱 aliasing → silent drift 패턴). wiki 269 entries. SE Trigger-5: window 961-980 SE=6/20=30% B FAIL → cycle 981 SE #335 마커 박제. cycles 981-986: skill-evolution SE #335-340 fast-path 6연속 — 명단=7 동일 + oscillation 173→177회. window 963-965 SE 이탈 → cycle 986 사후 8/20=40% B PASS → 마커 해소. cycle 987: explore-idea SUCCESS — 신규 entry #269 agentic-precommit-prediction-oos-track-record (lotto 1225회 OOS D-Day 2026-05-23 + KBO track record: git commit hash = 예측 불변 증거, N회 누적 OOS track record 구축 패턴). wiki 270 entries. SE: 8/20=40% B PASS → 마커 박제 X. oscillation 177회 steady-state.
+
 ## [0.9.63] — 2026-05-22
 
 ### Changed
