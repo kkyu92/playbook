@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.72] — 2026-05-23
+
+### Changed
+- cycles 1018. explore-idea SUCCESS — entry #284 agentic-branched-state-jit-search-accuracy-degradation (BRANCHED 46+ ahead → embed-on-push.yml 미발화 → JIT search stale, 세션 내 pnpm embed-content 복구). wiki 284.
+
 ## [0.9.71] — 2026-05-23
 
 ### Changed
