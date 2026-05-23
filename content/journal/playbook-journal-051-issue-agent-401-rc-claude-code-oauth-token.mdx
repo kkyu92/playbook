@@ -1,0 +1,56 @@
+---
+title: "Playbook Journal 051 — issue-agent 401 RC — CLAUDE_CODE_OAUTH_TOKEN 만료 + 자동 갱신 부재"
+category: harness-engineering
+date: "2026-05-23"
+tags: [playbook-journal, auto-ingest, lesson, blog-autopilot]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: issue-agent 401 RC — CLAUDE_CODE_OAUTH_TOKEN 만료 + 자동 갱신 부재 (from kkyu92/blog-autopilot)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260523-issue-agent-401-rc-claude-code-oauth-token-e38d7e1702763dd011e2e3fc5d1b91.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/blog-autopilot`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+사례:
+  2026-05-22 issue #97, #98 issue-agent.yml 실행 시 연속 401 실패.
+  log: ANTHROPIC_API_KEY: (빈값), CLAUDE_CODE_OAUTH_TOKEN: *** (설정은 있음).
+  에러: "Failed to authenticate. API Error: 401 Invalid authentication credentials"
+
+원인:
+  CLAUDE_CODE_OAUTH_TOKEN 은 2026-05-02 등록. Claude Code OAuth token ~24h expire 특성.
+  memory feedback_oauth_token_rotation_risk.md 정합 — accessToken ~24h expire.
+  issue-agent.yml 은 ANTHROPIC_API_KEY 를 env 로 inject 하지 않고 oauth_token 만 사용.
+  oauth token 만료 시 자동 갱신 없음 → 401 영구 fail.
+
+대응:
+  workflow yaml 수정 = 사용자 GO 영역.
+  옵션 A: ANTHROPIC_API_KEY secret 추가 후 issue-agent.yml 에 api_key 사용 전환.
+  옵션 B: CLAUDE_CODE_OAUTH_TOKEN 수동 갱신 (단기 — ~24h 후 재발).
+  옵션 C: issue-agent.yml 을 ANTHROPIC_API_KEY 기반으로 전환 (장기 안정).
+
+박제 위치:
+  lesson (blog-autopilot domain) — 2회+ 재발 시 docs/solutions/ 승격 대상.
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
