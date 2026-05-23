@@ -1,0 +1,135 @@
+---
+title: "BRANCHED State → JIT Search 정확도 저하 — GH Actions Pipeline Cascade"
+category: harness-engineering
+date: "2026-05-23"
+tags:
+  - branched
+  - jit-search
+  - embedding
+  - github-actions
+  - cascade
+  - harness-engineering
+  - silent-failure
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-23"
+connections:
+  - harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
+  - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+  - harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+source: explore-idea
+description: "local commit이 push되지 않으면 embed-on-push.yml이 발화 안 되어 embeddings.json이 stale해짐. BRANCHED 상태(46+ local ahead)에서 JIT search가 수정된 entry 이전 버전을 반환한 직접 evidence (cycle 1018, 2026-05-23)."
+---
+
+## BRANCHED State Cascade Chain
+
+```
+local commits 누적 (BRANCHED 46 ahead)
+  → push 미발생 (R6 사용자 결정 대기)
+    → embed-on-push.yml GH Actions 미발화
+      → public/embeddings.json 마지막 push 시점 freeze
+        → JIT search가 수정된 entry 이전 버전 반환
+          → LLM agent가 stale knowledge 기반 결정
+```
+
+## 직접 Evidence (cycle 1018, 2026-05-23)
+
+**상태**: `git rev-list --left-right --count origin/main...main` = `2  46` (local 46 ahead)
+
+**JIT search 결과 (stale)**:
+
+```
+query: "skill evolution evaluation window single activation oscillation"
+→ closed-loop-health.mdx 반환
+  → last_cycle: 551  ← 실제 파일은 last_cycle: 1011 (cycle 1010 수정)
+```
+
+`public/embeddings.json` 마지막 갱신: 2026-05-22 15:06 (local 작업 시작 전).
+
+**미반영 상태인 content 변경**:
+- entry #279 측정 오류 수정 (78%→0%)
+- entry #280~#283 신규 4건
+- `closed-loop-health.mdx` last_cycle 551→1011 갱신
+
+## 왜 이게 위험한가
+
+LLM agent의 JIT search 사용 계약: "검색 결과 = 현재 위키 상태". 실제는 push 시점 freeze.
+
+| 시나리오 | 결과 |
+|---|---|
+| JIT search가 수정된 entry 이전 버전 반환 | 오래된 패턴 기반 결정 (예: 78% zero connections 기준 curate) |
+| 신규 entry가 JIT search에 미노출 | 중복 entry 생성 (JIT "no match" = 신규처럼 착각) |
+| stale metric dashboard 검색 | 잘못된 cycle_n 기준 SE trigger 평가 |
+
+## 탐지 패턴
+
+### 1. JIT 스캔 결과 vs 실제 파일 비교
+
+```bash
+# JIT 검색 결과에 중요한 numeric field가 있으면 실제 파일과 비교
+node scripts/search.mjs "<쿼리>" 3 --inject 2>&1
+# 반환된 값과 실제 파일 값 비교
+grep "last_cycle:" content/reports/closed-loop-health.mdx
+```
+
+### 2. embeddings.json 갱신 시점 확인
+
+```bash
+stat -f "%Sm" public/embeddings.json  # macOS
+# 최근 content 변경보다 오래됐으면 stale
+git log --oneline content/ -5  # content 최근 변경
+```
+
+### 3. BRANCHED 상태 확인
+
+```bash
+git rev-list --left-right --count origin/main...main
+# right > 10 이면 embeddings stale 가능성 높음
+```
+
+## 완화 전략
+
+### 즉시 복구
+
+```bash
+pnpm embed-content  # 로컬에서 수동 재생성
+# public/embeddings.json 갱신 → 세션 내 JIT search 즉시 정확도 복구
+```
+
+**주의**: `public/embeddings.json`은 gitignored. commit 불가. 세션 내 local-only 효과. 다음 세션 시작 시 다시 freeze 상태 (git tracked X → 세션 간 persist X).
+
+→ 장기 BRANCHED 상태에서는 **세션 시작마다 `pnpm embed-content`** 필요. 혹은 BRANCHED 해소(push) → `embed-on-push.yml` 자동 실행이 영구 복구.
+
+### BRANCHED 기간 중 curate 종료 단계
+
+BRANCHED ≥ 10 commit 이면 curate chain stop 조건에 `pnpm embed-content` 추가 권장:
+
+```
+curate stop: 위키 정리 commit OR (BRANCHED ≥ 10 → pnpm embed-content + embed commit)
+```
+
+### GH Actions 의존 최소화
+
+`embed-on-push.yml` 자동화는 정상 push 사이클에서만 작동. BRANCHED 중에는 수동 embed가 유일한 복구 경로.
+
+## 관련 Cascade 패턴
+
+auto-update contract drift (entry #281) 와 공통점: **선언(자동화)이 있어서 "갱신된다"고 가정하지만, 실행 조건(push/retro step)이 충족 안 되면 silent freeze**.
+
+| 자동화 선언 | 실행 조건 | BRANCHED 시 |
+|---|---|---|
+| `embed-on-push.yml` | push event | 미발화 |
+| `dashboard-update.mjs` | SKILL retro step 호출 | 미박제 |
+| `auto_updated: true` frontmatter | SKILL 구현 | 미구현 |
+
+## Evidence
+
+- 2026-05-23: cycle 1018 — `git rev-list` 46 local ahead → `embeddings.json` 2026-05-22 freeze → JIT search `closed-loop-health` stale data (last_cycle: 551 반환, 실제 1011)
+- `pnpm embed-content` 수동 실행으로 즉시 복구
+
+## 관련 패턴
+
+- [agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry](/wiki/harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry): BRANCHED commit density 비대칭
+- [jit-embedding-retrieval-context-cost-scale-invariant](/wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant): JIT search O(1) 아키텍처 + 인덱스 갱신 운영
+- [agentic-auto-update-contract-drift-frontmatter-skill-mismatch](/wiki/harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch): 선언↔실행 조건 불충족 silent freeze 공통 패턴

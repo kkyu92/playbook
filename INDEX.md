@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-23T09:18:39.869Z
+Updated: 2026-05-23T09:23:53.911Z
 
-## 엔트리 (283개)
+## 엔트리 (284개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -33,6 +33,7 @@ Updated: 2026-05-23T09:18:39.869Z
 - [Agentic Auto-Update Contract Drift — frontmatter 선언과 SKILL 구현 불일치](wiki/harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch) — confidence: 2, status: draft
 - [N 사이클 Batch Session 컨텍스트 예산 관리](wiki/harness-engineering/agentic-batch-session-context-budget) — confidence: 2, status: draft
 - [자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프](wiki/harness-engineering/agentic-batch-vs-cascade-session-context-isolation) — confidence: 3, status: complete
+- [BRANCHED State → JIT Search 정확도 저하 — GH Actions Pipeline Cascade](wiki/harness-engineering/agentic-branched-state-jit-search-accuracy-degradation) — confidence: 2, status: draft
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도](wiki/harness-engineering/agentic-chain-dormancy-phase-map) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
@@ -872,6 +873,9 @@ Updated: 2026-05-23T09:18:39.869Z
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/agentic-local-commit-batch-deploy-rate-management
+- harness-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
+- harness-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+- harness-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
