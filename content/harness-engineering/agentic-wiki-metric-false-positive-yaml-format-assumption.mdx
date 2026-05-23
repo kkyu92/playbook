@@ -1,0 +1,125 @@
+---
+title: "Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive"
+category: harness-engineering
+date: "2026-05-23"
+tags:
+  - wiki-maintenance
+  - yaml
+  - measurement
+  - false-positive
+  - harness-engineering
+  - silent-failure
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-23"
+connections:
+  - harness-engineering/agentic-wiki-connection-graph-health-metrics
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+source: explore-idea
+description: "wiki connections 측정 스크립트가 YAML list format만 인식 → array format 누락 → 78% zero connections 오보 (실제 0%). cycle 1015 직접 evidence. MDX frontmatter 다중 형식 병존 시 health metric 스크립트는 양쪽 형식 모두 처리 필수."
+---
+
+## 사건 원인 (cycle 1015, 2026-05-23)
+
+**현상**: entry #279 (`agentic-wiki-connection-graph-health-metrics`) 주장 — "278 entries 중 216개(78%)가 connections 0. avg 0.84."
+
+**실측 재검증**: 282 entries 전체 connections 존재 (0% zero), avg 6.25, cross-category 51.8%.
+
+**원인**: 측정 스크립트가 YAML list format만 인식했기 때문.
+
+## MDX frontmatter 두 가지 connections 형식
+
+플레이북 wiki에 두 가지 connections 표기 방식이 병존:
+
+```yaml
+# 형식 A — YAML list (수동 큐레이션 entries)
+connections:
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/agentic-context-compaction-commit-density-survival
+```
+
+```yaml
+# 형식 B — Array (gap-pull/scout 자동 생성 entries)
+connections: [prompt-engineering/llm-prompt-optimization-role-definition-constraint-design, data-engineering/llm-fine-tuning-dataset-preparation-strategies, ...]
+```
+
+**발생 경위**: harness-engineering curated entries = YAML list format. gap-pull/scout batch entries = array format. 두 형식이 동일 wiki 안에 혼재.
+
+## 측정 스크립트 버그 패턴
+
+```python
+# ❌ 버그 버전 — YAML list만 감지
+m = re.search(r'connections:\s*\n((?:\s*-\s*.+\n)*)', content)
+if m:
+    conns = re.findall(r'-\s*(.+)', m.group(1))
+    # Array format entries → 연결 0으로 계산
+```
+
+```python
+# ✅ 수정 버전 — 양쪽 형식 모두 처리
+# YAML list
+m = re.search(r'connections:\s*\n((?:[ \t]+-[ \t]+.+\n?)*)', content)
+if m:
+    items = [i.strip() for i in re.findall(r'-\s*(.+)', m.group(1)) if len(i.strip()) > 3]
+    conn_count = len(items)
+# Array format
+m2 = re.search(r'connections:\s*\[([^\]]+)\]', content)
+if m2:
+    items = [i.strip() for i in m2.group(1).split(',') if i.strip()]
+    conn_count = len(items)
+```
+
+## 결과로 박제된 허위 수치
+
+| 지표 | entry #279 주장 (오류) | 실측 재검증 |
+|---|---|---|
+| connections=0 비율 | 78% | 0% |
+| 전체 avg connections | 0.84 | 6.25 |
+| cross-category 비율 | ~0% (추정) | 51.8% |
+| harness-engineering avg | 1.75 | 4.84 |
+
+**위험**: LLM agent가 entry #279를 "현재 상태 사실"로 신뢰하면 "78% zero" 기준 curate 권고 실행 → 실제로는 건강한 wiki에 불필요한 수정 시도.
+
+## 탐지 패턴
+
+### Wiki health script 작성 시 format 검증 체크리스트
+
+- [ ] 측정 대상 필드의 모든 YAML 표기 형식 파악 (list / array / 멀티라인 block scalar `>-`)
+- [ ] 각 형식별로 샘플 entry 3개 이상 수동 검증
+- [ ] 전체 count가 총 entry 수와 일치하는지 확인 (누락 = 미인식 format 존재)
+- [ ] `total_with_field > 0 && total_with_field < total_entries` 이면 format 파싱 버그 의심
+
+### 빠른 format 분포 확인
+
+```bash
+# connections: 형식 분포 확인
+grep -r "^connections:" content/ --include="*.mdx" | head -3  # array format
+grep -r "^connections:$" content/ --include="*.mdx" | head -3  # list format  
+grep -r "^connections: \[" content/ --include="*.mdx" | wc -l  # array count
+grep -r "^connections:$" content/ --include="*.mdx" | wc -l   # list count
+```
+
+## 관련 측정 artifact
+
+**YAML block scalar `>-`**: `closed-loop-health.mdx` connections 내 긴 slug를 `>-` 멀티라인으로 박제 → 스크립트가 `>-` 를 연결 대상으로 오인식.
+
+```yaml
+connections:
+  - >-
+    harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
+```
+
+orphan 스캔 시 `>-` 자체가 orphan target으로 보고됨 (실제 orphan X). 위 수정 스크립트에서 `len(i.strip()) > 3` 가드가 필요한 이유.
+
+## Evidence
+
+- 2026-05-23: cycle 1015 curate — entry #279 측정 재검증. `re.search(r'connections:\s*\[([^\]]+)\]', content)` 추가로 즉시 0% zero 확인.
+- entry #279 (`agentic-wiki-connection-graph-health-metrics`) 수정: 78%→0%, avg 0.84→6.25
+
+## 관련 패턴
+
+- [agentic-wiki-connection-graph-health-metrics](/wiki/harness-engineering/agentic-wiki-connection-graph-health-metrics): connection graph 건강도 지표 (수정된 실측값)
+- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): 4-level 드리프트 감지 프레임워크
+- [agentic-auto-update-contract-drift-frontmatter-skill-mismatch](/wiki/harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch): 선언↔구현 불일치 silent failure 패턴

@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-22T02:24:31.427Z
+Updated: 2026-05-23T09:18:39.869Z
 
-## 엔트리 (267개)
+## 엔트리 (283개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -30,6 +30,8 @@ Updated: 2026-05-22T02:24:31.427Z
 
 ### Harness Engineering
 - [에이전트 멀티-주파수 지식 파이프라인 패턴](wiki/harness-engineering/agent-multi-frequency-knowledge-pipeline) — confidence: 2, status: complete
+- [Agentic Auto-Update Contract Drift — frontmatter 선언과 SKILL 구현 불일치](wiki/harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch) — confidence: 2, status: draft
+- [N 사이클 Batch Session 컨텍스트 예산 관리](wiki/harness-engineering/agentic-batch-session-context-budget) — confidence: 2, status: draft
 - [자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프](wiki/harness-engineering/agentic-batch-vs-cascade-session-context-isolation) — confidence: 3, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [자율 에이전트 체인 풀 휴면 분포 — 프로젝트 페이즈 지도](wiki/harness-engineering/agentic-chain-dormancy-phase-map) — confidence: 2, status: complete
@@ -39,7 +41,10 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
+- [LLM Context Compaction 생존 전략 — 커밋 메시지 밀도가 요약 품질을 결정](wiki/harness-engineering/agentic-context-compaction-commit-density-survival) — confidence: 2, status: draft
 - [Cron 성공 + 출력 0 = Silent Failure — 파이프라인 output count 게이트 패턴](wiki/harness-engineering/agentic-cron-zero-output-silent-success-detection) — confidence: 3, status: complete
+- [Agentic 사이클 Chain 다양성 관리 — 연속 streak 감지 + 순환 강제](wiki/harness-engineering/agentic-cycle-chain-diversity-rebalancing) — confidence: 3, status: draft
+- [1000 사이클 Develop-Cycle Hub — 장기 운영 학습 요약](wiki/harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings) — confidence: 4, status: draft
 - [자율 에이전트 진단 소스 다양성 — 체인 선택 균형을 위한 소스-체인 친화도 설계](wiki/harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance) — confidence: 2, status: complete
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [Agentic Feature Page Incremental Layer Decomposition — 복잡한 기능 페이지를 N개 원자 레이어로 분해해 순차 구현하는 패턴](wiki/harness-engineering/agentic-feature-page-incremental-layer-decomposition) — confidence: 2, status: complete
@@ -47,6 +52,7 @@ Updated: 2026-05-22T02:24:31.427Z
 - [자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검](wiki/harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [Git Commit Body as Agentic Dispatch Transport — commit subtype 경량 IPC 패턴](wiki/harness-engineering/agentic-git-commit-body-dispatch-transport) — confidence: 4, status: complete
+- [Git History as Ground Truth — Checkpoint Staleness Resilience](wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience) — confidence: 2, status: draft
 - [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
 - [JIT 위키 검색 근-임계값 false negative — 카테고리 ls 폴백 패턴](wiki/harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback) — confidence: 2, status: complete
@@ -55,9 +61,11 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Agentic Local-Commit Batch Deploy Rate Management — 배포 한도 보존 local-first commit 전략](wiki/harness-engineering/agentic-local-commit-batch-deploy-rate-management) — confidence: 3, status: complete
 - [자율 에이전트 장기 carry-over 누적 — 자동화 경계 휴먼 체크포인트 패턴](wiki/harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary) — confidence: 2, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
+- [Manual Batch Session vs Zero-Touch — N 사이클 실행 전략 비교](wiki/harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs) — confidence: 3, status: draft
 - [자율 에이전트 메타-체인 fast-path streak guard — domain chain positive streak과의 비대칭 처리](wiki/harness-engineering/agentic-meta-chain-fast-path-streak-guard) — confidence: 2, status: complete
 - [멀티 에이전트 Chain Pool 생태계 분업 패턴 — 허브 메타 안정 / 워커 도메인 순환](wiki/harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization) — confidence: 3, status: complete
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
+- [Agentic Code Sweep — 동일 수치가 다른 시맨틱에 사용될 때 source-of-truth 결손 silent drift](wiki/harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift) — confidence: 2, status: complete
 - [병렬 에이전트 생태계 통합 지연과 커밋 밀도 비대칭](wiki/harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry) — confidence: 2, status: draft
 - [pnpm 빌트인 명령어 충돌 — 에이전트 JIT 검색 스크립트 무음 실패 패턴](wiki/harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure) — confidence: 2, status: complete
 - [Agentic Post-Feature Drift Sweep Gap=1 Cadence — explore-idea 직후 review-code 즉시 발화 패턴](wiki/harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence) — confidence: 2, status: complete
@@ -73,6 +81,11 @@ Updated: 2026-05-22T02:24:31.427Z
 - [에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드](wiki/harness-engineering/agentic-supervisor-session-liveness-contract) — confidence: 3, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [Wiki Entry Confidence Lifecycle — Draft에서 검증까지](wiki/harness-engineering/agentic-wiki-confidence-lifecycle) — confidence: 3, status: draft
+- [Wiki Connection Graph Health — 카테고리별 연결 희소성과 지식 사일로 패턴](wiki/harness-engineering/agentic-wiki-connection-graph-health-metrics) — confidence: 2, status: draft
+- [Wiki Entry 삭제 시 Orphan Reference Cascade — 삭제 ≠ 참조 해제](wiki/harness-engineering/agentic-wiki-entry-deletion-orphan-cascade) — confidence: 3, status: draft
+- [Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive](wiki/harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption) — confidence: 2, status: draft
+- [Agentic Worker Ambient Context Rule Starvation — 재발 패턴이 shared-rules 에 박제되지 않아 워커 ambient context 전파 실패](wiki/harness-engineering/agentic-worker-ambient-context-rule-starvation) — confidence: 2, status: complete
 - [다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop](wiki/harness-engineering/agentic-worker-dispatch-filter-registration-gap) — confidence: 3, status: complete
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
@@ -180,6 +193,7 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Playbook Journal 047 — cycle 623 explore-idea spec — saturation 의식 + 사용자 가치 후보 5건 박제 (#821)](wiki/journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821) — confidence: 3, status: published
 - [Playbook Journal 048 — lesson-pending 86건 batch — hub D5 cron 주간 재발 패턴 (cycle 669) (#958)](wiki/journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958) — confidence: 3, status: in-progress
 - [Playbook Journal 049 — cycle 835 operational-analysis (lite) — TODOS.md cycle 387 stale vs CLAUDE.md cycle 775 권위 drift (silent stale family 신규 layer)](wiki/journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle) — confidence: 3, status: in-progress
+- [Playbook Journal 050 — cycle 861 op-analysis lite — v1.8 cohort velocity + agent_memory 4 type drift sync](wiki/journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -196,7 +210,6 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
 - [GPT-5.5 Agent Model — Advanced Evaluation and Workflow Integration](wiki/agents/gpt-5-5-agent-model-evaluation-integration-strategies) — confidence: 1, status: draft
 - [AI Agent Inference Chain — 복합 작업 분해 및 견고한 실행 설계](wiki/agents/inference-chain-design-complex-ai-agents) — confidence: 1, status: draft
-- [Kimi K2.6: 오픈소스 에이전트형 코딩 모델 실전 통합 전략](wiki/agents/kimi-k2-6-open-source-agentic-coding-exploration) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
 - [LLM Agent Tool Use — Design Patterns for Enhanced Functionality](wiki/agents/llm-agent-tool-use-design-patterns) — confidence: 1, status: draft
 - [Autonomous Agent Long-Term Behavior — Anomaly Detection and Response Strategies](wiki/agents/long-term-agent-behavior-anomaly-detection-response) — confidence: 1, status: draft
@@ -213,6 +226,8 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Ruflo Platform — Claude Code 기반 멀티 에이전트 오케스트레이션 강화](wiki/agents/ruflo-multi-agent-orchestration-claude-code-playbooks) — confidence: 1, status: draft
 
 ### Evaluation
+- [OOS D-Day 도달 시 예측 평가 프로토콜](wiki/evaluation/agentic-oos-dday-arrival-evaluation-protocol) — confidence: 2, status: draft
+- [Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜](wiki/evaluation/agentic-precommit-prediction-oos-track-record) — confidence: 2, status: complete
 - [Claude Code Generation Reliability — Enhanced Validation Pipeline](wiki/evaluation/claude-code-generation-validation-pipeline-extension) — confidence: 1, status: draft
 - [Generative AI Hallucination: Automated Detection and Evaluation Methods](wiki/evaluation/generative-ai-hallucination-automated-detection-evaluation) — confidence: 1, status: draft
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
@@ -250,6 +265,7 @@ Updated: 2026-05-22T02:24:31.427Z
 - [Claude Code 세션 관제 — 웹/모바일 기반 개발 워크플로우 효율화](wiki/frontend-ai/claude-code-session-web-mobile-monitoring-implementation) — confidence: 1, status: draft
 - [Generative AI UI/UX Patterns — Crafting Adaptive Frontend Experiences](wiki/frontend-ai/generative-ai-ui-ux-design-patterns) — confidence: 1, status: draft
 - [LLM 기반 인터랙티브 UI 개발: 프론트엔드 전략 및 구현](wiki/frontend-ai/llm-interactive-ui-frontend-implementation) — confidence: 1, status: draft
+- [Next.js 동적 라우트 파라미터 검증 — 크롤러 리터럴 URL 접근 DB 오류 방어](wiki/frontend-ai/nextjs-dynamic-route-param-validation-bot-literal-url-guard) — confidence: 2, status: draft
 - [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
 - [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 
@@ -371,7 +387,6 @@ Updated: 2026-05-22T02:24:31.427Z
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/external-tool-integration-for-ai-agents ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
 - agents/external-tool-integration-for-ai-agents ↔ harness-engineering/antigravity-managed-agents-api-integration-review
-- agents/google-agents-cli-agent-development-acceleration ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/hub-worker-compounding-pattern
@@ -383,7 +398,6 @@ Updated: 2026-05-22T02:24:31.427Z
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
-- agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ agents/kimi-k2-6-open-source-agentic-coding-exploration
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
@@ -395,15 +409,6 @@ Updated: 2026-05-22T02:24:31.427Z
 - agents/inference-chain-design-complex-ai-agents ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/inference-chain-design-complex-ai-agents ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/inference-chain-design-complex-ai-agents ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/hub-worker-compounding-pattern
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/prompt-versioning-and-testing
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ frontend-ai/ai-inference-visualization-design-patterns
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
-- agents/kimi-k2-6-open-source-agentic-coding-exploration ↔ agents/ouroboros-agent-performance-cost-optimization
 - agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
@@ -724,6 +729,12 @@ Updated: 2026-05-22T02:24:31.427Z
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- evaluation/agentic-oos-dday-arrival-evaluation-protocol ↔ evaluation/agentic-precommit-prediction-oos-track-record
+- evaluation/agentic-oos-dday-arrival-evaluation-protocol ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+- evaluation/agentic-oos-dday-arrival-evaluation-protocol ↔ harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift
+- evaluation/agentic-precommit-prediction-oos-track-record ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
+- evaluation/agentic-precommit-prediction-oos-track-record ↔ harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift
+- evaluation/agentic-precommit-prediction-oos-track-record ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
@@ -846,12 +857,17 @@ Updated: 2026-05-22T02:24:31.427Z
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/guard-test-pattern
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
+- frontend-ai/nextjs-dynamic-route-param-validation-bot-literal-url-guard ↔ frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence
 - frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/agent-multi-frequency-knowledge-pipeline ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch ↔ harness-engineering/agentic-context-compaction-commit-density-survival
+- harness-engineering/agentic-batch-session-context-budget ↔ harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs
+- harness-engineering/agentic-batch-session-context-budget ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ context-engineering/agentic-cycle-state-json-carry-over-design
 - harness-engineering/agentic-batch-vs-cascade-session-context-isolation ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
@@ -894,9 +910,19 @@ Updated: 2026-05-22T02:24:31.427Z
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+- harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-batch-session-context-budget
+- harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
 - harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-cron-zero-output-silent-success-detection ↔ evaluation/prediction-model-calibration-inversion-detection
+- harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-chain-dormancy-phase-map
+- harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings ↔ harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs
+- harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-diagnosis-source-diversity-chain-selection-balance ↔ harness-engineering/zero-touch-develop-cycle-session-management
@@ -922,6 +948,10 @@ Updated: 2026-05-22T02:24:31.427Z
 - harness-engineering/agentic-git-commit-body-dispatch-transport ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-git-commit-body-dispatch-transport ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-git-commit-body-dispatch-transport ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
+- harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience ↔ harness-engineering/agentic-git-commit-body-dispatch-transport
+- harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-skill-evolution-convergence-maturity-signal
 - harness-engineering/agentic-hub-phase-lock-steady-state ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
@@ -953,6 +983,9 @@ Updated: 2026-05-22T02:24:31.427Z
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs ↔ harness-engineering/agentic-batch-vs-cascade-session-context-isolation
+- harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
 - harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-meta-chain-fast-path-streak-guard ↔ harness-engineering/agentic-chain-saturation-detection
@@ -967,6 +1000,9 @@ Updated: 2026-05-22T02:24:31.427Z
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+- harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift ↔ harness-engineering/agentic-worker-dispatch-filter-registration-gap
+- harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
 - harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure ↔ harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
@@ -1032,6 +1068,18 @@ Updated: 2026-05-22T02:24:31.427Z
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/autonomous-agent-long-run-phase-transition-pattern
+- harness-engineering/agentic-wiki-confidence-lifecycle ↔ harness-engineering/agentic-wiki-entry-deletion-orphan-cascade
+- harness-engineering/agentic-wiki-confidence-lifecycle ↔ harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings
+- harness-engineering/agentic-wiki-connection-graph-health-metrics ↔ harness-engineering/agentic-wiki-entry-deletion-orphan-cascade
+- harness-engineering/agentic-wiki-connection-graph-health-metrics ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/agentic-wiki-entry-deletion-orphan-cascade ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-wiki-entry-deletion-orphan-cascade ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+- harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
+- harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+- harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/agentic-worker-dispatch-filter-registration-gap
+- harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification
 - harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-worker-dispatch-filter-registration-gap ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
@@ -1390,6 +1438,7 @@ Updated: 2026-05-22T02:24:31.427Z
 - journal/playbook-journal-047-cycle-623-explore-idea-spec-saturation-5-821 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
