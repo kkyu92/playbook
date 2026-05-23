@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.71] — 2026-05-23
+
+### Changed
+- cycles 1016~1017. cycle 1016: skill-evolution SE #345 fast-path — 명단 6→5 (worker-incident-triage cycle 1013 탈퇴 + closed-loop-design window slide 재진입). oscillation 182회. cycle 1017: explore-idea SUCCESS — entry #283 agentic-wiki-metric-false-positive-yaml-format-assumption (YAML list/array 두 format 혼재 시 측정 스크립트 false positive — 78%→0% 오보 사례).
+
 ## [0.9.70] — 2026-05-23
 
 ### Changed
