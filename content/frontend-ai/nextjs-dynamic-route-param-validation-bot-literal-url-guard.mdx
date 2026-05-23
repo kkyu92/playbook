@@ -1,0 +1,110 @@
+---
+title: "Next.js 동적 라우트 파라미터 검증 — 크롤러 리터럴 URL 접근 DB 오류 방어"
+category: frontend-ai
+date: "2026-05-23"
+tags:
+  - nextjs
+  - dynamic-route
+  - bot
+  - validation
+  - frontend-ai
+  - security
+workers:
+  - all
+confidence: 2
+last_verified: "2026-05-23"
+connections:
+  - frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage
+source: explore-idea
+description: "GoogleOther 크롤러가 /predictions/[date] 리터럴 URL 접근 → %5Bdate%5D DB 쿼리 → invalid input syntax Sentry error. 2026-05-22 moneyball 직접 evidence. 동적 라우트 페이지에서 DB call 전 파라미터 형식 검증 필수 패턴."
+---
+
+## 사건 원인
+
+**현상**: `predictions/[date] getGamePredictions select failed: invalid input syntax for type date: "%5Bdate%5D"`
+
+**원인 체인**:
+1. GoogleOther (봇) 가 `/predictions/[date]` 리터럴 URL 접근
+   - `[date]` = Next.js 파일시스템 라우터의 동적 세그먼트 표기
+   - 봇이 sitemap/href에서 이 문자열을 literal URL로 크롤링
+2. `params.date = "%5Bdate%5D"` (URL 디코딩: `[date]`)
+3. 유효성 검사 없이 DB 쿼리 실행: `.eq("game_date", "[date]")`
+4. PostgreSQL `date` 타입 파싱 실패 → Sentry error
+
+## 패턴 식별
+
+| 라우트 파일 | 접근 URL | 리터럴 파라미터 | DB 타입 오류 |
+|---|---|---|---|
+| `predictions/[date]/page.tsx` | `/predictions/[date]` | `date = "[date]"` | `invalid input syntax for type date` |
+| `game/[id]/page.tsx` | `/game/[id]` | `id = "[id]"` | `invalid input syntax for type integer` |
+| `player/[slug]/page.tsx` | `/player/[slug]` | `slug = "[slug]"` | 잘못된 slug 쿼리 결과 |
+
+**트리거**: 봇이 Next.js 빌드 파일, 소스 href, 또는 서드파티 사이트에서 `[param]` 형식 URL 발견 → 크롤링.
+
+## 방어 패턴
+
+### 1. 파라미터 형식 검증 + notFound()
+
+```typescript
+import { notFound } from "next/navigation";
+
+export default async function Page({ params }: Props) {
+  const { date } = await params;
+  
+  // 형식 검증 (DB call 전)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) notFound();
+  
+  const data = await fetchByDate(date);
+  // ...
+}
+```
+
+**규칙**: 동적 파라미터를 DB 쿼리에 직접 전달하는 모든 페이지는 **DB call 전** 형식 검증 필수.
+
+### 2. 타입별 검증 패턴
+
+```typescript
+// 날짜 파라미터
+if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) notFound();
+
+// 정수 ID 파라미터
+const id = parseInt(params.id);
+if (isNaN(id) || id <= 0) notFound();
+
+// slug 파라미터 (영문/숫자/하이픈)
+if (!/^[a-z0-9-]+$/.test(params.slug)) notFound();
+```
+
+### 3. generateMetadata 도 검증 권장
+
+```typescript
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { date } = await params;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    // DB call 없는 경우 생략 가능. 단 metadata에 [date] 리터럴 포함 방지
+    return { title: "페이지를 찾을 수 없습니다" };
+  }
+  // ...
+}
+```
+
+`generateMetadata`가 DB를 호출하지 않으면 생략 가능. 단 metadata에 `[date]` 리터럴이 포함되는 것은 피해야 함.
+
+## 체크리스트
+
+신규 동적 라우트 페이지 ship 시:
+
+- [ ] `params` 를 DB 쿼리에 직접 전달하는가?
+- [ ] 전달한다면 형식 검증 guard 추가됐는가?
+- [ ] `notFound()` import (`next/navigation`) 확인
+- [ ] `not-found.tsx` 세그먼트별 커버리지 확인
+
+## Evidence
+
+- 2026-05-22: moneyball `predictions/[date]/page.tsx` — GoogleOther bot Sentry error #7499843619
+- Fix: `d9a4893` (moneyball) — YYYY-MM-DD 검증 + `notFound()` 추가
+- Playbook issue #1166 close
+
+## 관련 패턴
+
+- [nextjs-segment-level-notfound-trust-signal-systematic-coverage](/wiki/frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage): not-found.tsx 체계적 커버리지
