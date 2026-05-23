@@ -1,10 +1,11 @@
 # Playbook Wiki Index
-Updated: 2026-05-23T12:00:07.096Z
+Updated: 2026-05-23T21:04:32.427Z
 
-## 엔트리 (289개)
+## 엔트리 (293개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
+- [LLM Prompting: Boolean Logic Integration for Enhanced Control and Precision](wiki/prompt-engineering/llm-prompt-boolean-logic-control-precision-validation) — confidence: 1, status: draft
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
 - [Multi-turn Conversation Prompt Design - LLM 애플리케이션 성능 및 사용자 경험 최적화](wiki/prompt-engineering/multi-turn-conversation-prompt-design-patterns) — confidence: 1, status: draft
 - [Multi-Turn Prompt Design Patterns — Clarifying Complex User Intent in LLM Interactions](wiki/prompt-engineering/multi-turn-prompt-design-complex-intent-clarification) — confidence: 1, status: draft
@@ -122,6 +123,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - [LLM Agent Goal Management — Enhancing Persistent Objective Achievement for Long-Term Tasks](wiki/harness-engineering/llm-agent-persistent-goal-management-long-term-tasks) — confidence: 1, status: draft
 - [LLM Agent Tool Call Reliability — Enhancing with Forge Guardrails](wiki/harness-engineering/llm-agent-tool-call-reliability-forge-guardrails) — confidence: 1, status: draft
 - [LLM Dependency Risk Mitigation — Assessing and Addressing API Vulnerabilities](wiki/harness-engineering/llm-api-dependency-risk-mitigation-strategy) — confidence: 1, status: draft
+- [LLM API Retry Logic — Robust Design Patterns for Failure Resiliency](wiki/harness-engineering/llm-api-retry-logic-design-patterns-resilience) — confidence: 1, status: draft
 - [LLM Data Pipeline Engineering - Input and Output Design Patterns](wiki/harness-engineering/llm-input-output-data-pipeline-design-patterns) — confidence: 1, status: draft
 - [LLM Ops 파이프라인 디자인 패턴 — 프로덕션 LLM 서비스의 효율적 운영 전략](wiki/harness-engineering/llm-ops-pipeline-design-patterns-production-strategy) — confidence: 1, status: draft
 - [LLM Output System Boundary Sanitization — 파이프라인 경계 형식 정합성 보장](wiki/harness-engineering/llm-output-system-boundary-sanitization-pipeline) — confidence: 2, status: complete
@@ -215,6 +217,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
 - [GPT-5.5 Agent Model — Advanced Evaluation and Workflow Integration](wiki/agents/gpt-5-5-agent-model-evaluation-integration-strategies) — confidence: 1, status: draft
 - [AI Agent Inference Chain — 복합 작업 분해 및 견고한 실행 설계](wiki/agents/inference-chain-design-complex-ai-agents) — confidence: 1, status: draft
+- [LLM Agent 동적 툴 선택 — 복잡한 작업 자동화를 위한 최적화 전략](wiki/agents/llm-agent-dynamic-tool-selection-optimization) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
 - [LLM Agent Tool Use — Design Patterns for Enhanced Functionality](wiki/agents/llm-agent-tool-use-design-patterns) — confidence: 1, status: draft
 - [Autonomous Agent Long-Term Behavior — Anomaly Detection and Response Strategies](wiki/agents/long-term-agent-behavior-anomaly-detection-response) — confidence: 1, status: draft
@@ -239,6 +242,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM 문서 무결성 검증 — DELEGATE-52 기반 훼손 방지 파이프라인 강화](wiki/evaluation/llm-document-integrity-validation-pipeline-enhancement) — confidence: 1, status: draft
 - [LLM Output Validation — Enhancing Hallucination Detection Pipelines](wiki/evaluation/llm-output-hallucination-detection-pipeline-enhancement) — confidence: 1, status: draft
+- [LLM Output Validation: Enhancing Pipeline Robustness with Prompt Constraints](wiki/evaluation/llm-output-validation-prompt-constraints-robustness) — confidence: 1, status: draft
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 - [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 - [LLM 시스템 UX 평가 — 지표 설계 및 측정 전략](wiki/evaluation/llm-ux-evaluation-metrics-design-measurement) — confidence: 1, status: draft
@@ -339,6 +343,8 @@ Updated: 2026-05-23T12:00:07.096Z
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/long-term-agent-behavior-anomaly-detection-response
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/llm-output-validation-prompt-constraints-robustness
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-tool-use-design-patterns
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
@@ -399,6 +405,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/external-tool-integration-for-ai-agents ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
 - agents/external-tool-integration-for-ai-agents ↔ harness-engineering/antigravity-managed-agents-api-integration-review
+- agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/hub-worker-compounding-pattern
@@ -421,6 +428,12 @@ Updated: 2026-05-23T12:00:07.096Z
 - agents/inference-chain-design-complex-ai-agents ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/inference-chain-design-complex-ai-agents ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/inference-chain-design-complex-ai-agents ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
+- agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-tool-use-design-patterns
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - agents/llm-agent-goal-achievement-planning-patterns ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
@@ -431,7 +444,6 @@ Updated: 2026-05-23T12:00:07.096Z
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
-- agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multi-agent-collaboration-complex-problem-solving
 - agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multi-agent-collaboration-design-patterns
@@ -773,6 +785,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ project-ops/playbook-ai-integrated-logging-system
+- evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -793,12 +806,17 @@ Updated: 2026-05-23T12:00:07.096Z
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
-- evaluation/llm-output-validation-quality-metrics-design ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
+- evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-validation-prompt-constraints-robustness
+- evaluation/llm-output-validation-prompt-constraints-robustness ↔ evaluation/llm-output-validation-quality-metrics-design
+- evaluation/llm-output-validation-prompt-constraints-robustness ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- evaluation/llm-output-validation-prompt-constraints-robustness ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
+- evaluation/llm-output-validation-prompt-constraints-robustness ↔ harness-engineering/llm-prompt-validator-symmetry-drift
+- evaluation/llm-output-validation-prompt-constraints-robustness ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
-- evaluation/llm-output-validation-quality-metrics-design ↔ project-ops/ai-project-scope-management-complexity-change
 - evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/zero-few-shot-prompt-design-patterns-llm
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - evaluation/llm-output-validation-quality-metrics-design ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- evaluation/llm-output-validation-quality-metrics-design ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/multi-persona-llm-output-validation-enhancement
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
@@ -872,7 +890,6 @@ Updated: 2026-05-23T12:00:07.096Z
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ project-ops/claude-code-cost-optimization-strategies
 - frontend-ai/claude-code-session-web-mobile-monitoring-implementation ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
-- frontend-ai/generative-ai-ui-ux-design-patterns ↔ harness-engineering/guard-test-pattern
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ frontend-ai/llm-interactive-ui-frontend-implementation
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
@@ -1113,6 +1130,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/prompt-model-version-management-large-scale-ai
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
@@ -1162,6 +1180,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/distributed-ai-harness-design
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/debug-page-silent-drift-trap ↔ harness-engineering/silent-drift-family-pattern
@@ -1216,6 +1235,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/guard-test-pattern ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - harness-engineering/guard-test-pattern ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- harness-engineering/guard-test-pattern ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ agents/llm-agent-tool-use-design-patterns
@@ -1225,6 +1245,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ data-engineering/production-db-ai-agent-guardrails
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
+- harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
@@ -1251,6 +1272,10 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ project-ops/claude-code-cost-optimization-strategies
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-api-key-security-audit-usage-pattern-validation
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
+- harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
+- harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ infrastructure/llm-call-orchestration-reliability-enhancement
+- harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
@@ -1267,6 +1292,7 @@ Updated: 2026-05-23T12:00:07.096Z
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 - harness-engineering/llm-prompt-validator-symmetry-drift ↔ harness-engineering/prompt-model-version-management-large-scale-ai
+- harness-engineering/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
@@ -1479,6 +1505,8 @@ Updated: 2026-05-23T12:00:07.096Z
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
+- prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - reports/closed-loop-health ↔ harness-engineering/hub-worker-compounding-pattern
 - reports/closed-loop-health ↔ harness-engineering/drift-detection-methodology
 - reports/closed-loop-health ↔ harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
