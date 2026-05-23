@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.73] — 2026-05-23
+
+### Changed
+- cycle 1019: curate SUCCESS — wiki lint CLEAN 288 entries. merge origin/main (Geeknews #1167 Daily Ingest 4 entries + moneyball raw). BRANCHED 해소 + push 52 commits. embed-on-push.yml 발화 → embeddings 영구 갱신. CHANGELOG 0.9.73.
+
 ## [0.9.72] — 2026-05-23
 
 ### Changed
