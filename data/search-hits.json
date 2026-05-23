@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 574,
+  "totalInvocations": 576,
   "skipped": 26,
-  "searched": 548,
-  "hit": 146,
+  "searched": 550,
+  "hit": 148,
   "noMatch": 402,
-  "lastUpdated": "2026-05-23T08:57:55.287Z",
+  "lastUpdated": "2026-05-23T09:00:55.714Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -147,7 +147,9 @@
     "harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
     "retros/2026-05-13-cycles-424-425": 1,
-    "retros/2026-05-12-cycles-361-362": 1
+    "retros/2026-05-12-cycles-361-362": 1,
+    "frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage": 1,
+    "harness-engineering/db-query-type-safety-assert-select-ok-pattern": 1
   },
-  "totalQueries": 618
+  "totalQueries": 620
 }
