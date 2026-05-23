@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-23T09:23:53.911Z
+Updated: 2026-05-23T09:49:23.396Z
 
-## 엔트리 (284개)
+## 엔트리 (288개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -22,6 +22,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 - [Claude Code 컨텍스트 지속성: CTX 플러그인 통합 — 에이전트 효율성 및 지식 활용 증대](wiki/context-engineering/claude-code-ctx-plugin-context-persistence) — confidence: 1, status: draft
+- [Local Knowledge Hub Enhancement: Integrating .description.md Sidecar Files for Enriched Context](wiki/context-engineering/enriching-local-data-with-description-md-sidecars) — confidence: 1, status: draft
 - [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/context-engineering/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
 - [Mirage AI Agent Integration 
@@ -115,6 +116,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/harness-engineering/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
+- [Large-Scale AI Model Serving - Harness Caching Strategy Implementation](wiki/harness-engineering/large-scale-ai-serving-harness-caching-strategies) — confidence: 1, status: draft
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
 - [LLM Agent Goal Management — Enhancing Persistent Objective Achievement for Long-Term Tasks](wiki/harness-engineering/llm-agent-persistent-goal-management-long-term-tasks) — confidence: 1, status: draft
@@ -200,6 +202,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
 
 ### Agents
+- [AI Agent Persistent Memory: Bridging Session Gaps with Automated Context Management](wiki/agents/ai-agent-persistent-memory-automated-context-management) — confidence: 1, status: draft
 - [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/agents/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
 - [AI Agent Safety & Constraint Control: Design Patterns for Production Environments](wiki/agents/ai-agent-safety-constraint-control-design-patterns) — confidence: 1, status: draft
 - [AI Agent Guardrails: Superpowers Pattern으로 의도 정렬 구현](wiki/agents/ai-agent-superpowers-guardrails-intent-alignment) — confidence: 1, status: draft
@@ -217,6 +220,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - [Multi-Agent System Collaboration Patterns: Orchestrating Complex Problem Solving](wiki/agents/multi-agent-collaboration-complex-problem-solving) — confidence: 1, status: draft
 - [Multi-Agent System Collaboration — Design Patterns for Complex Task Resolution](wiki/agents/multi-agent-collaboration-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
+- [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Task Coordination: Strategies for Collaborative Goal Achievement](wiki/agents/multi-agent-task-collaboration-coordination-strategies) — confidence: 1, status: draft
 - [Multi-LLM Agent Workload Partitioning: Practical Implementation Patterns](wiki/agents/multi-llm-agent-workload-partitioning-patterns) — confidence: 1, status: draft
 - [다중 도구 AI 에이전트 설계 패턴 — 복합 기능 오케스트레이션](wiki/agents/multi-tool-ai-agent-design-patterns-orchestration) — confidence: 1, status: draft
@@ -311,6 +315,12 @@ Updated: 2026-05-23T09:23:53.911Z
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
 ## 교차 참조 (connections 기반)
+- agents/ai-agent-persistent-memory-automated-context-management ↔ agents/autonomous-agent-long-term-memory-management
+- agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
+- agents/ai-agent-persistent-memory-automated-context-management ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
+- agents/ai-agent-persistent-memory-automated-context-management ↔ harness-engineering/hub-worker-compounding-pattern
+- agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/agentic-multi-layer-state-persistence-decision-framework
+- agents/ai-agent-persistent-memory-automated-context-management ↔ agents/external-tool-integration-for-ai-agents
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ agents/llm-agent-tool-use-design-patterns
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/claude-code-ctx-plugin-context-persistence
@@ -442,6 +452,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - agents/multi-agent-collaboration-complex-problem-solving ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multimodal-ai-agent-effective-tool-integration
+- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
@@ -449,9 +460,15 @@ Updated: 2026-05-23T09:23:53.911Z
 - agents/multi-agent-collaboration-design-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
+- agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-decision-making-patterns ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
+- agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
+- agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/multi-agent-system-efficient-interaction-design-patterns ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- agents/multi-agent-system-efficient-interaction-design-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
@@ -461,7 +478,6 @@ Updated: 2026-05-23T09:23:53.911Z
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
-- agents/multi-llm-agent-workload-partitioning-patterns ↔ project-ops/ai-project-scope-management-complexity-change
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/claude-code-agent-view-worker-management-integration
@@ -603,7 +619,6 @@ Updated: 2026-05-23T09:23:53.911Z
 - context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ agents/autonomous-agent-long-term-memory-management
 - context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ harness-engineering/drift-detection-methodology
 - context-engineering/agentic-oos-memory-drift-count-smoke-baseline ↔ harness-engineering/silent-drift-family-pattern
-- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/llm-scalable-service-architecture-patterns
@@ -627,6 +642,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/zero-few-shot-prompt-design-patterns-llm
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
+- context-engineering/ambient-knowledge-injection ↔ context-engineering/enriching-local-data-with-description-md-sidecars
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
@@ -635,6 +651,12 @@ Updated: 2026-05-23T09:23:53.911Z
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
@@ -1095,6 +1117,7 @@ Updated: 2026-05-23T09:23:53.911Z
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/distributed-ai-harness-design
 - harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/antigravity-managed-agents-api-integration-review
+- harness-engineering/ai-model-serving-harness-enterprise-deployment-management ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/antigravity-managed-agents-api-integration-review ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - harness-engineering/antigravity-managed-agents-api-integration-review ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-gap-trigger-chain-health-check
@@ -1162,7 +1185,6 @@ Updated: 2026-05-23T09:23:53.911Z
 - harness-engineering/drift-detection-methodology ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - harness-engineering/drift-detection-methodology ↔ project-ops/playbook-ai-integrated-logging-system
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
-- harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
@@ -1201,10 +1223,16 @@ Updated: 2026-05-23T09:23:53.911Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ data-engineering/production-db-ai-agent-guardrails
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
+- harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
+- harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/question-own-defaults
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ harness-engineering/guard-test-pattern
