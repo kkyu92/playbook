@@ -4,6 +4,11 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.70] — 2026-05-23
+
+### Changed
+- cycles 1013~1015. cycle 1013: worker-incident-triage SUCCESS — issue #1166 close (moneyball predictions/[date] bot literal URL → DB invalid input syntax, notFound() + date validation guard ship). cycle 1014: explore-idea SUCCESS — entry #282 nextjs-dynamic-route-param-validation-bot-literal-url-guard (봇 리터럴 URL 접근 → %5Bdate%5D DB 오류 방어 패턴). cycle 1015: curate SUCCESS — entry #279 측정 오류 수정 (78% zero → 0% zero, avg 0.84 → 6.25; array format 누락 버그). frontmatter category 따옴표 제거 1건.
+
 ## [0.9.65] — 2026-05-22
 
 ## [0.9.69] — 2026-05-22
