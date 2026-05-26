@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 631,
+  "totalInvocations": 632,
   "skipped": 26,
-  "searched": 605,
-  "hit": 171,
+  "searched": 606,
+  "hit": 172,
   "noMatch": 434,
-  "lastUpdated": "2026-05-26T02:26:43.011Z",
+  "lastUpdated": "2026-05-26T04:12:50.829Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 9,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -72,7 +72,7 @@
     "retros/2026-05-12-cycles-327-330": 2,
     "retros/2026-05-12-cycles-377-378": 1,
     "infrastructure/sentry-serverless-flush": 1,
-    "retros/2026-05-12-cycles-320-322": 3,
+    "retros/2026-05-12-cycles-320-322": 4,
     "retros/2026-05-12-cycles-314-319": 3,
     "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 1,
     "infrastructure/llm-call-orchestration-reliability-enhancement": 1,
@@ -139,7 +139,7 @@
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 3,
     "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 2,
     "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
-    "retros/2026-05-12-cycles-323-326": 1,
+    "retros/2026-05-12-cycles-323-326": 2,
     "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1,
     "project-ops/agile-sprint-planning-execution-ai-projects": 1,
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1,
@@ -162,7 +162,8 @@
     "harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 1,
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
-    "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1
+    "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
+    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 1
   },
-  "totalQueries": 675
+  "totalQueries": 676
 }
