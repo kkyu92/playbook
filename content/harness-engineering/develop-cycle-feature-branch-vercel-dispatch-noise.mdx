@@ -1,0 +1,96 @@
+---
+title: "Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴"
+category: harness-engineering
+date: "2026-05-26"
+tags:
+  - develop-cycle
+  - vercel
+  - github-actions
+  - dispatch
+  - noise
+  - worker-incident-triage
+  - hub-worker
+workers:
+  - all
+confidence: 3
+last_verified: "2026-05-26"
+connections:
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
+  - harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
+status: complete
+description: "develop-cycle feature branch push → Vercel auto-preview/CI 실패 → repository_dispatch → 허브 inbound issue 생성 구조. 중간 단계 실패는 plan 완료 시 자동 superseded — batch triage 가능."
+type: entry
+source: manual
+---
+
+## 패턴
+
+develop-cycle 이 multi-step plan 을 실행할 때 feature branch 에 여러 차례 push 가 발생:
+
+```
+develop-cycle plan N step 1 push → Vercel preview fail → dispatch → 허브 issue
+develop-cycle plan N step 2 push → Vercel preview fail → dispatch → 허브 issue
+...
+develop-cycle plan N step 4 merged → CI pass → dispatch skipped
+                                   → Vercel production pass
+```
+
+각 push 마다 `Vercel Deploy Failure Dispatch` 또는 `CI Failure Dispatch` 워크플로가 발화. 중간 단계 실패는 이후 push 에서 자동 해결되지만, 각 실패당 허브에 별도 issue 가 생성된다.
+
+## 왜 이게 구조적 노이즈인가
+
+| 구분 | 특성 |
+|---|---|
+| 출처 | develop-cycle feature branch (develop-cycle/cycle-NNN-plan-X-stepY) |
+| 타이밍 | plan 중간 단계 — 의도적 실험/반복 중 |
+| 해소 | plan 완료 시 자연 superseded (branch 삭제, main merge 성공) |
+| 허브 impact | N개 feature branch push × M 실패 = N×M inbound issue 누적 |
+| 재발 패턴? | 아님 — 동일 commit/branch 재발 X, 후속 plan step 이 해결 |
+
+## 탐지 기준 (stale 판단)
+
+```
+1. Issue label: inbound + incident
+2. Fingerprint: vercel-deploy-<commitSHA> 또는 ci-develop-cycle-cycle-NNN
+3. Commit SHA grep: develop-cycle/cycle-NNN branch (현재 branch 존재 여부 확인)
+4. Moneyball current cycle >> NNN (이미 진행됨 = superseded 확정)
+```
+
+stale 판단 시 **일괄 close** 가능 (개별 root cause 분석 불필요).
+
+## 운영 전략
+
+### 즉시 (현재)
+
+batch-close with comment:
+```
+develop-cycle feature branch 중간 단계 실패 — plan 완료 확인 (cycle NNN superseded).
+재발 패턴 아님. 단발 branch deploy.
+```
+
+### 장기 고려
+
+`Vercel Deploy Failure Dispatch` 워크플로에 develop-cycle branch 필터 추가:
+
+```yaml
+# .github/workflows/vercel-deploy-failure-dispatch.yml
+if: |
+  !startsWith(github.ref, 'refs/heads/develop-cycle/') &&
+  !startsWith(github.ref, 'refs/heads/develop-cycle-blog/')
+```
+
+→ feature branch Vercel 실패 = dispatch X (허브에 issue 생성 X).
+
+**단점**: develop-cycle branch 의 production-breaking failure 놓칠 수 있음 (드물지만 가능). 현재 phase 에서는 signal/noise 비율 평가 후 결정.
+
+## 증거
+
+- **cycle 1020 (2026-05-26)**: moneyball develop-cycle plan #9 steps 1-4 (cycle 889-896) 실행 중 13개 Vercel failure + 1 CI failure → 허브 issues #1177-#1197. 모두 batch-close (moneyball 이미 cycle 907, plan #11 진행). 실제 재발 pattern 아님.
+- **Fingerprint 패턴**: `vercel-deploy-2fa9f80`, `vercel-deploy-379b239` 등 = plan #9 단계별 commit SHA
+
+## 관련
+
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): dispatch 파이프라인 전체 구조
+- [BRANCHED State JIT Search Degradation](/wiki/harness-engineering/agentic-branched-state-jit-search-accuracy-degradation): feature branch 누적의 다른 side effect
+- [Commit Density Asymmetry](/wiki/harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry): develop-cycle commit density 패턴

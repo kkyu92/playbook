@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-26T00:43:45.010Z
+Updated: 2026-05-26T00:49:25.803Z
 
-## 엔트리 (304개)
+## 엔트리 (305개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -107,6 +107,7 @@ Updated: 2026-05-26T00:43:45.010Z
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/harness-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/harness-engineering/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
+- [Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴](wiki/harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [대규모 AI 시스템 분산형 하네스 디자인 패턴: 안정성 및 확장성 확보](wiki/harness-engineering/distributed-ai-harness-design) — confidence: 1, status: draft
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
@@ -1224,6 +1225,9 @@ Updated: 2026-05-26T00:43:45.010Z
 - harness-engineering/debug-page-silent-drift-trap ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/debug-page-silent-drift-trap ↔ harness-engineering/guard-test-pattern
 - harness-engineering/deepseek-v4-pro-llm-backend-integration ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
+- harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/question-own-defaults
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/llm-scalable-service-architecture-patterns
