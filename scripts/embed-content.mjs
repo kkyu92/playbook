@@ -7,7 +7,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { findFilesByExt } from "./lib/fs-helpers.mjs";
-import { EMBEDDING_MODEL, PASSAGE_PREFIX, QUERY_PREFIX, EMBEDDING_VERSION } from "./lib/embedding-config.mjs";
+import { EMBEDDING_MODEL, PASSAGE_PREFIX, EMBEDDING_VERSION } from "./lib/embedding-config.mjs";
 
 const OUTPUT_FILE = path.join(process.cwd(), "public", "embeddings.json");
 

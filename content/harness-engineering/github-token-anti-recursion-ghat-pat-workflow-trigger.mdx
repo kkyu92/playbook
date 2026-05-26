@@ -1,0 +1,138 @@
+---
+title: GITHUB_TOKEN Anti-Recursion — Workflow Trigger Gap
+category: harness-engineering
+date: "2026-05-26"
+tags:
+  - ci-cd
+  - github-actions
+  - github-token
+  - gh-pat
+  - auto-merge
+  - agentic-systems
+  - workflow-trigger
+  - harness-engineering
+confidence: 4
+connections: [harness-engineering/agentic-ci-deploy-budget-batch-push-policy, infrastructure/github-actions-billing-block-diagnosis-recovery, harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern]
+status: complete
+description: GitHub Actions의 반재귀 방어 메커니즘 — GITHUB_TOKEN으로 push된 코드는 다른 workflow를 트리거하지 않는다. auto-ingest.yml이 GITHUB_TOKEN으로 checkout하면 branch push → ai-review.yml 미트리거 → PR 자동 머지 영구 실패. GH_PAT checkout으로 해소.
+type: entry
+source: harness-engineering
+---
+
+GitHub Actions는 내장 반재귀(anti-recursion) 메커니즘을 갖는다. **GITHUB_TOKEN 자격증명으로 실행된 push는 다른 workflow를 트리거하지 않는다.** 이 정책은 자동화 루프를 방지하기 위한 의도적 설계지만, 에이전트 harness에서 의도치 않은 트리거 갭을 만든다.
+
+## 증상
+
+pull-b (워커 lesson 자동 머지) 파이프라인이 수주에 걸쳐 완전히 작동하지 않는다:
+- `auto-ingest.yml`이 lesson branch를 생성하고 PR을 만든다
+- `ai-review.yml` (Auto Merge to main)은 `push` 이벤트에 trigger된다
+- **그러나 ai-review.yml이 단 한 번도 발화하지 않는다** — PR은 영구 미머지 상태
+
+`gh pr list`로 확인하면 오래된 lesson PR이 누적되어 있다.
+
+## 근본 원인
+
+```yaml
+# auto-ingest.yml 기존 코드 (버그)
+steps:
+  - uses: actions/checkout@v4
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}   # ← 버그: GITHUB_TOKEN
+```
+
+`actions/checkout@v4`에 `token`을 명시하지 않으면 기본값 = `GITHUB_TOKEN`. 이 경우 workflow 내 **모든 git 작업** (commit, branch push, PR creation) 이 GITHUB_TOKEN 자격증명을 사용한다.
+
+GitHub의 반재귀 규칙:
+- GITHUB_TOKEN push → `push` 이벤트 발생하지 않음
+- GITHUB_TOKEN이 만든 PR → `pull_request` 이벤트 발생하지 않음
+- 결과: `ai-review.yml`의 `push: branches-ignore: [main]` 트리거가 영구 불발
+
+```
+auto-ingest.yml (GITHUB_TOKEN)
+  → creates branch + PR
+  → pushes branch with GITHUB_TOKEN
+  → push event suppressed (anti-recursion)
+  → ai-review.yml never fires
+  → PR stays open forever
+```
+
+## 해결책 — GH_PAT fallback
+
+```yaml
+# auto-ingest.yml 수정 후
+steps:
+  - uses: actions/checkout@v4
+    with:
+      token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}  # GH_PAT 우선
+```
+
+GH_PAT (Personal Access Token)으로 push하면 GitHub가 이를 사용자 행위로 처리 → push 이벤트 정상 발화 → `ai-review.yml` 트리거.
+
+`GH_PAT || GITHUB_TOKEN` 패턴으로 GH_PAT 없는 환경도 안전하게 폴백.
+
+## 병행 문제 — INDEX.md 머지 충돌
+
+GH_PAT fix 적용 후 드러난 두 번째 문제: 워커가 하루 4-6개 lesson을 동시 dispatch하면, 각각이 INDEX.md를 수정하는 PR을 만든다. 이 PR들이 직렬화 없이 머지되면 충돌 발생.
+
+```yaml
+# auto-ingest.yml concurrency group (fix)
+concurrency:
+  group: >-
+    ${{
+      (github.event.action == 'worker-lesson' &&
+       github.event.client_payload.subtype != 'self-policy') ||
+      (github.event.inputs.event_type == 'worker-lesson' &&
+       github.event.inputs.subtype != 'self-policy')
+      && 'lesson-queue'
+      || github.event.client_payload.fingerprint
+      || github.event.inputs.fingerprint
+      || github.run_id
+    }}
+  cancel-in-progress: false
+```
+
+`lesson-queue` concurrency group으로 lesson 처리를 직렬화. `cancel-in-progress: false`로 큐 앞 처리 중 뒤를 취소하지 않도록 유지.
+
+### subtype 판별 주의사항
+
+lesson dispatch의 `subtype`은 빈 문자열(`""`) — `"lesson"` 아님. 조건을 `action == 'worker-lesson'`으로 거르는 이유다. self-policy dispatch(`subtype == 'self-policy'`)는 INDEX.md를 수정하지 않으므로 직렬화 불필요 — `fingerprint` 기반 독립 concurrency group 사용.
+
+## 진단 체크리스트
+
+```bash
+# 1. PR 자동 머지가 작동하는지 확인
+gh pr list --state open
+gh run list --workflow=ai-review.yml --limit 10
+
+# 2. checkout token 확인
+cat .github/workflows/auto-ingest.yml | grep -A3 "checkout"
+
+# 3. 최근 push 이벤트 확인 (ai-review.yml trigger 됐는지)
+gh run list --workflow=ai-review.yml --event=push --limit 10
+```
+
+ai-review.yml run이 0건 = GITHUB_TOKEN push 문제. GH_PAT checkout으로 전환 필요.
+
+## 적용 범위
+
+이 패턴은 다음 조건에서 발생한다:
+- A workflow pushes a branch and expects another workflow to react
+- The first workflow uses GITHUB_TOKEN (default or explicit)
+- The second workflow triggers on `push` or `pull_request`
+
+**영향받지 않는 경우**:
+- GH Actions agent-loop 내 workflow yaml 변경 (GITHUB_TOKEN의 `workflows:write` 제한 — 별개 이슈)
+- 로컬 develop-cycle 세션에서 GH_PAT로 push (이미 사용자 행위 → 트리거 정상)
+
+## 수주간 미발견 이유
+
+`auto-ingest.yml` 자체는 성공 상태 (`completed: success`)였다. PR 생성까지는 완료되므로 workflow 로그에 에러 없음. 실패는 `ai-review.yml`의 **발화 자체가 없는** 것인데, 발화 없으면 run 자체가 없으므로 `gh run list`에서도 보이지 않는다. **absence of evidence가 evidence**였다.
+
+진단 명령어:
+```bash
+# ai-review.yml이 얼마나 자주 발화하는지 확인
+gh run list --workflow=ai-review.yml --limit 20
+
+# GITHUB_TOKEN push는 이벤트 없이 조용히 완료됨을 확인
+# (run list에서 ai-review.yml run count = 0 이면 트리거 갭)
+```
