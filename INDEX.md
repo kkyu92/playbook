@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-26T00:41:47.810Z
+Updated: 2026-05-26T00:43:45.010Z
 
-## 엔트리 (303개)
+## 엔트리 (304개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -101,6 +101,7 @@ Updated: 2026-05-26T00:41:47.810Z
 - [Claude Code Harness Architecture: Large Codebase Integration Patterns](wiki/harness-engineering/claude-code-harness-large-codebase-architecture-patterns) — confidence: 1, status: draft
 - [Claude Code 하네스 스킬셋 강화 — 에이전트 플레이북 엔지니어링](wiki/harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook) — confidence: 1, status: draft
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
+- [Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token](wiki/harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern) — confidence: 4, status: complete
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [Concurrent & Fault-Tolerant AI Service Workflows: Design Patterns for Robustness](wiki/harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns) — confidence: 1, status: draft
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
@@ -1197,6 +1198,9 @@ Updated: 2026-05-26T00:41:47.810Z
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token
+- harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/guard-test-pattern
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
