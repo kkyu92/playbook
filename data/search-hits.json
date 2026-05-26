@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 576,
+  "totalInvocations": 588,
   "skipped": 26,
-  "searched": 550,
-  "hit": 148,
-  "noMatch": 402,
-  "lastUpdated": "2026-05-23T09:00:55.714Z",
+  "searched": 562,
+  "hit": 151,
+  "noMatch": 411,
+  "lastUpdated": "2026-05-26T00:34:39.736Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 6,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 29,
+    "reports/closed-loop-health": 30,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
@@ -108,7 +108,7 @@
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
     "retros/2026-05-12-cycles-299-301": 1,
-    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 6,
+    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 7,
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
@@ -127,7 +127,7 @@
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 4,
     "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
-    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 1,
+    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 2,
     "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 2,
     "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 2,
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
@@ -149,7 +149,9 @@
     "retros/2026-05-13-cycles-424-425": 1,
     "retros/2026-05-12-cycles-361-362": 1,
     "frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage": 1,
-    "harness-engineering/db-query-type-safety-assert-select-ok-pattern": 1
+    "harness-engineering/db-query-type-safety-assert-select-ok-pattern": 1,
+    "harness-engineering/agentic-ci-deploy-budget-batch-push-policy": 1,
+    "retros/2026-05-21-cycles-968-970": 1
   },
-  "totalQueries": 620
+  "totalQueries": 632
 }
