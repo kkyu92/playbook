@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.77] — 2026-05-26
+
+### Changed
+- cycle 1023: explore-idea SUCCESS — entry #289 claude-max-subscription-github-actions-self-hosted-runner-pattern (OAuth 24h expire → self-hosted+CLI, blog-autopilot issue-agent fix 2026-05-26 evidence). wiki 304.
+- cycle 1022: curate SUCCESS — wiki lint CLEAN 303 entries. isolated 0 (week-2026-22 → week-2026-21 체인). journal 051/052 cross-link.
+- cycle 1021: skill-evolution SE #346 fast-path — review-code window 이탈 (cycle 996 단발, sliding window artifact). oscillation 183회.
+- cycle 1020: worker-incident-triage SUCCESS — 14 inbound incident issues batch-close (moneyball develop-cycle branch Vercel/CI noise, plan #9 stale). git pull 44 commits fast-forward.
+
+### Fixed
+- blog-autopilot issue-agent.yml: ubuntu-latest + claude-code-action OAuth → self-hosted [home] + claude CLI 직접 (Max 구독 활용, ANTHROPIC_API_KEY 제거). 6건 이슈 처리 확인.
+
 ## [0.9.73] — 2026-05-23
 
 ### Changed
