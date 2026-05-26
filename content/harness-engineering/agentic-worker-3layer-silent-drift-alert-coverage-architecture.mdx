@@ -1,0 +1,151 @@
+---
+title: "Agentic Worker 3-Layer Silent Drift Alert Architecture — Deploy/Runtime/Health 직교 커버리지 패턴"
+category: harness-engineering
+date: "2026-05-26"
+tags:
+  - silent-drift
+  - observability
+  - monitoring
+  - alert
+  - github-actions
+  - health-check
+  - agentic-worker
+  - closed-loop
+workers:
+  - all
+confidence: 4
+last_verified: "2026-05-26"
+connections:
+  - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/agentic-cron-zero-output-silent-success-detection
+  - harness-engineering/drift-detection-methodology
+  - harness-engineering/hub-worker-compounding-pattern
+status: complete
+description: "agentic worker 3종 GH Actions alert 채널 — deploy-drift-alert (commit SHA) + runtime-error-alert (Sentry) + health-alert (composite HTTP) — 각 채널이 다른 failure mode 탐지. 단일 채널은 dead angle, 3-layer 조합으로 orthogonal coverage. moneyball cycles 838→871→909 (plan #11 3 step) 순차 ship evidence."
+type: entry
+source: manual
+---
+
+## 패턴
+
+agentic worker 자동화 루프의 silent failure 는 단일 alert channel 로 완전 탐지 불가.
+3종 채널이 각기 다른 failure mode 를 커버 — 직교 조합으로 실질 coverage 확보.
+
+```
+Layer 1: deploy-drift-alert.yml   → 배포 commit SHA 불일치 탐지
+Layer 2: runtime-error-alert.yml  → Sentry runtime error/warning 탐지
+Layer 3: health-alert.yml         → composite HTTP 헬스 탐지
+```
+
+각 layer 는 나머지 두 layer 가 탐지 불가한 failure mode 를 맡는다 — orthogonal coverage.
+
+## 3-Layer 구조
+
+### Layer 1 — Deploy Drift Alert (배포 정합성)
+
+**탐지 대상**: Vercel auto-deploy 가 commit SHA alias 를 swap 하지 않는 silent skip
+
+```yaml
+# .github/workflows/deploy-drift-alert.yml
+# commit SHA 기반: VERCEL_GIT_COMMIT_SHA hex 검사
+# production alias 와 expected commit SHA 불일치 → alert
+```
+
+| 탐지 가능 | 탐지 불가 |
+|---|---|
+| deploy alias silent skip | runtime 코드 오류 |
+| Vercel CD 파이프라인 결손 | DB/API layer 장애 |
+| 배포 완료 미확인 | 예측 pipeline 출력 0 |
+
+### Layer 2 — Runtime Error Alert (런타임 에러)
+
+**탐지 대상**: 코드 레벨 exception — Sentry event trigger
+
+```yaml
+# .github/workflows/runtime-error-alert.yml
+# Sentry API polling: warning / error level event 탐지
+# CI green / deploy success 이후에도 runtime crash 탐지
+```
+
+| 탐지 가능 | 탐지 불가 |
+|---|---|
+| try {} catch {} 누락 exception | deploy alias 불일치 |
+| 예기치 못한 null/undefined | 느린 degradation (latency) |
+| API 504/503 uncaught | 예측 출력 0 (정상 코드지만 data 부재) |
+
+### Layer 3 — Health Alert (복합 런타임 헬스)
+
+**탐지 대상**: 시스템 종합 상태 — `GET /api/health` composite check
+
+```
+composite checks:
+  - db: Supabase 연결 + 최근 row 존재 여부
+  - pipeline: 예측 최신성 (timestamp delta)
+  - kbo_api: KBO 데이터 소스 응답 (Referer 헤더 + 5s timeout)
+  - deploy_alias: VERCEL_GIT_COMMIT_SHA hex 검사 (Layer 1 와 다른 경로)
+
+응답 결정 로직:
+  overall='ok'       → ::notice::  (GH Actions notice)
+  overall='degraded' → ::warning:: (GH Actions warning)
+  overall='fail'     → ::error:: + exit 1 (워크플로 실패 처리)
+
+HTTP 엣지 케이스:
+  HTTP 404 → warning + exit 0  (deploy 진행 중 — 일시적, 오알람 방지)
+  HTTP 503 → overall=fail 정상 응답 (서버 자체 장애 신호)
+```
+
+| 탐지 가능 | 탐지 불가 |
+|---|---|
+| DB connection 결손 | 코드 레벨 silent catch (별도 Sentry) |
+| 예측 pipeline stale | deploy 직후 transient 404 |
+| KBO 봇차단 (Referer) | Sentry 외부 exception |
+| 복합 degraded state | 순간적 spike (polling 주기 간 소멸) |
+
+## 왜 단일 채널로 불충분한가
+
+| Failure Mode | Layer 1 | Layer 2 | Layer 3 |
+|---|---|---|---|
+| deploy alias silent skip | ✅ | ❌ | △ (간접) |
+| runtime exception | ❌ | ✅ | ❌ |
+| DB 연결 결손 | ❌ | △ (에러 발생 시만) | ✅ |
+| KBO API 봇차단 | ❌ | △ (에러 발생 시만) | ✅ |
+| 예측 pipeline stale | ❌ | ❌ | ✅ |
+| CI green / 배포 성공 / 실제 장애 | ❌ | △ | ✅ |
+
+→ 어떤 단일 채널도 6종 failure mode 전부 탐지 불가. 3-layer 조합으로 dead angle ↓.
+
+## 순차 ship 전략 (moneyball 사례)
+
+각 layer 를 한 번에 ship 하지 않고 독립 cycle 에 순차 박제:
+
+```
+cycle 838 — deploy-drift-alert.yml (Layer 1) ship
+cycle 871 — runtime-error-alert.yml (Layer 2) ship
+cycle 909 — health-alert.yml (Layer 3) ship  ← plan #11 3-step closure
+```
+
+**왜 순차인가**: 각 layer 가 독립 failure mode 탐지 → 독립 검증 가능. 동시 ship 시 regression 추적 어려움. agentic develop-cycle 패턴 = plan N step 분리 → step 별 dogfood 검증.
+
+## 운영 고려사항
+
+**cron 주기**: health-alert.yml = `'27 * * * *'` (매시 27분) — `:00` 회피 (GH Actions cron 동시 대기 peak).
+
+**concurrency lock**: 동시 실행 방지 — `concurrency: health-alert-group` + `cancel-in-progress: true`.
+
+**timeout**: workflow_dispatch 수동 run 포함 timeout 1m (cron 1시간 주기 대비 충분).
+
+**silent drift family 14 사례 coverage**: 본 3-layer 아키텍처가 family 중 사례 9 (vercel auto-deploy alias swap), 사례 8 (KBO 봇차단), 사례 11 (predict_final silent drop) 탐지 채널 제공.
+
+## 증거
+
+- **moneyball plan #11 step 1** (cycle 907): health-alert.yml 초안 — `/api/health` endpoint 기본 2-check (db + pipeline)
+- **moneyball plan #11 step 2** (cycle 908): `/api/health` 3-check 강화 — kbo_api (Referer+5s) + deploy_alias (hex 검사). unit test 635→641 PASS.
+- **moneyball plan #11 step 3** (cycle 909): health-alert.yml cron 박제 — `27 * * * *` + workflow_dispatch + concurrency. `run #26426012073 success 6s` — HTTP 200 + overall=ok + latency_ms=1381 + 4 checks all ok 실측 통과.
+- **3-layer closure**: deploy-drift (cycle 838) + runtime-error (cycle 871) + health (cycle 909) — silent drift family alert coverage 완성.
+
+## 관련
+
+- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern): 코드 레벨 silent drift 14 fork — 본 alert architecture 가 system level 에서 탐지하는 대상의 원천
+- [Cron Zero Output Silent Success](/wiki/harness-engineering/agentic-cron-zero-output-silent-success-detection): pipeline output 게이트 — Layer 3 health check 의 pipeline stale 탐지와 직교
+- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology): 4종 드리프트 분류 — 본 3-layer = Level 2 작동 드리프트 탐지 특화
+- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): agentic worker 자동화 구조 전반

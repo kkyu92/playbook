@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-26T00:49:25.803Z
+Updated: 2026-05-26T00:58:28.524Z
 
-## 엔트리 (305개)
+## 엔트리 (306개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -89,6 +89,7 @@ Updated: 2026-05-26T00:49:25.803Z
 - [Wiki Connection Graph Health — 카테고리별 연결 희소성과 지식 사일로 패턴](wiki/harness-engineering/agentic-wiki-connection-graph-health-metrics) — confidence: 2, status: draft
 - [Wiki Entry 삭제 시 Orphan Reference Cascade — 삭제 ≠ 참조 해제](wiki/harness-engineering/agentic-wiki-entry-deletion-orphan-cascade) — confidence: 3, status: draft
 - [Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive](wiki/harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption) — confidence: 2, status: draft
+- [Agentic Worker 3-Layer Silent Drift Alert Architecture — Deploy/Runtime/Health 직교 커버리지 패턴](wiki/harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture) — confidence: 4, status: complete
 - [Agentic Worker Ambient Context Rule Starvation — 재발 패턴이 shared-rules 에 박제되지 않아 워커 ambient context 전파 실패](wiki/harness-engineering/agentic-worker-ambient-context-rule-starvation) — confidence: 2, status: complete
 - [다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop](wiki/harness-engineering/agentic-worker-dispatch-filter-registration-gap) — confidence: 3, status: complete
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
@@ -1151,6 +1152,10 @@ Updated: 2026-05-26T00:49:25.803Z
 - harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
 - harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+- harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
+- harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture ↔ harness-engineering/drift-detection-methodology
+- harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/agentic-worker-dispatch-filter-registration-gap
 - harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-worker-ambient-context-rule-starvation ↔ harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification
