@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-25T21:05:09.031Z
+Updated: 2026-05-26T00:41:47.810Z
 
 ## 엔트리 (303개)
 
@@ -1550,7 +1550,10 @@ Updated: 2026-05-25T21:05:09.031Z
 - journal/playbook-journal-049-cycle-835-operational-analysis-lite-todos-md-cycle ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token ↔ journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7
+- journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7 ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7 ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
@@ -1572,3 +1575,4 @@ Updated: 2026-05-25T21:05:09.031Z
 - reports/week-2026-20 ↔ reports/week-2026-19
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
+- reports/week-2026-21 ↔ reports/week-2026-22
