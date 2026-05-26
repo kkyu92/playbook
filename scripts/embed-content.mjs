@@ -10,6 +10,10 @@ import { findFilesByExt } from "./lib/fs-helpers.mjs";
 
 const OUTPUT_FILE = path.join(process.cwd(), "public", "embeddings.json");
 const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
+// E5 모델 필수 prefix — 미적용 시 벡터 공간 불일치로 73%+ miss rate 발생 (2026-05-26 dogfood)
+const PASSAGE_PREFIX = "passage: ";
+const QUERY_PREFIX = "query: ";
+const EMBEDDING_VERSION = `${EMBEDDING_MODEL}|${PASSAGE_PREFIX.trim()}|${QUERY_PREFIX.trim()}`;
 
 // Phase 2 (Journal 025의 발견): docs/solutions, docs/retros 도 인덱싱.
 // "에러 메시지 → 과거 솔루션" JIT 검색의 핵심 high-value 자산.
@@ -93,12 +97,13 @@ function chunkByH2(content) {
 }
 
 // h2 제목을 텍스트에 포함 — 섹션 주제가 핵심 검색 시그널
+// "passage: " prefix = E5 모델 명세 요건 (query prefix 와 짝)
 function buildEmbeddingText(entryTitle, h2, text) {
   const parts = [];
   if (entryTitle) parts.push(`# ${entryTitle}`);
   if (h2) parts.push(`## ${h2}`);
   parts.push(text);
-  return parts.join("\n\n");
+  return PASSAGE_PREFIX + parts.join("\n\n");
 }
 
 function deriveSlug(source, parts, basename) {
@@ -180,6 +185,7 @@ async function main() {
 
   const index = {
     model: EMBEDDING_MODEL,
+    embedding_version: EMBEDDING_VERSION,
     dim: allChunks[0]?.vector?.length || 0,
     created_at: new Date().toISOString(),
     chunks: allChunks,

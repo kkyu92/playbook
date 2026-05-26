@@ -27,6 +27,12 @@ import { routeQuery } from "./lib/query-router.mjs";
 
 const INDEX_FILE = path.join(process.cwd(), "public", "embeddings.json");
 const HITS_FILE = path.join(process.cwd(), "data", "search-hits.json");
+// embed-content.mjs 와 동일 상수 — 불일치 시 즉시 에러로 드러냄 (무음 성능 저하 방지)
+const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
+const QUERY_PREFIX = "query: ";
+const PASSAGE_PREFIX = "passage: ";
+// embed-content.mjs 와 동일 산식 — 상수 변경 시 양쪽 동시 수정
+const EXPECTED_EMBEDDING_VERSION = `${EMBEDDING_MODEL}|${PASSAGE_PREFIX.trim()}|${QUERY_PREFIX.trim()}`;
 
 /**
  * 검색 invocation 메트릭을 영구 저장.
@@ -134,6 +140,14 @@ async function main() {
   }
 
   const index = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+  // E5 prefix 버전 검증 — 불일치 = stale index (pnpm embed-content 재실행 필요)
+  if (index.embedding_version !== EXPECTED_EMBEDDING_VERSION) {
+    console.error(`❌ Embedding version mismatch:`);
+    console.error(`   index:    ${index.embedding_version ?? "(none — pre-prefix build)"}`);
+    console.error(`   expected: ${EXPECTED_EMBEDDING_VERSION}`);
+    console.error(`   Fix: pnpm embed-content`);
+    process.exit(1);
+  }
   if (!injectMode) {
     console.log(`   Index: ${index.chunks.length} chunks, ${index.dim}d, model=${index.model}`);
   }
@@ -141,8 +155,8 @@ async function main() {
   const { pipeline } = await import("@xenova/transformers");
   const extractor = await pipeline("feature-extraction", index.model);
 
-  // 쿼리 임베딩
-  const queryOutput = await extractor(query, { pooling: "mean", normalize: true });
+  // 쿼리 임베딩 — "query: " prefix = E5 모델 명세 요건
+  const queryOutput = await extractor(QUERY_PREFIX + query, { pooling: "mean", normalize: true });
   const queryVec = Array.from(queryOutput.data);
 
   // 모든 청크와 코사인 유사도 계산
@@ -154,7 +168,9 @@ async function main() {
   scored.sort((a, b) => b.score - a.score);
   const elapsed = Date.now() - start;
 
-  const SCORE_THRESHOLD = 0.87;
+  // E5 prefix 적용 후 genuine match 점수 상승 → 0.88로 상향 (false positive 차단)
+  // 재보정 필요 시: node scripts/search.mjs "<쿼리>" 3 --force 로 실측 후 조정
+  const SCORE_THRESHOLD = 0.88;
   const top = scored.filter((c) => c.score >= SCORE_THRESHOLD).slice(0, topK);
 
   // 히트 카운트 기록 (unique slugs만)
