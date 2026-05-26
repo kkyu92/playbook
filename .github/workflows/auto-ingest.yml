@@ -49,8 +49,9 @@ permissions:
 # 처리. 두 번째 실행이 `--state open` dedup 검색 시 첫 번째 issue 잡힘 → 중복
 # 생성 차단. cancel-in-progress=false 로 둘 다 처리 보장 (상실 방지).
 concurrency:
-  # lesson subtype: 직렬화 (동시 PR → INDEX.md 머지 충돌 방지). 나머지: fingerprint 기반 병렬
-  group: auto-ingest-${{ (github.event.client_payload.subtype == 'lesson' || github.event.inputs.subtype == 'lesson') && 'lesson-queue' || github.event.client_payload.fingerprint || github.event.inputs.fingerprint || github.run_id }}
+  # lesson 경로 직렬화: worker-lesson action + self-policy 제외 → INDEX.md 머지 충돌 방지
+  # self-policy 는 fingerprint 기반 병렬 유지 (main 직접 push, PR 없음)
+  group: auto-ingest-${{ ((github.event.action == 'worker-lesson' && github.event.client_payload.subtype != 'self-policy') || (github.event.inputs.event_type == 'worker-lesson' && github.event.inputs.subtype != 'self-policy')) && 'lesson-queue' || github.event.client_payload.fingerprint || github.event.inputs.fingerprint || github.run_id }}
   cancel-in-progress: false
 
 jobs:

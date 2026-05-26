@@ -7,13 +7,9 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { findFilesByExt } from "./lib/fs-helpers.mjs";
+import { EMBEDDING_MODEL, PASSAGE_PREFIX, QUERY_PREFIX, EMBEDDING_VERSION } from "./lib/embedding-config.mjs";
 
 const OUTPUT_FILE = path.join(process.cwd(), "public", "embeddings.json");
-const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
-// E5 모델 필수 prefix — 미적용 시 벡터 공간 불일치로 73%+ miss rate 발생 (2026-05-26 dogfood)
-const PASSAGE_PREFIX = "passage: ";
-const QUERY_PREFIX = "query: ";
-const EMBEDDING_VERSION = `${EMBEDDING_MODEL}|${PASSAGE_PREFIX.trim()}|${QUERY_PREFIX.trim()}`;
 
 // Phase 2 (Journal 025의 발견): docs/solutions, docs/retros 도 인덱싱.
 // "에러 메시지 → 과거 솔루션" JIT 검색의 핵심 high-value 자산.

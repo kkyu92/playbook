@@ -24,15 +24,10 @@
 import fs from "fs";
 import path from "path";
 import { routeQuery } from "./lib/query-router.mjs";
+import { QUERY_PREFIX, EMBEDDING_VERSION as EXPECTED_EMBEDDING_VERSION } from "./lib/embedding-config.mjs";
 
 const INDEX_FILE = path.join(process.cwd(), "public", "embeddings.json");
 const HITS_FILE = path.join(process.cwd(), "data", "search-hits.json");
-// embed-content.mjs 와 동일 상수 — 불일치 시 즉시 에러로 드러냄 (무음 성능 저하 방지)
-const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
-const QUERY_PREFIX = "query: ";
-const PASSAGE_PREFIX = "passage: ";
-// embed-content.mjs 와 동일 산식 — 상수 변경 시 양쪽 동시 수정
-const EXPECTED_EMBEDDING_VERSION = `${EMBEDDING_MODEL}|${PASSAGE_PREFIX.trim()}|${QUERY_PREFIX.trim()}`;
 
 /**
  * 검색 invocation 메트릭을 영구 저장.
@@ -168,9 +163,9 @@ async function main() {
   scored.sort((a, b) => b.score - a.score);
   const elapsed = Date.now() - start;
 
-  // E5 prefix 적용 후 genuine match 점수 상승 → 0.88로 상향 (false positive 차단)
-  // 재보정 필요 시: node scripts/search.mjs "<쿼리>" 3 --force 로 실측 후 조정
-  const SCORE_THRESHOLD = 0.88;
+  // E5 prefix 적용 후 벡터 공간 정렬 → genuine match 분리도 개선
+  // 실측: genuine match 0.86-0.90 범위, 0.87 유지 (prefix 효과 = 분리도 개선, 절대값 상승 X)
+  const SCORE_THRESHOLD = 0.87;
   const top = scored.filter((c) => c.score >= SCORE_THRESHOLD).slice(0, topK);
 
   // 히트 카운트 기록 (unique slugs만)
