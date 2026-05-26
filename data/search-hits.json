@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 588,
+  "totalInvocations": 601,
   "skipped": 26,
-  "searched": 562,
-  "hit": 151,
-  "noMatch": 411,
-  "lastUpdated": "2026-05-26T00:34:39.736Z",
+  "searched": 575,
+  "hit": 156,
+  "noMatch": 419,
+  "lastUpdated": "2026-05-26T00:54:53.614Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 6,
+    "harness-engineering/hub-worker-compounding-pattern": 8,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -27,7 +27,7 @@
     "reports/closed-loop-health": 30,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
-    "infrastructure/github-actions-billing-block-diagnosis-recovery": 6,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 7,
     "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
@@ -92,10 +92,10 @@
     "harness-engineering/post-ship-meta-documentation-drift": 4,
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 1,
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
-    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 2,
+    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
     "harness-engineering/wiki-knowledge-roi-3axis-measurement": 10,
-    "retros/2026-05-19-cycles-801-804": 3,
+    "retros/2026-05-19-cycles-801-804": 5,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
     "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 11,
@@ -151,7 +151,13 @@
     "frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage": 1,
     "harness-engineering/db-query-type-safety-assert-select-ok-pattern": 1,
     "harness-engineering/agentic-ci-deploy-budget-batch-push-policy": 1,
-    "retros/2026-05-21-cycles-968-970": 1
+    "retros/2026-05-21-cycles-968-970": 1,
+    "harness-engineering/agentic-coding-claude-harness-playbook-strategy": 1,
+    "harness-engineering/claude-code-agent-view-worker-management-integration": 1,
+    "frontend-ai/claude-code-session-web-mobile-monitoring-implementation": 1,
+    "retros/2026-05-22-cycles-977-979": 2,
+    "harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 1,
+    "evaluation/agentic-precommit-prediction-oos-track-record": 1
   },
-  "totalQueries": 632
+  "totalQueries": 645
 }
