@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 628,
+  "totalInvocations": 631,
   "skipped": 26,
-  "searched": 602,
-  "hit": 170,
-  "noMatch": 432,
-  "lastUpdated": "2026-05-26T01:43:30.386Z",
+  "searched": 605,
+  "hit": 171,
+  "noMatch": 434,
+  "lastUpdated": "2026-05-26T02:26:43.011Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 9,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -27,7 +27,7 @@
     "reports/closed-loop-health": 30,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
-    "infrastructure/github-actions-billing-block-diagnosis-recovery": 9,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 10,
     "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
@@ -164,5 +164,5 @@
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1
   },
-  "totalQueries": 672
+  "totalQueries": 675
 }
