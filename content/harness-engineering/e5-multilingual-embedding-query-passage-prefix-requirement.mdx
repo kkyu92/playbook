@@ -1,0 +1,106 @@
+---
+title: E5 Multilingual Embedding — Query/Passage Prefix Requirement
+category: harness-engineering
+date: "2026-05-28"
+tags:
+  - embedding
+  - vector-search
+  - e5
+  - jit-search
+  - multilingual
+  - semantic-search
+  - harness-engineering
+confidence: 4
+connections: [harness-engineering/wiki-knowledge-roi-3axis-measurement, harness-engineering/agentic-branched-state-jit-search-accuracy-degradation, reports/closed-loop-health]
+status: complete
+description: multilingual-e5-small 모델은 쿼리와 문서 임베딩에 비대칭 접두사("query:" / "passage:")를 요구한다. 접두사 없이 인덱싱하면 벡터 공간 불일치 → hit rate 27% (73% miss). 접두사 적용 후 genuine match 0.86-0.90 범위 분리. 공유 설정 모듈 패턴으로 역할 swap 버그 방지.
+type: entry
+source: harness-engineering
+---
+
+`Xenova/multilingual-e5-small`을 포함한 E5 모델 계열은 **비대칭 임베딩(asymmetric embedding)** 구조를 사용한다. 쿼리와 문서(passage)를 동일한 방식으로 임베딩하면 벡터 공간이 정렬되지 않아 코사인 유사도가 의미를 잃는다.
+
+## 접두사 없을 때 증상
+
+```
+hit rate: 27% (검색 602회 중 170회만 threshold 충족)
+best score: 0.83-0.85 (genuine match 임계값 0.87 미달)
+```
+
+위키에 관련 항목이 분명히 있음에도 "no match" 반환. 에이전트가 JIT 검색을 거쳐도 기존 지식을 활용하지 못하고 중복 작업.
+
+## 원인 — 벡터 공간 불일치
+
+E5 모델은 쿼리와 패세지를 서로 다른 벡터 공간에 매핑하도록 훈련됐다. 접두사가 모델에게 "지금 인코딩하는 텍스트가 쿼리인지 문서인지"를 알려주는 역할을 한다:
+
+```
+query:   "query: 드리프트 감지 프로토콜"    → Q-space
+passage: "passage: ## 드리프트 감지\n..."   → P-space
+```
+
+Q-space와 P-space는 서로 매핑되도록 설계됐다. 두 텍스트에 동일한 접두사(또는 접두사 없음)를 쓰면 같은 공간에 투영되어 코사인 유사도가 random에 수렴.
+
+## 해결 — 접두사 적용
+
+```javascript
+// 인덱싱 시 (passage: 접두사)
+function buildEmbeddingText(title, h2, text) {
+  return `passage: # ${title}\n\n## ${h2}\n\n${text}`;
+}
+
+// 검색 시 (query: 접두사)
+const queryOutput = await extractor(`query: ${query}`, {
+  pooling: "mean",
+  normalize: true,
+});
+```
+
+접두사 적용 후 genuine match 범위: **0.86–0.90**. E5 prefix 효과는 절대 점수 상승이 아니라 **분리도 개선** — genuine match와 noise 사이 간격이 명확해진다.
+
+## 공유 설정 모듈 패턴 (역할 swap 버그 방지)
+
+인덱서(`embed-content.mjs`)와 검색기(`search.mjs`)가 독립적으로 접두사를 관리하면 역할 swap 버그가 발생한다. 공유 모듈로 단일 진실 소스를 유지:
+
+```javascript
+// scripts/lib/embedding-config.mjs
+export const EMBEDDING_MODEL = "Xenova/multilingual-e5-small";
+export const PASSAGE_PREFIX = "passage: ";
+export const QUERY_PREFIX = "query: ";
+export const EMBEDDING_VERSION =
+  `${EMBEDDING_MODEL}|passage=${PASSAGE_PREFIX.trim()}|query=${QUERY_PREFIX.trim()}`;
+```
+
+`EMBEDDING_VERSION` 문자열에 역할과 접두사를 인코딩 → 인덱스 파일에 저장 → 검색 시 버전 불일치 감지:
+
+```javascript
+// search.mjs
+if (index.embedding_version !== EXPECTED_EMBEDDING_VERSION) {
+  console.error(`❌ Embedding version mismatch`);
+  console.error(`   Fix: pnpm embed-content`);
+  process.exit(1);
+}
+```
+
+stale 인덱스(접두사 변경 전 빌드)를 검색에 사용하는 상황을 즉시 차단.
+
+## 임계값 설정
+
+접두사 적용 후 임계값 재측정이 필요하다. **E5 prefix 효과 = 분리도 개선, 절대값 상승 X** — genuine match 범위가 올라가지 않고, noise와의 간격이 넓어지는 것이므로 임계값을 올리지 않아도 된다.
+
+```
+threshold 0.87 유지 근거:
+- genuine match 실측: 0.86-0.90 범위
+- 0.87 = genuine match 대부분 포함 + noise 대부분 차단
+- threshold 0.88~0.90으로 올리면 genuine match도 일부 필터됨
+```
+
+## 적용 확인 명령어
+
+```bash
+# 인덱스 버전 확인
+node -e "const d=require('./public/embeddings.json'); console.log(d.embedding_version)"
+
+# 검색 테스트 (known match)
+node scripts/search.mjs "드리프트 감지 프로토콜 Level 0" 3
+# 기대: score ≥ 0.87, relevant entry 반환
+```
