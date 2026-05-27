@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 632,
+  "totalInvocations": 633,
   "skipped": 26,
-  "searched": 606,
-  "hit": 172,
+  "searched": 607,
+  "hit": 173,
   "noMatch": 434,
-  "lastUpdated": "2026-05-26T04:12:50.829Z",
+  "lastUpdated": "2026-05-27T23:33:58.919Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 9,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -163,7 +163,7 @@
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
-    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 1
+    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2
   },
-  "totalQueries": 676
+  "totalQueries": 677
 }
