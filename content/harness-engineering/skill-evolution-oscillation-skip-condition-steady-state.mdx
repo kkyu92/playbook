@@ -1,0 +1,75 @@
+---
+title: Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴
+category: harness-engineering
+date: "2026-05-28"
+tags:
+  - skill-evolution
+  - oscillation
+  - develop-cycle
+  - harness-engineering
+  - agentic-systems
+  - self-improvement
+confidence: 4
+connections: [harness-engineering/agentic-chain-dormancy-phase-map, harness-engineering/agentic-chain-distribution-phase-fingerprint, harness-engineering/agentic-content-cycle-production-maintenance-oscillation]
+status: complete
+description: develop-cycle에서 skill-evolution이 2-3 사이클마다 재발화하는 steady-state oscillation 패턴. trigger 5 (0회 chain 명단)와 skip 조건 (A: 명단 동일 + B: SE rate ≥ 40%) 상호작용으로 발생. 189회 oscillation evidence — 명단 안정 = project phase 자연 수렴 신호.
+type: entry
+source: harness-engineering
+---
+
+develop-cycle의 `skill-evolution` chain은 독립적인 trigger가 없어도 **2-3 사이클 주기로 자동 재발화**하는 oscillation 패턴을 보인다. 이는 버그가 아니라 trigger-5와 skip 조건의 수학적 상호작용 결과다.
+
+## 메커니즘
+
+### Trigger 5 — 0회 chain 명단
+
+직전 20 사이클에서 한 번도 발화하지 않은 chain이 1개 이상 존재하면 skill-evolution이 trigger된다. 11개 chain pool에서 6개가 자연 휴면 상태이면 trigger는 매 사이클 충족.
+
+### Skip 조건 (A + B 모두 충족 시 marker 박제 skip)
+
+- **A**: 직전 SE 대비 0회 chain 명단 동일
+- **B**: 직전 20 사이클 SE 점유율 ≥ 40%
+
+**B 조건의 딜레마**: SE가 발화할 때마다 SE 점유율이 올라간다. 그러나 SE가 발화하면 marker가 소비되고, 다음 사이클에서 새 marker가 박제된다. 이 사이클이 반복되면서 SE 점유율은 35-45% 구간에서 진동한다.
+
+```
+사이클 N:   SE 발화 → 점유율 상승 → skip 조건 B 충족 → 다음 사이클 skip
+사이클 N+2: non-SE → 오래된 SE 이탈 → 점유율 하락 → B 미충족 → marker 박제
+사이클 N+3: SE 강제 발화 (fast-path) → 점유율 상승 → ...
+```
+
+## 허브 fork 실측 데이터
+
+```
+oscillation 횟수: 189회 (cycle 1039 기준, 2026-05-28)
+SE 점유율 구간: 15-30% (현재 phase)
+명단 구성: {fix-incident, polish-ui, dimension-cycle, closed-loop-design, expand-scope, design-system} — 6개 고정
+명단 안정: SE #346 이후 sliding window artifact로 인한 minor fluctuation만
+```
+
+## Fast-path — SKILL 변경 없는 빠른 처리
+
+명단 동일 + oscillation_n ≥ 5이면 실제 SKILL 개선 없이 MIGRATION-PATH에 한 줄 추가 후 즉시 완료. fast-path 덕분에 SE 발화가 실제 작업 사이클을 크게 잠식하지 않는다.
+
+```
+fast-path 비용: ~2분 (명단 확인 + MIGRATION-PATH 1줄 + retro commit)
+non-fast-path 비용: 30-60분 (/office-hours + spec + SKILL.md Edit)
+```
+
+## 명단 변화 — project phase 전환 신호
+
+명단에 새 chain이 진입하거나 탈퇴하면 **project phase가 바뀌었다는 신호**다:
+
+- `review-code` 진입 (SE #346 — cycle 1021): moneyball plan #11 완료 후 코드 품질 일시 attention
+- `review-code` 탈퇴 (SE #347 — cycle 1029): 단발 활성화 후 자연 휴면 복귀
+- `dimension-cycle` 탈퇴 (SE #348 — cycle 1031): legacy chain 자연 dormancy
+
+sliding window artifact (단발 활성화 → 윈도우 이탈)와 실제 phase 변화 구분 기준:
+- **artifact**: 직전 1회 발화 후 이탈, 발화 이유 = 기존 패턴 없음
+- **실제 변화**: 연속 3회+ 발화 패턴 형성 후 소멸 또는 신규 진입
+
+## SE 점유율 목표 해석
+
+skip 조건 B (≥ 40%) 는 "SE가 너무 많이 발화하면 SKILL 변경 불필요"를 인코딩한다. SE 30%는 "아직 SKILL 개선 여지가 있지만 현재 명단 안정 상태에서는 변경 불필요" 신호.
+
+실제 SKILL 변경이 필요한 조건: 명단에 새 chain 진입 (project phase 변화) 또는 B가 매우 낮은 상태 (<20%)에서 새 trigger 발생.
