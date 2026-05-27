@@ -1,0 +1,78 @@
+---
+title: Cron Natural Fire — 운영 환경 검증 패턴
+category: harness-engineering
+date: "2026-05-28"
+tags:
+  - cron
+  - production-validation
+  - ci-cd
+  - agentic-systems
+  - harness-engineering
+  - github-actions
+confidence: 3
+connections: [harness-engineering/agentic-cron-zero-output-silent-success-detection, infrastructure/github-actions-billing-block-diagnosis-recovery, harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger]
+status: complete
+description: 코드 fix 후 다음 자연 cron fire 시점까지 기다리는 운영 검증 전략. 즉각 수동 재실행 대신 자연 fire를 "첫 운영 신호"로 활용. 검증 대기 기간 동안 모니터링 포인트와 판단 기준 사전 박제.
+type: entry
+source: harness-engineering
+---
+
+코드를 배포한 직후 즉시 검증하는 대신, **다음 자연 cron fire 시점을 기다리는** 운영 검증 패턴이다. 수동 `workflow_dispatch` 재실행은 실제 cron 환경(스케줄 주기, 상태 누적, 이전 실행 잔여물)을 재현하지 못한다.
+
+## 언제 유효한가
+
+- Fix가 cron 시나리오에 특화된 경우 (타이밍 의존, 상태 누적, 이전 실행 데이터 읽기)
+- 하루 1-2회 cron (24시간 이내 검증 가능)
+- 수동 재실행이 false positive 줄 수 있는 경우 (mock 데이터, 리셋된 상태)
+
+## 패턴 적용 예시
+
+**blog-autopilot editor array drift fix (2026-05-26)**:
+- 문제: LLM이 배열(`[0,1,2,3,4]` keys)을 반환하면 `inferStatus` 가 모든 분기를 미스 → throw
+- Fix: `a887598` — 배열 응답 감지 시 `revision_needed` fallback
+- 자연 fire 예정: KST 2026-05-27 02:57 (일 1회 cron)
+- 검증 결과: 2026-05-27 cron 14/15 → 2026-05-28 cron 정상화 확인
+
+```
+코드 배포 → 다음 cron까지 대기 → 자연 fire 결과 확인
+               ↑
+        이 시점에 모니터링 포인트 사전 박제
+```
+
+## 사전 박제할 내용
+
+자연 fire 전에 다음을 문서화:
+1. **예정 시각** — 다음 cron fire KST 시각
+2. **성공 기준** — 어떤 지표가 정상을 의미하는가 (예: `14/15 → 15/15`)
+3. **실패 신호** — 어떤 패턴이 재발을 의미하는가
+4. **확인 명령어** — `gh run list`, `gh run view`, DB 쿼리 등
+
+TODO.md 또는 cycle_state에 박제:
+```markdown
+검증 대기: 5/27 KST 02:57 자연 cron
+성공 기준: publish 성공 15/15 (현재 14/15)
+실패 신호: throw 에러 또는 동일 commit SHA array 반복
+확인: gh run list --workflow=publish.yml --limit 3
+```
+
+## 수동 재실행 시 고려사항
+
+cron 환경 재현이 어렵다고 모든 검증을 자연 fire로 미루면 안 된다. 수동 재실행이 유효한 경우:
+- **단위 테스트 가능한 fix** → 즉시 로컬 검증
+- **모든 입력이 API/DB 기반** → 수동 실행과 cron 실행 동일
+- **빠른 피드백 필요** (incident 복구 중)
+
+자연 fire를 기다리는 경우: fix가 스케줄 종속적이거나, 이전 실행의 상태를 읽는 로직을 고쳐야 할 때.
+
+## 검증 완료 처리
+
+자연 fire 결과 확인 후:
+```bash
+# 성공 시
+gh run view <run_id> --log | grep -E "success|error|failed"
+
+# TODO.md 대기 항목 close
+# cycle_state 업데이트 (verified: true)
+```
+
+검증 결과를 docs/solutions/ 또는 wiki entry에 evidence로 추가해 다음 유사 상황의 참조 자산으로 박제.
