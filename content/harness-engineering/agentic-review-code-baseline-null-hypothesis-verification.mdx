@@ -1,5 +1,5 @@
 ---
-title: "자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴"
+title: 자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴
 category: harness-engineering
 date: "2026-05-19"
 tags:
@@ -14,11 +14,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-19"
-connections:
-  - harness-engineering/silent-drift-family-pattern
-  - harness-engineering/agentic-lite-first-scan-gate-execution-pattern
-  - harness-engineering/agentic-gap-trigger-chain-health-check
-  - harness-engineering/drift-detection-methodology
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/agentic-lite-first-scan-gate-execution-pattern, harness-engineering/agentic-gap-trigger-chain-health-check, harness-engineering/drift-detection-methodology, evaluation/react-doctor-ai-code-validation-pipeline]
 status: complete
 description: "review-code chain에는 두 가지 대립 모드가 있다: drift를 찾기 위한 heavy mode (drift 발견이 성공)와 clean을 확인하기 위한 baseline mode (0 drift가 성공). baseline mode가 'retro-only'를 반환하는 것은 낭비가 아니라 null-hypothesis 검증 완료다."
 type: entry
