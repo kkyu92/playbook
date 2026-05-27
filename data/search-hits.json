@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 633,
+  "totalInvocations": 635,
   "skipped": 26,
-  "searched": 607,
+  "searched": 609,
   "hit": 173,
-  "noMatch": 434,
-  "lastUpdated": "2026-05-27T23:33:58.919Z",
+  "noMatch": 436,
+  "lastUpdated": "2026-05-27T23:35:48.280Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 9,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -165,5 +165,5 @@
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
     "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2
   },
-  "totalQueries": 677
+  "totalQueries": 679
 }
