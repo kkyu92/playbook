@@ -169,6 +169,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM Prompt-Validator 대칭성 드리프트 — 구조화 출력 일관성 보장](wiki/harness-engineering/llm-prompt-validator-symmetry-drift) — confidence: 2, status: complete
 - [LLM Response Quality Improvement - Automated Harness Testing Implementation](wiki/harness-engineering/llm-response-quality-automated-harness-testing) — confidence: 1, status: draft
 - [LLM 기반 서비스 확장 아키텍처 — 고성능, 저비용 시스템 설계 패턴](wiki/harness-engineering/llm-scalable-service-architecture-patterns) — confidence: 1, status: draft
+- [LLM 서비스 — 사용자 피드백 루프 통합 패턴 및 실전 전략](wiki/harness-engineering/llm-service-user-feedback-loop-integration-patterns) — confidence: 1, status: draft
 - [LLM Workflow Orchestration: Complex Business Logic Automation Patterns](wiki/harness-engineering/llm-workflow-orchestration-business-logic-patterns) — confidence: 1, status: draft
 - [Large-scale LLM Workload Management: MLOps Pipeline Design Patterns](wiki/harness-engineering/llm-workload-management-mlops-pipeline-design-patterns) — confidence: 1, status: draft
 - [다중 LLM 추론 — 로드밸런싱 및 페일오버 설계로 고가용성 확보](wiki/harness-engineering/multi-llm-inference-load-balancing-failover-design) — confidence: 1, status: draft
@@ -950,6 +951,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ project-ops/ai-project-scope-management-complexity-change
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ data-engineering/llm-fine-tuning-high-quality-data-construction-management
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ harness-engineering/prompt-model-version-management-large-scale-ai
+- data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ harness-engineering/llm-service-user-feedback-loop-integration-patterns
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ data-engineering/llm-fine-tuning-high-quality-data-construction
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ evaluation/llm-output-validation-quality-metrics-design
@@ -1094,6 +1096,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/claude-code-html-output-ux-enhancement
+- evaluation/llm-ux-evaluation-metrics-design-measurement ↔ harness-engineering/llm-service-user-feedback-loop-integration-patterns
 - evaluation/ml-pipeline-normalization-range-assumption ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/ml-pipeline-normalization-range-assumption ↔ harness-engineering/silent-drift-family-pattern
 - evaluation/ml-pipeline-normalization-range-assumption ↔ harness-engineering/question-own-defaults
@@ -1163,6 +1166,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/guard-test-pattern
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - frontend-ai/llm-interactive-ui-frontend-implementation ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
+- frontend-ai/llm-interactive-ui-frontend-implementation ↔ harness-engineering/llm-service-user-feedback-loop-integration-patterns
 - frontend-ai/nextjs-dynamic-route-param-validation-bot-literal-url-guard ↔ frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/nextjs-dynamic-route-param-validation-bot-literal-url-guard ↔ project-ops/operational-resilience-emergency-management-tooling
 - frontend-ai/nextjs-segment-level-notfound-trust-signal-systematic-coverage ↔ frontend-ai/generative-ai-ui-ux-design-patterns
@@ -1237,6 +1241,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/silent-drift-family-pattern
+- harness-engineering/agentic-content-cycle-production-maintenance-oscillation ↔ harness-engineering/llm-service-user-feedback-loop-integration-patterns
 - harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
 - harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-batch-session-context-budget
 - harness-engineering/agentic-context-compaction-commit-density-survival ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
@@ -1513,6 +1518,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ harness-engineering/claudemd-error-prevention-for-claude-code
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
