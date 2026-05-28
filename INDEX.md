@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-05-28T01:21:28.985Z
+Updated: 2026-05-28T01:28:56.891Z
 
 ## 엔트리 (319개)
 
@@ -160,7 +160,7 @@ Updated: 2026-05-28T01:21:28.985Z
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/harness-engineering/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
-- [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement) — confidence: 2, status: complete
+- [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement) — confidence: 3, status: complete
 - [Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴](wiki/harness-engineering/worker-lesson-velocity-signal) — confidence: 2, status: complete
 - [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/harness-engineering/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
 - [Zerostack 통합 — Rust 기반 코딩 에이전트를 활용한 AI 하네스 기능 확장](wiki/harness-engineering/zerostack-rust-agent-harness-extension) — confidence: 1, status: draft

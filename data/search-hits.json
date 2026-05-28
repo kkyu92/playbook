@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 638,
+  "totalInvocations": 651,
   "skipped": 26,
-  "searched": 612,
-  "hit": 173,
-  "noMatch": 439,
-  "lastUpdated": "2026-05-27T23:39:38.784Z",
+  "searched": 625,
+  "hit": 180,
+  "noMatch": 445,
+  "lastUpdated": "2026-05-28T01:28:18.114Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 9,
+    "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -32,7 +32,7 @@
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
-    "reports/mid-review-2026-04-28": 5,
+    "reports/mid-review-2026-04-28": 6,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
     "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 2,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 11,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 13,
     "retros/2026-05-19-cycles-801-804": 5,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -112,7 +112,7 @@
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
-    "harness-engineering/worker-lesson-velocity-signal": 6,
+    "harness-engineering/worker-lesson-velocity-signal": 7,
     "agents/external-tool-integration-for-ai-agents": 1,
     "retros/2026-05-13-cycles-392-394": 1,
     "harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation": 3,
@@ -159,11 +159,51 @@
     "harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 1,
     "evaluation/agentic-precommit-prediction-oos-track-record": 1,
     "harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 1,
-    "harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 1,
+    "harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 3,
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
-    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2
+    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
+    "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 4
   },
-  "totalQueries": 682
+  "noMatchQueries": [
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-05-28T01:24:07.057Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "양방향 무한성장 비전",
+      "timestamp": "2026-05-28T01:24:35.867Z",
+      "topScore": 0.8557
+    },
+    {
+      "query": "Pull 측정 인프라",
+      "timestamp": "2026-05-28T01:24:38.030Z",
+      "topScore": 0.8692
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-05-28T01:27:55.935Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "허브 워커 양방향 복리",
+      "timestamp": "2026-05-28T01:28:17.388Z",
+      "topScore": 0.8684
+    },
+    {
+      "query": "무덤 진단",
+      "timestamp": "2026-05-28T01:28:18.113Z",
+      "topScore": 0.8665
+    }
+  ],
+  "noMatchQueryCounts": {
+    "wiki grave 진단법": 2,
+    "양방향 무한성장 비전": 1,
+    "Pull 측정 인프라": 1,
+    "허브 워커 양방향 복리": 1,
+    "무덤 진단": 1
+  },
+  "totalQueries": 695
 }

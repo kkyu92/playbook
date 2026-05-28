@@ -10,14 +10,19 @@ tags:
   - search-hits
   - jit-search
   - compounding
-confidence: 2
+  - grave
+  - 무덤-진단
+  - hit-rate
+  - noMatch
+confidence: 3
 connections:
   - harness-engineering/hub-worker-compounding-pattern
   - harness-engineering/drift-detection-methodology
   - harness-engineering/agentic-chain-saturation-detection
   - harness-engineering/silent-drift-family-pattern
+  - harness-engineering/hub-pull-evidence-tracking-from-hub-convention
 status: complete
-description: "wiki entry 수 ≠ ROI. lint CLEAN + 생산 과잉 상태에서 실제 소비가 없으면 무덤이다. search-hits.json 기반 3축 측정으로 생산/소비 균형을 진단하는 패턴."
+description: "wiki entry 수 ≠ ROI. lint CLEAN + 생산 과잉 상태에서 실제 소비가 없으면 무덤이다 (wiki grave 진단법, wiki 무덤 진단). search-hits.json 기반 3축 측정 (검색 사용률 + hit rate + 결정 변경률) 으로 생산/소비 균형을 진단하는 패턴. noMatch 72% = 무덤 신호."
 type: entry
 source: manual
 ---

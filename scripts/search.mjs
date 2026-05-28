@@ -38,7 +38,10 @@ const HITS_FILE = path.join(process.cwd(), "data", "search-hits.json");
  *
  * outcome: "skipped" | "no_match" | "hit"
  */
-function recordInvocation(outcome, slugs = []) {
+// noMatch query 분석용 ring buffer 크기 (최근 N개 보존)
+const NOMATCH_RING_SIZE = 200;
+
+function recordInvocation(outcome, slugs = [], query = null, topScore = null) {
   // legacyQueries 는 schema v1 (totalQueries + hits dict 만 있던) 시절 누적치.
   // hit/noMatch/skip 분리 측정이 불가능했으므로 rate 분모에서 제외한다.
   const defaults = {
@@ -50,6 +53,9 @@ function recordInvocation(outcome, slugs = []) {
     noMatch: 0,
     lastUpdated: null,
     hits: {},
+    // noMatch query 텍스트 추적 (wiki grave 진단용 — cycle 1044 mid-review 박제)
+    noMatchQueries: [], // ring buffer: {query, timestamp, topScore} 최근 N개
+    noMatchQueryCounts: {}, // dedup count: {query: count} — top-K 분석용
   };
   let data = { ...defaults };
   try {
@@ -76,6 +82,20 @@ function recordInvocation(outcome, slugs = []) {
       }
     } else if (outcome === "no_match") {
       data.noMatch++;
+      // noMatch query text 추적 (wiki grave 진단 — 빠진 entry topic 식별용)
+      if (query) {
+        data.noMatchQueries.push({
+          query,
+          timestamp: new Date().toISOString(),
+          topScore: typeof topScore === "number" ? Number(topScore.toFixed(4)) : null,
+        });
+        // ring buffer cap
+        if (data.noMatchQueries.length > NOMATCH_RING_SIZE) {
+          data.noMatchQueries = data.noMatchQueries.slice(-NOMATCH_RING_SIZE);
+        }
+        // dedup count
+        data.noMatchQueryCounts[query] = (data.noMatchQueryCounts[query] || 0) + 1;
+      }
     }
   }
   data.lastUpdated = new Date().toISOString();
@@ -170,7 +190,14 @@ async function main() {
 
   // 히트 카운트 기록 (unique slugs만)
   const hitSlugs = [...new Set(top.map((r) => r.slug))];
-  recordInvocation(hitSlugs.length > 0 ? "hit" : "no_match", hitSlugs);
+  // noMatch 시 query + topScore 추가 박제 (wiki grave 진단용)
+  const topScore = scored[0]?.score ?? null;
+  recordInvocation(
+    hitSlugs.length > 0 ? "hit" : "no_match",
+    hitSlugs,
+    query,
+    topScore
+  );
 
   if (injectMode) {
     if (top.length === 0) {
