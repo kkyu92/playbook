@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-27T21:05:01.887Z
+Updated: 2026-05-28T00:16:36.101Z
 
-## 엔트리 (315개)
+## 엔트리 (318개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -107,6 +107,7 @@ Updated: 2026-05-27T21:05:01.887Z
 - [Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token](wiki/harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern) — confidence: 4, status: complete
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [Concurrent & Fault-Tolerant AI Service Workflows: Design Patterns for Robustness](wiki/harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns) — confidence: 1, status: draft
+- [Cron Natural Fire — 운영 환경 검증 패턴](wiki/harness-engineering/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/harness-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/harness-engineering/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
@@ -115,6 +116,7 @@ Updated: 2026-05-27T21:05:01.887Z
 - [대규모 AI 시스템 분산형 하네스 디자인 패턴: 안정성 및 확장성 확보](wiki/harness-engineering/distributed-ai-harness-design) — confidence: 1, status: draft
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [Dynamic Prompt Routing in Multi-LLM Environments — Cost and Performance Optimization](wiki/harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance) — confidence: 1, status: draft
+- [E5 Multilingual Embedding — Query/Passage Prefix Requirement](wiki/harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement) — confidence: 4, status: complete
 - [엔터프라이즈 에이전트 관리 패턴: 확장 가능하고 거버넌스 가능한 LLM 에이전트 오케스트레이션](wiki/harness-engineering/enterprise-agent-management-patterns-llm-orchestration) — confidence: 1, status: draft
 - [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/harness-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
 - [Fail-Loud 패턴 부분 적용 함정 — try/catch escape hatch 미제거로 보호막 무력화](wiki/harness-engineering/fail-loud-partial-adoption-escape-hatch-trap) — confidence: 2, status: complete
@@ -152,6 +154,7 @@ Updated: 2026-05-27T21:05:01.887Z
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
+- [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/harness-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/harness-engineering/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
@@ -1267,6 +1270,9 @@ Updated: 2026-05-27T21:05:01.887Z
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
+- harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
+- harness-engineering/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
+- harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/debug-page-silent-drift-trap ↔ harness-engineering/silent-drift-family-pattern
@@ -1298,6 +1304,9 @@ Updated: 2026-05-27T21:05:01.887Z
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
+- harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
+- harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ reports/closed-loop-health
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
@@ -1445,6 +1454,9 @@ Updated: 2026-05-27T21:05:01.887Z
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/silent-drift-family-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/silent-drift-family-pattern ↔ infrastructure/claude-api-key-security-audit-usage-pattern-validation
+- harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-dormancy-phase-map
+- harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/recurring-file-bug-accumulator-pattern
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/question-own-defaults
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/silent-drift-family-pattern
