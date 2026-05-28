@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-28T00:16:36.101Z
+Updated: 2026-05-28T01:21:28.985Z
 
-## 엔트리 (318개)
+## 엔트리 (319개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -127,6 +127,7 @@ Updated: 2026-05-28T00:16:36.101Z
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/harness-engineering/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
+- [Hub-Pull Evidence Tracking — from-hub Commit Convention](wiki/harness-engineering/hub-pull-evidence-tracking-from-hub-convention) — confidence: 3, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
 - [대규모 AI 서비스 배포: 확장성과 안정성을 위한 Harness 시스템 설계](wiki/harness-engineering/large-scale-ai-deployment-harness-system-design) — confidence: 1, status: draft
 - [Large-Scale AI Model Serving - Harness Caching Strategy Implementation](wiki/harness-engineering/large-scale-ai-serving-harness-caching-strategies) — confidence: 1, status: draft
@@ -1356,6 +1357,7 @@ Updated: 2026-05-28T00:16:36.101Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/operational-resilience-emergency-management-tooling
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
@@ -1662,3 +1664,5 @@ Updated: 2026-05-28T00:16:36.101Z
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
 - reports/week-2026-21 ↔ reports/week-2026-22
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/bidirectional-hub-worker-compound-growth-vision
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/closed-loop-design-philosophy

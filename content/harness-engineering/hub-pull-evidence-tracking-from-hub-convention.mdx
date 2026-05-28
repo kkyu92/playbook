@@ -1,0 +1,93 @@
+---
+title: "Hub-Pull Evidence Tracking — from-hub Commit Convention"
+category: harness-engineering
+date: "2026-05-28"
+tags:
+  - bidirectional-growth
+  - pull-tracking
+  - commit-convention
+  - hub-worker
+  - closed-loop-measurement
+confidence: 3
+connections: [harness-engineering/bidirectional-hub-worker-compound-growth-vision, harness-engineering/wiki-knowledge-roi-3axis-measurement, harness-engineering/closed-loop-design-philosophy]
+status: complete
+description: "허브→워커 Pull 채널의 처리/박제 단계 (Pull 3+4) 측정 인프라. 워커 commit body 안 'from-hub:' 컨벤션 라인으로 행동 변경 evidence 추적. 양방향 무한성장 비전의 measurement blind 절반 해소."
+type: entry
+source: harness-engineering
+---
+
+허브→워커 Push 채널 (워커→허브) 은 `submit-lesson.yml` + auto-ingest 로 transport+박제 측정 가능하다. 반대 방향 Pull 채널 (허브→워커) 은 transport (notify-workers / cross-update-shadow / worker-tag) 만 측정되고, 워커가 실제로 hub 정보를 받아 행동 변경했는지 evidence 가 부재했다 (cycle 1044 mid-review 식별).
+
+본 컨벤션 = 워커 commit body 안 `from-hub:` 라인으로 행동 변경 origin 박제.
+
+## 컨벤션
+
+워커 commit message body 안:
+
+```
+fix: <subject>
+
+subtype: fix-incident
+cycle: 1234
+
+from-hub: <source>
+
+<rest of body>
+```
+
+`from-hub:` 라인 = 본 commit 의 결정/행동이 허브 정보 수신 결과임을 명시.
+
+### source 형식
+
+| source 형식 | 의미 |
+|---|---|
+| `from-hub: issue #N` | hub-dispatch label OPEN issue 보고 결정 |
+| `from-hub: wiki/<slug>` | hub wiki entry 검색/read 결과 결정 |
+| `from-hub: memory/<slug>` | hub memory feedback/project entry 보고 결정 |
+| `from-hub: <SHA>` | 특정 hub commit (예: notify-workers 이벤트) 보고 결정 |
+| `from-hub: cross-update-shadow` | 자동 shadow sync workflow 수신 |
+
+멀티 source 시 다중 `from-hub:` 라인 가능.
+
+## 측정
+
+각 워커 repo 의 git log 에서:
+
+```bash
+git log --all --grep "^from-hub:" --since="2026-05-21" --pretty=format:"%H %s" | wc -l
+# source 별 분류:
+git log --all --grep "^from-hub: wiki/" | wc -l
+git log --all --grep "^from-hub: issue" | wc -l
+git log --all --grep "^from-hub: memory/" | wc -l
+```
+
+허브 측 통합 측정 = `scripts/measure-pull-evidence.mjs` (본 entry 와 함께 ship).
+
+## 양방향 무한성장 비전 정합
+
+- Push 4단계 (워커 발화 → submit-lesson transport → 허브 처리 → 위키/메모리 박제) = 측정 ✅
+- Pull 4단계 (허브 발화 → notify-workers transport → 워커 처리 → 행동 변경 박제) = transport (1+2) 만 측정. 처리 (3) + 박제 (4) 측정 부재
+- 본 컨벤션 = Pull 3+4 박제 evidence 채움 → 비전 closed-loop 측정 완성
+
+## 발화 trigger (워커 자율)
+
+워커 develop-cycle SKILL 안:
+- 진단 단계 hub-dispatch issue 처리 시 → `from-hub: issue #N` 박제 의무
+- chain 시퀀스 안 `pnpm search "<topic>" 3 --inject` (CLAUDE.md JIT 검색 룰) 매칭 후 결정 변경 시 → `from-hub: wiki/<slug>` 박제 의무
+- memory feedback 따른 결정 시 → `from-hub: memory/<slug>` 박제 의무
+- 자동 dispatch (cross-update-shadow workflow 수신) → `from-hub: cross-update-shadow` 자동 박제
+
+본 의무 = 워커 SKILL 의 commit step 안 강제 메커니즘.
+
+## hit rate baseline + 측정 사이클
+
+- 2026-05-28 cycle 1044 mid-review 기준 baseline = 0 (컨벤션 미적용)
+- 첫 적용 cycle = 본 commit 이후 워커 commit 부터
+- 7일 / 30일 측정 → 자연 발화 빈도 측정
+- 목표: 워커 cycle 당 ≥ 0.3 from-hub commit (= 사이클의 30% 이상 hub 정보 활용)
+
+## 관련 항목
+
+- [[bidirectional-hub-worker-compound-growth-vision]] — 양방향 비전 본체
+- [[wiki-knowledge-roi-3axis-measurement]] — 위키 hit rate / 결정 변경률 측정 정합
+- [[closed-loop-design-philosophy]] — 4단계 closed-loop 인프라 정합
