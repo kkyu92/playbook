@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-05-28T01:28:56.891Z
+Updated: 2026-05-28T04:47:42.382Z
 
-## 엔트리 (319개)
+## 엔트리 (320개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -108,6 +108,7 @@ Updated: 2026-05-28T01:28:56.891Z
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [Concurrent & Fault-Tolerant AI Service Workflows: Design Patterns for Robustness](wiki/harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns) — confidence: 1, status: draft
 - [Cron Natural Fire — 운영 환경 검증 패턴](wiki/harness-engineering/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
+- [Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop](wiki/harness-engineering/cross-fork-feedback-sync) — confidence: 2, status: draft
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/harness-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/harness-engineering/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
@@ -1274,6 +1275,12 @@ Updated: 2026-05-28T01:28:56.891Z
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger
+- harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
+- harness-engineering/cross-fork-feedback-sync ↔ context-engineering/ambient-knowledge-injection
+- harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/agentic-wiki-confidence-lifecycle
+- harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/question-own-defaults
+- harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/db-query-type-safety-assert-select-ok-pattern ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/debug-page-silent-drift-trap ↔ harness-engineering/silent-drift-family-pattern

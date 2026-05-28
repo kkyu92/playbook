@@ -1,0 +1,207 @@
+---
+title: Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop
+description: launchd cron poll + Gemini Flash 분류기로 3 fork (hub/moneyball/blog-autopilot) memory feedback 의 universal 여부 자동 판정 + atomic transaction 으로 SSOT pool 에 symlink 전파. 주1회 ALL sampling audit + cascade detector + few-shot prompt accumulation 으로 정확도 점진 향상하는 closed loop.
+category: harness-engineering
+date: "2026-05-28"
+tags:
+  - cross-fork-sync
+  - feedback-memory
+  - llm-classification
+  - atomic-transaction
+  - cascade-detection
+  - closed-loop-learning
+  - blind-spot-prevention
+  - hub-worker
+  - shared-rules
+  - launchd-cron
+confidence: 2
+status: draft
+workers: [moneyball, blog-autopilot]
+connections:
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/agentic-commit-body-subtype-dispatch-transport
+  - context-engineering/ambient-knowledge-injection
+  - harness-engineering/agentic-wiki-confidence-lifecycle
+  - harness-engineering/question-own-defaults
+  - harness-engineering/drift-detection-methodology
+---
+
+# Cross-fork Feedback Sync
+
+LLM 분류기로 새 feedback memory 의 universal 여부를 판정 + 통과 시 atomic transaction 으로 3 fork 에 symlink 전파 + 주1회 자가검증 + audit false positive → prompt few-shot 누적 = closed loop 반복학습.
+
+## 문제
+
+`~/.claude/projects/<fork>/memory/feedback_*.md` 의 룰들이 **fork 간 격리**된 상태로 누적. hub 에 46+, 공유는 6 (13%). 일부 universal 룰 (`fake_batch_self_block`, `automation_default_zone`, `question_own_defaults`) 이 워커 fork 에 없어 같은 mistake 재발 incident 다수.
+
+**예**: hub-only `fake_batch_self_block` → 워커 moneyball cycle 76-122 에서 47 cycle 한 세션 batch 박제 (룰 위반). 워커는 룰 자체를 못 봤음.
+
+manual triage (사용자가 박제 시 directly common/ 으로 mv) 시도 = adoption rate 0%. 마찰 高 (판단 + git mv + symlink ×3). 자동화 필요.
+
+## 핵심 결정 (autoplan 두 번 USER CHALLENGE 후 확정)
+
+### 결정 1 — Manual tag 가 아닌 LLM 자동 분류
+
+두 AI 리뷰어 (Claude subagent + Codex) 모두 `scope: universal|fork` frontmatter tag 추천 (단순, 안전). 사용자 override = "자동화 포기 안 함. 주1회 자가검증 + 반복학습 으로 정확도 점진 향상." → **Option F final**.
+
+리뷰어 우려를 safety layer 로 흡수:
+- ALL sampling audit (≥0.85 promotion 도 spot-check)
+- Cascade detector (false positive 발견 시 dependent rules 자동 grep)
+- Few-shot prompt accumulation (audit 결과 → prompt 자동 보강)
+- structured output mode + delimiters + sanitization (prompt injection 차단)
+
+### 결정 2 — post-commit hook 이 아닌 launchd cron poll
+
+원안 = fork repo 의 `.git/hooks/post-commit`. 검증 결과 = **작동 불가**. memory 파일은 `~/.claude/projects/.../memory/` 에 위치 (git repo **밖**). post-commit 은 git 변경 시 발화 → 절대 트리거 안 됨.
+
+대안 비교:
+
+| 옵션 | latency | 강건성 | 부담 |
+|---|---|---|---|
+| Chokidar daemon | 0초 | daemon 죽음 위험 | launchd plist 관리 |
+| **launchd cron 5min poll (채택)** | ≤5분 | launchd 자동 재시작 | plist 5 줄 |
+| Manual `/sync-memory` | user 트리거 | n/a | "자동화 포기" 목표 위반 |
+
+5분 latency 영향 = 미미. feedback 룰 적용 = 실시간 X.
+
+### 결정 3 — SSOT 위치는 repo 밖
+
+원안 = `hub_repo/shared-rules/common/`. 절대 경로 symlink. hub repo 이동 시 모든 fork 깨짐.
+
+채택 = `~/.claude/projects/universal-memory-pool/`. Repo-independent. hub repo 의 `shared-rules/common/` 은 informational mirror 로 잔존 (git history 보존용).
+
+## 아키텍처
+
+```
+[Claude Code 세션이 feedback_X.md 박제]
+              │
+              ▼ (file outside git, no commit needed)
+[launchd cron @ 5min: feedback-sync-daemon.mjs]
+              │
+              ▼
+[3 fork memory dir scan, filter not-yet-classified + not-symlink]
+              │
+              ▼ (per candidate)
+[atomic-promote: acquire pool file-lock]
+              │
+              ▼
+[Gemini Flash 분류: structured output + delimiters + sanitization]
+              │
+       universal && confidence ≥ 0.85 ?
+       /                                \
+      yes                                no
+       │                                  │
+       ▼                                  ▼
+[stage to pool/X.md (hash suffix if collision)]   [classification.jsonl append]
+       │                                          (decision = fork-local)
+       ▼
+[symlink × N forks + MEMORY.md touch + meta sidecar + log]
+       │
+       ▼
+[release lock]
+
+[weekly cron: audit-classification]
+       │
+       ▼
+[sample 3 buckets (high-conf-promoted / low-conf-kept / high-conf-kept) × N=5]
+       │
+       ▼
+[reclassify each → compare → flag FP/FN]
+       │
+       ▼ (if FP)
+[cascade-detector: grep dependent rules → cascade-pending-X.md]
+       │
+       ▼
+[Phase 5: false positive 사례 → classifier-prompt-examples.json PR auto-open]
+```
+
+## Components
+
+| 파일 | 역할 |
+|---|---|
+| `~/.local/share/feedback-sync/bin/feedback-sync` | CLI facade (10 subcommands) |
+| `scripts/auto-classify-feedback.mjs` | Gemini Flash 분류 (structured output, sanitized) |
+| `scripts/atomic-promote.mjs` | transaction primitive (lock + stage + apply + rollback) |
+| `scripts/feedback-sync-daemon.mjs` | cron scanner + heartbeat writer |
+| `scripts/audit-classification.mjs` | weekly sampling audit |
+| `scripts/cascade-detector.mjs` | dependent rules grep |
+| `scripts/weekly-summary.mjs` | markdown rollup + gh issue 선택 |
+| `scripts/notify.mjs` | osascript notification (30min throttle) |
+
+## Safety mechanisms (autoplan eng review 후 박제)
+
+| 위험 | 방어 |
+|---|---|
+| **Hook 위치 오류** | launchd cron 이 filesystem 직접 scan (git repo 밖) |
+| **Race / 동시 commit** | proper-lockfile + classification-log self-recursion guard |
+| **Filename collision** | content-hash suffix `<basename>-<hash8>.md` |
+| **Gemini invalid JSON / 429** | structured output mode (`response_schema`) + retry queue |
+| **Prompt injection** | `<<<UNTRUSTED>>>...<<<END>>>` 본문 wrap + instruction-strip regex (`/ignore.*instructions?/i`) |
+| **SSOT path coupling** | pool 위치 = `~/.claude/projects/universal-memory-pool/` (repo-independent) |
+| **Self-recursion (hook commits → re-trigger)** | classification.jsonl `<name>:<hash>` lookup skip |
+| **MEMORY.md orphan after auto-move** | symlink 가 같은 파일명 유지 → 인덱스 무관 |
+| **Cascade pollution** | false positive 시 grep 으로 dependent rules 자동 발견 |
+| **Phase 5 prompt drift** | examples FIFO N=20 + family partition + PR review gate (auto-commit X) |
+| **Silent cron failure** | launchd `StandardErrorPath/Out` + heartbeat 파일 + `status` STALE flag + osascript notification |
+| **Test concurrent state leak** | `--test-concurrency=1` (test 격리 안 됨 — 향후 config injection refactor) |
+
+## Closed loop 반복학습 (Phase 5)
+
+LLM 분류기는 stateless. 자동으로 정확도 안 올라감. 명시적 메커니즘 필요:
+
+1. 주1회 audit 이 ≥0.85 promotion sample 도 spot-check (현 plan v1 의 audit 결함 fix — confidence <0.8 만 보던 패턴)
+2. Disagreement 발견 시 (audit 의 reclassify ≠ 원래 decision) → false positive 처리
+3. False positive 의 (rule 본문 + 정답 label) 을 `classifier-prompt-examples.json` 에 append 후보로 stage
+4. **PR auto-open** (직접 commit 아님) — 사용자 review 후 1-click merge (Phase 5 ownership gate)
+5. 다음 분류 시 examples 가 few-shot 으로 prepend → 학습된 경계
+6. Examples FIFO N=20 + family partition (security/race/automation/observability) — rare counterexample 보존
+
+3 개월 수렴 목표: FPR 5% → 2%.
+
+## 측정 / KPI
+
+```bash
+feedback-sync stats
+```
+
+| 지표 | 측정 | 목표 |
+|---|---|---|
+| Pool size | `pool/` 내 파일 수 | 3 개월 30+ |
+| Promotion rate | classifications 중 promote 비율 | 15-25% (universal 비율 자연 분포) |
+| FPR | audit 의 false positive / sample 비율 | ≤5% (1 개월), ≤2% (3 개월) |
+| Cascade events | false positive → dependent rules 발견 횟수 | 박제만 — 자동 처리 X (수동 review) |
+| Cross-fork incident | universal-필요 룰 워커 누락 incident | 0건 (3 개월 관측) |
+
+## 운영 루프
+
+- **매일**: 자동 (cron). 사용자 부담 0.
+- **매주**: `feedback-sync stats` → FPR 추세 확인. `cascade list` → pending review.
+- **매월**: `feedback-sync evolve --shadow-eval` → prompt 진화 PR 생성 (옵션).
+- **이상 시**: `feedback-sync explain <file>`, `daemon.stderr.log`.
+
+## 대안 비교 (autoplan 두 USER CHALLENGE 의 결과물)
+
+| 대안 | 채택? | 이유 |
+|---|---|---|
+| Manual `scope:` frontmatter tag + bash sync | No | 자동화 가치 ↑ 우선 (사용자 결정), 단 첫 audit 운영까지 데이터 부족 |
+| Review queue (LLM hint + PR merge) | Partial | 직접 commit 차단으로 Phase 5 (prompt evolution) 에서 부활 |
+| Kill feedback memory layer | No | `/search` JIT 가 cross-fork 검색 가능하지만 ambient context loading 효과 다름 |
+| Rule consolidation (46→15 meta-rules) | No | 별도 후속 과제 (Phase 6+) |
+| GH Actions cron | No | local 머신 파일 접근 불가 |
+| Chokidar daemon | No | launchd 관리 부담 + 강건성 ↓ |
+
+## 함정
+
+1. **lock 파일 stuck**: daemon crash 시 `.lock-target.lock` 잔존 가능. 수동 삭제 또는 `feedback-sync repair`.
+2. **Worker session 활성 중 symlink 재작성**: `feedback_concurrent_session_safety` 룰 적용 (mtime 5분 이내 변동이면 묻기).
+3. **GEMINI_API_KEY plaintext in plist**: TODO macOS keychain 마이그레이션.
+4. **Cascade detector substring match**: 동명 슬러그 false positive 가능. Cascade report 는 박제만 — 자동 처리 안 함.
+5. **PATH 미설정**: `~/.local/share/feedback-sync/bin` 을 `~/.zshrc` 의 PATH 에 추가 필요.
+
+## 관련
+
+- 상위 패턴: [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern)
+- 인접 메커니즘: [Ambient Knowledge Injection](/wiki/context-engineering/ambient-knowledge-injection)
+- 설계 룰: [Question Own Defaults](/wiki/harness-engineering/question-own-defaults), [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology)
+- Plan: `~/.develop-cycle-hub/plans/PLAN_1_cross_fork_feedback_sync.md`
+- 운영 runbook: `~/.local/share/feedback-sync/README.md`

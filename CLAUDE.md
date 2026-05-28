@@ -136,6 +136,10 @@ AI 가 plan 에 하드코딩 상수, 마법수, 임계값, "기존 구조 유지
 
 드리프트 감지는 "구현 vs 현실" 감지, 이 프로토콜은 "설계 근거 vs 관습" 감지. 짝.
 
+## Cross-fork feedback memory sync
+
+`~/.local/share/feedback-sync/` 인프라가 launchd cron 5min poll 로 3 fork memory 의 universal feedback 을 자동 분류 + 전파. SSOT = `~/.claude/projects/universal-memory-pool/`. 운영: `feedback-sync status`, runbook 은 `~/.local/share/feedback-sync/README.md`, 방법론 은 [cross-fork-feedback-sync](content/harness-engineering/cross-fork-feedback-sync.mdx).
+
 ## Skill routing
 
 When the user's request matches an available skill, suggest it before acting.
