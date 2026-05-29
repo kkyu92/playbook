@@ -25,6 +25,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 - [Claude Code 컨텍스트 지속성: CTX 플러그인 통합 — 에이전트 효율성 및 지식 활용 증대](wiki/context-engineering/claude-code-ctx-plugin-context-persistence) — confidence: 1, status: draft
+- [CodeBoarding — LLM 기반 코드베이스 아키텍처 다이어그램 자동화](wiki/context-engineering/codeboarding-automated-codebase-architecture-diagrams) — confidence: 1, status: draft
 - [Local Knowledge Hub Enhancement: Integrating .description.md Sidecar Files for Enriched Context](wiki/context-engineering/enriching-local-data-with-description-md-sidecars) — confidence: 1, status: draft
 - [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/context-engineering/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
@@ -107,6 +108,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
 - [Claude CLI: Persistent Multi-session Web Terminal for Enhanced LLM Workflow](wiki/harness-engineering/claude-cli-persistent-multi-session-web-terminal) — confidence: 1, status: draft
 - [Claude Code Agent View: AI Worker Orchestration for Enhanced Playbook Efficiency](wiki/harness-engineering/claude-code-agent-view-worker-management-integration) — confidence: 1, status: draft
+- [Claude Code Dynamic Workflows — Playbook Agent Harness Integration](wiki/harness-engineering/claude-code-dynamic-workflows-harness-integration) — confidence: 1, status: draft
 - [Claude Code Harness Visibility — Component Introspection with ccinv CLI](wiki/harness-engineering/claude-code-harness-component-visibility-ccinv) — confidence: 1, status: draft
 - [Claude Code Harness Architecture: Large Codebase Integration Patterns](wiki/harness-engineering/claude-code-harness-large-codebase-architecture-patterns) — confidence: 1, status: draft
 - [Claude Code 하네스 스킬셋 강화 — 에이전트 플레이북 엔지니어링](wiki/harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook) — confidence: 1, status: draft
@@ -140,6 +142,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Hub-Pull Evidence Tracking — from-hub Commit Convention](wiki/harness-engineering/hub-pull-evidence-tracking-from-hub-convention) — confidence: 3, status: complete
 - [Hub-Worker Automation Loop Robustness — Harnessing External Control for Resilience](wiki/harness-engineering/hub-worker-automation-loop-resilience-external-control) — confidence: 1, status: draft
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/harness-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
+- [LLM Serving 트래픽 라우팅 — 지능형 부하 분산 시스템 디자인 패턴](wiki/harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving) — confidence: 1, status: draft
 - [대규모 AI 서비스 배포: 확장성과 안정성을 위한 Harness 시스템 설계](wiki/harness-engineering/large-scale-ai-deployment-harness-system-design) — confidence: 1, status: draft
 - [Large-Scale AI Model Serving - Harness Caching Strategy Implementation](wiki/harness-engineering/large-scale-ai-serving-harness-caching-strategies) — confidence: 1, status: draft
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
@@ -703,6 +706,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ context-engineering/claude-code-ctx-plugin-context-persistence
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
+- agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ harness-engineering/claude-code-dynamic-workflows-harness-integration
 - android-ai/aicore ↔ android-ai/android-ai-edge-vs-cloud-decision-framework
 - android-ai/aicore ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - android-ai/aicore ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -842,6 +846,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
+- context-engineering/codeboarding-automated-codebase-architecture-diagrams ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
+- context-engineering/codeboarding-automated-codebase-architecture-diagrams ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
+- context-engineering/codeboarding-automated-codebase-architecture-diagrams ↔ harness-engineering/claude-code-harness-large-codebase-architecture-patterns
+- context-engineering/codeboarding-automated-codebase-architecture-diagrams ↔ harness-engineering/agentic-wiki-confidence-lifecycle
+- context-engineering/codeboarding-automated-codebase-architecture-diagrams ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
@@ -1395,6 +1404,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ journal/playbook-journal-009-claude-cli-hang-paperclip-4-step
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
+- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/distributed-ai-harness-design
+- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
+- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ agents/llm-agent-tool-use-design-patterns
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ context-engineering/claude-code-ctx-plugin-context-persistence
@@ -1538,12 +1552,19 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/operational-resilience-emergency-management-tooling
+- harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving
 - harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/hub-worker-automation-loop-resilience-external-control ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/hub-worker-automation-loop-resilience-external-control ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ infrastructure/llm-call-orchestration-reliability-enhancement
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
