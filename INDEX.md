@@ -163,6 +163,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM 기반 서비스 확장 아키텍처 — 고성능, 저비용 시스템 설계 패턴](wiki/harness-engineering/llm-scalable-service-architecture-patterns) — confidence: 1, status: draft
 - [LLM Workflow Orchestration: Complex Business Logic Automation Patterns](wiki/harness-engineering/llm-workflow-orchestration-business-logic-patterns) — confidence: 1, status: draft
 - [Large-scale LLM Workload Management: MLOps Pipeline Design Patterns](wiki/harness-engineering/llm-workload-management-mlops-pipeline-design-patterns) — confidence: 1, status: draft
+- [다중 LLM 추론 — 로드밸런싱 및 페일오버 설계로 고가용성 확보](wiki/harness-engineering/multi-llm-inference-load-balancing-failover-design) — confidence: 1, status: draft
 - [Multi-LLM Routing Patterns - 비용 효율적이고 성능 좋은 LLM 애플리케이션 디자인](wiki/harness-engineering/multi-llm-routing-design-patterns-cost-performance) — confidence: 1, status: draft
 - [Multimodal AI Serving Architectures — Efficient Deployment Patterns](wiki/harness-engineering/multimodal-ai-model-serving-architecture-patterns) — confidence: 1, status: draft
 - [멀티모달 AI 오케스트레이션 — 복합 사용자 요청 처리를 위한 모델 통합](wiki/harness-engineering/multimodal-ai-orchestration-complex-user-request-processing) — confidence: 1, status: draft
@@ -274,6 +275,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM 에이전트 자율성 — 복잡한 문제 해결을 위한 설계](wiki/agents/llm-agent-autonomy-complex-problem-solving) — confidence: 1, status: draft
 - [LLM Agent 동적 툴 선택 — 복잡한 작업 자동화를 위한 최적화 전략](wiki/agents/llm-agent-dynamic-tool-selection-optimization) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
+- [LLM 에이전트 장기 기억 시스템 디자인 — 지속적인 학습과 복잡한 작업 수행 전략](wiki/agents/llm-agent-long-term-memory-system-design) — confidence: 1, status: draft
 - [LLM Agent 장기기억 및 도구 사용 패턴 — 복잡한 태스크 수행을 위한 핵심 전략](wiki/agents/llm-agent-long-term-memory-tool-use-patterns) — confidence: 1, status: draft
 - [LLM Agent Tool Use — Design Patterns for Enhanced Functionality](wiki/agents/llm-agent-tool-use-design-patterns) — confidence: 1, status: draft
 - [LLM Judgment & Code Verification Separation Architecture: Mitigating Hallucinations in Agents](wiki/agents/llm-judgment-code-verification-separation-architecture) — confidence: 1, status: draft
@@ -1665,6 +1667,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- harness-engineering/multi-llm-inference-load-balancing-failover-design ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- harness-engineering/multi-llm-inference-load-balancing-failover-design ↔ infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ project-ops/claude-code-cost-optimization-strategies
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
