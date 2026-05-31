@@ -1013,6 +1013,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - data-engineering/production-db-ai-agent-guardrails ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/zerostack-rust-agent-harness-extension
+- data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/ai-agent-security-firewall-production-access-control
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
