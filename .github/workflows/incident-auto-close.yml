@@ -1,0 +1,128 @@
+name: "🔒 Incident Auto-Close (worker fix merged)"
+
+# Phase 4b — closed-loop auto-close 완성.
+#
+# 매일 1회 (Cloudflare worker dispatch). hub 의 open `inbound,incident` issue 중
+# fingerprint commit hash 가 워커 (moneyballscore / blog-autopilot) main 에 머지됐고
+# 머지 후 N일 (3) 경과 = auto-close + comment 박제.
+#
+# 정합: cycle 1051 carry-over (hub bulk close 90 manual evidence) — 자동화 4차원 closed-loop.
+# 패턴 참조: incident-followup.yml (워커 reminder), weekly-triage.yml (jq 검색).
+
+on:
+  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 06:30 dispatch
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  auto_close:
+    runs-on: ubuntu-latest
+    env:
+      GRACE_DAYS: 3
+      WORKER_REPOS: kkyu92/moneyballscore kkyu92/blog-autopilot
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Collect open hub incidents
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          gh issue list \
+            --repo kkyu92/playbook \
+            --state open \
+            --label "inbound,incident" \
+            --limit 200 \
+            --json number,title,body,createdAt \
+            > /tmp/hub_incidents.json
+
+          echo "open incidents: $(jq length /tmp/hub_incidents.json)"
+
+      - name: Match fingerprint commit + worker main + grace period
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          NOW=$(date -u +%s)
+          GRACE_SEC=$((GRACE_DAYS * 86400))
+          CLOSED=0
+          SKIPPED=0
+
+          jq -c '.[]' /tmp/hub_incidents.json | while read -r row; do
+            INC_NUM=$(echo "$row" | jq -r .number)
+            INC_TITLE=$(echo "$row" | jq -r .title)
+            INC_BODY=$(echo "$row" | jq -r .body)
+            INC_CREATED=$(echo "$row" | jq -r .createdAt)
+
+            # commit hash 추출 (title 또는 body 의 40자 sha)
+            HASH=$(echo "$INC_TITLE $INC_BODY" | grep -oE '[a-f0-9]{40}' | head -1)
+            if [ -z "$HASH" ]; then
+              SKIPPED=$((SKIPPED+1))
+              continue
+            fi
+
+            # 워커 repo 매칭 (title 의 'from <repo>' parse)
+            WORKER_REPO=""
+            for WR in $WORKER_REPOS; do
+              SHORT=$(basename "$WR")
+              if echo "$INC_BODY" | grep -q "$WR\|$SHORT"; then
+                WORKER_REPO="$WR"
+                break
+              fi
+            done
+            [ -z "$WORKER_REPO" ] && WORKER_REPO=kkyu92/moneyballscore  # default
+
+            # 워커 main 에 commit 있나
+            MERGED=$(gh api "repos/$WORKER_REPO/commits/$HASH" 2>/dev/null | jq -r '.sha // empty')
+            if [ -z "$MERGED" ]; then
+              SKIPPED=$((SKIPPED+1))
+              continue
+            fi
+
+            # grace period (created_at + GRACE_DAYS)
+            CREATED_EPOCH=$(date -u -d "$INC_CREATED" +%s 2>/dev/null || gdate -u -d "$INC_CREATED" +%s)
+            AGE=$((NOW - CREATED_EPOCH))
+            if [ "$AGE" -lt "$GRACE_SEC" ]; then
+              SKIPPED=$((SKIPPED+1))
+              continue
+            fi
+
+            COMMENT="Auto-close (incident-auto-close.yml). fingerprint commit \`${HASH:0:7}\` 워커 ($WORKER_REPO) main 머지 확인 + grace ${GRACE_DAYS}d 경과. raw evidence file raw-sources/_archive 보존."
+
+            gh issue close "$INC_NUM" --repo kkyu92/playbook --comment "$COMMENT"
+            CLOSED=$((CLOSED+1))
+          done
+
+          echo "closed: $CLOSED / skipped: $SKIPPED"
+
+      - name: Self-report on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -e
+          gh label create hub-self-report --color "b60205" --description "허브 workflow 자체 실패" 2>/dev/null || true
+
+          EXISTING=$(gh issue list \
+            --state open \
+            --label "hub-self-report" \
+            --limit 1 \
+            --json number \
+            | jq -r '.[0].number // empty')
+
+          BODY="🚨 incident-auto-close.yml run #${GITHUB_RUN_NUMBER} 실패. Run: ${RUN_URL}"
+
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create \
+              --title "🚨 incident-auto-close.yml 실패 (Phase 4b)" \
+              --body "$BODY" \
+              --label "hub-self-report"
+          fi
