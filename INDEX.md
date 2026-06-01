@@ -4,6 +4,7 @@ Updated: 2026-06-28T21:04:27.050Z
 ## 엔트리 (350개)
 
 ### Prompt Engineering
+- [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
 - [LLM Prompting: Boolean Logic Integration for Enhanced Control and Precision](wiki/prompt-engineering/llm-prompt-boolean-logic-control-precision-validation) — confidence: 1, status: draft
 - [LLM Prompt Injection Defense – Robust Guardrails Implementation](wiki/prompt-engineering/llm-prompt-injection-defense-rules-implementation) — confidence: 1, status: draft
@@ -170,6 +171,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [멀티모달 Harness 디자인 패턴 — 복합 LLM 워크플로우를 위한 통합 프레임워크](wiki/harness-engineering/multimodal-harness-design-complex-llm-workflows) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
+- [Production LLM Harness Design — Scalable and Resilient AI Service Deployment](wiki/harness-engineering/production-llm-service-harness-system-design-patterns) — confidence: 1, status: draft
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/harness-engineering/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/harness-engineering/question-own-defaults) — confidence: 3, status: complete
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/harness-engineering/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
@@ -296,6 +298,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Paca: AI 에이전트 협업 프로젝트 관리 플랫폼 도입 검토](wiki/agents/paca-ai-agent-project-management-tool-review) — confidence: 1, status: draft
 - [Qwen3.6-Max-Preview LLM — 에이전틱 코딩 및 지시 이행 성능 평가](wiki/agents/qwen3-6-max-preview-llm-agentic-coding-evaluation) — confidence: 1, status: draft
 - [Qwen3.7-Max Evaluation: Agent Model Performance and Integration Strategies](wiki/agents/qwen3-7-max-agent-model-evaluation-integration) — confidence: 1, status: draft
+- [RAG Agent Optimization — 성능 및 신뢰성 향상 전략](wiki/agents/rag-agent-performance-reliability-optimization) — confidence: 1, status: draft
 - [Ruflo Platform — Claude Code 기반 멀티 에이전트 오케스트레이션 강화](wiki/agents/ruflo-multi-agent-orchestration-claude-code-playbooks) — confidence: 1, status: draft
 
 ### Evaluation
@@ -318,6 +321,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [RAG 애플리케이션 평가 — 검색 정확도 및 생성 품질 측정 전략](wiki/evaluation/rag-application-evaluation-retrieval-generation-quality) — confidence: 1, status: draft
 - [RAG Search Performance Evaluation - Designing Robust Metrics](wiki/evaluation/rag-search-performance-evaluation-metrics-design) — confidence: 1, status: draft
 - [AI-Generated React Code Validation — Enhancing Pipelines with React Doctor Static Analysis](wiki/evaluation/react-doctor-ai-code-validation-pipeline) — confidence: 1, status: draft
+- [LLM Observability with Spanlens: Call Tracing, Cost Management, and Agent Workflow Monitoring](wiki/evaluation/spanlens-llm-observability-agent-trace-monitoring) — confidence: 1, status: draft
 
 ### Infrastructure
 - [AI Agent Output Versioning: Advanced Management with DeltaDB Concepts](wiki/infrastructure/ai-agent-output-versioning-deltadb-concepts) — confidence: 1, status: draft
@@ -707,6 +711,12 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ evaluation/claude-code-generation-validation-pipeline-extension
+- agents/rag-agent-performance-reliability-optimization ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- agents/rag-agent-performance-reliability-optimization ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- agents/rag-agent-performance-reliability-optimization ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- agents/rag-agent-performance-reliability-optimization ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
+- agents/rag-agent-performance-reliability-optimization ↔ context-engineering/agentic-context-compaction-trigger-heuristics
+- agents/rag-agent-performance-reliability-optimization ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/ruflo-multi-agent-orchestration-claude-code-playbooks ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
@@ -1066,6 +1076,10 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/react-doctor-ai-code-validation-pipeline ↔ harness-engineering/agentic-review-code-baseline-null-hypothesis-verification
 - evaluation/react-doctor-ai-code-validation-pipeline ↔ harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 - evaluation/react-doctor-ai-code-validation-pipeline ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
+- evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
+- evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ project-ops/claude-code-cost-optimization-strategies
+- evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
@@ -1685,6 +1699,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/stale-temporal-comment-cleanup-policy
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/production-llm-service-harness-system-design-patterns ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- harness-engineering/production-llm-service-harness-system-design-patterns ↔ infrastructure/llm-call-orchestration-reliability-enhancement
+- harness-engineering/production-llm-service-harness-system-design-patterns ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/prompt-versioning-and-testing
 - harness-engineering/prompt-model-version-management-large-scale-ai ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/question-own-defaults ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
@@ -1748,6 +1765,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ agents/multi-agent-collaboration-design-patterns
 - infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ project-ops/claude-code-harness-cost-optimization-reassessment
+- infrastructure/llm-prompt-caching-cost-optimization-patterns ↔ prompt-engineering/claude-api-cost-optimization-context-hub
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ journal/playbook-journal-002-drift-existing-setup
@@ -1903,6 +1921,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - project-ops/ai-sre-principles-project-control-tower-enhancement ↔ project-ops/operational-resilience-emergency-management-tooling
 - project-ops/ai-sre-principles-project-control-tower-enhancement ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/claude-code-cost-optimization-strategies ↔ project-ops/claude-code-harness-cost-optimization-reassessment
+- project-ops/claude-code-cost-optimization-strategies ↔ prompt-engineering/claude-api-cost-optimization-context-hub
+- project-ops/claude-code-harness-cost-optimization-reassessment ↔ prompt-engineering/claude-api-cost-optimization-context-hub
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
