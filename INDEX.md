@@ -391,6 +391,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM Fine-tuning — 고품질 데이터셋 전처리 및 정제 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement) — confidence: 1, status: draft
 - [Production Database 보안 강화 - AI 에이전트 가드레일 설계 및 구현](wiki/data-engineering/production-db-ai-agent-guardrails) — confidence: 1, status: draft
 - [RAG 시스템 데이터 전처리 — 임베딩 최적화 전략](wiki/data-engineering/rag-data-preprocessing-embedding-optimization-strategies) — confidence: 1, status: draft
+- [RAG 시스템 성능 향상 — 효과적인 데이터 전처리 전략](wiki/data-engineering/rag-data-preprocessing-for-performance-gain) — confidence: 1, status: draft
 - [RAG 시스템 임베딩 업데이트 파이프라인 — 실시간 정보 반영 및 성능 유지 전략](wiki/data-engineering/rag-embedding-update-pipeline-realtime-strategies) — confidence: 1, status: draft
 - [RAG System Optimization — Embedding Dataset Construction Patterns](wiki/data-engineering/rag-system-embedding-dataset-optimization-patterns) — confidence: 1, status: draft
 - [Vector DB: 임베딩 데이터 최적화 패턴과 RAG 성능 향상 전략](wiki/data-engineering/vector-db-embedding-data-optimization-patterns) — confidence: 1, status: draft
@@ -590,6 +591,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/inference-chain-design-complex-ai-agents ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-autonomy-complex-problem-solving
+- agents/inference-chain-design-complex-ai-agents ↔ prompt-engineering/cot-prompting-complex-reasoning-patterns
 - agents/llm-agent-autonomy-complex-problem-solving ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/llm-agent-autonomy-complex-problem-solving ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-autonomy-complex-problem-solving ↔ agents/multi-agent-collaboration-complex-problem-solving
@@ -967,6 +969,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
 - data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement ↔ data-engineering/rag-data-preprocessing-for-performance-gain
 - data-engineering/production-db-ai-agent-guardrails ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - data-engineering/production-db-ai-agent-guardrails ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
@@ -1198,6 +1201,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance
 - harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/agentic-ci-deploy-budget-batch-push-policy ↔ harness-engineering/llm-agent-full-automation-development-pipeline-expansion
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/post-ship-meta-documentation-drift
@@ -1215,6 +1219,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ project-ops/claude-code-harness-cost-optimization-reassessment
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/flue-framework-integration-claude-code-harness-reconfigurati
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/claude-cli-persistent-multi-session-web-terminal
+- harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/llm-agent-full-automation-development-pipeline-expansion
 - harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
 - harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-commit-body-subtype-dispatch-transport ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
@@ -1968,6 +1973,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
 - project-ops/mlops-pipeline-design-ai-model-deployment-monitoring ↔ project-ops/operational-resilience-emergency-management-tooling
 - project-ops/operational-resilience-emergency-management-tooling ↔ project-ops/playbook-ai-integrated-logging-system
+- prompt-engineering/cot-prompting-complex-reasoning-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- prompt-engineering/cot-prompting-complex-reasoning-patterns ↔ prompt-engineering/zero-few-shot-prompt-design-patterns-llm
+- prompt-engineering/cot-prompting-complex-reasoning-patterns ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - reports/closed-loop-health ↔ harness-engineering/hub-worker-compounding-pattern
