@@ -10,7 +10,9 @@ name: "🔒 Incident Auto-Close (worker fix merged)"
 # 패턴 참조: incident-followup.yml (워커 reminder), weekly-triage.yml (jq 검색).
 
 on:
-  workflow_dispatch:  # cron 은 cloudflare-worker/ 가 매일 KST 06:30 dispatch
+  workflow_dispatch:  # manual dispatch (디버그용)
+  schedule:
+    - cron: "30 21 * * *"  # 매일 06:30 KST (UTC 21:30). silent-skip-tracker 06:00 와 30분 차이 (memory feedback_gh_actions_cron_unreliable 정합).
 
 permissions:
   contents: read
