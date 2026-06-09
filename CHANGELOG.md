@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.78] — 2026-06-10
+
+### Added
+- `.github/workflows/incident-auto-close.yml` schedule cron — 매일 06:30 KST 자동 fire (cycle 1073, cycle 1053 ship 8일 carry-over 해소). hub open inbound,incident 의 fingerprint commit 워커 main 매칭 + grace 3d → auto-close + comment.
+- `docs/solutions/blog-autopilot/2026-06-10-silent-fail-permanence.md` — N=3 항구화 (cycle 1072).
+- cycle 1070-1080: 자율 batch 11 cycle (SE x4 #362-363 oscillation 200 milestone / worker-incident-triage 322 close / closed-loop-design 2 ship / curate heavy wiki baseline / explore-idea scout 카타로그 / review-code heavy null-hypothesis 4번째).
+
+### Fixed
+- blog-autopilot `auto-publish.yml` timeout-minutes 180→240 — silent-fail N=3 항구화 (cycle 1072, blog@35dae95). 4/27 패턴 누적 (#118 5/27 / #152 5/31 / #199 6/9) cancelled 차단.
+- `package.json` pnpm.overrides `shell-quote >=1.8.4` — CI pnpm audit critical 해소 (cycle 1077, GHSA-w7jw-789q-3m8p).
+
+### Changed
+- cycles 1057-1080: 8일 backlog 322 issue close (moneyball lesson-pending 310 + hub inbound 12 + blog auto-discard + silent-fail 3 close). 3 repo 정리.
+- wiki baseline 박제: 322 entries / 49% utilization / 71.3% noMatch ratio (cycle 1074 measurement).
+- SE oscillation 195→200 (5 fast-path: SE #357-363).
+
 ## [0.9.77] — 2026-05-26
 
 ### Changed
