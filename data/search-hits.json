@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 651,
+  "totalInvocations": 653,
   "skipped": 26,
-  "searched": 625,
+  "searched": 627,
   "hit": 180,
-  "noMatch": 445,
-  "lastUpdated": "2026-05-28T01:28:18.114Z",
+  "noMatch": 447,
+  "lastUpdated": "2026-06-01T22:05:47.127Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -196,6 +196,16 @@
       "query": "무덤 진단",
       "timestamp": "2026-05-28T01:28:18.113Z",
       "topScore": 0.8665
+    },
+    {
+      "query": "BRANCHED diverged origin local push",
+      "timestamp": "2026-05-31T13:48:00.730Z",
+      "topScore": 0.8672
+    },
+    {
+      "query": "silent-fail cron cancelled timeout workflow",
+      "timestamp": "2026-06-01T22:05:47.126Z",
+      "topScore": 0.8536
     }
   ],
   "noMatchQueryCounts": {
@@ -203,7 +213,9 @@
     "양방향 무한성장 비전": 1,
     "Pull 측정 인프라": 1,
     "허브 워커 양방향 복리": 1,
-    "무덤 진단": 1
+    "무덤 진단": 1,
+    "BRANCHED diverged origin local push": 1,
+    "silent-fail cron cancelled timeout workflow": 1
   },
-  "totalQueries": 695
+  "totalQueries": 697
 }

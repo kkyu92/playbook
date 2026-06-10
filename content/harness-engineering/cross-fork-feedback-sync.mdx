@@ -149,7 +149,7 @@ manual triage (사용자가 박제 시 directly common/ 으로 mv) 시도 = adop
 
 LLM 분류기는 stateless. 자동으로 정확도 안 올라감. 명시적 메커니즘 필요:
 
-1. 주1회 audit 이 ≥0.85 promotion sample 도 spot-check (현 plan v1 의 audit 결함 fix — confidence <0.8 만 보던 패턴)
+1. 주1회 audit 이 ≥0.85 promotion sample 도 spot-check (현 plan v1 의 audit 결함 fix — confidence `<0.8` 만 보던 패턴)
 2. Disagreement 발견 시 (audit 의 reclassify ≠ 원래 decision) → false positive 처리
 3. False positive 의 (rule 본문 + 정답 label) 을 `classifier-prompt-examples.json` 에 append 후보로 stage
 4. **PR auto-open** (직접 commit 아님) — 사용자 review 후 1-click merge (Phase 5 ownership gate)
