@@ -1,0 +1,43 @@
+---
+date: "2026-05-31"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "78f00e6fe7a61ca801609e9c051a6565f9fc988b"
+---
+
+
+subtype: lesson
+cycle_n: 1078
+사례: 15 (develop-cycle 자체 retro 박제 layer silent skip)
+
+증상:
+- cycle 1078 git pull --rebase 결과: "have 2 and 1 different commits each, respectively"
+- local main: 70cca70 (cycle 1077 retro) → 42688bb (cycle 1076 retro) → f75c87f (cycle 1075)
+- origin main: 5a85577 (PR #1480) → f75c87f (cycle 1075)
+- 즉 cycle 1076/1077 retro commit 양쪽 local 만 박제, origin push 누락
+
+원인 (확정 X):
+- watch.sh 자연 종료 → 새 cycle process 시작 → 이전 cycle retro push 누락 (push 명령 호출 부재 또는 silent push 실패)
+- 본 메인 retro commit 박제는 매 cycle 진행되지만 push 단계 누락 가능성
+
+영향:
+- silent: hub workflow (submit-lesson.yml) dispatch 차단 (4 prefix 자동 dispatch 가 origin push 의존)
+- silent: 후속 cycle 진단 시 git log 조회 시 origin/main 보면 retro 부재로 보임 (cycle 1078 진단 시 발견)
+- 사례 15 streak break: cycle 901-1022 122 cycle → cycle 1023 1건 → cycle 1024-1075 53 cycle streak → cycle 1076/1077 재발 2건
+
+대응:
+- cycle 1078 진단 단계 = git pull --rebase 후 자연 회복 (rebase 1/2 + 2/2 success, 충돌 0)
+- 본 cycle 1078 retro commit + push 시 cycle 1076/1077 retro 도 함께 push (3 commit 묶음)
+- watch.sh layer push 검증 추가 후보 = signal 박제 직전 `git status` 안 unpushed commit count 측정 alert
+
+박제 위치:
+- 본 lesson commit (subtype: lesson)
+- cycle 1078 cycle_state JSON key_findings
+- CLAUDE.md 사례 15 재발 누적 evidence (다음 skill-evolution milestone 시 갱신 후보)
+
+권장 후속:
+- 다음 skill-evolution (cycle 1100 milestone 또는 trigger 5 fire) 시 watch.sh retro push 검증 layer 박제 검토
+- 본 cycle = 단건 fix, meta-pattern dispatch 미발화 (3건 누적 = N≥5 임계 미달)
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>

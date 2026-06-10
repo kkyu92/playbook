@@ -218,6 +218,7 @@ Updated: 2026-06-01T04:42:36.949Z
 - [Playbook Journal 050 — cycle 861 op-analysis lite — v1.8 cohort velocity + agent_memory 4 type drift sync](wiki/journal/playbook-journal-050-cycle-861-op-analysis-lite-v1-8-cohort-velocity-ag) — confidence: 3, status: in-progress
 - [Playbook Journal 051 — issue-agent 401 RC — CLAUDE_CODE_OAUTH_TOKEN 만료 + 자동 갱신 부재](wiki/journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token) — confidence: 3, status: in-progress
 - [Playbook Journal 052 — 5/21 CI silent drift — feat+test 분리 push 7연속 실패 패턴](wiki/journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7) — confidence: 3, status: in-progress
+- [Playbook Journal 053 — silent drift family 사례 15 재발 — cycle 1076/1077 retro local push 누락 (cycle 1078 자연 발견)](wiki/journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local) — confidence: 3, status: in-progress
 - [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
@@ -1649,6 +1650,7 @@ Updated: 2026-06-01T04:42:36.949Z
 - journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token ↔ harness-engineering/hub-worker-compounding-pattern
 - journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7 ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
+- journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
