@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 653,
+  "totalInvocations": 656,
   "skipped": 26,
-  "searched": 627,
+  "searched": 630,
   "hit": 180,
-  "noMatch": 447,
-  "lastUpdated": "2026-06-01T22:05:47.127Z",
+  "noMatch": 450,
+  "lastUpdated": "2026-06-10T01:45:31.725Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -206,6 +206,21 @@
       "query": "silent-fail cron cancelled timeout workflow",
       "timestamp": "2026-06-01T22:05:47.126Z",
       "topScore": 0.8536
+    },
+    {
+      "query": "bidirectional hub worker compound growth vision",
+      "timestamp": "2026-06-10T01:45:25.369Z",
+      "topScore": 0.8343
+    },
+    {
+      "query": "closed loop design philosophy",
+      "timestamp": "2026-06-10T01:45:31.045Z",
+      "topScore": 0.8241
+    },
+    {
+      "query": "hub worker compounding",
+      "timestamp": "2026-06-10T01:45:31.724Z",
+      "topScore": 0.8453
     }
   ],
   "noMatchQueryCounts": {
@@ -215,7 +230,10 @@
     "허브 워커 양방향 복리": 1,
     "무덤 진단": 1,
     "BRANCHED diverged origin local push": 1,
-    "silent-fail cron cancelled timeout workflow": 1
+    "silent-fail cron cancelled timeout workflow": 1,
+    "bidirectional hub worker compound growth vision": 1,
+    "closed loop design philosophy": 1,
+    "hub worker compounding": 1
   },
-  "totalQueries": 697
+  "totalQueries": 700
 }
