@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 656,
+  "totalInvocations": 657,
   "skipped": 26,
-  "searched": 630,
+  "searched": 631,
   "hit": 180,
-  "noMatch": 450,
-  "lastUpdated": "2026-06-10T01:45:31.725Z",
+  "noMatch": 451,
+  "lastUpdated": "2026-06-10T01:47:45.196Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -221,6 +221,11 @@
       "query": "hub worker compounding",
       "timestamp": "2026-06-10T01:45:31.724Z",
       "topScore": 0.8453
+    },
+    {
+      "query": "auto-ingest PR rebase conflict journal branch",
+      "timestamp": "2026-06-10T01:47:45.195Z",
+      "topScore": 0.8623
     }
   ],
   "noMatchQueryCounts": {
@@ -233,7 +238,8 @@
     "silent-fail cron cancelled timeout workflow": 1,
     "bidirectional hub worker compound growth vision": 1,
     "closed loop design philosophy": 1,
-    "hub worker compounding": 1
+    "hub worker compounding": 1,
+    "auto-ingest PR rebase conflict journal branch": 1
   },
-  "totalQueries": 700
+  "totalQueries": 701
 }
