@@ -12,7 +12,7 @@ tags:
   - workflow-trigger
   - harness-engineering
 confidence: 4
-connections: [harness-engineering/agentic-ci-deploy-budget-batch-push-policy, infrastructure/github-actions-billing-block-diagnosis-recovery, harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern]
+connections: [harness-engineering/agentic-ci-deploy-budget-batch-push-policy, infrastructure/github-actions-billing-block-diagnosis-recovery, harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern, infrastructure/open-source-supply-chain-security-llm-tools-hardening]
 status: complete
 description: GitHub Actions의 반재귀 방어 메커니즘 — GITHUB_TOKEN으로 push된 코드는 다른 workflow를 트리거하지 않는다. auto-ingest.yml이 GITHUB_TOKEN으로 checkout하면 branch push → ai-review.yml 미트리거 → PR 자동 머지 영구 실패. GH_PAT checkout으로 해소.
 type: entry
