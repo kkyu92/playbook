@@ -1515,7 +1515,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/operational-resilience-emergency-management-tooling
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
@@ -1846,5 +1848,5 @@ Updated: 2026-06-28T21:04:27.050Z
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
 - reports/week-2026-21 ↔ reports/week-2026-22
-- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/bidirectional-hub-worker-compound-growth-vision
-- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/closed-loop-design-philosophy
+- reports/week-2026-23 ↔ reports/week-2026-22
+- reports/week-2026-24 ↔ reports/week-2026-23
