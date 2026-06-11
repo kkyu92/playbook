@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 657,
+  "totalInvocations": 658,
   "skipped": 26,
-  "searched": 631,
+  "searched": 632,
   "hit": 180,
-  "noMatch": 451,
-  "lastUpdated": "2026-06-10T01:47:45.196Z",
+  "noMatch": 452,
+  "lastUpdated": "2026-06-11T12:39:37.308Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -226,6 +226,11 @@
       "query": "auto-ingest PR rebase conflict journal branch",
       "timestamp": "2026-06-10T01:47:45.195Z",
       "topScore": 0.8623
+    },
+    {
+      "query": "dependabot CI failure lint format moneyball",
+      "timestamp": "2026-06-11T12:39:37.306Z",
+      "topScore": 0.8648
     }
   ],
   "noMatchQueryCounts": {
@@ -239,7 +244,8 @@
     "bidirectional hub worker compound growth vision": 1,
     "closed loop design philosophy": 1,
     "hub worker compounding": 1,
-    "auto-ingest PR rebase conflict journal branch": 1
+    "auto-ingest PR rebase conflict journal branch": 1,
+    "dependabot CI failure lint format moneyball": 1
   },
-  "totalQueries": 701
+  "totalQueries": 702
 }
