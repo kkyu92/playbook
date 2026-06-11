@@ -150,6 +150,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Large-Scale AI Model Serving - Harness Caching Strategy Implementation](wiki/harness-engineering/large-scale-ai-serving-harness-caching-strategies) — confidence: 1, status: draft
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
+- [LLM Agent 관측 플랫폼 — Spanlens 오픈소스 트레이스 통합 패턴](wiki/harness-engineering/llm-agent-observability-spanlens-trace-monitoring) — confidence: 1, status: draft
 - [LLM Agent Goal Management — Enhancing Persistent Objective Achievement for Long-Term Tasks](wiki/harness-engineering/llm-agent-persistent-goal-management-long-term-tasks) — confidence: 1, status: draft
 - [LLM Agent Tool Call Reliability — Enhancing with Forge Guardrails](wiki/harness-engineering/llm-agent-tool-call-reliability-forge-guardrails) — confidence: 1, status: draft
 - [LLM API Cost Optimization: Harness Design Patterns for Efficiency](wiki/harness-engineering/llm-api-cost-optimization-harness-design-patterns) — confidence: 1, status: draft
@@ -1623,6 +1624,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ agents/llm-agent-goal-achievement-planning-patterns
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ infrastructure/ai-agent-output-versioning-deltadb-concepts
 - harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti ↔ harness-engineering/zerostack-rust-agent-harness-extension
+- harness-engineering/llm-agent-observability-spanlens-trace-monitoring ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- harness-engineering/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - harness-engineering/llm-agent-tool-call-reliability-forge-guardrails ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
