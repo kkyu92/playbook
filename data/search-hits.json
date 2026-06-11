@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 664,
+  "totalInvocations": 666,
   "skipped": 26,
-  "searched": 638,
-  "hit": 182,
-  "noMatch": 456,
-  "lastUpdated": "2026-06-11T12:56:58.298Z",
+  "searched": 640,
+  "hit": 183,
+  "noMatch": 457,
+  "lastUpdated": "2026-06-11T12:58:38.968Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -132,7 +132,7 @@
     "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 2,
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
     "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 2,
-    "harness-engineering/llm-agent-tool-call-reliability-forge-guardrails": 1,
+    "harness-engineering/llm-agent-tool-call-reliability-forge-guardrails": 2,
     "evaluation/llm-document-integrity-validation-pipeline-enhancement": 1,
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 2,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
@@ -165,7 +165,9 @@
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
     "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
     "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 5,
-    "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1
+    "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
+    "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 1,
+    "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1
   },
   "noMatchQueries": [
     {
@@ -252,6 +254,11 @@
       "query": "Claude 5 Fable model upgrade API",
       "timestamp": "2026-06-11T12:56:58.296Z",
       "topScore": 0.867
+    },
+    {
+      "query": "observability monitoring LLM cost tracking tracing",
+      "timestamp": "2026-06-11T12:58:38.967Z",
+      "topScore": 0.8325
     }
   ],
   "noMatchQueryCounts": {
@@ -270,7 +277,8 @@
     "hub worker bidirectional growth measurement closed loop": 1,
     "category rebalance wiki entry distribution": 1,
     "wiki growth ROI metrics hit rate measurement blind spot": 1,
-    "Claude 5 Fable model upgrade API": 1
+    "Claude 5 Fable model upgrade API": 1,
+    "observability monitoring LLM cost tracking tracing": 1
   },
-  "totalQueries": 708
+  "totalQueries": 710
 }
