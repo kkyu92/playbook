@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 658,
+  "totalInvocations": 664,
   "skipped": 26,
-  "searched": 632,
-  "hit": 180,
-  "noMatch": 452,
-  "lastUpdated": "2026-06-11T12:39:37.308Z",
+  "searched": 638,
+  "hit": 182,
+  "noMatch": 456,
+  "lastUpdated": "2026-06-11T12:56:58.298Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -50,7 +50,7 @@
     "solutions/ci-github-actions/_compiled-truth": 2,
     "retros/2026-05-12-cycles-305-307": 6,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
-    "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 4,
+    "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 5,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 5,
     "retros/2026-05-12-cycles-371-373": 1,
@@ -164,7 +164,8 @@
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
     "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
-    "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 4
+    "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 5,
+    "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1
   },
   "noMatchQueries": [
     {
@@ -231,6 +232,26 @@
       "query": "dependabot CI failure lint format moneyball",
       "timestamp": "2026-06-11T12:39:37.306Z",
       "topScore": 0.8648
+    },
+    {
+      "query": "hub worker bidirectional growth measurement closed loop",
+      "timestamp": "2026-06-11T12:49:03.736Z",
+      "topScore": 0.8462
+    },
+    {
+      "query": "category rebalance wiki entry distribution",
+      "timestamp": "2026-06-11T12:49:46.846Z",
+      "topScore": 0.8306
+    },
+    {
+      "query": "wiki growth ROI metrics hit rate measurement blind spot",
+      "timestamp": "2026-06-11T12:50:41.253Z",
+      "topScore": 0.8593
+    },
+    {
+      "query": "Claude 5 Fable model upgrade API",
+      "timestamp": "2026-06-11T12:56:58.296Z",
+      "topScore": 0.867
     }
   ],
   "noMatchQueryCounts": {
@@ -245,7 +266,11 @@
     "closed loop design philosophy": 1,
     "hub worker compounding": 1,
     "auto-ingest PR rebase conflict journal branch": 1,
-    "dependabot CI failure lint format moneyball": 1
+    "dependabot CI failure lint format moneyball": 1,
+    "hub worker bidirectional growth measurement closed loop": 1,
+    "category rebalance wiki entry distribution": 1,
+    "wiki growth ROI metrics hit rate measurement blind spot": 1,
+    "Claude 5 Fable model upgrade API": 1
   },
-  "totalQueries": 702
+  "totalQueries": 708
 }
