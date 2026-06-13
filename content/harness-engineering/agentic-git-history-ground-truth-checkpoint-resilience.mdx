@@ -1,5 +1,5 @@
 ---
-title: "Git History as Ground Truth — Checkpoint Staleness Resilience"
+title: Git History as Ground Truth — Checkpoint Staleness Resilience
 category: harness-engineering
 date: "2026-05-22"
 tags:
@@ -14,11 +14,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-22"
-connections:
-  - harness-engineering/agentic-commit-body-subtype-dispatch-transport
-  - harness-engineering/agentic-git-commit-body-dispatch-transport
-  - harness-engineering/drift-detection-methodology
-  - harness-engineering/zero-touch-develop-cycle-session-management
+connections: [harness-engineering/agentic-commit-body-subtype-dispatch-transport, harness-engineering/agentic-git-commit-body-dispatch-transport, harness-engineering/drift-detection-methodology, harness-engineering/zero-touch-develop-cycle-session-management, infrastructure/ai-agent-output-versioning-deltadb-concepts]
 source: explore-idea
 description: "policy: 커밋이 cycle state 전체를 inline 박제 → checkpoint 파일 497 cycle 드리프트 상황에서도 git log 만으로 30초 내 완전 컨텍스트 복구 성공. git history = 불변 ground truth, checkpoint = optional optimization."
 ---

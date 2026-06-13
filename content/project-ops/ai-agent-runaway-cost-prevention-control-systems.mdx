@@ -1,0 +1,67 @@
+---
+title: AI Agent Cost Control — Preventing Runaway Cloud Resource Consumption
+category: project-ops
+date: "2026-06-13"
+tags:
+  - AI Agents
+  - Cost Management
+  - Cloud Security
+  - Resource Governance
+  - LLM Ops
+  - FinOps
+  - project-ops
+confidence: 1
+connections: [agents/ai-agent-safety-constraint-control-design-patterns, agents/ai-agent-superpowers-guardrails-intent-alignment, harness-engineering/ai-agent-control-validation-mechanisms, harness-engineering/llm-agent-tool-call-reliability-forge-guardrails, project-ops/claude-code-cost-optimization-strategies, project-ops/operational-resilience-emergency-management-tooling, harness-engineering/llm-ops-pipeline-design-patterns-production-strategy, harness-engineering/llm-api-cost-optimization-harness-design-patterns, agents/multi-stage-agent-task-scheduling-monitoring]
+status: draft
+description: AI 에이전트의 무분별한 클라우드 리소스 사용과 비용 폭주를 방지하기 위한 가드레일 및 제어 시스템 구축 전략을 다룹니다.
+type: entry
+source: scout
+---
+
+AI 에이전트의 자율성이 증대함에 따라, 의도치 않은 클라우드 리소스의 과도한 소비 및 비용 폭주 위험 또한 커지고 있습니다. 최근 DN42 네트워크 스캔 사례와 같이, AI 에이전트가 네트워크 탐색을 위해 고사양 AWS 인스턴스를 무분별하게 배포하여 막대한 청구서로 이어진 사건은 이러한 위험성을 극명하게 보여줍니다. 이 문서는 AI 에이전트 운영 시 비용 효율성과 안전성을 확보하기 위한 체계적인 제어 시스템 구축 방안을 제시합니다.
+
+## AI 에이전트 폭주와 비용 재앙의 위협
+
+AI 에이전트는 특정 목표 달성을 위해 자체적으로 판단하고 행동하는 능력을 가지고 있습니다. 이는 생산성 혁신을 가져오지만, 동시에 제어되지 않을 경우 예측 불가능한 결과를 초래할 수 있습니다. 특히 클라우드 환경에서 에이전트가 자원 프로비저닝 권한을 가지거나, 비용에 대한 인지 없이 LLM API를 반복적으로 호출할 경우, 짧은 시간 내에 엄청난 비용을 발생시킬 수 있습니다. 이러한 위험을 최소화하기 위해서는 설계 단계부터 강력한 가드레일과 실시간 모니터링, 비상 제어 메커니즘이 필수적입니다.
+
+## 핵심 제어 메커니즘 구축
+
+AI 에이전트의 폭주를 방지하고 비용을 효과적으로 제어하기 위해서는 다층적인 접근 방식이 필요합니다. 다음은 주요 제어 메커니즘입니다.
+
+### LLM API 토큰 및 호출 제한
+
+LLM API 호출은 AI 에이전트 비용의 상당 부분을 차지할 수 있습니다. 각 API 호출에 대한 최대 토큰 사용량과 일일/시간당 호출 횟수를 제한하여 갑작스러운 비용 증가를 방지해야 합니다. 이는 API 게이트웨이 또는 에이전트 자체의 `Agent Wrapper` 수준에서 구현될 수 있습니다.
+
+### 클라우드 리소스 프로비저닝 가드레일
+
+AI 에이전트가 직접 클라우드 리소스를 생성하는 시나리오에서는 더욱 엄격한 통제가 요구됩니다. IAM(Identity and Access Management) 정책을 통해 에이전트에게 최소한의 권한(Least Privilege)만 부여하고, 특정 리소스 유형이나 최대 인스턴스 개수 등을 제한해야 합니다. 또한, 승인 워크플로우를 도입하여 중요 리소스 생성 시에는 반드시 인간의 개입을 거치도록 설계할 수 있습니다.
+
+### 예산 기반 자동 제어 (Budget-based Automation)
+
+클라우드 서비스 제공자(CSP)의 예산 알림 기능을 활용하고, 이를 연동하여 특정 예산을 초과할 경우 자동으로 리소스를 중단하거나 에이전트의 작업을 일시 중지시키는 시스템을 구축합니다. 예를 들어, AWS Budgets, Azure Cost Management, Google Cloud Billing Alerts 등을 통해 설정된 임계값에 도달하면 Lambda 함수나 Cloud Function을 트리거하여 에이전트 관련 리소스를 종료할 수 있습니다.
+
+### 비상 Kill Switch 시스템
+
+모든 제어 메커니즘이 실패하거나 예측 불가능한 상황이 발생할 경우, 에이전트의 모든 활동을 즉시 중단시킬 수 있는 중앙 집중식 Kill Switch가 필요합니다. 이는 단일 명령어로 에이전트 프로세스, 관련 클라우드 리소스, API 접근 권한 등을 비활성화하는 시스템이어야 합니다.
+
+### 실시간 모니터링 및 알림
+
+AI 에이전트의 활동, 클라우드 리소스 사용량, LLM API 호출 패턴, 그리고 관련 비용 지표를 실시간으로 모니터링하는 대시보드를 구축합니다. 이상 징후(예: 비정상적인 API 호출량 증가, 예상치 못한 리소스 생성)가 감지될 경우 즉시 담당자에게 알림을 전송하여 신속한 대응을 가능하게 합니다.
+
+## 시스템 아키텍처: AI 에이전트 비용 제어 워커
+
+다음 Mermaid 다이어그램은 AI 에이전트의 비용 제어를 위한 시스템 아키텍처의 한 예시를 보여줍니다.
+
+```mermaid
+graph TD
+    subgraph User/Admin
+        A[Kill Switch Trigger] --> E
+        B[Budget Configuration] --> C
+        F[Alerts/Reports] <-- K
+    end
+
+    subgraph AI Agent System
+        G[AI Agent Workflow] --> H[LLM API Call] & I[Cloud Resource Provisioning Request]
+    end
+
+    subgraph Control Plane [
