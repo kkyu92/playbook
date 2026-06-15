@@ -94,9 +94,22 @@ function detectSchemaDrift() {
   return { declaredButMissing, presentButUndeclared, journalSeparate: onDisk.has("journal") };
 }
 
+function countContentEntries() {
+  if (!fs.existsSync(CONTENT_DIR)) return 0;
+  let count = 0;
+  const skipDirs = new Set(["journal", "_archive"]);
+  for (const cat of fs.readdirSync(CONTENT_DIR, { withFileTypes: true })) {
+    if (!cat.isDirectory() || skipDirs.has(cat.name)) continue;
+    const catPath = path.join(CONTENT_DIR, cat.name);
+    count += fs.readdirSync(catPath).filter((f) => f.endsWith(".mdx")).length;
+  }
+  return count;
+}
+
 function analyze() {
   const entries = loadEntryVectors();
   const drift = detectSchemaDrift();
+  const N_content = countContentEntries();
 
   const byCategory = new Map();
   for (const e of entries) {
@@ -105,6 +118,9 @@ function analyze() {
   }
 
   const N_total = entries.length;
+  const embeddingsStaleness = N_content > 0 && (N_content - N_total) / N_content > 0.1
+    ? `⚠️ embeddings 스탈 감지: N_embedded=${N_total}, N_content=${N_content} (${Math.round((N_content - N_total) / N_content * 100)}% 미임베드 — pnpm embed-content 권장)`
+    : null;
 
   const categoryReports = [];
   for (const cat of CATEGORIES) {
@@ -215,6 +231,8 @@ function analyze() {
   return {
     skipped: false,
     n_total: N_total,
+    n_content: N_content,
+    embeddingsStaleness,
     categories: categoryReports,
     outliers,
     imbalance: { ratio: imbalance, flagged: imbalanceFlag, max: maxCount, min: minCount },
@@ -235,6 +253,7 @@ function toMarkdown(r) {
   out.push("## 🗂️ Category Rebalance Report");
   out.push("");
   out.push(`**N_total** = ${r.n_total} entries`);
+  if (r.embeddingsStaleness) out.push(""), out.push(r.embeddingsStaleness);
   if (r.imbalance.ratio !== null) {
     out.push(`**Imbalance ratio** = ${r.imbalance.ratio.toFixed(2)} (max=${r.imbalance.max}, min=${r.imbalance.min})${r.imbalance.flagged ? " ⚠️" : ""}`);
   }
