@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-06-14T21:03:48.355Z
+Updated: 2026-06-15T03:22:33.068Z
 
-## 엔트리 (343개)
+## 엔트리 (344개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -227,6 +227,7 @@ Updated: 2026-06-14T21:03:48.355Z
 - [Playbook Journal 052 — 5/21 CI silent drift — feat+test 분리 push 7연속 실패 패턴](wiki/journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7) — confidence: 3, status: in-progress
 - [Playbook Journal 053 — silent drift family 사례 15 재발 — cycle 1076/1077 retro local push 누락 (cycle 1078 자연 발견)](wiki/journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local) — confidence: 3, status: in-progress
 - [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: in-progress
+- [Playbook Journal 055 — incident wave 2026-06-10/11 — SUPABASE_URL + esbuild CVE family (8 fingerprints batch close, cycle 1169)](wiki/journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -1772,6 +1773,7 @@ Updated: 2026-06-14T21:03:48.355Z
 - journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7 ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/claude-code-cost-optimization-strategies
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/operational-resilience-emergency-management-tooling
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
