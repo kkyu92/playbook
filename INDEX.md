@@ -175,6 +175,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크](wiki/harness-engineering/wiki-category-health-rebalance-decision-framework) — confidence: 2, status: complete
 - [위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나](wiki/harness-engineering/wiki-jit-search-blind-spot-diagnosis) — confidence: 2, status: complete
+- [위키 Journal Append-Only 구조와 Long In-Progress 오경보 — lint 정책 충돌 해결](wiki/harness-engineering/wiki-journal-append-only-lint-false-positive-status) — confidence: 2, status: complete
 - [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement) — confidence: 3, status: complete
 - [Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴](wiki/harness-engineering/worker-lesson-velocity-signal) — confidence: 2, status: complete
 - [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/harness-engineering/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
