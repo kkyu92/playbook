@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 694,
+  "totalInvocations": 711,
   "skipped": 26,
-  "searched": 668,
-  "hit": 190,
-  "noMatch": 478,
-  "lastUpdated": "2026-06-15T02:21:02.487Z",
+  "searched": 685,
+  "hit": 200,
+  "noMatch": 485,
+  "lastUpdated": "2026-06-15T02:42:55.184Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 11,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -24,7 +24,7 @@
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
     "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 4,
-    "reports/closed-loop-health": 30,
+    "reports/closed-loop-health": 31,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 10,
@@ -32,7 +32,7 @@
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
-    "reports/mid-review-2026-04-28": 7,
+    "reports/mid-review-2026-04-28": 8,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
     "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 2,
@@ -51,8 +51,8 @@
     "retros/2026-05-12-cycles-305-307": 6,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
-    "retros/2026-05-13-cycles-452-455": 5,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 5,
+    "retros/2026-05-13-cycles-452-455": 6,
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 6,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
     "retros/2026-05-13-cycles-482-485": 4,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 14,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 16,
     "retros/2026-05-19-cycles-801-804": 5,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -106,7 +106,7 @@
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 2,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
-    "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 1,
+    "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 2,
     "retros/2026-05-12-cycles-299-301": 1,
     "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 7,
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
@@ -124,7 +124,7 @@
     "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 2,
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
-    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 2,
+    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
     "harness-engineering/agentic-git-commit-body-dispatch-transport": 4,
     "harness-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 2,
@@ -140,7 +140,7 @@
     "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 2,
     "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
     "retros/2026-05-12-cycles-323-326": 2,
-    "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1,
+    "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 3,
     "project-ops/agile-sprint-planning-execution-ai-projects": 1,
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1,
     "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 1,
@@ -161,7 +161,7 @@
     "harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 1,
     "harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 3,
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
-    "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
+    "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 2,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
     "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
     "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 6,
@@ -170,7 +170,13 @@
     "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
     "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
-    "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 1
+    "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 1,
+    "harness-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
+    "agents/autonomous-agent-long-term-memory-management": 1,
+    "retros/2026-05-22-cycles-1005-1008": 1,
+    "retros/2026-05-22-cycles-1006-1012": 2,
+    "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
+    "retros/2026-05-13-cycles-421-423": 1
   },
   "noMatchQueries": [
     {
@@ -367,6 +373,41 @@
       "query": "hub worker compounding",
       "timestamp": "2026-06-15T02:20:47.105Z",
       "topScore": 0.8453
+    },
+    {
+      "query": "hub worker bidirectional growth measurement",
+      "timestamp": "2026-06-15T02:26:59.507Z",
+      "topScore": 0.851
+    },
+    {
+      "query": "wiki category rebalance restructure",
+      "timestamp": "2026-06-15T02:27:39.929Z",
+      "topScore": 0.8489
+    },
+    {
+      "query": "wiki category coherence health score",
+      "timestamp": "2026-06-15T02:27:52.633Z",
+      "topScore": 0.849
+    },
+    {
+      "query": "closed loop design philosophy automation feedback",
+      "timestamp": "2026-06-15T02:37:59.538Z",
+      "topScore": 0.838
+    },
+    {
+      "query": "wiki search hit rate blind spot dead zone unused entry",
+      "timestamp": "2026-06-15T02:38:33.220Z",
+      "topScore": 0.8477
+    },
+    {
+      "query": "JIT search blind spot 0 hit entry dead zone detection",
+      "timestamp": "2026-06-15T02:40:43.709Z",
+      "topScore": 0.8587
+    },
+    {
+      "query": "category rebalance coherence score merge split decision",
+      "timestamp": "2026-06-15T02:42:51.733Z",
+      "topScore": 0.8256
     }
   ],
   "noMatchQueryCounts": {
@@ -404,7 +445,14 @@
     "drift detection monitoring methodology": 1,
     "category rebalance wiki": 1,
     "wiki entry ROI consumption metric": 1,
-    "bidirectional hub worker compound growth": 1
+    "bidirectional hub worker compound growth": 1,
+    "hub worker bidirectional growth measurement": 1,
+    "wiki category rebalance restructure": 1,
+    "wiki category coherence health score": 1,
+    "closed loop design philosophy automation feedback": 1,
+    "wiki search hit rate blind spot dead zone unused entry": 1,
+    "JIT search blind spot 0 hit entry dead zone detection": 1,
+    "category rebalance coherence score merge split decision": 1
   },
-  "totalQueries": 738
+  "totalQueries": 755
 }
