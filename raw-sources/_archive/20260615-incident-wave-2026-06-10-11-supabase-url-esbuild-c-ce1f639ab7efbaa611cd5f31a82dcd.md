@@ -1,0 +1,42 @@
+---
+date: "2026-06-15"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "ce1f639ab7efbaa611cd5f31a82dcd11652dd9fe"
+---
+
+
+subtype: lesson
+cycle_n: 1169
+chain: fix-incident (lite, incident-followup triage)
+wave: 4 (cycle 434 + 669 + 1095 + 1169)
+
+## 관찰
+
+cycle 1169 진단 lesson-pending label open issue 8건 (#1951~#1958) 분류:
+- vercel-deploy-* 4건 (#1951/#1952/#1954/#1955) — 5b3c0b0/eec05b4/53d84e6/67e2a05 deploy 실패
+- ci-main-* 3건 (#1953/#1956/#1957) — eec05b4/53d84e6/67e2a05 CI 실패
+- ci-dependabot-* 1건 (#1958) — dependabot esbuild CVE PR CI 실패
+
+→ 본 8건 모두 후속 fix series 로 resolve:
+- 5b3c0b0 (nav: NavIconName star, cycle 1138)
+- eec05b4 (tabpfn import, cycle 1138) → CI/deploy flake
+- 53d84e6 (docs todos) + 67e2a05 (lotto Step D, cycle 1138 wave)
+- ci-dependabot esbuild → fix 5892565 (esbuild >=0.28.1 override CVE GHSA-gv7w-rqvm-qjhr)
+- vercel-deploy SUPABASE_URL silent 무응답 → fix 8da59a5 (NEXT_PUBLIC_SUPABASE_URL fix, MLB pipeline 3일 silent)
+
+워커 실 작업 X. 본 reminder 들 = hub D5 cron 자동 spawn, fix 후 fingerprint 매칭 lesson 부재로 silent 누적.
+
+## N=4 trigger 도달
+
+cycle 434 (15건) → cycle 669 (86건) → cycle 1095 (23건) → cycle 1169 (8건) = 4회 동일 batch 패턴.
+cycle 1095 lesson 안 meta-pattern dispatch (memory: hub-d5-cron-recurring-noise) 이미 박제. 본 cycle 재진단 = 패턴 영구 누적 evidence carry-over (사용자 영역 hub repo workflow 조정 결정).
+
+## 박제
+
+1. 본 lesson commit (subtype: lesson, 8 fingerprint 묶음)
+2. 8 issue manual close + comment 본 commit hash 참조 (수동 close 필수 — D5 cron 자동 close X)
+3. meta-pattern dispatch 신규 X (wave 3 박제 시 N=3 trigger 이미 fire, 4 evidence carry-over only)
+
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
