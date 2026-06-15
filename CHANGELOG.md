@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.79] — 2026-06-15
+
+### Added
+- `content/harness-engineering/llm-agent-observability-spanlens-trace-monitoring.mdx` — Spanlens LLM agent trace + cost tracking 오픈소스 관측 패턴 (cycle 1089, blog-autopilot #164 scout 위키화).
+- `docs/solutions/develop-cycle-hub/2026-06-11-index-md-rebase-conflict-auto-regenerate.md` — INDEX.md rebase conflict N=3 해결책. `_compiled-truth.md` develop-cycle-hub N=3 달성 (cycle 1087): fake-batch anti-pattern / connections-slug-orphan / INDEX.md-rebase-conflict 3 패턴 메타 박제.
+
+### Fixed
+- blog-autopilot #164 (Spanlens LLM observability scout) — wiki entry 박제 후 close (cycle 1089).
+- blog-autopilot #218 (Claude 5 Fable model 업그레이드 scout) — BLOG_LLM_MODEL_OVERRIDE env 인프라 기존 지원 확인, 모델 GA 대기 carry-over (cycle 1088).
+- #1568/#1569/#1570/#1571 dependabot/CI esbuild vuln GHSA-gv7w-rqvm-qjhr — moneyball worker 영역 systemic carry-over (vite/vitest 업그레이드 필요), hub 차원 batch-close (cycle 1090-1091).
+- memory/.bak 파일 12건 정리 + 스테일 project memory 갱신 (cycle 1091: hub 1042→1091, wiki 310→324, BRANCHED 11/0→15/28).
+
+### Changed
+- wiki 322→324 entries (week-2026-24 + Spanlens). JIT search 669 invocations (hit rate 28.6%).
+- cycles 1085-1091: worker-incident-triage × 2 / curate × 2 / explore-idea × 1 / data-sync × 1.
+
 ## [0.9.78] — 2026-06-10
 
 ### Added
