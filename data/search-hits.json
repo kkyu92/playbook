@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 678,
+  "totalInvocations": 694,
   "skipped": 26,
-  "searched": 652,
-  "hit": 185,
-  "noMatch": 467,
-  "lastUpdated": "2026-06-15T01:57:46.451Z",
+  "searched": 668,
+  "hit": 190,
+  "noMatch": 478,
+  "lastUpdated": "2026-06-15T02:21:02.487Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 10,
+    "harness-engineering/hub-worker-compounding-pattern": 11,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -32,7 +32,7 @@
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
-    "reports/mid-review-2026-04-28": 6,
+    "reports/mid-review-2026-04-28": 7,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
     "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 2,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 13,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 14,
     "retros/2026-05-19-cycles-801-804": 5,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -164,11 +164,13 @@
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 1,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
     "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
-    "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 5,
+    "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 6,
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 1,
     "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
-    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1
+    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1,
+    "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
+    "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 1
   },
   "noMatchQueries": [
     {
@@ -310,19 +312,74 @@
       "query": "no match high rate",
       "timestamp": "2026-06-15T01:57:46.450Z",
       "topScore": 0.8256
+    },
+    {
+      "query": "incident followup cron recurring reminder fingerprint",
+      "timestamp": "2026-06-15T02:07:24.977Z",
+      "topScore": 0.865
+    },
+    {
+      "query": "closed loop automation design feedback pipeline",
+      "timestamp": "2026-06-15T02:10:20.550Z",
+      "topScore": 0.8356
+    },
+    {
+      "query": "sqlite uuid rowid primary key performance database",
+      "timestamp": "2026-06-15T02:10:24.823Z",
+      "topScore": 0.8468
+    },
+    {
+      "query": "hub worker compounding automation feedback loop self-improvement",
+      "timestamp": "2026-06-15T02:10:40.778Z",
+      "topScore": 0.8524
+    },
+    {
+      "query": "drift detection monitoring methodology",
+      "timestamp": "2026-06-15T02:10:41.474Z",
+      "topScore": 0.8559
+    },
+    {
+      "query": "category rebalance wiki",
+      "timestamp": "2026-06-15T02:17:06.122Z",
+      "topScore": 0.8435
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-15T02:17:32.333Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "무덤 진단",
+      "timestamp": "2026-06-15T02:17:33.022Z",
+      "topScore": 0.8665
+    },
+    {
+      "query": "wiki entry ROI consumption metric",
+      "timestamp": "2026-06-15T02:17:36.398Z",
+      "topScore": 0.859
+    },
+    {
+      "query": "bidirectional hub worker compound growth",
+      "timestamp": "2026-06-15T02:20:46.419Z",
+      "topScore": 0.8352
+    },
+    {
+      "query": "hub worker compounding",
+      "timestamp": "2026-06-15T02:20:47.105Z",
+      "topScore": 0.8453
     }
   ],
   "noMatchQueryCounts": {
-    "wiki grave 진단법": 2,
+    "wiki grave 진단법": 3,
     "양방향 무한성장 비전": 1,
     "Pull 측정 인프라": 1,
     "허브 워커 양방향 복리": 1,
-    "무덤 진단": 1,
+    "무덤 진단": 2,
     "BRANCHED diverged origin local push": 1,
     "silent-fail cron cancelled timeout workflow": 1,
     "bidirectional hub worker compound growth vision": 1,
     "closed loop design philosophy": 1,
-    "hub worker compounding": 1,
+    "hub worker compounding": 2,
     "auto-ingest PR rebase conflict journal branch": 1,
     "dependabot CI failure lint format moneyball": 1,
     "hub worker bidirectional growth measurement closed loop": 1,
@@ -339,7 +396,15 @@
     "prompt engineering content quality evaluation checklist": 1,
     "claude-ns-hub claude API cost optimization caching": 1,
     "fact verification source attribution LLM content": 1,
-    "no match high rate": 1
+    "no match high rate": 1,
+    "incident followup cron recurring reminder fingerprint": 1,
+    "closed loop automation design feedback pipeline": 1,
+    "sqlite uuid rowid primary key performance database": 1,
+    "hub worker compounding automation feedback loop self-improvement": 1,
+    "drift detection monitoring methodology": 1,
+    "category rebalance wiki": 1,
+    "wiki entry ROI consumption metric": 1,
+    "bidirectional hub worker compound growth": 1
   },
-  "totalQueries": 722
+  "totalQueries": 738
 }
