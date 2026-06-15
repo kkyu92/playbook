@@ -99,9 +99,11 @@ function checkPatterns(entries) {
 
 function checkInProgressOldEntries(entries) {
   // status: in-progress 인 채로 오래된 entry — 보강 또는 status 변경 후보
+  // journal 제외: append-only 정책으로 status 수정 불가 → 구조적 오경보
   const results = [];
   for (const e of entries) {
     if (e.frontmatter.status !== "in-progress") continue;
+    if (e.slug.startsWith("journal/")) continue;
     const days = daysSince(e.frontmatter.date);
     if (days > STALE_DAYS) results.push({ slug: e.slug, days });
   }
