@@ -1,18 +1,18 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 669,
+  "totalInvocations": 678,
   "skipped": 26,
-  "searched": 643,
-  "hit": 184,
-  "noMatch": 459,
-  "lastUpdated": "2026-06-15T01:43:12.344Z",
+  "searched": 652,
+  "hit": 185,
+  "noMatch": 467,
+  "lastUpdated": "2026-06-15T01:57:46.451Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
     "agents/qwen3-6-max-preview-llm-agentic-coding-evaluation": 1,
-    "evaluation/llm-output-validation-quality-metrics-design": 1,
+    "evaluation/llm-output-validation-quality-metrics-design": 2,
     "harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security": 1,
     "harness-engineering/question-own-defaults": 3,
     "harness-engineering/gstack-framework-ai-agent-collaboration-architecture": 1,
@@ -133,7 +133,7 @@
     "harness-engineering/agentic-supervisor-session-liveness-contract": 1,
     "harness-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance": 2,
     "harness-engineering/llm-agent-tool-call-reliability-forge-guardrails": 2,
-    "evaluation/llm-document-integrity-validation-pipeline-enhancement": 1,
+    "evaluation/llm-document-integrity-validation-pipeline-enhancement": 2,
     "harness-engineering/agentic-commit-body-subtype-dispatch-transport": 2,
     "harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 2,
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 3,
@@ -270,6 +270,46 @@
       "query": "esbuild vulnerability audit CI dependabot",
       "timestamp": "2026-06-15T01:43:12.343Z",
       "topScore": 0.8381
+    },
+    {
+      "query": "SQLite UUID primary key performance",
+      "timestamp": "2026-06-15T01:50:55.422Z",
+      "topScore": 0.8504
+    },
+    {
+      "query": "AI news RSS feed pipeline integration",
+      "timestamp": "2026-06-15T01:50:56.163Z",
+      "topScore": 0.8481
+    },
+    {
+      "query": "AI content smell detection quality evaluation",
+      "timestamp": "2026-06-15T01:51:00.059Z",
+      "topScore": 0.8294
+    },
+    {
+      "query": "blogger oauth token refresh security",
+      "timestamp": "2026-06-15T01:51:00.780Z",
+      "topScore": 0.8317
+    },
+    {
+      "query": "prompt engineering content quality evaluation checklist",
+      "timestamp": "2026-06-15T01:51:38.175Z",
+      "topScore": 0.84
+    },
+    {
+      "query": "claude-ns-hub claude API cost optimization caching",
+      "timestamp": "2026-06-15T01:53:48.264Z",
+      "topScore": 0.869
+    },
+    {
+      "query": "fact verification source attribution LLM content",
+      "timestamp": "2026-06-15T01:53:49.018Z",
+      "topScore": 0.8563
+    },
+    {
+      "query": "no match high rate",
+      "timestamp": "2026-06-15T01:57:46.450Z",
+      "topScore": 0.8256
     }
   ],
   "noMatchQueryCounts": {
@@ -291,7 +331,15 @@
     "Claude 5 Fable model upgrade API": 1,
     "observability monitoring LLM cost tracking tracing": 1,
     "daily ingest failure partial mdx pipeline": 1,
-    "esbuild vulnerability audit CI dependabot": 1
+    "esbuild vulnerability audit CI dependabot": 1,
+    "SQLite UUID primary key performance": 1,
+    "AI news RSS feed pipeline integration": 1,
+    "AI content smell detection quality evaluation": 1,
+    "blogger oauth token refresh security": 1,
+    "prompt engineering content quality evaluation checklist": 1,
+    "claude-ns-hub claude API cost optimization caching": 1,
+    "fact verification source attribution LLM content": 1,
+    "no match high rate": 1
   },
-  "totalQueries": 713
+  "totalQueries": 722
 }
