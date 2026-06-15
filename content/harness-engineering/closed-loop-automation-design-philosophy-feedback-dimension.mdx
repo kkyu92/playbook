@@ -1,0 +1,95 @@
+---
+title: "Closed-Loop 자동화 설계 철학 — 피드백 차원이 핵심인 이유"
+category: harness-engineering
+date: "2026-06-15"
+tags:
+  - closed-loop
+  - automation
+  - feedback-loop
+  - self-improvement
+  - system-design
+  - observability
+confidence: 2
+connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/llm-agent-observability-spanlens-trace-monitoring, evaluation/llm-output-validation-quality-metrics-design]
+status: draft
+description: "자동화 루프 4차원 (input/process/output/feedback) 설계 원칙. feedback 차원이 빠지면 시스템이 학습하지 못하는 이유, hub D1-D5 closed-loop 구현 예시, anti-pattern 카탈로그."
+type: entry
+source: meta
+---
+
+자동화 시스템은 대부분 **input → process → output** 3차원으로 설계된다. 하지만 장기적으로 살아남는 시스템은 **feedback** 차원을 더해 4차원 루프를 형성한다. 이 차이가 "유지되는 자동화"와 "썩어가는 자동화"를 가른다.
+
+## 4차원 프레임워크
+
+```
+input → process → output
+  ↑                  ↓
+  └────── feedback ───┘
+```
+
+| 차원 | 역할 | 부재 시 증상 |
+|---|---|---|
+| **input** | 데이터·트리거 수집 | 변화 감지 불가 → stale 처리 |
+| **process** | 변환·판단 실행 | 부정확한 변환 → 오류 누적 |
+| **output** | 결과 배포·저장 | 결과물 불완전 → 사용자 불신 |
+| **feedback** | 결과 측정 → 다음 input 보정 | **시스템이 배우지 못함 → silent drift** |
+
+feedback 가 없으면 process 가 아무리 정교해도 오류가 누적되어도 인식 못함. 가장 위험한 것은 **"돌아가는 것처럼 보이지만 서서히 망가지는"** 패턴 — silent drift 의 근원.
+
+## Feedback 차원의 3 sub-layer
+
+1. **Visibility** (가시성): 결과를 측정·기록. 측정 없이는 보정 불가.
+   - 예: JIT search hit rate, CI 실패율, lesson 생성 빈도
+
+2. **Alert** (이상 감지): 임계값 초과 시 신호. 사람이나 자동화가 개입할 수 있도록.
+   - 예: `incident-followup.yml` D5 cron, Sentry alert, `silent-skip-tracker`
+
+3. **Retro** (회고·갱신): 발견된 문제를 다음 cycle 의 input 으로 반영.
+   - 예: cycle_state JSON carry-over, SKILL.md 자가 갱신, solution 박제
+
+세 sub-layer 중 하나라도 없으면 feedback 루프가 끊긴다.
+
+## Hub D1-D5 Closed-Loop 구현 예시
+
+| Phase | 차원 | 구현체 |
+|---|---|---|
+| D1 | input | `auto-ingest.yml` — 워커 incident 자동 수집 |
+| D2 | process | `incident-correlation.mjs` — fingerprint 매칭 + unack 식별 |
+| D3 | output | `incident-followup.yml` — lesson-pending reminder 생성 |
+| D4 | feedback (visibility) | hub issue list — open 건수 추적 |
+| D5 | feedback (alert) | D5 cron — 3일+ unack 시 워커 reminder 생성 |
+| D6 | feedback (retro) | hub-dispatch cycle — batch close + wiki 박제 + solution 승격 |
+
+D5 cron 이 `--state all` 로 closed incident 포함했던 버그 = feedback sub-layer 2 (Alert) 의 input 범위 오류 → 이미 해결된 항목에 계속 alert → noise (cycle 1095 fix).
+
+## Anti-Pattern 카탈로그
+
+### 1. 반쪽 루프 (Half-loop)
+input → process → output 만 있고 feedback 없음. 처음엔 동작하지만 외부 환경 변화 시 silent drift. **진단**: 자동화가 "얼마나 잘 동작하는지" 측정하는 지표가 없으면 반쪽 루프.
+
+### 2. 끊긴 feedback (Broken feedback)
+feedback 생성은 되지만 다음 input 보정에 반영되지 않음. 회고는 하지만 변하지 않는 시스템. **진단**: 같은 오류 패턴이 N회 반복 (N=3 threshold = meta-pattern 신호).
+
+### 3. 과도한 feedback noise
+alert 빈도가 너무 높아 경보 피로 (alert fatigue). 실제 이상 신호가 noise 에 묻힘. **진단**: D5 cron reminder 를 매번 batch-close 해야 하는 상황 → `--state all` bug 같은 structural noise 원인 수정 필요.
+
+### 4. 단방향 루프 (Unidirectional)
+한쪽 방향의 변화만 feedback. push 는 자동화, pull 은 수동. 또는 반대. **진단**: hub-worker bidirectional growth 의 Push 만 구현된 초기 상태.
+
+## 새 자동화 설계 체크리스트
+
+신규 workflow/script 설계 시:
+- [ ] Input: 어떤 데이터·트리거를 수집하는가?
+- [ ] Process: 어떤 판단/변환 로직인가?
+- [ ] Output: 어디에 결과를 배포/저장하는가?
+- [ ] Visibility: 결과를 어떻게 측정·기록하는가?
+- [ ] Alert: 이상 발생 시 어떻게 신호를 보내는가?
+- [ ] Retro: 발견된 문제가 다음 cycle input 에 반영되는가?
+
+Visibility + Alert + Retro 중 하나라도 없으면 feedback 차원 결손 → `closed-loop-design` chain 발화 신호.
+
+## 관련 항목
+
+- [[hub-worker-compounding-pattern]] — 허브↔워커 양방향 성장 = closed-loop 의 실 구현체
+- [[llm-agent-observability-spanlens-trace-monitoring]] — Visibility sub-layer 실천 예시
+- [[llm-output-validation-quality-metrics-design]] — Output 검증 = feedback 루프 입력
