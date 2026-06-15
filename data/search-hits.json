@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 666,
+  "totalInvocations": 669,
   "skipped": 26,
-  "searched": 640,
-  "hit": 183,
-  "noMatch": 457,
-  "lastUpdated": "2026-06-11T12:58:38.968Z",
+  "searched": 643,
+  "hit": 184,
+  "noMatch": 459,
+  "lastUpdated": "2026-06-15T01:43:12.344Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 10,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -167,7 +167,8 @@
     "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 5,
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 1,
-    "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1
+    "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
+    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1
   },
   "noMatchQueries": [
     {
@@ -259,6 +260,16 @@
       "query": "observability monitoring LLM cost tracking tracing",
       "timestamp": "2026-06-11T12:58:38.967Z",
       "topScore": 0.8325
+    },
+    {
+      "query": "daily ingest failure partial mdx pipeline",
+      "timestamp": "2026-06-15T01:42:03.586Z",
+      "topScore": 0.8377
+    },
+    {
+      "query": "esbuild vulnerability audit CI dependabot",
+      "timestamp": "2026-06-15T01:43:12.343Z",
+      "topScore": 0.8381
     }
   ],
   "noMatchQueryCounts": {
@@ -278,7 +289,9 @@
     "category rebalance wiki entry distribution": 1,
     "wiki growth ROI metrics hit rate measurement blind spot": 1,
     "Claude 5 Fable model upgrade API": 1,
-    "observability monitoring LLM cost tracking tracing": 1
+    "observability monitoring LLM cost tracking tracing": 1,
+    "daily ingest failure partial mdx pipeline": 1,
+    "esbuild vulnerability audit CI dependabot": 1
   },
-  "totalQueries": 710
+  "totalQueries": 713
 }
