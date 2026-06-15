@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { findMdxFiles } from "./lib/fs-helpers.mjs";
+import { checkConnectionPrefix } from "./lib/develop-cycle-hub-check.mjs";
 
 // /lint 의 결정론적 검사 부분.
 // 의미 판단 (중복 감지, 패턴 → wiki 승격 권장) 은 Claude 가 /lint 호출 시 추가로 수행.
@@ -138,6 +139,7 @@ function printSection(title, items, formatItem, footer) {
 function main() {
   const entries = loadEntries();
   const orphans = checkOrphans(entries);
+  const connPrefixWarnings = checkConnectionPrefix(entries);
   const isolated = checkIsolated(entries);
   const stale = checkStale(entries);
   const inProgress = checkInProgressOldEntries(entries);
@@ -152,6 +154,7 @@ function main() {
   console.log(`Total entries: ${entries.length}`);
   console.log("");
   console.log(`${sym(orphans.length)} Orphan Links:        ${orphans.length}건`);
+  console.log(`${sym(connPrefixWarnings.length)} Conn Prefix Missing: ${connPrefixWarnings.length}건 (category/ 접두사 없는 connections)`);
   console.log(`${sym(isolated.length)} Isolated Nodes:      ${isolated.length}건`);
   console.log(`${sym(stale.length)} Stale:               ${stale.length}건 (confidence<3, ${STALE_DAYS}일+)`);
   console.log(`${sym(inProgress.length)} Long In-Progress:    ${inProgress.length}건 (${STALE_DAYS}일+)`);
@@ -161,6 +164,7 @@ function main() {
   console.log("");
 
   printSection("Orphans (참조하지만 엔트리 없음)", orphans, (o) => `${o.from} → ${o.to}`);
+  printSection("Conn Prefix Missing (category/ 접두사 없는 connections — orphan 원인)", connPrefixWarnings, (w) => `${w.entry}: connections 에 '${w.connection}' — '${w.connection.split('/')[0]}/' prefix 필요`);
   printSection("Isolated (connections 없음)", isolated, (s) => s);
   printSection("Stale (보강 또는 아카이브)", stale, (s) => `${s.slug} — confidence ${s.confidence}, ${s.days}일 전`);
   printSection("Long In-Progress (status 변경 또는 보강)", inProgress, (s) => `${s.slug} — ${s.days}일 전 작성, 여전히 in-progress`);
@@ -179,10 +183,10 @@ function main() {
   // A2 Phase 1 진입 base. subagent finding #4 (lint:wiki 통과 강제) 의 진짜 fix.
   // CI/workflow 에서 strict 모드 사용 → LLM hallucination (잘못된 connections) 자동 차단
   const strict = process.argv.includes("--strict");
-  if (strict && (orphans.length > 0 || isolated.length > 0)) {
+  if (strict && (orphans.length > 0 || isolated.length > 0 || connPrefixWarnings.length > 0)) {
     console.error("");
-    console.error(`❌ STRICT MODE FAIL — orphans=${orphans.length}, isolated=${isolated.length}`);
-    console.error("   회귀 가드: connections 변경 후 재검증 필요. orphan/isolated 0 이어야 통과.");
+    console.error(`❌ STRICT MODE FAIL — orphans=${orphans.length}, conn-prefix-missing=${connPrefixWarnings.length}, isolated=${isolated.length}`);
+    console.error("   회귀 가드: connections 변경 후 재검증 필요. orphan/isolated/conn-prefix 0 이어야 통과.");
     process.exit(1);
   }
 }
