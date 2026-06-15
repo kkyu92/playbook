@@ -4,17 +4,17 @@ source: "kkyu92/moneyballscore"
 type: "worker-incident"
 payload_type: "incident"
 severity: "error"
-fingerprint: "ci-dependabot-npm-and-yarn-lint-format-e6248b8319-74d1a91ab9"
+fingerprint: "ci-dependabot-npm-and-yarn-lint-format-e6248b8319-bbc0045810"
 environment: "ci"
-run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/27519315077"
+run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/27524356731"
 ---
 
 **Workflow**: CI
 **Branch**: dependabot/npm_and_yarn/lint-format-e6248b8319
-**Commit**: 74d1a91ab96206c883da392745992744d53edd9f
+**Commit**: bbc0045810f126762499df78eef98c1fa0e638c4
 **Triggered by**: dependabot[bot]
 **Attempt**: 1
-**Run URL**: https://github.com/kkyu92/moneyballscore/actions/runs/27519315077
+**Run URL**: https://github.com/kkyu92/moneyballscore/actions/runs/27524356731
 **Conclusion**: failure
 
 ---
