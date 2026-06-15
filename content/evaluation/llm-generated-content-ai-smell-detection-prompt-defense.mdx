@@ -1,0 +1,117 @@
+---
+title: "LLM 생성 콘텐츠 AI Smell 패턴 — 감지와 프롬프트 방어 전략"
+category: evaluation
+date: "2026-06-15"
+tags:
+  - ai-smell
+  - llm-generation
+  - content-quality
+  - prompt-engineering
+  - evaluation
+confidence: 1
+connections: [evaluation/llm-output-validation-quality-metrics-design, harness-engineering/llm-agent-observability-spanlens-trace-monitoring]
+status: draft
+description: "LLM이 생성하는 콘텐츠에서 반복적으로 나타나는 인공적 패턴(AI smell) 목록, 자동 감지 전략, 프롬프트 방어 기법. blog-autopilot 자연 SEO 콘텐츠 파이프라인 적용 기준."
+type: entry
+source: scout
+---
+
+LLM 이 생성하는 글에는 사람이 쓴 것과 다른 특유의 패턴이 반복된다. 독자는 이를 무의식적으로 "AI 느낌" 으로 인식 — SEO 신뢰도 저하, 이탈률 상승, 브랜드 진정성 훼손으로 이어진다. 체계적 감지 + 프롬프트 방어로 LLM 생성 콘텐츠의 품질 ceiling 을 높일 수 있다.
+
+## AI Smell 패턴 목록
+
+### 문장 구조 패턴
+- **한 줄 명언 남용**: "X는 Y의 핵심이다." 형태 단문 반복 (≥3회/단락)
+- **연속 짧은 문장**: 3문장 이상 단문 연속 (단락 평균 < 15단어)
+- **단락 간 동일 구조**: 모든 단락이 `정의 → 예시 → 결론` 동일 템플릿
+- **결론 단락 재요약**: "따라서 우리는 X 임을 알 수 있다" 식 반복
+
+### 어휘 패턴
+- **혁명/변화/전환 클리셰**: "혁명적", "게임체인저", "패러다임 전환", "미래를 바꿀"
+- **과도한 긍정 부사**: "즉시", "완벽하게", "효과적으로", "중요하게도" 과용
+- **hedging 과잉**: "일반적으로", "대부분의 경우", "어떤 의미에서는" 비율이 높음
+- **영어 직역 어색**: "-임에 틀림없다", "이것이 바로 ~하는 이유이다"
+
+### 콘텐츠 구조 패턴
+- **소제목 N개 강박**: 모든 섹션 H2/H3 균등 분할 (실제 비중 무관)
+- **인트로 공식**: "오늘날 X 는 중요합니다. 이 글에서는..." 패턴
+- **아웃트로 공식**: "X 를 도입하면 Y 가 가능합니다. 지금 시작하세요!" 패턴
+
+## 감지 전략
+
+### 자동화 가능 (스크립트)
+
+```typescript
+// AI smell score 계산 예시
+function computeAiSmellScore(text: string): number {
+  const sentences = text.split(/[.!?]/);
+  const avgLen = sentences.reduce((s, t) => s + t.length, 0) / sentences.length;
+  
+  let score = 0;
+  
+  // 문장 단조로움 (낮은 편차)
+  const variance = sentences.reduce((s, t) => s + Math.pow(t.length - avgLen, 2), 0) / sentences.length;
+  if (variance < 100) score += 2;
+  
+  // 클리셰 밀도
+  const clicheCount = CLICHE_PATTERNS.filter(p => new RegExp(p).test(text)).length;
+  score += clicheCount;
+  
+  return score; // 0~5: natural, 6~10: borderline, 11+: AI-heavy
+}
+
+const CLICHE_PATTERNS = [
+  '혁명적', '게임체인저', '패러다임 전환', '미래를 바꿀',
+  '따라서 우리는', '이것이 바로', '지금 시작하세요',
+  '오늘날.*중요합니다', '이 글에서는.*살펴보겠습니다',
+];
+```
+
+### 수동 점검 체크리스트
+
+- [ ] 3개 연속 단락이 동일 구조인가?
+- [ ] "X 는 Y 이다" 형태 문장 빈도 > 20%?
+- [ ] 인트로/아웃트로가 공식 구조인가?
+- [ ] 헤딩 개수 > 문단 수의 50%?
+
+## 프롬프트 방어 기법
+
+### 시스템 프롬프트 negative example
+
+```
+다음 패턴을 절대 사용하지 마세요:
+- 단락을 "따라서 우리는 ~임을 알 수 있다"로 끝내기
+- "오늘날 X는 중요합니다" 식 인트로
+- 같은 단락 구조를 3번 이상 반복
+- "혁명적", "게임체인저", "지금 시작하세요" 등의 과장 표현
+- 한 줄짜리 격언식 문장을 단락의 핵심으로 사용
+
+대신: 구체적 사례, 수치, 실제 상황 묘사로 단락을 다양화하세요.
+```
+
+### Few-shot negative/positive 예시 삽입
+
+bad → good 예시 2~3개 system prompt 에 포함. "마치 X 같다" 식 비유보다 실제 사례 우선.
+
+### 사후 검증 + 재생성 루프
+
+1. 초기 생성 → AI smell score 계산
+2. 임계값 초과 시 → "아래 내용을 더 자연스럽게 재작성하세요" prompt 로 재생성
+3. 재생성 2회 후에도 임계값 초과 → 사람 검토 큐로 이관
+
+## blog-autopilot 적용 포인트
+
+- `auto-publish.yml` 생성 단계 후 post-process step 추가
+- Claude prompt system message 에 CLICHE_PATTERNS negative instruction 주입
+- 재생성 루프: 최대 2회 → 그 이후 `ai_review` 필드 `needs_review: true` 박제 + Slack 알림
+
+## 대안
+
+- **patina** (blog-autopilot #188): AI 후처리 전용 도구. AI smell 특화 아닌 범용 post-processing.
+- **perplexity 기반 감지**: 낮은 perplexity = AI 확률 높음. 그러나 계산 비용 큼.
+- **사람 편집 단계**: AI smell 방어 가장 확실하나 자동화 ROI 감소.
+
+## 관련 항목
+
+- [[llm-output-validation-quality-metrics-design]] — LLM 출력 검증 메트릭 설계
+- [[llm-agent-observability-spanlens-trace-monitoring]] — LLM 파이프라인 관측 (AI smell score 를 span attribute 로 박제 가능)
