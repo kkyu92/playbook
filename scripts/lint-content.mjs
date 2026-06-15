@@ -164,7 +164,7 @@ function main() {
   console.log("");
 
   printSection("Orphans (참조하지만 엔트리 없음)", orphans, (o) => `${o.from} → ${o.to}`);
-  printSection("Conn Prefix Missing (category/ 접두사 없는 connections — orphan 원인)", connPrefixWarnings, (w) => `${w.entry}: connections 에 '${w.connection}' — '${w.connection.split('/')[0]}/' prefix 필요`);
+  printSection("Conn Prefix Missing (category/ 접두사 없는 connections — orphan 원인)", connPrefixWarnings, (w) => `${w.entry}: connections 에 '${w.connection}' — <category>/${w.connection} 형식 필요`);
   printSection("Isolated (connections 없음)", isolated, (s) => s);
   printSection("Stale (보강 또는 아카이브)", stale, (s) => `${s.slug} — confidence ${s.confidence}, ${s.days}일 전`);
   printSection("Long In-Progress (status 변경 또는 보강)", inProgress, (s) => `${s.slug} — ${s.days}일 전 작성, 여전히 in-progress`);
