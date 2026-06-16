@@ -184,6 +184,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [멀티모달 Harness 디자인 패턴 — 복합 LLM 워크플로우를 위한 통합 프레임워크](wiki/harness-engineering/multimodal-harness-design-complex-llm-workflows) — confidence: 1, status: draft
 - [Multimodal LLM Workflow Integration — Harness Orchestration Patterns](wiki/harness-engineering/multimodal-llm-workflow-harness-integration-patterns) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
+- [LLM 출력 검증 - OpenRouter Fusion API를 통한 견고한 에이전트 아키텍처](wiki/harness-engineering/openrouter-fusion-api-llm-output-validation) — confidence: 1, status: draft
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [Production LLM Harness Design — Scalable and Resilient AI Service Deployment](wiki/harness-engineering/production-llm-service-harness-system-design-patterns) — confidence: 1, status: draft
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/harness-engineering/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
@@ -340,6 +341,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 - [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 - [LLM 시스템 UX 평가 — 지표 설계 및 측정 전략](wiki/evaluation/llm-ux-evaluation-metrics-design-measurement) — confidence: 1, status: draft
+- [로컬 LLM 환경 구축 - 개인 지식 허브 및 AI 에이전트 하네스 최적화](wiki/evaluation/local-llm-environment-personal-knowledge-agent-harness) — confidence: 1, status: draft
 - [ML 파이프라인 정규화 함수 입력 범위 가정 — 피처 확장 시 silent 오계산](wiki/evaluation/ml-pipeline-normalization-range-assumption) — confidence: 2, status: complete
 - [Multi-Persona LLM Validation — Output Robustness Enhancement](wiki/evaluation/multi-persona-llm-output-validation-enhancement) — confidence: 1, status: draft
 - [예측 모델 Calibration 역전 감지 — confidence bucket vs 실제 적중률 불일치](wiki/evaluation/prediction-model-calibration-inversion-detection) — confidence: 2, status: complete
@@ -686,6 +688,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/openrouter-fusion-api-llm-output-validation
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-decision-making-patterns ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
@@ -750,6 +753,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/prompt-versioning-and-testing
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ agents/qwen3-7-max-agent-model-evaluation-integration
+- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ evaluation/local-llm-environment-personal-knowledge-agent-harness
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
@@ -1115,6 +1119,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/claude-code-html-output-ux-enhancement
+- evaluation/local-llm-environment-personal-knowledge-agent-harness ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- evaluation/local-llm-environment-personal-knowledge-agent-harness ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
 - evaluation/ml-pipeline-normalization-range-assumption ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/ml-pipeline-normalization-range-assumption ↔ harness-engineering/silent-drift-family-pattern
 - evaluation/ml-pipeline-normalization-range-assumption ↔ harness-engineering/question-own-defaults
@@ -1771,6 +1777,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ project-ops/claude-code-cost-optimization-strategies
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ project-ops/claude-code-harness-cost-optimization-reassessment
+- harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ harness-engineering/openrouter-fusion-api-llm-output-validation
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
