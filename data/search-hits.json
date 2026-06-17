@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 711,
+  "totalInvocations": 720,
   "skipped": 26,
-  "searched": 685,
-  "hit": 200,
-  "noMatch": 485,
-  "lastUpdated": "2026-06-15T02:42:55.184Z",
+  "searched": 694,
+  "hit": 207,
+  "noMatch": 487,
+  "lastUpdated": "2026-06-17T01:23:22.301Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 11,
+    "harness-engineering/hub-worker-compounding-pattern": 12,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -41,7 +41,7 @@
     "harness-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 1,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 3,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 4,
     "harness-engineering/develop-cycle-positive-streak-recognition": 3,
     "retros/2026-05-12-cycles-308-311": 4,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -94,21 +94,21 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 16,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 17,
     "retros/2026-05-19-cycles-801-804": 5,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
     "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 11,
     "harness-engineering/recurring-file-bug-accumulator-pattern": 1,
     "retros/2026-05-08-cycles-265-280": 1,
-    "retros/2026-05-12-cycles-342-346": 2,
+    "retros/2026-05-12-cycles-342-346": 3,
     "harness-engineering/agentic-lite-first-scan-gate-execution-pattern": 3,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
     "infrastructure/vercel-ignore-command-preview-skip": 2,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "harness-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 2,
     "retros/2026-05-12-cycles-299-301": 1,
-    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 7,
+    "harness-engineering/agentic-local-commit-batch-deploy-rate-management": 8,
     "harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop": 1,
     "retros/2026-05-13-cycles-405-406": 1,
     "retros/2026-05-13-cycles-408-409": 1,
@@ -121,7 +121,7 @@
     "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 2,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1,
-    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 2,
+    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 3,
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
@@ -163,7 +163,7 @@
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 2,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
-    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 2,
+    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 3,
     "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 6,
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 1,
@@ -176,7 +176,14 @@
     "retros/2026-05-22-cycles-1005-1008": 1,
     "retros/2026-05-22-cycles-1006-1012": 2,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
-    "retros/2026-05-13-cycles-421-423": 1
+    "retros/2026-05-13-cycles-421-423": 1,
+    "harness-engineering/agentic-wiki-confidence-lifecycle": 1,
+    "retros/2026-05-22-cycles-971-976": 1,
+    "retros/2026-05-19-cycle-789": 1,
+    "harness-engineering/agentic-wiki-entry-deletion-orphan-cascade": 1,
+    "retros/2026-05-19-cycle-785": 1,
+    "retros/2026-05-20-cycle-912": 1,
+    "solutions/ci-github-actions/2026-05-13-refactor-const-rename-test-sync-gap": 1
   },
   "noMatchQueries": [
     {
@@ -408,10 +415,20 @@
       "query": "category rebalance coherence score merge split decision",
       "timestamp": "2026-06-15T02:42:51.733Z",
       "topScore": 0.8256
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-15T02:51:38.413Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "Long In-Progress status entry 처리 결정 기준",
+      "timestamp": "2026-06-15T02:54:38.666Z",
+      "topScore": 0.8662
     }
   ],
   "noMatchQueryCounts": {
-    "wiki grave 진단법": 3,
+    "wiki grave 진단법": 4,
     "양방향 무한성장 비전": 1,
     "Pull 측정 인프라": 1,
     "허브 워커 양방향 복리": 1,
@@ -452,7 +469,8 @@
     "closed loop design philosophy automation feedback": 1,
     "wiki search hit rate blind spot dead zone unused entry": 1,
     "JIT search blind spot 0 hit entry dead zone detection": 1,
-    "category rebalance coherence score merge split decision": 1
+    "category rebalance coherence score merge split decision": 1,
+    "Long In-Progress status entry 처리 결정 기준": 1
   },
-  "totalQueries": 755
+  "totalQueries": 764
 }
