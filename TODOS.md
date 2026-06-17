@@ -6,11 +6,11 @@
 **Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) 가 origin/main 미반영. BRANCHED **local 68 / origin 124**. PR base = origin → audit gate fail. solution `ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure.md` 재발 이력 N=4 (cross-repo moneyball + intra-repo hub 동일 메커니즘).
 **Action (R6 사용자 영역)**: `git pull --rebase origin main` 또는 `git merge origin/main` 후 `git push origin main` → PR audit 자동 재실행 + 머지 unblock. push 후 10건 batch 자동 머지.
 
-## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 39건)
+## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 42건)
 
 **What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
-**Why**: CI 전체 블로킹. 허브 batch-close 누적: 28건(1110) + 5건(1112-1114) + 6건(1115-1117) = **39건 총 close**. playbook 자체는 cycle 1112 fix 완료.
-**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push. 마지막 이슈: 2026-06-17 02:00 KST.
+**Why**: CI 전체 블로킹. 허브 batch-close 누적: 28건(1110) + 5건(1112-1114) + 6건(1115-1117) + 3건(1124) = **42건 총 close**. playbook 자체는 cycle 1112 fix 완료.
+**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push. 마지막 이슈: 2026-06-17 23:48 KST.
 
 ---
 
