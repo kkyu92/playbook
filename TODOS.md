@@ -1,10 +1,10 @@
 # TODOS
 
-## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 33건)
+## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 39건)
 
 **What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
-**Why**: CI 전체 블로킹. 허브 batch-close 누적: cycle 1110 28건 + #1654 + #1657~1661 5건 = **33건 총 close**. playbook 자체는 cycle 1112 fix 완료.
-**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push. ⚠️ 매 cycle 새 issue 생성 중 — 조기 fix 권장.
+**Why**: CI 전체 블로킹. 허브 batch-close 누적: 28건(1110) + 5건(1112-1114) + 6건(1115-1117) = **39건 총 close**. playbook 자체는 cycle 1112 fix 완료.
+**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push. 마지막 이슈: 2026-06-17 02:00 KST.
 
 ---
 
