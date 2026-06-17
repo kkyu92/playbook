@@ -99,6 +99,17 @@ Top 5 most searched:
 2. harness-engineering / journal / retro 가 상위 — 허브 자체 운영 패턴이 가장 자주 검색됨.
 3. 157개 queries 의 target entry 는 long tail 분산.
 
+## wiki grave 진단법 (위키 무덤 진단법)
+
+"wiki grave 진단법" = 위키 지식베이스가 무덤이 됐는지 판정하는 3축 측정 방법론. **entry 수 ≠ ROI** 가 핵심.
+
+무덤 신호:
+- `data/search-hits.json` `noMatch` 항목 누적 (검색 해도 결과 없음 = 소비 채널 단절)
+- `totalQueries / 사이클 수` 0.1 이하 (search 자체가 안 불림)
+- lint CLEAN 이지만 히트율 30% 미만 (entry 는 있지만 검색 안 됨)
+
+wiki grave = 생산 과잉 + 소비 부재 구조. [[harness-engineering/wiki-jit-search-blind-spot-diagnosis]] 와 짝.
+
 ## 무덤 진단 기준 (3축 복합)
 
 | 상태 | 진단 기준 | 대응 |
