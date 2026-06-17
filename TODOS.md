@@ -1,5 +1,13 @@
 # TODOS
 
+## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16)
+
+**What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
+**Why**: CI 전체 블로킹 — 허브 issues #1584,#1612-#1649 (28건) batch-close 완료 (cycle 1110). moneyball 자체 fix 필요.
+**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push.
+
+---
+
 ## [DONE 2026-05-21] R6 머지 적용 — cycle 943 두 번째 머지 (`5904827`)
 
 **상태**: cycle 943 사용자 옵션 A 두 번째 머지 결정 → INDEX.md conflict 1건 script regen 으로 해소 → merge commit `5904827` 박제. 워커 lesson 23건 흡수 (249→253 entries, +4). embed 재생성 (1827→1938 chunks). BRANCHED 0/261 (origin 0 ahead, local 261 = 본 sess cycle 943 retro 추가 후 262).

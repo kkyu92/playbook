@@ -69,6 +69,7 @@ git push --force-with-lease origin auto-ingest/geeknews-YYYYMMDD
 |------|-----|------|------|
 | 2026-05-12 | #418, #421 | Next.js 16.2.3 (cycle 295 patch 미push) | cycle 303 root cause 확인, push 대기 |
 | 2026-05-12 | (moneyball 22건 batch) | protobufjs CVE — develop-cycle 브랜치 8건 + main 14건 | protobufjs >=7.5.6 fix PR #546 머지로 해소. cycle 452 triage CLOSE |
+| 2026-06-16 | (moneyball 28건 batch) | ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass on Windows) — cycle 1205-1207 SEO wave CI 전체 실패 | hub issues #1584,#1612-#1649 batch-close (cycle 1110 triage). fix: moneyball `pnpm update ws vite` 후 재push 필요. |
 
 ## 연관 솔루션
 
