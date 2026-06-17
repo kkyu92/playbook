@@ -4,6 +4,24 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.80] — 2026-06-17
+
+### Added
+- `content/harness-engineering/wiki-journal-append-only-lint-false-positive-status.mdx` — journal append-only 정책 vs lint Long In-Progress 구조적 오경보 수정 기록 (wiki #329, cycle 1109).
+- `content/infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern.mdx` — pnpm 간접 의존성 CVE audit gate 실패 수정 패턴 (wiki #330, cycle 1114). overrides vs devDep pin 판단 기준.
+- `content/harness-engineering/cross-fork-ci-failure-fix-propagation-boundary.mdx` — cross-fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정 (wiki #331, cycle 1116). 36건 CVE wave evidence.
+
+### Fixed
+- **playbook audit gate**: vite <=8.0.15 (GHSA-fx2h-pf6j-xcff) + protobufjs <=8.4.0 (GHSA-wcpc-wj8m-hjx6) CVE 패치 (cycle 1112). `vite ^8.0.16` devDependency 직접 pin + `pnpm.overrides protobufjs>=8.4.1`. audit high severity 0건.
+- `lint-content.mjs` Long In-Progress journal 제외 — append-only 구조적 오경보 24건 → 0건 (cycle 1109, `3499d1b`).
+- `vite` exact pin `8.0.16` → `^8.0.16` — 미래 patch 업데이트 차단 해소 (cycle 1117). redundant `pnpm.overrides.vite` 제거.
+- moneyball CI ws/vite CVE wave #1584~1669 **39건 batch-close** (cycles 1110-1117). root cause: ws <8.21.0 + vite <=8.0.15 moneyball 미수정. TODOS.md [P1] 갱신.
+
+### Changed
+- wiki 328→331 entries (cycle 1109-1116). JIT search embeddings 재빌드 (2484 chunks, 6 신규 entries 인덱싱 — cycle 1113).
+- `data/search-hits.json` totalQueries 764 (hub cycle 1103-1110 누적). `wiki grave 진단법` H2 alias 추가 (JIT noMatch 개선).
+- cycles 1110-1117: worker-incident-triage × 5 / fix-incident × 2 / curate × 2 / explore-idea × 2 / review-code × 1.
+
 ## [0.9.79] — 2026-06-15
 
 ### Added
