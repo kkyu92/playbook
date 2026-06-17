@@ -1,5 +1,11 @@
 # TODOS
 
+## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발)
+
+**What**: playbook hub auto-ingest PR 10건 (#1670/#1650/#1611/#1534/#1532/#1531/#1530/#1529/#1528/#1527) Auto Merge to main = FAILURE. workflow 안 `pnpm audit --audit-level high` 가 vite (`>=8.0.0 <=8.0.15`) + protobufjs (`>=8.0.0 <=8.4.0`) 2 high CVE block.
+**Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) 가 origin/main 미반영. BRANCHED **local 68 / origin 124**. PR base = origin → audit gate fail. solution `ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure.md` 재발 이력 N=4 (cross-repo moneyball + intra-repo hub 동일 메커니즘).
+**Action (R6 사용자 영역)**: `git pull --rebase origin main` 또는 `git merge origin/main` 후 `git push origin main` → PR audit 자동 재실행 + 머지 unblock. push 후 10건 batch 자동 머지.
+
 ## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 39건)
 
 **What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
