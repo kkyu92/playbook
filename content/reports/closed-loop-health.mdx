@@ -19,23 +19,23 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-06-17T23:42:06.248Z'
-last_cycle: 1120
+last_updated: '2026-06-17T23:43:46.532Z'
+last_cycle: 1121
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **1120**. 마지막 update: 2026-06-17T23:42:06.243Z.
+> 직전 cycle: **1121**. 마지막 update: 2026-06-17T23:43:46.528Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 9 / 21 / 1 |
-| **Process** | chain pool 분포 (직전 20) | curate=8 / explore-idea=4 / fix-incident=4 / review-code=2 / worker-incident-triage=1 / worker-incident-triage + explore-idea=1 |
-| **Process** | retro-only 비율 | 0/20 (0%) |
+| **Process** | chain pool 분포 (직전 20) | curate=7 / explore-idea=4 / fix-incident=4 / review-code=2 / worker-incident-triage=1 / worker-incident-triage + explore-idea=1 / skill-evolution=1 |
+| **Process** | retro-only 비율 | 1/20 (5%) |
 | **Output** | PR ship (직전 10) | 0 |
-| **Feedback** | 0회 chain (직전 20) | polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system, skill-evolution |
+| **Feedback** | 0회 chain (직전 20) | polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -43,19 +43,19 @@ last_cycle: 1120
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 1 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 1120 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 1121 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 감지됨 | 1 | ✅ |
-| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 6 | 자율 | ✅ |
+| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 5 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 1121 | skill-evolution | retro-only | — |
 | 1120 | fix-incident | partial | — |
 | 1119 | curate | success | — |
 | 1118 | curate | success | — |
 | 1117 | review-code | success | — |
-| 1116 | explore-idea | success | — |
 
 ## Methodology
 
