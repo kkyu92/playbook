@@ -4,6 +4,25 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.81] — 2026-06-18
+
+### Added
+- `content/harness-engineering/skill-evolution-skip-condition-mode-dependency.mdx` — SKILL skip 조건 mode 종속 결함 (zero-touch vs manual batch session) — wiki #332, cycle 1126. meta-skill-evolution 패턴.
+
+### Fixed
+- **`develop-cycle-hub` SKILL** skip 조건 patch: `(A AND B)` → `(A AND (B OR C))` (SE #370 cycle 1123). C = `oscillation_n ≥ 5`. manual batch session 시 SE 점유율 자연 미달 보강 — SE forced spam 무한 반복 차단.
+- moneyball CI ws/vite CVE inbound **4건 batch-close** (cycles 1124/1128). 누적 43건.
+- `docs/solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure.md` recurrence 3→4 (cycle 1120) — playbook hub intra-repo evidence row 추가. cross-repo + intra-repo 동일 메커니즘 증명.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 68 / origin 124. cycle 1112/1117 fix origin 미반영 → auto-ingest PR Auto Merge 10건 audit gate block (#1670/#1650/#1611/#1534/#1532/#1531/#1530/#1529/#1528/#1527). `git pull --rebase` 또는 `git merge` 후 push 필요.
+- **[P1] moneyball repo**: ws/vite CVE 누적 43건 미해결. `pnpm update ws vite` push 사용자 영역.
+
+### Changed
+- wiki 331→332 entries.
+- cycles 1120-1129 chain breakdown: fix-incident × 2 / skill-evolution × 3 (#368/#369/#370) / worker-incident-triage × 1 / curate × 2 / explore-idea × 1 / review-code × 1.
+- SE oscillation 209→212 누적. C 경로 신규 dogfood 발화 evidence 박제.
+
 ## [0.9.80] — 2026-06-17
 
 ### Added
