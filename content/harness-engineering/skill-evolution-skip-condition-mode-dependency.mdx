@@ -1,0 +1,86 @@
+---
+title: "SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session"
+category: harness-engineering
+date: "2026-06-18"
+tags:
+  - skill-evolution
+  - skip-condition
+  - manual-batch
+  - zero-touch
+  - oscillation
+  - meta-skill-evolution
+  - cycle-rotation-mode
+confidence: 3
+connections:
+  - harness-engineering/hub-worker-compounding-pattern
+  - harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
+status: complete
+description: "skill-evolution skip 조건의 (B) SE 점유율 ≥ 40% 단일 threshold 가 zero-touch 회전에선 자기조정 가능하지만 manual batch session N=10+ 에선 영원히 미달. SE forced spam 무한 반복 결함. (A AND (B OR C)) 로 patch — C = oscillation_n ≥ 5. cycle 1120-1123 발견 + cycle 1123 SE #370 SKILL 갱신."
+type: entry
+source: manual
+---
+
+## 문제
+
+`develop-cycle-hub` SKILL 의 trigger 5 (직전 20 cycle 동안 chain pool 1개 0회 발화) 충족 시 마커 박제 skip 조건은 두 평가축 AND:
+
+- **(A)** 직전 SE 대비 0회 chain 명단 동일 (진입/탈퇴 없음)
+- **(B)** 직전 20 cycle 내 `skill-evolution` 점유율 ≥ 40%
+
+이 룰은 **zero-touch 회전 시 정확하게 작동** — cycle 305-307 evidence (SE 35%→40% 자기조정 성공). 단 **manual batch session N=10+ 시 결함 노출**: window 안 SE 점유율 자연 한계 (1-2/20 = 5-10%) → B 영원히 미달 → 매 cycle 마커 박제 → SE forced spam 무한 반복.
+
+## 실측 evidence — cycle 1120-1123 batch session
+
+| cycle | chain | SE rate (window) | 결과 |
+|---|---|---|---|
+| 1120 | fix-incident | 0/20 = 0% | trigger 5 마커 박제 (B FAIL) |
+| 1121 | skill-evolution (#368) | 1/20 = 5% | retro-only (명단 5→6 oscillation) |
+| 1122 | skill-evolution (#369) | 2/20 = 10% | retro-only (명단 6→5 self-stabilize) |
+| 1123 | skill-evolution (#370) | 3/20 = 15% | **success — SKILL patch** |
+
+cycle 1121-1122 = batch session 안 oscillation self-stabilize. 명단 5→6→5 변화는 SE 자체 진입/탈퇴. 본질적으로 SE chain 자기 발화가 명단 변경 trigger.
+
+## 근본 원인
+
+**B threshold 단일 조건의 mode 의존성**:
+
+- **zero-touch 회전**: cycle 간 시간 간격 + 다양한 chain 자연 발화 → SE 가 windowing 동안 자기조정 (35% → 40% 점진 상승). B 자연 PASS 가능.
+- **manual batch session**: 짧은 시간 안 N=10 cycles 연속 진행 + 사용자 의도 = 다양한 chain 발화 우선. SE 가 1-2회 발화 후 다른 chain 우선 권장. window 안 SE 점유율 자연 한계 5-10% — B 영원히 FAIL.
+
+`window` 측정은 모드 무관 마지막 20 cycle JSON 기반 → mode 차이 흡수 안 함.
+
+## 해소 — SKILL patch (cycle 1123 SE #370)
+
+skip 조건 `(A AND B)` → `(A AND (B OR C))`:
+
+- **(C)** `oscillation_n ≥ 5` — steady-state 안정 휴식 (manual batch session 시 B 자연 미달 보강)
+
+C 경로 효과:
+- 명단 동일 (A PASS) + steady-state 안정 (oscillation_n 누적 ≥ 5) 시 마커 박제 skip
+- batch session N=10 안 SE forced spam 무한 반복 차단
+- zero-touch 회전 시 기존 B 경로 작동 유지 (호환)
+
+## 패턴 — meta-skill-evolution
+
+본 SKILL patch 자체가 **meta-skill-evolution** = SE chain 의 자기 진화. SE oscillation 자체가 SE 진화 evidence 누적. evidence 누적 임계 시 SE chain의 룰 자체 patch — recursive self-improvement.
+
+```
+SE chain trigger → SE chain 발화 → SE skip 조건 결함 발견
+                                        ↓
+SE chain 룰 patch ← SE chain 발화 (success)
+```
+
+SE → SE patch = 인프라 자가 진화 패턴. SKILL 자체가 SKILL 진화 메커니즘.
+
+## 운영 영향
+
+- batch session N=10 효율 ↑ — SE forced spam 제거 (cycle 1124+ dogfood evidence 누적)
+- zero-touch 회전 자연 운영 영향 0 (B 경로 보존)
+- SE oscillation steady-state 박제 가치 보존 (memory `project_develop_cycle_skill_family` SE oscillation 203회+ 누적 정합)
+
+## 관련 패턴
+
+- 모드 의존 결함 = "design-by-default-mode" anti-pattern
+- 해소 = 다중 경로 OR (mode 흡수)
+- recursive self-improvement: SKILL → SKILL patch chain
+- evidence-driven SKILL evolution (cycle 1120-1123 dogfood → patch)
