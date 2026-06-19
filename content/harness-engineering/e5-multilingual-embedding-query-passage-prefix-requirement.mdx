@@ -87,12 +87,22 @@ stale 인덱스(접두사 변경 전 빌드)를 검색에 사용하는 상황을
 
 접두사 적용 후 임계값 재측정이 필요하다. **E5 prefix 효과 = 분리도 개선, 절대값 상승 X** — genuine match 범위가 올라가지 않고, noise와의 간격이 넓어지는 것이므로 임계값을 올리지 않아도 된다.
 
+### threshold 0.87 → 0.85 patch (cycle 1136 박제)
+
+본래 0.87 유지 근거는 영어 query 기준 측정 (cycle 526). 한국어+영어 mix 환경 (한국어 query / 한국어+영어 mix wiki) 에서 genuine match 절대값이 더 낮음:
+
 ```
-threshold 0.87 유지 근거:
-- genuine match 실측: 0.86-0.90 범위
-- 0.87 = genuine match 대부분 포함 + noise 대부분 차단
-- threshold 0.88~0.90으로 올리면 genuine match도 일부 필터됨
+threshold 0.85 patch (cycle 1136 evidence):
+- 한국어+영어 mix genuine match 실측: 0.83-0.90 범위
+- 영어-only 측정 (cycle 526) 대비 절대값 하향
+- noMatch 70% (513/728) 중 다수가 의미상 hit인데 0.85-0.87 사이 미달
+- 0.85 = mix 환경 genuine match 대부분 포함 + noise 차단 절충
+- false positive 위험 < blind spot 비용 (cycle 1133 wiki #332 + 1135 embeddings rebuild 후에도 miss 지속 evidence)
 ```
+
+**역사**:
+- cycle 526 (2026-05-15): 0.87 박제 — 영어 query 기준
+- cycle 1136 (2026-06-19): 0.85 patch — 한국어+영어 mix 환경 실측
 
 ## 적용 확인 명령어
 
@@ -102,5 +112,5 @@ node -e "const d=require('./public/embeddings.json'); console.log(d.embedding_ve
 
 # 검색 테스트 (known match)
 node scripts/search.mjs "드리프트 감지 프로토콜 Level 0" 3
-# 기대: score ≥ 0.87, relevant entry 반환
+# 기대: score ≥ 0.85, relevant entry 반환
 ```
