@@ -1,13 +1,13 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 720,
-  "skipped": 26,
-  "searched": 694,
-  "hit": 207,
-  "noMatch": 487,
-  "lastUpdated": "2026-06-17T01:23:22.301Z",
+  "totalInvocations": 755,
+  "skipped": 27,
+  "searched": 728,
+  "hit": 215,
+  "noMatch": 513,
+  "lastUpdated": "2026-06-19T00:22:02.376Z",
   "hits": {
-    "harness-engineering/hub-worker-compounding-pattern": 12,
+    "harness-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
@@ -39,20 +39,20 @@
     "harness-engineering/agentic-chain-saturation-detection": 6,
     "harness-engineering/stale-temporal-comment-cleanup-policy": 3,
     "harness-engineering/silent-drift-family-pattern": 1,
-    "retros/2026-05-12-cycles-293-298": 1,
+    "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 4,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 6,
     "harness-engineering/develop-cycle-positive-streak-recognition": 3,
     "retros/2026-05-12-cycles-308-311": 4,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
     "retros/2026-05-08-cycles-291-292": 4,
     "retros/2026-05-08-cycles-286-290": 6,
     "solutions/ci-github-actions/_compiled-truth": 2,
-    "retros/2026-05-12-cycles-305-307": 6,
+    "retros/2026-05-12-cycles-305-307": 7,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 6,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 6,
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 8,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
     "retros/2026-05-13-cycles-482-485": 4,
@@ -62,7 +62,7 @@
     "journal/playbook-journal-008-github-repo-rename-self-hosted-runner": 3,
     "harness-engineering/fail-loud-partial-adoption-escape-hatch-trap": 3,
     "prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation": 1,
-    "retros/2026-05-12-cycles-334-341": 3,
+    "retros/2026-05-12-cycles-334-341": 4,
     "retros/2026-05-12-cycles-331-332": 4,
     "harness-engineering/zero-touch-develop-cycle-session-management": 12,
     "project-ops/claude-code-cost-optimization-strategies": 1,
@@ -73,8 +73,8 @@
     "retros/2026-05-12-cycles-377-378": 1,
     "infrastructure/sentry-serverless-flush": 1,
     "retros/2026-05-12-cycles-320-322": 4,
-    "retros/2026-05-12-cycles-314-319": 3,
-    "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 1,
+    "retros/2026-05-12-cycles-314-319": 5,
+    "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 4,
     "infrastructure/llm-call-orchestration-reliability-enhancement": 1,
     "harness-engineering/llm-scalable-service-architecture-patterns": 1,
     "evaluation/multi-persona-llm-output-validation-enhancement": 1,
@@ -94,8 +94,8 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 17,
-    "retros/2026-05-19-cycles-801-804": 5,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 18,
+    "retros/2026-05-19-cycles-801-804": 6,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
     "harness-engineering/agentic-trigger-skip-dual-condition-homeostasis": 11,
@@ -139,11 +139,11 @@
     "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 3,
     "harness-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 2,
     "harness-engineering/agentic-cron-zero-output-silent-success-detection": 1,
-    "retros/2026-05-12-cycles-323-326": 2,
+    "retros/2026-05-12-cycles-323-326": 3,
     "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 3,
     "project-ops/agile-sprint-planning-execution-ai-projects": 1,
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1,
-    "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 1,
+    "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 2,
     "harness-engineering/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
     "retros/2026-05-13-cycles-424-425": 1,
@@ -156,7 +156,7 @@
     "harness-engineering/claude-code-agent-view-worker-management-integration": 1,
     "frontend-ai/claude-code-session-web-mobile-monitoring-implementation": 1,
     "retros/2026-05-22-cycles-977-979": 2,
-    "harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 1,
+    "harness-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 2,
     "evaluation/agentic-precommit-prediction-oos-track-record": 1,
     "harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 1,
     "harness-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 3,
@@ -173,7 +173,7 @@
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 1,
     "harness-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
     "agents/autonomous-agent-long-term-memory-management": 1,
-    "retros/2026-05-22-cycles-1005-1008": 1,
+    "retros/2026-05-22-cycles-1005-1008": 2,
     "retros/2026-05-22-cycles-1006-1012": 2,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 1,
@@ -183,7 +183,11 @@
     "harness-engineering/agentic-wiki-entry-deletion-orphan-cascade": 1,
     "retros/2026-05-19-cycle-785": 1,
     "retros/2026-05-20-cycle-912": 1,
-    "solutions/ci-github-actions/2026-05-13-refactor-const-rename-test-sync-gap": 1
+    "solutions/ci-github-actions/2026-05-13-refactor-const-rename-test-sync-gap": 1,
+    "journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27": 1,
+    "harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry": 1,
+    "harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger": 1,
+    "harness-engineering/skill-evolution-oscillation-skip-condition-steady-state": 1
   },
   "noMatchQueries": [
     {
@@ -425,10 +429,140 @@
       "query": "Long In-Progress status entry 처리 결정 기준",
       "timestamp": "2026-06-15T02:54:38.666Z",
       "topScore": 0.8662
+    },
+    {
+      "query": "ws vite audit CI failure moneyball",
+      "timestamp": "2026-06-17T01:30:40.597Z",
+      "topScore": 0.8419
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-17T01:35:01.560Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "wiki grave diagnosis entry 무덤",
+      "timestamp": "2026-06-17T01:35:06.537Z",
+      "topScore": 0.8683
+    },
+    {
+      "query": "hub worker compounding growth bidirectional",
+      "timestamp": "2026-06-17T01:35:13.171Z",
+      "topScore": 0.8435
+    },
+    {
+      "query": "wiki entry ROI search usage rate",
+      "timestamp": "2026-06-17T01:35:16.518Z",
+      "topScore": 0.8522
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-17T01:39:59.079Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "hub worker compounding",
+      "timestamp": "2026-06-17T01:40:02.274Z",
+      "topScore": 0.8453
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-17T01:40:15.076Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "wiki grave 진단법",
+      "timestamp": "2026-06-17T01:40:20.868Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "위키 무덤 진단",
+      "timestamp": "2026-06-17T01:40:22.435Z",
+      "topScore": 0.867
+    },
+    {
+      "query": "wiki knowledge ROI measurement 3axis grave",
+      "timestamp": "2026-06-17T01:40:25.764Z",
+      "topScore": 0.8507
+    },
+    {
+      "query": "hub worker compounding",
+      "timestamp": "2026-06-17T01:41:01.689Z",
+      "topScore": 0.8453
+    },
+    {
+      "query": "hub worker bidirectional growth automation",
+      "timestamp": "2026-06-17T01:41:04.697Z",
+      "topScore": 0.8414
+    },
+    {
+      "query": "moneyball CI failure audit ws vite",
+      "timestamp": "2026-06-17T01:42:14.252Z",
+      "topScore": 0.8513
+    },
+    {
+      "query": "security vulnerability CVE pnpm audit recurring pattern",
+      "timestamp": "2026-06-17T01:43:09.229Z",
+      "topScore": 0.8505
+    },
+    {
+      "query": "pnpm override transitive dependency force version",
+      "timestamp": "2026-06-17T01:43:12.788Z",
+      "topScore": 0.8418
+    },
+    {
+      "query": "pnpm transitive dependency security audit",
+      "timestamp": "2026-06-17T01:43:25.723Z",
+      "topScore": 0.8367
+    },
+    {
+      "query": "cross-repo security patch propagation multi-fork",
+      "timestamp": "2026-06-17T01:48:45.720Z",
+      "topScore": 0.8397
+    },
+    {
+      "query": "develop cycle chain review-code detect silent drift",
+      "timestamp": "2026-06-17T01:48:49.422Z",
+      "topScore": 0.8648
+    },
+    {
+      "query": "moneyball CI fix propagation hub coordination",
+      "timestamp": "2026-06-17T01:48:54.640Z",
+      "topScore": 0.8518
+    },
+    {
+      "query": "closed loop CI failure cross fork automation repair",
+      "timestamp": "2026-06-17T01:48:55.425Z",
+      "topScore": 0.8509
+    },
+    {
+      "query": "hub triage boundary worker cannot fix code",
+      "timestamp": "2026-06-17T01:49:05.913Z",
+      "topScore": 0.8517
+    },
+    {
+      "query": "auto-ingest PR Auto Merge audit gate base divergence",
+      "timestamp": "2026-06-17T23:40:00.090Z",
+      "topScore": 0.8477
+    },
+    {
+      "query": "BRANCHED divergence audit fix unreflected",
+      "timestamp": "2026-06-17T23:40:04.742Z",
+      "topScore": 0.8495
+    },
+    {
+      "query": "manual batch session oscillation steady-state",
+      "timestamp": "2026-06-17T23:50:01.104Z",
+      "topScore": 0.8549
+    },
+    {
+      "query": "curate orphan stale wiki 무덤",
+      "timestamp": "2026-06-19T00:22:02.373Z",
+      "topScore": 0.8693
     }
   ],
   "noMatchQueryCounts": {
-    "wiki grave 진단법": 4,
+    "wiki grave 진단법": 8,
     "양방향 무한성장 비전": 1,
     "Pull 측정 인프라": 1,
     "허브 워커 양방향 복리": 1,
@@ -437,7 +571,7 @@
     "silent-fail cron cancelled timeout workflow": 1,
     "bidirectional hub worker compound growth vision": 1,
     "closed loop design philosophy": 1,
-    "hub worker compounding": 2,
+    "hub worker compounding": 4,
     "auto-ingest PR rebase conflict journal branch": 1,
     "dependabot CI failure lint format moneyball": 1,
     "hub worker bidirectional growth measurement closed loop": 1,
@@ -470,7 +604,27 @@
     "wiki search hit rate blind spot dead zone unused entry": 1,
     "JIT search blind spot 0 hit entry dead zone detection": 1,
     "category rebalance coherence score merge split decision": 1,
-    "Long In-Progress status entry 처리 결정 기준": 1
+    "Long In-Progress status entry 처리 결정 기준": 1,
+    "ws vite audit CI failure moneyball": 1,
+    "wiki grave diagnosis entry 무덤": 1,
+    "hub worker compounding growth bidirectional": 1,
+    "wiki entry ROI search usage rate": 1,
+    "위키 무덤 진단": 1,
+    "wiki knowledge ROI measurement 3axis grave": 1,
+    "hub worker bidirectional growth automation": 1,
+    "moneyball CI failure audit ws vite": 1,
+    "security vulnerability CVE pnpm audit recurring pattern": 1,
+    "pnpm override transitive dependency force version": 1,
+    "pnpm transitive dependency security audit": 1,
+    "cross-repo security patch propagation multi-fork": 1,
+    "develop cycle chain review-code detect silent drift": 1,
+    "moneyball CI fix propagation hub coordination": 1,
+    "closed loop CI failure cross fork automation repair": 1,
+    "hub triage boundary worker cannot fix code": 1,
+    "auto-ingest PR Auto Merge audit gate base divergence": 1,
+    "BRANCHED divergence audit fix unreflected": 1,
+    "manual batch session oscillation steady-state": 1,
+    "curate orphan stale wiki 무덤": 1
   },
-  "totalQueries": 764
+  "totalQueries": 799
 }
