@@ -4,6 +4,24 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.82] — 2026-06-19
+
+### Fixed
+- **JIT search threshold** 0.87 → 0.85 (cycle 1136). E5 한국어+영어 mix 환경 절대값 한계 보강 (cycle 526 영어 기준 0.87 → mix 환경 0.85). noMatch 70% (513/728) 일부 해소 — "manual batch session oscillation" 등 의미상 hit query unblock.
+- moneyball CI ws/vite CVE 19건 batch-close (cycle 1130). 누적 62건.
+
+### Changed
+- `content/harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement.mdx` threshold section 갱신 (cycle 1137). 0.87→0.85 patch 역사 + 한국어+영어 mix 측정 evidence 박제.
+- `content/harness-engineering/skill-evolution-skip-condition-mode-dependency.mdx` description keyword 보강 (cycle 1133). "manual batch session oscillation steady-state" + "meta-skill-evolution recursive" 추가.
+- embeddings.json 재빌드 (cycle 1135, 2504 chunks, 133s). wiki #331/#332 + #332 patch 인덱싱.
+- cycles 1130-1139 chain breakdown: worker-incident-triage × 2 / curate × 3 / review-code × 1 / explore-idea × 2 / fix-incident × 2.
+
+### Carry-over (R6 사용자 영역, 1130 시점 갱신)
+- **[P0] BRANCHED divergence**: local 81 / origin 156 (cycle 1130 시점, +25/+32). auto-ingest PR 11건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 62건 미해결. `pnpm update ws vite` push 사용자 영역.
+
+
+
 ## [0.9.81] — 2026-06-18
 
 ### Added
