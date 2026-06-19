@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.83] — 2026-06-19
+
+### Fixed
+- **`develop-cycle-hub` SKILL** A 정의 patch (SE #372 cycle 1145). skip 조건 (A) 명단 비교 = SE chain 제외 후 비교 — SE 자체 진입/탈퇴 noise 차단. SE forced spam 무한 반복 root cause 해소 (cycle 1121/1122/1144/1145 4회 evidence). [B 패치(cycle 1123) + A 패치(cycle 1145) = SE skip 조건 완전 안정화]
+
+### Changed
+- cycles 1140-1149 chain breakdown: review-code × 2 (light + heavy) / curate × 3 / explore-idea × 2 / skill-evolution × 2 (#371 retro-only + #372 success) / worker-incident-triage × 1.
+- SE oscillation 212→214 누적 (#371/#372).
+- retro-only 60% (incident steady-state — batch 1140-1149 변동 없음 + cycle 1130 burst close 효과 지속).
+
+### Carry-over (R6 사용자 영역, 갱신)
+- **[P0] BRANCHED divergence**: local 93 / origin 156 (cycle 1140 시점). auto-ingest PR 11건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 62건. `pnpm update ws vite` push 사용자 영역.
+
+
+
 ## [0.9.82] — 2026-06-19
 
 ### Fixed
