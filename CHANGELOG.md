@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.84] — 2026-06-19
+
+### Fixed
+- moneyball CI ws/vite CVE 43건 batch-close (cycles 1151/1153). 누적 105건. burst pattern 2회 (1151=30건, 1153=13건).
+- cycle 1150 SE #373 milestone (cycle_n % 50 = 0) trigger 3 forced. SKILL 변경 X (A+B+C 패치 완료 정합) → retro-only.
+
+### Changed
+- cycles 1150-1159 chain breakdown: skill-evolution × 1 (#373 milestone) / worker-incident-triage × 3 / curate × 3 / explore-idea × 1 / review-code × 1 / fix-incident × 1.
+- SE oscillation 214→215 누적 (#373 milestone).
+- retro-only 70% (incident burst 처리 후 안정 — cycle 1151 burst 직후 cleanup phase 유지).
+
+### Carry-over (R6 사용자 영역, 갱신)
+- **[P0] BRANCHED divergence**: local 105 / origin 217 (cycle 1150 시점, +12 local / +61 origin since 1140). auto-ingest PR 11+건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 105건. `pnpm update ws vite` push 사용자 영역.
+
+
+
 ## [0.9.83] — 2026-06-19
 
 ### Fixed
