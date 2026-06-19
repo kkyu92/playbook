@@ -19,20 +19,20 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-06-19T08:20:55.811Z'
-last_cycle: 1162
+last_updated: '2026-06-19T08:20:56.127Z'
+last_cycle: 1163
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **1162**. 마지막 update: 2026-06-19T08:20:55.807Z.
+> 직전 cycle: **1163**. 마지막 update: 2026-06-19T08:20:56.124Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 9 / 23 / 1 |
-| **Process** | chain pool 분포 (직전 20) | curate=6 / worker-incident-triage=5 / explore-idea=4 / skill-evolution=3 / review-code=1 / fix-incident=1 |
+| **Process** | chain pool 분포 (직전 20) | curate=6 / worker-incident-triage=5 / skill-evolution=3 / explore-idea=3 / review-code=2 / fix-incident=1 |
 | **Process** | retro-only 비율 | 14/20 (70%) |
 | **Output** | PR ship (직전 10) | 0 |
 | **Feedback** | 0회 chain (직전 20) | polish-ui, closed-loop-design, dimension-cycle, expand-scope, design-system |
@@ -43,7 +43,7 @@ last_cycle: 1162
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 1 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 1162 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 1163 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 감지됨 | 1 | ✅ |
 | 5 | 0회 chain (직전 20) + skip 조건 미충족 | 5 | 자율 | ✅ |
 
@@ -51,11 +51,11 @@ last_cycle: 1162
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 1163 | review-code | retro-only | — |
 | 1162 | explore-idea | retro-only | — |
 | 1161 | curate | retro-only | — |
 | 1160 | worker-incident-triage | success | — |
 | 1159 | curate | success | — |
-| 1158 | fix-incident | retro-only | — |
 
 ## Methodology
 
