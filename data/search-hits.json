@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 766,
+  "totalInvocations": 769,
   "skipped": 27,
-  "searched": 739,
-  "hit": 217,
+  "searched": 742,
+  "hit": 220,
   "noMatch": 522,
-  "lastUpdated": "2026-06-19T00:29:07.193Z",
+  "lastUpdated": "2026-06-19T06:16:41.106Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -41,7 +41,7 @@
     "harness-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 6,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 7,
     "harness-engineering/develop-cycle-positive-streak-recognition": 3,
     "retros/2026-05-12-cycles-308-311": 4,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -66,7 +66,7 @@
     "retros/2026-05-12-cycles-331-332": 4,
     "harness-engineering/zero-touch-develop-cycle-session-management": 12,
     "project-ops/claude-code-cost-optimization-strategies": 1,
-    "retros/2026-05-13-cycles-441-442": 2,
+    "retros/2026-05-13-cycles-441-442": 3,
     "retros/2026-05-13-cycles-457-458": 1,
     "infrastructure/sentry-pii-scrubbing-beforesend": 1,
     "retros/2026-05-12-cycles-327-330": 2,
@@ -79,7 +79,7 @@
     "harness-engineering/llm-scalable-service-architecture-patterns": 1,
     "evaluation/multi-persona-llm-output-validation-enhancement": 1,
     "journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs-": 1,
-    "retros/2026-05-13-cycles-486-487": 3,
+    "retros/2026-05-13-cycles-486-487": 4,
     "evaluation/claude-code-generation-validation-pipeline-extension": 1,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "harness-engineering/debug-page-silent-drift-trap": 5,
@@ -163,7 +163,7 @@
     "harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 2,
     "harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience": 1,
-    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 3,
+    "harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise": 4,
     "harness-engineering/hub-pull-evidence-tracking-from-hub-convention": 6,
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 1,
@@ -188,7 +188,9 @@
     "harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry": 1,
     "harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger": 1,
     "harness-engineering/skill-evolution-oscillation-skip-condition-steady-state": 1,
-    "harness-engineering/skill-evolution-skip-condition-mode-dependency": 1
+    "harness-engineering/skill-evolution-skip-condition-mode-dependency": 1,
+    "harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement": 1,
+    "harness-engineering/cross-fork-ci-failure-fix-propagation-boundary": 1
   },
   "noMatchQueries": [
     {
@@ -676,5 +678,5 @@
     "moneyball cross-fork compounding": 1,
     "BRANCHED steady-state worker hub": 1
   },
-  "totalQueries": 810
+  "totalQueries": 813
 }
