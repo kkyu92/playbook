@@ -1,5 +1,5 @@
 ---
-title: "OOS D-Day 도달 시 예측 평가 프로토콜"
+title: OOS D-Day 도달 시 예측 평가 프로토콜
 category: evaluation
 date: "2026-05-22"
 tags:
@@ -14,12 +14,9 @@ workers:
   - moneyball
 confidence: 2
 last_verified: "2026-05-22"
-connections:
-  - evaluation/agentic-precommit-prediction-oos-track-record
-  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
-  - harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift
+connections: [evaluation/agentic-precommit-prediction-oos-track-record, harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience, harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift, agents/autonomous-agent-self-correction-learning-loops]
 source: explore-idea
-description: "OOS D-Day (예측 검증 기간 시작일) 도달 시 agentic 시스템이 실행해야 할 평가 절차. 잠긴 git commit hash 찾기 → 실제 결과 조회 → hit/miss 판정 → confidence 갱신 → 사후 합리화 방지. lotto 1225회 OOS D-Day 2026-05-23 맥락."
+description: OOS D-Day (예측 검증 기간 시작일) 도달 시 agentic 시스템이 실행해야 할 평가 절차. 잠긴 git commit hash 찾기 → 실제 결과 조회 → hit/miss 판정 → confidence 갱신 → 사후 합리화 방지. lotto 1225회 OOS D-Day 2026-05-23 맥락.
 ---
 
 ## 언제 실행하는가
