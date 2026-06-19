@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 755,
+  "totalInvocations": 766,
   "skipped": 27,
-  "searched": 728,
-  "hit": 215,
-  "noMatch": 513,
-  "lastUpdated": "2026-06-19T00:22:02.376Z",
+  "searched": 739,
+  "hit": 217,
+  "noMatch": 522,
+  "lastUpdated": "2026-06-19T00:29:07.193Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -94,7 +94,7 @@
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
     "harness-engineering/agentic-loop-analytical-chain-lite-mode": 3,
     "agents/ai-agent-remote-management-ux-persistent-web-terminals": 1,
-    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 18,
+    "harness-engineering/wiki-knowledge-roi-3axis-measurement": 19,
     "retros/2026-05-19-cycles-801-804": 6,
     "harness-engineering/agent-multi-frequency-knowledge-pipeline": 2,
     "reports/week-2026-21": 1,
@@ -174,7 +174,7 @@
     "harness-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 2,
-    "retros/2026-05-22-cycles-1006-1012": 2,
+    "retros/2026-05-22-cycles-1006-1012": 3,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 1,
     "harness-engineering/agentic-wiki-confidence-lifecycle": 1,
@@ -187,7 +187,8 @@
     "journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27": 1,
     "harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry": 1,
     "harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger": 1,
-    "harness-engineering/skill-evolution-oscillation-skip-condition-steady-state": 1
+    "harness-engineering/skill-evolution-oscillation-skip-condition-steady-state": 1,
+    "harness-engineering/skill-evolution-skip-condition-mode-dependency": 1
   },
   "noMatchQueries": [
     {
@@ -559,6 +560,51 @@
       "query": "curate orphan stale wiki 무덤",
       "timestamp": "2026-06-19T00:22:02.373Z",
       "topScore": 0.8693
+    },
+    {
+      "query": "manual batch session oscillation steady-state",
+      "timestamp": "2026-06-19T00:27:37.787Z",
+      "topScore": 0.8549
+    },
+    {
+      "query": "BRANCHED divergence audit fix unreflected",
+      "timestamp": "2026-06-19T00:27:38.476Z",
+      "topScore": 0.8495
+    },
+    {
+      "query": "auto-ingest PR Auto Merge audit gate base divergence",
+      "timestamp": "2026-06-19T00:27:39.174Z",
+      "topScore": 0.8477
+    },
+    {
+      "query": "skill-evolution oscillation steady-state pattern",
+      "timestamp": "2026-06-19T00:28:31.830Z",
+      "topScore": 0.8698
+    },
+    {
+      "query": "auto-ingest PR audit gate base",
+      "timestamp": "2026-06-19T00:28:32.525Z",
+      "topScore": 0.8528
+    },
+    {
+      "query": "moneyball cross-fork compounding",
+      "timestamp": "2026-06-19T00:28:33.215Z",
+      "topScore": 0.8322
+    },
+    {
+      "query": "BRANCHED steady-state worker hub",
+      "timestamp": "2026-06-19T00:28:33.921Z",
+      "topScore": 0.8345
+    },
+    {
+      "query": "BRANCHED divergence audit fix unreflected",
+      "timestamp": "2026-06-19T00:29:06.485Z",
+      "topScore": 0.8495
+    },
+    {
+      "query": "auto-ingest PR Auto Merge audit gate base divergence",
+      "timestamp": "2026-06-19T00:29:07.192Z",
+      "topScore": 0.8477
     }
   ],
   "noMatchQueryCounts": {
@@ -621,10 +667,14 @@
     "moneyball CI fix propagation hub coordination": 1,
     "closed loop CI failure cross fork automation repair": 1,
     "hub triage boundary worker cannot fix code": 1,
-    "auto-ingest PR Auto Merge audit gate base divergence": 1,
-    "BRANCHED divergence audit fix unreflected": 1,
-    "manual batch session oscillation steady-state": 1,
-    "curate orphan stale wiki 무덤": 1
+    "auto-ingest PR Auto Merge audit gate base divergence": 3,
+    "BRANCHED divergence audit fix unreflected": 3,
+    "manual batch session oscillation steady-state": 2,
+    "curate orphan stale wiki 무덤": 1,
+    "skill-evolution oscillation steady-state pattern": 1,
+    "auto-ingest PR audit gate base": 1,
+    "moneyball cross-fork compounding": 1,
+    "BRANCHED steady-state worker hub": 1
   },
-  "totalQueries": 799
+  "totalQueries": 810
 }
