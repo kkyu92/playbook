@@ -184,6 +184,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [멀티모달 Harness 디자인 패턴 — 복합 LLM 워크플로우를 위한 통합 프레임워크](wiki/harness-engineering/multimodal-harness-design-complex-llm-workflows) — confidence: 1, status: draft
 - [Multimodal LLM Workflow Integration — Harness Orchestration Patterns](wiki/harness-engineering/multimodal-llm-workflow-harness-integration-patterns) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
+- [OpenCodex: LLM 하네스 유연성 및 다중 모델 통합 전략](wiki/harness-engineering/opencodex-llm-harness-model-flexibility) — confidence: 1, status: draft
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [Production LLM Harness Design — Scalable and Resilient AI Service Deployment](wiki/harness-engineering/production-llm-service-harness-system-design-patterns) — confidence: 1, status: draft
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/harness-engineering/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
@@ -274,6 +275,7 @@ Updated: 2026-06-28T21:04:27.050Z
 
 ### Agents
 - [AI Agent 고급 도구 사용 패턴 — 복잡성 관리와 신뢰성 확보](wiki/agents/advanced-ai-agent-tool-use-patterns) — confidence: 1, status: draft
+- [AI Agent Complex Task Orchestration — Robust Planning & Error Handling Patterns](wiki/agents/ai-agent-complex-task-planning-error-handling) — confidence: 1, status: draft
 - [AI Agent Persistent Memory: Bridging Session Gaps with Automated Context Management](wiki/agents/ai-agent-persistent-memory-automated-context-management) — confidence: 1, status: draft
 - [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/agents/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
 - [AI 에이전트 견고성 — 도구 활용 오류 처리 및 자가 복구 구현](wiki/agents/ai-agent-robust-tool-error-recovery) — confidence: 1, status: draft
@@ -585,6 +587,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
+- agents/glm-5-2-agent-extension-validation-enhancement ↔ harness-engineering/opencodex-llm-harness-model-flexibility
+- agents/glm-5-2-agent-extension-validation-enhancement ↔ evaluation/llm-hallucination-analysis-output-validation-pipeline
 - agents/google-agents-cli-agent-development-acceleration ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/gstack-framework-ai-agent-collaboration-architecture
 - agents/google-agents-cli-agent-development-acceleration ↔ harness-engineering/hub-worker-compounding-pattern
@@ -601,6 +605,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ agents/ouroboros-agent-performance-cost-optimization
 - agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ evaluation/rag-search-performance-evaluation-metrics-design
+- agents/gpt-5-5-agent-model-evaluation-integration-strategies ↔ evaluation/llm-hallucination-analysis-output-validation-pipeline
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-tool-use-design-patterns
 - agents/inference-chain-design-complex-ai-agents ↔ agents/multi-agent-collaboration-complex-problem-solving
@@ -705,7 +710,6 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/paca-ai-agent-project-management-tool-review
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/claude-code-agent-view-worker-management-integration
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/ai-model-serving-harness-enterprise-deployment-management
-- agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/distributed-ai-harness-design
@@ -1709,6 +1713,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - harness-engineering/llm-agent-tool-call-reliability-forge-guardrails ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
+- harness-engineering/llm-agent-tool-call-reliability-forge-guardrails ↔ harness-engineering/llm-external-tool-integration-harness-patterns
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
@@ -1771,6 +1776,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ project-ops/claude-code-cost-optimization-strategies
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ project-ops/claude-code-harness-cost-optimization-reassessment
+- harness-engineering/multi-llm-routing-design-patterns-cost-performance ↔ harness-engineering/opencodex-llm-harness-model-flexibility
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
