@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.86] — 2026-06-21
+
+### Fixed
+- moneyball CI ws/vite + Vercel 배포 실패 12건 batch-close (cycle 1190). 누적 164건. (CI 4 + Vercel 8 mix burst — 새 incident 유형 Vercel 배포 실패 추가)
+
+### Changed
+- cycles 1190-1199 chain breakdown: worker-incident-triage × 1 (success burst close) / curate × 4 / explore-idea × 2 / review-code × 1 / fix-incident × 1 / 기타 retro-only.
+- retro-only 85%+ 유지.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 147 / origin 333 (cycle 1190 시점, +50 origin since 1160). auto-ingest PR 11+건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE + Vercel 배포 실패 누적 164건. `pnpm update ws vite` push 사용자 영역.
+
+
+
 ## [0.9.85] — 2026-06-19
 
 ### Fixed
