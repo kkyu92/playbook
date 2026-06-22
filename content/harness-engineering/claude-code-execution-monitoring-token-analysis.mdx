@@ -1,0 +1,53 @@
+---
+title: Claude Code 실행 모니터링 – Agent-Blackbox를 활용한 토큰 낭비 분석 및 최적화
+category: harness-engineering
+date: "2026-06-22"
+tags:
+  - LLMAgents
+  - TokenOptimization
+  - Monitoring
+  - AgentEfficiency
+  - ClaudeCode
+  - CostReduction
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/agentic-coding-claude-harness-playbook-strategy, harness-engineering/claude-code-agent-view-worker-management-integration, project-ops/claude-code-cost-optimization-strategies, evaluation/claude-code-generation-validation-pipeline-extension, context-engineering/ai-agent-context-window-optimization-session-longevity, harness-engineering/llm-api-cost-optimization-harness-design-patterns, agents/ai-agent-transparent-execution-knowledge-integration]
+status: draft
+description: Agent-Blackbox를 활용하여 Claude Code/OpenCode 실행을 모니터링하고 세션 맵 및 컨텍스트 효율 점수를 분석하여 LLM 토큰 낭비를 최적화하는 방법을 다룹니다.
+type: entry
+source: scout
+---
+
+## LLM 에이전트 실행 투명성 확보 및 토큰 낭비 최적화
+
+대규모 언어 모델(LLM) 기반 에이전트, 특히 Claude Code나 OpenCode와 같은 코드 생성 및 실행 에이전트의 개발과 운영에서 가장 큰 도전 과제 중 하나는 에이전트의 내부 작동 방식을 파악하기 어렵다는 점입니다. 에이전트가 어떤 맥락에서 어떤 결정을 내리고, 어떤 코드를 실행하며, 그 과정에서 얼마나 많은 토큰을 소비하는지는 블랙박스에 가깝습니다. 이러한 불투명성은 비효율적인 토큰 사용으로 이어져 운영 비용을 증가시키고, 예상치 못한 동작을 디버깅하기 어렵게 만듭니다. 실제로 AI에게 "이 작업에 토큰을 얼마나 쓸 것 같아?"라고 물으면 실제 비용과의 상관관계가 0.39에 불과하다는 연구(arXiv:2604.22750) 결과는 LLM 자체의 토큰 비용 예측 능력의 한계를 명확히 보여줍니다.
+
+Agent-Blackbox는 이러한 문제를 해결하기 위해 Claude Code 및 OpenCode 실행을 로컬에서 기록하고, 이를 시각적인 세션 맵과 정량적인 컨텍스트 효율 점수로 제공하는 혁신적인 모니터링 도구입니다. 이 도구를 플레이북의 Claude Code 하네스 및 LLM 출력 검증 파이프라인에 통합함으로써, 에이전트의 작동 방식을 심층적으로 분석하고 토큰 낭비를 줄여 전반적인 효율성을 극대화할 수 있습니다. 2026년 현재, LLM 운영 비용 최적화는 단순히 성능 향상을 넘어선 필수적인 요구사항으로 자리 잡고 있습니다.
+
+### Agent-Blackbox의 핵심 기능
+
+1.  **세션 맵(Session Map) 시각화**: 에이전트가 특정 작업을 수행하는 동안의 전체 대화 흐름, 도구 호출, LLM 턴(turn) 등을 시각적으로 표현합니다. 이를 통해 개발자는 에이전트의 의사결정 경로와 코드 실행 단계를 한눈에 파악할 수 있습니다.
+2.  **컨텍스트 효율 점수(Context Efficiency Score) 분석**: 에이전트가 컨텍스트 윈도우 내의 정보를 얼마나 효과적으로 활용하는지 정량적으로 평가합니다. 불필요한 정보 반복, 관련성 낮은 컨텍스트 포함 등 토큰 낭비 요소를 식별하여 컨텍스트 관리 전략을 개선하는 데 기여합니다.
+3.  **로컬 실행 기록**: 개발 환경에서 에이전트의 실행을 상세히 기록하여 디버깅 및 반복적인 최적화 작업을 용이하게 합니다.
+
+### 통합 전략 및 코드 예시
+
+Agent-Blackbox를 기존 LLM 에이전트 워크플로우에 통합하는 핵심은 에이전트의 각 실행 단계에서 발생하는 데이터(프롬프트, 응답, 도구 호출, 실행 결과 등)를 표준화된 형식으로 기록하는 것입니다. 다음은 Claude Code 에이전트 실행을 시뮬레이션하고, Agent-Blackbox가 소비할 수 있는 형태로 로그를 생성하는 파이썬 코드 예시입니다.
+
+```python
+import json
+import time
+import uuid
+
+def simulate_claude_execution(session_id: str, turn_idx: int, prompt: str, tool_use: bool = False) -> dict:
+    start_time = time.time()
+    
+    # Simulate Claude API call and token usage
+    # In a real scenario, this involves calling anthropic.Anthropic().messages.create
+    # and parsing the response to extract tool calls and output.
+    
+    input_tokens = len(prompt.split()) * 1.5 # Rough estimate based on words
+    output_content = """```python\n# Python script to greet\ndef greet(name):\n    return f"Hello, {name}!"\nprint(greet("World"))\n```\n\n실행 결과: Hello, World!"""
+    
+    if tool_use:
+        output_content = """tool_code:{\

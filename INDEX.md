@@ -338,6 +338,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM 출력 검증 파이프라인 — 자동화 실패 방지를 위한 강화 전략](wiki/evaluation/llm-output-validation-automation-failure-prevention) — confidence: 1, status: draft
 - [LLM Output Validation: Enhancing Pipeline Robustness with Prompt Constraints](wiki/evaluation/llm-output-validation-prompt-constraints-robustness) — confidence: 1, status: draft
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
+- [LLM 출력 검증: 문장 단위 강제 처리로 무결성 보장](wiki/evaluation/llm-output-validation-sentence-unit-forced-processing) — confidence: 1, status: draft
 - [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 - [LLM 시스템 UX 평가 — 지표 설계 및 측정 전략](wiki/evaluation/llm-ux-evaluation-metrics-design-measurement) — confidence: 1, status: draft
 - [ML 파이프라인 정규화 함수 입력 범위 가정 — 피처 확장 시 silent 오계산](wiki/evaluation/ml-pipeline-normalization-range-assumption) — confidence: 2, status: complete
@@ -1065,6 +1066,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/ai-model-serving-harness-enterprise-deployment-management
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/prompt-model-version-management-large-scale-ai
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/react-doctor-ai-code-validation-pipeline
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-output-validation-sentence-unit-forced-processing
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ harness-engineering/agentic-chain-saturation-detection
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
@@ -1609,6 +1611,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/llm-api-cost-optimization-harness-design-patterns
+- harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance ↔ harness-engineering/llm-application-cost-effective-deployment-patterns
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ reports/closed-loop-health
