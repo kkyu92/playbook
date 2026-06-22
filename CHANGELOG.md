@@ -4,6 +4,23 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.87] — 2026-06-22
+
+### Fixed
+- moneyball Vercel 배포 실패 + CI 19건 batch-close (cycle 1201). 누적 183건. Vercel 18 / CI 1 비율 — Vercel 배포 실패 비중 급증.
+- cycle 1200 SE #374 milestone (1200 % 50 = 0) trigger 3 forced. SKILL A+B+C patch 완료 정합 → retro-only.
+
+### Changed
+- cycles 1200-1209 chain breakdown: skill-evolution × 1 (#374 milestone) / worker-incident-triage × 1 / curate × 3 / explore-idea × 2 / review-code × 1 / fix-incident × 1 / 기타 retro-only.
+- SE oscillation 215→216 누적.
+- retro-only 80%+ 유지 (incident steady-state).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 158 / origin 391 (cycle 1200 시점, +58 origin since 1190). auto-ingest PR 11+건 audit gate block.
+- **[P1] moneyball repo**: ws/vite CVE + Vercel 배포 실패 누적 183건. `pnpm update ws vite` + Vercel 배포 점검 사용자 영역.
+
+
+
 ## [0.9.86] — 2026-06-21
 
 ### Fixed
