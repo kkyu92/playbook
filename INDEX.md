@@ -115,6 +115,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [Concurrent & Fault-Tolerant AI Service Workflows: Design Patterns for Robustness](wiki/harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns) — confidence: 1, status: draft
 - [Cron Natural Fire — 운영 환경 검증 패턴](wiki/harness-engineering/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
+- [Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정](wiki/harness-engineering/cross-fork-ci-failure-fix-propagation-boundary) — confidence: 3, status: complete
 - [Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop](wiki/harness-engineering/cross-fork-feedback-sync) — confidence: 2, status: draft
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/harness-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
@@ -1426,6 +1427,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger
+- harness-engineering/cross-fork-ci-failure-fix-propagation-boundary ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/cross-fork-ci-failure-fix-propagation-boundary ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
 - harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
 - harness-engineering/cross-fork-feedback-sync ↔ context-engineering/ambient-knowledge-injection
