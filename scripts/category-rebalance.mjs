@@ -253,7 +253,7 @@ function toMarkdown(r) {
   out.push("## 🗂️ Category Rebalance Report");
   out.push("");
   out.push(`**N_total** = ${r.n_total} entries`);
-  if (r.embeddingsStaleness) out.push(""), out.push(r.embeddingsStaleness);
+  if (r.embeddingsStaleness) { out.push(""); out.push(r.embeddingsStaleness); }
   if (r.imbalance.ratio !== null) {
     out.push(`**Imbalance ratio** = ${r.imbalance.ratio.toFixed(2)} (max=${r.imbalance.max}, min=${r.imbalance.min})${r.imbalance.flagged ? " ⚠️" : ""}`);
   }
