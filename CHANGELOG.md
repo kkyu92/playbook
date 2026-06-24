@@ -4,6 +4,27 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.88] — 2026-06-25
+
+### Fixed
+- moneyball inbound incidents 80건 batch-close (cycle 1210). 누적 263건 (이전 183건). Vercel 배포 실패 ~40 + CI 실패 ~40 — ws/vite CVE audit gate 재발 패턴.
+- `incident-auto-close.yml` bash pipe subshell 카운터 버그: `CLOSED/SKIPPED=0` 표시 오류 → process substitution 으로 수정 (cycle 1213). 실 close 동작은 기존에도 정상.
+- `incident-auto-close.yml` `--limit 200` hard cap → `--limit 500` 상향 (cycle 1221). backlog 200+ 시 silent miss 방어.
+- `scripts/category-rebalance.mjs` comma expression ESLint warning 해소 (cycle 1214). ESLint 0 warnings 달성.
+
+### Added
+- wiki #332: `bash-pipe-subshell-variable-isolation-monitoring-trap` (conf3) — pipe-while 서브셸 변수 격리 패턴 + GH Actions 실증 (cycle 1217).
+- wiki #333: `agentic-closed-loop-self-repair-workflow-bug-discovery-fix` (conf3) — 허브 자체 workflow 버그 발견·수정 폐루프 패턴 (cycle 1225). 334 total entries.
+- TODOS P0/P1 갱신: auto-ingest PR 블로킹 11→24건, batch-close 누적 183→263건 (cycle 1219).
+
+### Changed
+- cycles 1210-1229 chain breakdown: worker-incident-triage × 2 (success 1) / explore-idea × 3 (success 2) / curate × 4 / fix-incident × 3 (success 2 + partial 1) / review-code × 2.
+- `incident-auto-close.yml` 안정화 (3건 수정 이력 cycle 1047~1221).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 521 / origin 169 (cycle 1219 시점). auto-ingest PR 24건 audit gate block (매일 증가 중).
+- **[P1] moneyball repo**: ws/vite CVE 지속. `pnpm update ws vite` + push 사용자 영역. batch-close 누적 263건.
+
 ## [0.9.87] — 2026-06-22
 
 ### Fixed
