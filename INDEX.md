@@ -170,6 +170,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
+- [SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session](wiki/harness-engineering/skill-evolution-skip-condition-mode-dependency) — confidence: 3, status: complete
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/harness-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/harness-engineering/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
@@ -1645,6 +1646,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/recurring-file-bug-accumulator-pattern
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/question-own-defaults
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/silent-drift-family-pattern
