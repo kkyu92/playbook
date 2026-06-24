@@ -1,0 +1,76 @@
+---
+title: "Agentic Closed-Loop Self-Repair — Hub 자체 Workflow 버그 발견·수정 패턴"
+category: harness-engineering
+date: "2026-06-25"
+tags:
+  - agentic-systems
+  - closed-loop
+  - self-repair
+  - workflow
+  - github-actions
+  - monitoring
+  - harness-engineering
+  - develop-cycle
+workers:
+  - all
+confidence: 3
+last_verified: "2026-06-25"
+connections:
+  - harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap
+  - harness-engineering/agentic-gap-trigger-chain-health-check
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "develop-cycle-hub 가 자체 monitoring workflow 의 버그를 발견하고 사람 개입 없이 fix-incident chain 으로 직접 수정하는 폐루프(closed-loop) 자가 수리 패턴. incident-auto-close.yml 3건 수정 실증 (cycle 1047~1221)."
+type: entry
+source: explore-idea
+---
+
+## 패턴 개요
+
+아젠틱 허브(develop-cycle-hub)가 자신이 관리하는 인프라 워크플로우(`incident-auto-close.yml` 등)의 버그를 **운영 중 스스로 발견하고** explore-idea 또는 fix-incident chain 으로 즉시 수정하는 폐루프 자가 수리 구조.
+
+```
+허브 사이클 N → explore-idea chain (workflow log 분석)
+              → 버그 발견 → cycle_state 박제
+허브 사이클 N+1 → fix-incident chain (next_recommended_chain 힌트)
+               → PR 또는 직접 main 수정 → 자동 배포
+```
+
+사람이 버그를 인식하거나 보고서를 읽기 전에 이미 수정 완료.
+
+## 실증 — incident-auto-close.yml 진화 이력
+
+| 사이클 | 발견 방법 | 버그 | 수정 |
+|--------|-----------|------|------|
+| ~cycle 1047 | carry-over 설계 | Phase 4b 초기 구현 | 최초 배포 (closed-loop 인프라 완성) |
+| cycle 1212 | workflow log 분석 (explore-idea) | bash pipe subshell → CLOSED/SKIPPED=0 표시 오류 | cycle 1213 fix-incident |
+| cycle 1220 | workflow 코드 리뷰 (explore-idea) | `--limit 200` hard cap → backlog 200+ 시 silent miss | cycle 1221 fix-incident |
+
+### Cycle 1212 → 1213 상세 (bash subshell)
+
+```bash
+# 1212: workflow log 에서 "closed: 0 / skipped: 0" 발견 (80건 처리했는데 0)
+# 원인 분석: pipe-while subshell 변수 격리
+# 1213: process substitution 으로 즉시 수정
+```
+
+실제 close 동작은 정상이었지만 모니터링 수치가 항상 0 표시 → 운영자가 "정상(그날 eligible 없음)"으로 오독 가능 → 자가 발견 없었으면 영구 잠복.
+
+## 자가 수리 가능 조건
+
+1. **관찰 가능성 (Observability)**: 워크플로우 로그가 구조화되어 있어 에이전트가 parse 가능
+2. **자율 처리 범위**: workflow yaml 변경이 R6(사용자 영역) 아닌 자율 처리 가능 영역
+3. **carry-over 메커니즘**: explore-idea 에서 발견한 버그를 next_recommended_chain 으로 fix-incident 로 전달
+4. **low blast radius**: 수정이 소규모 (1-2줄) 이고 롤백 용이
+
+## 한계 및 비자가수리 영역
+
+- **R6 영역 (사용자 결정)**: secrets, force-push, BRANCHED merge — 발견은 가능, 수정은 불가
+- **복잡 리팩터**: 설계 변경 수준의 버그 → expand-scope 으로 상향, 사용자 review 필요
+- **외부 서비스 버그**: Vercel, GitHub Actions runner 버그 → carry-over 박제만
+
+## 패턴 가치
+
+- 인프라 안정성 자율 유지 (사람 감시 부담 ↓)
+- "워크플로우가 이미 고장났는데 아무도 몰랐던" 기간 최소화
+- 자가 수리 evidence 는 자동으로 git history + cycle_state JSON 에 박제 → 추후 감사 가능

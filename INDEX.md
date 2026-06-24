@@ -44,6 +44,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic CI/CD Deploy Budget Economy — Batch Push Policy](wiki/harness-engineering/agentic-ci-deploy-budget-batch-push-policy) — confidence: 4, status: complete
 - [CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴](wiki/harness-engineering/agentic-claude-md-line-reference-silent-drift) — confidence: 2, status: complete
+- [Agentic Closed-Loop Self-Repair — Hub 자체 Workflow 버그 발견·수정 패턴](wiki/harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix) — confidence: 3, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
@@ -1131,6 +1132,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/post-ship-meta-documentation-drift
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/stale-temporal-comment-cleanup-policy
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/question-own-defaults
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/agentic-gap-trigger-chain-health-check
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/zero-touch-develop-cycle-session-management
