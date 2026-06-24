@@ -1,0 +1,110 @@
+---
+title: "Bash Pipe 서브셸 변수 격리 — 모니터링 카운터 무음 오염 패턴"
+category: harness-engineering
+date: "2026-06-25"
+tags:
+  - bash
+  - shell-scripting
+  - github-actions
+  - monitoring
+  - silent-failure
+  - subshell
+  - pipeline
+  - harness-engineering
+  - ci-cd
+workers:
+  - all
+confidence: 3
+last_verified: "2026-06-25"
+connections:
+  - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure
+  - harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
+  - harness-engineering/zero-touch-develop-cycle-session-management
+status: complete
+description: "bash 파이프라인 우측 while loop 는 서브셸에서 실행 — 내부 변수 할당이 부모 셸에 전파되지 않아 카운터가 항상 0을 표시. 실제 사이드이펙트(gh issue close 등)는 정상 실행. 진단 어려운 '동작은 정상, 보고는 오류' 패턴. process substitution 으로 수정."
+type: entry
+source: explore-idea
+---
+
+## 문제
+
+GH Actions bash 스크립트에서 `command | while read -r row; do ... COUNTER=$((COUNTER+1)) ... done; echo "count: $COUNTER"` 패턴 사용 시 `COUNTER` 가 항상 초기값(0)을 출력.
+
+```bash
+# 🔴 버그 패턴
+CLOSED=0
+jq -c '.[]' /tmp/incidents.json | while read -r row; do
+  gh issue close "$INC_NUM"
+  CLOSED=$((CLOSED+1))          # 서브셸 내 변수 — 부모 셸에 전파 X
+done
+echo "closed: $CLOSED"          # 항상 "closed: 0" 출력
+```
+
+## 원인
+
+bash 파이프라인(`A | B`)에서 `B` (while loop 포함) 는 **서브셸(subshell)**에서 실행. 서브셸 안 변수 할당은 부모 셸에 전파되지 않음.
+
+```
+parent shell: CLOSED=0
+              ↓ fork (pipe 생성)
+subshell:     CLOSED=0 (복사본)
+              CLOSED=1 (gh close 후)
+              CLOSED=2 ...
+              exit
+parent shell: CLOSED=0 (변경 없음 — 서브셸 복사본만 변경됨)
+```
+
+## 실증 (cycle 1213 — incident-auto-close.yml)
+
+| 지표 | 값 |
+|---|---|
+| workflow | `incident-auto-close.yml` (Phase 4b closed-loop) |
+| 증상 | 80건 open incidents 처리 시 "closed: 0 / skipped: 0" |
+| 실제 동작 | `gh issue close` 는 정상 실행 (사이드이펙트) |
+| 오류 기간 | workflow 최초 배포 이후 ~ cycle 1213 fix 전 (장기) |
+| 감지 방법 | cycle 1212 explore-idea 에서 workflow log 분석 |
+
+**감지가 늦은 이유**: 실제 close 동작은 정상 → 기능 테스트 통과. 카운터 0 표시는 "처리 건수 없음 = 정상(그날 eligible 없음)" 으로 오독 가능.
+
+## 수정 패턴
+
+### 방법 1: Process Substitution (권장)
+
+```bash
+# ✅ fix — process substitution
+CLOSED=0
+while read -r row; do
+  gh issue close "$INC_NUM"
+  CLOSED=$((CLOSED+1))
+done < <(jq -c '.[]' /tmp/incidents.json)
+echo "closed: $CLOSED"  # 실제 카운트 반영
+```
+
+`< <(cmd)` = process substitution. while loop 가 현재 셸에서 직접 실행. 서브셸 생성 X.
+
+### 방법 2: 임시 파일
+
+```bash
+CLOSED=0
+jq -c '.[]' /tmp/incidents.json > /tmp/rows.txt
+while read -r row; do
+  gh issue close "$INC_NUM"
+  CLOSED=$((CLOSED+1))
+done < /tmp/rows.txt
+echo "closed: $CLOSED"
+```
+
+## 적용 범위
+
+이 패턴이 발생하는 조건:
+- `command | while ... done` 구조
+- while loop 안에서 변수 값 누적 (counter, sum, array append)
+- loop 종료 후 변수 사용
+
+영향 없는 경우:
+- `gh issue close` 같은 사이드이펙트 (파일 쓰기, API 호출, echo) — 서브셸에서도 실행
+- `lastpipe` 옵션 활성화 시 (`shopt -s lastpipe`) — bash 4.2+ 파이프 마지막 명령을 현재 셸에서 실행
+
+## GH Actions 주의 사항
+
+GH Actions ubuntu runner bash = 기본 `lastpipe` OFF. `set -euo pipefail` 도 이 동작 미변경. process substitution 은 `#!/bin/bash` 에서 동작 (`#!/bin/sh` 에서는 미지원 — POSIX sh 는 process substitution X).
