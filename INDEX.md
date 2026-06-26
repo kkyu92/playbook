@@ -289,6 +289,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Autonomous AI Agent Task Planning — Robust Execution Patterns](wiki/agents/autonomous-ai-agent-task-planning-execution-patterns) — confidence: 1, status: draft
 - [Claude Code /goal 기능 — 자율 플레이북 워커를 위한 반복 실행 및 검증 강화](wiki/agents/claude-goal-playbook-worker-automation) — confidence: 1, status: draft
 - [다중 에이전트 시스템: 협업 및 충돌 해결 디자인 패턴](wiki/agents/collaboration-conflict-resolution-multi-agent-systems) — confidence: 1, status: draft
+- [AI Agent Tool Chaining — 복잡한 워크플로우를 위한 고급 디자인 패턴](wiki/agents/complex-ai-agent-tool-chaining-design-patterns) — confidence: 1, status: draft
 - [AI 에이전트 외부 툴 연동 설계 — 실제 업무 자동화를 위한 필수 전략](wiki/agents/external-tool-integration-for-ai-agents) — confidence: 1, status: draft
 - [GLM 5.2 Integration — Agent Functionality Expansion and Validation Enhancement](wiki/agents/glm-5-2-agent-extension-validation-enhancement) — confidence: 1, status: draft
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
@@ -686,6 +687,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/multi-ai-model-complex-service-harness-design
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-decision-making-patterns ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
