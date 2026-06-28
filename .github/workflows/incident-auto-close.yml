@@ -38,9 +38,23 @@ jobs:
             --repo kkyu92/playbook \
             --state open \
             --label "inbound,incident" \
-            --limit 200 \
+            --limit 500 \
             --json number,title,body,createdAt \
             > /tmp/hub_incidents.json
+
+          # Strip unescaped control chars (U+0000-U+001F) from issue bodies.
+          # gh issue list may return JSON with raw control chars in body strings,
+          # which causes jq parse errors in the Match step.
+          python3 - <<'PYEOF'
+import json, re
+with open('/tmp/hub_incidents.json') as f:
+    data = json.loads(f.read(), strict=False)
+for item in data:
+    body = item.get('body') or ''
+    item['body'] = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', body)
+with open('/tmp/hub_incidents.json', 'w') as f:
+    json.dump(data, f)
+PYEOF
 
           echo "open incidents: $(jq length /tmp/hub_incidents.json)"
 
@@ -55,20 +69,20 @@ jobs:
           CLOSED=0
           SKIPPED=0
 
-          jq -c '.[]' /tmp/hub_incidents.json | while read -r row; do
+          while read -r row; do
             INC_NUM=$(echo "$row" | jq -r .number)
             INC_TITLE=$(echo "$row" | jq -r .title)
             INC_BODY=$(echo "$row" | jq -r .body)
             INC_CREATED=$(echo "$row" | jq -r .createdAt)
 
             # commit hash 추출 (title 또는 body 의 40자 sha)
-            HASH=$(echo "$INC_TITLE $INC_BODY" | grep -oE '[a-f0-9]{40}' | head -1)
+            HASH=$(echo "$INC_TITLE $INC_BODY" | grep -oE '[a-f0-9]{40}' | head -1 || true)
             if [ -z "$HASH" ]; then
               SKIPPED=$((SKIPPED+1))
               continue
             fi
 
-            # 워커 repo 매칭 (title 의 'from <repo>' parse)
+            # 워커 repo 매칭 (body 의 'from <repo>' parse)
             WORKER_REPO=""
             for WR in $WORKER_REPOS; do
               SHORT=$(basename "$WR")
@@ -96,9 +110,13 @@ jobs:
 
             COMMENT="Auto-close (incident-auto-close.yml). fingerprint commit \`${HASH:0:7}\` 워커 ($WORKER_REPO) main 머지 확인 + grace ${GRACE_DAYS}d 경과. raw evidence file raw-sources/_archive 보존."
 
-            gh issue close "$INC_NUM" --repo kkyu92/playbook --comment "$COMMENT"
+            gh issue close "$INC_NUM" --repo kkyu92/playbook --comment "$COMMENT" || {
+              echo "⚠️ close failed #$INC_NUM (already closed or error) — skipping"
+              SKIPPED=$((SKIPPED+1))
+              continue
+            }
             CLOSED=$((CLOSED+1))
-          done
+          done < <(jq -c '.[]' /tmp/hub_incidents.json)
 
           echo "closed: $CLOSED / skipped: $SKIPPED"
 
