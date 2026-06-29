@@ -231,6 +231,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Playbook Journal 053 — silent drift family 사례 15 재발 — cycle 1076/1077 retro local push 누락 (cycle 1078 자연 발견)](wiki/journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local) — confidence: 3, status: in-progress
 - [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: in-progress
 - [Playbook Journal 055 — incident wave 2026-06-10/11 — SUPABASE_URL + esbuild CVE family (8 fingerprints batch close, cycle 1169)](wiki/journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c) — confidence: 3, status: in-progress
+- [Playbook Journal 057 — P1-P4 패턴 추출 — sparse detection / silent LLM fallback / registry sweep / alert cascade (cycle 1400)](wiki/journal/playbook-journal-057-p1-p4-sparse-detection-silent-llm-fallback-registr) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -1820,6 +1821,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-057-p1-p4-sparse-detection-silent-llm-fallback-registr ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/claude-code-cost-optimization-strategies
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/operational-resilience-emergency-management-tooling
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
