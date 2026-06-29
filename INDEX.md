@@ -22,6 +22,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Agentic 멀티 레이어 상태 지속성 — 5계층 결정 프레임워크](wiki/context-engineering/agentic-multi-layer-state-persistence-decision-framework) — confidence: 3, status: complete
 - [Agentic OOS 메모리 드리프트 — count_smoke 베이스라인으로 사실 일치성 검증](wiki/context-engineering/agentic-oos-memory-drift-count-smoke-baseline) — confidence: 2, status: draft
 - [AI 에이전트 코드 이해 - 지식 그래프 통합을 통한 효율 최적화](wiki/context-engineering/ai-agent-code-knowledge-graph-integration-efficiency) — confidence: 1, status: draft
+- [AI Agent Context Layer — Data Warehouse 상호작용을 위한 구조화된 지식 통합](wiki/context-engineering/ai-agent-context-layer-data-warehousing) — confidence: 1, status: draft
 - [AI Agent Context Optimization — Enhancing Session Longevity and Efficiency](wiki/context-engineering/ai-agent-context-window-optimization-session-longevity) — confidence: 1, status: draft
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
@@ -550,7 +551,6 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/external-tool-integration-for-ai-agents ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/external-tool-integration-for-ai-agents ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/external-tool-integration-for-ai-agents ↔ infrastructure/llm-call-orchestration-reliability-enhancement
-- agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/external-tool-integration-for-ai-agents ↔ harness-engineering/zerostack-rust-agent-harness-extension
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/external-tool-integration-for-ai-agents ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
@@ -558,6 +558,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/external-tool-integration-for-ai-agents ↔ context-engineering/ai-agent-code-knowledge-graph-integration-efficiency
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-tool-usage-design
+- agents/external-tool-integration-for-ai-agents ↔ harness-engineering/multi-llm-api-integration-harness-patterns
+- agents/external-tool-integration-for-ai-agents ↔ agents/llm-autonomous-agents-tool-use-planning-implementation
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
@@ -609,6 +611,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-collaboration-system-design-patterns
+- agents/llm-agent-goal-achievement-planning-patterns ↔ agents/llm-autonomous-agents-tool-use-planning-implementation
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
@@ -1661,7 +1664,6 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/llm-api-cost-optimization-harness-design-patterns ↔ project-ops/claude-code-cost-optimization-strategies
-- harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ project-ops/claude-code-commit-message-hermes-md-monitoring-remediation
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents
@@ -1671,6 +1673,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/open-source-supply-chain-security-llm-tools-hardening
+- harness-engineering/llm-api-dependency-risk-mitigation-strategy ↔ harness-engineering/multi-llm-api-integration-harness-patterns
 - harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/llm-api-retry-logic-design-patterns-resilience ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
