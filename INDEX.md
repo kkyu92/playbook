@@ -174,6 +174,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [멀티모달 AI 오케스트레이션 — 복합 사용자 요청 처리를 위한 모델 통합](wiki/harness-engineering/multimodal-ai-orchestration-complex-user-request-processing) — confidence: 1, status: draft
 - [Multimodal AI Orchestration — Bridging Diverse AI Components](wiki/harness-engineering/multimodal-ai-orchestration-design-patterns) — confidence: 1, status: draft
 - [멀티모달 Harness 디자인 패턴 — 복합 LLM 워크플로우를 위한 통합 프레임워크](wiki/harness-engineering/multimodal-harness-design-complex-llm-workflows) — confidence: 1, status: draft
+- [Multimodal LLM Workflow Integration — Harness Orchestration Patterns](wiki/harness-engineering/multimodal-llm-workflow-harness-integration-patterns) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/harness-engineering/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [Production LLM Harness Design — Scalable and Resilient AI Service Deployment](wiki/harness-engineering/production-llm-service-harness-system-design-patterns) — confidence: 1, status: draft
@@ -272,6 +273,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [AI Agent Guardrails: Superpowers Pattern으로 의도 정렬 구현](wiki/agents/ai-agent-superpowers-guardrails-intent-alignment) — confidence: 1, status: draft
 - [AI Agent Execution & Knowledge Integration — 투명한 작업 진행 및 결과 공유](wiki/agents/ai-agent-transparent-execution-knowledge-integration) — confidence: 1, status: draft
 - [AI Collaboration 5 Principles — Playbook Agent Workflow Optimization](wiki/agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi) — confidence: 1, status: draft
+- [Autonomous Agent Feedback Loops — Design Patterns for Stability and Performance](wiki/agents/autonomous-agent-feedback-loop-design-patterns) — confidence: 1, status: draft
 - [Autonomous Agents: Long-Term Memory Management Strategies](wiki/agents/autonomous-agent-long-term-memory-management) — confidence: 1, status: draft
 - [Autonomous AI Agent Decision Logic – Implementation Patterns for Complex Environments](wiki/agents/autonomous-ai-agent-decision-logic-implementation-patterns) — confidence: 1, status: draft
 - [Autonomous AI Agent Task Planning — Robust Execution Patterns](wiki/agents/autonomous-ai-agent-task-planning-execution-patterns) — confidence: 1, status: draft
@@ -315,6 +317,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [OOS D-Day 도달 시 예측 평가 프로토콜](wiki/evaluation/agentic-oos-dday-arrival-evaluation-protocol) — confidence: 2, status: draft
 - [Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜](wiki/evaluation/agentic-precommit-prediction-oos-track-record) — confidence: 2, status: complete
 - [Claude Code Generation Reliability — Enhanced Validation Pipeline](wiki/evaluation/claude-code-generation-validation-pipeline-extension) — confidence: 1, status: draft
+- [Claude Code Extended Thinking — 불투명한 추론 의존도 재평가](wiki/evaluation/claude-extended-thinking-dependency-reassessment) — confidence: 1, status: draft
 - [Generative AI Hallucination: Automated Detection and Evaluation Methods](wiki/evaluation/generative-ai-hallucination-automated-detection-evaluation) — confidence: 1, status: draft
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM 문서 무결성 검증 — DELEGATE-52 기반 훼손 방지 파이프라인 강화](wiki/evaluation/llm-document-integrity-validation-pipeline-enhancement) — confidence: 1, status: draft
@@ -491,6 +494,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-agent-decision-making-patterns
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ harness-engineering/antigravity-managed-agents-api-integration-review
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-stage-agent-task-scheduling-monitoring
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/long-term-agent-behavior-anomaly-detection-response
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ harness-engineering/ai-agent-control-validation-mechanisms
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ evaluation/llm-output-safety-reliability-validation-enhancement
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ reports/closed-loop-health
 - agents/autonomous-agent-long-term-memory-management ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/autonomous-agent-long-term-memory-management ↔ agents/llm-agent-tool-use-design-patterns
 - agents/autonomous-agent-long-term-memory-management ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
@@ -697,6 +705,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-ai-agent-realtime-decision-logic
 - agents/multimodal-ai-agent-effective-tool-integration ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-ai-agent-tool-usage-design
+- agents/multimodal-ai-agent-effective-tool-integration ↔ harness-engineering/multimodal-llm-workflow-harness-integration-patterns
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -1557,6 +1566,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
+- harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/harness-level-loop-playbook-worker-orchestration
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/ephemeral-credentials-session-llm-harness ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -1715,7 +1725,10 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/multimodal-ai-orchestration-design-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - harness-engineering/multimodal-ai-orchestration-design-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
+- harness-engineering/multimodal-ai-orchestration-design-patterns ↔ harness-engineering/multimodal-llm-workflow-harness-integration-patterns
 - harness-engineering/multimodal-harness-design-complex-llm-workflows ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
+- harness-engineering/multimodal-harness-design-complex-llm-workflows ↔ harness-engineering/multimodal-llm-workflow-harness-integration-patterns
+- harness-engineering/multimodal-llm-workflow-harness-integration-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/silent-drift-family-pattern
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/post-ship-meta-documentation-drift ↔ harness-engineering/stale-temporal-comment-cleanup-policy
