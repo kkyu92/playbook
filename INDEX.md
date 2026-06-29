@@ -165,6 +165,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Large-scale LLM Workload Management: MLOps Pipeline Design Patterns](wiki/harness-engineering/llm-workload-management-mlops-pipeline-design-patterns) — confidence: 1, status: draft
 - [Multi-LLM Routing Patterns - 비용 효율적이고 성능 좋은 LLM 애플리케이션 디자인](wiki/harness-engineering/multi-llm-routing-design-patterns-cost-performance) — confidence: 1, status: draft
 - [Multimodal AI Serving Architectures — Efficient Deployment Patterns](wiki/harness-engineering/multimodal-ai-model-serving-architecture-patterns) — confidence: 1, status: draft
+- [멀티모달 AI 오케스트레이션 — 복합 사용자 요청 처리를 위한 모델 통합](wiki/harness-engineering/multimodal-ai-orchestration-complex-user-request-processing) — confidence: 1, status: draft
 - [Multimodal AI Orchestration — Bridging Diverse AI Components](wiki/harness-engineering/multimodal-ai-orchestration-design-patterns) — confidence: 1, status: draft
 - [멀티모달 Harness 디자인 패턴 — 복합 LLM 워크플로우를 위한 통합 프레임워크](wiki/harness-engineering/multimodal-harness-design-complex-llm-workflows) — confidence: 1, status: draft
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/harness-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
@@ -354,6 +355,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [AI Agent Cost Control — Preventing Runaway Cloud Resource Consumption](wiki/project-ops/ai-agent-runaway-cost-prevention-control-systems) — confidence: 1, status: draft
 - [AI 프로젝트 기획 및 로드맵 — 성공적인 초기 전략 수립](wiki/project-ops/ai-project-planning-roadmap-initial-strategy) — confidence: 1, status: draft
 - [AI Project Scope Management — Navigating Complexity and Change](wiki/project-ops/ai-project-scope-management-complexity-change) — confidence: 1, status: draft
+- [AI 기반 SRE 원칙: 프로젝트 관제탑 강화 및 운영 신뢰성 제고](wiki/project-ops/ai-sre-principles-project-control-tower-enhancement) — confidence: 1, status: draft
 - [Claude Code Commit Message Security — HERMES.md 필터링 및 자동화된 검증](wiki/project-ops/claude-code-commit-message-hermes-md-monitoring-remediation) — confidence: 1, status: draft
 - [Claude Code Cost Optimization - Strategic Usage & Budget Management](wiki/project-ops/claude-code-cost-optimization-strategies) — confidence: 1, status: draft
 - [Claude Code Harness 비용 최적화 — 재평가 및 전략 수립](wiki/project-ops/claude-code-harness-cost-optimization-reassessment) — confidence: 1, status: draft
@@ -1659,6 +1661,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ project-ops/claude-code-harness-cost-optimization-reassessment
 - harness-engineering/llm-workflow-orchestration-business-logic-patterns ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
 - harness-engineering/llm-workflow-orchestration-business-logic-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
+- harness-engineering/llm-workflow-orchestration-business-logic-patterns ↔ harness-engineering/multimodal-ai-orchestration-complex-user-request-processing
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -1671,6 +1674,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
+- harness-engineering/multimodal-ai-model-serving-architecture-patterns ↔ harness-engineering/multimodal-ai-orchestration-complex-user-request-processing
+- harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
+- harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/multimodal-ai-orchestration-design-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - harness-engineering/multimodal-ai-orchestration-design-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/multimodal-harness-design-complex-llm-workflows ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
@@ -1894,6 +1900,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- project-ops/ai-sre-principles-project-control-tower-enhancement ↔ project-ops/operational-resilience-emergency-management-tooling
+- project-ops/ai-sre-principles-project-control-tower-enhancement ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/claude-code-cost-optimization-strategies ↔ project-ops/claude-code-harness-cost-optimization-reassessment
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
