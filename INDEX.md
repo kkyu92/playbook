@@ -114,6 +114,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Claude Code Agent View: AI Worker Orchestration for Enhanced Playbook Efficiency](wiki/harness-engineering/claude-code-agent-view-worker-management-integration) — confidence: 1, status: draft
 - [Claude Code Dynamic Workflows — Playbook Agent Harness Integration](wiki/harness-engineering/claude-code-dynamic-workflows-harness-integration) — confidence: 1, status: draft
 - [Claude Code Harness Visibility — Component Introspection with ccinv CLI](wiki/harness-engineering/claude-code-harness-component-visibility-ccinv) — confidence: 1, status: draft
+- [Claude Code Harness Containment: Mitigating AI Agent Risks](wiki/harness-engineering/claude-code-harness-containment-risk-mitigation) — confidence: 1, status: draft
 - [Claude Code Harness Architecture: Large Codebase Integration Patterns](wiki/harness-engineering/claude-code-harness-large-codebase-architecture-patterns) — confidence: 1, status: draft
 - [Claude Code 하네스 스킬셋 강화 — 에이전트 플레이북 엔지니어링](wiki/harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook) — confidence: 1, status: draft
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
@@ -318,6 +319,7 @@ Updated: 2026-06-28T21:04:27.050Z
 ### Evaluation
 - [OOS D-Day 도달 시 예측 평가 프로토콜](wiki/evaluation/agentic-oos-dday-arrival-evaluation-protocol) — confidence: 2, status: draft
 - [Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜](wiki/evaluation/agentic-precommit-prediction-oos-track-record) — confidence: 2, status: complete
+- [AI-Driven Vulnerability Management — Enhancing Guard Tests with Autonomous Discovery and Remediation](wiki/evaluation/ai-vulnerability-guard-test-enhancement) — confidence: 1, status: draft
 - [Claude Code Generation Reliability — Enhanced Validation Pipeline](wiki/evaluation/claude-code-generation-validation-pipeline-extension) — confidence: 1, status: draft
 - [Claude Code Extended Thinking — 불투명한 추론 의존도 재평가](wiki/evaluation/claude-extended-thinking-dependency-reassessment) — confidence: 1, status: draft
 - [Generative AI Hallucination: Automated Detection and Evaluation Methods](wiki/evaluation/generative-ai-hallucination-automated-detection-evaluation) — confidence: 1, status: draft
@@ -1008,6 +1010,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/agentic-precommit-prediction-oos-track-record ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
 - evaluation/agentic-precommit-prediction-oos-track-record ↔ harness-engineering/agentic-numeric-threshold-semantic-aliasing-drift
 - evaluation/agentic-precommit-prediction-oos-track-record ↔ context-engineering/agentic-cycle-state-json-carry-over-design
+- evaluation/ai-vulnerability-guard-test-enhancement ↔ evaluation/llm-output-validation-prompt-constraints-robustness
+- evaluation/ai-vulnerability-guard-test-enhancement ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
+- evaluation/ai-vulnerability-guard-test-enhancement ↔ harness-engineering/guard-test-pattern
+- evaluation/ai-vulnerability-guard-test-enhancement ↔ harness-engineering/claude-code-harness-containment-risk-mitigation
+- evaluation/ai-vulnerability-guard-test-enhancement ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
@@ -1469,6 +1476,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/guard-test-pattern
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ project-ops/claude-code-cost-optimization-strategies
 - harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
+- harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection ↔ harness-engineering/claude-code-harness-containment-risk-mitigation
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - harness-engineering/claude-cli-persistent-multi-session-web-terminal ↔ journal/playbook-journal-009-claude-cli-hang-paperclip-4-step
@@ -1485,6 +1493,10 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - harness-engineering/claude-code-harness-component-visibility-ccinv ↔ agents/llm-agent-goal-achievement-planning-patterns
+- harness-engineering/claude-code-harness-containment-risk-mitigation ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
+- harness-engineering/claude-code-harness-containment-risk-mitigation ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- harness-engineering/claude-code-harness-containment-risk-mitigation ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
+- harness-engineering/claude-code-harness-containment-risk-mitigation ↔ project-ops/operational-resilience-emergency-management-tooling
 - harness-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
 - harness-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ harness-engineering/code-based-agent-task-patterns-harness-design
@@ -1696,6 +1708,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ harness-engineering/llm-workload-management-mlops-pipeline-design-patterns
 - harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
+- harness-engineering/llm-input-output-data-pipeline-design-patterns ↔ harness-engineering/realtime-data-stream-ai-harness-design-patterns
 - harness-engineering/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
