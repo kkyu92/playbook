@@ -47,9 +47,12 @@ jobs:
 
           SINCE=$(date -u -d '7 days ago' +%Y-%m-%d)
 
-          # incident Issues (label: incident + inbound) 최근 7일
+          # incident Issues (label: incident + inbound) 최근 7일 — open 만
+          # --state open: closed carry-over (not-planned) incident 는 lesson reminder 불필요.
+          # D5 cron 이 closed incident 에도 reminder 생성 → wave-3 N=3 recurring batch pattern
+          # 원인 (journal-054, 2026-06-01). open 만 보면 이미 해소된 incident 제외.
           gh issue list \
-            --state all \
+            --state open \
             --label "incident" \
             --label "inbound" \
             --limit 100 \

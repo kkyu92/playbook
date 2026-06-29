@@ -4,6 +4,178 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.88] — 2026-06-25
+
+### Fixed
+- moneyball inbound incidents 80건 batch-close (cycle 1210). 누적 263건 (이전 183건). Vercel 배포 실패 ~40 + CI 실패 ~40 — ws/vite CVE audit gate 재발 패턴.
+- `incident-auto-close.yml` bash pipe subshell 카운터 버그: `CLOSED/SKIPPED=0` 표시 오류 → process substitution 으로 수정 (cycle 1213). 실 close 동작은 기존에도 정상.
+- `incident-auto-close.yml` `--limit 200` hard cap → `--limit 500` 상향 (cycle 1221). backlog 200+ 시 silent miss 방어.
+- `scripts/category-rebalance.mjs` comma expression ESLint warning 해소 (cycle 1214). ESLint 0 warnings 달성.
+
+### Added
+- wiki #332: `bash-pipe-subshell-variable-isolation-monitoring-trap` (conf3) — pipe-while 서브셸 변수 격리 패턴 + GH Actions 실증 (cycle 1217).
+- wiki #333: `agentic-closed-loop-self-repair-workflow-bug-discovery-fix` (conf3) — 허브 자체 workflow 버그 발견·수정 폐루프 패턴 (cycle 1225). 334 total entries.
+- TODOS P0/P1 갱신: auto-ingest PR 블로킹 11→24건, batch-close 누적 183→263건 (cycle 1219).
+
+### Changed
+- cycles 1210-1229 chain breakdown: worker-incident-triage × 2 (success 1) / explore-idea × 3 (success 2) / curate × 4 / fix-incident × 3 (success 2 + partial 1) / review-code × 2.
+- `incident-auto-close.yml` 안정화 (3건 수정 이력 cycle 1047~1221).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 521 / origin 169 (cycle 1219 시점). auto-ingest PR 24건 audit gate block (매일 증가 중).
+- **[P1] moneyball repo**: ws/vite CVE 지속. `pnpm update ws vite` + push 사용자 영역. batch-close 누적 263건.
+
+## [0.9.87] — 2026-06-22
+
+### Fixed
+- moneyball Vercel 배포 실패 + CI 19건 batch-close (cycle 1201). 누적 183건. Vercel 18 / CI 1 비율 — Vercel 배포 실패 비중 급증.
+- cycle 1200 SE #374 milestone (1200 % 50 = 0) trigger 3 forced. SKILL A+B+C patch 완료 정합 → retro-only.
+
+### Changed
+- cycles 1200-1209 chain breakdown: skill-evolution × 1 (#374 milestone) / worker-incident-triage × 1 / curate × 3 / explore-idea × 2 / review-code × 1 / fix-incident × 1 / 기타 retro-only.
+- SE oscillation 215→216 누적.
+- retro-only 80%+ 유지 (incident steady-state).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 158 / origin 391 (cycle 1200 시점, +58 origin since 1190). auto-ingest PR 11+건 audit gate block.
+- **[P1] moneyball repo**: ws/vite CVE + Vercel 배포 실패 누적 183건. `pnpm update ws vite` + Vercel 배포 점검 사용자 영역.
+
+
+
+## [0.9.86] — 2026-06-21
+
+### Fixed
+- moneyball CI ws/vite + Vercel 배포 실패 12건 batch-close (cycle 1190). 누적 164건. (CI 4 + Vercel 8 mix burst — 새 incident 유형 Vercel 배포 실패 추가)
+
+### Changed
+- cycles 1190-1199 chain breakdown: worker-incident-triage × 1 (success burst close) / curate × 4 / explore-idea × 2 / review-code × 1 / fix-incident × 1 / 기타 retro-only.
+- retro-only 85%+ 유지.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 147 / origin 333 (cycle 1190 시점, +50 origin since 1160). auto-ingest PR 11+건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE + Vercel 배포 실패 누적 164건. `pnpm update ws vite` push 사용자 영역.
+
+
+
+## [0.9.85] — 2026-06-19
+
+### Fixed
+- moneyball CI ws/vite CVE **47건 batch-close** (cycles 1160/1164/1171/1180). 누적 152건. 4 burst pattern (30/14/2/1).
+
+### Changed
+- cycles 1160-1189 (30-cycle batch) chain breakdown: worker-incident-triage × 4 (1160/1164/1171/1180 success burst close) / curate × 8 / explore-idea × 6 / review-code × 4 / fix-incident × 2 / 기타 retro-only.
+- retro-only 85%+ (incident burst 안정 phase, batch session SE forced spam 차단 효과).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 116 / origin 283 (cycle 1160 시점). auto-ingest PR 11+건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 152건. `pnpm update ws vite` push 사용자 영역.
+
+
+
+## [0.9.84] — 2026-06-19
+
+### Fixed
+- moneyball CI ws/vite CVE 43건 batch-close (cycles 1151/1153). 누적 105건. burst pattern 2회 (1151=30건, 1153=13건).
+- cycle 1150 SE #373 milestone (cycle_n % 50 = 0) trigger 3 forced. SKILL 변경 X (A+B+C 패치 완료 정합) → retro-only.
+
+### Changed
+- cycles 1150-1159 chain breakdown: skill-evolution × 1 (#373 milestone) / worker-incident-triage × 3 / curate × 3 / explore-idea × 1 / review-code × 1 / fix-incident × 1.
+- SE oscillation 214→215 누적 (#373 milestone).
+- retro-only 70% (incident burst 처리 후 안정 — cycle 1151 burst 직후 cleanup phase 유지).
+
+### Carry-over (R6 사용자 영역, 갱신)
+- **[P0] BRANCHED divergence**: local 105 / origin 217 (cycle 1150 시점, +12 local / +61 origin since 1140). auto-ingest PR 11+건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 105건. `pnpm update ws vite` push 사용자 영역.
+
+
+
+## [0.9.83] — 2026-06-19
+
+### Fixed
+- **`develop-cycle-hub` SKILL** A 정의 patch (SE #372 cycle 1145). skip 조건 (A) 명단 비교 = SE chain 제외 후 비교 — SE 자체 진입/탈퇴 noise 차단. SE forced spam 무한 반복 root cause 해소 (cycle 1121/1122/1144/1145 4회 evidence). [B 패치(cycle 1123) + A 패치(cycle 1145) = SE skip 조건 완전 안정화]
+
+### Changed
+- cycles 1140-1149 chain breakdown: review-code × 2 (light + heavy) / curate × 3 / explore-idea × 2 / skill-evolution × 2 (#371 retro-only + #372 success) / worker-incident-triage × 1.
+- SE oscillation 212→214 누적 (#371/#372).
+- retro-only 60% (incident steady-state — batch 1140-1149 변동 없음 + cycle 1130 burst close 효과 지속).
+
+### Carry-over (R6 사용자 영역, 갱신)
+- **[P0] BRANCHED divergence**: local 93 / origin 156 (cycle 1140 시점). auto-ingest PR 11건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 62건. `pnpm update ws vite` push 사용자 영역.
+
+
+
+## [0.9.82] — 2026-06-19
+
+### Fixed
+- **JIT search threshold** 0.87 → 0.85 (cycle 1136). E5 한국어+영어 mix 환경 절대값 한계 보강 (cycle 526 영어 기준 0.87 → mix 환경 0.85). noMatch 70% (513/728) 일부 해소 — "manual batch session oscillation" 등 의미상 hit query unblock.
+- moneyball CI ws/vite CVE 19건 batch-close (cycle 1130). 누적 62건.
+
+### Changed
+- `content/harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement.mdx` threshold section 갱신 (cycle 1137). 0.87→0.85 patch 역사 + 한국어+영어 mix 측정 evidence 박제.
+- `content/harness-engineering/skill-evolution-skip-condition-mode-dependency.mdx` description keyword 보강 (cycle 1133). "manual batch session oscillation steady-state" + "meta-skill-evolution recursive" 추가.
+- embeddings.json 재빌드 (cycle 1135, 2504 chunks, 133s). wiki #331/#332 + #332 patch 인덱싱.
+- cycles 1130-1139 chain breakdown: worker-incident-triage × 2 / curate × 3 / review-code × 1 / explore-idea × 2 / fix-incident × 2.
+
+### Carry-over (R6 사용자 영역, 1130 시점 갱신)
+- **[P0] BRANCHED divergence**: local 81 / origin 156 (cycle 1130 시점, +25/+32). auto-ingest PR 11건 audit gate block 지속.
+- **[P1] moneyball repo**: ws/vite CVE 누적 62건 미해결. `pnpm update ws vite` push 사용자 영역.
+
+
+
+## [0.9.81] — 2026-06-18
+
+### Added
+- `content/harness-engineering/skill-evolution-skip-condition-mode-dependency.mdx` — SKILL skip 조건 mode 종속 결함 (zero-touch vs manual batch session) — wiki #332, cycle 1126. meta-skill-evolution 패턴.
+
+### Fixed
+- **`develop-cycle-hub` SKILL** skip 조건 patch: `(A AND B)` → `(A AND (B OR C))` (SE #370 cycle 1123). C = `oscillation_n ≥ 5`. manual batch session 시 SE 점유율 자연 미달 보강 — SE forced spam 무한 반복 차단.
+- moneyball CI ws/vite CVE inbound **4건 batch-close** (cycles 1124/1128). 누적 43건.
+- `docs/solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure.md` recurrence 3→4 (cycle 1120) — playbook hub intra-repo evidence row 추가. cross-repo + intra-repo 동일 메커니즘 증명.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 68 / origin 124. cycle 1112/1117 fix origin 미반영 → auto-ingest PR Auto Merge 10건 audit gate block (#1670/#1650/#1611/#1534/#1532/#1531/#1530/#1529/#1528/#1527). `git pull --rebase` 또는 `git merge` 후 push 필요.
+- **[P1] moneyball repo**: ws/vite CVE 누적 43건 미해결. `pnpm update ws vite` push 사용자 영역.
+
+### Changed
+- wiki 331→332 entries.
+- cycles 1120-1129 chain breakdown: fix-incident × 2 / skill-evolution × 3 (#368/#369/#370) / worker-incident-triage × 1 / curate × 2 / explore-idea × 1 / review-code × 1.
+- SE oscillation 209→212 누적. C 경로 신규 dogfood 발화 evidence 박제.
+
+## [0.9.80] — 2026-06-17
+
+### Added
+- `content/harness-engineering/wiki-journal-append-only-lint-false-positive-status.mdx` — journal append-only 정책 vs lint Long In-Progress 구조적 오경보 수정 기록 (wiki #329, cycle 1109).
+- `content/infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern.mdx` — pnpm 간접 의존성 CVE audit gate 실패 수정 패턴 (wiki #330, cycle 1114). overrides vs devDep pin 판단 기준.
+- `content/harness-engineering/cross-fork-ci-failure-fix-propagation-boundary.mdx` — cross-fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정 (wiki #331, cycle 1116). 36건 CVE wave evidence.
+
+### Fixed
+- **playbook audit gate**: vite <=8.0.15 (GHSA-fx2h-pf6j-xcff) + protobufjs <=8.4.0 (GHSA-wcpc-wj8m-hjx6) CVE 패치 (cycle 1112). `vite ^8.0.16` devDependency 직접 pin + `pnpm.overrides protobufjs>=8.4.1`. audit high severity 0건.
+- `lint-content.mjs` Long In-Progress journal 제외 — append-only 구조적 오경보 24건 → 0건 (cycle 1109, `3499d1b`).
+- `vite` exact pin `8.0.16` → `^8.0.16` — 미래 patch 업데이트 차단 해소 (cycle 1117). redundant `pnpm.overrides.vite` 제거.
+- moneyball CI ws/vite CVE wave #1584~1669 **39건 batch-close** (cycles 1110-1117). root cause: ws <8.21.0 + vite <=8.0.15 moneyball 미수정. TODOS.md [P1] 갱신.
+
+### Changed
+- wiki 328→331 entries (cycle 1109-1116). JIT search embeddings 재빌드 (2484 chunks, 6 신규 entries 인덱싱 — cycle 1113).
+- `data/search-hits.json` totalQueries 764 (hub cycle 1103-1110 누적). `wiki grave 진단법` H2 alias 추가 (JIT noMatch 개선).
+- cycles 1110-1117: worker-incident-triage × 5 / fix-incident × 2 / curate × 2 / explore-idea × 2 / review-code × 1.
+
+## [0.9.79] — 2026-06-15
+
+### Added
+- `content/harness-engineering/llm-agent-observability-spanlens-trace-monitoring.mdx` — Spanlens LLM agent trace + cost tracking 오픈소스 관측 패턴 (cycle 1089, blog-autopilot #164 scout 위키화).
+- `docs/solutions/develop-cycle-hub/2026-06-11-index-md-rebase-conflict-auto-regenerate.md` — INDEX.md rebase conflict N=3 해결책. `_compiled-truth.md` develop-cycle-hub N=3 달성 (cycle 1087): fake-batch anti-pattern / connections-slug-orphan / INDEX.md-rebase-conflict 3 패턴 메타 박제.
+
+### Fixed
+- blog-autopilot #164 (Spanlens LLM observability scout) — wiki entry 박제 후 close (cycle 1089).
+- blog-autopilot #218 (Claude 5 Fable model 업그레이드 scout) — BLOG_LLM_MODEL_OVERRIDE env 인프라 기존 지원 확인, 모델 GA 대기 carry-over (cycle 1088).
+- #1568/#1569/#1570/#1571 dependabot/CI esbuild vuln GHSA-gv7w-rqvm-qjhr — moneyball worker 영역 systemic carry-over (vite/vitest 업그레이드 필요), hub 차원 batch-close (cycle 1090-1091).
+- memory/.bak 파일 12건 정리 + 스테일 project memory 갱신 (cycle 1091: hub 1042→1091, wiki 310→324, BRANCHED 11/0→15/28).
+
+### Changed
+- wiki 322→324 entries (week-2026-24 + Spanlens). JIT search 669 invocations (hit rate 28.6%).
+- cycles 1085-1091: worker-incident-triage × 2 / curate × 2 / explore-idea × 1 / data-sync × 1.
+
 ## [0.9.78] — 2026-06-10
 
 ### Added

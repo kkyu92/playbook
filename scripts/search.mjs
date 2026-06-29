@@ -184,8 +184,10 @@ async function main() {
   const elapsed = Date.now() - start;
 
   // E5 prefix 적용 후 벡터 공간 정렬 → genuine match 분리도 개선
-  // 실측: genuine match 0.86-0.90 범위, 0.87 유지 (prefix 효과 = 분리도 개선, 절대값 상승 X)
-  const SCORE_THRESHOLD = 0.87;
+  // 실측 (cycle 1136 박제): 한국어+영어 mix 환경에서 genuine match 0.83-0.90 범위.
+  // 0.87→0.85 patch — 의미상 hit이 0.85 부근 미달하는 사례 다수 (noMatch 70% 중 다수 = E5 절대값 한계).
+  // false positive 위험 < blind spot 비용 (cycle 1133/1135/1136 evidence).
+  const SCORE_THRESHOLD = 0.85;
   const top = scored.filter((c) => c.score >= SCORE_THRESHOLD).slice(0, topK);
 
   // 히트 카운트 기록 (unique slugs만)

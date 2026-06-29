@@ -1,5 +1,19 @@
 # TODOS
 
+## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1130 갱신)
+
+**What**: playbook hub auto-ingest PR **24건** (cycle 1219 시점, 2026-06-25) Auto Merge to main = FAILURE. workflow 안 `pnpm audit --audit-level high` 가 vite (`>=8.0.0 <=8.0.15`) + protobufjs (`>=8.0.0 <=8.4.0`) 2 high CVE block. (이전: 11건 cycle 1130)
+**Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) 가 origin/main 미반영. BRANCHED **local 576 / origin 197** (cycle 1230 시점, +55/+28 since 1219). PR base = origin → audit gate fail. solution `ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure.md` 재발 이력 N=4+ (cross-repo moneyball + intra-repo hub 동일 메커니즘).
+**Action (R6 사용자 영역)**: `git pull --rebase origin main` 또는 `git merge origin/main` 후 `git push origin main` → PR audit 자동 재실행 + 머지 unblock. push 후 24건 batch 자동 머지.
+
+## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 135건)
+
+**What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
+**Why**: CI 전체 블로킹. 허브 batch-close 누적: 164건(1110-1190) + 19건(1201) + **80건(1210)** = **263건 총 close** (2026-06-25 갱신). playbook 자체는 cycle 1112 fix 완료.
+**Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push.
+
+---
+
 ## [DONE 2026-05-21] R6 머지 적용 — cycle 943 두 번째 머지 (`5904827`)
 
 **상태**: cycle 943 사용자 옵션 A 두 번째 머지 결정 → INDEX.md conflict 1건 script regen 으로 해소 → merge commit `5904827` 박제. 워커 lesson 23건 흡수 (249→253 entries, +4). embed 재생성 (1827→1938 chunks). BRANCHED 0/261 (origin 0 ahead, local 261 = 본 sess cycle 943 retro 추가 후 262).

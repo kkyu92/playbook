@@ -281,6 +281,7 @@ jobs:
           script: |
             const prNumber = parseInt(process.env.PR_NUMBER);
             const prTitle  = process.env.PR_TITLE;
+            const isAutoIngest = context.ref.startsWith('refs/heads/auto-ingest/');
 
             try {
               await github.rest.pulls.merge({
@@ -293,14 +294,31 @@ jobs:
               console.log('✅ Squash Merge 완료');
               core.setOutput('merged', 'true');
             } catch (err) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body: `⚠️ 자동 머지 실패 — 수동으로 머지해주세요.\n\`\`\`\n${err.message}\n\`\`\``,
-              });
-              core.setFailed(err.message);
+              // auto-ingest/* race condition: parallel squash-merges advance main between rebase and
+              // merge API call. Re-trigger via force-push instead of failing — workflow auto-retries.
+              if (isAutoIngest && (err.message.includes('merge conflicts') || err.message.includes('not mergeable'))) {
+                core.setOutput('retry', 'true');
+                core.warning(`race condition detected — will re-trigger via force-push: ${err.message}`);
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  body: `⚠️ 자동 머지 실패 — 수동으로 머지해주세요.\n\`\`\`\n${err.message}\n\`\`\``,
+                });
+                core.setFailed(err.message);
+              }
             }
+
+      # ── auto-ingest race condition recovery ──
+      # squash-merge 경쟁 조건 감지 시 rebase -X ours + force-push → 새 workflow run 자동 트리거
+      - name: Auto-ingest retry (re-trigger via force-push)
+        if: steps.merge.outputs.retry == 'true'
+        run: |
+          git fetch origin main
+          git rebase origin/main -X ours
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
+          echo "✅ Re-triggered auto-merge via force-push (race condition recovery)"
 
       # ── 머지 후 Vercel 배포 트리거 ──
       # GITHUB_TOKEN으로 만든 squash merge는 Vercel webhook을 발동시키지 않음.

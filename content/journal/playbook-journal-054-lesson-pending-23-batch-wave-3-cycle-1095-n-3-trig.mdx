@@ -5,7 +5,7 @@ date: "2026-06-01"
 tags: [playbook-journal, auto-ingest, lesson, moneyball]
 confidence: 3
 connections: [journal/playbook-journal-000-bootstrap]
-status: in-progress
+status: completed
 description: "자동 수집: lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495) (from kkyu92/moneyballscore)"
 type: entry
 series: playbook-journal
@@ -99,12 +99,17 @@ Co-authored-by: Claude Opus 4.7 <noreply@anthropic.com>
 
 ## 분석
 
-_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+`incident-followup.yml` D5 cron 의 incident 수집 step 이 `--state all` 로 closed incident 포함했음. hub-dispatch cycle 에서 esbuild/CI carry-over 로 batch-close 한 incident 가 7일 window 안에 있으면 D5 cron 이 재차 lesson-pending reminder 생성 → 다음 batch sweep 반복.
+
+**근본 원인**: incident 수집이 `--state all` → closed carry-over incident 도 포함 → 이미 "not planned" 로 닫힌 항목에 reminder 생성.
+
+**fix (cycle 1095)**: `.github/workflows/incident-followup.yml` Collect step `--state all` → `--state open`. 이미 closed 된 incident 에 대한 lesson 요청 원천 차단.
 
 ## 교훈
 
-_TODO: 교훈 정리_
+- 자동화 루프의 `--state all` 패턴은 closed 항목을 다시 처리할 위험 내재. incident follow-up 류는 `--state open` 이 자연 default.
+- N=3 trigger (434→669→1095) = 재발 시 meta-pattern dispatch + 구조적 수정으로 영구 차단.
 
 ## 적용
 
-_TODO: 다음 액션_
+- cycle 1095 `fix-incident` chain — `incident-followup.yml` `--state open` 패치 commit.

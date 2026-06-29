@@ -4,7 +4,7 @@ category: ci-github-actions
 date: 2026-05-12
 tags: [audit, branched, security-patch, pr-branch, nextjs, protobufjs]
 confidence: 3
-recurrence: 3
+recurrence: 4
 ---
 
 ## 문제
@@ -69,6 +69,8 @@ git push --force-with-lease origin auto-ingest/geeknews-YYYYMMDD
 |------|-----|------|------|
 | 2026-05-12 | #418, #421 | Next.js 16.2.3 (cycle 295 patch 미push) | cycle 303 root cause 확인, push 대기 |
 | 2026-05-12 | (moneyball 22건 batch) | protobufjs CVE — develop-cycle 브랜치 8건 + main 14건 | protobufjs >=7.5.6 fix PR #546 머지로 해소. cycle 452 triage CLOSE |
+| 2026-06-16 | (moneyball 28건 batch) | ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass on Windows) — cycle 1205-1207 SEO wave CI 전체 실패 | hub issues #1584,#1612-#1649 batch-close (cycle 1110 triage). fix: moneyball `pnpm update ws vite` 후 재push 필요. |
+| 2026-06-18 | (playbook 자체 auto-ingest PR 10건: #1670/#1650/#1611/#1534/#1532/#1531/#1530/#1529/#1528/#1527) | hub repo 안 동일 패턴 — local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) 가 origin/main 미반영 (BRANCHED local 68 / origin 124). auto-ingest PR base = origin → audit gate `vite >=8.0.0 <=8.0.15` + `protobufjs >=8.0.0 <=8.4.0` 2 high CVE block | cycle 1120 fix-incident chain root cause 확인. R6 사용자 영역 (push/merge/rebase). carry-over [P1] TODOS 박제. N=4 재발 cross-repo+intra-repo 동일 메커니즘 증명. |
 
 ## 연관 솔루션
 

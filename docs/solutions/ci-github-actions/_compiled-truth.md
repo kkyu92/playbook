@@ -2,12 +2,12 @@
 
 코드 게이트 승격: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07, cycle 141)
 
-## 종합 (9건, 최종 갱신 2026-05-21)
+## 종합 (10건, 최종 갱신 2026-06-29)
 
-- **재발 횟수**: 25건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건 + knip cleanup lockfile drift 1건 + worker unconditional inject test mismatch 5건)
+- **재발 횟수**: 28건+ (notify-workers 계열 4건 + billing-block 3 레포 + MockResult<T> type 재발 6건 + PR branch old-base audit 1건 + push race BRANCHED block 5건 + compareModels-shadow test sync gap 1건 + knip cleanup lockfile drift 1건 + worker unconditional inject test mismatch 5건 + issue body control chars jq parse 2건)
 - **현재 최선 해결책**: `docs/solutions/ci-github-actions/` 개별 solution 참조
 - **코드 게이트 승격**: ✅ 완료 — `.claude/commands/ci-github-actions-guard.md` (2026-05-07)
-- **마지막 발생**: 2026-05-21 (blog-autopilot feat(molit) 5b10a35 — editor.ts 미수정, d4418db broken tests 방치 재노출 → editor.test.ts:276/300 assertion fail, hub issue #1056, hub cycle 967)
+- **마지막 발생**: 2026-06-29 (hub incident-auto-close.yml 2회 연속 crash — issue body control chars + jq parse error + pipe subshell counter isolation, hub issue #2124, hub cycle 1230)
 
 ### 주요 교훈 요약
 
@@ -22,6 +22,7 @@
 | 7 | compareModels-shadow test sync gap — 리팩터 상수 rename 후 테스트 기댓값 미동기 (string literal mismatch) | 리팩터 커밋 시 테스트 파일 동시 grep 후 동기화. workaround: TypeScript 타입이 잡지 못하는 경우 수동 확인 필수 | 1회 (hub issue #548, moneyball cycle 349 fix, 2026-05-13) |
 | 8 | knip cleanup 후 pnpm-lock.yaml 미갱신 — dependency 제거 후 lockfile stale → `ERR_PNPM_OUTDATED_LOCKFILE` | knip 실행 후 반드시 `pnpm install` + lockfile diff 확인 + 함께 커밋. LLM이 typecheck/test 통과해도 lockfile 별도 확인 의무 | 1회 (hub issues #552/#553/#555, moneyball cycle 353, 2026-05-13) |
 | 9 | 워커 신규 inject 기능 무조건부 활성 → 기존 `undefined` 기대 테스트 assertion fail | 신규 inject 추가 시 관련 테스트 toBeUndefined 케이스 동시 grep + 조건부 주입 또는 테스트 갱신. 워커 자체 fix 필요 (R6) | 5회 재발 (blog-autopilot hub issues #1045/#1046/#1049/#1053/#1056, cycles 952/953/955/962/967, 2026-05-21) |
+| 10 | GH issue body 제어문자 U+0000-U+001F → jq parse error + pipe subshell counter 격리 | Python strict=False + regex strip (pre-jq). `while ... done < <(jq ...)` process substitution. `|| { skip; continue }` close error handling | 2회 crash (hub incident-auto-close run#18/#19, hub issue #2124, cycle 1230, 2026-06-29) |
 
 ### 메타 패턴
 
@@ -32,6 +33,8 @@
 3. **LLM 에이전트 자동화 환경 인프라 한도**: 일반 개발 팀 대비 PR/CI 회전 속도 10~50x. Free tier 한도 (GH Actions 2,000 min/월, Vercel 100회/일) 1~2주 소진. **Private repo + LLM 자동화 = 조합 위험.**
 
 4. **BRANCHED 차단 재발 루프**: CI-critical 수정이 local commit으로만 존재하고 BRANCHED 상태에서 push 지연 시 — origin은 구버전 실행 → 동일 버그 재발 무한루프. solution #5(security patch)와 #6(push race) 모두 동일 구조. **CI-critical workflow 수정 = 즉시 batch push 트리거.**
+
+5. **외부 API JSON 신뢰 금지**: GitHub API (`gh issue list --json`) 등 외부 source JSON 은 spec 위반 (제어문자 미escape) 가능. `jq` 직접 파싱 전 sanitization 레이어 필수. Python `json.loads(strict=False)` + regex strip 이 실용적 패턴.
 
 ## 개별 솔루션 목록
 
@@ -44,6 +47,7 @@
 7. [2026-05-13 — compareModels-shadow test sync gap](2026-05-13-refactor-const-rename-test-sync-gap.md) — 리팩터 상수 rename → 테스트 기댓값 미동기 (cycle 447, hub issue #548)
 8. [2026-05-13 — knip cleanup lockfile drift](2026-05-13-knip-cleanup-lockfile-drift.md) — knip 후 pnpm-lock.yaml 미갱신 → ERR_PNPM_OUTDATED_LOCKFILE (cycle 353, hub issues #552/#553/#555)
 9. [2026-05-21 — worker unconditional inject test mismatch](2026-05-21-worker-unconditional-inject-test-mismatch.md) — blog-autopilot adsense/molit author box 무조건부 주입 + 방치 → editor.test.ts 5건 fail (hub issues #1045/#1046/#1049/#1053/#1056, cycles 952/953/955/962/967)
+10. [2026-06-29 — issue body control chars jq subshell](2026-06-29-issue-body-control-chars-jq-subshell.md) — GH issue body U+0000-U+001F + pipe subshell counter isolation + close set-e crash (hub issue #2124, cycles 1230/1231)
 
 ## 승격 후보 분석
 

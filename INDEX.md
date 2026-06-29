@@ -48,6 +48,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic CI/CD Deploy Budget Economy — Batch Push Policy](wiki/harness-engineering/agentic-ci-deploy-budget-batch-push-policy) — confidence: 4, status: complete
 - [CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴](wiki/harness-engineering/agentic-claude-md-line-reference-silent-drift) — confidence: 2, status: complete
+- [Agentic Closed-Loop Self-Repair — Hub 자체 Workflow 버그 발견·수정 패턴](wiki/harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix) — confidence: 3, status: complete
 - [Agentic Coding - Claude Code Harness 개발 Playbook 최적화 전략](wiki/harness-engineering/agentic-coding-claude-harness-playbook-strategy) — confidence: 1, status: draft
 - [자율 에이전트 git commit body subtype 자기 dispatch 전송 패턴](wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport) — confidence: 2, status: draft
 - [자율 에이전트 콘텐츠 사이클 — 생산↔유지보수 체인 쌍 안정 교번 패턴](wiki/harness-engineering/agentic-content-cycle-production-maintenance-oscillation) — confidence: 2, status: complete
@@ -116,9 +117,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Claude Code 하네스 스킬셋 강화 — 에이전트 플레이북 엔지니어링](wiki/harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook) — confidence: 1, status: draft
 - [Claude Code Session Context Persistence — Leveraging CTX Plugin for Memory Management](wiki/harness-engineering/claude-code-session-context-persistence-ctx-plugin) — confidence: 1, status: draft
 - [Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token](wiki/harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern) — confidence: 4, status: complete
+- [Closed-Loop 자동화 설계 철학 — 피드백 차원이 핵심인 이유](wiki/harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension) — confidence: 2, status: draft
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/harness-engineering/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [Concurrent & Fault-Tolerant AI Service Workflows: Design Patterns for Robustness](wiki/harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns) — confidence: 1, status: draft
 - [Cron Natural Fire — 운영 환경 검증 패턴](wiki/harness-engineering/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
+- [Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정](wiki/harness-engineering/cross-fork-ci-failure-fix-propagation-boundary) — confidence: 3, status: complete
 - [Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop](wiki/harness-engineering/cross-fork-feedback-sync) — confidence: 2, status: draft
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/harness-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
@@ -150,6 +153,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Large-Scale AI Model Serving - Harness Caching Strategy Implementation](wiki/harness-engineering/large-scale-ai-serving-harness-caching-strategies) — confidence: 1, status: draft
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/harness-engineering/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
+- [LLM Agent 관측 플랫폼 — Spanlens 오픈소스 트레이스 통합 패턴](wiki/harness-engineering/llm-agent-observability-spanlens-trace-monitoring) — confidence: 1, status: draft
 - [LLM Agent Goal Management — Enhancing Persistent Objective Achievement for Long-Term Tasks](wiki/harness-engineering/llm-agent-persistent-goal-management-long-term-tasks) — confidence: 1, status: draft
 - [LLM Agent Tool Call Reliability — Enhancing with Forge Guardrails](wiki/harness-engineering/llm-agent-tool-call-reliability-forge-guardrails) — confidence: 1, status: draft
 - [LLM API Cost Optimization: Harness Design Patterns for Efficiency](wiki/harness-engineering/llm-api-cost-optimization-harness-design-patterns) — confidence: 1, status: draft
@@ -180,10 +184,14 @@ Updated: 2026-06-28T21:04:27.050Z
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/harness-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
+- [SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session](wiki/harness-engineering/skill-evolution-skip-condition-mode-dependency) — confidence: 3, status: complete
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/harness-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/harness-engineering/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/harness-engineering/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
+- [위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크](wiki/harness-engineering/wiki-category-health-rebalance-decision-framework) — confidence: 2, status: complete
+- [위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나](wiki/harness-engineering/wiki-jit-search-blind-spot-diagnosis) — confidence: 2, status: complete
+- [위키 Journal Append-Only 구조와 Long In-Progress 오경보 — lint 정책 충돌 해결](wiki/harness-engineering/wiki-journal-append-only-lint-false-positive-status) — confidence: 2, status: complete
 - [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/harness-engineering/wiki-knowledge-roi-3axis-measurement) — confidence: 3, status: complete
 - [Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴](wiki/harness-engineering/worker-lesson-velocity-signal) — confidence: 2, status: complete
 - [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/harness-engineering/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
@@ -310,6 +318,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Generative AI Hallucination: Automated Detection and Evaluation Methods](wiki/evaluation/generative-ai-hallucination-automated-detection-evaluation) — confidence: 1, status: draft
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM 문서 무결성 검증 — DELEGATE-52 기반 훼손 방지 파이프라인 강화](wiki/evaluation/llm-document-integrity-validation-pipeline-enhancement) — confidence: 1, status: draft
+- [LLM 생성 콘텐츠 AI Smell 패턴 — 감지와 프롬프트 방어 전략](wiki/evaluation/llm-generated-content-ai-smell-detection-prompt-defense) — confidence: 1, status: draft
 - [LLM Output Validation — Enhancing Hallucination Detection Pipelines](wiki/evaluation/llm-output-hallucination-detection-pipeline-enhancement) — confidence: 1, status: draft
 - [LLM Output Validation: Strengthening Safety and Reliability Logic](wiki/evaluation/llm-output-safety-reliability-validation-enhancement) — confidence: 1, status: draft
 - [LLM 출력 검증 파이프라인 — 자동화 실패 방지를 위한 강화 전략](wiki/evaluation/llm-output-validation-automation-failure-prevention) — confidence: 1, status: draft
@@ -397,7 +406,7 @@ Updated: 2026-06-28T21:04:27.050Z
 
 ### Reports
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
-- [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: in-progress
+- [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: complete
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
@@ -1016,6 +1025,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ harness-engineering/agentic-chain-saturation-detection
 - evaluation/llm-document-integrity-validation-pipeline-enhancement ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
+- evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ evaluation/llm-output-validation-quality-metrics-design
+- evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ harness-engineering/llm-agent-observability-spanlens-trace-monitoring
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
@@ -1180,6 +1191,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/post-ship-meta-documentation-drift
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/stale-temporal-comment-cleanup-policy
 - harness-engineering/agentic-claude-md-line-reference-silent-drift ↔ harness-engineering/question-own-defaults
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/agentic-gap-trigger-chain-health-check
+- harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/agentic-coding-claude-harness-playbook-strategy ↔ harness-engineering/zero-touch-develop-cycle-session-management
@@ -1489,6 +1503,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/agentic-cron-zero-output-silent-success-detection
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - harness-engineering/cron-natural-fire-production-validation-pattern ↔ harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger
+- harness-engineering/cross-fork-ci-failure-fix-propagation-boundary ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/cross-fork-ci-failure-fix-propagation-boundary ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
 - harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/cross-fork-feedback-sync ↔ harness-engineering/agentic-commit-body-subtype-dispatch-transport
 - harness-engineering/cross-fork-feedback-sync ↔ context-engineering/ambient-knowledge-injection
@@ -1623,6 +1639,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ agents/llm-agent-goal-achievement-planning-patterns
 - harness-engineering/llm-agent-artifact-first-diagnosis ↔ infrastructure/ai-agent-output-versioning-deltadb-concepts
 - harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti ↔ harness-engineering/zerostack-rust-agent-harness-extension
+- harness-engineering/llm-agent-observability-spanlens-trace-monitoring ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
+- harness-engineering/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/llm-agent-persistent-goal-management-long-term-tasks ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - harness-engineering/llm-agent-tool-call-reliability-forge-guardrails ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
@@ -1725,6 +1743,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/recurring-file-bug-accumulator-pattern
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/question-own-defaults
 - harness-engineering/stale-temporal-comment-cleanup-policy ↔ harness-engineering/silent-drift-family-pattern
@@ -1947,5 +1967,5 @@ Updated: 2026-06-28T21:04:27.050Z
 - reports/week-2026-20 ↔ reports/mid-review-2026-04-28
 - reports/week-2026-21 ↔ reports/week-2026-20
 - reports/week-2026-21 ↔ reports/week-2026-22
-- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/bidirectional-hub-worker-compound-growth-vision
-- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/closed-loop-design-philosophy
+- reports/week-2026-23 ↔ reports/week-2026-22
+- reports/week-2026-24 ↔ reports/week-2026-23
