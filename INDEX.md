@@ -134,6 +134,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/harness-engineering/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
 - [Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴](wiki/harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
+- [Google Agent Executor: 분산 에이전트 런타임 하네스 통합 검토](wiki/harness-engineering/distributed-agent-executor-harness-integration) — confidence: 1, status: draft
 - [대규모 AI 시스템 분산형 하네스 디자인 패턴: 안정성 및 확장성 확보](wiki/harness-engineering/distributed-ai-harness-design) — confidence: 1, status: draft
 - [분산 하네스 디자인 패턴 — 대규모 LLM 애플리케이션의 안정성과 확장성 확보](wiki/harness-engineering/distributed-harness-patterns-for-llm-applications) — confidence: 1, status: draft
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
@@ -1589,6 +1590,10 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/develop-cycle-feature-branch-vercel-dispatch-noise ↔ harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/question-own-defaults
+- harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/distributed-ai-harness-design
+- harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/distributed-ai-harness-design ↔ infrastructure/llm-call-orchestration-reliability-enhancement
