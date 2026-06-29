@@ -1,0 +1,95 @@
+---
+title: BRANCHED 상태에서 브랜치 생성 — origin/main 직접 기반 패턴
+category: harness-engineering
+date: "2026-06-29"
+tags:
+  - git
+  - branched-state
+  - branch-creation
+  - rebase
+  - ci-cd
+  - automation
+  - harness-engineering
+confidence: 4
+connections: [harness-engineering/agentic-push-defer-divergence-concurrent-writes, harness-engineering/agentic-branched-state-jit-search-accuracy-degradation, harness-engineering/auto-ingest-parallel-squash-merge-race-condition-recovery]
+status: complete
+description: 허브가 BRANCHED 상태(local 200+ ahead, origin N ahead)일 때 로컬 main에서 브랜치를 만들면 GHA ai-review.yml이 squash-merge할 수 없는 상태가 된다. origin/main을 직접 기반으로 브랜치를 만들면 rebase 오버헤드 없이 즉시 CI 통과 가능. 900+ 사이클 운영에서 반복 확인.
+type: entry
+source: harness-engineering
+---
+
+허브(playbook)는 구조적으로 BRANCHED steady-state에 있다. 로컬 사이클 commit + worker auto-ingest(4-6건/일)의 양방향 발산으로 local main이 origin/main보다 200+ 커밋 앞서 있다. 이 상태에서 브랜치를 만드는 방식이 CI 성패를 결정한다.
+
+## 문제: 로컬 main에서 브랜치 생성 → GHA 머지 불가
+
+```
+local main  ──────────────────────── 200+ commits ──► HEAD
+                  ↑
+            이 지점이 origin/main
+```
+
+`git checkout -b fix/my-fix` (로컬 main에서 생성)하면 새 브랜치는 origin/main보다 200+ 커밋 앞선 상태로 시작한다.
+
+ai-review.yml Rebase step:
+```yaml
+if git merge-base --is-ancestor origin/main HEAD; then
+  echo "✅ Already up to date"  # 이 조건이 NEVER 충족
+fi
+# 항상 rebase 경로로 진입 — 200+ 커밋 포함한 전체 rebase
+git rebase origin/main
+```
+
+결과: 200+ commit rebase는 성공하더라도 squash-merge 시점에 origin/main과 diverged → `"merge conflicts"` 또는 `"not mergeable"` → CI 실패.
+
+실제 사례: cycles 1238-1243에서 ai-review.yml 수정 브랜치(`fix/ai-review-race-condition-1238` 등) 모두 로컬 main 기반으로 생성 → 매번 수동 rebase 필요.
+
+## 해결: origin/main 직접 기반 브랜치 생성
+
+```bash
+# 나쁜: 로컬 main 기반 (BRANCHED 상태에서 즉시 stale)
+git checkout -b fix/my-fix
+
+# 좋은: origin/main 직접 기반
+git checkout -B fix/my-fix origin/main
+# 또는
+git fetch origin && git checkout -b fix/my-fix origin/main
+```
+
+`-B`(대문자) 플래그: 이미 존재하는 브랜치면 reset, 없으면 create.
+
+origin/main 기반 브랜치 → ai-review.yml `merge-base --is-ancestor` 조건 충족 → rebase 스킵 → squash-merge 즉시 가능.
+
+## 패턴이 적용되는 브랜치 유형
+
+| 브랜치 유형 | 기반 | 이유 |
+|------------|------|------|
+| `fix/*`, `feat/*` (단독 변경) | `origin/main` | CI 즉시 통과 목적 |
+| `curate/*`, `explore/*` | `origin/main` | 새 콘텐츠는 origin 기준으로 충분 |
+| `auto-ingest/*` | `origin/main` | 생성 스크립트에서 `-B origin/main` 적용 필수 |
+| 대규모 리팩터링 (로컬 변경 의존) | `local main` | 로컬 변경 포함 필요 → 수동 rebase 허용 |
+
+## BRANCHED 상태에서 로컬 작업과의 관계
+
+origin/main 기반 브랜치는 로컬 main의 사이클 commit들을 포함하지 않는다. 이는 의도된 것:
+
+- 로컬 사이클 commit = 대부분 `policy:` (retro) commit으로 PR에 포함 불필요
+- 콘텐츠/수정 변경만 origin/main 기반으로 PR → 깔끔한 single-purpose PR
+- 로컬 main의 누적 commit은 사용자가 `git pull --rebase origin main + git push` 시 origin으로 흡수
+
+## 감지: 브랜치가 로컬 main 기반인지 확인
+
+```bash
+# 브랜치가 origin/main과 얼마나 diverged인지
+git rev-list --left-right --count origin/main...$(git branch --show-current)
+# 좋음: 0  X (X = 실제 변경 커밋 수만)
+# 나쁨: 0  200+ (200+ = 불필요한 로컬 commit 포함)
+
+# 또는 merge-base 확인
+git merge-base --is-ancestor origin/main HEAD && echo "OK" || echo "BRANCHED"
+```
+
+## 관련 패턴
+
+[[agentic-push-defer-divergence-concurrent-writes]] — BRANCHED steady-state 구조 원인 분석
+[[agentic-branched-state-jit-search-accuracy-degradation]] — BRANCHED로 인한 JIT search 정확도 저하
+[[auto-ingest-parallel-squash-merge-race-condition-recovery]] — origin/main 기반 브랜치가 필요한 레이스 컨디션 패턴
