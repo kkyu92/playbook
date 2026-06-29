@@ -28,6 +28,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Local Knowledge Hub Enhancement: Integrating .description.md Sidecar Files for Enriched Context](wiki/context-engineering/enriching-local-data-with-description-md-sidecars) — confidence: 1, status: draft
 - [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/context-engineering/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
+- [Local Meeting AI Integration — On-Premise Transcription & Decision Wiki Search](wiki/context-engineering/local-meeting-transcription-decision-wiki-ai-integration) — confidence: 1, status: draft
 - [Mirage AI Agent Integration 
 — Unified Virtual Filesystem for Knowledge Access](wiki/context-engineering/mirage-ai-agent-unified-filesystem-integration) — confidence: 1, status: draft
 - [Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패](wiki/context-engineering/nextjs-instrumentation-location) — confidence: 3, status: complete
@@ -136,6 +137,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [대규모 AI 모델 서빙: GPU 리소스 최적화 전략 및 패턴](wiki/harness-engineering/gpu-resource-optimization-large-scale-ai-serving) — confidence: 1, status: draft
 - [GStack 프레임워크: AI 에이전트 협업 및 역할 분담 강화 아키텍처 패턴](wiki/harness-engineering/gstack-framework-ai-agent-collaboration-architecture) — confidence: 1, status: draft
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/harness-engineering/guard-test-pattern) — confidence: 3, status: complete
+- [Self-Improving Agents — Hermes-style Learning in Claude Code Harness](wiki/harness-engineering/hermes-style-self-improving-agents-claude-code-harness) — confidence: 1, status: draft
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/harness-engineering/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
 - [Hub-Pull Evidence Tracking — from-hub Commit Convention](wiki/harness-engineering/hub-pull-evidence-tracking-from-hub-convention) — confidence: 3, status: complete
 - [Hub-Worker Automation Loop Robustness — Harnessing External Control for Resilience](wiki/harness-engineering/hub-worker-automation-loop-resilience-external-control) — confidence: 1, status: draft
@@ -154,6 +156,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [LLM Ops 파이프라인 디자인 패턴 — 프로덕션 LLM 서비스의 효율적 운영 전략](wiki/harness-engineering/llm-ops-pipeline-design-patterns-production-strategy) — confidence: 1, status: draft
 - [LLM Output System Boundary Sanitization — 파이프라인 경계 형식 정합성 보장](wiki/harness-engineering/llm-output-system-boundary-sanitization-pipeline) — confidence: 2, status: complete
 - [LLM Prompt-Validator 대칭성 드리프트 — 구조화 출력 일관성 보장](wiki/harness-engineering/llm-prompt-validator-symmetry-drift) — confidence: 2, status: complete
+- [LLM Response Quality Improvement - Automated Harness Testing Implementation](wiki/harness-engineering/llm-response-quality-automated-harness-testing) — confidence: 1, status: draft
 - [LLM 기반 서비스 확장 아키텍처 — 고성능, 저비용 시스템 설계 패턴](wiki/harness-engineering/llm-scalable-service-architecture-patterns) — confidence: 1, status: draft
 - [LLM Workflow Orchestration: Complex Business Logic Automation Patterns](wiki/harness-engineering/llm-workflow-orchestration-business-logic-patterns) — confidence: 1, status: draft
 - [Large-scale LLM Workload Management: MLOps Pipeline Design Patterns](wiki/harness-engineering/llm-workload-management-mlops-pipeline-design-patterns) — confidence: 1, status: draft
@@ -365,6 +368,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Production Database 보안 강화 - AI 에이전트 가드레일 설계 및 구현](wiki/data-engineering/production-db-ai-agent-guardrails) — confidence: 1, status: draft
 - [RAG 시스템 데이터 전처리 — 임베딩 최적화 전략](wiki/data-engineering/rag-data-preprocessing-embedding-optimization-strategies) — confidence: 1, status: draft
 - [RAG 시스템 임베딩 업데이트 파이프라인 — 실시간 정보 반영 및 성능 유지 전략](wiki/data-engineering/rag-embedding-update-pipeline-realtime-strategies) — confidence: 1, status: draft
+- [RAG System Optimization — Embedding Dataset Construction Patterns](wiki/data-engineering/rag-system-embedding-dataset-optimization-patterns) — confidence: 1, status: draft
 - [Vector DB: 임베딩 데이터 최적화 패턴과 RAG 성능 향상 전략](wiki/data-engineering/vector-db-embedding-data-optimization-patterns) — confidence: 1, status: draft
 
 ### Android AI
@@ -822,7 +826,6 @@ Updated: 2026-06-28T21:04:27.050Z
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ harness-engineering/code-based-agent-task-patterns-harness-design
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/llm-interactive-ui-frontend-implementation
-- context-engineering/ambient-knowledge-injection ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/ai-personalized-ux-frontend-design-patterns
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - context-engineering/ambient-knowledge-injection ↔ project-ops/claude-code-cost-optimization-strategies
@@ -834,6 +837,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/enriching-local-data-with-description-md-sidecars
+- context-engineering/ambient-knowledge-injection ↔ context-engineering/local-meeting-transcription-decision-wiki-ai-integration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/claude-code-session-context-persistence-ctx-plugin
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - context-engineering/claude-code-ctx-plugin-context-persistence ↔ frontend-ai/claude-code-session-web-mobile-monitoring-implementation
@@ -848,15 +852,21 @@ Updated: 2026-06-28T21:04:27.050Z
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
+- context-engineering/enriching-local-data-with-description-md-sidecars ↔ context-engineering/local-meeting-transcription-decision-wiki-ai-integration
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ evaluation/rag-search-performance-evaluation-metrics-design
+- context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ data-engineering/rag-system-embedding-dataset-optimization-patterns
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ context-engineering/nextjs-instrumentation-location
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - context-engineering/kuku-concepts-playbook-local-markdown-enhancement ↔ frontend-ai/llm-interactive-ui-frontend-implementation
+- context-engineering/local-meeting-transcription-decision-wiki-ai-integration ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- context-engineering/local-meeting-transcription-decision-wiki-ai-integration ↔ data-engineering/vector-db-embedding-data-optimization-patterns
+- context-engineering/local-meeting-transcription-decision-wiki-ai-integration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
+- context-engineering/local-meeting-transcription-decision-wiki-ai-integration ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - context-engineering/mirage-ai-agent-unified-filesystem-integration ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - context-engineering/mirage-ai-agent-unified-filesystem-integration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - context-engineering/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
@@ -880,6 +890,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ project-ops/ai-project-scope-management-complexity-change
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/llm-fine-tuning-high-quality-data-construction-management
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
+- data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/rag-system-embedding-dataset-optimization-patterns
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - data-engineering/llm-fine-tuning-dataset-preparation-strategies ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -928,6 +939,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
+- data-engineering/rag-data-preprocessing-embedding-optimization-strategies ↔ data-engineering/rag-system-embedding-dataset-optimization-patterns
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ evaluation/rag-search-performance-evaluation-metrics-design
@@ -935,6 +947,10 @@ Updated: 2026-06-28T21:04:27.050Z
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ harness-engineering/ai-model-serving-harness-enterprise-deployment-management
+- data-engineering/rag-embedding-update-pipeline-realtime-strategies ↔ data-engineering/rag-system-embedding-dataset-optimization-patterns
+- data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/vector-db-embedding-data-optimization-patterns
+- data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-search-performance-evaluation-metrics-design
 - data-engineering/vector-db-embedding-data-optimization-patterns ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
@@ -1012,6 +1028,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/llm-interactive-ui-frontend-implementation
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ harness-engineering/drift-detection-methodology
@@ -1290,11 +1307,13 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/worker-lesson-velocity-signal
 - harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ harness-engineering/hermes-style-self-improving-agents-claude-code-harness
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-sliding-window-threshold-natural-oscillation
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-meta-chain-fast-path-streak-guard
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
+- harness-engineering/agentic-skill-evolution-convergence-maturity-signal ↔ harness-engineering/hermes-style-self-improving-agents-claude-code-harness
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-content-cycle-production-maintenance-oscillation
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-meta-chain-fast-path-streak-guard
 - harness-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/zero-touch-develop-cycle-session-management
@@ -1410,6 +1429,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ harness-engineering/code-based-agent-task-patterns-harness-design
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
 - harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti
+- harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook ↔ harness-engineering/hermes-style-self-improving-agents-claude-code-harness
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ context-engineering/ambient-knowledge-injection
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - harness-engineering/claude-code-session-context-persistence-ctx-plugin ↔ agents/llm-agent-goal-achievement-planning-patterns
@@ -1527,6 +1547,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - harness-engineering/guard-test-pattern ↔ harness-engineering/llm-agent-tool-call-reliability-forge-guardrails
 - harness-engineering/guard-test-pattern ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
+- harness-engineering/hermes-style-self-improving-agents-claude-code-harness ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ agents/llm-agent-tool-use-design-patterns
@@ -1549,6 +1570,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/large-scale-ai-serving-harness-caching-strategies
 - harness-engineering/large-scale-ai-deployment-harness-system-design ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- harness-engineering/large-scale-ai-deployment-harness-system-design ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
 - harness-engineering/large-scale-ai-serving-harness-caching-strategies ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
