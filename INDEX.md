@@ -134,6 +134,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/harness-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
 - [Dynamic Prompt Routing in Multi-LLM Environments — Cost and Performance Optimization](wiki/harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance) — confidence: 1, status: draft
 - [E5 Multilingual Embedding — Query/Passage Prefix Requirement](wiki/harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement) — confidence: 4, status: complete
+- [대규모 LLM 배포 – 효율적인 MLOps 파이프라인 구축 전략](wiki/harness-engineering/efficient-large-scale-llm-deployment-mlops) — confidence: 1, status: draft
 - [엔터프라이즈 에이전트 관리 패턴: 확장 가능하고 거버넌스 가능한 LLM 에이전트 오케스트레이션](wiki/harness-engineering/enterprise-agent-management-patterns-llm-orchestration) — confidence: 1, status: draft
 - [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/harness-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
 - [Fail-Loud 패턴 부분 적용 함정 — try/catch escape hatch 미제거로 보호막 무력화](wiki/harness-engineering/fail-loud-partial-adoption-escape-hatch-trap) — confidence: 2, status: complete
@@ -1566,6 +1567,12 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ reports/closed-loop-health
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/llm-input-output-data-pipeline-design-patterns
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/enterprise-agent-management-patterns-llm-orchestration ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
