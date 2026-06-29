@@ -316,6 +316,7 @@ jobs:
         if: steps.merge.outputs.retry == 'true'
         run: |
           git fetch origin main
+          git checkout -- .  # discard build-generated unstaged changes before rebase
           git rebase origin/main -X ours
           git push origin HEAD:${{ github.ref_name }} --force-with-lease
           echo "✅ Re-triggered auto-merge via force-push (race condition recovery)"
