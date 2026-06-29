@@ -111,6 +111,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/harness-engineering/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
 - [Claude 5 Fable Integration — Advanced LLM Worker Harness for Compounding Automation](wiki/harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation) — confidence: 1, status: draft
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
+- [Claude Autonomous Vulnerability Harness: Architecture for AI-driven Discovery & Remediation](wiki/harness-engineering/claude-autonomous-vulnerability-harness-architecture) — confidence: 1, status: draft
 - [Claude CLI: Persistent Multi-session Web Terminal for Enhanced LLM Workflow](wiki/harness-engineering/claude-cli-persistent-multi-session-web-terminal) — confidence: 1, status: draft
 - [Claude Code Agent View: AI Worker Orchestration for Enhanced Playbook Efficiency](wiki/harness-engineering/claude-code-agent-view-worker-management-integration) — confidence: 1, status: draft
 - [Claude Code Dynamic Workflows — Playbook Agent Harness Integration](wiki/harness-engineering/claude-code-dynamic-workflows-harness-integration) — confidence: 1, status: draft
@@ -418,6 +419,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
 - [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
 - [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
+- [Android 온디바이스 LLM 양자화: Gemma 4 QAT 모델 적용 전략](wiki/android-ai/on-device-llm-quantization-gemma-4-qat-application) — confidence: 1, status: draft
 - [On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준](wiki/android-ai/on-device-llm-quantization-patterns-android) — confidence: 1, status: draft
 
 ### Reports
@@ -691,6 +693,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multimodal-ai-agent-realtime-decision-logic
+- agents/multi-agent-decision-making-patterns ↔ agents/reinforcement-learning-autonomous-agent-behavior-control
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ harness-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
@@ -782,6 +785,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/mediapipe
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/on-device-llm-quantization-gemma-4-qat-application
 - android-ai/android-background-ai-workflow-workmanager ↔ frontend-ai/ai-inference-visualization-design-patterns
 - android-ai/android-background-ai-workflow-workmanager ↔ harness-engineering/hub-worker-compounding-pattern
 - android-ai/android-background-ai-workflow-workmanager ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
@@ -811,6 +815,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - android-ai/gemini-nano ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - android-ai/gemini-nano ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - android-ai/gemini-nano ↔ frontend-ai/llm-interactive-ui-frontend-implementation
+- android-ai/gemini-nano ↔ android-ai/on-device-llm-quantization-gemma-4-qat-application
 - android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - android-ai/genkit-android-backend-genai-framework ↔ infrastructure/gomodel-llm-gateway-introduction-strategy
 - android-ai/genkit-android-backend-genai-framework ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -841,6 +846,11 @@ Updated: 2026-06-28T21:04:27.050Z
 - android-ai/ml-kit ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
 - android-ai/ml-kit ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - android-ai/ml-kit ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/on-device-llm-quantization-patterns-android
+- android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
+- android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ data-engineering/llm-fine-tuning-dataset-preparation-strategies
 - android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/on-device-llm-inference-efficiency-patterns
 - android-ai/on-device-llm-quantization-patterns-android ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - android-ai/on-device-llm-quantization-patterns-android ↔ reports/mid-review-2026-04-28
