@@ -16,6 +16,7 @@ on:
   push:
     branches-ignore:
       - main
+  workflow_dispatch:  # manual re-trigger: gh workflow run ai-review.yml --ref <branch>
 
 # Node 20 deprecation 대응 — GitHub Actions runner가 2026-06-02부터 Node 24로 전환.
 # 지금 opt-in해서 새 런타임 기반으로 선제 전환. 롤백은 이 env 블록 제거만.
