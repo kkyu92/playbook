@@ -1,0 +1,227 @@
+---
+title: "LLM Judgment & Code Verification Separation Architecture: Mitigating Hallucinations in Agents"
+category: agents
+date: "2026-06-27"
+tags:
+  - LLM
+  - Agent Architecture
+  - Hallucination
+  - Code Verification
+  - Trustworthy AI
+  - Reliability
+  - agents
+confidence: 1
+connections: [agents/ai-agent-self-correction-design-principles, agents/llm-agent-tool-use-design-patterns, evaluation/llm-output-hallucination-detection-pipeline-enhancement, harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook, harness-engineering/llm-output-system-boundary-sanitization-pipeline, evaluation/llm-output-validation-automation-failure-prevention]
+status: draft
+description: Explore an architecture separating LLM judgments from code-verified facts to improve AI agent reliability and reduce hallucinations.
+type: entry
+source: scout
+---
+
+## Introduction to Trustworthy AI Agent Output
+The proliferation of Large Language Model (LLM) based agents introduces significant potential for automation and intelligent systems. However, a critical challenge remains: the inherent probabilistic nature of LLMs often leads to "hallucinations" – generating plausible but factually incorrect information. Conflating an LLM's interpretive "judgment" or generated text with empirically "verified facts" can severely compromise the reliability and trustworthiness of agent operations, especially in critical domains.
+
+Drawing inspiration from concepts like SongRyeon Core, which emphasizes separating "LLM-spoken judgments" from "code-confirmed facts," this architecture proposes a structured approach to enhance agent robustness. By explicitly isolating the LLM's generative and reasoning outputs from deterministic code-based validations, we can build agents that are more reliable, auditable, and less prone to propagating misinformation.
+
+### The Core Problem: Conflating Judgment and Fact
+LLMs excel at pattern recognition, synthesis, and creative generation. They can formulate complex plans, generate code snippets, and derive insights from vast datasets. These outputs, however, are fundamentally judgments based on statistical likelihood, not guarantees of factual accuracy or operational correctness. When an agent directly acts upon an LLM's raw output without independent verification, it risks:
+*   **Executing incorrect code**: Leading to system failures or security vulnerabilities.
+*   **Providing false information**: Undermining user trust or driving flawed decisions.
+*   **Performing invalid actions**: Resulting in unintended side effects or resource waste.
+
+The proposed architecture addresses this by introducing a mandatory code-driven verification layer, ensuring that critical outputs are grounded in verifiable reality before execution or dissemination.
+
+### Architectural Blueprint: Separating Concerns
+This architecture consists of distinct modules designed to manage LLM judgment and code verification independently, orchestrated by a central agent runtime.
+
+1.  **LLM Judgment Module**:
+    *   **Role**: Generates initial hypotheses, action plans, code proposals, or data analyses based on prompts and context. This module is responsible for the creative and reasoning aspects.
+    *   **Output**: Semantic instructions, code fragments, data interpretations – *these are considered unverified judgments*.
+
+2.  **Code Verification Module**:
+    *   **Role**: Executes deterministic checks, runs tools, performs API calls, or validates computational outputs based on the LLM's judgments. This module provides empirical evidence.
+    *   **Output**: Boolean verification results (pass/fail), validated data, error messages, or corrected outputs – *these are considered verified facts*.
+
+3.  **Orchestration & Reconciliation Layer**:
+    *   **Role**: Manages the flow between the LLM judgment and code verification modules. It interprets LLM outputs, dispatches them for verification, and reconciles the LLM's judgment with the verified facts. If discrepancies arise, it can trigger self-correction loops with the LLM or flag issues for human review.
+    *   **Output**: Confirmed actions, refined data, or error reports for agent re-planning.
+
+The separation ensures that the system's "belief" (LLM's judgment) is always cross-referenced with "reality" (code's verification). This aligns with the 2026 trend towards more robust and auditable AI systems, moving beyond simple prompt-response loops to verifiable and accountable agentic workflows.
+
+### Illustrative Flow with Mermaid
+
+```mermaid
+graph TD
+    A[User Prompt/Agent Goal] --> B{Agent Orchestrator};
+
+    B --> C[LLM Judgment Module];
+    C -- Generates Plan/Code --> D{Verification Request};
+
+    D --> E[Code Verification Module];
+    E -- Executes Tools/Tests --> F{Verification Result};
+
+    F -- Verified/Failed --> G{Agent Orchestrator};
+
+    G -- If Verified --> H[Action Execution/Output Generation];
+    G -- If Failed --> I[Self-Correction/Human Review];
+
+    I --> C; // Feedback loop to LLM for re-evaluation
+    H --> J[Completed Task];
+
+    subgraph "LLM Judgment"
+        C
+    end
+
+    subgraph "Code Verification"
+        E
+        F
+    end
+
+    subgraph "Agent Control"
+        B
+        D
+        G
+        H
+        I
+        J
+    end
+```
+
+### Code Verification Example
+Consider an agent tasked with fetching data and summarizing it. The LLM might generate a Python script to query a database. Before execution, the script must be verified.
+
+```python
+# LLM Judgment Module Output (example)
+llm_generated_code = """
+import pandas as pd
+import sqlalchemy
+
+def fetch_and_process_data(db_url, query):
+    engine = sqlalchemy.create_engine(db_url)
+    df = pd.read_sql(query, engine)
+    # Simple processing, potentially flawed
+    df['total_amount'] = df['quantity'] * df['price']
+    return df.to_json()
+"""
+
+# Code Verification Module Logic
+import ast
+import inspect
+import io
+import contextlib
+import unittest
+
+class CodeVerifier:
+    def __init__(self, safe_globals=None):
+        self.safe_globals = safe_globals if safe_globals is not None else {}
+
+    def is_syntax_valid(self, code):
+        try:
+            ast.parse(code)
+            return True, "Syntax OK"
+        except SyntaxError as e:
+            return False, f"Syntax Error: {e}"
+
+    def check_unsafe_imports(self, code):
+        forbidden_modules = ['os', 'subprocess', 'shutil', 'sys']
+        tree = ast.parse(code)
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                modules = []
+                if isinstance(node, ast.Import):
+                    modules.extend([n.name for n in node.names])
+                else: # ast.ImportFrom
+                    modules.append(node.module)
+                for module in modules:
+                    if module in forbidden_modules or any(module.startswith(f + '.') for f in forbidden_modules):
+                        return False, f"Forbidden import '{module}' detected."
+        return True, "No forbidden imports"
+
+    def execute_and_capture_output(self, code, func_name, *args, **kwargs):
+        stdout_capture = io.StringIO()
+        stderr_capture = io.StringIO()
+        result = None
+        error = None
+
+        try:
+            # Create a restricted execution environment
+            local_env = self.safe_globals.copy()
+            exec(code, {"__builtins__": None, **local_env}) # Restricted builtins
+            func = local_env.get(func_name)
+
+            if func:
+                with contextlib.redirect_stdout(stdout_capture), \
+                     contextlib.redirect_stderr(stderr_capture):
+                    result = func(*args, **kwargs)
+            else:
+                error = f"Function '{func_name}' not found in the generated code."
+        except Exception as e:
+            error = str(e)
+
+        return result, error, stdout_capture.getvalue(), stderr_capture.getvalue()
+
+# Usage Example
+verifier = CodeVerifier(safe_globals={'pd': pd, 'sqlalchemy': sqlalchemy, 'create_engine': sqlalchemy.create_engine})
+
+# 1. Syntax Check
+syntax_ok, syntax_msg = verifier.is_syntax_valid(llm_generated_code)
+print(f"Syntax Check: {syntax_ok} - {syntax_msg}") # Expected: True - Syntax OK
+
+# 2. Safety Check (Forbidden Imports)
+safe_imports, import_msg = verifier.check_unsafe_imports(llm_generated_code)
+print(f"Safety Check: {safe_imports} - {import_msg}") # Expected: True - No forbidden imports
+
+# 3. Functional Execution (requires mock DB or actual DB setup for full test)
+# For demonstration, assume a mock function or skip actual DB for safety
+# result, error, stdout, stderr = verifier.execute_and_capture_output(
+#     llm_generated_code,
+#     'fetch_and_process_data',
+#     'sqlite:///:memory:',
+#     'SELECT quantity, price FROM sales'
+# )
+# print(f"Execution Result: {result}, Error: {error}, Stdout: {stdout}, Stderr: {stderr}")
+
+# In a real scenario, a test harness would mock DB, check DataFrame schema, data types, etc.
+# For example, checking if 'total_amount' column exists and is numeric.
+```
+
+This Python example demonstrates a simplified `CodeVerifier` that performs static analysis (syntax, forbidden imports) and sets up an environment for safe execution. A full-fledged verification module in a production system would involve a comprehensive test harness, potentially sandboxed environments, and integration with robust assertion libraries to validate the semantic correctness and side effects of the generated code against predefined expectations or schemas. This rigorous approach dramatically reduces the risk of deploying hallucinated or erroneous code generated by the LLM.
+
+### Trends and Future Outlook (2026)
+By 2026, the demand for verifiable and explainable AI will be paramount. This architectural pattern aligns perfectly with these trends:
+*   **Enhanced Auditability**: Each step from LLM judgment to code verification and final action is explicit and traceable. This is crucial for regulatory compliance and debugging.
+*   **Dynamic Tool Integration**: Agents will increasingly leverage a diverse set of external tools. The code verification module becomes essential for validating tool calls, outputs, and handling potential API contract drifts.
+*   **Self-Correction and Learning**: The feedback loop from verification failures back to the LLM (via refined prompts or fine-tuning data) enables agents to learn from their mistakes and reduce future hallucinations.
+*   **Hybrid AI Systems**: This architecture fosters a robust hybrid AI system where the strengths of generative LLMs (reasoning, creativity) are combined with the reliability of symbolic AI and deterministic code (verification, constraint enforcement).
+
+## 트레이드오프
+
+이 LLM 판단과 코드 검증 분리 아키텍처는 여러 장점을 제공하지만, 몇 가지 트레이드오프를 수반한다.
+
+*   **성능 오버헤드 (Performance Overhead)**:
+    *   **언제 좋고**: 높은 신뢰도와 정확성이 요구되는 금융, 의료, 인프라 관리 등 미션 크리티컬한 시스템에서 LLM 환각으로 인한 치명적인 오류를 방지해야 할 때 좋다. 검증으로 인한 추가 지연이 허용 가능한 경우.
+    *   **언제 나쁜지**: 실시간 응답 속도가 최우선인 대화형 AI나 낮은 위험도의 개인 생산성 도구처럼 빠른 반응이 중요한 애플리케이션에는 부적합할 수 있다. 검증 로직 자체의 비효율성이 큰 경우 성능 저하가 두드러진다.
+
+*   **개발 복잡도 증가 (Increased Development Complexity)**:
+    *   **언제 좋고**: 에이전트의 안정성과 유지보수성이 장기적으로 중요하며, 개발 팀이 검증 로직 설계 및 구현에 투자할 자원과 전문성을 갖추고 있을 때 좋다. 복잡한 시스템에서 디버깅 및 문제 해결 비용을 절감할 수 있다.
+    *   **언제 나쁜지**: 프로토타이핑이나 MVP 개발 등 빠른 시장 출시가 목표일 때 초기 개발 속도를 저해할 수 있다. 리소스가 제한적이거나 단순한 태스크에 대해서는 과도한 설계가 될 수 있다.
+
+*   **자원 소모 증가 (Increased Resource Consumption)**:
+    *   **언제 좋고**: 에이전트의 동작이 높은 계산 자원을 요구하는 복잡한 코드 실행이나 광범위한 데이터 검증을 포함할 때, 이 자원 소모가 시스템의 전체 비용에 비해 합리적이라고 판단될 때 좋다.
+    *   **언제 나쁜지**: 저비용으로 대규모 에이전트 인스턴스를 운영해야 하거나, 에지 디바이스와 같이 자원이 극도로 제한적인 환경에서는 코드 검증으로 인한 추가적인 컴퓨팅 및 메모리 소모가 큰 부담이 될 수 있다.
+
+*   **LLM의 자율성 제약 (Constraint on LLM Autonomy)**:
+    *   **언제 좋고**: LLM의 창의적이고 자율적인 판단이 시스템의 안정성이나 규제 준수 측면에서 제어되어야 할 때 좋다. 예측 불가능한 LLM의 행동을 안전한 범위 내로 제한할 수 있다.
+    *   **언제 나쁜지**: LLM의 완전한 자율성과 자유로운 탐색이 핵심적인 연구 목적이나 특정 유형의 제약 없는 창작 활동에는 불필요한 제약이 될 수 있다.
+
+## 실전 체크리스트
+
+LLM 판단과 코드 검증 분리 아키텍처를 프로젝트에 적용하기 위한 실전 체크리스트는 다음과 같다.
+
+*   [ ] **검증 범위 및 기준 정의**: LLM의 어떤 출력(코드, 데이터, 액션 플랜 등)이 코드 검증의 대상이 되는지 명확히 하고, 각 출력에 대한 합격/불합격 기준을 구체적으로 문서화했는가? (예: SQL 쿼리는 특정 테이블에만 접근하고, `DELETE` 문은 금지하며, 응답 스키마는 X를 따라야 한다.)
+*   [ ] **코드 검증 모듈 격리 및 샌드박싱**: 코드 검증 모듈이 LLM 출력 코드를 안전하게 실행할 수 있는 격리된(예: 컨테이너, 샌드박스) 환경에서 동작하도록 설계되었는가? 호스트 시스템에 대한 잠재적 위협을 최소화하는 조치가 마련되었는가?
+*   [ ] **검증 실패 시 피드백 루프 구현**: 코드 검증 실패 시 LLM에게 명확하고 구조화된 오류 메시지와 함께 다시 시도할 기회를 제공하는 피드백 메커니즘이 구현되었는가? (예: `SyntaxError: unexpected EOF while parsing` 대신, `Error: Python code is incomplete. Function 'my_func' is not properly closed. Please ensure all blocks are indented correctly and complete.`)
+*   [ ] **성능 및 지연 시간 모니터링**: 코드 검증 단계에서 발생하는 추가적인 지연 시간(latency)과 자원 소모를 실시간으로 모니터링하고 있으며, 서비스 목표(SLA) 내에 있는지 주기적으로 평가하고 있는가?
+*   [ ] **테스트 커버리지 및 자동화**: LLM이 생성할 수 있는 다양한 유형의 출력을 커버하는 코드 검증 테스트 케이스(성공/실패 시나리오 포함)가 충분히 작성되었으며, CI/CD 파이프라인에 통합되어 자동화되었는가?
+*   [ ] **인간 개입(Human-in-the-Loop) 전략**: 복잡하거나 중요한 검증 실패 상황, 또는 LLM의 자가 수정이 한계에 도달했을 때 인간 전문가가 개입하여 문제를 해결할 수 있는 명확한 프로세스와 도구가 준비되어 있는가?
+*   [ ] **버전 관리 및 추적**: LLM 모델 버전, 검증 로직 버전, 그리고 LLM이 생성하고 검증을 통과한 출력에 대한 버전 관리가 이루어지고 있어, 시스템의 동작을 감사하고 재현할 수 있는가?
