@@ -312,6 +312,26 @@ jobs:
 
       # ── auto-ingest race condition recovery ──
       # squash-merge 경쟁 조건 감지 시 rebase -X ours + force-push → 새 workflow run 자동 트리거
+      - name: Comment on race condition retry
+        if: steps.merge.outputs.retry == 'true'
+        uses: actions/github-script@v7
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: parseInt(process.env.PR_NUMBER),
+              body: [
+                '## ♻️ Race condition detected — retrying via force-push',
+                '',
+                '`auto-ingest/*` 병렬 squash-merge 경쟁 조건 감지. 다른 브랜치가 먼저 origin/main을 업데이트함.',
+                '`git rebase origin/main -X ours` + force-push로 재트리거합니다. 수동 개입 불필요.',
+              ].join('\n'),
+            });
+
       - name: Auto-ingest retry (re-trigger via force-push)
         if: steps.merge.outputs.retry == 'true'
         run: |
