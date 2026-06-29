@@ -1,0 +1,87 @@
+---
+title: "대규모 LLM 병렬 처리 Harness 설계: 성능 및 비용 최적화 전략"
+category: harness-engineering
+date: "2026-06-29"
+tags:
+  - LLM
+  - ParallelProcessing
+  - Harness
+  - DistributedSystems
+  - PerformanceOptimization
+  - MLOps
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/large-scale-llm-harness-architecture-patterns, harness-engineering/distributed-harness-patterns-for-llm-applications, harness-engineering/llm-scalable-service-architecture-patterns, harness-engineering/gpu-resource-optimization-large-scale-ai-serving, harness-engineering/efficient-large-scale-llm-deployment-mlops, infrastructure/llm-call-orchestration-reliability-enhancement, harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving]
+status: draft
+description: 대규모 LLM 워크로드를 위한 병렬 처리 Harness를 설계하여 성능과 비용을 최적화하는 핵심 전략과 구현 패턴을 다룹니다.
+type: entry
+source: gap-pull
+---
+
+대규모 언어 모델(LLM) 워크로드는 엄청난 컴퓨팅 자원과 메모리를 요구하며, 이를 효율적으로 처리하기 위한 병렬 처리 Harness 설계는 성능과 비용 최적화에 필수적인 요소입니다. 단일 장치로는 처리하기 어려운 모델 크기와 추론/학습 속도 요구사항 때문에, 여러 장치나 노드에 작업을 분산시키는 전략이 핵심입니다.
+
+## LLM 병렬 처리의 필요성
+LLM은 수십억 개에서 수조 개에 이르는 파라미터를 가지며, 이는 단일 GPU의 VRAM 용량을 초과하는 경우가 많습니다. 또한, 수많은 동시 사용자 요청을 처리하거나 방대한 데이터셋으로 학습할 때 요구되는 처리량은 단순한 스케일업(Scale-up)만으로는 달성하기 어렵습니다. 따라서 병렬 처리(Parallel Processing)를 통해 모델 또는 데이터를 여러 컴퓨팅 자원에 분산하여 처리하는 Harness 설계가 중요합니다.
+
+## 병렬 처리 Harness의 핵심 유형
+LLM 병렬 처리는 크게 다음과 같은 방식으로 나눌 수 있으며, 실제 Harness에서는 이들을 조합하여 활용합니다.
+
+### 1. 데이터 병렬화 (Data Parallelism)
+모델의 복사본을 각 장치에 배치하고, 입력 데이터를 여러 미니 배치로 나누어 각 장치에 분산 처리하는 방식입니다. 각 장치에서 계산된 그라디언트(gradients)는 동기화되어 모델 파라미터를 업데이트합니다. 이는 훈련(Training) 과정에서 주로 사용됩니다.
+
+### 2. 모델 병렬화 (Model Parallelism)
+단일 장치에 모델 전체가 올라가지 않을 때 사용됩니다. 모델의 레이어(layer) 또는 특정 부분을 여러 장치에 분산하여 배치합니다. 모델 병렬화는 다시 여러 하위 유형으로 나뉩니다.
+
+*   **파이프라인 병렬화 (Pipeline Parallelism)**: 모델의 연속적인 레이어 그룹을 다른 장치에 할당하여, 데이터가 파이프라인처럼 장치 간을 흐르도록 합니다. 각 장치는 이전 장치로부터 출력을 받아 자신의 계산을 수행하고 다음 장치로 전달합니다.
+*   **텐서 병렬화 (Tensor Parallelism)**: 모델 내의 특정 텐서(예: 가중치 행렬)를 여러 장치에 분할하여 저장하고 계산합니다. 이는 레이어 내부의 연산까지 병렬화하는 방식으로, 고도로 최적화된 통신이 필요합니다.
+
+### 3. 전문가 병렬화 (Expert Parallelism)
+Mixture-of-Experts (MoE) 모델과 같이, 특정 입력에 대해 소수의 '전문가(expert)' 모델만 활성화되는 구조에서 활용됩니다. 각 전문가는 다른 장치에 배치되고, 라우터(router)가 입력 토큰을 적절한 전문가에게 전달하여 처리량을 극대화합니다.
+
+## Harness 설계 요소
+
+### 1. 분산 오케스트레이션 (Distributed Orchestration)
+병렬 처리 워크로드를 관리하고 조정하는 핵심 부분입니다. 2026년 기준, Kubernetes, Ray, Slurm과 같은 솔루션들이 널리 사용됩니다.
+
+*   **Kubernetes**: 컨테이너화된 LLM 워크로드를 배포하고 스케일링하며, GPU 스케줄링 및 리소스 할당에 유용합니다.
+*   **Ray**: 대규모 AI/ML 워크로드를 위한 범용 분산 컴퓨팅 프레임워크로, 데이터 병렬화 및 모델 병렬화를 유연하게 지원합니다.
+*   **Slurm**: 고성능 컴퓨팅(HPC) 환경에서 주로 사용되며, 정교한 리소스 관리와 작업 스케줄링 기능을 제공합니다.
+
+### 2. 로드 밸런싱 및 라우팅 (Load Balancing & Routing)
+들어오는 추론 요청을 여러 병렬 처리 인스턴스에 효율적으로 분배하여 지연 시간을 줄이고 처리량을 높입니다. 모델 크기, 요청 복잡도, 사용 가능한 리소스 등을 고려한 동적 라우팅 전략이 중요합니다.
+
+### 3. 통신 최적화 (Communication Optimization)
+병렬 처리 환경에서 장치 간 데이터 통신은 병목 현상의 주범이 될 수 있습니다. NCCL (NVIDIA Collective Communications Library)과 같은 고성능 통신 라이브러리 및 RDMA(Remote Direct Memory Access) 기술을 활용하여 통신 오버헤드를 최소화해야 합니다.
+
+### 4. 고가용성 및 장애 복구 (High Availability & Fault Tolerance)
+분산 시스템에서는 노드 장애가 발생할 수 있습니다. 체크포인팅(Checkpointing), 자동 재시작(Automatic Restart), 그리고 중복성(Redundancy)을 통해 워크로드의 지속성을 보장해야 합니다. 최신 Harness는 서버리스(Serverless) 컴퓨팅 모델과 결합하여 이러한 복원성을 자동으로 제공하는 경향이 있습니다.
+
+### 5. 모니터링 및 옵저버빌리티 (Monitoring & Observability)
+GPU 활용률, 메모리 사용량, 네트워크 대역폭, 요청 처리 지연 시간, 오류율 등을 실시간으로 모니터링하여 시스템 병목 현상을 식별하고 최적화 기회를 찾아야 합니다. Prometheus, Grafana, OpenTelemetry와 같은 도구들이 통합될 수 있습니다.
+
+다음은 대규모 LLM 추론 Harness의 구조를 나타내는 Mermaid 다이어그램입니다.
+
+```mermaid
+graph TD
+    A[사용자/애플리케이션 요청] --> B{API Gateway / Load Balancer}
+    B --> C[Request Router]
+    C --> D{LLM Inference Worker Pool}
+    D -- 모델 병렬화 --> D1(GPU-1: Model Part A)
+    D -- 모델 병렬화 --> D2(GPU-2: Model Part B)
+    D -- 데이터 병렬화 --> D3(GPU-3: Model Copy)
+    D -- 데이터 병렬화 --> D4(GPU-4: Model Copy)
+    subgraph Orchestration Layer
+        D1
+        D2
+        D3
+        D4
+    end
+    D --> E[응답 집계/후처리]
+    E --> B
+    D --> F(메트릭 수집 및 모니터링)
+    F --> G[옵저버빌리티 대시보드]
+    C -- Expert Routing --> H(Expert A Worker Pool)
+    C -- Expert Routing --> I(Expert B Worker Pool)
+    H --> J(GPU-N: Expert A)
+    I --> K(GPU-M: Expert B)
+    subgraph LLM Workload Orchestration [
