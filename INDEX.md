@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-06-29T21:08:49.376Z
+Updated: 2026-06-30T21:05:50.004Z
 
-## 엔트리 (435개)
+## 엔트리 (439개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -27,6 +27,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - [AI Agent Context Layer — Data Warehouse 상호작용을 위한 구조화된 지식 통합](wiki/context-engineering/ai-agent-context-layer-data-warehousing) — confidence: 1, status: draft
 - [AI Agent Context Optimization — Enhancing Session Longevity and Efficiency](wiki/context-engineering/ai-agent-context-window-optimization-session-longevity) — confidence: 1, status: draft
 - [AI Agent Global Context Management — Implementing gc-tree for Persistent Sessions](wiki/context-engineering/ai-agent-global-context-gc-tree-integration) — confidence: 1, status: draft
+- [AI Agent Long-Term Memory — Scalable System Design and Integration](wiki/context-engineering/ai-agent-long-term-memory-system-integration) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 - [Claude Code Context Engineering - Playbook 기반 복잡한 도메인 문제 해결 전략](wiki/context-engineering/claude-code-advanced-context-playbook-strategy) — confidence: 1, status: draft
 - [Claude Code 컨텍스트 지속성: CTX 플러그인 통합 — 에이전트 효율성 및 지식 활용 증대](wiki/context-engineering/claude-code-ctx-plugin-context-persistence) — confidence: 1, status: draft
@@ -105,6 +106,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - [다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop](wiki/harness-engineering/agentic-worker-dispatch-filter-registration-gap) — confidence: 3, status: complete
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/harness-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
 - [AI Agent Oversight — Robust Control and Validation Mechanisms](wiki/harness-engineering/ai-agent-control-validation-mechanisms) — confidence: 1, status: draft
+- [AI Agent Harness Architecture: Go Micro Patterns for Robust Orchestration](wiki/harness-engineering/ai-agent-harness-architecture-go-micro-patterns) — confidence: 1, status: draft
 - [AI 에이전트 프롬프트 하네스 표준화: oh-my-harness CLI 활용 전략](wiki/harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness) — confidence: 1, status: draft
 - [AI Model Serving Harness: 엔터프라이즈 환경에서의 배포 및 관리 전략](wiki/harness-engineering/ai-model-serving-harness-enterprise-deployment-management) — confidence: 1, status: draft
 - [AI Model Serving: MLOps Pipeline Design Patterns for Real-time Services](wiki/harness-engineering/ai-model-serving-mlops-pipeline-design-patterns) — confidence: 1, status: draft
@@ -143,6 +145,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [Google Agent Executor: 분산 에이전트 런타임 하네스 통합 검토](wiki/harness-engineering/distributed-agent-executor-harness-integration) — confidence: 1, status: draft
 - [대규모 AI 시스템 분산형 하네스 디자인 패턴: 안정성 및 확장성 확보](wiki/harness-engineering/distributed-ai-harness-design) — confidence: 1, status: draft
+- [Harness 분산 처리 — 대규모 AI 워크로드를 위한 확장 가능한 아키텍처 패턴](wiki/harness-engineering/distributed-ai-workload-processing-harness-patterns) — confidence: 1, status: draft
 - [분산 하네스 디자인 패턴 — 대규모 LLM 애플리케이션의 안정성과 확장성 확보](wiki/harness-engineering/distributed-harness-patterns-for-llm-applications) — confidence: 1, status: draft
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/harness-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/harness-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -296,6 +299,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - [AI Agent Harness: 기능 확장 및 워크플로 자동화 통합 전략](wiki/agents/ai-agent-harness-feature-extension-integration-strategy) — confidence: 1, status: draft
 - [AI 에이전트 기반 개발 워크플로 자동화 — 이슈 감지부터 PR 생성까지](wiki/agents/ai-agent-issue-pr-workflow-automation) — confidence: 1, status: draft
 - [AI Agent Persistent Memory: Bridging Session Gaps with Automated Context Management](wiki/agents/ai-agent-persistent-memory-automated-context-management) — confidence: 1, status: draft
+- [AI Agent Development — RAG Integration for Enhanced Knowledge and Reduced Hallucinations](wiki/agents/ai-agent-rag-integration-hallucination-reduction) — confidence: 1, status: draft
 - [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/agents/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
 - [AI 에이전트 견고성 — 도구 활용 오류 처리 및 자가 복구 구현](wiki/agents/ai-agent-robust-tool-error-recovery) — confidence: 1, status: draft
 - [AI Agent Safety & Constraint Control: Design Patterns for Production Environments](wiki/agents/ai-agent-safety-constraint-control-design-patterns) — confidence: 1, status: draft
@@ -478,6 +482,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/llm-agent-dynamic-tool-selection-optimization
+- agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/ai-agent-harness-architecture-go-micro-patterns
 - agents/ai-agent-issue-pr-workflow-automation ↔ agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi
 - agents/ai-agent-issue-pr-workflow-automation ↔ agents/llm-agent-tool-use-design-patterns
 - agents/ai-agent-issue-pr-workflow-automation ↔ harness-engineering/hub-worker-compounding-pattern
@@ -493,6 +498,14 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/external-tool-integration-for-ai-agents
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/llm-agent-long-term-memory-tool-use-patterns
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/long-term-memory-management-patterns-for-ai-agents
+- agents/ai-agent-persistent-memory-automated-context-management ↔ harness-engineering/ai-agent-harness-architecture-go-micro-patterns
+- agents/ai-agent-persistent-memory-automated-context-management ↔ agents/ai-agent-rag-integration-hallucination-reduction
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ context-engineering/ai-agent-long-term-memory-system-integration
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/ai-agent-transparent-execution-knowledge-integration
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ agents/llm-agent-tool-use-design-patterns
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/ai-agent-context-window-optimization-session-longevity
 - agents/ai-agent-remote-management-ux-persistent-web-terminals ↔ context-engineering/claude-code-ctx-plugin-context-persistence
@@ -510,7 +523,6 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/ai-agent-robust-tool-error-recovery ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
-- agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/llm-prompt-validator-symmetry-drift
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
@@ -524,6 +536,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/ai-agent-harness-architecture-go-micro-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/ai-agent-self-correction-design-principles ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
@@ -717,6 +730,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/llm-agent-long-term-memory-system-design ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - agents/llm-agent-long-term-memory-system-design ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - agents/llm-agent-long-term-memory-system-design ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
+- agents/llm-agent-long-term-memory-system-design ↔ context-engineering/ai-agent-long-term-memory-system-integration
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-long-term-memory-tool-use-patterns ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
@@ -774,6 +788,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/long-term-memory-management-systems-ai-agents ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - agents/long-term-memory-management-systems-ai-agents ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - agents/long-term-memory-management-systems-ai-agents ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
+- agents/long-term-memory-management-systems-ai-agents ↔ context-engineering/ai-agent-long-term-memory-system-integration
 - agents/long-term-memory-reflection-ai-agent-design-patterns ↔ agents/autonomous-agent-long-term-memory-management
 - agents/long-term-memory-reflection-ai-agent-design-patterns ↔ agents/llm-agent-long-term-memory-tool-use-patterns
 - agents/long-term-memory-reflection-ai-agent-design-patterns ↔ agents/ai-agent-persistent-memory-automated-context-management
@@ -836,6 +851,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/distributed-ai-harness-design
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/agent-parallel-execution-isolation-git-worktree-patterns
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
+- agents/multi-llm-agent-workload-partitioning-patterns ↔ harness-engineering/distributed-ai-workload-processing-harness-patterns
 - agents/multi-stage-agent-task-scheduling-monitoring ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-stage-agent-task-scheduling-monitoring ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-stage-agent-task-scheduling-monitoring ↔ harness-engineering/realtime-ai-model-deployment-monitoring-patterns
@@ -1029,15 +1045,18 @@ Updated: 2026-06-29T21:08:49.376Z
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ harness-engineering/agentic-self-documentation-dual-perspective-knowledge-accumulation
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ data-engineering/production-db-ai-agent-guardrails
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ context-engineering/claude-code-advanced-context-playbook-strategy
-- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/claude-code-agent-view-worker-management-integration
+- context-engineering/ai-agent-context-layer-data-warehousing ↔ context-engineering/ai-agent-long-term-memory-system-integration
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ context-engineering/mirage-ai-agent-unified-filesystem-integration
 - context-engineering/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation
+- context-engineering/ai-agent-context-window-optimization-session-longevity ↔ context-engineering/ai-agent-long-term-memory-system-integration
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ context-engineering/claude-code-ctx-plugin-context-persistence
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ harness-engineering/enterprise-agent-management-patterns-llm-orchestration
 - context-engineering/ai-agent-global-context-gc-tree-integration ↔ harness-engineering/code-based-agent-task-patterns-harness-design
+- context-engineering/ai-agent-long-term-memory-system-integration ↔ data-engineering/rag-system-embedding-dataset-optimization-patterns
+- context-engineering/ai-agent-long-term-memory-system-integration ↔ harness-engineering/agent-multi-frequency-knowledge-pipeline
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/llm-interactive-ui-frontend-implementation
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/ai-personalized-ux-frontend-design-patterns
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
@@ -1224,7 +1243,6 @@ Updated: 2026-06-29T21:08:49.376Z
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ agents/ai-agent-self-correction-design-principles
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ evaluation/llm-output-safety-reliability-validation-enhancement
-- evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
@@ -1654,6 +1672,10 @@ Updated: 2026-06-29T21:08:49.376Z
 - harness-engineering/ai-agent-control-validation-mechanisms ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - harness-engineering/ai-agent-control-validation-mechanisms ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
 - harness-engineering/ai-agent-control-validation-mechanisms ↔ harness-engineering/llm-inference-reliability-validation-harness
+- harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/large-scale-llm-harness-architecture-patterns
+- harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/distributed-ai-harness-design
+- harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
+- harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/microservice-harness-architecture-large-scale-ai
 - harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness ↔ harness-engineering/code-based-agent-task-patterns-harness-design
 - harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness ↔ harness-engineering/prompt-model-version-management-large-scale-ai
 - harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
@@ -1677,6 +1699,7 @@ Updated: 2026-06-29T21:08:49.376Z
 - harness-engineering/ai-model-serving-mlops-pipeline-design-patterns ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/ai-model-serving-mlops-pipeline-design-patterns ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/ai-model-serving-mlops-pipeline-design-patterns ↔ harness-engineering/gpu-resource-optimization-large-scale-ai-serving
+- harness-engineering/ai-model-serving-mlops-pipeline-design-patterns ↔ harness-engineering/distributed-ai-workload-processing-harness-patterns
 - harness-engineering/ai-service-high-availability-fallback-retry-strategies ↔ harness-engineering/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/ai-service-high-availability-fallback-retry-strategies ↔ harness-engineering/llm-api-retry-logic-design-patterns-resilience
 - harness-engineering/ai-service-high-availability-fallback-retry-strategies ↔ harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns
@@ -1839,6 +1862,11 @@ Updated: 2026-06-29T21:08:49.376Z
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
 - harness-engineering/distributed-ai-harness-design ↔ harness-engineering/realtime-ai-service-load-balancing-api-gateway-design
+- harness-engineering/distributed-ai-harness-design ↔ harness-engineering/distributed-ai-workload-processing-harness-patterns
+- harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
+- harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/llm-workload-management-mlops-pipeline-design-patterns
+- harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/production-llm-service-harness-system-design-patterns
+- harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/efficient-large-scale-llm-deployment-mlops
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/distributed-ai-harness-design
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/llm-scalable-service-architecture-patterns
