@@ -11,7 +11,7 @@ tags:
   - Automation
   - agents
 confidence: 1
-connections: [agents/multi-agent-collaboration-design-patterns, agents/llm-agent-goal-achievement-planning-patterns, agents/claude-goal-playbook-worker-automation, context-engineering/ai-agent-context-window-optimization-session-longevity, harness-engineering/hub-worker-compounding-pattern, evaluation/llm-output-validation-quality-metrics-design, harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti, agents/multi-agent-decision-making-patterns, harness-engineering/antigravity-managed-agents-api-integration-review, agents/multi-stage-agent-task-scheduling-monitoring]
+connections: [agents/multi-agent-collaboration-design-patterns, agents/llm-agent-goal-achievement-planning-patterns, agents/claude-goal-playbook-worker-automation, context-engineering/ai-agent-context-window-optimization-session-longevity, harness-engineering/hub-worker-compounding-pattern, evaluation/llm-output-validation-quality-metrics-design, agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti, agents/multi-agent-decision-making-patterns, harness-engineering/antigravity-managed-agents-api-integration-review, agents/multi-stage-agent-task-scheduling-monitoring]
 status: draft
 description: AI 협업 5원칙을 Playbook 에이전트의 컨텍스트, 취향 설정, 검증, 위임, 피드백 루프에 적용하여 워크플로를 최적화하는 방안.
 type: entry
@@ -66,7 +66,7 @@ print(ctx_manager.get_current_context())
 에이전트에게 더 많은 책임과 권한을 위임하여 자율성을 높입니다. 단순한 코드 생성뿐만 아니라, 테스트 코드 작성, 배포 스크립트 수정, 문서 업데이트, 심지어 경미한 버그 수정까지 확장될 수 있습니다. `agents/multi-agent-task-collaboration-coordination-strategies`와 같이 여러 에이전트 간의 태스크 분할 및 협업을 통해 복잡한 작업을 엔드-투-엔드로 처리하는 능력을 배양합니다. 핵심은 에이전트가 실패하더라도 안전하게 복구할 수 있는 `harness-engineering/fail-loud-partial-adoption-escape-hatch-trap`과 같은 안전망을 구축하는 것입니다.
 
 ### 5. 피드백 루프 (Feedback Loop)
-AI 협업의 '복리 효과'를 극대화하는 가장 중요한 원칙입니다. 에이전트의 모든 작업 결과, 사용자의 수정, 검증 단계에서 발생한 오류, 그리고 성공/실패 사례는 학습 데이터로 피드백되어 에이전트의 모델이나 설정에 반영되어야 합니다. 특히 워커 에이전트의 `lesson/error dispatch`에서 허브 에이전트의 `cross-update`로 이어지는 자동화된 파이프라인에 이 피드백 루프를 깊게 반영해야 합니다. `harness-engineering/hub-worker-compounding-pattern`과 `harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop`와 같은 패턴을 통해 지속적인 개선 사이클을 만듭니다.
+AI 협업의 '복리 효과'를 극대화하는 가장 중요한 원칙입니다. 에이전트의 모든 작업 결과, 사용자의 수정, 검증 단계에서 발생한 오류, 그리고 성공/실패 사례는 학습 데이터로 피드백되어 에이전트의 모델이나 설정에 반영되어야 합니다. 특히 워커 에이전트의 `lesson/error dispatch`에서 허브 에이전트의 `cross-update`로 이어지는 자동화된 파이프라인에 이 피드백 루프를 깊게 반영해야 합니다. `harness-engineering/hub-worker-compounding-pattern`과 `frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop`와 같은 패턴을 통해 지속적인 개선 사이클을 만듭니다.
 
 아래 Mermaid 다이어그램은 AI 협업 5원칙이 적용된 Playbook 에이전트의 워크플로를 보여줍니다.
 

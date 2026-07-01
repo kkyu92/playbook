@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 777,
+  "totalInvocations": 779,
   "skipped": 27,
-  "searched": 750,
-  "hit": 224,
-  "noMatch": 526,
-  "lastUpdated": "2026-07-01T23:36:58.253Z",
+  "searched": 752,
+  "hit": 225,
+  "noMatch": 527,
+  "lastUpdated": "2026-07-01T23:45:45.409Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -49,7 +49,7 @@
     "retros/2026-05-08-cycles-286-290": 6,
     "solutions/ci-github-actions/_compiled-truth": 2,
     "retros/2026-05-12-cycles-305-307": 7,
-    "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
+    "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 5,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 6,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 9,
@@ -193,7 +193,8 @@
     "harness-engineering/cross-fork-ci-failure-fix-propagation-boundary": 1,
     "solutions/develop-cycle-hub/2026-06-11-index-md-rebase-conflict-auto-regenerate": 1,
     "retros/2026-05-13-cycle-456": 1,
-    "journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7": 1
+    "journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7": 1,
+    "solutions/ci-github-actions/2026-05-01-notify-workers-heredoc-eof-gap": 1
   },
   "noMatchQueries": [
     {
@@ -630,6 +631,11 @@
       "query": "closed loop design philosophy",
       "timestamp": "2026-07-01T23:36:58.252Z",
       "topScore": 0.8345
+    },
+    {
+      "query": "category rebalance entry reclassification",
+      "timestamp": "2026-07-01T23:45:45.407Z",
+      "topScore": 0.819
     }
   ],
   "noMatchQueryCounts": {
@@ -701,7 +707,8 @@
     "moneyball cross-fork compounding": 1,
     "BRANCHED steady-state worker hub": 1,
     "BRANCHED state local main diverged origin steady-state": 1,
-    "retry mechanism counter limit infinite loop observability": 1
+    "retry mechanism counter limit infinite loop observability": 1,
+    "category rebalance entry reclassification": 1
   },
-  "totalQueries": 821
+  "totalQueries": 823
 }

@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-06-28T21:04:27.050Z
+Updated: 2026-07-01T23:42:52.250Z
 
-## 엔트리 (350개)
+## 엔트리 (365개)
 
 ### Prompt Engineering
 - [LAO 워크플로우 — LLM 에이전트 설계서 강화 전략](wiki/prompt-engineering/lao-workflow-llm-agent-design-enhancement) — confidence: 1, status: draft
@@ -103,6 +103,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Antigravity 2.0 & Managed Agents API — AI 에이전트 개발 및 오케스트레이션 가이드](wiki/harness-engineering/antigravity-managed-agents-api-integration-review) — confidence: 1, status: draft
 - [API 하네스 디자인 패턴 — 대규모 AI 서비스 통합을 위한 견고성 및 확장성 확보](wiki/harness-engineering/api-harness-large-scale-ai-service-integration) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/harness-engineering/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
+- [Bash Pipe 서브셸 변수 격리 — 모니터링 카운터 무음 오염 패턴](wiki/harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap) — confidence: 3, status: complete
 - [Claude 5 Fable Integration — Advanced LLM Worker Harness for Compounding Automation](wiki/harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation) — confidence: 1, status: draft
 - [Claude API 보안: OpenClaw 키워드 가드 및 응답 드리프트 감지](wiki/harness-engineering/claude-api-openclaw-keyword-guard-behavior-drift-detection) — confidence: 1, status: draft
 - [Claude CLI: Persistent Multi-session Web Terminal for Enhanced LLM Workflow](wiki/harness-engineering/claude-cli-persistent-multi-session-web-terminal) — confidence: 1, status: draft
@@ -237,7 +238,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Playbook Journal 051 — issue-agent 401 RC — CLAUDE_CODE_OAUTH_TOKEN 만료 + 자동 갱신 부재](wiki/journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token) — confidence: 3, status: in-progress
 - [Playbook Journal 052 — 5/21 CI silent drift — feat+test 분리 push 7연속 실패 패턴](wiki/journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7) — confidence: 3, status: in-progress
 - [Playbook Journal 053 — silent drift family 사례 15 재발 — cycle 1076/1077 retro local push 누락 (cycle 1078 자연 발견)](wiki/journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local) — confidence: 3, status: in-progress
-- [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: in-progress
+- [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: completed
 - [Playbook Journal 055 — incident wave 2026-06-10/11 — SUPABASE_URL + esbuild CVE family (8 fingerprints batch close, cycle 1169)](wiki/journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
@@ -330,6 +331,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - [Next.js Security Hardening — Patching Vulnerabilities and Enhancing Defense](wiki/infrastructure/nextjs-security-patching-defense-logic-reinforcement) — confidence: 1, status: draft
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
 - [오픈소스 공급망 보안 강화 — LLM 개발 툴 안전성 확보 전략](wiki/infrastructure/open-source-supply-chain-security-llm-tools-hardening) — confidence: 1, status: draft
+- [pnpm 간접 의존성 CVE — audit gate CI 실패 + overrides/pin 수정 패턴](wiki/infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern) — confidence: 3, status: complete
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 - [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
@@ -990,6 +992,12 @@ Updated: 2026-06-28T21:04:27.050Z
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ infrastructure/llm-call-orchestration-reliability-enhancement
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ harness-engineering/llm-inference-reliability-validation-harness
+- evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-output-validation-prompt-constraints-robustness
+- evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-output-safety-reliability-validation-enhancement
+- evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
+- evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/silent-drift-family-pattern
+- evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/ai-agent-control-validation-mechanisms
+- evaluation/llm-output-validation-automation-failure-prevention ↔ project-ops/ai-agent-runaway-cost-prevention-control-systems
 - evaluation/llm-output-validation-prompt-constraints-robustness ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-output-validation-prompt-constraints-robustness ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - evaluation/llm-output-validation-prompt-constraints-robustness ↔ harness-engineering/llm-output-system-boundary-sanitization-pipeline
@@ -1377,6 +1385,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/api-harness-large-scale-ai-service-integration ↔ harness-engineering/realtime-ai-service-load-balancing-api-gateway-design
 - harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/zero-touch-develop-cycle-session-management
+- harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap ↔ harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure
+- harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap ↔ harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
+- harness-engineering/bash-pipe-subshell-variable-isolation-monitoring-trap ↔ harness-engineering/zero-touch-develop-cycle-session-management
 - harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ harness-engineering/llm-agent-persistent-goal-management-long-term-tasks
 - harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
@@ -1415,6 +1426,9 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token
 - harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
+- harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension ↔ harness-engineering/hub-worker-compounding-pattern
+- harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension ↔ harness-engineering/llm-agent-observability-spanlens-trace-monitoring
+- harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/guard-test-pattern
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - harness-engineering/code-based-agent-task-patterns-harness-design ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -1533,7 +1547,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/operational-resilience-emergency-management-tooling
 - harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
-- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
+- harness-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/question-own-defaults
 - harness-engineering/hub-worker-compounding-pattern ↔ prompt-engineering/lao-workflow-llm-agent-design-enhancement
 - harness-engineering/hub-worker-compounding-pattern ↔ harness-engineering/superagent-harness-architecture-long-running-task-orchestrat
@@ -1609,6 +1623,7 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ harness-engineering/llm-workload-management-mlops-pipeline-design-patterns
 - harness-engineering/llm-scalable-service-architecture-patterns ↔ project-ops/claude-code-harness-cost-optimization-reassessment
+- harness-engineering/llm-scalable-service-architecture-patterns ↔ harness-engineering/realtime-ai-service-load-balancing-api-gateway-design
 - harness-engineering/llm-workflow-orchestration-business-logic-patterns ↔ harness-engineering/multimodal-ai-orchestration-design-patterns
 - harness-engineering/llm-workflow-orchestration-business-logic-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/llm-workload-management-mlops-pipeline-design-patterns ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
@@ -1664,6 +1679,13 @@ Updated: 2026-06-28T21:04:27.050Z
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/claude-api-key-security-audit-usage-pattern-validation
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - harness-engineering/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/open-source-supply-chain-security-llm-tools-hardening
+- harness-engineering/wiki-category-health-rebalance-decision-framework ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/wiki-category-health-rebalance-decision-framework ↔ harness-engineering/agentic-wiki-connection-graph-health-metrics
+- harness-engineering/wiki-jit-search-blind-spot-diagnosis ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
+- harness-engineering/wiki-jit-search-blind-spot-diagnosis ↔ harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
+- harness-engineering/wiki-jit-search-blind-spot-diagnosis ↔ harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+- harness-engineering/wiki-journal-append-only-lint-false-positive-status ↔ harness-engineering/wiki-jit-search-blind-spot-diagnosis
+- harness-engineering/wiki-journal-append-only-lint-false-positive-status ↔ harness-engineering/agentic-wiki-confidence-lifecycle
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/hub-worker-compounding-pattern
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/drift-detection-methodology
 - harness-engineering/wiki-knowledge-roi-3axis-measurement ↔ harness-engineering/agentic-chain-saturation-detection
@@ -1702,6 +1724,8 @@ Updated: 2026-06-28T21:04:27.050Z
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/open-source-supply-chain-security-llm-tools-hardening ↔ journal/playbook-journal-037-pnpm-lock-yaml-ci-frozen-lockfile
+- infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern ↔ infrastructure/npm-pnpm-supply-chain-security-enhancement
+- infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern ↔ infrastructure/nextjs-security-patching-defense-logic-reinforcement
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ infrastructure/sentry-serverless-flush
 - infrastructure/sentry-pii-scrubbing-beforesend ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
@@ -1870,3 +1894,6 @@ Updated: 2026-06-28T21:04:27.050Z
 - reports/week-2026-21 ↔ reports/week-2026-22
 - reports/week-2026-23 ↔ reports/week-2026-22
 - reports/week-2026-24 ↔ reports/week-2026-23
+- reports/week-2026-25 ↔ reports/week-2026-24
+- reports/week-2026-26 ↔ reports/week-2026-25
+- reports/week-2026-27 ↔ reports/week-2026-26

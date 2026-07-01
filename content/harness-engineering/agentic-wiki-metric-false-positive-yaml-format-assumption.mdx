@@ -108,7 +108,7 @@ grep -r "^connections:$" content/ --include="*.mdx" | wc -l   # list count
 ```yaml
 connections:
   - >-
-    harness-engineering/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
+    frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 ```
 
 orphan 스캔 시 `>-` 자체가 orphan target으로 보고됨 (실제 orphan X). 위 수정 스크립트에서 `len(i.strip()) > 3` 가드가 필요한 이유.

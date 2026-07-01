@@ -11,7 +11,7 @@ tags:
   - Benchmarking
   - agents
 confidence: 1
-connections: [agents/qwen3-6-max-preview-llm-agentic-coding-evaluation, harness-engineering/agentic-coding-claude-harness-playbook-strategy, harness-engineering/multi-llm-routing-design-patterns-cost-performance, agents/llm-agent-tool-use-design-patterns, agents/autonomous-agent-long-term-memory-management, evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth, evaluation/claude-code-generation-validation-pipeline-extension]
+connections: [agents/qwen3-6-max-preview-llm-agentic-coding-evaluation, harness-engineering/agentic-coding-claude-harness-playbook-strategy, prompt-engineering/multi-llm-routing-design-patterns-cost-performance, agents/llm-agent-tool-use-design-patterns, agents/autonomous-agent-long-term-memory-management, evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth, evaluation/claude-code-generation-validation-pipeline-extension]
 status: draft
 description: Evaluates Qwen3.7-Max's coding and autonomous execution capabilities, exploring its integration into existing Claude Code harnesses or new automation workflows.
 type: entry
@@ -24,7 +24,7 @@ Qwen3.7-Max는 코딩, 디버깅, 사무 자동화 및 수백~수천 단계의 �
 Qwen3.7-Max는 소프트웨어 개발 라이프사이클 전반에 걸쳐 뛰어난 **코딩 및 디버깅** 능력을 제공한다. **자율 실행 및 심층 추론** 능력은 장기적인 목표 설정과 비구조화된 문제 해결에 필수적이며, GPQA Diamond 벤치마크로 이를 입증했다. 또한, 복잡한 문서 처리와 데이터 분석 등 **사무 자동화** 시나리오와 **다국어 지원**에서도 강점을 보인다. 이 모델은 고도로 자동화된 에이전트 시스템 구축의 핵심 동력으로 작용할 수 있다.
 
 ## 통합 전략
-Qwen3.7-Max를 기존 AI 워크플로우에 도입하는 방법은 크게 두 가지이다. 첫째, **기존 Claude Code 하네스 보조 또는 대체**이다. 고도의 복잡성이나 장기 실행이 필요한 코딩/디버깅 태스크에 Qwen3.7-Max를 라우팅하여 Claude Code의 한계를 보완할 수 있다. `harness-engineering/multi-llm-routing-design-patterns-cost-performance`에서 제시된 것처럼, 각 LLM의 강점을 활용한 멀티 LLM 오케스트레이션이 효과적이다. 둘째, Qwen3.7-Max의 강력한 자율 실행 능력을 활용하여 **새로운 엔드-투-엔드(end-to-end) 자동화 워크플로우**를 구축하는 것이다. 이는 개발 환경 설정부터 코드 작성, 테스트, 배포까지 일련의 과정을 자율적으로 처리하는 에이전트 시스템을 가능하게 한다.
+Qwen3.7-Max를 기존 AI 워크플로우에 도입하는 방법은 크게 두 가지이다. 첫째, **기존 Claude Code 하네스 보조 또는 대체**이다. 고도의 복잡성이나 장기 실행이 필요한 코딩/디버깅 태스크에 Qwen3.7-Max를 라우팅하여 Claude Code의 한계를 보완할 수 있다. `prompt-engineering/multi-llm-routing-design-patterns-cost-performance`에서 제시된 것처럼, 각 LLM의 강점을 활용한 멀티 LLM 오케스트레이션이 효과적이다. 둘째, Qwen3.7-Max의 강력한 자율 실행 능력을 활용하여 **새로운 엔드-투-엔드(end-to-end) 자동화 워크플로우**를 구축하는 것이다. 이는 개발 환경 설정부터 코드 작성, 테스트, 배포까지 일련의 과정을 자율적으로 처리하는 에이전트 시스템을 가능하게 한다.
 
 ## 코드 예시: 에이전트 기반 개발 워크플로우
 Qwen3.7-Max 에이전트의 개발 태스크 수행 방식을 개념적으로 보여준다.
