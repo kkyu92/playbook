@@ -84,7 +84,7 @@ node scripts/search.mjs "<질문>" 3 --inject   # 관련 청크만 inject 모드
 
 ## 드리프트 감지 프로토콜 (필수)
 
-가정과 실 리포 사이 4종 괴리를 계층적으로 차단. 상세: [drift-detection-methodology](content/harness-engineering/drift-detection-methodology.mdx).
+가정과 실 리포 사이 4종 괴리를 계층적으로 차단. 상세: [drift-detection-methodology](content/context-engineering/drift-detection-methodology.mdx).
 
 ### Level 0 — 세션 시작 시 (메모리 드리프트 #1)
 
@@ -125,7 +125,7 @@ cat package.json | grep <name>
 
 ## Question Own Defaults 프로토콜 (필수)
 
-설계/리뷰 중 **자기 제안 값과 상속 값 자가 의심**. 상세: [question-own-defaults](content/harness-engineering/question-own-defaults.mdx).
+설계/리뷰 중 **자기 제안 값과 상속 값 자가 의심**. 상세: [question-own-defaults](content/project-ops/question-own-defaults.mdx).
 
 AI 가 plan 에 하드코딩 상수, 마법수, 임계값, "기존 구조 유지" 제안 시 출력 직전 3초 자가 감사:
 1. **출처 추적** — 이 값의 근거가 뭔가? 상속 유산이면 플래그
@@ -138,7 +138,7 @@ AI 가 plan 에 하드코딩 상수, 마법수, 임계값, "기존 구조 유지
 
 ## Cross-fork feedback memory sync
 
-`~/.local/share/feedback-sync/` 인프라가 launchd cron 5min poll 로 3 fork memory 의 universal feedback 을 자동 분류 + 전파. SSOT = `~/.claude/projects/universal-memory-pool/`. 운영: `feedback-sync status`, runbook 은 `~/.local/share/feedback-sync/README.md`, 방법론 은 [cross-fork-feedback-sync](content/harness-engineering/cross-fork-feedback-sync.mdx).
+`~/.local/share/feedback-sync/` 인프라가 launchd cron 5min poll 로 3 fork memory 의 universal feedback 을 자동 분류 + 전파. SSOT = `~/.claude/projects/universal-memory-pool/`. 운영: `feedback-sync status`, runbook 은 `~/.local/share/feedback-sync/README.md`, 방법론 은 [cross-fork-feedback-sync](content/infrastructure/cross-fork-feedback-sync.mdx).
 
 ## Skill routing
 
