@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [harness-engineering/hub-worker-compounding-pattern, context-engineering/agentic-cycle-state-json-carry-over-design, reports/closed-loop-health, harness-engineering/agentic-chain-saturation-detection, harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook, prompt-engineering/llm-call-orchestration-reliability-enhancement, prompt-engineering/on-device-llm-inference-efficiency-patterns]
+connections: [context-engineering/hub-worker-compounding-pattern, context-engineering/agentic-cycle-state-json-carry-over-design, reports/closed-loop-health, harness-engineering/agentic-chain-saturation-detection, project-ops/claude-code-harness-skillset-reinforcement-agent-playbook, prompt-engineering/llm-call-orchestration-reliability-enhancement, prompt-engineering/on-device-llm-inference-efficiency-patterns]
 status: complete
 description: 에이전트 자율 루프의 chain pool에 "코드 변경 0, 측정만" 전용 chain을 두는 패턴. 측정 이벤트를 cycle_state 히스토리에 박제 → 다음 사이클이 분석 결과를 진단 input으로 활용.
 type: entry
@@ -96,7 +96,7 @@ cycle 144 → cycle 166 (21 cycle gap):
 
 ## 관련
 
-- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 워커 chain을 허브 wiki로 일반화하는 흐름
+- [Hub-Worker Compounding Pattern](/wiki/context-engineering/hub-worker-compounding-pattern): 워커 chain을 허브 wiki로 일반화하는 흐름
 - [Agentic Cycle State JSON](/wiki/context-engineering/agentic-cycle-state-json-carry-over-design): 측정 결과를 cycle_state에 박제하는 패턴
 - [Closed-Loop Health Dashboard](/wiki/reports/closed-loop-health): 허브의 "external analytical layer" 구현체
 - [Agentic Chain Saturation Detection](/wiki/harness-engineering/agentic-chain-saturation-detection): analytical chain이 saturation 감지에 필요한 데이터 공급

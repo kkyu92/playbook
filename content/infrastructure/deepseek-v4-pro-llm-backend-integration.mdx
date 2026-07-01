@@ -11,7 +11,7 @@ tags:
   - AIBackend
   - harness-engineering
 confidence: 1
-connections: [agents/code-based-agent-task-patterns-harness-design, harness-engineering/drift-detection-methodology]
+connections: [agents/code-based-agent-task-patterns-harness-design, context-engineering/drift-detection-methodology]
 status: draft
 description: DeepSeek V4 Pro와 같은 저렴한 LLM을 Claude Code와 같은 에이전트 프레임워크의 백엔드로 통합하여 운영 비용을 절감하고 시스템 유연성을 극대화합니다.
 type: entry
@@ -150,7 +150,7 @@ graph TD
 *   - [ ] **API 호환성 검증**: 기존 에이전트 코드와 새로운 LLM 백엔드(예: DeepSeek V4 Pro via OpenRouter)의 API 규격(요청/응답 형식, 파라미터, 스트리밍 동작)이 100% 호환되는지 기능 테스트 및 통합 테스트를 완료했는가?
 *   - [ ] **출력 품질 평가 파이프라인 통합**: 새로운 LLM 백엔드로 전환 후, `evaluation/llm-output-validation-quality-metrics-design`에서 정의된 핵심 태스크에 대한 LLM 출력 품질 메트릭(정확성, 일관성, 유효성, 안전성)이 최소 허용 기준을 충족하는지 자동화된 평가 파이프라인을 통해 지속적으로 검증하는가?
 *   - [ ] **비용 및 성능 모니터링 시스템 구축**: DeepSeek V4 Pro 등 저렴한 LLM 사용 시 실제 API 호출 비용, 지연 시간(Latency), 처리량(Throughput) 데이터를 실시간으로 수집하고, 예상 비용 및 성능 지표와 비교하는 모니터링 대시보드를 구축하여 최적화 효과를 추적하는가?
-*   - [ ] **드리프트 탐지 및 완화 전략**: 모델 교체로 인한 에이전트 행동 변화(드리프트)를 조기에 탐지하고, 필요한 경우 자동으로 이전 백엔드로 롤백하거나 프롬프트 엔지니어링을 통해 보정하는 `harness-engineering/drift-detection-methodology` 기반의 메커니즘을 설계하고 운영하는가?
+*   - [ ] **드리프트 탐지 및 완화 전략**: 모델 교체로 인한 에이전트 행동 변화(드리프트)를 조기에 탐지하고, 필요한 경우 자동으로 이전 백엔드로 롤백하거나 프롬프트 엔지니어링을 통해 보정하는 `context-engineering/drift-detection-methodology` 기반의 메커니즘을 설계하고 운영하는가?
 *   - [ ] **보안 및 규정 준수 검토**: 새로운 LLM 백엔드 제공업체가 데이터 보안 표준(예: 암호화, 접근 제어), 개인 정보 보호 정책(GDPR, CCPA), 그리고 산업별 규정 준수 요구사항을 충족하는지 법률 및 보안 팀과 협력하여 철저히 검토했는가?
 *   - [ ] **동적 라우팅 및 폴백 전략**: 비용 효율적인 LLM을 기본으로 사용하되, 특정 복잡하거나 중요도가 높은 태스크에 대해서는 고성능 LLM으로 자동 전환하거나, 저렴한 LLM이 실패할 경우 고성능 LLM으로 폴백(fallback)하는 `agents/multi-llm-agent-workload-partitioning-patterns`와 유사한 동적 라우팅 전략을 구현했는가?
 *   - [ ] **프롬프트 엔지니어링 최적화**: 새로운 LLM 백엔드의 특성(예: 강점, 약점, 토큰 한도)에 맞춰 프롬프트 엔지니어링 전략을 재검토하고 최적화하여, `agents/ai-agent-context-window-optimization-session-longevity`를 고려한 컨텍스트 활용을 최대화하고 비용 효율적인 출력을 유도했는가?

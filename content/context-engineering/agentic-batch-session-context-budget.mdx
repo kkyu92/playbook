@@ -15,7 +15,7 @@ confidence: 2
 last_verified: "2026-05-22"
 connections:
   - harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs
-  - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
+  - infrastructure/agentic-git-history-ground-truth-checkpoint-resilience
 source: explore-idea
 description: "N 사이클 manual batch 세션에서 컨텍스트 예산이 사이클마다 누적되는 문제. skill 로딩, 스캔 결과, entry 내용이 ctx 를 소비. 후반 사이클에서 ctx % 증가 → 품질 저하 방지 패턴."
 ---
@@ -73,4 +73,4 @@ cycle 992~1011 (20 사이클 batch):
 ## 관련 패턴
 
 - [agentic-manual-batch-vs-zero-touch](/wiki/harness-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs): 두 모드 비교
-- [agentic-git-history-ground-truth](/wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience): ctx 손실 시 git log로 복구
+- [agentic-git-history-ground-truth](/wiki/infrastructure/agentic-git-history-ground-truth-checkpoint-resilience): ctx 손실 시 git log로 복구

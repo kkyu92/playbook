@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [evaluation/prediction-model-calibration-inversion-detection, harness-engineering/silent-drift-family-pattern, harness-engineering/question-own-defaults, project-ops/ai-model-serving-harness-enterprise-deployment-management]
+connections: [evaluation/prediction-model-calibration-inversion-detection, harness-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, project-ops/ai-model-serving-harness-enterprise-deployment-management]
 status: complete
 description: ML 파이프라인에 새 피처나 계산 경로를 추가할 때, 기존 정규화 함수가 "입력 양수" 를 암묵적으로 가정하고 있으면 음수 입력 시 factor < 0 가 발생하는 silent 버그. calibration 역전 또는 신뢰도 왜곡의 근본 원인이 될 수 있다.
 type: entry
@@ -99,4 +99,4 @@ bucket 역전의 원인 중 하나로 normalize 음수 추정 → cycle 208 수�
 
 - [Calibration Inversion Detection](/wiki/evaluation/prediction-model-calibration-inversion-detection) — normalize 버그가 calibration 역전의 원인 중 하나
 - [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — factor 범위 오계산 = 조용히 누적되는 silent drift
-- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "기존 normalize() 가 새 피처에도 OK" 가정을 먼저 의심했어야
+- [Question Own Defaults](/wiki/project-ops/question-own-defaults) — "기존 normalize() 가 새 피처에도 OK" 가정을 먼저 의심했어야

@@ -12,7 +12,7 @@ tags:
   - Silent Drift
   - context-engineering
 confidence: 2
-connections: [context-engineering/agentic-cycle-state-json-carry-over-design, context-engineering/agentic-multi-layer-state-persistence-decision-framework, agents/autonomous-agent-long-term-memory-management, harness-engineering/drift-detection-methodology, harness-engineering/silent-drift-family-pattern]
+connections: [context-engineering/agentic-cycle-state-json-carry-over-design, context-engineering/agentic-multi-layer-state-persistence-decision-framework, agents/autonomous-agent-long-term-memory-management, context-engineering/drift-detection-methodology, harness-engineering/silent-drift-family-pattern]
 status: draft
 description: LLM 에이전트의 메모리 파일에 저장된 사실 설명이 현실과 조용히 어긋나는 OOS(out-of-sync) 드리프트 현상, count_smoke 베이스라인 실행으로 이를 감지하고 수정하는 패턴. 장기 휴면(30+ cycle gap) 후 재개 시 특히 중요.
 type: entry
@@ -103,6 +103,6 @@ count_smoke는 Count drift와 Status drift에 가장 효과적이다. Path drift
 
 ## 연관 패턴
 
-- [Drift Detection Methodology](harness-engineering/drift-detection-methodology): 구현 vs 현실 감지 (이 entry는 메모리 vs 현실 감지)
+- [Drift Detection Methodology](context-engineering/drift-detection-methodology): 구현 vs 현실 감지 (이 entry는 메모리 vs 현실 감지)
 - [Silent Drift Family Pattern](harness-engineering/silent-drift-family-pattern): silent 드리프트의 일반 taxonomy
 - [Agentic Cycle State JSON](context-engineering/agentic-cycle-state-json-carry-over-design): 사이클 간 상태 carry-over 설계 (드리프트 발생 맥락)

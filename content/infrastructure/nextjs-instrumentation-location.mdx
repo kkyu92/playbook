@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr, infrastructure/vercel-env-oauth-security-enhancement, harness-engineering/db-query-type-safety-assert-select-ok-pattern, infrastructure/nextjs-security-patching-defense-logic-reinforcement, context-engineering/kuku-concepts-playbook-local-markdown-enhancement]
+connections: [journal/playbook-journal-003-drift-silent-bugs, journal/playbook-journal-004-drift-half-working, infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/sentry-serverless-flush, journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr, infrastructure/vercel-env-oauth-security-enhancement, infrastructure/db-query-type-safety-assert-select-ok-pattern, infrastructure/nextjs-security-patching-defense-logic-reinforcement, context-engineering/kuku-concepts-playbook-local-markdown-enhancement]
 status: complete
 description: Next.js 16 + src/app 구조에서 instrumentation.ts 는 src/instrumentation.ts 여야 자동 감지된다. 프로젝트 루트에 두면 Next 가 파일 존재조차 인식 못함 → Sentry.init 모듈스코프도 register() 도 둘 다 no-op. CI 통과 + 빌드 무에러 + 클라이언트 정상으로 silent.
 type: entry
@@ -60,7 +60,7 @@ apps/moneyball/src/instrumentation-client.ts
 
 ## 일반화 — 프레임워크 컨벤션 드리프트
 
-이 사고는 [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 의 한 변형. "feat 커밋 머지 + CI 통과 + 빌드 무에러" 셋 다 통과해도 서버 observability 가 silent 죽음 가능. 동일 패턴:
+이 사고는 [drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 의 한 변형. "feat 커밋 머지 + CI 통과 + 빌드 무에러" 셋 다 통과해도 서버 observability 가 silent 죽음 가능. 동일 패턴:
 
 - [Journal 003 — 머지됐지만 죽어있는 코드](/wiki/journal/playbook-journal-003-drift-silent-bugs): 사전 버그 silent failure
 - [Journal 004 — 반쪽짜리 작동](/wiki/journal/playbook-journal-004-drift-half-working): 한쪽만 작동
@@ -73,14 +73,14 @@ apps/moneyball/src/instrumentation-client.ts
 
 ## Phase 3 관점
 
-이 사례는 워커 → 허브 첫 자연 inbound 의 일부 (가드 B 패턴 자체가 두 근본 버그를 동시에 폭로). [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 Cycle 1 dispatch 가 의도된 대로 작동한 첫 케이스. 추후 Phase 3 (Claude Agent CI 자동 cross-update) 도래 시 "프레임워크 컨벤션 silent 실패" 카테고리의 reference 로 활용.
+이 사례는 워커 → 허브 첫 자연 inbound 의 일부 (가드 B 패턴 자체가 두 근본 버그를 동시에 폭로). [hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern) 의 Cycle 1 dispatch 가 의도된 대로 작동한 첫 케이스. 추후 Phase 3 (Claude Agent CI 자동 cross-update) 도래 시 "프레임워크 컨벤션 silent 실패" 카테고리의 reference 로 활용.
 
 ## Related
 
-- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 작동 드리프트의 직접 사례
+- [Drift Detection Methodology](/wiki/context-engineering/drift-detection-methodology) — Level 2 작동 드리프트의 직접 사례
 - [Sentry PII Scrubbing — beforeSend vs 대시보드](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 같은 보고서에서 발견된 형제 lesson
 - [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)
 - [Journal 004 — 반쪽 작동](/wiki/journal/playbook-journal-004-drift-half-working)
-- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 첫 자연 사례
+- [Hub-Worker Compounding Pattern](/wiki/context-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 첫 자연 사례
 - [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 같은 가드 B 가 동시 폭로한 형제 trap
 - [Guard Test Pattern](/wiki/infrastructure/guard-test-pattern) — 본 사례를 폭로한 메타 패턴

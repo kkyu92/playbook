@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-20"
-connections: [harness-engineering/worker-lesson-velocity-signal, harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry, harness-engineering/hub-worker-compounding-pattern, evaluation/llm-api-retry-logic-design-patterns-resilience, project-ops/operational-resilience-emergency-management-tooling]
+connections: [harness-engineering/worker-lesson-velocity-signal, harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry, context-engineering/hub-worker-compounding-pattern, evaluation/llm-api-retry-logic-design-patterns-resilience, infrastructure/operational-resilience-emergency-management-tooling]
 status: complete
 description: 허브-워커 다중 에이전트 시스템에서 CI 실패 dispatch를 수신한 허브가 트리아지할 때, 경과 시간이 자연 disambiguation 신호가 된다. 'dispatch 시점 상태'가 아닌 '현재 CI 상태'를 확인하면 transient(자가해소)와 structural(코드 수정 필요) 실패를 자동 구별할 수 있다.
 type: entry
@@ -117,4 +117,4 @@ git log --oneline -5  # 이슈 생성 이후 커밋에 "fix" 있는지 확인
 
 - [worker-lesson-velocity-signal](/wiki/harness-engineering/worker-lesson-velocity-signal): 워커가 허브에 lesson을 전송하는 속도 패턴. incident dispatch와 같은 채널 사용
 - [agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry](/wiki/harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry): 워커 dispatch가 만드는 origin/main 비대칭 구조. incident dispatch도 동일 비대칭의 일부
-- [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 허브-워커 복리 성장 설계. incident triage가 워커 안정성 축에 해당
+- [hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern): 허브-워커 복리 성장 설계. incident triage가 워커 안정성 축에 해당

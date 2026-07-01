@@ -16,7 +16,7 @@ confidence: 4
 last_verified: "2026-05-20"
 connections:
   - harness-engineering/zero-touch-develop-cycle-session-management
-  - harness-engineering/hub-worker-compounding-pattern
+  - context-engineering/hub-worker-compounding-pattern
   - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 status: complete
 description: "agentic 워크플로우에서 외부 메시지 큐 없이 git commit body의 structured 'subtype:' 필드를 IPC/dispatch 채널로 활용하는 패턴. git history가 durable message bus 역할을 수행 — 수신자는 git log --grep으로 dispatch 메시지를 pull한다."
@@ -164,5 +164,5 @@ cycle_state JSON 파일과 병행 사용:
 ## 관련 패턴
 
 - [zero-touch-develop-cycle-session-management](/wiki/harness-engineering/zero-touch-develop-cycle-session-management): 이 패턴을 사용하는 orchestration 전체 구조
-- [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): 워커→허브 방향은 workflow_dispatch 사용 (cross-repo 이유)
+- [hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern): 워커→허브 방향은 workflow_dispatch 사용 (cross-repo 이유)
 - [agentic-trigger-skip-dual-condition-homeostasis](/wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis): cycle-retro dispatch 데이터로 구동되는 SE 발화율 조절 패턴

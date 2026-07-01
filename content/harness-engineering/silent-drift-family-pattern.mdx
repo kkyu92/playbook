@@ -19,7 +19,7 @@ workers:
   - all
 confidence: 4
 last_verified: "2026-05-06"
-connections: [harness-engineering/drift-detection-methodology, harness-engineering/hub-worker-compounding-pattern, harness-engineering/question-own-defaults, evaluation/prediction-model-calibration-inversion-detection, harness-engineering/db-query-type-safety-assert-select-ok-pattern, harness-engineering/feature-flag-dead-code-cleanup-timing, evaluation/llm-prompt-validator-symmetry-drift, harness-engineering/debug-page-silent-drift-trap, infrastructure/claude-api-key-security-audit-usage-pattern-validation, evaluation/claude-code-generation-validation-pipeline-extension, project-ops/prompt-model-version-management-large-scale-ai, agents/long-term-agent-behavior-anomaly-detection-response, harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture, evaluation/llm-output-validation-automation-failure-prevention]
+connections: [context-engineering/drift-detection-methodology, context-engineering/hub-worker-compounding-pattern, project-ops/question-own-defaults, evaluation/prediction-model-calibration-inversion-detection, infrastructure/db-query-type-safety-assert-select-ok-pattern, infrastructure/feature-flag-dead-code-cleanup-timing, evaluation/llm-prompt-validator-symmetry-drift, harness-engineering/debug-page-silent-drift-trap, infrastructure/claude-api-key-security-audit-usage-pattern-validation, evaluation/claude-code-generation-validation-pipeline-extension, project-ops/prompt-model-version-management-large-scale-ai, agents/long-term-agent-behavior-anomaly-detection-response, harness-engineering/agentic-worker-3layer-silent-drift-alert-coverage-architecture, evaluation/llm-output-validation-automation-failure-prevention]
 status: complete
 description: silent catch / silent fail 가시화가 review-code chain 자연 발화로 13 fork 누적된 후 chain dominance 정착 → scripts/ 자연 종료 detect → src/lib 첫 직교 진입 → src/lib N=2 deepen → src/app+components 차원 직교 두 번째 누적 → scripts/ 차원 재진입 (cycle 84) 까지 차원 직교 fork 회귀 패턴 첫 evidence. 강한·약한 의도 보존 분류 첫 동시 적용 + cycle 79 entry 박제 명제 "자연 종료" 의 cycle 84 reverse 약한 결론 N=1 메타 lens 자연 추가 — entry 의 차원 재정의 trigger 자연 발화 dogfood evidence (entry 박제 명제 자체 reverse 차원, 보존 판정 reverse 와 직교 lens).
 type: entry
@@ -28,7 +28,7 @@ source: manual
 
 ## 문제
 
-자동화 루프에서 가장 비싼 결손은 [작동 드리프트 #3](/wiki/harness-engineering/drift-detection-methodology) 의 sub-family — `try { ... } catch {}` empty catch, `.error` 미체크, fallback 0 stub, JSON.parse 미가드 — 이 모두 **silent 하게 실패**해서 자동화 루프 안에서 "성공"으로 박제된다. CI green / cron success / lint pass 모두 통과해도 결과만 invisible degradation.
+자동화 루프에서 가장 비싼 결손은 [작동 드리프트 #3](/wiki/context-engineering/drift-detection-methodology) 의 sub-family — `try { ... } catch {}` empty catch, `.error` 미체크, fallback 0 stub, JSON.parse 미가드 — 이 모두 **silent 하게 실패**해서 자동화 루프 안에서 "성공"으로 박제된다. CI green / cron success / lint pass 모두 통과해도 결과만 invisible degradation.
 
 이 패턴은 워커 (머니볼) 에서 23 cycle SUCCESS streak 으로 먼저 정착됐고, 허브 (playbook) 에 cross-project transport 되어 13 fork 누적했다. 9 fork 후 scripts/ 영역에서 자연 종료 신호를 detect 했고 (cycle 70), 그 직후 cycle 78 에서 src/lib 첫 직교 진입 → cycle 80 N=2 deepen (quiz-storage + auth.ts) → cycle 82 src/app + components 차원 직교 두 번째 누적 → **cycle 84 scripts/ 차원 재진입 (watch-content + search 잔여 가시화) — 차원 직교 fork 회귀 패턴 첫 evidence**. 본 entry 의 [차원 재정의 trigger #1](#차원-재정의-trigger) 자연 발화 N=3 dogfood + 강한·약한 의도 보존 분류 첫 동시 적용 + cycle 79 entry 박제 명제 "scripts/ 자연 종료" 의 cycle 84 reverse 약한 결론 N=1 메타 lens 자연 추가.
 
@@ -91,7 +91,7 @@ cycle 78 표 에 "보존 (의도)" 분류된 src/ + scripts/ 영역 후보들이
 - **강한 보존** (보안/안전 critical, cleanup/dev-only, **자식 process 가 직접 stderr 출력 → 부모 catch silent 이중 출력 회피**, `} catch { /* already exists */ }` 같은 강한 의도 주석 명시) — cycle 70~84 14 사이클 동안 0건 reverse 정합. 영구 정합
 - **약한 보존** (의도 명시 가능하지만 한 줄 주석 / 단일 site 분류 / debugging path 정보 surface 가치 ↑) — 추후 재진입 시 reverse 가능. cycle 80~84 사이 9건 reverse evidence
 
-[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "의도 명시 분류" 자체도 자가 의심 대상 — 첫 grep 단일 site 만 본 결정은 동 파일 안 추가 catch 누락 가능. 강한 보존 (보안 critical / cleanup / dev-only / 자식 process 직접 출력) 외 약한 보존은 추후 재진입 시 reverse trigger.
+[question-own-defaults](/wiki/project-ops/question-own-defaults) 정합: "의도 명시 분류" 자체도 자가 의심 대상 — 첫 grep 단일 site 만 본 결정은 동 파일 안 추가 catch 누락 가능. 강한 보존 (보안 critical / cleanup / dev-only / 자식 process 직접 출력) 외 약한 보존은 추후 재진입 시 reverse trigger.
 
 **자가 dogfood**: cycle 78 분류 vs cycle 80~82 reverse 가 본 entry 안 박제 → cycle 84 강한·약한 보존 동시 적용 = entry 자체가 보존 분류 reverse 패턴을 박제하는 메커니즘 작동 N=2 evidence.
 
@@ -155,7 +155,7 @@ scripts/ 자연 종료 (cycle 70) → src/lib 첫 진입 (cycle 78) → src/lib 
 
 머니볼 패턴은 codebase 큰 만큼 동일 helper 패턴 다차원 재진입, 허브는 codebase 작아 scripts/ 단일 차원 자연 종료 후 src/ 영역도 lib → app+components 차원 직교 두 단계로 진입, 그 후 scripts/ 회귀로 4 도메인 cycle 회귀. **허브 fork 패턴 = "차원 종료 → 직교 도메인 진입 N=2 → 종료 차원 회귀 진입" N=3 단계 evidence** (cycle 78 → 82 → 84 자연 진행, 머니볼 동차원 재진입 패턴과 직교 + 회귀 동시).
 
-[hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 양방향 흐름 dogfood evidence: 워커 → 허브 transport (PR auto-tag + auto-ingest 채널) 가 패턴 자체를 흘려보냈고, 허브는 자체 코드 baseline 따라 도메인 직교 + 회귀 fork 패턴으로 진화.
+[hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern) 의 양방향 흐름 dogfood evidence: 워커 → 허브 transport (PR auto-tag + auto-ingest 채널) 가 패턴 자체를 흘려보냈고, 허브는 자체 코드 baseline 따라 도메인 직교 + 회귀 fork 패턴으로 진화.
 
 ## 박제 가치 — 무한 카운팅 X, 자연 종료 + 차원 직교 N=2 + 회귀 N=1 + 보존 reverse + 약한 결론 N=1 자체가 milestone
 
@@ -166,7 +166,7 @@ scripts/ 자연 종료 (cycle 70) → src/lib 첫 진입 (cycle 78) → src/lib 
 - chain dominance + 자연 종료 detect + 차원 직교 N=2 진입 + 차원 회귀 N=1 진입 + 보존 판정 reverse (시간 lens) + 약한 결론 reverse (entry 박제 명제 lens) 자체가 메타 패턴 차원
 - **본 entry 자체 dogfood**: cycle 71 박제 → cycle 78 차원 재정의 trigger #1 첫 자연 발화 → cycle 82 차원 직교 N=2 evidence + 보존 판정 reverse 메타 lens 자연 추가 → **cycle 84 차원 회귀 N=1 evidence + 강한·약한 의도 보존 동시 적용 + cycle 79 entry 박제 명제 자체의 약한 결론 N=1 reverse 메타 lens** (entry 박제 후 13 사이클 만에 자체 메커니즘 작동성 N=3 검증 + 새 메타 lens 2종 자연 발화)
 
-[question-own-defaults](/wiki/harness-engineering/question-own-defaults) 정합: "10 streak milestone" 자체도 자가 의심 대상 — 산술 단순 카운팅이 아니라 자연 종료 detect + 차원 직교 진입 + 차원 회귀 진입 + 보존 판정 시간 lens 변동 + entry 박제 명제 lens 변동이 박제 trigger.
+[question-own-defaults](/wiki/project-ops/question-own-defaults) 정합: "10 streak milestone" 자체도 자가 의심 대상 — 산술 단순 카운팅이 아니라 자연 종료 detect + 차원 직교 진입 + 차원 회귀 진입 + 보존 판정 시간 lens 변동 + entry 박제 명제 lens 변동이 박제 trigger.
 
 ## 차원 재정의 trigger
 
@@ -182,6 +182,6 @@ scripts/ 자연 종료 (cycle 70) → src/lib 첫 진입 (cycle 78) → src/lib 
 
 ## 박제 위치 / connections
 
-- 인접: [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) (silent drift = 작동 드리프트 #3 의 sub-family)
-- 인접: [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) (cross-project transport 메커니즘)
-- 인접: [question-own-defaults](/wiki/harness-engineering/question-own-defaults) (10 streak milestone default 자가 의심 정합)
+- 인접: [drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology) (silent drift = 작동 드리프트 #3 의 sub-family)
+- 인접: [hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern) (cross-project transport 메커니즘)
+- 인접: [question-own-defaults](/wiki/project-ops/question-own-defaults) (10 streak milestone default 자가 의심 정합)

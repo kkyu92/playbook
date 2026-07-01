@@ -13,7 +13,7 @@ workers:
   - playbook
 confidence: 3
 last_verified: "2026-05-22"
-connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, harness-engineering/agentic-commit-body-subtype-dispatch-transport]
+connections: [harness-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, harness-engineering/agentic-commit-body-subtype-dispatch-transport]
 status: complete
 description: "다중 워커 허브에서 PROJECTS 배열에 신규 워커를 등록해도 파이프라인 dispatch 필터 코드가 하드코딩된 기존 워커 ID만 처리할 때 신규 워커 dispatch가 silent drop된다. blog-autopilot scout dispatch 0건 (cycle 947 이후 30+ 사이클) — billing 문제가 아닌 scout filter hardcode bug. T8 Push 축 검증 미완의 실제 원인."
 type: entry
@@ -102,5 +102,5 @@ grep -n "project_id\|filter\|match" scripts/scout-*.mjs
 ## 연결 패턴
 
 - [silent-drift-family-pattern](/wiki/harness-engineering/silent-drift-family-pattern): dead-code에 의한 silent failure 일반 패턴
-- [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology): Level 1 존재 드리프트 — 등록과 필터 불일치
+- [drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology): Level 1 존재 드리프트 — 등록과 필터 불일치
 - [agentic-commit-body-subtype-dispatch-transport](/wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport): dispatch 채널 설계 원칙

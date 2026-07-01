@@ -17,9 +17,9 @@ confidence: 4
 last_verified: "2026-05-26"
 connections:
   - harness-engineering/silent-drift-family-pattern
-  - harness-engineering/agentic-cron-zero-output-silent-success-detection
-  - harness-engineering/drift-detection-methodology
-  - harness-engineering/hub-worker-compounding-pattern
+  - infrastructure/agentic-cron-zero-output-silent-success-detection
+  - context-engineering/drift-detection-methodology
+  - context-engineering/hub-worker-compounding-pattern
 status: complete
 description: "agentic worker 3종 GH Actions alert 채널 — deploy-drift-alert (commit SHA) + runtime-error-alert (Sentry) + health-alert (composite HTTP) — 각 채널이 다른 failure mode 탐지. 단일 채널은 dead angle, 3-layer 조합으로 orthogonal coverage. moneyball cycles 838→871→909 (plan #11 3 step) 순차 ship evidence."
 type: entry
@@ -146,6 +146,6 @@ cycle 909 — health-alert.yml (Layer 3) ship  ← plan #11 3-step closure
 ## 관련
 
 - [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern): 코드 레벨 silent drift 14 fork — 본 alert architecture 가 system level 에서 탐지하는 대상의 원천
-- [Cron Zero Output Silent Success](/wiki/harness-engineering/agentic-cron-zero-output-silent-success-detection): pipeline output 게이트 — Layer 3 health check 의 pipeline stale 탐지와 직교
-- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology): 4종 드리프트 분류 — 본 3-layer = Level 2 작동 드리프트 탐지 특화
-- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern): agentic worker 자동화 구조 전반
+- [Cron Zero Output Silent Success](/wiki/infrastructure/agentic-cron-zero-output-silent-success-detection): pipeline output 게이트 — Layer 3 health check 의 pipeline stale 탐지와 직교
+- [Drift Detection Methodology](/wiki/context-engineering/drift-detection-methodology): 4종 드리프트 분류 — 본 3-layer = Level 2 작동 드리프트 탐지 특화
+- [Hub-Worker Compounding Pattern](/wiki/context-engineering/hub-worker-compounding-pattern): agentic worker 자동화 구조 전반

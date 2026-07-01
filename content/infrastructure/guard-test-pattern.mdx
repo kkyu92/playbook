@@ -25,7 +25,7 @@ source: manual
 
 관측 인프라 (Sentry / Datadog), 보안 가드 (PII 스크러빙 / rate-limit), 데이터 파이프라인 — 이 카테고리들은 공통적으로 "설정만 하면 작동" 인상을 준다. 실제론 환경별 미세 조정이 필요해서 silent 실패가 누적되기 쉽다. CI 통과 / 빌드 무에러 / 클라이언트 정상이라 신호가 없다.
 
-[drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 가 정확히 이 카테고리. 메모리·존재·완전성 드리프트와 달리 코드 자체는 정상이라 read-only 검토로 안 잡힘. **의도적 테스트 이벤트 발사 + 외부 관측점 검증** 만이 유일한 감지 수단.
+[drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 가 정확히 이 카테고리. 메모리·존재·완전성 드리프트와 달리 코드 자체는 정상이라 read-only 검토로 안 잡힘. **의도적 테스트 이벤트 발사 + 외부 관측점 검증** 만이 유일한 감지 수단.
 
 ## 패턴
 
@@ -135,9 +135,9 @@ GET → { clientInitialized: !!Sentry.getClient(), flushed: await Sentry.flush(1
 
 ## Related
 
-- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — 본 패턴이 방어하는 Level 2 작동 드리프트
+- [Drift Detection Methodology](/wiki/context-engineering/drift-detection-methodology) — 본 패턴이 방어하는 Level 2 작동 드리프트
 - [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 가드 B 의 본체
 - [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 가드 B 가 폭로한 부수 trap
 - [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 가드 B 가 폭로한 근본 silent
-- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 가드 발견 → 허브 학습 메커니즘
+- [Hub-Worker Compounding Pattern](/wiki/context-engineering/hub-worker-compounding-pattern) — 워커 가드 발견 → 허브 학습 메커니즘
 - [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)

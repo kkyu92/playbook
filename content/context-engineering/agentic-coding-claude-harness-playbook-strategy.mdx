@@ -11,7 +11,7 @@ tags:
   - WorkflowOptimization
   - harness-engineering
 confidence: 1
-connections: [agents/claude-goal-playbook-worker-automation, harness-engineering/claude-code-harness-skillset-reinforcement-agent-playbook, harness-engineering/hub-worker-compounding-pattern, context-engineering/claude-code-ctx-plugin-context-persistence, harness-engineering/zero-touch-develop-cycle-session-management, agents/lao-workflow-llm-agent-design-enhancement, context-engineering/claude-code-harness-large-codebase-architecture-patterns, evaluation/claude-code-generation-validation-pipeline-extension, context-engineering/zerostack-rust-agent-harness-extension, agents/qwen3-7-max-agent-model-evaluation-integration, project-ops/claude-code-harness-cost-optimization-reassessment, harness-engineering/flue-framework-integration-claude-code-harness-reconfigurati, infrastructure/claude-cli-persistent-multi-session-web-terminal]
+connections: [agents/claude-goal-playbook-worker-automation, project-ops/claude-code-harness-skillset-reinforcement-agent-playbook, context-engineering/hub-worker-compounding-pattern, context-engineering/claude-code-ctx-plugin-context-persistence, harness-engineering/zero-touch-develop-cycle-session-management, agents/lao-workflow-llm-agent-design-enhancement, context-engineering/claude-code-harness-large-codebase-architecture-patterns, evaluation/claude-code-generation-validation-pipeline-extension, context-engineering/zerostack-rust-agent-harness-extension, agents/qwen3-7-max-agent-model-evaluation-integration, project-ops/claude-code-harness-cost-optimization-reassessment, context-engineering/flue-framework-integration-claude-code-harness-reconfigurati, infrastructure/claude-cli-persistent-multi-session-web-terminal]
 status: draft
 description: Agentic Coding 방법론을 Claude Code 하네스 개발에 적용하여 playbook 기반의 자동화된 워크플로를 설계하고 최적화하는 전략을 다룹니다.
 type: entry
@@ -179,6 +179,6 @@ executeWorkerAgentTask(hubTask).then(result => {
 - [ ] 각 워커 에이전트가 **명확한 단일 책임 원칙**을 따르며, 불필요한 역할 오버랩이 없는가? (설계 문서 및 코드 리뷰를 통해 확인)
 - [ ] 에이전트 간의 **컨텍스트 전달 메커니즘**이 견고하게 작동하며, 정보 손실이나 오염 없이 다음 단계로 정확하게 전달되는가? (`context-engineering/claude-code-ctx-plugin-context-persistence` 패턴 적용 확인)
 - [ ] 에이전트의 작업 결과에 대한 **자동화된 검증(테스트, 린트, 스캔 등) 시스템**이 구축되어 있으며, 실패 시 적절한 피드백을 제공하는가?
-- [ ] 비정상적인 에이전트 행동(드리프트)을 **감지하고 알림을 발생시키는 모니터링 시스템**이 있는가? (`harness-engineering/drift-detection-methodology` 적용)
+- [ ] 비정상적인 에이전트 행동(드리프트)을 **감지하고 알림을 발생시키는 모니터링 시스템**이 있는가? (`context-engineering/drift-detection-methodology` 적용)
 - [ ] LLM API 호출 **비용과 성능 지표(latency, token usage)**를 지속적으로 추적하고 최적화 계획이 수립되어 있는가?
-- [ ] 사용자 또는 허브 에이전트가 **에이전트의 진행 상황을 투명하게 확인**하고, 필요 시 개입하거나 중단할 수 있는 인터페이스를 제공하는가? (`frontend-ai/claude-code-session-web-mobile-monitoring-implementation`와 같은 대시보드 존재 여부)
+- [ ] 사용자 또는 허브 에이전트가 **에이전트의 진행 상황을 투명하게 확인**하고, 필요 시 개입하거나 중단할 수 있는 인터페이스를 제공하는가? (`context-engineering/claude-code-session-web-mobile-monitoring-implementation`와 같은 대시보드 존재 여부)

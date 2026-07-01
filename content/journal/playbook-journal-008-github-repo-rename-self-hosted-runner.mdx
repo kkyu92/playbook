@@ -5,7 +5,7 @@ date: "2026-04-27"
 tags: [playbook-journal, auto-ingest, lesson, blog-autopilot, self-hosted-runner, github-actions, drift-level-2]
 confidence: 3
 workers: [blog-autopilot]
-connections: [harness-engineering/hub-worker-compounding-pattern, harness-engineering/drift-detection-methodology, infrastructure/guard-test-pattern, journal/playbook-journal-003-drift-silent-bugs]
+connections: [context-engineering/hub-worker-compounding-pattern, context-engineering/drift-detection-methodology, infrastructure/guard-test-pattern, journal/playbook-journal-003-drift-silent-bugs]
 status: stable
 description: "자동 수집: GitHub repo rename 시 self-hosted runner 재설정 절차 (from kkyu92/blog-autopilot)"
 type: entry
@@ -54,7 +54,7 @@ GitHub Actions self-hosted runner 는 `~/actions-runner/.runner` 에 등록 시�
 
 ### 드리프트 Level 2 — 작동 드리프트의 전형
 
-`runner status="online"` 이라 외부 관찰로는 정상. 실제로는 새 repo 의 dispatch 못 받음. CLAUDE.md 의 [드리프트 감지 프로토콜](/wiki/harness-engineering/drift-detection-methodology) Level 2 (작동 드리프트 — "보이는 상태 ≠ 실 작동") 의 명시적 사례. cron 1회 miss 후에야 발견 — silent failure.
+`runner status="online"` 이라 외부 관찰로는 정상. 실제로는 새 repo 의 dispatch 못 받음. CLAUDE.md 의 [드리프트 감지 프로토콜](/wiki/context-engineering/drift-detection-methodology) Level 2 (작동 드리프트 — "보이는 상태 ≠ 실 작동") 의 명시적 사례. cron 1회 miss 후에야 발견 — silent failure.
 
 ### BOM 트랩 — 왜 sed in-place 가 안전한가
 
@@ -78,7 +78,7 @@ sed -i '' 's|content-autopilot|blog-autopilot|g' .runner
 
 3. **Self-hosted runner 의 외부 의존 sync** — GitHub-hosted runner 와 달리 self-hosted 는 register 시점 config 가 영속. external state 변경 (rename, org 이전 등) 시 수동 sync 필요. 자동화 후보.
 
-4. **워커 lesson dispatch 첫 실 사례** — blog-autopilot 워커가 hub 로 보낸 첫 lesson. [hub-worker-compounding-pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) 의 Pull (b) 채널 양방향 작동 검증 시점.
+4. **워커 lesson dispatch 첫 실 사례** — blog-autopilot 워커가 hub 로 보낸 첫 lesson. [hub-worker-compounding-pattern](/wiki/context-engineering/hub-worker-compounding-pattern) 의 Pull (b) 채널 양방향 작동 검증 시점.
 
 ## 적용
 

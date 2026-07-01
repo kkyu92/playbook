@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs, harness-engineering/drift-detection-methodology, infrastructure/guard-test-pattern, context-engineering/ambient-knowledge-injection, harness-engineering/hub-worker-compounding-pattern]
+connections: [infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs, context-engineering/drift-detection-methodology, infrastructure/guard-test-pattern, context-engineering/ambient-knowledge-injection, context-engineering/hub-worker-compounding-pattern]
 status: complete
 description: Vercel 서버리스 환경에서 Sentry.captureException() 호출 후 Response 반환 즉시 function 종료 → 백그라운드 send 중이던 이벤트 유실. await Sentry.flush(2000) 으로 강제 flush 후 응답해야 안전. 기본 중 기본이지만 Sentry Next.js SDK 가이드에 잘 부각 안 됨.
 type: entry
@@ -92,7 +92,7 @@ catch (err) {
 
 ## 일반화 — 서버리스 관측 trap 가족
 
-이 trap 은 [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 한 변형. captureException 호출은 있지만 (코드 정상) 실제 도착은 안 됨 (silent). 같은 가족:
+이 trap 은 [drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 한 변형. captureException 호출은 있지만 (코드 정상) 실제 도착은 안 됨 (silent). 같은 가족:
 
 - [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 프레임워크 컨벤션 미준수 silent
 - [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 대시보드 가드 부정확 silent
@@ -115,6 +115,6 @@ catch (err) {
 
 - [Sentry PII Scrubbing — beforeSend vs 대시보드](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 형제 Sentry trap
 - [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 형제 Sentry trap
-- [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 작동 드리프트 가족
+- [Drift Detection Methodology](/wiki/context-engineering/drift-detection-methodology) — Level 2 작동 드리프트 가족
 - [Guard Test Pattern — 의도적 검증 테스트의 N건 폭로](/wiki/infrastructure/guard-test-pattern) — 본 trap 을 발견시킨 메타 패턴
-- [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 사례
+- [Hub-Worker Compounding Pattern](/wiki/context-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 사례

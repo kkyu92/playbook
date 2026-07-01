@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/db-query-type-safety-assert-select-ok-pattern, harness-engineering/question-own-defaults]
+connections: [harness-engineering/silent-drift-family-pattern, infrastructure/db-query-type-safety-assert-select-ok-pattern, project-ops/question-own-defaults]
 status: complete
 description: review-code 중 같은 파일에서 동일 버그 유형이 3회+ 발견되면 코드 리뷰 누락이 아니라 설계 구조가 버그를 유발하는 신호 — wrapper/guard 부재 → 개별 호출마다 수동 체크 요구.
 type: entry
@@ -125,5 +125,5 @@ fix: daily.ts .error 체크 추가 (3rd instance — wrapper 추출 고려)
 ## 관련
 
 - [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — .error 미체크 = silent wrong output (fallback 발화)
-- [DB 쿼리 타입 안전성 강제](/wiki/harness-engineering/db-query-type-safety-assert-select-ok-pattern) — assertSelectOk 패턴 (Server Component 레벨 구조 fix)
-- [Question Own Defaults](/wiki/harness-engineering/question-own-defaults) — "기존 코드도 체크 안 했으니까 OK" 가정을 먼저 의심
+- [DB 쿼리 타입 안전성 강제](/wiki/infrastructure/db-query-type-safety-assert-select-ok-pattern) — assertSelectOk 패턴 (Server Component 레벨 구조 fix)
+- [Question Own Defaults](/wiki/project-ops/question-own-defaults) — "기존 코드도 체크 안 했으니까 OK" 가정을 먼저 의심
