@@ -1,4 +1,8 @@
-# [ci-github-actions] notify-workers heredoc EOF 종료 토큰 yaml indent 갭
+# [ci-github-actions] GitHub Actions yaml workflow heredoc 충돌 패턴
+
+**재발 이력**: 4회+ (2026-05-01 ~ 2026-07-02)
+
+## Variant 1 — heredoc 종료 토큰 indent 갭 (bash runtime 에러)
 
 **날짜**: 2026-05-01 ~ 2026-05-02
 **발생 파일**: `.github/workflows/notify-workers.yml`
@@ -122,3 +126,50 @@ PR 리뷰 시 yaml workflow heredoc 수정 시 확인:
 - Wiki: `content/harness-engineering/drift-detection-methodology.mdx` Level 2 (머지 후 CI 결과 확인 — false positive skip path 함정)
 - 원본: PR #99, #101, #102, #109 c6dfc38, run 25238064779
 - 박제 trigger: 2026-05-04 /handoff load 후 retroactive 의무 박제 (5/1~5/2 시점 누락)
+
+---
+
+## Variant 2 — heredoc body column-0 → GitHub YAML block scalar 종료 → workflow file issue
+
+**날짜**: 2026-07-02
+**발생 파일**: `.github/workflows/incident-auto-close.yml`
+**관련 커밋**: cycle 1270 fix `79b131a6`
+**증상**: 모든 push 에 "This run likely failed because of a workflow file issue" (0s duration, 47+ 연속). workflow API name = 파일 경로 (`.github/workflows/incident-auto-close.yml`).
+
+### 원인
+
+`run: |` block scalar (indentation 10) 안에서 `python3 - <<'PYEOF'` 사용 시 Python code body 가 column 0 에 위치:
+
+```yaml
+        run: |
+          python3 - <<'PYEOF'
+import json, re        # ← column 0 (YAML block scalar indentation 10 위반)
+...
+PYEOF                  # ← column 0
+```
+
+GitHub 의 YAML parser 는 block scalar indentation (10) 이하 라인 발견 시 block scalar 종료로 판단. `import json, re` → YAML 최상위 scalar 로 오파싱 → `name:` 필드 미탐색 → workflow name = 파일 경로 박제 → push 이벤트마다 validation 실패.
+
+**Variant 1 과의 차이**: Variant 1 은 bash runtime 에러 (workflow 실행 후 실패), Variant 2 는 YAML parse 단계 실패 (workflow 미실행, 0s).
+
+### 해결
+
+heredoc → `python3 -c "..."` 로 교체. Python code 를 10-space indentation 유지:
+
+```yaml
+        run: |
+          python3 -c "
+          import json, re
+          data = json.loads(open('/tmp/hub_incidents.json').read(), strict=False)
+          for d in data: d['body'] = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', d.get('body') or '')
+          json.dump(data, open('/tmp/hub_incidents.json', 'w'))
+          "
+```
+
+bash `"..."` double-quoted string 안 single-quoted Python literal 정상 처리. YAML block scalar 내 모든 content 10-space 유지 → YAML valid.
+
+### 체크리스트 추가
+
+- [ ] `run: |` block scalar 안 heredoc 추가 시 → body content 가 column 0 이면 `python3 -c "..."` 또는 multi-line string 대체 필수
+- [ ] YAML validation: `python3 -c "import yaml; yaml.safe_load(open('workflow.yml'))"` (체크리스트에 추가)
+- [ ] GitHub workflow API `name` 필드 확인: 파일 경로로 저장되면 YAML parse 실패 signal
