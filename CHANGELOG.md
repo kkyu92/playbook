@@ -4,6 +4,27 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.89] — 2026-07-01
+
+### Fixed
+- cycle 1250 SE #375 milestone (1250 % 50 = 0) trigger 3 forced. SKILL A+B+C patch 완료 정합 → retro-only.
+- #2206 inbound close (worker CREDIT_EXHAUSTED = R6 결제 영역).
+- **manual batch session** (07-01 daily-fire auth 실패 후 사용자 override) — cycle 1250-1269 진행.
+
+### Changed
+- cycles 1250-1269 (20 cycles manual). chain: SE × 1 (#375), worker-triage × 3, curate × 6, explore-idea × 4, review-code × 3, fix-incident × 3.
+- SE oscillation 217 유지 (batch 안 1회만 SE forced).
+- retro-only 95% (incident steady-state — 30일 이전 batch cleanup 효과 지속).
+
+### Infra
+- **07-01 daily-fire auth 실패**: `claude-hub-daily` tmux session 안 claude TUI 401. root cause = session 별 login 독립. manual override 로 batch 완주.
+- daily-fire 시각 08:21 KST 유지 (rate limit reset margin OK).
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 96 / origin 217.
+- **[P1] moneyball repo**: ws/vite CVE + CREDIT_EXHAUSTED — `pnpm update ws vite` push + Anthropic 결제 필요.
+- **daily-fire session auth**: tmux `claude-hub-daily` attach 후 `/login` 필요 시 수동.
+
 ## [0.9.88] — 2026-06-25
 
 ### Fixed
