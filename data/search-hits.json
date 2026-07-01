@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 769,
+  "totalInvocations": 777,
   "skipped": 27,
-  "searched": 742,
-  "hit": 220,
-  "noMatch": 522,
-  "lastUpdated": "2026-06-19T06:16:41.106Z",
+  "searched": 750,
+  "hit": 224,
+  "noMatch": 526,
+  "lastUpdated": "2026-07-01T23:36:58.253Z",
   "hits": {
     "harness-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -52,7 +52,7 @@
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 4,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 6,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 8,
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 9,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
     "retros/2026-05-13-cycles-482-485": 4,
@@ -74,7 +74,7 @@
     "infrastructure/sentry-serverless-flush": 1,
     "retros/2026-05-12-cycles-320-322": 4,
     "retros/2026-05-12-cycles-314-319": 5,
-    "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 4,
+    "solutions/ci-github-actions/2026-05-12-pr-branch-old-base-audit-failure": 5,
     "infrastructure/llm-call-orchestration-reliability-enhancement": 1,
     "harness-engineering/llm-scalable-service-architecture-patterns": 1,
     "evaluation/multi-persona-llm-output-validation-enhancement": 1,
@@ -121,7 +121,7 @@
     "harness-engineering/agentic-long-running-carryover-human-checkpoint-boundary": 2,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1,
-    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 3,
+    "harness-engineering/agentic-push-defer-divergence-concurrent-writes": 4,
     "harness-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
@@ -170,10 +170,10 @@
     "harness-engineering/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
     "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
-    "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 1,
+    "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 2,
     "harness-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
     "agents/autonomous-agent-long-term-memory-management": 1,
-    "retros/2026-05-22-cycles-1005-1008": 2,
+    "retros/2026-05-22-cycles-1005-1008": 3,
     "retros/2026-05-22-cycles-1006-1012": 3,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 1,
@@ -186,11 +186,14 @@
     "solutions/ci-github-actions/2026-05-13-refactor-const-rename-test-sync-gap": 1,
     "journal/playbook-journal-016-submit-lesson-workflow-pr-commit-fix-100-27": 1,
     "harness-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry": 1,
-    "harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger": 1,
+    "harness-engineering/github-token-anti-recursion-ghat-pat-workflow-trigger": 2,
     "harness-engineering/skill-evolution-oscillation-skip-condition-steady-state": 1,
     "harness-engineering/skill-evolution-skip-condition-mode-dependency": 1,
     "harness-engineering/e5-multilingual-embedding-query-passage-prefix-requirement": 1,
-    "harness-engineering/cross-fork-ci-failure-fix-propagation-boundary": 1
+    "harness-engineering/cross-fork-ci-failure-fix-propagation-boundary": 1,
+    "solutions/develop-cycle-hub/2026-06-11-index-md-rebase-conflict-auto-regenerate": 1,
+    "retros/2026-05-13-cycle-456": 1,
+    "journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7": 1
   },
   "noMatchQueries": [
     {
@@ -607,6 +610,26 @@
       "query": "auto-ingest PR Auto Merge audit gate base divergence",
       "timestamp": "2026-06-19T00:29:07.192Z",
       "topScore": 0.8477
+    },
+    {
+      "query": "BRANCHED state local main diverged origin steady-state",
+      "timestamp": "2026-06-29T00:47:04.193Z",
+      "topScore": 0.8466
+    },
+    {
+      "query": "retry mechanism counter limit infinite loop observability",
+      "timestamp": "2026-06-29T00:49:03.726Z",
+      "topScore": 0.8294
+    },
+    {
+      "query": "bidirectional hub worker compound growth vision",
+      "timestamp": "2026-07-01T23:36:57.514Z",
+      "topScore": 0.8343
+    },
+    {
+      "query": "closed loop design philosophy",
+      "timestamp": "2026-07-01T23:36:58.252Z",
+      "topScore": 0.8345
     }
   ],
   "noMatchQueryCounts": {
@@ -617,8 +640,8 @@
     "무덤 진단": 2,
     "BRANCHED diverged origin local push": 1,
     "silent-fail cron cancelled timeout workflow": 1,
-    "bidirectional hub worker compound growth vision": 1,
-    "closed loop design philosophy": 1,
+    "bidirectional hub worker compound growth vision": 2,
+    "closed loop design philosophy": 2,
     "hub worker compounding": 4,
     "auto-ingest PR rebase conflict journal branch": 1,
     "dependabot CI failure lint format moneyball": 1,
@@ -676,7 +699,9 @@
     "skill-evolution oscillation steady-state pattern": 1,
     "auto-ingest PR audit gate base": 1,
     "moneyball cross-fork compounding": 1,
-    "BRANCHED steady-state worker hub": 1
+    "BRANCHED steady-state worker hub": 1,
+    "BRANCHED state local main diverged origin steady-state": 1,
+    "retry mechanism counter limit infinite loop observability": 1
   },
-  "totalQueries": 813
+  "totalQueries": 821
 }
