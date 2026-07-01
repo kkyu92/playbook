@@ -19,7 +19,7 @@ last_verified: "2026-06-25"
 connections:
   - infrastructure/agentic-pnpm-builtin-collision-script-shadow-silent-failure
   - infrastructure/cross-fork-ci-failure-fix-propagation-boundary
-  - harness-engineering/zero-touch-develop-cycle-session-management
+  - infrastructure/zero-touch-develop-cycle-session-management
 status: complete
 description: "bash 파이프라인 우측 while loop 는 서브셸에서 실행 — 내부 변수 할당이 부모 셸에 전파되지 않아 카운터가 항상 0을 표시. 실제 사이드이펙트(gh issue close 등)는 정상 실행. 진단 어려운 '동작은 정상, 보고는 오류' 패턴. process substitution 으로 수정."
 type: entry

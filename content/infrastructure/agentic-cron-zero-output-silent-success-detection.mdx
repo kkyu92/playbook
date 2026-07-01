@@ -14,7 +14,7 @@ workers:
   - moneyball
 confidence: 3
 last_verified: "2026-05-21"
-connections: [harness-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, evaluation/prediction-model-calibration-inversion-detection]
+connections: [context-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, evaluation/prediction-model-calibration-inversion-detection]
 status: complete
 description: "cron job이 exit code 0으로 성공 보고하지만 predictions_generated=0 / rows_inserted=0 으로 실제 의미 있는 출력이 없는 패턴. 코드 레벨 silent catch (silent-drift-family) 와 직교하는 파이프라인 레벨 silent failure. moneyball predict 2일간 preds=0 (사례 11 후보, cycles 775~812). 탐지 gate = success boolean X, output count."
 type: entry
@@ -37,7 +37,7 @@ cron이 매시간 실행됐다. 일부는 성공, 일부는 에러. 하지만 **
 
 | 레벨 | 패턴 | 증거 |
 |---|---|---|
-| **코드 레벨** | `try { ... } catch {}` 빈 catch, `.error` 미체크 | [silent-drift-family-pattern](/wiki/harness-engineering/silent-drift-family-pattern) — 허브 13 fork |
+| **코드 레벨** | `try { ... } catch {}` 빈 catch, `.error` 미체크 | [silent-drift-family-pattern](/wiki/context-engineering/silent-drift-family-pattern) — 허브 13 fork |
 | **파이프라인 레벨** | cron success + output_count=0 | 본 entry — moneyball predict 사례 11 후보 |
 
 코드 레벨 silent failure는 `grep "catch" + 가시화` 로 해소. 파이프라인 레벨은 코드가 완벽해도 발생한다 — 상류 데이터 fetch 실패, 조건 window 미충족, prerequisite 부재 등.

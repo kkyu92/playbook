@@ -15,8 +15,8 @@ workers:
 confidence: 2
 last_verified: "2026-05-20"
 connections:
-  - harness-engineering/agentic-lite-first-scan-gate-execution-pattern
-  - harness-engineering/agentic-chain-dormancy-phase-map
+  - infrastructure/agentic-lite-first-scan-gate-execution-pattern
+  - context-engineering/agentic-chain-dormancy-phase-map
   - harness-engineering/agentic-chain-saturation-detection
   - harness-engineering/agentic-loop-analytical-chain-lite-mode
 status: complete
@@ -95,7 +95,7 @@ moneyball 워커에서 gap 기반 trigger 가 실제로 발화한 증거:
 
 ## Lite-First 게이트와의 통합
 
-갭 타이머 트리거와 [Lite-First 게이트](harness-engineering/agentic-lite-first-scan-gate-execution-pattern)는 계층을 이룬다:
+갭 타이머 트리거와 [Lite-First 게이트](infrastructure/agentic-lite-first-scan-gate-execution-pattern)는 계층을 이룬다:
 
 ```
 [갭 타이머] → WHEN to fire a dormant chain
@@ -132,7 +132,7 @@ trigger_count 활용:
 
 trigger_count 가 계속 증가하는데 outcome 이 항상 `retro-only` 이면:
 → 해당 chain 의 이벤트 source 자체가 부재한 것 (chain dormancy 페이즈)
-→ [chain dormancy phase map](harness-engineering/agentic-chain-dormancy-phase-map) 으로 페이즈 진단
+→ [chain dormancy phase map](context-engineering/agentic-chain-dormancy-phase-map) 으로 페이즈 진단
 
 ## 이벤트 트리거 vs 갭 타이머 우선순위
 

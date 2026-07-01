@@ -13,7 +13,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [harness-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, context-engineering/drift-detection-methodology]
+connections: [context-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, context-engineering/drift-detection-methodology]
 status: complete
 description: Feature flag 도입 후 실제로 끈 적 없는 플래그가 코드베이스에 잔존 — prod env var 이력 확인 + 코드 직접 read 로 dead code 확증 후 제거. 111 cycle 지연 사례 기반.
 type: entry
@@ -63,7 +63,7 @@ if (sfrEnabled) {
 
 ## Silent drift 연결
 
-Feature flag dead code 는 [silent drift family](/wiki/harness-engineering/silent-drift-family-pattern) 의 한 변형:
+Feature flag dead code 는 [silent drift family](/wiki/context-engineering/silent-drift-family-pattern) 의 한 변형:
 
 | silent drift 유형 | 기저 원인 | feature flag 버전 |
 |---|---|---|
@@ -89,6 +89,6 @@ Feature flag dead code 는 [silent drift family](/wiki/harness-engineering/silen
 
 ## 관련
 
-- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — dead code 누적 = silent accumulation drift
+- [Silent Drift Family Pattern](/wiki/context-engineering/silent-drift-family-pattern) — dead code 누적 = silent accumulation drift
 - [Question Own Defaults](/wiki/project-ops/question-own-defaults) — "이 플래그 여전히 필요한가?" 자가 의심 프로토콜
 - [Drift Detection Methodology](/wiki/context-engineering/drift-detection-methodology) — Level 2: 코드 직접 read 로 가정 검증

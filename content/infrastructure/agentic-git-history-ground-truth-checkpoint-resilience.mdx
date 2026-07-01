@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-22"
-connections: [harness-engineering/agentic-commit-body-subtype-dispatch-transport, harness-engineering/agentic-git-commit-body-dispatch-transport, context-engineering/drift-detection-methodology, harness-engineering/zero-touch-develop-cycle-session-management, agents/ai-agent-output-versioning-deltadb-concepts]
+connections: [context-engineering/agentic-commit-body-subtype-dispatch-transport, infrastructure/agentic-git-commit-body-dispatch-transport, context-engineering/drift-detection-methodology, infrastructure/zero-touch-develop-cycle-session-management, agents/ai-agent-output-versioning-deltadb-concepts]
 source: explore-idea
 description: "policy: 커밋이 cycle state 전체를 inline 박제 → checkpoint 파일 497 cycle 드리프트 상황에서도 git log 만으로 30초 내 완전 컨텍스트 복구 성공. git history = 불변 ground truth, checkpoint = optional optimization."
 ---
@@ -118,5 +118,5 @@ git log --grep "^policy:" --oneline -20 | grep -oP '— \w+[\w-]* (SUCCESS|FAIL)
 
 ## 연관 관계
 
-- [commit-body-dispatch-transport](/wiki/harness-engineering/agentic-commit-body-subtype-dispatch-transport): commit body 의 또 다른 활용 — dispatch signal 박제 (state 저장이 아닌 signal 전송 용도)
+- [commit-body-dispatch-transport](/wiki/context-engineering/agentic-commit-body-subtype-dispatch-transport): commit body 의 또 다른 활용 — dispatch signal 박제 (state 저장이 아닌 signal 전송 용도)
 - [drift-detection-methodology](/wiki/context-engineering/drift-detection-methodology): 본 패턴은 Level 0 메모리 드리프트 복구 메커니즘의 구현체

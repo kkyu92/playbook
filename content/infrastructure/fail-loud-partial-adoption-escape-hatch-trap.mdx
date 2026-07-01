@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [infrastructure/db-query-type-safety-assert-select-ok-pattern, harness-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, harness-engineering/recurring-file-bug-accumulator-pattern]
+connections: [infrastructure/db-query-type-safety-assert-select-ok-pattern, context-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, infrastructure/recurring-file-bug-accumulator-pattern]
 status: complete
 description: fail-loud 패턴(assertSelectOk 등)을 파일에 도입할 때 기존 try/catch 또는 null fallback 을 제거하지 않으면, 새 패턴이 일부만 적용된 채 escape hatch 가 존재하는 하이브리드 상태가 된다 — 에러가 조용히 삼켜지는 silent drift 재발.
 type: entry
@@ -115,6 +115,6 @@ cycle 211: daily.ts 1182줄 전체 read → gap 발견
 ## 관련
 
 - [DB 쿼리 타입 안전성 강제](/wiki/infrastructure/db-query-type-safety-assert-select-ok-pattern) — assertSelectOk 패턴 원본
-- [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — try/catch 삼킴 = silent wrong output 변형
+- [Silent Drift Family Pattern](/wiki/context-engineering/silent-drift-family-pattern) — try/catch 삼킴 = silent wrong output 변형
 - [Question Own Defaults](/wiki/project-ops/question-own-defaults) — "이 파일은 이미 새 패턴 적용됨" 가정 자가 의심
-- [서비스 파일 반복 진입 패턴](/wiki/harness-engineering/recurring-file-bug-accumulator-pattern) — 같은 파일 반복 진입 = 구조 부채 신호
+- [서비스 파일 반복 진입 패턴](/wiki/infrastructure/recurring-file-bug-accumulator-pattern) — 같은 파일 반복 진입 = 구조 부채 신호

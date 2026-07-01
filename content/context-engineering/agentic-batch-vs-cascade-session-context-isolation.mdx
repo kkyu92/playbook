@@ -15,7 +15,7 @@ workers:
 confidence: 3
 last_verified: "2026-05-20"
 connections:
-  - harness-engineering/zero-touch-develop-cycle-session-management
+  - infrastructure/zero-touch-develop-cycle-session-management
   - context-engineering/agentic-cycle-state-json-carry-over-design
   - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
   - infrastructure/agentic-local-commit-batch-deploy-rate-management
@@ -62,7 +62,7 @@ LLM 세션이 길어질수록 대화 히스토리가 압축된다. 사이클 10�
 
 ### 2. 드리프트 누적
 
-배치 세션의 LLM은 "내가 지금까지 해온 것"의 무게를 지고 결정한다. 사이클 15의 chain 선택이 사이클 5의 컨텍스트 잔여물에 영향받는다. 이것은 [silent drift family pattern](harness-engineering/silent-drift-family-pattern)의 세션 단위 버전이다.
+배치 세션의 LLM은 "내가 지금까지 해온 것"의 무게를 지고 결정한다. 사이클 15의 chain 선택이 사이클 5의 컨텍스트 잔여물에 영향받는다. 이것은 [silent drift family pattern](context-engineering/silent-drift-family-pattern)의 세션 단위 버전이다.
 
 ### 3. 단일 충돌점(Single Point of Failure)
 
