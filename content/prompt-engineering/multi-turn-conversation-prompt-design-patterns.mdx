@@ -11,7 +11,7 @@ tags:
   - Performance Optimization
   - prompt-engineering
 confidence: 1
-connections: [context-engineering/ambient-knowledge-injection, evaluation/llm-response-quality-automated-evaluation-metrics-design-str, frontend-ai/llm-interactive-ui-frontend-implementation, agents/gpt-5-5-agent-model-evaluation-integration-strategies, evaluation/multi-persona-llm-output-validation-enhancement, harness-engineering/guard-test-pattern, agents/llm-agent-persistent-goal-management-long-term-tasks]
+connections: [context-engineering/ambient-knowledge-injection, evaluation/llm-response-quality-automated-evaluation-metrics-design-str, frontend-ai/llm-interactive-ui-frontend-implementation, agents/gpt-5-5-agent-model-evaluation-integration-strategies, evaluation/multi-persona-llm-output-validation-enhancement, infrastructure/guard-test-pattern, agents/llm-agent-persistent-goal-management-long-term-tasks]
 status: draft
 description: 복잡한 대화형 LLM 애플리케이션의 성능과 사용자 경험을 극대화하기 위한 Multi-turn Conversation Prompt 설계 전략을 탐구합니다.
 type: entry
@@ -63,7 +63,7 @@ SYSTEM_PROMPT_CUSTOMER_SUPPORT = """
 Multi-turn 대화는 LLM이 잘못된 정보를 생성하거나(hallucination), 사용자가 불분명한 질문을 할 때 대화가 실패할 위험이 높다. 효과적인 오류 처리 전략은 다음과 같다.
 
 *   **명확화 요청 (Clarification Prompting)**: 사용자의 질문이 모호할 경우, LLM이 추가 정보를 요청하도록 유도한다.
-*   **가드레일 (Guardrails)**: LLM이 부적절하거나 안전하지 않은 내용을 생성하지 않도록 특정 규칙을 적용한다. `harness-engineering/guard-test-pattern`과 같은 접근 방식이 여기에 해당한다.
+*   **가드레일 (Guardrails)**: LLM이 부적절하거나 안전하지 않은 내용을 생성하지 않도록 특정 규칙을 적용한다. `infrastructure/guard-test-pattern`과 같은 접근 방식이 여기에 해당한다.
 *   **대화 재조정 (Conversation Re-alignment)**: LLM이 대화의 맥락을 벗어났을 때, 이전의 특정 지점으로 돌아가 대화를 재시작하거나 핵심 주제로 다시 유도하는 프롬프트를 사용한다.
 
 ### 5. Chain-of-Thought (CoT) 및 Few-shot Prompting 활용

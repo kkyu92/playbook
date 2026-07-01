@@ -11,7 +11,7 @@ tags:
   - Iterative Process
   - agents
 confidence: 1
-connections: [agents/ouroboros-agent-performance-cost-optimization, context-engineering/ai-agent-context-window-optimization-session-longevity, evaluation/llm-output-validation-quality-metrics-design, evaluation/generative-ai-hallucination-automated-detection-evaluation, evaluation/multi-persona-llm-output-validation-enhancement, agents/multi-tool-ai-agent-design-patterns-orchestration, harness-engineering/agentic-coding-claude-harness-playbook-strategy, agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi, harness-engineering/flue-framework-integration-claude-code-harness-reconfigurati, harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation, agents/ai-agent-transparent-execution-knowledge-integration]
+connections: [agents/ouroboros-agent-performance-cost-optimization, agents/ai-agent-context-window-optimization-session-longevity, evaluation/llm-output-validation-quality-metrics-design, evaluation/generative-ai-hallucination-automated-detection-evaluation, evaluation/multi-persona-llm-output-validation-enhancement, agents/multi-tool-ai-agent-design-patterns-orchestration, context-engineering/agentic-coding-claude-harness-playbook-strategy, agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi, harness-engineering/flue-framework-integration-claude-code-harness-reconfigurati, harness-engineering/claude-5-fable-llm-worker-harness-compounding-automation, agents/ai-agent-transparent-execution-knowledge-integration]
 status: draft
 description: Claude Code의 /goal 기능을 활용하여 플레이북 워커의 자율적인 목표 달성 반복 실행 및 자동 교정 메커니즘을 강화하는 방안을 설명합니다.
 type: entry
@@ -96,4 +96,4 @@ graph TD
 - [ ] **종료 조건 및 안전 장치**: 목표 달성 실패 시나리오, 무한 루프 방지를 위한 최대 반복 횟수 제한, 타임아웃 등의 안전 장치가 명확히 정의되고 구현되었는지 확인합니다.
 - [ ] **비용 및 성능 최적화**: 반복 실행 과정에서 발생하는 LLM 토큰 사용량과 컴퓨팅 비용을 모니터링하고, Fast Model의 효율적 활용 및 반복 횟수 최적화를 통해 비용 효율성을 확보했는지 점검합니다.
 - [ ] **가시성 및 모니터링**: `/goal` 워크플로의 각 턴별 진행 상황, 평가 결과, 에이전트의 행동 로그 등을 실시간으로 모니터링할 수 있는 대시보드 또는 로깅 시스템이 구축되었는지 확인합니다.
-- [ ] **에이전트 컨텍스트 관리**: 장기 반복 실행 과정에서 에이전트의 컨텍스트 윈도우(context window)가 적절히 관리되어 이전 턴의 정보를 효과적으로 활용하면서도 컨텍스트 오염을 방지하는지 점검합니다. (예: `context-engineering/ai-agent-context-window-optimization-session-longevity` 참조)
+- [ ] **에이전트 컨텍스트 관리**: 장기 반복 실행 과정에서 에이전트의 컨텍스트 윈도우(context window)가 적절히 관리되어 이전 턴의 정보를 효과적으로 활용하면서도 컨텍스트 오염을 방지하는지 점검합니다. (예: `agents/ai-agent-context-window-optimization-session-longevity` 참조)

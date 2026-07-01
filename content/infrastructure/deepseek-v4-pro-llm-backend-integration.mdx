@@ -11,7 +11,7 @@ tags:
   - AIBackend
   - harness-engineering
 confidence: 1
-connections: [harness-engineering/code-based-agent-task-patterns-harness-design, harness-engineering/drift-detection-methodology]
+connections: [agents/code-based-agent-task-patterns-harness-design, harness-engineering/drift-detection-methodology]
 status: draft
 description: DeepSeek V4 Pro와 같은 저렴한 LLM을 Claude Code와 같은 에이전트 프레임워크의 백엔드로 통합하여 운영 비용을 절감하고 시스템 유연성을 극대화합니다.
 type: entry
@@ -153,4 +153,4 @@ graph TD
 *   - [ ] **드리프트 탐지 및 완화 전략**: 모델 교체로 인한 에이전트 행동 변화(드리프트)를 조기에 탐지하고, 필요한 경우 자동으로 이전 백엔드로 롤백하거나 프롬프트 엔지니어링을 통해 보정하는 `harness-engineering/drift-detection-methodology` 기반의 메커니즘을 설계하고 운영하는가?
 *   - [ ] **보안 및 규정 준수 검토**: 새로운 LLM 백엔드 제공업체가 데이터 보안 표준(예: 암호화, 접근 제어), 개인 정보 보호 정책(GDPR, CCPA), 그리고 산업별 규정 준수 요구사항을 충족하는지 법률 및 보안 팀과 협력하여 철저히 검토했는가?
 *   - [ ] **동적 라우팅 및 폴백 전략**: 비용 효율적인 LLM을 기본으로 사용하되, 특정 복잡하거나 중요도가 높은 태스크에 대해서는 고성능 LLM으로 자동 전환하거나, 저렴한 LLM이 실패할 경우 고성능 LLM으로 폴백(fallback)하는 `agents/multi-llm-agent-workload-partitioning-patterns`와 유사한 동적 라우팅 전략을 구현했는가?
-*   - [ ] **프롬프트 엔지니어링 최적화**: 새로운 LLM 백엔드의 특성(예: 강점, 약점, 토큰 한도)에 맞춰 프롬프트 엔지니어링 전략을 재검토하고 최적화하여, `context-engineering/ai-agent-context-window-optimization-session-longevity`를 고려한 컨텍스트 활용을 최대화하고 비용 효율적인 출력을 유도했는가?
+*   - [ ] **프롬프트 엔지니어링 최적화**: 새로운 LLM 백엔드의 특성(예: 강점, 약점, 토큰 한도)에 맞춰 프롬프트 엔지니어링 전략을 재검토하고 최적화하여, `agents/ai-agent-context-window-optimization-session-longevity`를 고려한 컨텍스트 활용을 최대화하고 비용 효율적인 출력을 유도했는가?

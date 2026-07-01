@@ -38,7 +38,7 @@ LLM은 본질적으로 텍스트 예측 모델이므로, 외부 환경과 상호
 
 ### 4. 지속적인 상태 관리 및 메모리 (Persistent State Management and Memory)
 
-복잡한 장기 태스크를 수행하는 에이전트는 과거의 경험과 정보를 기억하고 활용해야 합니다. 단기 컨텍스트 메모리(Short-term Context Memory)는 현재 대화나 태스크의 즉각적인 정보를 유지하지만, 장기 메모리(Long-term Memory)는 벡터 데이터베이스(Vector Database) 등을 활용하여 과거의 학습 내용, 성공/실패 사례, 도구 사용법 등을 저장합니다. 이러한 정보는 새로운 태스크를 계획하거나 기존 문제를 해결하는 데 중요한 맥락으로 작용하며, 에이전트의 컨텍스트 윈도우 최적화(`context-engineering/ai-agent-context-window-optimization-session-longevity`)와도 밀접하게 연결됩니다.
+복잡한 장기 태스크를 수행하는 에이전트는 과거의 경험과 정보를 기억하고 활용해야 합니다. 단기 컨텍스트 메모리(Short-term Context Memory)는 현재 대화나 태스크의 즉각적인 정보를 유지하지만, 장기 메모리(Long-term Memory)는 벡터 데이터베이스(Vector Database) 등을 활용하여 과거의 학습 내용, 성공/실패 사례, 도구 사용법 등을 저장합니다. 이러한 정보는 새로운 태스크를 계획하거나 기존 문제를 해결하는 데 중요한 맥락으로 작용하며, 에이전트의 컨텍스트 윈도우 최적화(`agents/ai-agent-context-window-optimization-session-longevity`)와도 밀접하게 연결됩니다.
 
 ## 에이전트 아키텍처 예시: 자율 코드 생성 및 디버깅
 

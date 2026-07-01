@@ -1,6 +1,6 @@
 ---
 title: Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로
-category: harness-engineering
+category: infrastructure
 date: "2026-04-19"
 tags:
   - guard
@@ -13,7 +13,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [evaluation/multi-persona-llm-output-validation-enhancement, agents/lao-workflow-llm-agent-design-enhancement, frontend-ai/llm-interactive-ui-frontend-implementation, prompt-engineering/multi-turn-conversation-prompt-design-patterns, project-ops/claude-code-commit-message-hermes-md-monitoring-remediation, project-ops/agile-sprint-planning-execution-ai-projects, infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection, prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation, harness-engineering/code-based-agent-task-patterns-harness-design, evaluation/claude-code-generation-validation-pipeline-extension, agents/long-term-agent-behavior-anomaly-detection-response, agents/llm-agent-tool-call-reliability-forge-guardrails, prompt-engineering/llm-prompt-boolean-logic-control-precision-validation, agents/ai-agent-control-validation-mechanisms, evaluation/llm-output-safety-reliability-validation-enhancement]
+connections: [evaluation/multi-persona-llm-output-validation-enhancement, agents/lao-workflow-llm-agent-design-enhancement, frontend-ai/llm-interactive-ui-frontend-implementation, prompt-engineering/multi-turn-conversation-prompt-design-patterns, infrastructure/claude-code-commit-message-hermes-md-monitoring-remediation, project-ops/agile-sprint-planning-execution-ai-projects, infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection, prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation, agents/code-based-agent-task-patterns-harness-design, evaluation/claude-code-generation-validation-pipeline-extension, agents/long-term-agent-behavior-anomaly-detection-response, agents/llm-agent-tool-call-reliability-forge-guardrails, prompt-engineering/llm-prompt-boolean-logic-control-precision-validation, agents/ai-agent-control-validation-mechanisms, evaluation/llm-output-safety-reliability-validation-enhancement]
 status: complete
 description: 관측 인프라 / 보안 가드 / 데이터 파이프라인은 '설정만 하면 작동' 인상을 주지만 silent 실패가 누적되기 쉽다. 의도적 검증 테스트 1회가 sub-system 의 silent 실패를 N건 다발로 드러낸다는 메타 패턴. 워커 가드 B 테스트가 5건 (근본 2 + 부수 3) 동시 폭로한 모범 사례.
 type: entry
@@ -43,7 +43,7 @@ source: manual
 
 | # | 종류 | 발견 |
 |---|------|------|
-| 1 | 근본 | [Next.js 16 instrumentation.ts 위치 silent 실패](/wiki/context-engineering/nextjs-instrumentation-location) — 서버 Sentry 완전 사망 |
+| 1 | 근본 | [Next.js 16 instrumentation.ts 위치 silent 실패](/wiki/infrastructure/nextjs-instrumentation-location) — 서버 Sentry 완전 사망 |
 | 2 | 근본 | [Sentry 대시보드 깊이 매칭 부정확](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — PII RAW 누출 |
 | 3 | 부수 | sourcemap 미업로드 ("Processing Error" 배지) — pre-existing |
 | 4 | 부수 | Sentry 그룹핑 묶임 → 새 이벤트 찾기 어려움 |
@@ -138,6 +138,6 @@ GET → { clientInitialized: !!Sentry.getClient(), flushed: await Sentry.flush(1
 - [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — 본 패턴이 방어하는 Level 2 작동 드리프트
 - [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 가드 B 의 본체
 - [Sentry on Vercel Serverless — flush](/wiki/infrastructure/sentry-serverless-flush) — 가드 B 가 폭로한 부수 trap
-- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 가드 B 가 폭로한 근본 silent
+- [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 가드 B 가 폭로한 근본 silent
 - [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 가드 발견 → 허브 학습 메커니즘
 - [Journal 003 — silent 죽음](/wiki/journal/playbook-journal-003-drift-silent-bugs)

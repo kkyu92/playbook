@@ -12,7 +12,7 @@ tags:
   - instrumentation
 confidence: 3
 last_verified: "2026-04-19"
-connections: [context-engineering/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, frontend-ai/claude-code-session-web-mobile-monitoring-implementation]
+connections: [infrastructure/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, frontend-ai/claude-code-session-web-mobile-monitoring-implementation]
 status: published
 description: "자동 수집: Next.js 16 src/app 구조에서 instrumentation.ts 위치 — silent 서버 Sentry 사망 (from kkyu92/moneyballscore)"
 type: entry
@@ -41,7 +41,7 @@ source: manual
 
 탐지: 가드 B (PII 스크러빙 검증) 테스트 이벤트가 Sentry 에 안 뜨는 것만 단서 → 진단 response 에 Sentry.getClient() 값 노출해서 undefined 확인.
 
-참조: playbook/content/context-engineering/nextjs-instrumentation-location.mdx
+참조: playbook/content/infrastructure/nextjs-instrumentation-location.mdx
 ~~~
 
 ## 분석

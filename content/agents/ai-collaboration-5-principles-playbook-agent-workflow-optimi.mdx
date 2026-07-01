@@ -11,7 +11,7 @@ tags:
   - Automation
   - agents
 confidence: 1
-connections: [agents/multi-agent-collaboration-design-patterns, agents/llm-agent-goal-achievement-planning-patterns, agents/claude-goal-playbook-worker-automation, context-engineering/ai-agent-context-window-optimization-session-longevity, harness-engineering/hub-worker-compounding-pattern, evaluation/llm-output-validation-quality-metrics-design, agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti, agents/multi-agent-decision-making-patterns, agents/antigravity-managed-agents-api-integration-review, agents/multi-stage-agent-task-scheduling-monitoring]
+connections: [agents/multi-agent-collaboration-design-patterns, agents/llm-agent-goal-achievement-planning-patterns, agents/claude-goal-playbook-worker-automation, agents/ai-agent-context-window-optimization-session-longevity, harness-engineering/hub-worker-compounding-pattern, evaluation/llm-output-validation-quality-metrics-design, agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti, agents/multi-agent-decision-making-patterns, agents/antigravity-managed-agents-api-integration-review, agents/multi-stage-agent-task-scheduling-monitoring]
 status: draft
 description: AI 협업 5원칙을 Playbook 에이전트의 컨텍스트, 취향 설정, 검증, 위임, 피드백 루프에 적용하여 워크플로를 최적화하는 방안.
 type: entry
@@ -21,7 +21,7 @@ source: scout
 AI와의 협업은 단순한 도구 활용을 넘어, 복리(compounding)처럼 성장하는 지식 시스템 구축으로 진화하고 있습니다. 긱뉴스에서 언급된 'AI와 함께 일하며 복리처럼 쌓아 성장하는 법'의 5가지 원칙은 Playbook 에이전트 워크플로를 최적화하는 데 핵심적인 지침을 제공합니다. 이 원칙들은 에이전트의 효율성, 정확성, 그리고 자율 학습 능력을 극대화하여 복잡한 태스크를 더욱 효과적으로 처리할 수 있도록 설계되었습니다. 특히 Playbook 에이전트의 컨텍스트 관리, 사용자 취향 반영, 결과물 검증, 작업 위임, 그리고 피드백 루프 메커니즘을 이 5원칙에 따라 재구성하면, 에이전트 시스템은 지속적으로 개선되고 확장될 수 있습니다.
 
 ### 1. 컨텍스트 제공 (Context Provision)
-Playbook 에이전트는 명확하고 풍부한 컨텍스트를 기반으로 작업을 수행합니다. 초기 프롬프트뿐만 아니라, 이전 작업 세션의 모든 산출물(코드, 문서, 분석 결과, 결정 사항)을 다음 세션의 컨텍스트로 누적 관리하는 것이 중요합니다. 이는 `context-engineering/ai-agent-global-context-gc-tree-integration`과 같이 계층적이고 구조화된 방식으로 이루어져야 하며, `context-engineering/ai-agent-context-window-optimization-session-longevity` 기법을 통해 효율적으로 관리되어야 합니다.
+Playbook 에이전트는 명확하고 풍부한 컨텍스트를 기반으로 작업을 수행합니다. 초기 프롬프트뿐만 아니라, 이전 작업 세션의 모든 산출물(코드, 문서, 분석 결과, 결정 사항)을 다음 세션의 컨텍스트로 누적 관리하는 것이 중요합니다. 이는 `context-engineering/ai-agent-global-context-gc-tree-integration`과 같이 계층적이고 구조화된 방식으로 이루어져야 하며, `agents/ai-agent-context-window-optimization-session-longevity` 기법을 통해 효율적으로 관리되어야 합니다.
 
 ```python
 class PlaybookAgentContextManager:

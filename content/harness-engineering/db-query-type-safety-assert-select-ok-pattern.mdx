@@ -13,7 +13,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, context-engineering/nextjs-instrumentation-location]
+connections: [harness-engineering/silent-drift-family-pattern, harness-engineering/drift-detection-methodology, infrastructure/nextjs-instrumentation-location]
 status: complete
 description: Server Component page의 DB select 쿼리가 타입 없이 any를 반환할 때 런타임에서 silent null/undefined — assertSelectOk 헬퍼로 쿼리 결과를 타입 강제 + 빈 결과를 즉시 에러로 표면화.
 type: entry
@@ -159,4 +159,4 @@ if (error) throw new Error(`[recentFinalGames] DB error: ${error.message}`);
 
 - [Silent Drift Family Pattern](/wiki/harness-engineering/silent-drift-family-pattern) — assertSelectOk = silent null을 표면화하는 drift 방어 패턴
 - [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2: 머지 후 DB 결과 `.error` 체크
-- [Next.js instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 같은 moneyball에서 동시 발견된 패턴
+- [Next.js instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 같은 moneyball에서 동시 발견된 패턴

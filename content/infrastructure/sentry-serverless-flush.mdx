@@ -14,7 +14,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-04-19"
-connections: [infrastructure/sentry-pii-scrubbing-beforesend, context-engineering/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs, harness-engineering/drift-detection-methodology, harness-engineering/guard-test-pattern, context-engineering/ambient-knowledge-injection, harness-engineering/hub-worker-compounding-pattern]
+connections: [infrastructure/sentry-pii-scrubbing-beforesend, infrastructure/nextjs-instrumentation-location, journal/playbook-journal-007-sentry-sensitive-fields-beforesend, journal/playbook-journal-003-drift-silent-bugs, harness-engineering/drift-detection-methodology, infrastructure/guard-test-pattern, context-engineering/ambient-knowledge-injection, harness-engineering/hub-worker-compounding-pattern]
 status: complete
 description: Vercel 서버리스 환경에서 Sentry.captureException() 호출 후 Response 반환 즉시 function 종료 → 백그라운드 send 중이던 이벤트 유실. await Sentry.flush(2000) 으로 강제 flush 후 응답해야 안전. 기본 중 기본이지만 Sentry Next.js SDK 가이드에 잘 부각 안 됨.
 type: entry
@@ -94,11 +94,11 @@ catch (err) {
 
 이 trap 은 [drift-detection-methodology](/wiki/harness-engineering/drift-detection-methodology) 의 **Level 2 작동 드리프트** 한 변형. captureException 호출은 있지만 (코드 정상) 실제 도착은 안 됨 (silent). 같은 가족:
 
-- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 프레임워크 컨벤션 미준수 silent
+- [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 프레임워크 컨벤션 미준수 silent
 - [Sentry PII Scrubbing — beforeSend](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 대시보드 가드 부정확 silent
 - 본 entry — 서버리스 lifecycle 미인식 silent
 
-세 trap 의 공통 패턴: **관측 인프라가 "설정만 하면 작동" 인 인상을 주지만 실제론 환경별 미세 조정 필요**. → [guard-test-pattern](/wiki/harness-engineering/guard-test-pattern) 적용으로 검증.
+세 trap 의 공통 패턴: **관측 인프라가 "설정만 하면 작동" 인 인상을 주지만 실제론 환경별 미세 조정 필요**. → [guard-test-pattern](/wiki/infrastructure/guard-test-pattern) 적용으로 검증.
 
 ## 가드 체크리스트
 
@@ -114,7 +114,7 @@ catch (err) {
 ## Related
 
 - [Sentry PII Scrubbing — beforeSend vs 대시보드](/wiki/infrastructure/sentry-pii-scrubbing-beforesend) — 형제 Sentry trap
-- [Next.js 16 instrumentation.ts 위치](/wiki/context-engineering/nextjs-instrumentation-location) — 형제 Sentry trap
+- [Next.js 16 instrumentation.ts 위치](/wiki/infrastructure/nextjs-instrumentation-location) — 형제 Sentry trap
 - [Drift Detection Methodology](/wiki/harness-engineering/drift-detection-methodology) — Level 2 작동 드리프트 가족
-- [Guard Test Pattern — 의도적 검증 테스트의 N건 폭로](/wiki/harness-engineering/guard-test-pattern) — 본 trap 을 발견시킨 메타 패턴
+- [Guard Test Pattern — 의도적 검증 테스트의 N건 폭로](/wiki/infrastructure/guard-test-pattern) — 본 trap 을 발견시킨 메타 패턴
 - [Hub-Worker Compounding Pattern](/wiki/harness-engineering/hub-worker-compounding-pattern) — 워커 발견 → 허브 학습 사례

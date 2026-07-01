@@ -1,6 +1,6 @@
 ---
 title: "LLM Context Compaction 생존 전략 — 커밋 메시지 밀도가 요약 품질을 결정"
-category: harness-engineering
+category: context-engineering
 date: "2026-05-22"
 tags:
   - context-management
@@ -14,8 +14,8 @@ confidence: 2
 last_verified: "2026-05-22"
 connections:
   - harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience
-  - harness-engineering/agentic-batch-session-context-budget
-  - harness-engineering/agentic-wiki-connection-graph-health-metrics
+  - context-engineering/agentic-batch-session-context-budget
+  - context-engineering/agentic-wiki-connection-graph-health-metrics
 source: explore-idea
 description: "LLM 세션 context compaction 발생 시 커밋 메시지에 박제된 구조화 상태(cycle_n, chain, entry#, commit hash)가 자동 요약의 핵심 anchor가 됨. 2026-05-22 N=20 배치 세션 직접 evidence. commit body 설계 원칙 박제."
 ---
@@ -103,4 +103,4 @@ compaction 요약기가 이 구조를 인식하는 이유:
 ## 관련 패턴
 
 - [agentic-git-history-ground-truth-checkpoint-resilience](/wiki/harness-engineering/agentic-git-history-ground-truth-checkpoint-resilience): git history = 불변 ground truth (checkpoint drift 복구)
-- [agentic-batch-session-context-budget](/wiki/harness-engineering/agentic-batch-session-context-budget): N-cycle batch 세션 컨텍스트 예산 전략
+- [agentic-batch-session-context-budget](/wiki/context-engineering/agentic-batch-session-context-budget): N-cycle batch 세션 컨텍스트 예산 전략
