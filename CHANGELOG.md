@@ -4,6 +4,29 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.90] — 2026-07-02
+
+### Fixed
+- `incident-auto-close.yml` YAML block scalar + Python heredoc column-0 충돌 수정 (cycle 1270, commit `79b131a6`). `python3 - <<'PYEOF'` → `python3 -c "..."` 교체. GitHub YAML parser 의 block scalar 조기 종료 방지. **로컬 완료, push 대기**.
+- wiki orphan links 2건 정리 (cycle 1271): `hub-pull-evidence-tracking` 의 dead connections 올바른 slug 로 교정.
+- wiki isolated nodes 3건 정리 (cycle 1271): weekly-report week-2026-25/26/27 connections 연결.
+
+### Added
+- Solution doc `docs/solutions/ci-github-actions/2026-05-01-notify-workers-heredoc-eof-gap.md` Variant 2 추가 (cycle 1272): YAML block scalar column-0 heredoc body → GitHub workflow file issue 패턴 박제. 재발 4회+ 통합 문서.
+
+### Changed
+- **wiki 대규모 카테고리 리밸런싱** (cycles 1274-1278): 172/240 outlier entries 재분류. harness-engineering 185→14 entries (92% 감소). 배포:
+  - context-engineering +42 (agentic-* 클러스터 이전)
+  - infrastructure +38 (agentic-ci/deploy/infra 이전)
+  - agents +8 / prompt-engineering +9 / project-ops +9 증가
+- CLAUDE.md 내 하드코딩 경로 3개 갱신 (drift-detection, question-own-defaults, cross-fork-feedback-sync).
+- cycles 1270-1279 chain: fix-incident × 1 / curate × 6 / explore-idea × 1 / review-code × 1.
+- health check 10.0/10 유지 (cycle 1273): tsc/eslint/vitest 전부 clean.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 257 / origin 97 (2026-07-02). `incident-auto-close.yml` fix push 포함. auto-ingest PR 10+ 건 Vercel rate-limit stall.
+- **[P1] moneyball repo**: ws/vite CVE + CREDIT_EXHAUSTED — `pnpm update ws vite` push + Anthropic 결제 필요.
+
 ## [0.9.89] — 2026-07-01
 
 ### Fixed
