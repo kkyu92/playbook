@@ -1,0 +1,70 @@
+---
+title: GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)
+category: infrastructure
+date: "2026-07-03"
+tags:
+  - github-actions
+  - gh-cli
+  - infrastructure
+  - incident
+  - ci-cd
+workers:
+  - all
+confidence: 2
+last_verified: "2026-07-03"
+connections: [infrastructure/github-actions-billing-block-diagnosis-recovery, infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger]
+status: complete
+description: "GH Actions job 에서 actions/checkout 없이 gh issue create/comment 를 호출하면 'fatal: not a git repository' 로 실패. GH_REPO env 또는 --repo 플래그로 해결."
+type: entry
+source: manual
+---
+
+## 증상
+
+```
+failed to run git: fatal: not a git repository (or any of the parent directories): .git
+```
+
+`gh issue create` 또는 `gh issue comment` 호출 시 exit code 1 로 실패.
+
+**실제 발생**: `gemini-key-health.yml` 2026-07-02 — PRIMARY/FALLBACK HTTP 503 unhealthy 감지 후 issue 생성 시도 시 실패.
+
+## 원인
+
+`gh` CLI 는 현재 디렉토리에서 `git remote get-url origin` 으로 repo 를 식별.  
+`actions/checkout` 없는 job 은 `.git` 디렉토리가 없어 git context 획득 실패.
+
+**해당 job 유형**: health check / notification / cron reporter 처럼 코드 접근 불필요하여 checkout 을 생략한 job.
+
+## 해결
+
+### Option A — GH_REPO env (추천)
+
+```yaml
+- name: Issue 생성
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    GH_REPO: ${{ github.repository }}   # ← 추가
+  run: |
+    gh issue create --title "..." --body "..."
+```
+
+`GH_REPO` 는 gh CLI 가 git 없이 repo 를 인식하는 공식 env var.
+
+### Option B — --repo 플래그
+
+```yaml
+run: |
+  gh issue create --repo "${{ github.repository }}" --title "..." --body "..."
+```
+
+각 gh 명령마다 `--repo` 를 명시해야 하므로 env 방식보다 번거롭다.
+
+### Option C — actions/checkout 추가
+
+checkout 이 불필요한 job 에 추가하면 job 실행 시간이 늘어난다. 권장 X.
+
+## 주의
+
+- `GH_REPO` 는 `gh issue list` / `gh issue comment` 등 **모든 gh subcommand** 에 적용됨. step env 에 한 번만 선언하면 해당 step 전체에 적용.
+- `GITHUB_REPOSITORY` env var (`owner/repo` 형식) 과 값이 동일하므로 `GH_REPO: ${{ github.repository }}` = `GH_REPO: $GITHUB_REPOSITORY` 동치.
