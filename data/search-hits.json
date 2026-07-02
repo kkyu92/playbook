@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 810,
+  "totalInvocations": 813,
   "skipped": 27,
-  "searched": 783,
-  "hit": 242,
+  "searched": 786,
+  "hit": 245,
   "noMatch": 541,
-  "lastUpdated": "2026-07-02T23:34:25.161Z",
+  "lastUpdated": "2026-07-02T23:37:54.758Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -52,7 +52,7 @@
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 6,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 6,
-    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 10,
+    "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 11,
     "retros/2026-05-12-cycles-371-373": 1,
     "retros/2026-05-12-cycles-356-360": 2,
     "retros/2026-05-13-cycles-482-485": 4,
@@ -124,7 +124,7 @@
     "context-engineering/agentic-push-defer-divergence-concurrent-writes": 4,
     "context-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
-    "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
+    "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 4,
     "infrastructure/agentic-git-commit-body-dispatch-transport": 4,
     "context-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 4,
@@ -171,7 +171,7 @@
     "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 2,
-    "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 2,
+    "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 3,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 4,
     "retros/2026-05-22-cycles-1006-1012": 7,
@@ -203,7 +203,9 @@
     "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 2,
     "retros/2026-05-21-cycles-937-945": 2,
     "agents/concurrent-fault-tolerant-ai-workflow-design-patterns": 2,
-    "infrastructure/cross-fork-feedback-sync": 1
+    "infrastructure/cross-fork-feedback-sync": 1,
+    "agents/multi-stage-agent-task-scheduling-monitoring": 1,
+    "prompt-engineering/llm-workflow-orchestration-business-logic-patterns": 1
   },
   "noMatchQueries": [
     {
@@ -803,5 +805,5 @@
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
     "catch-all category anti-pattern redistribute outliers preserve identity core": 1
   },
-  "totalQueries": 854
+  "totalQueries": 857
 }
