@@ -1,18 +1,18 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 787,
+  "totalInvocations": 797,
   "skipped": 27,
-  "searched": 760,
-  "hit": 228,
-  "noMatch": 532,
-  "lastUpdated": "2026-07-02T00:03:54.614Z",
+  "searched": 770,
+  "hit": 232,
+  "noMatch": 538,
+  "lastUpdated": "2026-07-02T00:17:53.152Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
     "prompt-engineering/prompt-versioning-and-testing": 2,
     "prompt-engineering/llm-prompt-optimization-role-definition-constraint-design": 2,
     "agents/qwen3-6-max-preview-llm-agentic-coding-evaluation": 1,
-    "evaluation/llm-output-validation-quality-metrics-design": 2,
+    "evaluation/llm-output-validation-quality-metrics-design": 3,
     "infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security": 1,
     "project-ops/question-own-defaults": 3,
     "agents/gstack-framework-ai-agent-collaboration-architecture": 1,
@@ -34,7 +34,7 @@
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
     "reports/mid-review-2026-04-28": 8,
     "journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91": 6,
-    "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 1,
+    "journal/playbook-journal-023-h5-n-62-v1-5-75-vs-v1-6-36-96-38-04pp-cycle-14-53": 2,
     "journal/playbook-journal-019-develop-cycle-tier-2-n-3-2-candidate-5": 2,
     "harness-engineering/agentic-chain-saturation-detection": 6,
     "context-engineering/stale-temporal-comment-cleanup-policy": 3,
@@ -127,7 +127,7 @@
     "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
     "infrastructure/agentic-git-commit-body-dispatch-transport": 4,
     "context-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
-    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 2,
+    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 3,
     "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 2,
     "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 2,
     "context-engineering/agentic-supervisor-session-liveness-contract": 1,
@@ -174,7 +174,7 @@
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 4,
-    "retros/2026-05-22-cycles-1006-1012": 5,
+    "retros/2026-05-22-cycles-1006-1012": 6,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 1,
     "context-engineering/agentic-wiki-confidence-lifecycle": 1,
@@ -195,7 +195,9 @@
     "retros/2026-05-13-cycle-456": 1,
     "journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7": 1,
     "solutions/ci-github-actions/2026-05-01-notify-workers-heredoc-eof-gap": 1,
-    "retros/2026-05-21-cycles-948-950": 1
+    "retros/2026-05-21-cycles-948-950": 1,
+    "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
+    "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1
   },
   "noMatchQueries": [
     {
@@ -662,6 +664,36 @@
       "query": "search hits jit unused slug drift stale remap after rename",
       "timestamp": "2026-07-02T00:03:40.217Z",
       "topScore": 0.8457
+    },
+    {
+      "query": "silent skip tracker automation coverage gap visibility alert",
+      "timestamp": "2026-07-02T00:07:35.237Z",
+      "topScore": 0.8452
+    },
+    {
+      "query": "embedding index stale slug category rename vector orphan JIT accuracy",
+      "timestamp": "2026-07-02T00:08:24.902Z",
+      "topScore": 0.8482
+    },
+    {
+      "query": "embedding freshness staleness detection monitoring automated check",
+      "timestamp": "2026-07-02T00:13:29.211Z",
+      "topScore": 0.8413
+    },
+    {
+      "query": "review-code code quality simplify health score improvement",
+      "timestamp": "2026-07-02T00:16:19.840Z",
+      "topScore": 0.8316
+    },
+    {
+      "query": "automated testing strategy wiki content quality validation regression",
+      "timestamp": "2026-07-02T00:17:49.410Z",
+      "topScore": 0.8353
+    },
+    {
+      "query": "BRANCHED divergence steady state periodic merge resolution strategy",
+      "timestamp": "2026-07-02T00:17:53.151Z",
+      "topScore": 0.8314
     }
   ],
   "noMatchQueryCounts": {
@@ -739,7 +771,13 @@
     "catch-all category anti-pattern wiki growth taxonomy drift": 1,
     "agentic context compression token budget management": 1,
     "category taxonomy embedding coherence rebalance decision": 1,
-    "search hits jit unused slug drift stale remap after rename": 1
+    "search hits jit unused slug drift stale remap after rename": 1,
+    "silent skip tracker automation coverage gap visibility alert": 1,
+    "embedding index stale slug category rename vector orphan JIT accuracy": 1,
+    "embedding freshness staleness detection monitoring automated check": 1,
+    "review-code code quality simplify health score improvement": 1,
+    "automated testing strategy wiki content quality validation regression": 1,
+    "BRANCHED divergence steady state periodic merge resolution strategy": 1
   },
-  "totalQueries": 831
+  "totalQueries": 841
 }
