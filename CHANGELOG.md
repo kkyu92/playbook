@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.94] — 2026-07-03
+
+### Added
+- wiki entry #288 `infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env` (cycle 1293): GH Actions job 에서 checkout 없이 gh CLI 호출 시 `fatal: not a git repository` 실패 패턴. `GH_REPO` env var 해결법.
+
+### Changed
+- wiki 369 entries, 2420 edges.
+- cycles 1292-1293 chain: curate × 1 / explore-idea × 1.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 285+ / origin 98 (2026-07-03). 3 local-only fixes pending push.
+- **[P1] moneyball repo**: ws/vite CVE 미해소.
+
 ## [0.9.93] — 2026-07-03
 
 ### Fixed
