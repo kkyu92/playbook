@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T00:18:39.375Z
+Updated: 2026-07-02T00:21:03.467Z
 
-## 엔트리 (367개)
+## 엔트리 (368개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -87,6 +87,7 @@ Updated: 2026-07-02T00:18:39.375Z
 - [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/context-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/context-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
+- [위키 catch-all 카테고리 재분배 패턴 — 머지 대신 outlier 분산으로 정체성 복원](wiki/context-engineering/wiki-catch-all-category-redistribution-pattern) — confidence: 2, status: complete
 - [위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크](wiki/context-engineering/wiki-category-health-rebalance-decision-framework) — confidence: 2, status: complete
 - [위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴](wiki/context-engineering/wiki-category-migration-execution-runbook) — confidence: 2, status: complete
 - [위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나](wiki/context-engineering/wiki-jit-search-blind-spot-diagnosis) — confidence: 2, status: complete
@@ -1178,6 +1179,8 @@ Updated: 2026-07-02T00:18:39.375Z
 - context-engineering/stale-temporal-comment-cleanup-policy ↔ infrastructure/recurring-file-bug-accumulator-pattern
 - context-engineering/stale-temporal-comment-cleanup-policy ↔ project-ops/question-own-defaults
 - context-engineering/stale-temporal-comment-cleanup-policy ↔ context-engineering/silent-drift-family-pattern
+- context-engineering/wiki-catch-all-category-redistribution-pattern ↔ context-engineering/wiki-category-health-rebalance-decision-framework
+- context-engineering/wiki-catch-all-category-redistribution-pattern ↔ context-engineering/wiki-category-migration-execution-runbook
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/agentic-wiki-connection-graph-health-metrics
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/wiki-category-migration-execution-runbook
