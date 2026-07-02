@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T23:42:32.175Z
+Updated: 2026-07-02T23:46:06.734Z
 
 ## 엔트리 (371개)
 
@@ -1604,6 +1604,7 @@ Updated: 2026-07-02T23:42:32.175Z
 - infrastructure/feature-flag-dead-code-cleanup-timing ↔ context-engineering/drift-detection-methodology
 - infrastructure/gemini-api-http-status-key-health-classification ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
 - infrastructure/gemini-api-http-status-key-health-classification ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
+- infrastructure/gemini-api-http-status-key-health-classification ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
