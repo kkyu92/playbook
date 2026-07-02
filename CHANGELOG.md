@@ -4,6 +4,21 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.96] — 2026-07-03
+
+### Added
+- wiki entry #290 `infrastructure/vercel-deploy-rate-limit-auto-merge-blocked` (cycle 1299): Vercel 배포 100/일 한도 초과 시 PR required check 실패 → auto-merge 영구 차단. 24h 후 재트리거 없는 이유 + empty commit 해결 패턴.
+
+### Changed
+- wiki 371 entries, 2424 edges.
+- cycles 1299-1300 chain: explore-idea × 1 / SE #377 milestone retro-only × 1.
+- SE #377 cycle 1300 milestone. oscillation_n 219. SKILL 구조 건전.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 295+ / origin 98. 3 local-only workflow fixes pending.
+- **[P0] PR #2138**: Vercel rate-limit blocked (2026-06-29). empty commit retrigger 필요.
+- **[P1] moneyball repo**: ws/vite CVE 미해소.
+
 ## [0.9.95] — 2026-07-03
 
 ### Fixed
