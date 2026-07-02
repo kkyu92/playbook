@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 804,
+  "totalInvocations": 807,
   "skipped": 27,
-  "searched": 777,
-  "hit": 236,
+  "searched": 780,
+  "hit": 239,
   "noMatch": 541,
-  "lastUpdated": "2026-07-02T23:29:32.381Z",
+  "lastUpdated": "2026-07-02T23:32:07.203Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -27,7 +27,7 @@
     "reports/closed-loop-health": 31,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
-    "infrastructure/github-actions-billing-block-diagnosis-recovery": 11,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 14,
     "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
@@ -200,7 +200,9 @@
     "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
     "retros/2026-05-20-cycles-928-929": 1,
     "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 1,
-    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 1
+    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 2,
+    "retros/2026-05-21-cycles-937-945": 2,
+    "agents/concurrent-fault-tolerant-ai-workflow-design-patterns": 2
   },
   "noMatchQueries": [
     {
@@ -800,5 +802,5 @@
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
     "catch-all category anti-pattern redistribute outliers preserve identity core": 1
   },
-  "totalQueries": 848
+  "totalQueries": 851
 }
