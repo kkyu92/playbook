@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T00:04:37.234Z
+Updated: 2026-07-02T00:06:20.059Z
 
 ## 엔트리 (366개)
 
@@ -1175,7 +1175,7 @@ Updated: 2026-07-02T00:04:37.234Z
 - context-engineering/stale-temporal-comment-cleanup-policy ↔ context-engineering/silent-drift-family-pattern
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/agentic-wiki-connection-graph-health-metrics
-- context-engineering/wiki-category-migration-execution-runbook ↔ context-engineering/wiki-category-health-rebalance-decision-framework
+- context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/wiki-category-migration-execution-runbook
 - context-engineering/wiki-category-migration-execution-runbook ↔ context-engineering/agentic-wiki-connection-graph-health-metrics
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback
