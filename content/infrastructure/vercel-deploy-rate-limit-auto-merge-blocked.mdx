@@ -1,0 +1,90 @@
+---
+title: Vercel 배포 한도 초과 → PR auto-merge 영구 차단 패턴
+category: infrastructure
+date: "2026-07-03"
+tags:
+  - vercel
+  - github-actions
+  - auto-merge
+  - rate-limit
+  - infrastructure
+  - ci-cd
+workers:
+  - all
+confidence: 2
+last_verified: "2026-07-03"
+connections: [infrastructure/vercel-ignore-command-preview-skip, infrastructure/agentic-ci-deploy-budget-batch-push-policy]
+status: complete
+description: "Vercel free tier 배포 한도 초과 시 PR required check 실패 → auto-merge 영구 차단. 24h 후 한도 리셋되어도 오래된 PR 은 재트리거 없이 차단 상태 유지."
+type: entry
+source: manual
+---
+
+## 증상
+
+```
+Vercel  fail  "Deployment rate limited — retry in 24 hours."
+```
+
+PR에 auto-merge 설정되어 있어도 Vercel check 실패 → merge 차단. 24시간 후 한도 리셋되어도 **이전 PR 은 check 가 재실행되지 않아 차단 상태 유지.**
+
+**실제 사례**: PR #2138 `explore/lint-false-positive-1249` (2026-06-29 생성) — 4일 후에도 OPEN.
+
+## 원인 메커니즘
+
+```
+PR push → Vercel deploy trigger → rate limit 100/day 초과 → 배포 실패
+→ GitHub required check FAIL → auto-merge block
+
+24h 후: rate limit 리셋
+→ Vercel check 재실행 X (push 이벤트 없음)
+→ PR 계속 차단
+```
+
+## 해결 패턴
+
+### 빠른 해결: empty commit 으로 check 재트리거
+
+```bash
+# PR 브랜치에 empty commit push → Vercel 재배포 트리거
+git checkout explore/lint-false-positive-1249
+git commit --allow-empty -m "chore: retrigger Vercel check after rate limit reset"
+git push origin explore/lint-false-positive-1249
+```
+
+### 예방: vercelignore 또는 조건부 배포
+
+content-only PR (wiki entry 추가) 은 실제 배포가 불필요. `vercel.json` 또는 `.vercelignore` 로 배포 skip.
+
+```json
+// vercel.json
+{
+  "github": {
+    "silent": true
+  }
+}
+```
+
+또는 Vercel ignore command (`.vercelignore` 패턴 또는 `vercel.json` 의 `ignoreCommand`):
+```json
+{
+  "ignoreCommand": "git diff HEAD^ HEAD -- content/ | grep -q . && exit 1 || exit 0"
+}
+```
+→ `content/` 변경 없으면 배포 skip.
+
+### 근본 해결: Vercel required check 제거
+
+GitHub Branch Protection 에서 Vercel check 를 required 에서 제외.  
+wiki-only PR 의 경우 build 성공 여부가 머지 결정에 불필요.
+
+## 영향 범위
+
+- **auto-ingest PR**: 매일 4-6개 생성 → Vercel check 100회/일 소진 = 1일 1-2건만 정상 배포
+- **content PR**: wiki entry 추가 후 rate limit 이면 무조건 차단
+- **BRANCHED 가속**: 차단된 PR 이 쌓이면 local main ↔ origin/main divergence 심화
+
+## 관련 패턴
+
+- `vercel-ignore-command-preview-skip`: content 변경 시 배포 skip 설정
+- `agentic-ci-deploy-budget-batch-push-policy`: 자동화 환경에서 배포 예산 관리

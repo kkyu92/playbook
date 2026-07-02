@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T23:34:59.578Z
+Updated: 2026-07-02T23:42:32.175Z
 
-## 엔트리 (370개)
+## 엔트리 (371개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -324,6 +324,7 @@ Updated: 2026-07-02T23:34:59.578Z
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
+- [Vercel 배포 한도 초과 → PR auto-merge 영구 차단 패턴](wiki/infrastructure/vercel-deploy-rate-limit-auto-merge-blocked) — confidence: 2, status: complete
 - [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
 - [Vercel ignoreCommand — PR Preview 배포 비활성화로 100회/일 한도 보호](wiki/infrastructure/vercel-ignore-command-preview-skip) — confidence: 3, status: complete
 - [위키 Journal Append-Only 구조와 Long In-Progress 오경보 — lint 정책 충돌 해결](wiki/infrastructure/wiki-journal-append-only-lint-false-positive-status) — confidence: 2, status: complete
@@ -1687,6 +1688,8 @@ Updated: 2026-07-02T23:34:59.578Z
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
+- infrastructure/vercel-deploy-rate-limit-auto-merge-blocked ↔ infrastructure/vercel-ignore-command-preview-skip
+- infrastructure/vercel-deploy-rate-limit-auto-merge-blocked ↔ infrastructure/agentic-ci-deploy-budget-batch-push-policy
 - infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/vercel-env-oauth-security-enhancement ↔ project-ops/question-own-defaults
 - infrastructure/vercel-ignore-command-preview-skip ↔ context-engineering/hub-worker-compounding-pattern
