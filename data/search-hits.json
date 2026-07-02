@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 823,
+  "totalInvocations": 827,
   "skipped": 27,
-  "searched": 796,
-  "hit": 254,
-  "noMatch": 542,
-  "lastUpdated": "2026-07-02T23:45:43.349Z",
+  "searched": 800,
+  "hit": 257,
+  "noMatch": 543,
+  "lastUpdated": "2026-07-02T23:47:00.302Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -29,7 +29,7 @@
     "harness-engineering/guard-test-pattern": 8,
     "infrastructure/github-actions-billing-block-diagnosis-recovery": 16,
     "context-engineering/nextjs-instrumentation-location": 4,
-    "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
+    "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 3,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 9,
     "journal/playbook-journal-011-mid-review-dialectic-2026-04-28": 4,
     "reports/mid-review-2026-04-28": 8,
@@ -121,10 +121,10 @@
     "agents/agentic-long-running-carryover-human-checkpoint-boundary": 2,
     "context-engineering/agentic-multi-layer-state-persistence-decision-framework": 1,
     "agents/multi-agent-collaboration-design-patterns": 1,
-    "context-engineering/agentic-push-defer-divergence-concurrent-writes": 4,
+    "context-engineering/agentic-push-defer-divergence-concurrent-writes": 5,
     "context-engineering/agentic-sliding-window-threshold-natural-oscillation": 1,
     "harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure": 2,
-    "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 4,
+    "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 5,
     "infrastructure/agentic-git-commit-body-dispatch-transport": 4,
     "context-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
     "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 4,
@@ -158,7 +158,7 @@
     "retros/2026-05-22-cycles-977-979": 2,
     "context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 2,
     "evaluation/agentic-precommit-prediction-oos-track-record": 1,
-    "infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 2,
+    "infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 3,
     "context-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 3,
     "context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 2,
@@ -200,7 +200,7 @@
     "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
     "retros/2026-05-20-cycles-928-929": 1,
     "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 2,
-    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 4,
+    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 5,
     "retros/2026-05-21-cycles-937-945": 2,
     "agents/concurrent-fault-tolerant-ai-workflow-design-patterns": 2,
     "infrastructure/cross-fork-feedback-sync": 1,
@@ -209,7 +209,10 @@
     "infrastructure/gemini-api-http-status-key-health-classification": 1,
     "context-engineering/agent-multi-frequency-knowledge-pipeline": 1,
     "harness-engineering/agentic-cycle-chain-diversity-rebalancing": 1,
-    "context-engineering/agentic-batch-session-context-budget": 1
+    "context-engineering/agentic-batch-session-context-budget": 1,
+    "context-engineering/ephemeral-credentials-session-llm-harness": 1,
+    "journal/playbook-journal-004-drift-half-working": 1,
+    "journal/playbook-journal-003-drift-silent-bugs": 1
   },
   "noMatchQueries": [
     {
@@ -726,6 +729,11 @@
       "query": "auto-merge disabled Vercel deployment rate limited build queue overflow",
       "timestamp": "2026-07-02T23:42:03.130Z",
       "topScore": 0.8482
+    },
+    {
+      "query": "monitoring alert noise false positive threshold signal-to-noise ratio",
+      "timestamp": "2026-07-02T23:46:32.816Z",
+      "topScore": 0.8212
     }
   ],
   "noMatchQueryCounts": {
@@ -813,7 +821,8 @@
     "prompt versioning systematic iteration comparison regression": 1,
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
     "catch-all category anti-pattern redistribute outliers preserve identity core": 1,
-    "auto-merge disabled Vercel deployment rate limited build queue overflow": 1
+    "auto-merge disabled Vercel deployment rate limited build queue overflow": 1,
+    "monitoring alert noise false positive threshold signal-to-noise ratio": 1
   },
-  "totalQueries": 867
+  "totalQueries": 871
 }
