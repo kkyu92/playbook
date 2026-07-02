@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.92] — 2026-07-02
+
+### Added
+- wiki entry #287 `context-engineering/wiki-catch-all-category-redistribution-pattern` (cycle 1287): catch-all 카테고리 재분배 결정 트리. cross-sim 0.99 = catch-all 오염 vs 진짜 도메인 수렴 구분. harness-engineering 185→14 실증.
+
+### Changed
+- wiki 368 entries, 2418 edges.
+- cycles 1285-1287 chain: curate × 2 / explore-idea × 1.
+- decision-framework entry: redistribution-pattern cross-link 추가.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 271+ / origin 97 (2026-07-02). `incident-auto-close.yml` fix push 포함.
+- **[P1] moneyball repo**: ws/vite CVE + CREDIT_EXHAUSTED 미해소.
+
 ## [0.9.91] — 2026-07-02
 
 ### Fixed
