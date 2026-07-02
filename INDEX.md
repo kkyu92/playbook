@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T00:12:24.285Z
+Updated: 2026-07-02T00:14:18.132Z
 
-## 엔트리 (366개)
+## 엔트리 (367개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -78,6 +78,7 @@ Updated: 2026-07-02T00:12:24.285Z
 - [Debug Page Silent Drift Trap — 인시던트 조사 중 진단 도구 자체 silent 실패](wiki/context-engineering/debug-page-silent-drift-trap) — confidence: 2, status: complete
 - [Drift Detection Methodology — 가정과 현실 사이 4종 괴리](wiki/context-engineering/drift-detection-methodology) — confidence: 4, status: complete
 - [E5 Multilingual Embedding — Query/Passage Prefix Requirement](wiki/context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement) — confidence: 4, status: complete
+- [임베딩 인덱스 staleness 감지 — 카테고리 마이그레이션 후 slug 정합성 검증 패턴](wiki/context-engineering/embedding-index-staleness-detection-after-slug-migration) — confidence: 2, status: complete
 - [Local Knowledge Hub Enhancement: Integrating .description.md Sidecar Files for Enriched Context](wiki/context-engineering/enriching-local-data-with-description-md-sidecars) — confidence: 1, status: draft
 - [LLM 하네스: 임시 크리덴셜 및 세션 관리 — 노-트레이스 실행 환경 구축](wiki/context-engineering/ephemeral-credentials-session-llm-harness) — confidence: 1, status: draft
 - [Flue Framework Integration — Claude Code 하네스 재구성 전략](wiki/context-engineering/flue-framework-integration-claude-code-harness-reconfigurati) — confidence: 1, status: draft
@@ -1137,6 +1138,9 @@ Updated: 2026-07-02T00:12:24.285Z
 - context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement ↔ reports/closed-loop-health
+- context-engineering/embedding-index-staleness-detection-after-slug-migration ↔ context-engineering/wiki-category-migration-execution-runbook
+- context-engineering/embedding-index-staleness-detection-after-slug-migration ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+- context-engineering/embedding-index-staleness-detection-after-slug-migration ↔ context-engineering/wiki-category-health-rebalance-decision-framework
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ frontend-ai/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - context-engineering/enriching-local-data-with-description-md-sidecars ↔ evaluation/llm-input-output-data-pipeline-design-patterns

@@ -1,0 +1,102 @@
+---
+title: "임베딩 인덱스 staleness 감지 — 카테고리 마이그레이션 후 slug 정합성 검증 패턴"
+category: context-engineering
+date: "2026-07-02"
+tags:
+  - embedding
+  - slug
+  - staleness
+  - jit-search
+  - category-migration
+  - embeddings-json
+confidence: 2
+connections:
+  - context-engineering/wiki-category-migration-execution-runbook
+  - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+  - context-engineering/wiki-category-health-rebalance-decision-framework
+status: complete
+description: "카테고리 마이그레이션 후 embeddings.json slug 정합성 검증 패턴. 2026-07-02 실증: 172-entry 이동 후 37.7% stale chunks. 감지 쿼리 + 재생성 기준."
+type: entry
+source: meta
+---
+
+`pnpm embed-content` 는 gitignored 로컬 빌드 아티팩트라 자동 재생성이 없다. 카테고리 마이그레이션 후 망각하면 JIT 검색이 존재하지 않는 slug로 wiki URL을 반환한다.
+
+## 실증 데이터 (2026-07-02)
+
+172개 엔트리 마이그레이션 (`harness-engineering/*` → 7개 카테고리) 후 embeddings.json 검사:
+
+| 항목 | Before | After |
+|---|---|---|
+| 전체 청크 | 2504 | 2709 |
+| Stale chunks | 943 (37.7%) | 0 |
+| 재생성 시간 | — | 144.5s |
+| Stale 원인 | 구 harness-engineering/* slug | — |
+
+37.7% 의 JIT 검색 결과가 `/wiki/harness-engineering/...` URL (404) 를 반환하고 있었다.
+
+## 감지 쿼리
+
+```python
+import json, os
+from pathlib import Path
+
+def check_embedding_staleness(embeddings_path="public/embeddings.json", content_dir="content"):
+    data = json.load(open(embeddings_path))
+    chunks = data.get("chunks", [])
+    
+    # content/ 실제 파일 slug 집합
+    valid_slugs = set()
+    for p in Path(content_dir).rglob("*.mdx"):
+        slug = str(p).replace(f"{content_dir}/", "").replace(".mdx", "")
+        valid_slugs.add(slug)
+    
+    stale = [c for c in chunks if c.get("slug") in (set(c["slug"] for c in chunks) - valid_slugs)]
+    total = len(chunks)
+    print(f"Stale chunks: {len(stale)} / {total} ({len(stale)*100//total if total else 0}%)")
+    if stale:
+        stale_slugs = sorted(set(c["slug"] for c in stale))[:10]
+        print("Sample stale slugs:", stale_slugs)
+    return len(stale)
+```
+
+단순 버전 (이전 카테고리명 직접 검색):
+```bash
+python3 -c "
+import json
+chunks = json.load(open('public/embeddings.json'))['chunks']
+old = [c['slug'] for c in chunks if 'OLD_CATEGORY_NAME' in c.get('slug','')]
+print(f'Stale: {len(old)} / {len(chunks)}')"
+```
+
+## 재생성 기준
+
+| 상황 | 재생성 필요 여부 |
+|---|---|
+| 카테고리 이름 변경 (content/A → content/B) | **필수** (slug 전체 변경) |
+| 파일명 변경 | **필수** (slug 변경) |
+| 파일 내용 수정만 | 선택 (기존 slug 유효, 의미 변화 반영 안 됨) |
+| 신규 파일 추가 | 권장 (새 파일 JIT 검색 안 됨) |
+| 파일 삭제 | 권장 (orphan chunk 검색 결과 출력 방지) |
+
+**실용 기준**: `content/` 안 `git mv` 또는 `shutil.move` 사용 시 재생성 의무. 내용 수정만이면 선택.
+
+## 빠른 freshness 점검
+
+```bash
+# embeddings.json 생성 일자 vs 최신 content 변경 일자 비교
+embed_ts=$(python3 -c "import json; d=json.load(open('public/embeddings.json')); print(d.get('created_at','?'))")
+last_content=$(git log --max-count=1 --format="%ci" -- content/ 2>/dev/null)
+echo "embeddings: $embed_ts"
+echo "last content: $last_content"
+```
+
+## 카테고리 마이그레이션 실행 런북과의 관계
+
+본 감지 패턴은 `wiki-category-migration-execution-runbook` Phase 4 의 상세 보완. 런북의 체크리스트 항목 `pnpm embed-content` 실행 전 staleness 측정 → 재생성 후 재측정으로 정량화.
+
+## 관련 항목
+
+- [[context-engineering/wiki-category-migration-execution-runbook]] — Phase 4 실행 런북 (본 패턴의 upstream)
+- [[context-engineering/jit-embedding-retrieval-context-cost-scale-invariant]] — JIT 검색 규모 불변성
+- [[context-engineering/wiki-category-health-rebalance-decision-framework]] — rebalance 결정 프레임워크
