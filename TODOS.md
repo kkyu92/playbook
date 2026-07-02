@@ -2,7 +2,7 @@
 
 ## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1270 갱신)
 
-**What**: auto-ingest PR 24건+ blocked (pnpm audit CVE). cycle 1270 추가: incident-auto-close.yml YAML fix (79b131a6) local-only. cycle 1290 추가: gemini-key-health.yml GH_REPO fix (f8ca916d) local-only. BRANCHED **local 278 / origin 98** (cycle 1290 갱신 — cycle 1270 local 239/97 대비 증가).
+**What**: auto-ingest PR 24건+ blocked (pnpm audit CVE). cycle 1270 추가: incident-auto-close.yml YAML fix (79b131a6) local-only. cycle 1290 추가: gemini-key-health.yml GH_REPO fix (f8ca916d) local-only. cycle 1296 추가: gemini-key-health.yml 503 TRANSIENT fix (e7c31f3c) local-only. BRANCHED **local 310 / origin 98** (cycle 1306 갱신).
 **Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) origin 미반영. PR base = origin → audit gate fail. cycle 1270 fix (incident-auto-close heredoc → python3 -c) 도 push 필요.
 **Action (R6 사용자 영역)**: `git pull --rebase origin main` 후 `git push origin main` → PR audit 자동 재실행 + incident-auto-close fix 반영.
 
