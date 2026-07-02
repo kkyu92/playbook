@@ -83,6 +83,7 @@ jobs:
         if: steps.smoke.outputs.unhealthy != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           UNHEALTHY: ${{ steps.smoke.outputs.unhealthy }}
           REPORT: ${{ steps.smoke.outputs.report }}
         run: |
