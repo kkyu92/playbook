@@ -4,6 +4,24 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.91] — 2026-07-02
+
+### Fixed
+- `public/embeddings.json` 37.7% stale chunks 해소 (cycle 1283): 172-entry 카테고리 마이그레이션 후 `pnpm embed-content` 미실행. 2504 청크 중 943개 stale `harness-engineering/*` slug → JIT 검색 404 URL 반환. `pnpm embed-content` 재실행 → 2709 청크, stale 0.
+
+### Added
+- wiki entry #285 `context-engineering/wiki-category-migration-execution-runbook` (cycle 1281): 카테고리 마이그레이션 실행 런북. 2-phase 배치 스크립트, search-hits slug 리맵, CLAUDE.md 경로 감사, embeddings Phase 4.
+- wiki entry #286 `context-engineering/embedding-index-staleness-detection-after-slug-migration` (cycle 1284): 임베딩 staleness 감지 쿼리 + freshness 점검 패턴. 재생성 기준 정의.
+
+### Changed
+- search-hits.json 56-slug 리맵 (cycle 1282): category rebalance 후 JIT Unused 227 → 172.
+- wiki 367 entries, 2412 edges (cross-links 갱신).
+- cycles 1281-1284 chain: curate × 1 / fix-incident × 1 / explore-idea × 2.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 261+ / origin 97 (2026-07-02). `incident-auto-close.yml` fix push 포함. auto-ingest PR stall 지속.
+- **[P1] moneyball repo**: ws/vite CVE + CREDIT_EXHAUSTED 미해소.
+
 ## [0.9.90] — 2026-07-02
 
 ### Fixed
