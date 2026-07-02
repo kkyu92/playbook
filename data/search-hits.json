@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 827,
+  "totalInvocations": 830,
   "skipped": 27,
-  "searched": 800,
-  "hit": 257,
+  "searched": 803,
+  "hit": 260,
   "noMatch": 543,
-  "lastUpdated": "2026-07-02T23:47:00.302Z",
+  "lastUpdated": "2026-07-02T23:49:07.211Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -27,7 +27,7 @@
     "reports/closed-loop-health": 31,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
-    "infrastructure/github-actions-billing-block-diagnosis-recovery": 16,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 17,
     "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 3,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 9,
@@ -82,7 +82,7 @@
     "retros/2026-05-13-cycles-486-487": 4,
     "evaluation/claude-code-generation-validation-pipeline-extension": 1,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
-    "context-engineering/debug-page-silent-drift-trap": 5,
+    "context-engineering/debug-page-silent-drift-trap": 7,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 1,
     "retros/2026-05-12-cycles-350-355": 8,
     "frontend-ai/nextjs-security-patching-defense-logic-reinforcement": 1,
@@ -158,7 +158,7 @@
     "retros/2026-05-22-cycles-977-979": 2,
     "context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch": 2,
     "evaluation/agentic-precommit-prediction-oos-track-record": 1,
-    "infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 3,
+    "infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture": 6,
     "context-engineering/agentic-develop-cycle-1000-cycle-milestone-learnings": 3,
     "context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs": 1,
     "context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization": 2,
@@ -200,7 +200,7 @@
     "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
     "retros/2026-05-20-cycles-928-929": 1,
     "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 2,
-    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 5,
+    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 6,
     "retros/2026-05-21-cycles-937-945": 2,
     "agents/concurrent-fault-tolerant-ai-workflow-design-patterns": 2,
     "infrastructure/cross-fork-feedback-sync": 1,
@@ -212,7 +212,8 @@
     "context-engineering/agentic-batch-session-context-budget": 1,
     "context-engineering/ephemeral-credentials-session-llm-harness": 1,
     "journal/playbook-journal-004-drift-half-working": 1,
-    "journal/playbook-journal-003-drift-silent-bugs": 1
+    "journal/playbook-journal-003-drift-silent-bugs": 1,
+    "context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix": 2
   },
   "noMatchQueries": [
     {
@@ -824,5 +825,5 @@
     "auto-merge disabled Vercel deployment rate limited build queue overflow": 1,
     "monitoring alert noise false positive threshold signal-to-noise ratio": 1
   },
-  "totalQueries": 871
+  "totalQueries": 874
 }
