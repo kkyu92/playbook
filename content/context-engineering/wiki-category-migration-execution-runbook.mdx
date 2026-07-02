@@ -132,6 +132,25 @@ done < <(grep "content/" CLAUDE.md)
 - `content/harness-engineering/question-own-defaults.mdx` → `content/project-ops/`
 - `content/harness-engineering/cross-fork-feedback-sync.mdx` → `content/infrastructure/`
 
+## Phase 4: embeddings.json 재생성
+
+embeddings.json (`public/embeddings.json`) 은 gitignored 로컬 빌드 아티팩트. 마이그레이션 후 재생성하지 않으면 JIT 검색이 구 slug 기준 청크를 반환 — wiki URL이 404.
+
+**2026-07-02 실측**: 172/366 엔트리 이동 → 이전 embeddings 2504 청크 중 943개(37.7%)가 stale `harness-engineering/*` slug 보유. 재생성 후 2709 청크, stale 0.
+
+```bash
+# 감지
+python3 -c "
+import json
+chunks = json.load(open('public/embeddings.json'))['chunks']
+old = [c['slug'] for c in chunks if 'OLD_CATEGORY' in c.get('slug','')]
+print(f'Stale chunks: {len(old)} / {len(chunks)} ({len(old)*100//len(chunks)}%)')
+"
+
+# 재생성 (~144s for 366 entries)
+pnpm embed-content
+```
+
 ## 완료 체크리스트
 
 - [ ] 배치별 commit (prefix: `content:`)
@@ -140,13 +159,14 @@ done < <(grep "content/" CLAUDE.md)
 - [ ] CLAUDE.md 하드코딩 경로 감사 + 수정
 - [ ] GH issue close (완료/부분 완료 코멘트 포함)
 - [ ] `pnpm lint` CLEAN 확인
+- [ ] `pnpm embed-content` 재생성 (stale chunk 37.7% → 0)
 
 ## Anti-Pattern
 
 - **전체 일괄 이동**: 172건 단일 batch = git diff 가독성 0, connections 누락 추적 불가
 - **Phase 1만 실행 (Phase 2 skip)**: connections ref 구 경로 잔존 → lint orphan 급등
 - **search-hits.json 수정 누락**: JIT Unused count 인위 증가 → search 커버리지 지표 오염
-- **마이그레이션 직후 embed 재생성 skip**: 검색 정확도 저하 (embedding이 구 카테고리 기준)
+- **마이그레이션 직후 embed 재생성 skip**: JIT 검색 결과 37.7% 가 stale slug → 404 URL 반환 (2026-07-02 실증)
 
 ## 관련 항목
 
