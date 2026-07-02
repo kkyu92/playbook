@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.95] — 2026-07-03
+
+### Fixed
+- `gemini-key-health.yml` 503/500 false-positive alert 차단 (cycle 1296, commit `e7c31f3c`): 서버 일시 과부하(503) 를 key 불량으로 오분류 → 알림 발생. `TRANSIENT` 분류 추가, `UNHEALTHY` 목록 제외.
+
+### Added
+- wiki entry #289 `infrastructure/gemini-api-http-status-key-health-classification` (cycle 1296): Gemini API HTTP 상태코드 → key 건강 분류 기준. 503/500=일시, 429+limit:0=영구, 401/403=auth 실패.
+
+### Changed
+- wiki 370 entries, 2422 edges.
+- cycles 1294-1296 chain: curate × 1 / review-code × 1 / explore-idea × 1.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 290+ / origin 98. 3 local-only workflow fixes pending push.
+- **[P1] moneyball repo**: ws/vite CVE 미해소.
+
 ## [0.9.94] — 2026-07-03
 
 ### Added
