@@ -1,0 +1,154 @@
+---
+title: "위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴"
+category: context-engineering
+date: "2026-07-02"
+tags:
+  - wiki
+  - category
+  - migration
+  - rebalance
+  - slug
+  - runbook
+confidence: 2
+connections:
+  - context-engineering/wiki-category-health-rebalance-decision-framework
+  - context-engineering/agentic-wiki-connection-graph-health-metrics
+status: complete
+description: "카테고리 rebalance 결정 후 실제 마이그레이션 실행 런북. 배치 Python 스크립트 2-phase 패턴, search-hits.json slug 드리프트 수정, CLAUDE.md 하드코딩 경로 감사."
+type: entry
+source: meta
+---
+
+`wiki-category-health-rebalance-decision-framework` 가 **언제** 리밸런스할지 판단 기준이라면, 본 런북은 **어떻게** 실행하는지 패턴 기록. 2026-07-02 cycles 1274–1280 에서 172개 엔트리 이동 실전 증거.
+
+## 전제 조건
+
+rebalance 결정 기준 충족 후 실행:
+- `scripts/category-rebalance.mjs` 출력에서 outlier 엔트리 목록 확인
+- GH issue 오픈 (이슈 번호 추적 + 진행 상황 기록용)
+- 전체 outlier 수 파악 → 배치 단위 결정 (권장: 20–30건/배치)
+
+## Phase 1: 배치 Python 스크립트 — 2-phase 패턴
+
+### 왜 2-phase인가
+
+`all_mdx` 리스트를 이동 전에 수집하면 이동된 파일을 다시 읽지 못함. **이동 완료 후 fresh list** 필요.
+
+```python
+import os, re, shutil, glob
+
+# Phase 1: 파일 이동 + frontmatter category 업데이트
+moves = [
+    ("content/A/foo.mdx", "content/B/foo.mdx", "A", "B"),
+    # ...
+]
+
+for src, dst, old_cat, new_cat in moves:
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.move(src, dst)
+    content = open(dst).read()
+    content = re.sub(
+        r'^(category:\s*)' + old_cat,
+        lambda m: m.group(1) + new_cat,
+        content, flags=re.MULTILINE
+    )
+    open(dst, 'w').write(content)
+
+# Phase 2: 전체 MDX 재스캔 후 connections 참조 업데이트
+all_mdx = glob.glob("content/**/*.mdx", recursive=True)
+for src, dst, old_cat, new_cat in moves:
+    old_slug = src.replace("content/", "").replace(".mdx", "")
+    new_slug = dst.replace("content/", "").replace(".mdx", "")
+    for mdx_path in all_mdx:
+        text = open(mdx_path).read()
+        new_text = text.replace(old_slug, new_slug)
+        if new_text != text:
+            open(mdx_path, 'w').write(new_text)
+```
+
+### 배치 크기 가이드
+
+- **20–30건/배치**: PR 충돌 최소화. 배치당 `git add content/ && git commit -m "content: category rebalance batch N — M outliers"`
+- 각 배치 후 `node scripts/generate-content-manifest.mjs` 재생성 (INDEX.md 싱크)
+- 대규모 (50+건) 단일 배치: 나중에 connections ref 누락 발견 시 추적 어려움
+
+## Phase 2: search-hits.json slug 드리프트 수정
+
+### 증상
+
+마이그레이션 완료 후 `data/search-hits.json` 의 JIT Unused count 급등. 2026-07-02 사례: 161 → 227 (66 추가 증가). 원인: search-hits.json 슬러그 키가 구 경로 기준.
+
+### 수정 절차
+
+```bash
+# 1. git renames 추출
+git log --diff-filter=R --name-status --format="" -- content/ \
+  | grep "^R" \
+  | awk '{print $2 "\t" $3}' > /tmp/renames.tsv
+
+# 2. slug 변환 (content/ prefix, .mdx suffix 제거)
+# old_slug = $2.replace("content/","").replace(".mdx","")
+# new_slug = $3.replace("content/","").replace(".mdx","")
+
+# 3. search-hits.json 에서 old_slug → new_slug 치환 (Python)
+```
+
+```python
+import json
+
+with open("data/search-hits.json") as f:
+    hits = json.load(f)
+
+renames = {}  # {old_slug: new_slug} — git log 에서 추출
+
+new_hits = {}
+for slug, count in hits.items():
+    new_slug = renames.get(slug, slug)
+    new_hits[new_slug] = new_hits.get(new_slug, 0) + count
+
+with open("data/search-hits.json", "w") as f:
+    json.dump(new_hits, f, indent=2, ensure_ascii=False)
+```
+
+**2026-07-02 결과**: 56 슬러그 리맵 → JIT Unused 227 → 172.
+
+## Phase 3: CLAUDE.md 하드코딩 경로 감사
+
+대규모 리밸런스 후 CLAUDE.md 안 `content/A/x.mdx` 형태 하드코딩 경로가 구 카테고리를 가리킬 수 있음.
+
+```bash
+# CLAUDE.md 안 content/ 경로 추출
+grep -n "content/" /Users/kyusikkim/projects/playbook/CLAUDE.md
+
+# 각 경로 존재 확인
+while IFS= read -r line; do
+  path=$(echo "$line" | grep -o 'content/[^)]*\.mdx')
+  [ -n "$path" ] && [ ! -f "$path" ] && echo "BROKEN: $path"
+done < <(grep "content/" CLAUDE.md)
+```
+
+**2026-07-02 사례**: 3건 수동 수정 필요.
+- `content/harness-engineering/drift-detection-methodology.mdx` → `content/context-engineering/`
+- `content/harness-engineering/question-own-defaults.mdx` → `content/project-ops/`
+- `content/harness-engineering/cross-fork-feedback-sync.mdx` → `content/infrastructure/`
+
+## 완료 체크리스트
+
+- [ ] 배치별 commit (prefix: `content:`)
+- [ ] `node scripts/generate-content-manifest.mjs` 재생성
+- [ ] search-hits.json slug 리맵 + commit
+- [ ] CLAUDE.md 하드코딩 경로 감사 + 수정
+- [ ] GH issue close (완료/부분 완료 코멘트 포함)
+- [ ] `pnpm lint` CLEAN 확인
+
+## Anti-Pattern
+
+- **전체 일괄 이동**: 172건 단일 batch = git diff 가독성 0, connections 누락 추적 불가
+- **Phase 1만 실행 (Phase 2 skip)**: connections ref 구 경로 잔존 → lint orphan 급등
+- **search-hits.json 수정 누락**: JIT Unused count 인위 증가 → search 커버리지 지표 오염
+- **마이그레이션 직후 embed 재생성 skip**: 검색 정확도 저하 (embedding이 구 카테고리 기준)
+
+## 관련 항목
+
+- [[context-engineering/wiki-category-health-rebalance-decision-framework]] — 언제 rebalance 결정할지 기준 (본 런북의 전제)
+- [[context-engineering/agentic-wiki-connection-graph-health-metrics]] — connections 기반 그래프 건강도
