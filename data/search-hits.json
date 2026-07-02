@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 802,
+  "totalInvocations": 804,
   "skipped": 27,
-  "searched": 775,
-  "hit": 234,
+  "searched": 777,
+  "hit": 236,
   "noMatch": 541,
-  "lastUpdated": "2026-07-02T00:20:28.663Z",
+  "lastUpdated": "2026-07-02T23:29:32.381Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -19,7 +19,7 @@
     "evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth": 1,
     "project-ops/generative-ai-mlops-pipeline-design-patterns": 1,
     "agents/gpt-5-5-agent-model-evaluation-integration-strategies": 1,
-    "solutions/llm-generation/2026-04-20-post-gen-validation-loop": 1,
+    "solutions/llm-generation/2026-04-20-post-gen-validation-loop": 2,
     "solutions/README.md/README": 2,
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 3,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
@@ -27,7 +27,7 @@
     "reports/closed-loop-health": 31,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
-    "infrastructure/github-actions-billing-block-diagnosis-recovery": 10,
+    "infrastructure/github-actions-billing-block-diagnosis-recovery": 11,
     "context-engineering/nextjs-instrumentation-location": 4,
     "solutions/ci-github-actions/2026-05-02-notify-workers-guard-skip-cascade-gap": 2,
     "context-engineering/agentic-cycle-state-json-carry-over-design": 8,
@@ -49,7 +49,7 @@
     "retros/2026-05-08-cycles-286-290": 6,
     "solutions/ci-github-actions/_compiled-truth": 2,
     "retros/2026-05-12-cycles-305-307": 7,
-    "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 5,
+    "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 6,
     "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
     "retros/2026-05-13-cycles-452-455": 6,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 9,
@@ -70,7 +70,7 @@
     "retros/2026-05-13-cycles-457-458": 1,
     "infrastructure/sentry-pii-scrubbing-beforesend": 1,
     "retros/2026-05-12-cycles-327-330": 2,
-    "retros/2026-05-12-cycles-377-378": 1,
+    "retros/2026-05-12-cycles-377-378": 2,
     "infrastructure/sentry-serverless-flush": 1,
     "retros/2026-05-12-cycles-320-322": 4,
     "retros/2026-05-12-cycles-314-319": 5,
@@ -198,7 +198,9 @@
     "retros/2026-05-21-cycles-948-950": 1,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
     "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
-    "retros/2026-05-20-cycles-928-929": 1
+    "retros/2026-05-20-cycles-928-929": 1,
+    "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 1,
+    "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 1
   },
   "noMatchQueries": [
     {
@@ -798,5 +800,5 @@
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
     "catch-all category anti-pattern redistribute outliers preserve identity core": 1
   },
-  "totalQueries": 846
+  "totalQueries": 848
 }
