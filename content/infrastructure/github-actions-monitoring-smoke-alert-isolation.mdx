@@ -1,0 +1,98 @@
+---
+title: GitHub Actions 모니터링 job 설계 — smoke test / alert step 격리
+category: infrastructure
+date: "2026-07-03"
+tags:
+  - github-actions
+  - monitoring
+  - health-check
+  - infrastructure
+  - observability
+workers:
+  - all
+confidence: 2
+last_verified: "2026-07-03"
+connections: [infrastructure/gemini-api-http-status-key-health-classification, infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture]
+status: complete
+description: "GH Actions 모니터링 job 에서 smoke test(감지)와 alert(알림) 을 격리하지 않으면 alerting step 실패 시 job 전체 FAIL → 감지 결과가 issue 생성 없이 로그에만 남아 가시성 저하."
+type: entry
+source: manual
+---
+
+## 문제
+
+```yaml
+steps:
+  - name: smoke test     # 결과: PRIMARY 503, FALLBACK 503, FALLBACK_2 OK
+  - name: alert (issue 생성)  # GH_REPO 없어 실패 → exit 1 → job FAIL
+```
+
+- `smoke test` 는 성공적으로 키 상태를 감지
+- `alert` step 이 실패하면 **job 전체 FAIL** 표시
+- GH issue 미생성: 감지 결과가 Actions 로그에만 존재 (검색 어려움)
+- 실제 사례: `gemini-key-health.yml` 2026-07-02 — 503 감지 → issue 생성 실패 (GH_REPO 누락)
+
+## 격리 패턴
+
+### Pattern A — `continue-on-error: true` on alert step
+
+```yaml
+- name: 결과 알림 (issue 생성)
+  if: steps.smoke.outputs.unhealthy != ''
+  continue-on-error: true  # alert 실패 시 job GREEN 유지
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    GH_REPO: ${{ github.repository }}
+  run: |
+    gh issue create --title "..." --body "..."
+```
+
+**장점**: smoke test 결과가 job status 에 반영됨 (알림 실패 ≠ job 실패)  
+**단점**: alert 실패 무시 → alerting 인프라 버그 장기 방치 가능
+
+### Pattern B — 별도 job 으로 alert 분리
+
+```yaml
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    outputs:
+      unhealthy: ${{ steps.smoke.outputs.unhealthy }}
+    steps: [...]
+
+  alert:
+    needs: smoke
+    if: needs.smoke.outputs.unhealthy != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Issue 생성
+        ...
+```
+
+**장점**: smoke / alert 독립 상태 추적. smoke PASS + alert FAIL = 명확히 분리  
+**단점**: job 추가 → workflow 복잡도 증가
+
+### Pattern C — `|| true` exit code 방어
+
+```yaml
+run: |
+  gh issue create --title "..." --body "..." || \
+    echo "⚠️ issue 생성 실패 (alerting error)" >&2
+```
+
+**장점**: 단순. job FAIL 방지  
+**단점**: alert 실패 완전히 조용히 묻힘 (로그에만)
+
+## 선택 기준
+
+| 우선순위 | smoke 결과 중요도 | alert 신뢰도 | 권장 |
+|---|---|---|---|
+| 감지 가시성 최우선 | HIGH | 불안정 | Pattern A |
+| alerting 신뢰성 모니터링 필요 | HIGH | HIGH | Pattern B |
+| 단순 유지 | LOW | 낮아도 됨 | Pattern C |
+
+## 현황 (`gemini-key-health.yml`)
+
+현재 구조: smoke + alert 같은 step chain. alert 실패 시 job FAIL.  
+적용된 수정: GH_REPO env 추가 + 503 TRANSIENT 분류로 alert 진입 빈도 감소.  
+추천: Pattern A (`continue-on-error: true`) 추가 — alert 인프라 버그 재발 방어.

@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T23:46:06.734Z
+Updated: 2026-07-02T23:47:34.878Z
 
-## 엔트리 (371개)
+## 엔트리 (372개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -308,6 +308,7 @@ Updated: 2026-07-02T23:46:06.734Z
 - [Gemini API HTTP 상태코드 → key 건강 분류 패턴](wiki/infrastructure/gemini-api-http-status-key-health-classification) — confidence: 2, status: complete
 - [GitHub Actions Billing Block — 진단 및 복구 패턴](wiki/infrastructure/github-actions-billing-block-diagnosis-recovery) — confidence: 3, status: complete
 - [GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)](wiki/infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env) — confidence: 2, status: complete
+- [GitHub Actions 모니터링 job 설계 — smoke test / alert step 격리](wiki/infrastructure/github-actions-monitoring-smoke-alert-isolation) — confidence: 2, status: complete
 - [GITHUB_TOKEN Anti-Recursion — Workflow Trigger Gap](wiki/infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger) — confidence: 4, status: complete
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/infrastructure/guard-test-pattern) — confidence: 3, status: complete
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/infrastructure/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
@@ -1609,6 +1610,9 @@ Updated: 2026-07-02T23:46:06.734Z
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
+- infrastructure/github-actions-monitoring-smoke-alert-isolation ↔ infrastructure/gemini-api-http-status-key-health-classification
+- infrastructure/github-actions-monitoring-smoke-alert-isolation ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
+- infrastructure/github-actions-monitoring-smoke-alert-isolation ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger ↔ infrastructure/agentic-ci-deploy-budget-batch-push-policy
 - infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger ↔ infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern
