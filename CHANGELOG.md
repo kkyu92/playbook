@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.93] — 2026-07-03
+
+### Fixed
+- `gemini-key-health.yml` issue 생성 실패 해소 (cycle 1290, commit `f8ca916d`): checkout 없는 job 에서 `gh issue create` 가 `fatal: not a git repository` 로 실패. `GH_REPO: ${{ github.repository }}` env 추가로 gh CLI 가 git context 없이 동작.
+
+### Changed
+- wiki 368 entries, 2418 edges (변화 없음).
+- cycles 1288-1291 chain: curate × 1 / SE #376 retro-only × 1 / fix-incident × 1 / skill-evolution × 1.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 278 / origin 98 (2026-07-03). `incident-auto-close.yml` + `gemini-key-health.yml` fix push 포함.
+- **[P1] moneyball repo**: ws/vite CVE 미해소.
+
 ## [0.9.92] — 2026-07-02
 
 ### Added
