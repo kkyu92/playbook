@@ -4,6 +4,30 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.98] — 2026-07-03
+
+### Batch Summary — cycles 1290-1309 (N=20)
+
+#### Fixed
+- `gemini-key-health.yml` GH_REPO env 추가 (cycle 1290): checkout 없는 job 에서 `gh issue create` 실패 해소.
+- `gemini-key-health.yml` 503/500 TRANSIENT 분류 (cycle 1296): 서버 일시 과부하 false-positive alert 차단.
+
+#### Added
+- wiki entry #288 `infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env`
+- wiki entry #289 `infrastructure/gemini-api-http-status-key-health-classification`
+- wiki entry #290 `infrastructure/vercel-deploy-rate-limit-auto-merge-blocked`
+- wiki entry #291 `infrastructure/github-actions-monitoring-smoke-alert-isolation`
+
+#### Changed
+- wiki 372 entries, 2429 edges.
+- SE #376 (cycle 1291) retro-only: worker-incident-triage 자연 oscillation. oscillation_n 218.
+- SE #377 (cycle 1300) milestone retro-only. oscillation_n 219.
+
+#### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 305+ / origin 98. push/rebase 필요.
+- **[P0] PR #2138**: Vercel rate-limit blocked since 2026-06-29. empty commit retrigger 필요.
+- **[P1] moneyball repo**: ws/vite CVE 미해소.
+
 ## [0.9.97] — 2026-07-03
 
 ### Added
