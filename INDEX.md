@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T00:15:38.233Z
+Updated: 2026-07-02T00:18:39.375Z
 
 ## 엔트리 (367개)
 
@@ -928,6 +928,7 @@ Updated: 2026-07-02T00:15:38.233Z
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+- context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/embedding-index-staleness-detection-after-slug-migration
 - context-engineering/agentic-chain-dormancy-phase-map ↔ context-engineering/agentic-diagnosis-source-diversity-chain-selection-balance
 - context-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-chain-saturation-detection
 - context-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
@@ -1184,6 +1185,7 @@ Updated: 2026-07-02T00:15:38.233Z
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+- context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ context-engineering/embedding-index-staleness-detection-after-slug-migration
 - context-engineering/zerostack-rust-agent-harness-extension ↔ project-ops/production-db-ai-agent-guardrails
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
