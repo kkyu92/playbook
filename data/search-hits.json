@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 797,
+  "totalInvocations": 802,
   "skipped": 27,
-  "searched": 770,
-  "hit": 232,
-  "noMatch": 538,
-  "lastUpdated": "2026-07-02T00:17:53.152Z",
+  "searched": 775,
+  "hit": 234,
+  "noMatch": 541,
+  "lastUpdated": "2026-07-02T00:20:28.663Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -127,7 +127,7 @@
     "infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback": 3,
     "infrastructure/agentic-git-commit-body-dispatch-transport": 4,
     "context-engineering/agentic-skill-evolution-convergence-maturity-signal": 4,
-    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 3,
+    "context-engineering/jit-embedding-retrieval-context-cost-scale-invariant": 4,
     "harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery": 2,
     "journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade": 2,
     "context-engineering/agentic-supervisor-session-liveness-contract": 1,
@@ -174,7 +174,7 @@
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 1,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 4,
-    "retros/2026-05-22-cycles-1006-1012": 6,
+    "retros/2026-05-22-cycles-1006-1012": 7,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 1,
     "context-engineering/agentic-wiki-confidence-lifecycle": 1,
@@ -197,7 +197,8 @@
     "solutions/ci-github-actions/2026-05-01-notify-workers-heredoc-eof-gap": 1,
     "retros/2026-05-21-cycles-948-950": 1,
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
-    "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1
+    "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
+    "retros/2026-05-20-cycles-928-929": 1
   },
   "noMatchQueries": [
     {
@@ -694,6 +695,21 @@
       "query": "BRANCHED divergence steady state periodic merge resolution strategy",
       "timestamp": "2026-07-02T00:17:53.151Z",
       "topScore": 0.8314
+    },
+    {
+      "query": "prompt versioning systematic iteration comparison regression",
+      "timestamp": "2026-07-02T00:19:56.284Z",
+      "topScore": 0.8495
+    },
+    {
+      "query": "knowledge organization taxonomy specificity merge vs split tradeoff",
+      "timestamp": "2026-07-02T00:20:14.729Z",
+      "topScore": 0.8259
+    },
+    {
+      "query": "catch-all category anti-pattern redistribute outliers preserve identity core",
+      "timestamp": "2026-07-02T00:20:28.662Z",
+      "topScore": 0.8407
     }
   ],
   "noMatchQueryCounts": {
@@ -777,7 +793,10 @@
     "embedding freshness staleness detection monitoring automated check": 1,
     "review-code code quality simplify health score improvement": 1,
     "automated testing strategy wiki content quality validation regression": 1,
-    "BRANCHED divergence steady state periodic merge resolution strategy": 1
+    "BRANCHED divergence steady state periodic merge resolution strategy": 1,
+    "prompt versioning systematic iteration comparison regression": 1,
+    "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
+    "catch-all category anti-pattern redistribute outliers preserve identity core": 1
   },
-  "totalQueries": 841
+  "totalQueries": 846
 }
