@@ -4,6 +4,20 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.97] — 2026-07-03
+
+### Added
+- wiki entry #291 `infrastructure/github-actions-monitoring-smoke-alert-isolation` (cycle 1303): GH Actions monitoring job smoke/alert step 격리 패턴. alert step 실패 시 감지 결과 가시성 저하 — `continue-on-error` / 별도 job 분리 설계 비교.
+
+### Changed
+- wiki 372 entries, 2429 edges.
+- cross-links: #288→#289, #289→#290, #291→{#288,#289} 추가 (2429 edges).
+- cycles 1302-1303 chain: curate × 1 / explore-idea × 1.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 300+ / origin 98. 3+ local-only fixes pending.
+- **[P0] PR #2138**: Vercel rate-limit blocked. empty commit retrigger 필요.
+
 ## [0.9.96] — 2026-07-03
 
 ### Added
