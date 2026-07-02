@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T23:31:20.021Z
+Updated: 2026-07-02T23:34:59.578Z
 
-## 엔트리 (369개)
+## 엔트리 (370개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -305,6 +305,7 @@ Updated: 2026-07-02T23:31:20.021Z
 - [Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴](wiki/infrastructure/develop-cycle-feature-branch-vercel-dispatch-noise) — confidence: 3, status: complete
 - [Fail-Loud 패턴 부분 적용 함정 — try/catch escape hatch 미제거로 보호막 무력화](wiki/infrastructure/fail-loud-partial-adoption-escape-hatch-trap) — confidence: 2, status: complete
 - [Feature Flag 수명 주기 — 비활성 플래그 dead code 감지 및 정리 타이밍](wiki/infrastructure/feature-flag-dead-code-cleanup-timing) — confidence: 2, status: complete
+- [Gemini API HTTP 상태코드 → key 건강 분류 패턴](wiki/infrastructure/gemini-api-http-status-key-health-classification) — confidence: 2, status: complete
 - [GitHub Actions Billing Block — 진단 및 복구 패턴](wiki/infrastructure/github-actions-billing-block-diagnosis-recovery) — confidence: 3, status: complete
 - [GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)](wiki/infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env) — confidence: 2, status: complete
 - [GITHUB_TOKEN Anti-Recursion — Workflow Trigger Gap](wiki/infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger) — confidence: 4, status: complete
@@ -1600,6 +1601,8 @@ Updated: 2026-07-02T23:31:20.021Z
 - infrastructure/fail-loud-partial-adoption-escape-hatch-trap ↔ infrastructure/recurring-file-bug-accumulator-pattern
 - infrastructure/feature-flag-dead-code-cleanup-timing ↔ project-ops/question-own-defaults
 - infrastructure/feature-flag-dead-code-cleanup-timing ↔ context-engineering/drift-detection-methodology
+- infrastructure/gemini-api-http-status-key-health-classification ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
+- infrastructure/gemini-api-http-status-key-health-classification ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-actions-billing-block-diagnosis-recovery

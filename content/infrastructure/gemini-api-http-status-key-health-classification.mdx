@@ -1,0 +1,94 @@
+---
+title: Gemini API HTTP 상태코드 → key 건강 분류 패턴
+category: infrastructure
+date: "2026-07-03"
+tags:
+  - gemini
+  - api
+  - health-check
+  - infrastructure
+  - monitoring
+workers:
+  - all
+confidence: 2
+last_verified: "2026-07-03"
+connections: [infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture]
+status: complete
+description: "Gemini API 상태코드를 key 건강 기준으로 분류. 503(일시적 과부하)을 unhealthy 로 오분류하면 false-positive alert 발생. 영구 실패(401/403/limit:0)와 일시 실패(503/500) 구분이 핵심."
+type: entry
+source: manual
+---
+
+## 배경
+
+`gemini-key-health.yml` 2026-07-02: PRIMARY/FALLBACK 모두 HTTP 503 → `unhealthy` 분류 → issue 생성 시도. 실제 원인은 Gemini 서버 일시 과부하 (서비스 메시지: "high demand, try later") — key 자체 문제 아님.
+
+## 분류 기준
+
+| HTTP 코드 | 의미 | key 건강 판정 | 처리 |
+|---|---|---|---|
+| **200** | 정상 응답 | ✅ HEALTHY | 정상 |
+| **429** + `limit: 0` | quota 0 할당 (영구) | ❌ UNHEALTHY | alert + issue 생성 |
+| **429** + `RESOURCE_EXHAUSTED` | 일일 한도 소진 (일시) | ⚠️ QUOTA_EXCEEDED | 경고 (alert X) |
+| **503** | 서버 일시 과부하 | ⏳ TRANSIENT | 재시도 1회 후 skip |
+| **500** | 서버 내부 오류 (일시) | ⏳ TRANSIENT | 재시도 1회 후 skip |
+| **401 / 403** | 인증 실패 (영구) | ❌ UNHEALTHY | alert + issue 생성 |
+| **기타** | 미분류 | ❌ UNHEALTHY | alert + issue 생성 |
+
+## 올바른 `test_one()` 패턴
+
+```bash
+test_one() {
+  local name=$1 key=$2
+  [ -z "$key" ] && { REPORT+="- ${name}: SKIP (unset)\n"; return 0; }
+
+  # 1회 시도
+  local CODE
+  CODE=$(curl -s -o /tmp/r.json -w "%{http_code}" \
+    -X POST -H "Content-Type: application/json" \
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$key" \
+    -d '{"contents":[{"parts":[{"text":"Reply OK."}]}]}')
+
+  case "$CODE" in
+    200)
+      REPORT+="- ${name}: ✅ HEALTHY\n"; return 0 ;;
+    429)
+      local msg; msg=$(jq -r '.error.message' /tmp/r.json 2>/dev/null | head -c 200)
+      if echo "$msg" | grep -qi "limit: 0"; then
+        REPORT+="- ${name}: ❌ limit:0 (quota 0 할당)\n"
+        UNHEALTHY+="${name} (limit:0) / "
+      else
+        REPORT+="- ${name}: ⚠️ QUOTA_EXCEEDED (일일 한도, 정상)\n"
+      fi; return 0 ;;
+    503|500)
+      # 일시 과부하 — 1회 재시도
+      sleep 5
+      local CODE2
+      CODE2=$(curl -s -o /tmp/r2.json -w "%{http_code}" ...)
+      if [ "$CODE2" = "200" ]; then
+        REPORT+="- ${name}: ✅ HEALTHY (retry ok)\n"; return 0
+      fi
+      REPORT+="- ${name}: ⏳ TRANSIENT ${CODE} (retry ${CODE2})\n"; return 0 ;;
+    *)
+      local body; body=$(head -c 300 /tmp/r.json)
+      REPORT+="- ${name}: ❌ HTTP ${CODE} — ${body}\n"
+      UNHEALTHY+="${name} (HTTP ${CODE}) / " ;;
+  esac
+}
+```
+
+## 실증 (2026-07-02)
+
+```
+PRIMARY:   ❌ HTTP 503 → 오분류 unhealthy
+FALLBACK:  ❌ HTTP 503 → 오분류 unhealthy
+FALLBACK_2: ✅ HEALTHY
+```
+
+503은 key 자체 문제 아님 (Gemini 서버 일시 과부하). false-positive alert → issue 생성 시도 → `fatal: not a git repository` 오류 ([GH_REPO env 해결법]참조).
+
+## 설계 원칙
+
+1. **영구 실패 구분**: `limit:0` (quota 0) / 401/403 (auth) 만 진짜 key 문제
+2. **일시 실패 skip**: 503/500은 서버 문제, key 교체로 해결 안 됨
+3. **FALLBACK 역할**: FALLBACK_2가 healthy면 서비스 계속 — PRIMARY 503 = 비상은 아님
