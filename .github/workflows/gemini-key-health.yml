@@ -55,7 +55,14 @@ jobs:
               return 0
             fi
 
-            # 200 / 429 외 모두 unhealthy
+            # 503 / 500 = 서버 일시 과부하 — key 문제 아님, 알림 skip
+            if [ "$CODE" = "503" ] || [ "$CODE" = "500" ]; then
+              local body; body=$(head -c 200 /tmp/r.json)
+              REPORT="${REPORT}- ${name}: ⏳ TRANSIENT HTTP ${CODE} (서버 일시 과부하, key 정상)"$'\n'
+              return 0
+            fi
+
+            # 401 / 403 / 기타 = key auth 실패 또는 미분류 unhealthy
             local body
             body=$(head -c 300 /tmp/r.json)
             REPORT="${REPORT}- ${name}: ❌ HTTP ${CODE} — ${body}"$'\n'
