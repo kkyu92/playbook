@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 813,
+  "totalInvocations": 816,
   "skipped": 27,
-  "searched": 786,
-  "hit": 245,
-  "noMatch": 541,
-  "lastUpdated": "2026-07-02T23:37:54.758Z",
+  "searched": 789,
+  "hit": 247,
+  "noMatch": 542,
+  "lastUpdated": "2026-07-02T23:42:03.131Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -104,7 +104,7 @@
     "retros/2026-05-12-cycles-342-346": 3,
     "infrastructure/agentic-lite-first-scan-gate-execution-pattern": 3,
     "journal/playbook-journal-005-moneyballscore-playbook-e2e": 1,
-    "infrastructure/vercel-ignore-command-preview-skip": 2,
+    "infrastructure/vercel-ignore-command-preview-skip": 3,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 2,
     "retros/2026-05-12-cycles-299-301": 1,
@@ -199,13 +199,14 @@
     "harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback": 1,
     "data-engineering/rag-embedding-update-pipeline-realtime-strategies": 1,
     "retros/2026-05-20-cycles-928-929": 1,
-    "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 1,
+    "solutions/llm-generation/2026-04-23-model-tier-quota-per-account": 2,
     "infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger": 2,
     "retros/2026-05-21-cycles-937-945": 2,
     "agents/concurrent-fault-tolerant-ai-workflow-design-patterns": 2,
     "infrastructure/cross-fork-feedback-sync": 1,
     "agents/multi-stage-agent-task-scheduling-monitoring": 1,
-    "prompt-engineering/llm-workflow-orchestration-business-logic-patterns": 1
+    "prompt-engineering/llm-workflow-orchestration-business-logic-patterns": 1,
+    "infrastructure/gemini-api-http-status-key-health-classification": 1
   },
   "noMatchQueries": [
     {
@@ -717,6 +718,11 @@
       "query": "catch-all category anti-pattern redistribute outliers preserve identity core",
       "timestamp": "2026-07-02T00:20:28.662Z",
       "topScore": 0.8407
+    },
+    {
+      "query": "auto-merge disabled Vercel deployment rate limited build queue overflow",
+      "timestamp": "2026-07-02T23:42:03.130Z",
+      "topScore": 0.8482
     }
   ],
   "noMatchQueryCounts": {
@@ -803,7 +809,8 @@
     "BRANCHED divergence steady state periodic merge resolution strategy": 1,
     "prompt versioning systematic iteration comparison regression": 1,
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
-    "catch-all category anti-pattern redistribute outliers preserve identity core": 1
+    "catch-all category anti-pattern redistribute outliers preserve identity core": 1,
+    "auto-merge disabled Vercel deployment rate limited build queue overflow": 1
   },
-  "totalQueries": 857
+  "totalQueries": 860
 }
