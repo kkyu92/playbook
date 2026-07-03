@@ -2977,3 +2977,9 @@
 - GitHub Actions workflows (Gemini pipelines)
 - Hub-worker slash commands (`.claude/commands/`)
 - Sample journal entry (playbook-journal-000-bootstrap)
+
+## [0.9.106] — 2026-07-04
+
+### Added
+- entry #299 `harness-engineering/backfill-bidirectional-curate-pass-pattern` — backfill-bidirectional curate 패스 패턴 (636 links, cap-exceeded 가지치기, lint 검증)
+

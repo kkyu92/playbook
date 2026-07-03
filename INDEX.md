@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:54:02.406Z
+Updated: 2026-07-03T23:59:02.961Z
 
-## 엔트리 (379개)
+## 엔트리 (380개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -106,6 +106,7 @@ Updated: 2026-07-03T23:54:02.406Z
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [backfill-bidirectional 대규모 curate 패스 — 한 번에 위키 전체 교차 연결 보강](wiki/harness-engineering/backfill-bidirectional-curate-pass-pattern) — confidence: 2, status: complete
 - [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) — confidence: 2, status: complete
 - [BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴](wiki/harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) — confidence: 3, status: complete
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
@@ -1444,6 +1445,10 @@ Updated: 2026-07-03T23:54:02.406Z
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/agentic-git-commit-body-dispatch-transport
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/agentic-retro-soft-scheduling-recommendation-signal
+- harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ harness-engineering/branched-state-cherry-pick-orphan-connection-cascade
+- harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ context-engineering/agentic-wiki-connection-graph-health-metrics
+- harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ context-engineering/batch-session-content-jit-search-coverage-gap
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/claude-plan-rate-limit-cron-automation-resilience

@@ -1,0 +1,81 @@
+---
+title: backfill-bidirectional 대규모 curate 패스 — 한 번에 위키 전체 교차 연결 보강
+category: harness-engineering
+date: "2026-07-04"
+tags:
+  - curate
+  - backfill-bidirectional
+  - connections
+  - structural-health
+  - batch-curate
+  - wiki-graph
+confidence: 2
+connections: [harness-engineering/branched-state-cherry-pick-orphan-connection-cascade, context-engineering/agentic-wiki-connection-graph-health-metrics, harness-engineering/branched-state-local-lint-false-positive-signal-drift, context-engineering/batch-session-content-jit-search-coverage-gap]
+status: complete
+description: scripts/backfill-bidirectional.mjs를 위키 전체에 한 번 실행하는 curate 패스 — entry N개 추가 후 단방향 connections 보완, 누락 역방향 링크 일괄 추가. cap-exceeded 가지치기, lint 검증, edge 증가량 측정 방법.
+type: entry
+source: harness-engineering
+---
+
+`scripts/backfill-bidirectional.mjs`를 위키 전체에 한 번 실행하면 모든 단방향 connections을 양방향으로 보완한다. wiki entry를 여러 개 추가한 후 교차 연결이 불충분할 때 사용하는 일괄 curate 패스.
+
+## 언제 사용
+
+- 배치 세션(N=10+)에서 entry 다수 추가 후 역방향 connections 누락 의심
+- `lint-content.mjs` 실행 시 Isolated Nodes 0이지만 graph density가 낮음
+- `generate-content-manifest.mjs` 출력 edges 수가 entries 대비 낮을 때 (예: 379 entries / 2448 edges)
+
+## 실행
+
+```bash
+cd ~/projects/playbook
+node scripts/backfill-bidirectional.mjs 2>&1 | tail -10
+```
+
+## 실제 결과 (2026-07-04, cycle 1327)
+
+- entries: 379개
+- 추가된 links: 636개 bidirectional
+- 가지치기(cap-exceeded): 251개 — connections 상한 초과 entry 에서 pruned
+- 총 edges: 2448 → 2582 (134 net 증가)
+- 소요 시간: ~30초
+
+## 검증 절차
+
+```bash
+# 1. manifest 재생성 (edge count 확인)
+node scripts/generate-content-manifest.mjs 2>&1 | grep "edges"
+# 출력: ✅ Manifest generated: 379 entries, 379 nodes, 2582 edges
+
+# 2. lint clean 확인 (orphan 0 필수)
+node scripts/lint-content.mjs 2>&1 | grep -E "Orphan|Isolated"
+# 정상: ✓ Orphan Links: 0건
+```
+
+## cap-exceeded 가지치기 동작
+
+backfill-bidirectional은 entry당 connections 최대 개수를 초과하면 추가를 skip(pruning)한다. pruned 수가 많으면 일부 역방향 링크가 누락되지만 lint orphan은 발생하지 않는다(상대 entry의 단방향이 남음).
+
+**판단 기준**: `추가 636건 / 가지치기 251건` → 약 28% pruned = 정상 범위. 50%+ pruned이면 connections cap 값 검토.
+
+## 주의사항
+
+### BRANCHED 상태에서 실행
+
+origin/main 에만 있는 entry를 참조하는 connections이 추가될 수 있다 → cherry-pick 후 orphan 발생 패턴과 유사. 실행 후 반드시 lint 확인.
+
+### embeddings.json 갱신 필요
+
+backfill-bidirectional 실행 후 connections 배열이 변경됨 → `pnpm embed-content` 로 재생성 (156초). JIT 검색이 갱신된 connections 반영하려면 필수. 단, 커밋 전에 반드시 lint clean 확인 후 실행.
+
+## commit 패턴
+
+```bash
+git add content/ INDEX.md
+git commit -m "content: curate — cross-links backfill-bidirectional N links (M entries, E edges)"
+```
+
+## 연관 패턴
+
+- [[harness-engineering/branched-state-cherry-pick-orphan-connection-cascade]]: cherry-pick 후 orphan 발생 — backfill 전 lint 필요한 이유
+- [[context-engineering/agentic-wiki-connection-graph-health-metrics]]: graph health 지표 전체 맥락
