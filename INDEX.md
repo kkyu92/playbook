@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:28:23.014Z
+Updated: 2026-07-03T23:31:33.189Z
 
 ## 엔트리 (373개)
 
@@ -1495,6 +1495,9 @@ Updated: 2026-07-03T23:28:23.014Z
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ context-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ project-ops/question-own-defaults
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ context-engineering/agentic-chain-dormancy-phase-map
 - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
@@ -1924,6 +1927,3 @@ Updated: 2026-07-03T23:28:23.014Z
 - reports/week-2026-25 ↔ reports/week-2026-24
 - reports/week-2026-26 ↔ reports/week-2026-25
 - reports/week-2026-27 ↔ reports/week-2026-26
-- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-push-defer-divergence-concurrent-writes
-- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
-- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/branched-state-branch-creation-origin-main-pattern
