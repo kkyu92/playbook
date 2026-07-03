@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:47:08.974Z
+Updated: 2026-07-03T23:49:55.777Z
 
-## 엔트리 (377개)
+## 엔트리 (378개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -106,6 +106,7 @@ Updated: 2026-07-03T23:47:08.974Z
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) — confidence: 2, status: complete
+- [BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴](wiki/harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) — confidence: 3, status: complete
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트](wiki/harness-engineering/github-actions-workflow-zero-second-failure-diagnosis) — confidence: 2, status: complete
@@ -1502,6 +1503,9 @@ Updated: 2026-07-03T23:47:08.974Z
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/claude-plan-rate-limit-cron-automation-resilience
+- harness-engineering/branched-state-cherry-pick-orphan-connection-cascade ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- harness-engineering/branched-state-cherry-pick-orphan-connection-cascade ↔ harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main
+- harness-engineering/branched-state-cherry-pick-orphan-connection-cascade ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state

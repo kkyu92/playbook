@@ -1,0 +1,96 @@
+---
+title: BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴
+category: harness-engineering
+date: "2026-07-04"
+tags:
+  - git
+  - cherry-pick
+  - branched-state
+  - orphan
+  - connections
+  - lint
+  - cascade
+confidence: 3
+connections: [harness-engineering/branched-state-local-lint-false-positive-signal-drift, harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked]
+status: complete
+description: PR을 origin/main 기반으로 생성하고 local main에 cherry-pick할 때 발생하는 connections 불일치 — origin-only entry를 참조하는 연결이 orphan link로 감지되는 cascade와 즉각 수정 절차.
+type: entry
+source: harness-engineering
+---
+
+PR을 origin/main 기반으로 생성하고 BRANCHED 상태의 local main에 cherry-pick하면 connections가 origin-only entry를 참조해 orphan link가 발생한다.
+
+## 발생 메커니즘
+
+```
+1. PR #2138 생성 (origin/main 기반)
+   connections: [agentic-push-defer..., agentic-branched-state-jit..., ...]
+   → 이 entry들은 origin/main에만 존재
+
+2. cherry-pick to local main
+   → entry 파일 추가됨
+   → connections는 그대로 (origin-only 슬러그 포함)
+
+3. node scripts/lint-content.mjs
+   → "Orphan Links: 3건" 감지
+   → harness-engineering/agentic-push-defer... (없음)
+```
+
+## 실제 사례 (cycle 1312-1313)
+
+PR #2138 cherry-pick 후:
+```
+⚠ Orphan Links:        3건
+  harness-engineering/branched-state-local-lint-false-positive-signal-drift
+    → harness-engineering/agentic-push-defer-divergence-concurrent-writes
+    → harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
+    → harness-engineering/branched-state-branch-creation-origin-main-pattern
+```
+
+3 entry 모두 `git ls-tree -r origin/main --name-only | grep <slug>` 로 확인 → origin/main에만 존재.
+
+## 즉각 수정 절차
+
+```bash
+# 1. 어떤 orphan인지 확인
+node scripts/lint-content.mjs 2>&1 | grep "→"
+
+# 2. origin에 존재하는지 확인
+git ls-tree -r origin/main --name-only | grep "<orphan-slug>"
+
+# 3. local main에 있는 대체 entry 찾기
+ls content/<category>/ | grep -E "<관련 키워드>"
+
+# 4. connections 수정
+# - orphan slug 제거
+# - 의미상 유사한 local-existing slug로 교체
+
+# 5. 재생성 + 검증
+node scripts/generate-content-manifest.mjs
+node scripts/lint-content.mjs 2>&1 | head -10
+```
+
+## 대체 connection 선택 기준
+
+| 우선순위 | 기준 | 예시 |
+|---------|------|------|
+| 1 | 동일 category, 유사 주제 | `agentic-hub-phase-lock-steady-state` |
+| 2 | 동일 topic의 다른 각도 | `skill-evolution-oscillation-skip-condition-steady-state` |
+| 3 | 상위 개념 entry | `zero-touch-develop-cycle-session-management` |
+| 피할 것 | 무관한 entry | - |
+
+## 예방 전략
+
+cherry-pick 시 즉시 lint 실행을 workflow에 포함:
+
+```bash
+git cherry-pick <commit> --no-commit
+git status  # 변경 확인
+node scripts/lint-content.mjs 2>&1 | grep "Orphan"  # 즉시 확인
+# orphan 없으면 commit, 있으면 connections 먼저 수정 후 commit
+```
+
+## 연관 패턴
+
+- cherry-pick 결정: [[harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main]]
+- BRANCHED lint false-positive: [[harness-engineering/branched-state-local-lint-false-positive-signal-drift]]
