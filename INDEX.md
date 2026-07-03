@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:44:44.503Z
+Updated: 2026-07-03T23:47:08.974Z
 
-## 엔트리 (376개)
+## 엔트리 (377개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -371,6 +371,7 @@ Updated: 2026-07-03T23:44:44.503Z
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/project-ops/question-own-defaults) — confidence: 3, status: complete
 - [AI-Generated React Code Validation — Enhancing Pipelines with React Doctor Static Analysis](wiki/project-ops/react-doctor-ai-code-validation-pipeline) — confidence: 1, status: draft
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/project-ops/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
+- [TODOS.md P-Priority 반복 이슈 카운터 유지 패턴 — 누적 이력 없이 최신 상태만 추적](wiki/project-ops/todos-priority-recurring-issue-counter-pattern) — confidence: 2, status: complete
 
 ### Data Engineering
 - [LLM 데이터셋 구축: 고품질 학습 및 파인튜닝 전략](wiki/data-engineering/llm-data-acquisition-high-quality-datasets) — confidence: 1, status: draft
@@ -1894,6 +1895,8 @@ Updated: 2026-07-03T23:44:44.503Z
 - project-ops/production-db-ai-agent-guardrails ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
 - project-ops/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows
+- project-ops/todos-priority-recurring-issue-counter-pattern ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- project-ops/todos-priority-recurring-issue-counter-pattern ↔ project-ops/question-own-defaults
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/prompt-versioning-and-testing
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/dynamic-prompt-routing-multi-llm-cost-performance
