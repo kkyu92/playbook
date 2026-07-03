@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.102] — 2026-07-04
+
+### Added
+- wiki entry #295 `harness-engineering/github-actions-workflow-zero-second-failure-diagnosis` (cycle 1318): GH Actions 워크플로 0초 실패 (jobs 없음) 원인 진단 체크리스트. YAML 파싱 오류 / 권한 부족 / 이벤트 필터 / 브랜치 버전 불일치.
+
+### Changed
+- wiki 376 entries, 2440 edges.
+
 ## [0.9.101] — 2026-07-04
 
 ### Added
