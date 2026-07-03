@@ -1,0 +1,95 @@
+---
+title: Claude Plan 일일 한도 — cron 자동화에서 rate limit 충돌 패턴과 복구 설계
+category: infrastructure
+date: "2026-07-04"
+tags:
+  - claude-cli
+  - rate-limit
+  - cron-automation
+  - self-hosted-runner
+  - healthcheck
+  - resilience
+  - blog-autopilot
+confidence: 2
+connections: [infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern, harness-engineering/agentic-hub-phase-lock-steady-state]
+status: complete
+description: Claude Plan (Pro/Max) 의 일일 Sonnet 사용 한도가 cron 자동화 워크플로 실행 중 소진될 때 발생하는 실패 패턴. healthcheck 설계로 조기 감지 + graceful skip 전략.
+type: entry
+source: infrastructure
+---
+
+Claude CLI 를 사용하는 cron 자동화(blog-autopilot 등)에서 Claude Plan 일일 Sonnet 한도 소진 시 발생하는 실패 패턴과 복구 전략.
+
+## 증상
+
+```
+stdout: You've hit your Sonnet limit · resets 7pm (Asia/Seoul)
+```
+
+`claude --print 'ok'` 실행 시 위 메시지와 함께 exit code 1. 이후 워크플로 전체 skip 또는 실패.
+
+## 발생 조건
+
+1. Claude Plan (Pro/Max) 의 일일 Sonnet 사용 한도 소진
+2. 소진 시점: 주로 야간 heavy 사용 후 cron 첫 실행 (자정 이후)
+3. 한도 리셋: 특정 KST 시간 (예: 19:00 KST)
+4. 영향: `claude CLI` 기반 self-hosted runner 워크플로 전체
+
+## 발생 사례
+
+**2026-06-27 01:17 KST** — blog-autopilot 자동 publish 워크플로:
+- healthcheck step: `claude --print 'ok'` 실패 (Sonnet limit)
+- 다음 KST 01:17 cron 에서 전체 publish skip 위험
+- Run URL: [blog-autopilot #28287328718](https://github.com/kkyu92/blog-autopilot/actions/runs/28287328718)
+
+## Rate limit vs Token 만료 구분
+
+| 증상 | 원인 | 복구 |
+|------|------|------|
+| `You've hit your Sonnet limit · resets HH:mm` | Plan 일일 한도 소진 | 시간 기다리거나 cron 재스케줄 |
+| `401 Unauthorized` / token error | 인증 토큰 만료 | `claude logout && claude login` 재인증 |
+| healthcheck 통과 → 중간 실패 | 실행 중 한도 소진 | 다음 run 자동 복구 (limit 리셋 후) |
+
+**핵심**: "Sonnet limit" 메시지 = rate limit. 재인증 불필요. 리셋 시간까지 대기.
+
+## 설계 패턴: healthcheck early-exit
+
+```yaml
+steps:
+  - name: Claude CLI healthcheck
+    id: healthcheck
+    run: |
+      if ! claude --print 'ok' 2>&1 | grep -q "^ok$"; then
+        echo "::warning::Claude rate limit or auth issue — skipping publish"
+        echo "skip=true" >> $GITHUB_OUTPUT
+      fi
+    continue-on-error: true
+
+  - name: Run publish
+    if: steps.healthcheck.outputs.skip != 'true'
+    run: npx tsx scripts/auto-publish.ts
+```
+
+**장점**: 한도 소진 시 publish skip (데이터 무결성 보호). 다음 cron 에서 자동 복구.
+
+## cron 재스케줄 전략
+
+한도 소진이 반복되면 cron 시간을 리셋 이후로 변경:
+
+```yaml
+# 한도 리셋: 19:00 KST = 10:00 UTC
+on:
+  schedule:
+    - cron: '30 10 * * *'  # 10:30 UTC = 19:30 KST (리셋 30분 후)
+```
+
+## 모니터링 포인트
+
+- healthcheck step 에 별도 alert 연결 (GH issue 자동 생성 또는 슬랙 알림)
+- 한도 소진 빈도가 주 1회+ 이면 usage 패턴 재검토
+- Max 구독 전환 검토 기준: 월 3회+ 한도 소진
+
+## 연쇄 영향
+
+- daily ingest cron 이 skip 되면 당일 컨텐츠 누락 (다음 날 정상 복구)
+- 긴 cron 갭 (2일+) 은 dashboard 지표에 빈값으로 표시
