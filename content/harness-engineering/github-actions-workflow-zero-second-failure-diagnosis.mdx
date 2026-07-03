@@ -1,0 +1,114 @@
+---
+title: GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트
+category: harness-engineering
+date: "2026-07-04"
+tags:
+  - github-actions
+  - workflow-failure
+  - debugging
+  - yaml
+  - permissions
+  - harness-engineering
+confidence: 2
+connections: [harness-engineering/branched-state-local-lint-false-positive-signal-drift, infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/github-actions-monitoring-smoke-alert-isolation]
+status: complete
+description: GH Actions 워크플로가 0초 만에 실패하고 jobs 목록이 비어 있을 때의 원인 분류와 진단 명령어. YAML 파싱 오류 / 권한 오류 / 이벤트 필터링 / 스케줄 지연 등.
+type: entry
+source: harness-engineering
+---
+
+`gh run list` 에서 `0s` duration, `jobs: []`, `failure` conclusion 조합이 나타날 때의 원인 진단 패턴.
+
+## 증상
+
+```bash
+gh run list --workflow my-workflow.yml
+# completed  failure  <commit message>  .github/workflows/my-workflow.yml  main  push  <run_id>  0s
+```
+
+`gh run view <run_id> --json status,conclusion,jobs`
+```json
+{"conclusion": "failure", "jobs": [], "status": "completed"}
+```
+
+## 원인 분류 및 진단
+
+### 1. YAML 파싱 오류 (가장 흔한 원인)
+
+워크플로 파일 자체에 YAML 구문 오류가 있으면 jobs 목록 자체가 구성되기 전에 실패.
+
+```bash
+# 로컬에서 YAML 유효성 검사
+python3 -c "import yaml; yaml.safe_load(open('.github/workflows/my-workflow.yml'))" && echo OK
+
+# GH Actions 워크플로 표준 린터
+# (actionlint 도구 사용 시)
+actionlint .github/workflows/my-workflow.yml
+```
+
+**특징**: 항상 0s, `jobs: []`, 모든 push/schedule 이벤트에서 재현.
+
+### 2. 이벤트 필터링 — 트리거 없는 이벤트로 실행 시도
+
+브랜치에 해당 이벤트 트리거가 없는데 GH Actions가 실행을 시도하는 경우.
+
+```yaml
+# 워크플로의 on: 절 확인
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 21 * * *"
+# push: 없는데 push 이벤트로 실행되면 → 0s failure
+```
+
+**발생 조건**: 
+- 다른 워크플로가 `gh workflow run` 또는 `workflow_call`로 이 워크플로를 호출 시
+- 브랜치 버전과 main 버전의 on: 절 불일치 시
+
+### 3. 권한 부족
+
+```yaml
+permissions:
+  issues: write  # 있는데
+```
+
+PR 브랜치를 bot이 push할 때, GITHUB_TOKEN 권한이 제한되어 job 시작 자체가 실패.
+
+**진단**: `gh run view <id> --json` 에서 `workflowRun.event` 확인. `push` 이벤트 + fork PR이면 권한 제한 적용.
+
+### 4. 스케줄 run의 이벤트 표시 오류
+
+`gh run list` 가 schedule 이벤트를 때때로 `push`로 잘못 표시하는 경우.
+
+**진단**: `gh run view <id> --json workflowRun` 에서 `event` 필드 직접 확인.
+
+### 5. 워크플로 파일 분기 버전 불일치
+
+PR 브랜치가 main과 다른 버전의 워크플로 파일을 가질 때.
+
+```bash
+# PR 브랜치의 워크플로 파일 확인
+git show origin/<pr-branch>:.github/workflows/my-workflow.yml | grep -A5 "^on:"
+# main의 버전과 비교
+git show origin/main:.github/workflows/my-workflow.yml | grep -A5 "^on:"
+```
+
+## 진단 순서
+
+```bash
+# 1. YAML 유효성
+python3 -c "import yaml; yaml.safe_load(open('.github/workflows/<wf>.yml'))" && echo OK
+
+# 2. 실제 이벤트 타입 확인
+gh run view <run_id> --json workflowRun 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('workflowRun',{}).get('event','?'))"
+
+# 3. origin/main 버전 on: 절 확인
+git show origin/main:.github/workflows/<wf>.yml | grep -A5 "^on:"
+
+# 4. 관련 다른 워크플로가 이 워크플로를 호출하는지 확인
+grep -r "<wf-name>" .github/workflows/ | grep -v "<wf-file>"
+```
+
+## 재발 사례
+
+**cycle 1318 (2026-07-04)**: `incident-auto-close.yml` 가 `push` 이벤트로 0s failure (5회 연속). 로컬 버전 YAML 정상, origin 버전 `push` 트리거 없음. 원인 미확정 — BRANCHED state 조사 carry-over.
