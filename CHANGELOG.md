@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.105] — 2026-07-04
+
+### Added
+- wiki entry #298 `context-engineering/batch-session-content-jit-search-coverage-gap` (cycle 1325): 배치 세션에서 새 entry 추가 후 JIT 검색 coverage gap 원인(embeddings.json 미갱신) + 갱신 판단 기준 + 비용 트레이드오프.
+
+### Changed
+- wiki 379 entries, 2448 edges.
+
 ## [0.9.104] — 2026-07-04
 
 ### Added
