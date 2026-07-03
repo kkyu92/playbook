@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:49:55.777Z
+Updated: 2026-07-03T23:51:11.346Z
 
-## 엔트리 (378개)
+## 엔트리 (379개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -68,6 +68,7 @@ Updated: 2026-07-03T23:49:55.777Z
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
 - [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/context-engineering/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
+- [배치 세션 콘텐츠 추가 → JIT 검색 공백 — 신규 entry가 검색에 안 잡히는 원인과 대응](wiki/context-engineering/batch-session-content-jit-search-coverage-gap) — confidence: 2, status: complete
 - [Claude 5 Fable Integration — Advanced LLM Worker Harness for Compounding Automation](wiki/context-engineering/claude-5-fable-llm-worker-harness-compounding-automation) — confidence: 1, status: draft
 - [Claude Code Agent View: AI Worker Orchestration for Enhanced Playbook Efficiency](wiki/context-engineering/claude-code-agent-view-worker-management-integration) — confidence: 1, status: draft
 - [Claude Code Harness Visibility — Component Introspection with ccinv CLI](wiki/context-engineering/claude-code-harness-component-visibility-ccinv) — confidence: 1, status: draft
@@ -1090,6 +1091,9 @@ Updated: 2026-07-03T23:49:55.777Z
 - context-engineering/ambient-knowledge-injection ↔ prompt-engineering/zero-few-shot-prompt-design-patterns-llm
 - context-engineering/ambient-knowledge-injection ↔ frontend-ai/kuku-concepts-playbook-local-markdown-enhancement
 - context-engineering/ambient-knowledge-injection ↔ context-engineering/enriching-local-data-with-description-md-sidecars
+- context-engineering/batch-session-content-jit-search-coverage-gap ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+- context-engineering/batch-session-content-jit-search-coverage-gap ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- context-engineering/batch-session-content-jit-search-coverage-gap ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ project-ops/claude-goal-playbook-worker-automation
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ context-engineering/hub-worker-compounding-pattern
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ evaluation/llm-output-validation-quality-metrics-design
