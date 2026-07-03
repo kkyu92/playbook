@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.103] — 2026-07-04
+
+### Added
+- wiki entry #296 `project-ops/todos-priority-recurring-issue-counter-pattern` (cycle 1320): TODOS.md 반복 이슈 카운터 유지 패턴. 건당 새 항목 추가 대신 카운터 갱신 + 날짜만 업데이트. 이력은 git log 위임.
+
+### Changed
+- wiki 377 entries, 2442 edges.
+
 ## [0.9.102] — 2026-07-04
 
 ### Added
