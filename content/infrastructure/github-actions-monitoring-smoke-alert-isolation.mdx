@@ -12,9 +12,9 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-07-03"
-connections: [infrastructure/gemini-api-http-status-key-health-classification, infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture]
+connections: [infrastructure/gemini-api-http-status-key-health-classification, infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture, harness-engineering/github-actions-workflow-zero-second-failure-diagnosis]
 status: complete
-description: "GH Actions 모니터링 job 에서 smoke test(감지)와 alert(알림) 을 격리하지 않으면 alerting step 실패 시 job 전체 FAIL → 감지 결과가 issue 생성 없이 로그에만 남아 가시성 저하."
+description: GH Actions 모니터링 job 에서 smoke test(감지)와 alert(알림) 을 격리하지 않으면 alerting step 실패 시 job 전체 FAIL → 감지 결과가 issue 생성 없이 로그에만 남아 가시성 저하.
 type: entry
 source: manual
 ---

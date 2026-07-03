@@ -1,5 +1,5 @@
 ---
-title: "N 사이클 Batch Session 컨텍스트 예산 관리"
+title: N 사이클 Batch Session 컨텍스트 예산 관리
 category: context-engineering
 date: "2026-05-22"
 tags:
@@ -13,11 +13,9 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-22"
-connections:
-  - context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs
-  - infrastructure/agentic-git-history-ground-truth-checkpoint-resilience
+connections: [context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs, infrastructure/agentic-git-history-ground-truth-checkpoint-resilience, context-engineering/agentic-context-compaction-commit-density-survival]
 source: explore-idea
-description: "N 사이클 manual batch 세션에서 컨텍스트 예산이 사이클마다 누적되는 문제. skill 로딩, 스캔 결과, entry 내용이 ctx 를 소비. 후반 사이클에서 ctx % 증가 → 품질 저하 방지 패턴."
+description: N 사이클 manual batch 세션에서 컨텍스트 예산이 사이클마다 누적되는 문제. skill 로딩, 스캔 결과, entry 내용이 ctx 를 소비. 후반 사이클에서 ctx % 증가 → 품질 저하 방지 패턴.
 ---
 
 ## 문제

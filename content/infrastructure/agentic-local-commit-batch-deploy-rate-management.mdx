@@ -13,11 +13,7 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-05-19"
-connections:
-  - infrastructure/zero-touch-develop-cycle-session-management
-  - context-engineering/hub-worker-compounding-pattern
-  - harness-engineering/agentic-chain-saturation-detection
-  - prompt-engineering/llm-prompt-caching-cost-optimization-patterns
+connections: [prompt-engineering/llm-prompt-caching-cost-optimization-patterns, context-engineering/agentic-batch-vs-cascade-session-context-isolation, context-engineering/agentic-push-defer-divergence-concurrent-writes]
 status: complete
 description: 자율 에이전트가 매 사이클 자유롭게 commit하되 push는 명시적 사용자 요청 시만 batch로 실행하는 전략. Vercel free tier 100 deploy/day 한도를 소진하지 않으면서 commit 이력의 세밀도를 유지하는 설계 패턴.
 type: entry

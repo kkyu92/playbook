@@ -1,5 +1,5 @@
 ---
-title: "Git Commit Body as Agentic Dispatch Transport — commit subtype 경량 IPC 패턴"
+title: Git Commit Body as Agentic Dispatch Transport — commit subtype 경량 IPC 패턴
 category: infrastructure
 date: "2026-05-20"
 tags:
@@ -14,12 +14,9 @@ workers:
   - all
 confidence: 4
 last_verified: "2026-05-20"
-connections:
-  - infrastructure/zero-touch-develop-cycle-session-management
-  - context-engineering/hub-worker-compounding-pattern
-  - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
+connections: [infrastructure/zero-touch-develop-cycle-session-management, harness-engineering/agentic-trigger-skip-dual-condition-homeostasis, infrastructure/agentic-git-history-ground-truth-checkpoint-resilience]
 status: complete
-description: "agentic 워크플로우에서 외부 메시지 큐 없이 git commit body의 structured 'subtype:' 필드를 IPC/dispatch 채널로 활용하는 패턴. git history가 durable message bus 역할을 수행 — 수신자는 git log --grep으로 dispatch 메시지를 pull한다."
+description: agentic 워크플로우에서 외부 메시지 큐 없이 git commit body의 structured 'subtype:' 필드를 IPC/dispatch 채널로 활용하는 패턴. git history가 durable message bus 역할을 수행 — 수신자는 git log --grep으로 dispatch 메시지를 pull한다.
 type: entry
 source: explore-idea
 ---

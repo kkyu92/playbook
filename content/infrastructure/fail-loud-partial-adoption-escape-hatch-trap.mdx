@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-07"
-connections: [infrastructure/db-query-type-safety-assert-select-ok-pattern, context-engineering/silent-drift-family-pattern, project-ops/question-own-defaults, infrastructure/recurring-file-bug-accumulator-pattern]
+connections: [infrastructure/db-query-type-safety-assert-select-ok-pattern, project-ops/question-own-defaults, infrastructure/recurring-file-bug-accumulator-pattern, journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1]
 status: complete
 description: fail-loud 패턴(assertSelectOk 등)을 파일에 도입할 때 기존 try/catch 또는 null fallback 을 제거하지 않으면, 새 패턴이 일부만 적용된 채 escape hatch 가 존재하는 하이브리드 상태가 된다 — 에러가 조용히 삼켜지는 silent drift 재발.
 type: entry

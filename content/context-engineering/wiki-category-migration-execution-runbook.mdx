@@ -1,5 +1,5 @@
 ---
-title: "위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴"
+title: 위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴
 category: context-engineering
 date: "2026-07-02"
 tags:
@@ -10,12 +10,9 @@ tags:
   - slug
   - runbook
 confidence: 2
-connections:
-  - context-engineering/wiki-category-health-rebalance-decision-framework
-  - context-engineering/agentic-wiki-connection-graph-health-metrics
-  - context-engineering/embedding-index-staleness-detection-after-slug-migration
+connections: [context-engineering/wiki-category-health-rebalance-decision-framework, context-engineering/agentic-wiki-connection-graph-health-metrics, context-engineering/embedding-index-staleness-detection-after-slug-migration, context-engineering/wiki-catch-all-category-redistribution-pattern]
 status: complete
-description: "카테고리 rebalance 결정 후 실제 마이그레이션 실행 런북. 배치 Python 스크립트 2-phase 패턴, search-hits.json slug 드리프트 수정, CLAUDE.md 하드코딩 경로 감사."
+description: 카테고리 rebalance 결정 후 실제 마이그레이션 실행 런북. 배치 Python 스크립트 2-phase 패턴, search-hits.json slug 드리프트 수정, CLAUDE.md 하드코딩 경로 감사.
 type: entry
 source: meta
 ---

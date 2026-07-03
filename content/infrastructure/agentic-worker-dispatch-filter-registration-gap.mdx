@@ -1,5 +1,5 @@
 ---
-title: "다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop"
+title: 다중 워커 파이프라인 — PROJECTS 등록과 dispatch 필터 불일치 → 신규 워커 silent drop
 category: infrastructure
 date: "2026-05-22"
 tags:
@@ -13,9 +13,9 @@ workers:
   - playbook
 confidence: 3
 last_verified: "2026-05-22"
-connections: [context-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, context-engineering/agentic-commit-body-subtype-dispatch-transport]
+connections: [context-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, context-engineering/agentic-commit-body-subtype-dispatch-transport, context-engineering/agentic-numeric-threshold-semantic-aliasing-drift, context-engineering/agentic-worker-ambient-context-rule-starvation]
 status: complete
-description: "다중 워커 허브에서 PROJECTS 배열에 신규 워커를 등록해도 파이프라인 dispatch 필터 코드가 하드코딩된 기존 워커 ID만 처리할 때 신규 워커 dispatch가 silent drop된다. blog-autopilot scout dispatch 0건 (cycle 947 이후 30+ 사이클) — billing 문제가 아닌 scout filter hardcode bug. T8 Push 축 검증 미완의 실제 원인."
+description: 다중 워커 허브에서 PROJECTS 배열에 신규 워커를 등록해도 파이프라인 dispatch 필터 코드가 하드코딩된 기존 워커 ID만 처리할 때 신규 워커 dispatch가 silent drop된다. blog-autopilot scout dispatch 0건 (cycle 947 이후 30+ 사이클) — billing 문제가 아닌 scout filter hardcode bug. T8 Push 축 검증 미완의 실제 원인.
 type: entry
 source: manual
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Wiki Entry 삭제 시 Orphan Reference Cascade — 삭제 ≠ 참조 해제"
+title: Wiki Entry 삭제 시 Orphan Reference Cascade — 삭제 ≠ 참조 해제
 category: infrastructure
 date: "2026-05-22"
 tags:
@@ -13,11 +13,9 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-05-22"
-connections:
-  - context-engineering/drift-detection-methodology
-  - infrastructure/agentic-git-history-ground-truth-checkpoint-resilience
+connections: [context-engineering/drift-detection-methodology, infrastructure/agentic-git-history-ground-truth-checkpoint-resilience, context-engineering/agentic-wiki-confidence-lifecycle, context-engineering/agentic-wiki-connection-graph-health-metrics]
 source: explore-idea
-description: "entry 삭제 시 해당 entry를 connections에 명시한 다른 entry들이 orphan link 상태가 됨. kimi-k2 entry 삭제 후 13건 orphan cascade 발생 (cycle 989 삭제 → cycle 993 curate에서 발견). 삭제 전 reverse-lookup 필수."
+description: entry 삭제 시 해당 entry를 connections에 명시한 다른 entry들이 orphan link 상태가 됨. kimi-k2 entry 삭제 후 13건 orphan cascade 발생 (cycle 989 삭제 → cycle 993 curate에서 발견). 삭제 전 reverse-lookup 필수.
 ---
 
 ## 문제

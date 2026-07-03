@@ -1,5 +1,5 @@
 ---
-title: "CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴"
+title: CLAUDE.md 코드 좌표 무음 드리프트 — file:line 박제의 정렬 부패 패턴
 category: infrastructure
 date: "2026-05-20"
 tags:
@@ -15,12 +15,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-20"
-connections:
-  - context-engineering/drift-detection-methodology
-  - context-engineering/silent-drift-family-pattern
-  - infrastructure/post-ship-meta-documentation-drift
-  - context-engineering/stale-temporal-comment-cleanup-policy
-  - project-ops/question-own-defaults
+connections: [context-engineering/silent-drift-family-pattern, infrastructure/post-ship-meta-documentation-drift, context-engineering/stale-temporal-comment-cleanup-policy, project-ops/question-own-defaults]
 status: complete
 description: "CLAUDE.md(또는 메타 문서)에 하드코딩된 file:line 좌표(예: live.ts:274, daily.ts:529)가 코드 변경 후 조용히 stale해지는 패턴. grep-verify 없이 박제된 좌표는 +5~+20 라인 drift가 발생해도 에이전트가 잘못된 위치를 신뢰하게 된다. moneyball 3회 재발(cycles 732/735/741) evidence."
 type: entry

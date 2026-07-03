@@ -1,5 +1,5 @@
 ---
-title: "자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프"
+title: 자율 에이전트 루프 세션 설계 — 배치(1세션 N사이클) vs 캐스케이드(N세션 1사이클) 컨텍스트 격리 트레이드오프
 category: context-engineering
 date: "2026-05-20"
 tags:
@@ -14,13 +14,9 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-05-20"
-connections:
-  - infrastructure/zero-touch-develop-cycle-session-management
-  - context-engineering/agentic-cycle-state-json-carry-over-design
-  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
-  - infrastructure/agentic-local-commit-batch-deploy-rate-management
+connections: [infrastructure/zero-touch-develop-cycle-session-management, context-engineering/agentic-cycle-state-json-carry-over-design, harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor, infrastructure/agentic-local-commit-batch-deploy-rate-management, context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs]
 status: complete
-description: "자율 개발 루프에서 '1세션 안에서 N사이클 돌리기'와 'N개의 신선한 세션 각각 1사이클씩'은 근본적으로 다른 LLM 컨텍스트 품질을 만든다. 880+ 사이클 실증에서 캐스케이드(N세션) 설계의 우위를 확인했다."
+description: 자율 개발 루프에서 '1세션 안에서 N사이클 돌리기'와 'N개의 신선한 세션 각각 1사이클씩'은 근본적으로 다른 LLM 컨텍스트 품질을 만든다. 880+ 사이클 실증에서 캐스케이드(N세션) 설계의 우위를 확인했다.
 type: entry
 source: explore-idea
 ---

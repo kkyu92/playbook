@@ -1,5 +1,5 @@
 ---
-title: "Agentic Worker 3-Layer Silent Drift Alert Architecture — Deploy/Runtime/Health 직교 커버리지 패턴"
+title: Agentic Worker 3-Layer Silent Drift Alert Architecture — Deploy/Runtime/Health 직교 커버리지 패턴
 category: infrastructure
 date: "2026-05-26"
 tags:
@@ -15,11 +15,7 @@ workers:
   - all
 confidence: 4
 last_verified: "2026-05-26"
-connections:
-  - context-engineering/silent-drift-family-pattern
-  - infrastructure/agentic-cron-zero-output-silent-success-detection
-  - context-engineering/drift-detection-methodology
-  - context-engineering/hub-worker-compounding-pattern
+connections: [context-engineering/silent-drift-family-pattern, infrastructure/agentic-cron-zero-output-silent-success-detection, context-engineering/drift-detection-methodology, context-engineering/hub-worker-compounding-pattern, infrastructure/gemini-api-http-status-key-health-classification, infrastructure/github-actions-monitoring-smoke-alert-isolation]
 status: complete
 description: "agentic worker 3종 GH Actions alert 채널 — deploy-drift-alert (commit SHA) + runtime-error-alert (Sentry) + health-alert (composite HTTP) — 각 채널이 다른 failure mode 탐지. 단일 채널은 dead angle, 3-layer 조합으로 orthogonal coverage. moneyball cycles 838→871→909 (plan #11 3 step) 순차 ship evidence."
 type: entry

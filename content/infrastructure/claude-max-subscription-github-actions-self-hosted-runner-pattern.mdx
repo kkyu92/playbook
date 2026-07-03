@@ -1,5 +1,5 @@
 ---
-title: "Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token"
+title: Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token
 category: infrastructure
 date: "2026-05-26"
 tags:
@@ -13,12 +13,9 @@ workers:
   - all
 confidence: 4
 last_verified: "2026-05-26"
-connections:
-  - context-engineering/hub-worker-compounding-pattern
-  - journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token
-  - context-engineering/agentic-coding-claude-harness-playbook-strategy
+connections: [context-engineering/hub-worker-compounding-pattern, journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token, context-engineering/agentic-coding-claude-harness-playbook-strategy, infrastructure/claude-plan-rate-limit-cron-automation-resilience, infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger]
 status: complete
-description: "claude-code-action@v1 OAuth token ~24h 만료 문제. Self-hosted runner에서 claude CLI 직접 호출로 Max 구독 영구 인증 재사용 — ANTHROPIC_API_KEY 불필요, 추가 과금 없음."
+description: claude-code-action@v1 OAuth token ~24h 만료 문제. Self-hosted runner에서 claude CLI 직접 호출로 Max 구독 영구 인증 재사용 — ANTHROPIC_API_KEY 불필요, 추가 과금 없음.
 type: entry
 source: manual
 ---

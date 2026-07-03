@@ -11,7 +11,7 @@ tags:
   - branched-state
   - content-rescue
 confidence: 2
-connections: [harness-engineering/branched-state-local-lint-false-positive-signal-drift, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked, infrastructure/claude-plan-rate-limit-cron-automation-resilience]
+connections: [harness-engineering/branched-state-local-lint-false-positive-signal-drift, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked, infrastructure/claude-plan-rate-limit-cron-automation-resilience, harness-engineering/branched-state-cherry-pick-orphan-connection-cascade]
 status: complete
 description: Vercel rate-limit으로 PR auto-merge가 차단됐을 때, PR 브랜치 내용을 local main에 cherry-pick으로 선제 흡수하는 패턴. push 없이 로컬에서 즉시 활용 가능.
 type: entry

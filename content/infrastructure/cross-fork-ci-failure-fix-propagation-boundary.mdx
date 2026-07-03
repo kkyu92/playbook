@@ -1,5 +1,5 @@
 ---
-title: "Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정"
+title: Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정
 category: infrastructure
 date: "2026-06-17"
 tags:
@@ -12,11 +12,9 @@ tags:
   - user-territory
   - closed-loop
 confidence: 3
-connections:
-  - context-engineering/hub-worker-compounding-pattern
-  - infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
+connections: [context-engineering/hub-worker-compounding-pattern, infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern, harness-engineering/skill-evolution-skip-condition-mode-dependency, infrastructure/bash-pipe-subshell-variable-isolation-monitoring-trap]
 status: complete
-description: "multi-fork (허브 + 워커) 아키텍처에서 허브가 워커 CI 실패를 트리아지/close 할 수 있지만 워커 코드를 직접 수정할 수 없는 구조적 경계. 허브 TODOS.md 박제 ≠ 워커 자동 수정. 누적 36건 ws/vite CVE wave evidence (2026-06-16~17)."
+description: multi-fork (허브 + 워커) 아키텍처에서 허브가 워커 CI 실패를 트리아지/close 할 수 있지만 워커 코드를 직접 수정할 수 없는 구조적 경계. 허브 TODOS.md 박제 ≠ 워커 자동 수정. 누적 36건 ws/vite CVE wave evidence (2026-06-16~17).
 type: entry
 source: manual
 ---
