@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-02T23:47:34.878Z
+Updated: 2026-07-03T23:28:23.014Z
 
-## 엔트리 (372개)
+## 엔트리 (373개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -105,6 +105,7 @@ Updated: 2026-07-02T23:47:34.878Z
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
 - [SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session](wiki/harness-engineering/skill-evolution-skip-condition-mode-dependency) — confidence: 3, status: complete
@@ -1923,3 +1924,6 @@ Updated: 2026-07-02T23:47:34.878Z
 - reports/week-2026-25 ↔ reports/week-2026-24
 - reports/week-2026-26 ↔ reports/week-2026-25
 - reports/week-2026-27 ↔ reports/week-2026-26
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-push-defer-divergence-concurrent-writes
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-branched-state-jit-search-accuracy-degradation
+- harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/branched-state-branch-creation-origin-main-pattern

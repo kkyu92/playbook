@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 830,
+  "totalInvocations": 832,
   "skipped": 27,
-  "searched": 803,
-  "hit": 260,
-  "noMatch": 543,
-  "lastUpdated": "2026-07-02T23:49:07.211Z",
+  "searched": 805,
+  "hit": 261,
+  "noMatch": 544,
+  "lastUpdated": "2026-07-03T23:26:33.655Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -50,7 +50,7 @@
     "solutions/ci-github-actions/_compiled-truth": 2,
     "retros/2026-05-12-cycles-305-307": 7,
     "solutions/ci-github-actions/2026-05-07-billing-block-all-workflows-blocked": 6,
-    "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 5,
+    "journal/playbook-journal-009-claude-cli-hang-paperclip-4-step": 6,
     "retros/2026-05-13-cycles-452-455": 6,
     "solutions/ci-github-actions/2026-05-12-push-race-branched-fix-blocked": 12,
     "retros/2026-05-12-cycles-371-373": 1,
@@ -213,7 +213,8 @@
     "context-engineering/ephemeral-credentials-session-llm-harness": 1,
     "journal/playbook-journal-004-drift-half-working": 1,
     "journal/playbook-journal-003-drift-silent-bugs": 1,
-    "context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix": 2
+    "context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix": 2,
+    "infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1
   },
   "noMatchQueries": [
     {
@@ -735,6 +736,11 @@
       "query": "monitoring alert noise false positive threshold signal-to-noise ratio",
       "timestamp": "2026-07-02T23:46:32.816Z",
       "topScore": 0.8212
+    },
+    {
+      "query": "Claude CLI rate limit plan limit Sonnet self-hosted runner",
+      "timestamp": "2026-07-03T23:26:19.955Z",
+      "topScore": 0.8352
     }
   ],
   "noMatchQueryCounts": {
@@ -823,7 +829,8 @@
     "knowledge organization taxonomy specificity merge vs split tradeoff": 1,
     "catch-all category anti-pattern redistribute outliers preserve identity core": 1,
     "auto-merge disabled Vercel deployment rate limited build queue overflow": 1,
-    "monitoring alert noise false positive threshold signal-to-noise ratio": 1
+    "monitoring alert noise false positive threshold signal-to-noise ratio": 1,
+    "Claude CLI rate limit plan limit Sonnet self-hosted runner": 1
   },
-  "totalQueries": 874
+  "totalQueries": 876
 }
