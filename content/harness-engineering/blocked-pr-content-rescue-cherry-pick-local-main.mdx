@@ -1,0 +1,78 @@
+---
+title: Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴
+category: harness-engineering
+date: "2026-07-04"
+tags:
+  - git
+  - cherry-pick
+  - vercel
+  - rate-limit
+  - pr-blocked
+  - branched-state
+  - content-rescue
+confidence: 2
+connections: [harness-engineering/branched-state-local-lint-false-positive-signal-drift, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked, infrastructure/claude-plan-rate-limit-cron-automation-resilience]
+status: complete
+description: Vercel rate-limit으로 PR auto-merge가 차단됐을 때, PR 브랜치 내용을 local main에 cherry-pick으로 선제 흡수하는 패턴. push 없이 로컬에서 즉시 활용 가능.
+type: entry
+source: harness-engineering
+---
+
+BRANCHED 상태에서 Vercel rate-limit으로 PR auto-merge가 차단될 때 해당 PR 내용을 즉시 local main에 통합하는 패턴.
+
+## 발생 조건
+
+1. PR이 Vercel deploy required check 실패로 auto-merge 영구 차단
+2. PR 내용(wiki entry, 코드 수정)이 값지고 즉시 활용이 필요
+3. 현재 세션이 local commit 만 허용 (zero-touch push 정책)
+
+**사례**: PR #2138 — `harness-engineering/branched-state-local-lint-false-positive-signal-drift` entry. 2026-06-29 생성 후 5일 이상 차단. cycle 1312에서 cherry-pick으로 구출.
+
+## 패턴
+
+```bash
+# 1. PR 확인
+gh pr view <PR_NUM> --json title,state,headRefName
+
+# 2. remote branch 에서 cherry-pick (--no-commit 으로 staged 상태 확인)
+git cherry-pick <remote_branch_head_commit> --no-commit
+
+# 3. 충돌/변경 확인
+git status
+
+# 4. 필요 시 추가 수정 (connections 교차 검증 — BRANCHED 시 orphan 위험)
+node scripts/generate-content-manifest.mjs
+node scripts/lint-content.mjs
+
+# 5. commit
+git add <files>
+git commit -m "content: #<N> <slug> (from PR #<PR_NUM>)"
+```
+
+## BRANCHED 상태에서의 주의사항
+
+PR이 origin/main 기반으로 생성됐지만 local main 은 앞서 있음 → cherry-pick 시 connections 배열에 origin-only entry 참조 발생 가능.
+
+**예시**: PR #2138 의 connections `[agentic-push-defer-divergence-concurrent-writes, ...]` → local main 에 없는 entry → orphan link 발생
+
+**대응**: cherry-pick 후 즉시 lint 확인 + orphan connection 을 local 에 있는 entry 로 교체.
+
+## 판단 기준
+
+| 상황 | 권장 |
+|------|------|
+| PR 내용이 즉시 활용 필요 (검색, 참조) | cherry-pick → local main |
+| PR 내용이 origin push 후 자동 머지 가능 | 기다리기 |
+| PR 내용이 코드 변경 (빌드/테스트 필요) | cherry-pick 전 검증 필수 |
+| PR 내용이 wiki entry 만 | cherry-pick 안전 (lint만 확인) |
+
+## 차단 PR 이후 정리
+
+cherry-pick 완료 후 원본 PR 은 두 가지 결과:
+1. **사용자가 push 하면**: PR 기반 브랜치 내용과 local main 충돌 가능 → rebase 또는 PR close 필요
+2. **push 대기 중**: PR 계속 open. push 후 auto-merge 가 재시도되면 local main 에 이미 내용 있음 → 중복 commit (squash merge 로 흡수 가능)
+
+## 관련 패턴
+
+- [[infrastructure/vercel-deploy-rate-limit-auto-merge-blocked]]: Vercel rate-limit 차단 메커니즘
+- [[harness-engineering/branched-state-local-lint-false-positive-signal-drift]]: cherry-pick 후 orphan 발생 원인

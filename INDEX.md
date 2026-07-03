@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:37:13.678Z
+Updated: 2026-07-03T23:39:59.302Z
 
-## 엔트리 (374개)
+## 엔트리 (375개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -105,6 +105,7 @@ Updated: 2026-07-03T23:37:13.678Z
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) — confidence: 2, status: complete
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
@@ -1496,6 +1497,9 @@ Updated: 2026-07-03T23:37:13.678Z
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/zero-touch-develop-cycle-session-management
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ context-engineering/agent-multi-frequency-knowledge-pipeline
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
+- harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ infrastructure/claude-plan-rate-limit-cron-automation-resilience
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
