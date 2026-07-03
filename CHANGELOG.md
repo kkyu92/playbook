@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.101] — 2026-07-04
+
+### Added
+- wiki entry #294 `harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main` (cycle 1316): Vercel rate-limit 차단 PR 내용을 local main에 cherry-pick으로 구출하는 패턴. BRANCHED 상태 orphan link 주의사항 + 판단 기준표.
+
+### Changed
+- wiki 375 entries, 2437 edges.
+
 ## [0.9.100] — 2026-07-04
 
 ### Added
