@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.104] — 2026-07-04
+
+### Added
+- wiki entry #297 `harness-engineering/branched-state-cherry-pick-orphan-connection-cascade` (cycle 1323): BRANCHED 상태에서 origin/main 기반 PR을 cherry-pick할 때 connections이 origin-only entry를 참조해 orphan link 발생하는 cascade. 즉각 수정 절차 + 예방 전략.
+
+### Changed
+- wiki 378 entries, 2445 edges.
+
 ## [0.9.103] — 2026-07-04
 
 ### Added
