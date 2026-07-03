@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.99] — 2026-07-04
+
+### Added
+- wiki entry #292 `harness-engineering/branched-state-local-lint-false-positive-signal-drift` (cycle 1312): BRANCHED 상태에서 로컬 lint 신호 오염 패턴. origin 20+ ahead 시 curate chain 이 이미 수정된 문제 재감지 → retro-only 원인. 교차 검증 명령어 + 신뢰도 표 포함. (PR #2138 local cherry-pick)
+
+### Changed
+- wiki 373 entries, 2432 edges.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 316+ / origin 126. push/rebase 필요.
+- **[P1] moneyball repo**: ws/vite CVE 미해소 (264건 close).
+
 ## [0.9.98] — 2026-07-03
 
 ### Batch Summary — cycles 1290-1309 (N=20)
