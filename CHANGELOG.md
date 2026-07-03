@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.100] — 2026-07-04
+
+### Added
+- wiki entry #293 `infrastructure/claude-plan-rate-limit-cron-automation-resilience` (cycle 1314): Claude Plan 일일 Sonnet 한도 소진 시 cron 자동화 실패 패턴. healthcheck early-exit 설계 + rate limit vs token 만료 구분표 + cron 재스케줄 전략.
+
+### Changed
+- wiki 374 entries, 2434 edges.
+
+### Carry-over (R6 사용자 영역)
+- **[P0] BRANCHED divergence**: local 320+ / origin 126. push/rebase 필요.
+- **[P1] moneyball repo**: ws/vite CVE 미해소 (264건 close).
+
 ## [0.9.99] — 2026-07-04
 
 ### Added
