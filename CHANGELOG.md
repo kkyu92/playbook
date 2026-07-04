@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.106] — 2026-07-05
+
+### Added
+- wiki entry #300 `harness-engineering/review-code-chain-retro-only-mature-codebase-signal` (cycle 1330): review-code 체인이 retro-only (변경 없음) 를 반환할 때 코드베이스 성숙도의 정상 신호임을 설명. 15+ 연속 retro-only 증거 (cycles 1155-1322, 96/96 PASS). 강제 코드 수정 역효과 경고.
+
+### Changed
+- wiki 381 entries, 2594 edges. 4개 연결 entry 에 backlink 추가.
+
 ## [0.9.105] — 2026-07-04
 
 ### Added

@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:29:52.109Z
+Updated: 2026-07-04T23:31:04.844Z
 
 ## 엔트리 (381개)
 
@@ -1417,6 +1417,7 @@ Updated: 2026-07-04T23:29:52.109Z
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-cycle-chain-diversity-rebalancing
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
+- harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-hub-phase-lock-steady-state
@@ -1424,6 +1425,7 @@ Updated: 2026-07-04T23:29:52.109Z
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-trigger-permanent-optout-structural-false-positive
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/agentic-feature-saturation-sequential-batch-delivery
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
+- harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
@@ -1441,6 +1443,7 @@ Updated: 2026-07-04T23:29:52.109Z
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ infrastructure/agentic-feature-saturation-sequential-batch-delivery
+- harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-trigger-permanent-optout-structural-false-positive ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
@@ -1463,12 +1466,9 @@ Updated: 2026-07-04T23:29:52.109Z
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/post-ship-meta-documentation-drift
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/worker-lesson-velocity-signal
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
+- harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
-- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
-- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-chain-saturation-detection
-- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/develop-cycle-positive-streak-recognition
-- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/zero-touch-develop-cycle-session-management
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
