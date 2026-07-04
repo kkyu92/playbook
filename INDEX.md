@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:35:43.546Z
+Updated: 2026-07-04T23:37:57.281Z
 
-## 엔트리 (382개)
+## 엔트리 (383개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -181,6 +181,7 @@ Updated: 2026-07-04T23:35:43.546Z
 - [2026년 25주차 학습 리포트](wiki/reports/week-2026-25) — confidence: 5, status: complete
 - [2026년 26주차 학습 리포트](wiki/reports/week-2026-26) — confidence: 5, status: complete
 - [2026년 27주차 학습 리포트](wiki/reports/week-2026-27) — confidence: 5, status: complete
+- [2026년 28주차 학습 리포트](wiki/reports/week-2026-28) — confidence: 5, status: complete
 
 ### Agents
 - [AI Agent 고급 도구 사용 패턴 — 복잡성 관리와 신뢰성 확보](wiki/agents/advanced-ai-agent-tool-use-patterns) — confidence: 1, status: draft
@@ -930,7 +931,7 @@ Updated: 2026-07-04T23:35:43.546Z
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/batch-session-content-jit-search-coverage-gap
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ infrastructure/develop-cycle-feature-branch-vercel-dispatch-noise
-- context-engineering/agentic-branched-state-production-content-lag ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
+- context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/agentic-branched-state-production-content-lag
 - context-engineering/agentic-branched-state-production-content-lag ↔ context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - context-engineering/agentic-branched-state-production-content-lag ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - context-engineering/agentic-chain-dormancy-phase-map ↔ context-engineering/agentic-diagnosis-source-diversity-chain-selection-balance
@@ -1712,3 +1713,4 @@ Updated: 2026-07-04T23:35:43.546Z
 - reports/week-2026-24 ↔ reports/week-2026-25
 - reports/week-2026-25 ↔ reports/week-2026-26
 - reports/week-2026-26 ↔ reports/week-2026-27
+- reports/week-2026-28 ↔ reports/week-2026-27

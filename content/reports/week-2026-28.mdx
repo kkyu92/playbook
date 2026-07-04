@@ -1,0 +1,67 @@
+---
+title: "2026년 28주차 학습 리포트"
+category: harness-engineering
+date: "2026-07-04"
+tags: [weekly-report, 학습리포트]
+confidence: 5
+connections: [reports/week-2026-27]
+status: complete
+description: "2026-06-27 ~ 2026-07-04 주간 학습 요약"
+type: entry
+---
+
+## 이번 주 학습 요약
+
+**기간:** 2026-06-27 ~ 2026-07-04
+**학습한 엔트리:** 24개
+**평균 Confidence:** 1.9/5
+**연속 학습:** 3일째
+
+## 카테고리별 학습
+
+- **agents**: 3개
+- **context-engineering**: 4개
+- **evaluation**: 3개
+- **harness-engineering**: 6개
+- **infrastructure**: 6개
+- **project-ops**: 1개
+- **prompt-engineering**: 1개
+
+## Source Mix (파이프라인 건강도)
+
+- **scout** (긱뉴스 외부): 4개 (17%)
+- **gap-pull** (커버리지 갭 자동): 4개 (17%)
+- **manual** (수동): 5개 (21%)
+
+## 이번 주 학습한 엔트리
+
+- [AI 에이전트 장기 기억 관리 — 효율적인 컨텍스트 및 지식 통합 전략](/wiki/agents/long-term-memory-management-patterns-for-ai-agents) (agents, confidence 1)
+- [Multi-Agent System Collaboration — Design Patterns for Complex Task Execution](/wiki/agents/multi-agent-collaboration-complex-task-patterns) (agents, confidence 1)
+- [Paca: AI 에이전트 협업 프로젝트 관리 플랫폼 도입 검토](/wiki/agents/paca-ai-agent-project-management-tool-review) (agents, confidence 1)
+- [배치 세션 콘텐츠 추가 → JIT 검색 공백 — 신규 entry가 검색에 안 잡히는 원인과 대응](/wiki/context-engineering/batch-session-content-jit-search-coverage-gap) (context-engineering, confidence 2)
+- [임베딩 인덱스 staleness 감지 — 카테고리 마이그레이션 후 slug 정합성 검증 패턴](/wiki/context-engineering/embedding-index-staleness-detection-after-slug-migration) (context-engineering, confidence 2)
+- [위키 catch-all 카테고리 재분배 패턴 — 머지 대신 outlier 분산으로 정체성 복원](/wiki/context-engineering/wiki-catch-all-category-redistribution-pattern) (context-engineering, confidence 2)
+- [위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴](/wiki/context-engineering/wiki-category-migration-execution-runbook) (context-engineering, confidence 2)
+- [LLM 추론 신뢰성 검증 하네스 — 견고한 설계 및 구현](/wiki/evaluation/llm-inference-reliability-validation-harness) (evaluation, confidence 1)
+- [LLM Judgment & Code Verification Separation Architecture: Mitigating Hallucinations in Agents](/wiki/evaluation/llm-judgment-code-verification-separation-architecture) (evaluation, confidence 1)
+- [LLM 출력 검증 파이프라인 — 자동화 실패 방지를 위한 강화 전략](/wiki/evaluation/llm-output-validation-automation-failure-prevention) (evaluation, confidence 1)
+- [backfill-bidirectional 대규모 curate 패스 — 한 번에 위키 전체 교차 연결 보강](/wiki/harness-engineering/backfill-bidirectional-curate-pass-pattern) (harness-engineering, confidence 2)
+- [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](/wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) (harness-engineering, confidence 2)
+- [BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴](/wiki/harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) (harness-engineering, confidence 3)
+- [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](/wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) (harness-engineering, confidence 3)
+- [GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트](/wiki/harness-engineering/github-actions-workflow-zero-second-failure-diagnosis) (harness-engineering, confidence 2)
+- [Claude Plan 일일 한도 — cron 자동화에서 rate limit 충돌 패턴과 복구 설계](/wiki/infrastructure/claude-plan-rate-limit-cron-automation-resilience) (infrastructure, confidence 2)
+- [Gemini API HTTP 상태코드 → key 건강 분류 패턴](/wiki/infrastructure/gemini-api-http-status-key-health-classification) (infrastructure, confidence 2)
+- [GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)](/wiki/infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env) (infrastructure, confidence 2)
+- [GitHub Actions 모니터링 job 설계 — smoke test / alert step 격리](/wiki/infrastructure/github-actions-monitoring-smoke-alert-isolation) (infrastructure, confidence 2)
+- [Real-time AI Service Load Balancing: API Gateway Design for Scalable Inference](/wiki/infrastructure/realtime-ai-service-load-balancing-api-gateway-design) (infrastructure, confidence 1)
+- [Vercel 배포 한도 초과 → PR auto-merge 영구 차단 패턴](/wiki/infrastructure/vercel-deploy-rate-limit-auto-merge-blocked) (infrastructure, confidence 2)
+- [TODOS.md P-Priority 반복 이슈 카운터 유지 패턴 — 누적 이력 없이 최신 상태만 추적](/wiki/project-ops/todos-priority-recurring-issue-counter-pattern) (project-ops, confidence 2)
+- [LLM Prompt Injection Defense – Robust Guardrails Implementation](/wiki/prompt-engineering/llm-prompt-injection-defense-rules-implementation) (prompt-engineering, confidence 1)
+- [2026년 27주차 학습 리포트](/wiki/reports/week-2026-27) (harness-engineering, confidence 5)
+
+## 다음 주 추천
+
+- **android-ai** 카테고리에 아직 이번 주 학습이 없습니다
+- **data-engineering** 카테고리에 아직 이번 주 학습이 없습니다
+- **frontend-ai** 카테고리에 아직 이번 주 학습이 없습니다
