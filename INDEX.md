@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:46:21.019Z
+Updated: 2026-07-04T23:47:47.879Z
 
-## 엔트리 (387개)
+## 엔트리 (388개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -93,6 +93,7 @@ Updated: 2026-07-04T23:46:21.019Z
 - [위키 catch-all 카테고리 재분배 패턴 — 머지 대신 outlier 분산으로 정체성 복원](wiki/context-engineering/wiki-catch-all-category-redistribution-pattern) — confidence: 2, status: complete
 - [위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크](wiki/context-engineering/wiki-category-health-rebalance-decision-framework) — confidence: 2, status: complete
 - [위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴](wiki/context-engineering/wiki-category-migration-execution-runbook) — confidence: 2, status: complete
+- [Wiki Entry Confidence 승격 경로 — auto-generated 에서 검증된 지식까지](wiki/context-engineering/wiki-entry-confidence-upgrade-path) — confidence: 3, status: complete
 - [위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나](wiki/context-engineering/wiki-jit-search-blind-spot-diagnosis) — confidence: 2, status: complete
 - [Zerostack 통합 — Rust 기반 코딩 에이전트를 활용한 AI 하네스 기능 확장](wiki/context-engineering/zerostack-rust-agent-harness-extension) — confidence: 1, status: draft
 
@@ -1183,6 +1184,9 @@ Updated: 2026-07-04T23:46:21.019Z
 - context-engineering/wiki-catch-all-category-redistribution-pattern ↔ context-engineering/wiki-category-migration-execution-runbook
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/wiki-category-migration-execution-runbook
+- context-engineering/wiki-entry-confidence-upgrade-path ↔ context-engineering/agentic-wiki-confidence-lifecycle
+- context-engineering/wiki-entry-confidence-upgrade-path ↔ context-engineering/agentic-pipeline-source-mix-quality-indicator
+- context-engineering/wiki-entry-confidence-upgrade-path ↔ harness-engineering/curate-cycle-compound-maintenance-value
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-journal-append-only-lint-false-positive-status

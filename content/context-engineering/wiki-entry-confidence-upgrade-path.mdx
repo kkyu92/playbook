@@ -1,0 +1,109 @@
+---
+title: Wiki Entry Confidence 승격 경로 — auto-generated 에서 검증된 지식까지
+category: context-engineering
+date: "2026-07-05"
+tags:
+  - confidence
+  - wiki-quality
+  - knowledge-lifecycle
+  - curate
+  - context-engineering
+workers:
+  - all
+confidence: 3
+last_verified: "2026-07-05"
+connections:
+  - context-engineering/agentic-wiki-confidence-lifecycle
+  - context-engineering/agentic-pipeline-source-mix-quality-indicator
+  - harness-engineering/curate-cycle-compound-maintenance-value
+status: complete
+description: wiki entry 의 confidence 가 1→5 로 승격되는 구체적 경로. auto-ingest 에서 생성된 confidence 1 entry 가 실전 검증을 거쳐 confidence 3-4 로 오르는 trigger 와 curate chain 의 역할.
+type: entry
+source: explore-idea
+---
+
+## 승격 단계
+
+| Confidence | 상태 | 의미 |
+|------------|------|------|
+| 1 | auto-generated | scout/gap-pull 자동 생성, 미검증 |
+| 2 | initial | 수동 작성 또는 간단 검증 완료 |
+| 3 | verified | JIT 검색 hit + 실전 결정 기여 |
+| 4 | strong | 시스템 문서(CLAUDE.md/SKILL.md) 반영 |
+| 5 | canonical | 다수 세션, 주간 리포트 avg 5 |
+
+## 승격 trigger
+
+### 1 → 2
+
+```
+auto-ingest scout entry (confidence 1)
++ 수동 내용 보강 (예: 실전 사례 추가)
++ curate 에서 lint 통과 확인
+= confidence 2
+```
+
+일반적으로 curate 에서 명시적 승격 없이 진행.
+
+### 2 → 3
+
+```
+JIT search 에서 해당 entry 반환
++ 에이전트가 이 entry 기반 결정 변경
+= 실전 검증 완료 → confidence 3
+```
+
+결정 변경 예:
+- "backfill-bidirectional-curate-pass-pattern" 검색 hit → 큐레이션 전략 변경
+- "agentic-branched-state-production-content-lag" hit → push 타이밍 재검토
+
+### 3 → 4
+
+```
+entry 내용이 CLAUDE.md 또는 SKILL.md 에 직접 반영
+= 운영 문서화 → confidence 4
+```
+
+예: `drift-detection-methodology` 가 CLAUDE.md "드리프트 감지 프로토콜"에 반영.
+
+### 4 → 5
+
+```
+다수 세션(3+)에서 반복 참조
++ 반박 evidence 없음
++ 주간 리포트에서 avg confidence 5 표시
+= canonical 지식 → confidence 5
+```
+
+현재 confidence 5: `reports/week-2026-27` (주간 리포트 자체), `reports/week-2026-28` 등.
+
+## 현실적 승격 분포
+
+```
+허브 wiki 387 entries (2026-07-05):
+  confidence 1: 다수 (scout/gap-pull auto entries)
+  confidence 2: 다수 (수동 작성)
+  confidence 3: 일부 (실전 검증)
+  confidence 4: 소수 (시스템 반영)
+  confidence 5: 극소수 (canonical)
+```
+
+weekly 리포트 avg confidence 1.9 = confidence 1-2 entries 가 대다수. 이것은 정상 — 모든 entry 가 검증될 필요 없음.
+
+## curate 에서의 승격 판단
+
+curate 사이클에서 신중한 confidence 승격 기준:
+
+| 승격 | 조건 |
+|------|------|
+| 1→2 | 내용이 정확하고 curate agent 가 직접 확인 가능 |
+| 2→3 | 현재 세션에서 JIT hit + 실제 결정 기여 확인 |
+| 3→4 | CLAUDE.md/SKILL.md 반영 사실 확인 가능 |
+
+**과도한 승격 금지**: 읽었다고 confidence 올리기 X. 실전 결정 기여가 3 승격의 조건.
+
+## 비승격 대상
+
+- 단순 JIT 검색 반환 (hit) ≠ 승격 조건
+- "이 entry 가 있었다" 확인만으로 confidence 2→3 X
+- 사용 안 하는 entry 를 confidence 올려 "있어 보이게" X
