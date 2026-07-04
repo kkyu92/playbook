@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 883,
+  "totalInvocations": 886,
   "skipped": 27,
-  "searched": 856,
-  "hit": 291,
-  "noMatch": 565,
-  "lastUpdated": "2026-07-04T23:37:43.366Z",
+  "searched": 859,
+  "hit": 292,
+  "noMatch": 567,
+  "lastUpdated": "2026-07-04T23:38:53.137Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -222,7 +222,10 @@
     "context-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 2,
     "context-engineering/embedding-index-staleness-detection-after-slug-migration": 1,
-    "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1
+    "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1,
+    "reports/week-2026-27": 1,
+    "reports/week-2026-24": 1,
+    "reports/week-2026-26": 1
   },
   "noMatchQueries": [
     {
@@ -854,6 +857,16 @@
       "query": "auto-ingest scout confidence 1 entries quality gap manual curation",
       "timestamp": "2026-07-04T23:37:39.468Z",
       "topScore": 0.8405
+    },
+    {
+      "query": "auto-ingest pipeline confidence 1 entries quality gap low value content",
+      "timestamp": "2026-07-04T23:38:29.236Z",
+      "topScore": 0.8422
+    },
+    {
+      "query": "knowledge pipeline source distribution health indicator quality signal",
+      "timestamp": "2026-07-04T23:38:53.133Z",
+      "topScore": 0.8361
     }
   ],
   "noMatchQueryCounts": {
@@ -964,7 +977,9 @@
     "local-only commits production system stale state feedback mismatch": 1,
     "BRANCHED local commits production deployment lag content not live": 1,
     "local-only wiki development production system divergence visibility gap": 1,
-    "auto-ingest scout confidence 1 entries quality gap manual curation": 1
+    "auto-ingest scout confidence 1 entries quality gap manual curation": 1,
+    "auto-ingest pipeline confidence 1 entries quality gap low value content": 1,
+    "knowledge pipeline source distribution health indicator quality signal": 1
   },
-  "totalQueries": 927
+  "totalQueries": 930
 }

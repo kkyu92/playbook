@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.109] — 2026-07-05
+
+### Added
+- wiki entry #303 `context-engineering/agentic-pipeline-source-mix-quality-indicator` (cycle 1337): auto-ingest 파이프라인 소스 믹스(scout/gap-pull/manual) 가 지식 깊이 vs 너비 균형 건강 지표임. 분포 해석 가이드 + JIT 품질 연관 + confidence 승격 트리거.
+
+### Changed
+- wiki 384 entries, 2603 edges.
+
 ## [0.9.108] — 2026-07-05
 
 ### Added
