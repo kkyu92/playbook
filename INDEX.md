@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:52:05.026Z
+Updated: 2026-07-04T23:53:14.325Z
 
 ## 엔트리 (389개)
 
@@ -940,6 +940,7 @@ Updated: 2026-07-04T23:52:05.026Z
 - context-engineering/agentic-branched-state-jit-search-accuracy-degradation ↔ context-engineering/agentic-branched-state-production-content-lag
 - context-engineering/agentic-branched-state-production-content-lag ↔ context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
 - context-engineering/agentic-branched-state-production-content-lag ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- context-engineering/agentic-branched-state-production-content-lag ↔ harness-engineering/agentic-deferred-push-batch-timing-heuristics
 - context-engineering/agentic-chain-dormancy-phase-map ↔ context-engineering/agentic-diagnosis-source-diversity-chain-selection-balance
 - context-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-chain-saturation-detection
 - context-engineering/agentic-chain-dormancy-phase-map ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
@@ -1070,6 +1071,7 @@ Updated: 2026-07-04T23:52:05.026Z
 - context-engineering/agentic-wiki-confidence-lifecycle ↔ infrastructure/agentic-wiki-entry-deletion-orphan-cascade
 - context-engineering/agentic-wiki-confidence-lifecycle ↔ infrastructure/cross-fork-feedback-sync
 - context-engineering/agentic-wiki-confidence-lifecycle ↔ infrastructure/wiki-journal-append-only-lint-false-positive-status
+- context-engineering/agentic-wiki-confidence-lifecycle ↔ context-engineering/wiki-entry-confidence-upgrade-path
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ infrastructure/agentic-wiki-entry-deletion-orphan-cascade
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ context-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption
@@ -1188,7 +1190,6 @@ Updated: 2026-07-04T23:52:05.026Z
 - context-engineering/wiki-catch-all-category-redistribution-pattern ↔ context-engineering/wiki-category-migration-execution-runbook
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/wiki-category-migration-execution-runbook
-- context-engineering/wiki-entry-confidence-upgrade-path ↔ context-engineering/agentic-wiki-confidence-lifecycle
 - context-engineering/wiki-entry-confidence-upgrade-path ↔ context-engineering/agentic-pipeline-source-mix-quality-indicator
 - context-engineering/wiki-entry-confidence-upgrade-path ↔ harness-engineering/curate-cycle-compound-maintenance-value
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
@@ -1451,7 +1452,6 @@ Updated: 2026-07-04T23:52:05.026Z
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-hub-phase-lock-steady-state
-- harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ context-engineering/agentic-branched-state-production-content-lag
 - harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern

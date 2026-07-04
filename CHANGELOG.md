@@ -4,6 +4,15 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.114] — 2026-07-05
+
+### Added
+- wiki entry #308 `context-engineering/agentic-stale-entry-survival-vs-deletion-zero-jit-threshold` (cycle 1348): confidence 1 stale entry 45+days 0-JIT-hit 삭제 결정 프레임. lazy-enrichment 원칙의 임계값. 역참조 0 + 45일+ + JIT 0hit = 삭제 후보.
+
+### Changed
+- wiki 389 entries, 2619 edges.
+- backlinks: `agentic-branched-state-production-content-lag` + `agentic-deferred-push-batch-timing-heuristics` 연결. `agentic-wiki-confidence-lifecycle` + #307/#308 연결.
+
 ## [0.9.113] — 2026-07-05
 
 ### Added
