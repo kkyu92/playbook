@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.108] — 2026-07-05
+
+### Added
+- wiki entry #302 `reports/week-2026-28` (cycle 1335): 2026-06-27~07-04 주간 학습 리포트. 24 entries, 평균 confidence 1.9, source mix scout/gap-pull/manual.
+
+### Changed
+- wiki 383 entries, 2600 edges.
+
 ## [0.9.107] — 2026-07-05
 
 ### Added

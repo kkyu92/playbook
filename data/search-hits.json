@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 879,
+  "totalInvocations": 883,
   "skipped": 27,
-  "searched": 852,
-  "hit": 288,
-  "noMatch": 564,
-  "lastUpdated": "2026-07-04T23:34:37.485Z",
+  "searched": 856,
+  "hit": 291,
+  "noMatch": 565,
+  "lastUpdated": "2026-07-04T23:37:43.366Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -65,7 +65,7 @@
     "retros/2026-05-12-cycles-334-341": 5,
     "retros/2026-05-12-cycles-331-332": 4,
     "infrastructure/zero-touch-develop-cycle-session-management": 14,
-    "infrastructure/claude-code-cost-optimization-strategies": 1,
+    "infrastructure/claude-code-cost-optimization-strategies": 2,
     "retros/2026-05-13-cycles-441-442": 3,
     "retros/2026-05-13-cycles-457-458": 1,
     "infrastructure/sentry-pii-scrubbing-beforesend": 1,
@@ -143,7 +143,7 @@
     "harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 3,
     "project-ops/agile-sprint-planning-execution-ai-projects": 1,
     "frontend-ai/user-behavior-prediction-ai-model-integration": 1,
-    "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 2,
+    "harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor": 3,
     "agents/agentic-r6-boundary-cumulative-tracking-patience-ledger": 1,
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
     "retros/2026-05-13-cycles-424-425": 1,
@@ -174,10 +174,10 @@
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 8,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 8,
-    "retros/2026-05-22-cycles-1006-1012": 12,
+    "retros/2026-05-22-cycles-1006-1012": 13,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 2,
-    "context-engineering/agentic-wiki-confidence-lifecycle": 1,
+    "context-engineering/agentic-wiki-confidence-lifecycle": 2,
     "retros/2026-05-22-cycles-971-976": 1,
     "retros/2026-05-19-cycle-789": 1,
     "infrastructure/agentic-wiki-entry-deletion-orphan-cascade": 1,
@@ -214,13 +214,13 @@
     "journal/playbook-journal-004-drift-half-working": 1,
     "journal/playbook-journal-003-drift-silent-bugs": 1,
     "context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix": 2,
-    "infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
+    "infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern": 2,
     "infrastructure/vercel-deploy-rate-limit-auto-merge-blocked": 2,
     "infrastructure/github-actions-monitoring-smoke-alert-isolation": 2,
     "journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958": 1,
     "journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig": 1,
     "context-engineering/agentic-wiki-connection-graph-health-metrics": 1,
-    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1,
+    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 2,
     "context-engineering/embedding-index-staleness-detection-after-slug-migration": 1,
     "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1
   },
@@ -849,6 +849,11 @@
       "query": "local-only wiki development production system divergence visibility gap",
       "timestamp": "2026-07-04T23:34:37.484Z",
       "topScore": 0.841
+    },
+    {
+      "query": "auto-ingest scout confidence 1 entries quality gap manual curation",
+      "timestamp": "2026-07-04T23:37:39.468Z",
+      "topScore": 0.8405
     }
   ],
   "noMatchQueryCounts": {
@@ -958,7 +963,8 @@
     "review-code chain PASS stable health code quality": 1,
     "local-only commits production system stale state feedback mismatch": 1,
     "BRANCHED local commits production deployment lag content not live": 1,
-    "local-only wiki development production system divergence visibility gap": 1
+    "local-only wiki development production system divergence visibility gap": 1,
+    "auto-ingest scout confidence 1 entries quality gap manual curation": 1
   },
-  "totalQueries": 923
+  "totalQueries": 927
 }
