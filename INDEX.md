@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:42:37.869Z
+Updated: 2026-07-04T23:44:34.856Z
 
-## 엔트리 (385개)
+## 엔트리 (386개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -101,6 +101,7 @@ Updated: 2026-07-04T23:42:37.869Z
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic 사이클 Chain 다양성 관리 — 연속 streak 감지 + 순환 강제](wiki/harness-engineering/agentic-cycle-chain-diversity-rebalancing) — confidence: 3, status: draft
+- [로컬 commit 누적과 batch push 타이밍 — 자율 에이전트 R6 결정 가이드](wiki/harness-engineering/agentic-deferred-push-batch-timing-heuristics) — confidence: 3, status: complete
 - [자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검](wiki/harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
@@ -1441,6 +1442,9 @@ Updated: 2026-07-04T23:42:37.869Z
 - harness-engineering/agentic-chain-saturation-detection ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ context-engineering/agentic-branched-state-production-content-lag
+- harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
+- harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/develop-cycle-positive-streak-recognition

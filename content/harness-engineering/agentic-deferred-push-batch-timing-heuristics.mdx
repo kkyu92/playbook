@@ -1,0 +1,100 @@
+---
+title: 로컬 commit 누적과 batch push 타이밍 — 자율 에이전트 R6 결정 가이드
+category: harness-engineering
+date: "2026-07-05"
+tags:
+  - branched-state
+  - batch-push
+  - r6-boundary
+  - timing
+  - harness-engineering
+  - deployment
+workers:
+  - all
+confidence: 3
+last_verified: "2026-07-05"
+connections:
+  - context-engineering/agentic-branched-state-production-content-lag
+  - context-engineering/agentic-branched-state-jit-search-accuracy-degradation
+  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+status: complete
+description: 자율 에이전트의 push 정책(로컬 누적, 사용자 batch push)에서 "언제 push 해야 하는가"에 대한 의사결정 가이드. commit 누적 속도, 프로덕션 영향도, JIT search 품질 저하 임계값 기반 타이밍 판단.
+type: entry
+source: explore-idea
+---
+
+## 왜 deferred push 인가
+
+허브 develop-cycle의 push 정책:
+
+```
+commit: 자유 (매 cycle 로컬 commit)
+push:   금지 (사용자 명시 시점만) — Vercel free tier 100 deploy/일 한도
+```
+
+이 정책 덕에 N=20 배치가 20번의 Vercel deploy 없이 실행된다. 하지만 trade-off 로 **로컬 commit 이 누적**되고 프로덕션과 괴리가 발생한다 ([agentic-branched-state-production-content-lag](/wiki/context-engineering/agentic-branched-state-production-content-lag)).
+
+## commit 누적 속도 (허브 기준)
+
+| 기간 | 누적 속도 |
+|------|-----------|
+| N=20 batch 1회 | ~20-25 commits (cycle-retro 1 + content 1-3 + curate 1-2 per cycle) |
+| 1주 자동화 | ~50-100 commits (auto-ingest 4-6/일 × 7일 × 2 commit/PR) |
+| 복합 기간 | local 급격히 증가, origin 자동화만큼 증가 |
+
+cycle 1342 기준: local 354+ ahead, origin 127 ahead.
+
+## push 타이밍 판단 기준
+
+### 즉시 push 가 필요한 신호
+
+| 신호 | 기준 | 현재 상태 |
+|------|------|-----------|
+| workflow 버그 fix 미반영 | workflow 수정 commit 존재 + CI 지속 실패 | ⚠️ incident-auto-close 0s failure 47회+ |
+| JIT search 심각 저하 | 로컬 신규 entry ≥ 20개 미반영 | ⚠️ 8+ entry 미반영 (cycles 1310+) |
+| 프로덕션 콘텐츠 격차 | local ahead ≥ 200 commits | ⚠️ 354 commits |
+
+### 미뤄도 되는 상황
+
+| 상황 | 이유 |
+|------|------|
+| batch 진행 중 | push 시 N회 Vercel deploy → 한도 소진 |
+| curate/explore-idea 만 쌓인 경우 | 코드/workflow 변경 없으면 workflow 영향 없음 |
+| 다음 batch 전 buffer | batch 완료 후 한꺼번에 push = 1회 deploy |
+
+## 실전 push 결정 흐름
+
+```
+1. git rev-list --left-right --count origin/main...main
+   → local X ahead / origin Y ahead
+
+2. 체크리스트:
+   □ CI 지속 실패 중? (workflow fix 있는데 미반영)
+   □ local ahead > 200?
+   □ 신규 wiki entry > 20개 미반영?
+   □ 배치 완료 직후?
+
+3. 체크 1개 이상 = push 권장 (사용자 GO 요청)
+   체크 0개     = 배치 계속 진행
+```
+
+## 허브 push 이력
+
+| 시점 | local ahead | 계기 |
+|------|-------------|------|
+| cycle 913 | 112 | 사용자 manual merge |
+| cycle 943 | ~50 | 사용자 merge (23 worker lessons) |
+| cycle 973 | ~30 | auto-ingest batch |
+| cycle 1043 | ~261 | 사용자 rebase+push |
+| cycle 1342 현재 | 354+ | 대기 중 (R6) |
+
+pattern: 사용자가 약 300-400 commit 누적 시 batch push 결정하는 경향. 이 시점이 실질 임계값.
+
+## agent 역할 제한
+
+push 결정은 R6 영역 (사용자 결정). agent 는:
+- ✅ BRANCHED 상태 측정 + TODOS P0 업데이트
+- ✅ push 권장 신호 탐지 + retro 에 명시
+- ✅ 본 entry 같은 가이드 문서화
+- ❌ `git push` 자율 실행 (사용자 GO 없이)
+- ❌ force-push / rebase (R6 사용자 영역)
