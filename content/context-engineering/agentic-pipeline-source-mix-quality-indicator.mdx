@@ -1,0 +1,104 @@
+---
+title: 지식 파이프라인 소스 믹스 — 깊이 vs 너비 건강 지표
+category: context-engineering
+date: "2026-07-05"
+tags:
+  - knowledge-pipeline
+  - source-mix
+  - quality-indicator
+  - auto-ingest
+  - context-engineering
+  - confidence
+workers:
+  - all
+confidence: 3
+last_verified: "2026-07-05"
+connections:
+  - context-engineering/agentic-wiki-confidence-lifecycle
+  - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+  - reports/week-2026-28
+status: complete
+description: auto-ingest 파이프라인의 scout/gap-pull/manual 소스 믹스는 지식 베이스의 깊이(depth) vs 너비(breadth) 균형을 보여주는 건강 지표다. 소스 분포로 위키 품질 상태를 빠르게 진단할 수 있다.
+type: entry
+source: explore-idea
+---
+
+## 소스 유형과 품질 의미
+
+자율 에이전트 허브의 auto-ingest 파이프라인은 3가지 소스로 콘텐츠를 생산한다:
+
+| 소스 | 설명 | 초기 confidence | 의미 |
+|------|------|-----------------|------|
+| **scout** | GeekNews 등 외부 스카우트 | 1 | 외부 신규 지식 능동 탐색 |
+| **gap-pull** | 커버리지 갭 자동 보완 | 1 | 주제 너비 자동 확장 |
+| **manual** | 실전 사례 직접 작성 | 2+ | 검증된 깊이 있는 지식 |
+
+## 소스 믹스 해석
+
+### 주간 리포트 소스 믹스 예시
+
+```
+2026년 28주차 (cycle 1310~1329 배치):
+  scout   : 4/24 = 17%
+  gap-pull: 4/24 = 17%
+  manual  : 5/24 = 21%
+  기타    : 11/24 = 46% (지난 주 리포트 포함)
+```
+
+평균 confidence: 1.9/5 → 자동 생성 엔트리 비중이 높음.
+
+### 소스 비율 해석 가이드
+
+| 패턴 | 의미 | 권장 행동 |
+|------|------|-----------|
+| scout 30%+ | 외부 지식 적극 수집 중 | confidence 1 → 실전 검증 후 승격 필요 |
+| gap-pull 40%+ | 자동 커버리지 확장 과다 | manual 작성 대비 확인 (자동 > 수동) |
+| manual 50%+ | 깊이 있는 실전 지식 성숙 | 건강한 상태. JIT hit rate 상승 기대 |
+| 전체 conf 평균 < 2.0 | 검증 미완료 엔트리 다수 | curate chain 에서 confidence 승격 검토 |
+
+## JIT 검색과 소스 믹스의 관계
+
+confidence 1 엔트리는 실전 검증이 없는 상태다. JIT 검색에서 이 엔트리들이 반환될 때, 에이전트는 낮은 신뢰도 기반 결정을 내릴 위험이 있다.
+
+```
+source mix shift →
+  confidence distribution →
+    JIT 반환 결과 품질 →
+      에이전트 결정 신뢰도
+```
+
+scout/gap-pull 비중이 높으면 JIT 반환 결과에 미검증 내용이 많아질 수 있다.
+
+## 건강한 소스 믹스 진화 패턴
+
+```
+[초기 구축]         scout/gap-pull 80%+ → 빠른 너비 확장
+[활성 개발]         manual 증가 → confidence 분포 개선
+[성숙 유지]         manual 40%+ / avg conf 2.5+ → 깊이 있는 지식 기반
+[허브 현재 상태]    batch 배치에서 harness-engineering manual 6/24 (25%)
+                   → 실전 사례 지식 성장 중
+```
+
+## 측정 방법
+
+```bash
+# 주간 리포트의 소스 믹스 확인
+grep "Source Mix" content/reports/week-2026-28.mdx -A 5
+
+# 전체 위키의 confidence 분포
+python3 -c "
+import glob, re
+confs = []
+for f in glob.glob('content/**/*.mdx', recursive=True):
+    m = re.search(r'^confidence: (\d+)', open(f).read(), re.MULTILINE)
+    if m: confs.append(int(m.group(1)))
+from collections import Counter
+print(Counter(confs))
+"
+```
+
+## 활용
+
+1. **curate 트리거**: avg conf < 2.0 이 3주 연속이면 confidence 승격 집중 curate 권장
+2. **explore-idea 방향**: scout 에서 들어온 confidence 1 엔트리 중 실전 적용 가능한 것 우선 manual 보강
+3. **파이프라인 건강도**: gap-pull 비중 급증 = 특정 카테고리 커버리지 부족 신호 → 해당 카테고리 explore-idea 검토

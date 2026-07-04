@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:37:57.281Z
+Updated: 2026-07-04T23:39:36.044Z
 
-## 엔트리 (383개)
+## 엔트리 (384개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -55,6 +55,7 @@ Updated: 2026-07-04T23:37:57.281Z
 - [Agentic Code Sweep — 동일 수치가 다른 시맨틱에 사용될 때 source-of-truth 결손 silent drift](wiki/context-engineering/agentic-numeric-threshold-semantic-aliasing-drift) — confidence: 2, status: complete
 - [Agentic OOS 메모리 드리프트 — count_smoke 베이스라인으로 사실 일치성 검증](wiki/context-engineering/agentic-oos-memory-drift-count-smoke-baseline) — confidence: 2, status: draft
 - [병렬 에이전트 생태계 통합 지연과 커밋 밀도 비대칭](wiki/context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry) — confidence: 2, status: draft
+- [지식 파이프라인 소스 믹스 — 깊이 vs 너비 건강 지표](wiki/context-engineering/agentic-pipeline-source-mix-quality-indicator) — confidence: 3, status: complete
 - [Agentic Post-Feature Drift Sweep Gap=1 Cadence — explore-idea 직후 review-code 즉시 발화 패턴](wiki/context-engineering/agentic-post-feature-drift-sweep-gap1-cadence) — confidence: 2, status: complete
 - [Agentic Post-Content-Saturation UX Chip Pivot — 콘텐츠 포화 후 UX 차원 전환 패턴](wiki/context-engineering/agentic-post-saturation-ux-chip-pivot) — confidence: 3, status: complete
 - [Push 무기한 유예 + 동시 origin 쓰기 → 쌍방향 divergence 침묵 누적](wiki/context-engineering/agentic-push-defer-divergence-concurrent-writes) — confidence: 3, status: complete
@@ -1030,6 +1031,9 @@ Updated: 2026-07-04T23:37:57.281Z
 - context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry ↔ context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification
 - context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry ↔ infrastructure/develop-cycle-feature-branch-vercel-dispatch-noise
 - context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry ↔ journal/playbook-journal-052-5-21-ci-silent-drift-feat-test-push-7
+- context-engineering/agentic-pipeline-source-mix-quality-indicator ↔ context-engineering/agentic-wiki-confidence-lifecycle
+- context-engineering/agentic-pipeline-source-mix-quality-indicator ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+- context-engineering/agentic-pipeline-source-mix-quality-indicator ↔ reports/week-2026-28
 - context-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ context-engineering/silent-drift-family-pattern
 - context-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ context-engineering/drift-detection-methodology
 - context-engineering/agentic-post-feature-drift-sweep-gap1-cadence ↔ infrastructure/zero-touch-develop-cycle-session-management
