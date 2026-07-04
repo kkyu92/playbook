@@ -1,0 +1,90 @@
+---
+title: curate 사이클 복합 유지보수 가치 — 단일 사이클에서 4개 유지보수 작업 동시 실행
+category: harness-engineering
+date: "2026-07-05"
+tags:
+  - curate
+  - maintenance
+  - compound
+  - changelog
+  - harness-engineering
+  - chain-pool
+workers:
+  - all
+confidence: 3
+last_verified: "2026-07-05"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/backfill-bidirectional-curate-pass-pattern
+  - harness-engineering/review-code-chain-retro-only-mature-codebase-signal
+status: complete
+description: curate 체인 1회 사이클에서 CHANGELOG 갱신 + 대시보드 업데이트 + backlink 추가 + lint 검사 의 4개 유지보수 작업이 동시에 실행된다. 이 복합 실행이 curate 의 explore-idea 대비 낮은 토큰 소모로 높은 시스템 상태 가치를 제공하는 이유다.
+type: entry
+source: explore-idea
+---
+
+## 관찰
+
+`explore-idea` 사이클은 새 wiki entry 를 생성한다. 반면 `curate` 사이클은 한 번에 여러 유지보수 작업을 수행한다.
+
+cycle 1331 curate 예시:
+
+```
+curate 1 사이클 = CHANGELOG 0.9.106 추가
+               + 4개 entry 에 backlink 추가
+               + 대시보드 cycle 1330 갱신
+               + lint 검사 (no orphans)
+```
+
+이 4개 작업이 단일 commit 에 묶인다.
+
+## 작업별 가치
+
+| 작업 | 대상 | 가치 |
+|------|------|------|
+| **CHANGELOG 갱신** | 버전 이력 | 변경사항 추적 가능성 |
+| **대시보드 업데이트** | closed-loop-health.mdx | 운영 가시성 (chain 분포, 0회 chain 수) |
+| **backlink 추가** | 연결된 4-5개 entry | 그래프 밀도 증가 (edges ↑) |
+| **lint 검사** | 전체 위키 | 품질 이상 조기 감지 |
+
+## explore-idea vs curate 효율 비교
+
+| 사이클 | 산출물 | 토큰 소모 | 시스템 가치 |
+|--------|--------|-----------|-------------|
+| explore-idea | 새 entry 1개 (2-5 새 edges) | 높음 | 지식 베이스 확장 |
+| curate | CHANGELOG + dashboard + backlinks + lint | 낮음 | 시스템 상태 갱신 (100% 즉각 반영) |
+
+curate 는 "생산" 없이 "유지보수"만 한다고 느껴지지만, 시스템 상태 관점에서 explore-idea 보다 즉각적 가치를 낸다.
+
+## 복합 curate 의 연쇄 효과
+
+새 entry #300 추가 (explore-idea) → curate 1331:
+1. CHANGELOG 0.9.106 → 버전 이력 완성
+2. 4개 backlink → `agentic-chain-saturation-detection` 등의 graph connectivity ↑
+3. 대시보드 → `retro-only 10%, 0회 chain 7개` 가시화
+4. lint → no new orphans 확인
+
+backlink 4개 = edges 2600+로 증가. 단일 curate 로 그래프 밀도 유지.
+
+## curate 빈도와 효율
+
+N=20 배치에서 curate 는 ~10회 발화한다:
+
+```
+N=20: curate ≈ 10회 × 복합 4개 작업 = 40개 유지보수 작업
+      explore-idea ≈ 8회 × entry 1개 = 8개 신규 entry
+```
+
+curate 1회 ≠ 작업 1개. 복합 실행이 curate 의 높은 발화율 (55%) 을 정당화한다.
+
+## curate 사이클 설계 원칙
+
+좋은 curate 사이클:
+1. **새 entry 에 즉시 CHANGELOG 추가** (stale 방지)
+2. **backlink 자동 추가** (신규 entry 연결 entry 에 역링크)
+3. **dashboard 갱신** (운영 가시성 유지)
+4. **lint 통과 확인** (orphan 감지)
+
+나쁜 curate 사이클:
+- CHANGELOG 만 추가 (backlink, dashboard 생략)
+- entry 수정 없이 lint 만 실행 (lint CLEAN = 아무것도 안 한 것과 동일)

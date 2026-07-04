@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:44:34.856Z
+Updated: 2026-07-04T23:46:21.019Z
 
-## 엔트리 (386개)
+## 엔트리 (387개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -114,6 +114,7 @@ Updated: 2026-07-04T23:44:34.856Z
 - [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) — confidence: 2, status: complete
 - [BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴](wiki/harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) — confidence: 3, status: complete
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
+- [curate 사이클 복합 유지보수 가치 — 단일 사이클에서 4개 유지보수 작업 동시 실행](wiki/harness-engineering/curate-cycle-compound-maintenance-value) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트](wiki/harness-engineering/github-actions-workflow-zero-second-failure-diagnosis) — confidence: 2, status: complete
 - [review-code 체인 retro-only — 성숙한 코드베이스의 정상 신호](wiki/harness-engineering/review-code-chain-retro-only-mature-codebase-signal) — confidence: 4, status: complete
@@ -1480,6 +1481,9 @@ Updated: 2026-07-04T23:44:34.856Z
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ project-ops/todos-priority-recurring-issue-counter-pattern
+- harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/backfill-bidirectional-curate-pass-pattern
+- harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ project-ops/question-own-defaults
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/post-ship-meta-documentation-drift
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/worker-lesson-velocity-signal
