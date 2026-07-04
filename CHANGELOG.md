@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.113] — 2026-07-05
+
+### Added
+- wiki entry #307 `context-engineering/wiki-entry-confidence-upgrade-path` (cycle 1346): wiki entry confidence 1→5 승격 경로. auto-ingest→검증→시스템반영 단계별 trigger. JIT hit + 결정 변경 = confidence 3 조건.
+
+### Changed
+- wiki 388 entries, 2616 edges.
+
 ## [0.9.112] — 2026-07-05
 
 ### Added

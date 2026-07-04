@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 907,
+  "totalInvocations": 910,
   "skipped": 27,
-  "searched": 880,
-  "hit": 307,
-  "noMatch": 573,
-  "lastUpdated": "2026-07-04T23:45:42.032Z",
+  "searched": 883,
+  "hit": 309,
+  "noMatch": 574,
+  "lastUpdated": "2026-07-04T23:47:07.285Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -173,8 +173,8 @@
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 3,
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 9,
     "agents/autonomous-agent-long-term-memory-management": 1,
-    "retros/2026-05-22-cycles-1005-1008": 15,
-    "retros/2026-05-22-cycles-1006-1012": 18,
+    "retros/2026-05-22-cycles-1005-1008": 17,
+    "retros/2026-05-22-cycles-1006-1012": 20,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 2,
     "context-engineering/agentic-wiki-confidence-lifecycle": 3,
@@ -900,6 +900,11 @@
       "query": "wiki entry last accessed usage frequency stale detection promotion candidate",
       "timestamp": "2026-07-04T23:45:23.383Z",
       "topScore": 0.8358
+    },
+    {
+      "query": "confidence upgrade path auto-generated entry verification production use evidence",
+      "timestamp": "2026-07-04T23:47:07.284Z",
+      "topScore": 0.8465
     }
   ],
   "noMatchQueryCounts": {
@@ -1018,7 +1023,8 @@
     "periodic architectural review chain low frequency high impact audit": 1,
     "batch commit push deferred R6 boundary accumulation rate velocity": 1,
     "self-referential knowledge base wiki documents own operation meta-wiki": 1,
-    "wiki entry last accessed usage frequency stale detection promotion candidate": 1
+    "wiki entry last accessed usage frequency stale detection promotion candidate": 1,
+    "confidence upgrade path auto-generated entry verification production use evidence": 1
   },
-  "totalQueries": 951
+  "totalQueries": 954
 }
