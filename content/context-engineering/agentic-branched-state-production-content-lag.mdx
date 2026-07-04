@@ -1,0 +1,122 @@
+---
+title: BRANCHED 상태 프로덕션 콘텐츠 가시성 지연 — 로컬 개발 vs 배포 시스템 분기
+category: context-engineering
+date: "2026-07-05"
+tags:
+  - branched-state
+  - production
+  - visibility-lag
+  - agentic-system
+  - deployment
+  - context-engineering
+workers:
+  - all
+confidence: 4
+last_verified: "2026-07-05"
+connections:
+  - context-engineering/agentic-branched-state-jit-search-accuracy-degradation
+  - context-engineering/agentic-parallel-ecosystem-integration-lag-commit-density-asymmetry
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+status: complete
+description: BRANCHED 상태에서 로컬에 354개 commit 쌓일 동안 프로덕션 시스템(Vercel, GH Actions, JIT search)은 오래된 origin/main 을 바라본다. 자율 에이전트가 "추가했다"고 간주하는 콘텐츠가 실제로는 프로덕션에 미노출. 이 시각 지연의 2차 효과와 임계값 탐지 방법.
+type: entry
+source: explore-idea
+---
+
+## 현상
+
+git BRANCHED 상태: `local 354 commits ahead / origin 127 commits ahead` (cycle 1332 측정).
+
+자율 에이전트는 `content/` 에 새 MDX 엔트리를 추가하고, `generate-content-manifest.mjs` 로 INDEX 갱신하며 "위키에 추가됐다"고 처리한다. 하지만 이 commit 은 로컬 main 에만 존재한다.
+
+**프로덕션 시스템이 바라보는 origin/main 은 cycle ~1309 시점에 고정되어 있다.**
+
+## 영향 받는 시스템
+
+| 시스템 | 영향 |
+|--------|------|
+| **Vercel 호스팅** | 방문자에게 오래된 위키 표시 (381 entries 중 로컬 전용 8+ entry 미노출) |
+| **JIT search (embeddings.json)** | origin 기준 embed — 신규 entry 검색 불가 (로컬 에이전트도 영향) |
+| **auto-ingest 워커** | 스카우트 시 이미 로컬에 있는 토픽을 "coverage gap"으로 오판 가능 |
+| **silent-skip-tracker** | origin 기준 cron 발화 — 로컬 workflow 수정 미반영 |
+| **incident-auto-close.yml** | 로컬 fix (`79b131a6`) 미푸시 → origin 에 broken YAML 잔존 → 0s failure |
+| **Gemini Key Health** | origin 기준 check — 로컬 전용 fix 미반영 |
+
+## 측정 방법
+
+```bash
+# BRANCHED 정도 측정
+git rev-list --left-right --count origin/main...main
+# left=origin only / right=local only
+# "127 354" → origin 127 ahead + local 354 ahead
+
+# 로컬 전용 commit 내용 요약
+git log origin/main..main --oneline | head -20
+```
+
+## 2차 효과
+
+### auto-ingest 중복 entry 위험
+
+워커 scout 시스템이 이미 로컬에 존재하는 토픽(예: "backfill-bidirectional curate pass")을 탐지하면:
+- JIT search = no-match (로컬 entry 가 origin 미반영이라 embeddings 에 없음)
+- 에이전트는 "새 토픽"으로 판단 → 중복 entry 생성 시도
+
+이 경로는 직접 관측된 바 없으나 354 commits lag 에서는 이론적 위험.
+
+### GH Actions noise
+
+로컬 workflow 수정 (예: incident-auto-close.yml heredoc → python3 -c) 이 origin 에 미반영되면 **해당 workflow 가 발화될 때마다 0s failure** 발생. 47회+ 연속 failure 관측.
+
+이 noise 는 `gh run list` 진단 시 actual incident 신호를 희석.
+
+### "완료된 작업" 착각
+
+에이전트가 "entry #300 추가 완료" 라고 처리했지만 실제 사용자는 사이트에서 볼 수 없다. retro 에 "success" 박제가 로컬 기준임을 인지해야 함.
+
+## BRANCHED 임계값 경험칙
+
+| commits ahead (local) | 영향 |
+|----------------------|------|
+| < 10 | 무시 가능. auto-ingest 4-6회/일 + 허브 1-2 commit/cycle → 자연 발생 |
+| 10~50 | 경미. JIT search 가 최신 1-2 entry 미탐색 |
+| 50~100 | 주의. 위키 week report 반영 불완전. 스카우트 coverage gap 판단 오류 가능 |
+| 100~200 | 위험. GH Actions noise 다수. 사이트 콘텐츠 크게 outdated |
+| **200+** | **심각. 프로덕션 = 개발 현실 단절. batch push 필요** |
+
+cycle 1332 기준 354 local-only = 심각 구간.
+
+## 탐지 자동화 (권장)
+
+```bash
+# BRANCHED 경보 — 200 이상 시 TODOS P0 갱신 추천
+LOCAL_AHEAD=$(git rev-list --count origin/main..main 2>/dev/null || echo 0)
+if [ "$LOCAL_AHEAD" -gt 200 ]; then
+  echo "⚠️ BRANCHED CRITICAL: local $LOCAL_AHEAD commits ahead of origin"
+  # TODOS.md P0 항목 업데이트 signal
+fi
+```
+
+이 check 는 매 cycle 진단 단계 말미에 포함 가능.
+
+## 해소 방법
+
+**R6 사용자 영역** (에이전트 자율 불가):
+
+```bash
+# push policy: 사용자 명시 시점만
+git push origin main  # local 354 commits → origin 반영
+# 또는 rebase after pull:
+git pull --rebase origin main && git push origin main
+```
+
+push 후:
+- Vercel 자동 rebuild → 최신 위키 라이브
+- GH Actions origin 기준 → 수정된 workflow 반영
+- `pnpm embed-content` → embeddings.json 갱신 (별도 실행 또는 embed-on-push.yml 자동)
+
+## JIT search 저하와의 관계
+
+[agentic-branched-state-jit-search-accuracy-degradation](/wiki/context-engineering/agentic-branched-state-jit-search-accuracy-degradation) 은 JIT search 정확도 저하를 다룬다. 본 entry 는 그 상위 맥락: **프로덕션 시스템 전체**가 오래된 origin 을 바라보는 구조적 상황.
+
+JIT 저하는 "에이전트 내부 검색"의 문제, 프로덕션 lag 은 "외부 사용자 및 자동화 시스템"의 문제.
