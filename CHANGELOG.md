@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.112] — 2026-07-05
+
+### Added
+- wiki entry #306 `harness-engineering/curate-cycle-compound-maintenance-value` (cycle 1344): curate 체인 1회에서 CHANGELOG + 대시보드 + backlink + lint 4개 유지보수 작업 동시 실행. N=20 배치에서 curate 55% 발화율 정당화.
+
+### Changed
+- wiki 387 entries, 2613 edges.
+
 ## [0.9.111] — 2026-07-05
 
 ### Added
