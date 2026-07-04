@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:47:47.879Z
+Updated: 2026-07-04T23:52:05.026Z
 
-## 엔트리 (388개)
+## 엔트리 (389개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -62,6 +62,7 @@ Updated: 2026-07-04T23:47:47.879Z
 - [자율 에이전트 리뷰-코드 베이스라인 모드 — 무결점 확인 NULL 가설 검증 패턴](wiki/context-engineering/agentic-review-code-baseline-null-hypothesis-verification) — confidence: 2, status: complete
 - [자율 에이전트 Skill Evolution 수렴 궤적 — fast-path 비율이 말해주는 시스템 성숙 신호](wiki/context-engineering/agentic-skill-evolution-convergence-maturity-signal) — confidence: 3, status: complete
 - [자율 에이전트 슬라이딩 윈도우 임계값 — 메타 체인 자연 oscillation 생성 메커니즘](wiki/context-engineering/agentic-sliding-window-threshold-natural-oscillation) — confidence: 5, status: complete
+- [Confidence 1 Stale Entry 생존 vs 삭제 — 0-JIT-hit 임계값 결정 프레임](wiki/context-engineering/agentic-stale-entry-survival-vs-deletion-zero-jit-threshold) — confidence: 2, status: complete
 - [에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드](wiki/context-engineering/agentic-supervisor-session-liveness-contract) — confidence: 3, status: complete
 - [Wiki Entry Confidence Lifecycle — Draft에서 검증까지](wiki/context-engineering/agentic-wiki-confidence-lifecycle) — confidence: 3, status: draft
 - [Wiki Connection Graph Health — 카테고리별 연결 희소성과 지식 사일로 패턴](wiki/context-engineering/agentic-wiki-connection-graph-health-metrics) — confidence: 2, status: draft
@@ -1061,6 +1062,9 @@ Updated: 2026-07-04T23:47:47.879Z
 - context-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ infrastructure/zero-touch-develop-cycle-session-management
 - context-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - context-engineering/agentic-sliding-window-threshold-natural-oscillation ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- context-engineering/agentic-stale-entry-survival-vs-deletion-zero-jit-threshold ↔ context-engineering/agentic-wiki-confidence-lifecycle
+- context-engineering/agentic-stale-entry-survival-vs-deletion-zero-jit-threshold ↔ context-engineering/wiki-entry-confidence-upgrade-path
+- context-engineering/agentic-stale-entry-survival-vs-deletion-zero-jit-threshold ↔ infrastructure/agentic-wiki-entry-deletion-orphan-cascade
 - context-engineering/agentic-supervisor-session-liveness-contract ↔ infrastructure/zero-touch-develop-cycle-session-management
 - context-engineering/agentic-supervisor-session-liveness-contract ↔ context-engineering/drift-detection-methodology
 - context-engineering/agentic-wiki-confidence-lifecycle ↔ infrastructure/agentic-wiki-entry-deletion-orphan-cascade
