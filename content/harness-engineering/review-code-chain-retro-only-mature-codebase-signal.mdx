@@ -1,0 +1,123 @@
+---
+title: review-code 체인 retro-only — 성숙한 코드베이스의 정상 신호
+category: harness-engineering
+date: "2026-07-05"
+tags:
+  - review-code
+  - chain-pool
+  - code-quality
+  - retro-only
+  - harness-engineering
+  - mature-codebase
+workers:
+  - all
+confidence: 4
+last_verified: "2026-07-05"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-chain-saturation-detection
+  - harness-engineering/develop-cycle-positive-streak-recognition
+  - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+status: complete
+description: review-code 체인이 retro-only (변경 없음) 를 반환할 때, 이는 체인 실패가 아니라 코드베이스 성숙도의 정상 신호다. 15+ 연속 retro-only = 품질 안정 확인. 강제 코드 수정 시도는 역효과.
+type: entry
+source: explore-idea
+---
+
+## 문제 인식
+
+자율 에이전트 루프에서 `review-code` 체인이 반복적으로 **retro-only** (변경 없음, no code changes needed) 를 반환할 때, "체인이 제대로 작동하지 않는 것 아닌가?" 라는 의심이 생긴다.
+
+> "96/96 PASS, lint clean. 개선 대상 없음. retro-only." — cycles 1155~1322, 15회+
+
+이 의심이 잘못된 이유와, retro-only 가 오히려 **강력한 긍정 신호**인 이유를 설명한다.
+
+## 왜 retro-only 가 정상인가
+
+### 코드베이스 성숙도 곡선
+
+```
+[초기 구축]         → 많은 코드 → 매 review-code 에 수정 대상 다수
+[활성 개발]         → 기능 추가 + 빚 누적 → 수정 대상 간헐적
+[유지보수 안정기]   → 코드 변화 적음 → review-code 대부분 PASS
+[성숙 정상상태]     → content/scripts 위주 + 코드 고정 → retro-only 지배
+```
+
+허브 프로젝트는 cycle 1155+ 에서 **성숙 정상상태**에 진입:
+- 코드베이스 성격: Next.js + 관리 스크립트 (~/projects/playbook/scripts/) + 콘텐츠 중심
+- 신규 기능 추가 드묾 (콘텐츠 파이프라인은 content/ 의 MDX 변경)
+- 96개 테스트 모두 PASS 유지 (cycle 771 기준 96, 이전 93)
+- ESLint 0 warnings, tsc 0 errors, knip CLEAN
+
+이 상태에서 `review-code` 가 수정 대상을 찾지 못하는 것은 **도구 실패가 아니라 코드 안정 확인**이다.
+
+## 허브 증거 (cycles 1155~1322)
+
+| 사이클 | retro-only 이유 |
+|--------|----------------|
+| 1155   | 변동 없음       |
+| 1163   | 변동 없음       |
+| 1167   | 변동 없음       |
+| 1174~1193 | 5회 연속 retro-only |
+| 1204, 1224 | 2회 추가    |
+| 1254, 1259, 1264 | 3회 연속 |
+| 1273   | "허브 코드베이스 완전 건강" |
+| 1295   | 96 tests, 0 orphans |
+| 1308   | 96/96 PASS     |
+| 1322   | 96/96 PASS, lint clean |
+
+**누적 15+ 회 retro-only** — 이 기간 동안 코드베이스 실제로 문제 없었음.
+
+## 오개념 vs 현실
+
+| 오개념 | 현실 |
+|--------|------|
+| retro-only = 체인이 뭔가를 놓침 | retro-only = 수정 대상 부재 = 정상 |
+| 항상 뭔가 수정해야 함 | 수정이 없는 게 최고 상태 |
+| review-code가 dormant = 비효율 | dormant = 해당 차원에 부채 없음 |
+| 강제 수정으로 "유용함" 증명 | 억지 수정 = 회귀 위험 도입 |
+
+## retro-only 와 진짜 실패의 구분
+
+retro-only가 "체인이 제대로 체크 안 했을" 가능성을 배제하려면:
+
+```bash
+# 실제 실행 여부 확인
+tsc --noEmit                    # 0 errors
+pnpm lint                       # 0 warnings
+pnpm test                       # 96/96 pass
+pnpm knip                       # 0 dead code
+node scripts/lint-content.mjs   # 0 orphans
+```
+
+이 5가지가 모두 CLEAN 이면 retro-only = 진짜 CLEAN.
+
+**체인이 "아무것도 안 했다"와 "확인하고 이상 없음을 확인했다"는 다르다.**
+
+## 체인 dormancy 와의 관계
+
+review-code 가 retro-only 를 연속 반환하면 chain pool 내에서 자연스럽게 **dormant** 상태가 된다:
+
+- 직전 20 cycle 내 `review-code` 발화율 감소
+- 메인 자율 추론이 다른 trigger 가 명확한 chain 을 우선 선택
+- `curate`, `explore-idea` 가 주도하는 단계로 전환
+
+이것이 **의도된 정상 동작**. chain pool 의 역할은 "필요할 때 발화, 필요 없을 때 조용"이다. dormancy 를 강제로 깨려는 시도 (예: "review-code 오래 안 했으니 한 번 해보자") 는 ROI 가 없다.
+
+## trigger — 다음 review-code 발화 시점
+
+retro-only 연속 후 review-code 가 다시 실질적 성과를 내는 시점:
+
+1. **신규 스크립트 추가** (새 파이프라인 도입)
+2. **의존성 업그레이드** (타입 불일치, API 변경)
+3. **대형 리팩토링 후** (DRY 재조정)
+4. **테스트 수 변동** (새 케이스 추가 → 96→97)
+5. **장기 미실행 (20+ cycle)** → baseline 재확인 의미
+
+이 조건 없이 review-code 를 발화하면 retro-only 반복이 예측된다.
+
+## 결론
+
+> **96/96 PASS, lint clean, retro-only** = 이 코드베이스는 지금 최상의 상태다.
+
+review-code 가 찾을 것이 없을 때, 에이전트는 안심하고 다른 chain (curate, explore-idea) 에 사이클을 투자해야 한다. 품질이 안정된 코드베이스에서 retro-only 는 목표 달성을 의미한다.

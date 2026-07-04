@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-03T23:59:02.961Z
+Updated: 2026-07-04T23:29:52.109Z
 
-## 엔트리 (380개)
+## 엔트리 (381개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -112,6 +112,7 @@ Updated: 2026-07-03T23:59:02.961Z
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
 - [GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트](wiki/harness-engineering/github-actions-workflow-zero-second-failure-diagnosis) — confidence: 2, status: complete
+- [review-code 체인 retro-only — 성숙한 코드베이스의 정상 신호](wiki/harness-engineering/review-code-chain-retro-only-mature-codebase-signal) — confidence: 4, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
 - [SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session](wiki/harness-engineering/skill-evolution-skip-condition-mode-dependency) — confidence: 3, status: complete
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: done
@@ -1464,6 +1465,10 @@ Updated: 2026-07-03T23:59:02.961Z
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
+- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-chain-saturation-detection
+- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/develop-cycle-positive-streak-recognition
+- harness-engineering/review-code-chain-retro-only-mature-codebase-signal ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/zero-touch-develop-cycle-session-management
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
