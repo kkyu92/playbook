@@ -2983,3 +2983,32 @@
 ### Added
 - entry #299 `harness-engineering/backfill-bidirectional-curate-pass-pattern` — backfill-bidirectional curate 패스 패턴 (636 links, cap-exceeded 가지치기, lint 검증)
 
+
+## [Batch Summary] cycles 1310–1329 — 2026-07-04
+
+### 20 사이클 배치 완료 (N=20, manual batch mode)
+
+#### 주요 결과
+
+- **wiki entries**: 291 → 380 (entries #292~#299, 8개 신규)
+- **graph edges**: 2448 → 2586 (138 증가 — backfill-bidirectional 636 links 포함)
+- **orphan links**: 0건 유지 (lint clean throughout)
+- **chain 분포**: explore-idea 3, curate 5, worker-incident-triage 1, skill-evolution 1(retro-only), curate-backfill 1
+
+#### 신규 entries
+
+- #292 `harness-engineering/branched-state-local-lint-false-positive-signal-drift` — BRANCHED 로컬 lint 오염 (cherry-pick PR #2138)
+- #293 `infrastructure/claude-plan-rate-limit-cron-automation-resilience` — Claude 일일 한도 cron 복구 설계
+- #294 `harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main` — Vercel 차단 PR 구출 패턴
+- #295 `harness-engineering/github-actions-workflow-zero-second-failure-diagnosis` — GH Actions 0s 실패 진단
+- #296 `project-ops/todos-priority-recurring-issue-counter-pattern` — TODOS 재발 카운터 패턴
+- #297 `harness-engineering/branched-state-cherry-pick-orphan-connection-cascade` — cherry-pick orphan 연쇄
+- #298 `context-engineering/batch-session-content-jit-search-coverage-gap` — JIT 검색 커버리지 갭
+- #299 `harness-engineering/backfill-bidirectional-curate-pass-pattern` — backfill-bidirectional curate 패스
+
+#### R6 carry-over (사용자 결정 필요)
+
+- `git pull --rebase origin main && git push origin main` — BRANCHED 해소 (local 352 ahead / origin 126 ahead)
+- `incident-auto-close.yml` heredoc fix: local 수정(cycle 1270) → origin 미배포 → 0s 실패 지속
+- moneyball: `pnpm update ws vite` (audit P1)
+
