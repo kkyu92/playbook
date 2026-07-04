@@ -1,0 +1,88 @@
+---
+title: 2-chain alternation lock — 주기적 아키텍처 감사 강제 메커니즘
+category: harness-engineering
+date: "2026-07-05"
+tags:
+  - alternation-lock
+  - chain-pool
+  - architectural-audit
+  - closed-loop-design
+  - harness-engineering
+  - chain-diversity
+workers:
+  - all
+confidence: 3
+last_verified: "2026-07-05"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-cycle-chain-diversity-rebalancing
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+  - context-engineering/agentic-branched-state-production-content-lag
+status: complete
+description: explore-idea/curate 2-chain alternation lock 이 8 사이클 이상 지속되면 잠긴 chain 제외 강제 선택 룰이 발동한다. 이 강제 전환이 일상 운영에서 보이지 않는 시스템 갭을 발견하는 주기적 아키텍처 감사 효과를 낸다. cycle 1332 closed-loop-design 실증.
+type: entry
+source: explore-idea
+---
+
+## 배경
+
+허브 develop-cycle의 chain pool 은 11개 chain 을 포함하지만, 성숙 단계에서는 자연스럽게 2-3개 chain 이 압도적으로 발화한다:
+
+- cycle 1310~1329: explore-idea + curate 양대 지배
+- cycle 1330~1338: explore-idea + curate 지속 (closed-loop-design 1회 중단 제외)
+
+이 2-chain 지배 패턴이 8 사이클 이상 지속되면 **alternation lock 탐지 룰**이 발동한다:
+> "직전 8 사이클 distinct chain ≤2 시 잠긴 chain 제외 + 다른 chain 강제 선택"
+
+## 강제 전환의 두 번째 효과
+
+alternation lock 룰의 1차 목적은 chain diversity 유지다. 하지만 실제 운영에서 더 중요한 **2차 효과**가 나타난다:
+
+**강제 전환 → 주기적 아키텍처 감사**
+
+explore-idea/curate 가 일상 콘텐츠 생산에 집중하는 동안, 감사 chain (closed-loop-design, review-code 등) 은 **"지금 잘 돌아가고 있나?"** 를 묻는다. 이 질문은 일상 chain 에서는 자연적으로 발화되지 않는다.
+
+## cycle 1332 사례 증거
+
+**발화 조건**: cycle 1331-1338 직전 8 사이클 distinct = {curate, explore-idea, closed-loop-design} = 2 → lock 탐지
+
+**강제 선택**: closed-loop-design (20 사이클 동안 0회 발화)
+
+**발견 사항** (일상 curate/explore-idea 사이클에서 보이지 않았던 것):
+
+| 발견 | 설명 | 마지막 일상 사이클의 인식 여부 |
+|------|------|-------------------------------|
+| Output 갭 | 354 local commit 이 production 미반영 | 개별 curate 에서 노출 X |
+| Feedback noise | incident-auto-close.yml 0s failure 47회+ | 배경 noise 로 묻힘 |
+
+이 두 갭은 수십 사이클 동안 지속됐지만 curate/explore-idea 운영에서는 발견되지 않았다.
+
+## 감사 효과의 조건
+
+**alternation lock → 감사 chain** 경로가 작동하려면:
+
+1. lock threshold 충족 (8 사이클 distinct ≤2)
+2. 잠긴 chain 제외 후 **감사 성격 chain** 이 선택 가능해야 함
+   - closed-loop-design (4차원 루프 감사)
+   - review-code (코드 품질 감사)
+   - health check 목적 dimension-cycle
+3. 선택된 chain 이 실제로 systemic gap 을 발견할 수 있어야 함
+
+lock 후 폴백이 dimension-cycle (기본 폴백) 로 끝나면 감사 효과 약함. **감사 chain 의 trigger source 가 있어야 높은 확률**.
+
+## 주기 추정
+
+explore-idea/curate 6-cycle alternation → alternation lock → 감사 chain 1 cycle → explore-idea/curate 재개 패턴을 따르면:
+
+```
+감사 주기 ≈ 8-10 사이클 마다 1회
+N=20 배치에서 ≈ 2회 발생
+```
+
+이 주기는 매우 짧은 편이다. 주기적 아키텍처 리뷰 문화에서 "격주 회의" 정도의 빈도. 시스템이 자연스럽게 이 빈도를 만들어낸다.
+
+## 활용
+
+1. **락 발생 전 미리 준비**: locked chain 후보가 나타날 때 감사 안건 list 미리 정리 가능
+2. **closed-loop-design 우선**: alternation lock 후 폴백 chain 중 closed-loop-design 은 가장 광범위한 시스템 감사
+3. **발견 → carry-over 박제**: 감사에서 발견된 갭이 R6 영역이면 TODOS 박제 + 다음 사이클 explore-idea 로 문서화

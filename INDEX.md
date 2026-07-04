@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:39:36.044Z
+Updated: 2026-07-04T23:42:37.869Z
 
-## 엔트리 (384개)
+## 엔트리 (385개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -97,6 +97,7 @@ Updated: 2026-07-04T23:39:36.044Z
 - [Zerostack 통합 — Rust 기반 코딩 에이전트를 활용한 AI 하네스 기능 확장](wiki/context-engineering/zerostack-rust-agent-harness-extension) — confidence: 1, status: draft
 
 ### Harness Engineering
+- [2-chain alternation lock — 주기적 아키텍처 감사 강제 메커니즘](wiki/harness-engineering/agentic-alternation-lock-architectural-audit-mechanism) — confidence: 3, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic 사이클 Chain 다양성 관리 — 연속 streak 감지 + 순환 강제](wiki/harness-engineering/agentic-cycle-chain-diversity-rebalancing) — confidence: 3, status: draft
@@ -1419,6 +1420,10 @@ Updated: 2026-07-04T23:39:36.044Z
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
+- harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-cycle-chain-diversity-rebalancing
+- harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ context-engineering/agentic-branched-state-production-content-lag
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
