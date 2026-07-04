@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.110] — 2026-07-05
+
+### Added
+- wiki entry #304 `harness-engineering/agentic-alternation-lock-architectural-audit-mechanism` (cycle 1339): 2-chain alternation lock 이 주기적 아키텍처 감사를 강제하는 메커니즘. cycle 1332 closed-loop-design 실증(Output/Feedback 갭 발견). 8-10 사이클마다 감사 chain 자연 발화.
+
+### Changed
+- wiki 385 entries, 2607 edges.
+
 ## [0.9.109] — 2026-07-05
 
 ### Added

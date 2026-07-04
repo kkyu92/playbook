@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 886,
+  "totalInvocations": 894,
   "skipped": 27,
-  "searched": 859,
-  "hit": 292,
-  "noMatch": 567,
-  "lastUpdated": "2026-07-04T23:38:53.137Z",
+  "searched": 867,
+  "hit": 297,
+  "noMatch": 570,
+  "lastUpdated": "2026-07-04T23:41:46.030Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -173,8 +173,8 @@
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 3,
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 8,
     "agents/autonomous-agent-long-term-memory-management": 1,
-    "retros/2026-05-22-cycles-1005-1008": 8,
-    "retros/2026-05-22-cycles-1006-1012": 13,
+    "retros/2026-05-22-cycles-1005-1008": 11,
+    "retros/2026-05-22-cycles-1006-1012": 15,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 2,
     "context-engineering/agentic-wiki-confidence-lifecycle": 2,
@@ -206,7 +206,7 @@
     "infrastructure/cross-fork-feedback-sync": 1,
     "agents/multi-stage-agent-task-scheduling-monitoring": 1,
     "prompt-engineering/llm-workflow-orchestration-business-logic-patterns": 1,
-    "infrastructure/gemini-api-http-status-key-health-classification": 1,
+    "infrastructure/gemini-api-http-status-key-health-classification": 2,
     "context-engineering/agent-multi-frequency-knowledge-pipeline": 1,
     "harness-engineering/agentic-cycle-chain-diversity-rebalancing": 1,
     "context-engineering/agentic-batch-session-context-budget": 1,
@@ -219,13 +219,15 @@
     "infrastructure/github-actions-monitoring-smoke-alert-isolation": 2,
     "journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958": 1,
     "journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig": 1,
-    "context-engineering/agentic-wiki-connection-graph-health-metrics": 1,
+    "context-engineering/agentic-wiki-connection-graph-health-metrics": 3,
     "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 2,
     "context-engineering/embedding-index-staleness-detection-after-slug-migration": 1,
     "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1,
     "reports/week-2026-27": 1,
     "reports/week-2026-24": 1,
-    "reports/week-2026-26": 1
+    "reports/week-2026-26": 1,
+    "retros/2026-05-20-cycles-930-932": 1,
+    "evaluation/llm-judgment-code-verification-separation-architecture": 1
   },
   "noMatchQueries": [
     {
@@ -867,6 +869,21 @@
       "query": "knowledge pipeline source distribution health indicator quality signal",
       "timestamp": "2026-07-04T23:38:53.133Z",
       "topScore": 0.8361
+    },
+    {
+      "query": "cross-link backfill graph density edge growth trajectory batch",
+      "timestamp": "2026-07-04T23:40:20.669Z",
+      "topScore": 0.8473
+    },
+    {
+      "query": "N=20 batch profile explore curate ratio output predictable",
+      "timestamp": "2026-07-04T23:40:21.381Z",
+      "topScore": 0.844
+    },
+    {
+      "query": "periodic architectural review chain low frequency high impact audit",
+      "timestamp": "2026-07-04T23:41:46.029Z",
+      "topScore": 0.8188
     }
   ],
   "noMatchQueryCounts": {
@@ -979,7 +996,10 @@
     "local-only wiki development production system divergence visibility gap": 1,
     "auto-ingest scout confidence 1 entries quality gap manual curation": 1,
     "auto-ingest pipeline confidence 1 entries quality gap low value content": 1,
-    "knowledge pipeline source distribution health indicator quality signal": 1
+    "knowledge pipeline source distribution health indicator quality signal": 1,
+    "cross-link backfill graph density edge growth trajectory batch": 1,
+    "N=20 batch profile explore curate ratio output predictable": 1,
+    "periodic architectural review chain low frequency high impact audit": 1
   },
-  "totalQueries": 930
+  "totalQueries": 938
 }
