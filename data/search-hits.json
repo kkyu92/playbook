@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 874,
+  "totalInvocations": 879,
   "skipped": 27,
-  "searched": 847,
-  "hit": 286,
-  "noMatch": 561,
-  "lastUpdated": "2026-07-04T23:30:43.720Z",
+  "searched": 852,
+  "hit": 288,
+  "noMatch": 564,
+  "lastUpdated": "2026-07-04T23:34:37.485Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -171,7 +171,7 @@
     "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 1,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 3,
-    "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 7,
+    "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 8,
     "agents/autonomous-agent-long-term-memory-management": 1,
     "retros/2026-05-22-cycles-1005-1008": 8,
     "retros/2026-05-22-cycles-1006-1012": 12,
@@ -220,7 +220,9 @@
     "journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958": 1,
     "journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig": 1,
     "context-engineering/agentic-wiki-connection-graph-health-metrics": 1,
-    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1
+    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 1,
+    "context-engineering/embedding-index-staleness-detection-after-slug-migration": 1,
+    "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1
   },
   "noMatchQueries": [
     {
@@ -832,6 +834,21 @@
       "query": "review-code chain PASS stable health code quality",
       "timestamp": "2026-07-04T23:30:43.719Z",
       "topScore": 0.839
+    },
+    {
+      "query": "local-only commits production system stale state feedback mismatch",
+      "timestamp": "2026-07-04T23:33:11.445Z",
+      "topScore": 0.8438
+    },
+    {
+      "query": "BRANCHED local commits production deployment lag content not live",
+      "timestamp": "2026-07-04T23:34:33.801Z",
+      "topScore": 0.8411
+    },
+    {
+      "query": "local-only wiki development production system divergence visibility gap",
+      "timestamp": "2026-07-04T23:34:37.484Z",
+      "topScore": 0.841
     }
   ],
   "noMatchQueryCounts": {
@@ -938,7 +955,10 @@
     "automation R6 zone boundary agent cannot act": 1,
     "code quality plateau saturation review-code no changes needed": 1,
     "review-code PASS perfect score no debt zero technical debt stable": 1,
-    "review-code chain PASS stable health code quality": 1
+    "review-code chain PASS stable health code quality": 1,
+    "local-only commits production system stale state feedback mismatch": 1,
+    "BRANCHED local commits production deployment lag content not live": 1,
+    "local-only wiki development production system divergence visibility gap": 1
   },
-  "totalQueries": 918
+  "totalQueries": 923
 }

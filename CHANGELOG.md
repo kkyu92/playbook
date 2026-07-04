@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.107] — 2026-07-05
+
+### Added
+- wiki entry #301 `context-engineering/agentic-branched-state-production-content-lag` (cycle 1333): BRANCHED 상태에서 354 로컬 commit 이 프로덕션 시스템(Vercel/GH Actions/JIT search)에 미반영되는 구조적 가시성 지연. 2차 효과(auto-ingest 중복, noise 희석) + 임계값 경험칙 + 탐지 스크립트.
+
+### Changed
+- wiki 382 entries, 2597 edges.
+
 ## [0.9.106] — 2026-07-05
 
 ### Added
