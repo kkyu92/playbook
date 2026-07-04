@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.111] — 2026-07-05
+
+### Added
+- wiki entry #305 `harness-engineering/agentic-deferred-push-batch-timing-heuristics` (cycle 1342): 로컬 commit 누적 vs batch push 타이밍 결정 가이드. 즉시 push 신호 3가지(CI 지속 실패/JIT 저하/local>200 ahead) + 허브 push 이력 패턴.
+
+### Changed
+- wiki 386 entries, 2610 edges.
+
 ## [0.9.110] — 2026-07-05
 
 ### Added
