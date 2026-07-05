@@ -26,7 +26,7 @@ jobs:
       WORKER_REPOS: kkyu92/moneyballscore kkyu92/blog-autopilot
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Collect open hub incidents
         env:
@@ -45,16 +45,9 @@ jobs:
           # Strip unescaped control chars (U+0000-U+001F) from issue bodies.
           # gh issue list may return JSON with raw control chars in body strings,
           # which causes jq parse errors in the Match step.
-          python3 - <<'PYEOF'
-import json, re
-with open('/tmp/hub_incidents.json') as f:
-    data = json.loads(f.read(), strict=False)
-for item in data:
-    body = item.get('body') or ''
-    item['body'] = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', body)
-with open('/tmp/hub_incidents.json', 'w') as f:
-    json.dump(data, f)
-PYEOF
+          # Note: single-line python3 -c avoids heredoc PYEOF at column-0 which
+          # breaks GitHub's YAML parser ("workflow file issue" on every push).
+          python3 -c "import json,re;f='/tmp/hub_incidents.json';d=json.loads(open(f).read(),strict=False);[x.update({'body':re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]','',x.get('body')or'')})for x in d];json.dump(d,open(f,'w'))"
 
           echo "open incidents: $(jq length /tmp/hub_incidents.json)"
 
