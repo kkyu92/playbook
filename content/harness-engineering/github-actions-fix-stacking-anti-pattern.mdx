@@ -1,0 +1,104 @@
+---
+title: GH Actions 픽스 스태킹 안티패턴 — 미확정 근본 원인 위에 수정 누적
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - github-actions
+  - debugging
+  - root-cause-analysis
+  - fix-quality
+  - anti-pattern
+  - harness-engineering
+confidence: 3
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - harness-engineering/github-actions-cross-workflow-version-consistency-audit
+  - harness-engineering/branched-state-local-fix-quality-drift
+status: complete
+description: 워크플로 픽스 시 근본 원인 미확정 상태에서 추가 수정을 누적하는 패턴. 각 실패 시도를 증거로 활용하지 않고 새 변경을 덮어쌓으면 수정 범위가 불명확해지고 롤백 어려워짐. cycle 1350 v5→v4 + heredoc fix 복합 사례.
+type: entry
+source: harness-engineering
+---
+
+워크플로 픽스가 한 번에 해결되지 않을 때 **실패한 시도를 증거로 활용**하지 않고 새 변경을 계속 추가하면 "픽스 스태킹" 안티패턴으로 진입한다.
+
+## 안티패턴 형태
+
+```
+시도 1: A 변경 → 여전히 실패
+시도 2: A + B 변경 → 여전히 실패
+시도 3: A + B + C 변경 → 성공 (but: 실제 원인은 C였고 A, B는 불필요)
+```
+
+결과: 불필요한 변경이 코드베이스에 잔류. 다음 디버깅 시 A, B가 목적 불명 변경으로 남음.
+
+## 사례 — cycle 1350 (2026-07-06)
+
+`incident-auto-close.yml` 0s 실패 픽스 과정:
+
+| 시도 | 변경 내용 | 실패 원인 착각 | 실제 상태 |
+|---|---|---|---|
+| 시도 1 | `actions/checkout@v5` → `@v4` | AI 컷오프: v5 없다고 판단 | v5 유효 — 불필요한 변경 |
+| 시도 2 | PYEOF heredoc → `python3 -c` | 실제 원인 발견 | heredoc column-0 = 실제 원인 |
+
+**결과**: v5→v4 변경이 불필요했음에도 PR에 포함. entry #313에서 뒤늦게 파악.
+
+## 올바른 반복 수정 원칙
+
+### 1. 각 실패 시도를 증거로 기록
+
+```bash
+# 시도마다 hypothesis 명시
+# 시도 1: "v5가 원인일 것" → 실패 → v5 제외 확인
+# 시도 2: "heredoc column-0이 원인" → 성공 → 확정
+```
+
+시도 1 실패 = "v5는 원인이 아님" 정보. 다음 가설 범위 좁힘.
+
+### 2. 이전 시도 변경 롤백 후 새 가설 단독 테스트
+
+```bash
+# 나쁜 방법: A 실패 → A+B 시도
+git diff HEAD  # 변경이 복합적으로 누적
+
+# 좋은 방법: A 실패 → A 롤백 → B만 시도
+git diff HEAD  # 변경이 단일
+```
+
+이렇게 하면 B가 성공했을 때 B가 실제 원인임을 확신할 수 있다.
+
+### 3. fix-stacking 자가 감지
+
+커밋 준비 전 diff 리뷰 시 각 변경에 대해:
+- 이 변경이 근본 원인과 직접 연결되는가?
+- 이 변경이 실패했을 때 어떤 가설을 검증하는가?
+- "혹시 모르니 바꿔두자" 변경은 없는가?
+
+"혹시 모르니" 변경 = fix-stacking 신호.
+
+## 불필요 변경이 잔류하면 생기는 문제
+
+- **다음 사이클 오염**: 잘못된 변경이 정상 코드처럼 보임 (cycle 1361에서 v5→v4가 의도적 변경처럼 보임)
+- **audit trail 손상**: PR review 시 "왜 v4로 바꿨나?" 설명 불가
+- **재발 시 오진**: 다음 번 유사 실패 시 v4를 먼저 확인하게 됨 (잘못된 학습)
+- **최소 변경 원칙 위반**: 필요 최소 변경만 포함해야 rollback 용이
+
+## 워크플로 디버깅 이진 탐색 원칙
+
+실패 시도를 증거로 활용하면 점차 원인 범위를 좁힐 수 있다:
+
+```
+전체 가설 공간: [YAML 구문, version, 환경변수, 스크립트 로직, 권한]
+시도 1 (version 변경) 실패 → version 제외
+남은 가설: [YAML 구문, 환경변수, 스크립트 로직, 권한]
+시도 2 (YAML 구문 — heredoc) 성공 → 확정
+```
+
+각 시도는 반드시 "이 가설이 틀렸을 때 어떤 정보를 얻는가"를 먼저 생각하고 설계.
+
+## 관련 패턴
+
+- **교차 워크플로 감사**: 버전 변경 전 전체 사용 현황 확인 → fix-stacking 예방
+- **최소 변경 원칙**: 픽스는 확인된 원인만 다룬다
+- **local fix quality drift**: BRANCHED 상태에서는 fix-stacking이 CI 없이 누적될 위험 더 높음
