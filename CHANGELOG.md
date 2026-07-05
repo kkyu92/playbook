@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.119] — 2026-07-06
+
+### Added
+- wiki entry #313 `harness-engineering/github-actions-cross-workflow-version-consistency-audit` (cycle 1361): 워크플로 픽스 전 교차 워크플로 버전 일관성 감사 패턴. AI 학습 컷오프로 인한 잘못된 버전 권장 방지. cycle 1350 checkout@v5→v4 불필요 변경 사례 (17개 workflow 모두 v5 사용 성공).
+
+### Changed
+- wiki 394 entries.
+
 ## [0.9.118] — 2026-07-06
 
 ### Added
