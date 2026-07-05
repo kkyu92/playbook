@@ -19,24 +19,24 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-07-05T23:40:56.540Z'
-last_cycle: 1354
+last_updated: '2026-07-05T23:43:37.300Z'
+last_cycle: 1355
 source: manual
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **1354**. 마지막 update: 2026-07-05T23:40:56.536Z.
+> 직전 cycle: **1355**. 마지막 update: 2026-07-05T23:43:37.296Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 10 / 29 / 1 |
-| **Process** | chain pool 분포 (직전 20) | explore-idea=9 / curate=8 / review-code=1 / fix-incident=1 / skill-evolution=1 |
+| **Process** | chain pool 분포 (직전 20) | curate=8 / explore-idea=8 / review-code=1 / fix-incident=1 / skill-evolution=1 / closed-loop-design=1 |
 | **Process** | retro-only 비율 | 2/20 (10%) |
 | **Output** | PR ship (직전 10) | 1 |
-| **Feedback** | 0회 chain (직전 20) | polish-ui, worker-incident-triage, closed-loop-design, dimension-cycle, expand-scope, design-system |
+| **Feedback** | 0회 chain (직전 20) | polish-ui, worker-incident-triage, dimension-cycle, expand-scope, design-system |
 
 ## skill-evolution Trigger 평가
 
@@ -44,19 +44,19 @@ source: manual
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 1 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 1354 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 1355 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 없음 | 1 | ❌ |
-| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 6 | 자율 | ✅ |
+| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 5 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 1355 | closed-loop-design | success | — |
 | 1354 | explore-idea | success | — |
 | 1353 | curate | success | — |
 | 1352 | explore-idea | success | — |
 | 1351 | skill-evolution | retro-only | — |
-| 1350 | fix-incident | success | #2240 |
 
 ## Methodology
 
