@@ -1,0 +1,112 @@
+---
+title: GH Actions 0초 실패 — in-workflow self-report 맹점 (YAML 파싱 오류)
+category: harness-engineering
+date: "2026-07-06"
+tags:
+  - github-actions
+  - monitoring
+  - blind-spot
+  - yaml
+  - self-report
+  - closed-loop
+  - harness-engineering
+confidence: 3
+last_verified: "2026-07-06"
+connections:
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - harness-engineering/branched-state-origin-main-targeted-fix-bypass
+  - infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
+status: complete
+description: GH Actions 워크플로 안의 `if:failure()` self-report 단계는 0초 YAML 파싱 실패 시 절대 실행되지 않는다. 20+ 연속 실패가 무음 지속된 cycle 1350 사례 — 외부 cross-workflow 모니터링 필요.
+type: entry
+source: harness-engineering
+---
+
+GH Actions 워크플로에 `if: failure()` self-report 단계를 넣어도 YAML 파싱 오류로 인한 0초 실패는 탐지할 수 없다. 실패가 jobs 구성 이전에 발생하므로 어떤 step도 실행되지 않는다.
+
+## 증상
+
+워크플로 내 self-report 단계 예시:
+```yaml
+- name: Self-report on failure
+  if: failure()
+  run: |
+    gh issue create --title "🚨 workflow 실패" ...
+```
+
+이 단계는 **다음 경우에 실행되지 않는다**:
+- 0초 실패 (YAML 파싱 오류)
+- "workflow file issue" (GitHub 서버 측 validation 실패)
+- jobs: [] (jobs 구성 전 실패)
+
+## 사례 — cycle 1350 (2026-07-06)
+
+`incident-auto-close.yml`에 `Self-report on failure` 단계가 존재했으나 **4일간 무음 실패**:
+
+```
+2026-07-03T07:52:54Z — 첫 실패 시작 (PYEOF heredoc column-0)
+2026-07-06T09:00:00Z — cycle 1350 루틴 진단에서 발견
+→ 총 20+ 연속 0초 실패, 이슈 생성 0건, 알림 0건
+```
+
+원인: `python3 - <<'PYEOF'` 헤레독 종료 토큰이 column-0에 있어 GitHub YAML 파서 실패. 워크플로가 jobs 단계 이전에 종료 → `if: failure()` 단계 미실행.
+
+## 왜 발생하는가
+
+GH Actions의 실패 단계:
+
+```
+1. YAML 파싱 (서버) — ← 여기서 실패 시 모든 jobs/steps = 0
+2. 이벤트 매칭
+3. jobs 구성
+4. steps 실행 (self-report 포함)
+```
+
+`if: failure()`는 step 4 수준. step 1 실패는 step 4에 도달하지 않는다.
+
+## 해결 — 외부 cross-workflow 모니터링
+
+in-workflow self-report만으로는 0초 실패를 탐지할 수 없다. 외부에서 모든 workflow의 실패를 폴링해야 한다.
+
+### 옵션 A: 별도 모니터링 워크플로
+
+```yaml
+# .github/workflows/workflow-health-monitor.yml
+on:
+  schedule:
+    - cron: "0 * * * *"  # 매시간
+jobs:
+  check_failures:
+    steps:
+      - run: |
+          # 지난 1시간 내 0초 실패 감지
+          gh run list --limit 100 --json name,conclusion,createdAt,durationMs \
+            | jq '[.[] | select(.conclusion == "failure" and .durationMs < 5000)]'
+```
+
+### 옵션 B: silent-skip-tracker 확장
+
+기존 `silent-skip-tracker.yml`에 `0s failure` 탐지 룰 추가:
+```bash
+# 지난 24시간 내 0초 실패 workflow 목록
+gh run list --created ">$(date -d '1 day ago' +%Y-%m-%dT%H:%M:%SZ)" \
+  --json workflowName,conclusion,durationMs \
+  | jq '[.[] | select(.conclusion == "failure" and .durationMs == 0)] | group_by(.workflowName)'
+```
+
+### 옵션 C: 진단 루틴에 포함
+
+cycle 진단 단계 `gh run list --limit 10` 에서 `0s failure` 필터 자동 플래그:
+```bash
+gh run list --limit 20 --json conclusion,durationMs,workflowName \
+  | jq '[.[] | select(.conclusion == "failure" and .durationMs < 5000)] | length'
+# > 0 이면 key_finding에 추가
+```
+
+## 적용 우선순위
+
+현재 허브 진단 루틴이 옵션 C를 사실상 수행 중 (gh run list → 수동 확인). cycle 1350에서 4일 후 발견 = 탐지 지연 허용 수준이지만, 자동 플래그가 없다.
+
+**즉각 개선 가능한 것**: 진단 step에서 `0s failure` 자동 플래그 추가 → key_findings에 박제.
+
+**중장기**: silent-skip-tracker에 0초 실패 탐지 통합 (옵션 B) — closed-loop design chain 후보.
