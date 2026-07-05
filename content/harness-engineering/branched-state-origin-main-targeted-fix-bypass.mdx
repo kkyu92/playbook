@@ -1,0 +1,98 @@
+---
+title: BRANCHED 상태 우회 — origin/main 기반 타겟 픽스 브랜치 패턴
+category: harness-engineering
+date: "2026-07-06"
+tags:
+  - git
+  - branched-state
+  - workflow-fix
+  - targeted-fix
+  - origin-main
+  - bypass
+  - harness-engineering
+confidence: 3
+last_verified: "2026-07-06"
+connections:
+  - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main
+  - harness-engineering/branched-state-cherry-pick-orphan-connection-cascade
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - context-engineering/agentic-branched-state-production-content-lag
+status: complete
+description: local main이 origin/main과 수백 커밋 diverged된 BRANCHED 상태에서 origin/main의 프로덕션 버그를 즉시 고치는 패턴. R6(full merge) 없이 origin/main 기반 fresh 브랜치로 타겟 fix → PR.
+type: entry
+source: harness-engineering
+---
+
+local/origin이 BRANCHED된 상태에서도 origin/main의 프로덕션 버그를 즉시 수정할 수 있다. 핵심: local의 코드가 아닌 **origin/main HEAD를 브랜치 베이스로 사용**하면 BRANCHED divergence와 완전히 독립적으로 PR을 만들 수 있다.
+
+## 발생 조건
+
+1. local main이 origin/main과 수백 커밋 BRANCHED (R6 사용자 영역 대기 중)
+2. origin/main에 프로덕션 버그 존재 (예: workflow 0s failure, 20+ 연속 실패)
+3. local에 이미 관련 fix가 있으나 BRANCHED 상태로 origin 미반영
+4. 즉각 수정 필요 (다음 R6 batch까지 기다릴 수 없음)
+
+**사례**: cycle 1350 — `incident-auto-close.yml` PYEOF heredoc 버그가 2026-07-03부터 모든 push에서 0s 실패. local `79b131a6` fix 존재했으나 local 392 / origin 129 BRANCHED로 미반영. origin/main 기반 PR #2240으로 즉시 해소.
+
+## 패턴
+
+```bash
+# 1. BRANCHED 상태 확인
+git rev-list --left-right --count origin/main...main
+# 129   392 → local 392 ahead, origin 129 ahead
+
+# 2. origin/main HEAD 기준으로 fix 브랜치 생성
+git stash  # local uncommitted 보전
+git checkout -b fix/issue-name origin/main
+
+# 3. 해당 파일 수정 (origin/main 버전 기준)
+# ⚠ local main의 fix와 origin/main의 코드가 다를 수 있음
+# origin/main의 현재 파일 상태를 먼저 확인하고 fix 적용
+
+# 4. commit + push
+git add <file>
+git commit -m "fix: <description>"
+git push -u origin fix/issue-name
+
+# 5. PR 생성 (base: origin/main = default main)
+gh pr create --base main --head fix/issue-name --title "..." --body "..."
+
+# 6. local main으로 복귀
+git checkout main
+git stash pop
+```
+
+## local fix vs origin/main fix 주의사항
+
+local에 이미 해당 버그의 fix가 존재하더라도, **origin/main 기반으로 새로 작성해야 할 수 있다**.
+
+| 상황 | 이유 |
+|---|---|
+| local fix가 불완전할 수 있음 | BRANCHED 상태에서 push 안 했다면 e2e 검증 미완료 |
+| origin/main 파일과 local 파일이 다름 | 중간에 origin에 다른 커밋이 들어왔을 수 있음 |
+| local의 구현 방식이 origin에 적합하지 않을 수 있음 | 예: local은 `python3 -c "..."` 멀티라인(IndentationError 잠재), origin fix는 single-line이 정합 |
+
+**항상 `git show origin/main:<file>`로 origin 현재 상태 확인 후 fix 작성.**
+
+## 이 패턴의 의의
+
+- **R6 없이 프로덕션 hotfix 가능**: full merge/rebase 없이 origin/main만 고침
+- **BRANCHED divergence 무관**: PR base = origin/main이면 CI도 정상 통과
+- **local stash로 작업 보전**: local uncommitted 변경사항 안전하게 유지
+- **로컬 fix와 독립**: local fix가 있어도 origin 기준으로 별도 fix가 더 정확할 수 있음
+
+## 적용 판단 기준
+
+| 조건 | 권장 전략 |
+|---|---|
+| origin/main 프로덕션 버그, 즉각 수정 필요 | **이 패턴** (origin 기반 fix 브랜치) |
+| PR 내용을 local에서 즉시 사용하고 싶음 | cherry-pick to local main |
+| BRANCHED 완전 해소 필요 | R6 (git pull --rebase + push) |
+| 버그가 local에만 있고 origin은 정상 | local commit + 다음 R6 batch |
+
+## 연쇄 주의
+
+fix 브랜치가 origin/main에 merge된 후:
+- local main의 같은 파일은 여전히 구 버전 (BRANCHED 상태 유지)
+- 다음 R6 merge 시 동일 파일 conflict 가능 → merge conflict 수동 해소 필요
+- lint로 orphan 연결 감지 시 해소 필요 ([branched-state-cherry-pick-orphan-connection-cascade](harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) 참고)
