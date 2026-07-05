@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.116] — 2026-07-06
+
+### Added
+- wiki entry #310 `harness-engineering/github-actions-0s-failure-self-report-blind-spot` (cycle 1354): in-workflow `if:failure()` step이 YAML 파싱 0s 실패에서 절대 실행되지 않는 blind spot. cycle 1350 4일 무음 evidence. 외부 cross-workflow 모니터링 3가지 옵션.
+
+### Fixed
+- `silent-skip-tracker.yml` 0s YAML 파싱 실패 교차 스캔 step 추가 (cycle 1355): 최근 200건 run 중 duration<10s + failure 탐지 → threshold 3 → hub-self-report 이슈 자동 생성. 이전에는 어떤 알림도 발생하지 않는 blind spot.
+
+### Changed
+- wiki 391 entries.
+
 ## [0.9.115] — 2026-07-06
 
 ### Added
