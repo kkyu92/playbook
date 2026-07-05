@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 910,
+  "totalInvocations": 918,
   "skipped": 27,
-  "searched": 883,
-  "hit": 309,
+  "searched": 891,
+  "hit": 317,
   "noMatch": 574,
-  "lastUpdated": "2026-07-04T23:47:07.285Z",
+  "lastUpdated": "2026-07-04T23:51:23.425Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 13,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -173,14 +173,14 @@
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 3,
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 9,
     "agents/autonomous-agent-long-term-memory-management": 1,
-    "retros/2026-05-22-cycles-1005-1008": 17,
-    "retros/2026-05-22-cycles-1006-1012": 20,
+    "retros/2026-05-22-cycles-1005-1008": 20,
+    "retros/2026-05-22-cycles-1006-1012": 25,
     "harness-engineering/agentic-wiki-connection-graph-health-metrics": 1,
     "retros/2026-05-13-cycles-421-423": 2,
-    "context-engineering/agentic-wiki-confidence-lifecycle": 3,
+    "context-engineering/agentic-wiki-confidence-lifecycle": 6,
     "retros/2026-05-22-cycles-971-976": 1,
     "retros/2026-05-19-cycle-789": 1,
-    "infrastructure/agentic-wiki-entry-deletion-orphan-cascade": 1,
+    "infrastructure/agentic-wiki-entry-deletion-orphan-cascade": 2,
     "retros/2026-05-19-cycle-785": 1,
     "retros/2026-05-20-cycle-912": 1,
     "solutions/ci-github-actions/2026-05-13-refactor-const-rename-test-sync-gap": 1,
@@ -220,15 +220,17 @@
     "journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958": 1,
     "journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig": 1,
     "context-engineering/agentic-wiki-connection-graph-health-metrics": 3,
-    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 3,
-    "context-engineering/embedding-index-staleness-detection-after-slug-migration": 1,
+    "context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal": 5,
+    "context-engineering/embedding-index-staleness-detection-after-slug-migration": 2,
     "journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo": 1,
     "reports/week-2026-27": 1,
     "reports/week-2026-24": 1,
     "reports/week-2026-26": 1,
-    "retros/2026-05-20-cycles-930-932": 1,
+    "retros/2026-05-20-cycles-930-932": 2,
     "evaluation/llm-judgment-code-verification-separation-architecture": 1,
-    "context-engineering/wiki-category-migration-execution-runbook": 1
+    "context-engineering/wiki-category-migration-execution-runbook": 1,
+    "agents/ai-agent-context-window-optimization-session-longevity": 1,
+    "context-engineering/agentic-context-compaction-commit-density-survival": 2
   },
   "noMatchQueries": [
     {
@@ -1026,5 +1028,5 @@
     "wiki entry last accessed usage frequency stale detection promotion candidate": 1,
     "confidence upgrade path auto-generated entry verification production use evidence": 1
   },
-  "totalQueries": 954
+  "totalQueries": 962
 }
