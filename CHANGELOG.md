@@ -4,6 +4,18 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.115] — 2026-07-06
+
+### Added
+- wiki entry #309 `harness-engineering/branched-state-origin-main-targeted-fix-bypass` (cycle 1352): BRANCHED 상태에서 origin/main 직접 기반 타겟 픽스 브랜치 패턴. R6 없이 프로덕션 hotfix. cycle 1350 fix-incident (PR #2240) 실전 검증 패턴 박제.
+- solution docs `ci-github-actions/2026-07-06-incident-auto-close-heredoc-column0-regression` (cycle 1350): PYEOF heredoc column-0 회귀 패턴. f433298e regression → PR #2240 fix. 재발 방지 체크리스트.
+
+### Fixed
+- `incident-auto-close.yml` PYEOF heredoc column-0 GitHub YAML 파서 실패 수정 (PR #2240, MERGED). 2026-07-03부터 20+ 연속 push 실패 해소. actions/checkout@v4 업그레이드.
+
+### Changed
+- wiki 390 entries.
+
 ## [0.9.114] — 2026-07-05
 
 ### Added
