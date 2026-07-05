@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.118] — 2026-07-06
+
+### Added
+- wiki entry #312 `harness-engineering/branched-state-local-fix-quality-drift` (cycle 1359): BRANCHED 상태 로컬 전용 픽스 CI 미검증 품질 드리프트. local fix = draft quality 원칙. cycle 1350 python3 -c 멀티라인 IndentationError 사례.
+
+### Changed
+- wiki 393 entries.
+
 ## [0.9.117] — 2026-07-06
 
 ### Added
