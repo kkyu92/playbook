@@ -1,0 +1,122 @@
+---
+title: BRANCHED 상태 로컬 전용 픽스 품질 드리프트 — CI 미검증 패치의 잠재적 오류
+category: harness-engineering
+date: "2026-07-06"
+tags:
+  - git
+  - branched-state
+  - fix-quality
+  - ci
+  - drift
+  - local-only
+  - harness-engineering
+confidence: 3
+last_verified: "2026-07-06"
+connections:
+  - harness-engineering/branched-state-origin-main-targeted-fix-bypass
+  - harness-engineering/branched-state-local-lint-false-positive-signal-drift
+  - harness-engineering/github-actions-inline-script-safe-patterns
+  - context-engineering/agentic-branched-state-production-content-lag
+status: complete
+description: BRANCHED 상태에서 local main에만 존재하는 픽스는 CI 검증 루프를 거치지 않아 subtle 오류를 품고 있을 수 있다. local fix = draft quality, origin 적용 시 재검증 필요. cycle 1350 python3 -c 사례.
+type: entry
+source: harness-engineering
+---
+
+BRANCHED 상태에서 local main에만 존재하는 픽스는 **CI 검증 루프를 완전히 우회한다**. 로컬에서는 "완성된 픽스"로 보이지만, origin/main에 적용할 시점에 subtle 오류가 발견되는 경우가 있다.
+
+## 발생 메커니즘
+
+```
+local main (BRANCHED)
+  ├── fix A (commit 79b131a6) — "python3 -c 멀티라인" 방식
+  │     └── 로컬 개발: OK (bash 문법 체크 X)
+  │     └── CI: 한 번도 실행 안 됨 (BRANCHED → push 안 됨)
+  └── origin/main에 적용 시점 →
+        "정확한" 방법은 단일 라인 python3 -c임을 발견
+```
+
+local 픽스가 합리적으로 보이지만, CI가 실제로 실행하면 드러나는 오류가 숨어있다.
+
+## 사례 — cycle 1350 (2026-07-06)
+
+`incident-auto-close.yml`의 heredoc 문제를 local에서 fix:
+
+```yaml
+# local fix (79b131a6) — 멀티라인 python3 -c
+python3 -c "
+          import json, re
+          data = json.loads(open('/tmp/hub_incidents.json').read(), strict=False)
+          for d in data: d['body'] = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', d.get('body') or '')
+          json.dump(data, open('/tmp/hub_incidents.json', 'w'))
+          "
+```
+
+이 버전은:
+1. **YAML 파싱**: OK (heredoc 없음)
+2. **Python 실행**: IndentationError — `"` 다음 줄의 `          import json, re`는 10개 공백이 있어 Python이 `IndentationError: unexpected indent` 발생
+
+local 개발 시에는 YAML 파싱만 검증됐고 Python 실행은 테스트되지 않았다.
+
+origin/main 적용 시 올바른 버전:
+```yaml
+# origin fix (87d82c7b) — 단일 라인 python3 -c
+python3 -c "import json,re;f='/tmp/hub_incidents.json';d=json.loads(open(f).read(),strict=False);[x.update({'body':re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]','',x.get('body')or'')})for x in d];json.dump(d,open(f,'w'))"
+```
+
+## 왜 local에서는 발견되지 않는가
+
+| 검증 유형 | Local | CI |
+|---|---|---|
+| YAML 파싱 | `python3 -c "import yaml; yaml.safe_load(...)"` — 가능 | 동일 |
+| Bash 문법 | `bash -n workflow.yml` — 불완전 | 동일 |
+| **실제 실행** | **불가능** (GitHub Actions 환경 없음) | **가능** |
+| Python IndentationError | 실행 없으면 발견 불가 | 실행 시 즉시 발견 |
+
+## 대응 원칙
+
+### 1. local-only fix = draft quality
+
+BRANCHED 상태에서 local에만 있는 픽스는 "발상 수준의 초안"으로 간주. production fix로 취급 금지.
+
+### 2. origin 적용 전 재검증
+
+origin/main에 적용할 때 local 버전을 그대로 복사하지 않고, origin/main의 현재 파일 상태를 확인 후 fresh하게 작성:
+
+```bash
+# local 버전 참고는 하되 그대로 복사 금지
+git show origin/main:.github/workflows/incident-auto-close.yml
+
+# origin 기반 fix 브랜치에서 실제 CI 실행 확인
+```
+
+### 3. local fix가 있어도 origin 기반으로 새로 작성
+
+entry #309의 BRANCHED bypass 패턴과 결합:
+1. `git checkout -b fix/xyz origin/main`
+2. origin/main 파일 상태 확인
+3. **local fix를 참고**하되 origin 파일에 맞게 **새로 작성**
+4. CI 통과 확인
+
+### 4. 검증 가능한 부분은 local에서 검증
+
+```bash
+# YAML 파싱 검증
+python3 -c "import yaml; yaml.safe_load(open('.github/workflows/my-workflow.yml'))"
+
+# Python 실행 검증 (로컬에서)
+echo "test input" | python3 -c "import json; ..."  # 실제 Python 코드 실행 테스트
+```
+
+## BRANCHED 상태 픽스 품질 등급
+
+| 픽스 위치 | CI 검증 | 품질 등급 | 권장 용도 |
+|---|---|---|---|
+| origin/main 직접 PR | O | Production | 즉시 배포 가능 |
+| feature branch (from origin) | O | Production | 즉시 배포 가능 |
+| local main (BRANCHED) | X | Draft | 아이디어/아이디어 발전 |
+| local main (BRANCHED, 오래된) | X | Stale Draft | 재검토 필요 |
+
+## 연쇄 리스크
+
+local fix가 BRANCHED 상태에서 오래 머물수록 (수백 cycles) origin/main과의 코드 베이스 차이가 커져 직접 이식 불가능해질 수 있다. **BRANCHED 트랩 기간 = 픽스 품질 decay 기간**.
