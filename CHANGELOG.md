@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.120] — 2026-07-07
+
+### Added
+- wiki entry #314 `harness-engineering/github-actions-fix-stacking-anti-pattern` (cycle 1363): 근본 원인 미확정 상태에서 수정 누적 안티패턴. 각 실패 시도를 증거로 활용, 이진 탐색 원칙. cycle 1350 v5→v4 + heredoc composite fix 사례.
+
+### Changed
+- wiki 395 entries.
+
 ## [0.9.119] — 2026-07-06
 
 ### Added
