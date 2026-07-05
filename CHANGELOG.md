@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.117] — 2026-07-06
+
+### Added
+- wiki entry #311 `infrastructure/github-actions-inline-script-safe-patterns` (cycle 1357): GH Actions run:| 블록 인라인 스크립트 4가지 안전 패턴 (single-line python3 -c, 별도 스크립트, jq, cat-to-tmp heredoc). heredoc 대안 포지티브 가이드. PR 리뷰 체크리스트.
+
+### Changed
+- wiki 392 entries.
+
 ## [0.9.116] — 2026-07-06
 
 ### Added
