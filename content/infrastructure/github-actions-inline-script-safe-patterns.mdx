@@ -1,0 +1,113 @@
+---
+title: GH Actions 인라인 스크립트 안전 패턴 — Python/bash 언어 경계 가이드
+category: infrastructure
+date: "2026-07-06"
+tags:
+  - github-actions
+  - python
+  - bash
+  - yaml
+  - inline-script
+  - heredoc
+  - best-practices
+  - infrastructure
+confidence: 3
+last_verified: "2026-07-06"
+connections:
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - harness-engineering/github-actions-0s-failure-self-report-blind-spot
+  - harness-engineering/branched-state-origin-main-targeted-fix-bypass
+status: complete
+description: GH Actions run:| 블록 안에서 Python/bash 멀티언어 스크립트를 안전하게 작성하는 4가지 패턴. heredoc 위험성과 대안 — 재발하는 column-0 YAML 파서 실패 방지.
+type: entry
+source: infrastructure
+---
+
+GH Actions `run: |` 블록은 YAML + bash + (인라인 Python) 3개 언어가 중첩된다. 이 중첩이 예상치 못한 파싱 실패를 일으키는 주요 패턴을 정리한다.
+
+## 핵심 규칙: heredoc 금지
+
+`run: |` 블록 안에서 heredoc(`<<'EOF'`, `<<'PYEOF'`) 사용 시 **종료 토큰이 column 0에 위치하면 GitHub YAML 파서가 block scalar를 종료된 것으로 판단** → workflow file issue (0s 실패).
+
+```yaml
+# BROKEN — PYEOF가 column 0
+run: |
+  python3 - <<'PYEOF'
+import json  # ← column 0 (YAML parser가 block scalar 종료로 판단)
+PYEOF        # ← column 0
+```
+
+이 패턴은 2회 이상 재발했다 (notify-workers 2026-05, incident-auto-close 2026-07).
+
+## 4가지 안전한 대안
+
+### 1. 단일 라인 python3 -c (소규모 로직)
+
+```yaml
+run: |
+  python3 -c "import json,re;f='/tmp/data.json';d=json.loads(open(f).read(),strict=False);[x.update({'body':re.sub(r'[\x00-\x1f]','',x.get('body')or'')})for x in d];json.dump(d,open(f,'w'))"
+```
+
+**적합**: 1-2줄 로직, heredoc 불필요.  
+**주의**: 가독성 저하. 긴 줄은 다음 패턴 고려.
+
+### 2. 파일로 Python 스크립트 분리 (복잡한 로직)
+
+```yaml
+- name: Checkout
+  uses: actions/checkout@v4
+
+- name: Process data
+  run: python3 scripts/process-data.py
+```
+
+**적합**: 10줄+ 로직, 재사용 필요, 테스트 필요.  
+**주의**: checkout 단계 필요. 스크립트 파일을 repo에 추가해야 함.
+
+### 3. jq (JSON 처리 한정)
+
+```yaml
+run: |
+  jq '[.[] | .body = (.body // "" | gsub("[\\u0000-\\u001f]"; ""))]' \
+    /tmp/in.json > /tmp/out.json && mv /tmp/out.json /tmp/in.json
+```
+
+**적합**: JSON 필터링, 변환, 집계. ubuntu-latest에 기본 탑재.  
+**주의**: 복잡한 제어 흐름에는 부적합.
+
+### 4. python3를 파일 stdin으로 (중간 복잡도)
+
+```yaml
+run: |
+  cat > /tmp/process.py << 'EOF'
+  import json, re
+  # Python code here — proper indentation
+  EOF
+  python3 /tmp/process.py
+```
+
+**적합**: heredoc를 bash heredoc로 `/tmp/` 파일에 먼저 쓴 후 실행.  
+**왜 안전**: `cat > /tmp/process.py <<'EOF'` 에서 `EOF`는 bash가 처리 (Python 실행 전). YAML block scalar에 영향 없음.  
+**주의**: 약간 복잡. 패턴 1이 안 되는 경우에만 사용.
+
+## 패턴 선택 기준
+
+| 로직 크기 | Python 필요 | 권장 패턴 |
+|---|---|---|
+| 1-2줄 | JSON 처리 | jq |
+| 1-2줄 | 기타 | python3 -c 단일 라인 |
+| 3-10줄 | 예 | python3 /tmp/script.py (cat heredoc) |
+| 10줄+ | 예 | 별도 스크립트 파일 |
+
+## 재발 방지 체크리스트
+
+PR 리뷰 시 `run: |` 블록 안에 다음이 있으면 플래그:
+
+- [ ] `<<'EOF'` 또는 `<<'PYEOF'` → 대안 검토
+- [ ] `python3 -c "` 에 `\n` + 들여쓰기 있는 멀티라인 → IndentationError 위험
+- [ ] `actions/<name>@v<N>` → 해당 버전 존재 여부 확인 (예: checkout@v5는 v4만 존재)
+
+## 관련
+
+- Solution: `ci-github-actions/2026-07-06-incident-auto-close-heredoc-column0-regression`
+- Solution: `ci-github-actions/2026-05-01-notify-workers-heredoc-eof-gap`
