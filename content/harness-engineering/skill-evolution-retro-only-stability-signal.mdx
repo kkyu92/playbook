@@ -1,0 +1,89 @@
+---
+title: skill-evolution retro-only = SKILL 안정 확인 신호 — 거버넌스 레이어 자가 건강 검진
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - agentic
+  - skill-evolution
+  - stability
+  - health-signal
+  - self-regulation
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/agentic-chain-dormancy-as-health-signal
+  - harness-engineering/agentic-forced-vs-voluntary-chain-injection
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+status: complete
+description: skill-evolution이 trigger 충족으로 강제 발화했지만 retro-only(SKILL.md 수정 없음)로 종료될 때, 이는 SKILL 거버넌스 레이어가 안정 상태임을 확인하는 신호다. SE #374-#381 = 8연속 retro-only, oscillation_n=223.
+type: entry
+source: harness-engineering
+---
+
+`skill-evolution` chain이 강제 발화한 후 SKILL.md를 수정하지 않고 retro-only로 종료될 때, 이는 SKILL 거버넌스 레이어가 현재 시스템 상태와 정합한다는 확인 신호다.
+
+## 두 레이어의 건강 신호
+
+에이전틱 사이클 시스템의 건강은 두 레이어에서 독립적으로 확인된다:
+
+| 레이어 | 건강 신호 | 근거 |
+|---|---|---|
+| **chain 레이어** | 개별 chain dormancy | 해당 도메인 문제 없음 (entry #321) |
+| **SKILL 거버넌스 레이어** | skill-evolution retro-only | SKILL 구조가 현재 phase와 정합 |
+
+두 신호가 모두 "이상 없음"이면 시스템 전체가 안정 phase.
+
+## retro-only의 의미
+
+`skill-evolution` trigger 충족 → 강제 발화 → SKILL.md 수정 없음 → retro-only:
+
+**이것이 실패가 아닌 이유**: trigger는 "SKILL 갱신 기회 탐색"을 위한 것. 탐색 결과 갱신이 불필요하면 retro-only = 올바른 결론.
+
+**이것이 성공인 이유**: 현재 chain pool, trigger 조건, oscillation 패턴이 시스템 실제 동작을 정확히 설명하고 있다는 증거.
+
+비유: 건강검진(SE 강제 발화) 결과 "이상 없음"(retro-only) = 건강 확인. 매번 치료(SKILL 수정)가 필요하면 오히려 문제.
+
+## 명단 변화 해석 — window shift artifact
+
+trigger 5 (직전 20 사이클 0-fire chain) 충족 시 명단 변화가 자주 발생한다. 명단 변화에는 두 종류가 있다:
+
+| 종류 | 의미 | SE 대응 |
+|---|---|---|
+| **실제 phase 변화** | chain trigger 조건이 시스템 상태와 불일치 | SKILL 구조 검토 필요 |
+| **window shift artifact** | 경계 사이클이 window 밖으로 밀려 명단 진입/탈퇴 | retro-only |
+
+**window shift artifact 판별**: 명단 변화가 일어난 chain의 마지막 발화 사이클 확인. 해당 사이클이 이전 SE window 경계 부근이면 → window shift.
+
+```
+예시: closed-loop-design SE #381 case
+  SE #379 window: 1331-1350 → closed-loop-design cycles 1335+1345 포함 (active)
+  SE #380 window: 1351-1370 → cycles 1355+1365 포함 (active)
+  SE #381 window: 1367-1386 → cycles 1355+1365 외부 → 0-fire → 명단 진입
+  
+  판정: 1355+1365 = SE #380 window 안, SE #381 window 밖 → window shift
+```
+
+## SE #374-#381 연속 retro-only 증거
+
+| SE | 사이클 | trigger | 명단 변화 | 원인 | 결론 |
+|---|---|---|---|---|---|
+| #374 | 1200 | T3 milestone | 없음 | — | retro-only |
+| #375 | 1250 | T3 milestone | 없음 | — | retro-only |
+| #376 | 1291 | T5 | 5→6 | worker-triage oscillation | retro-only |
+| #377 | 1300 | T3 milestone | 없음 | — | retro-only |
+| #378 | 1311 | T5 | worker-triage↔fix-incident | 자연 oscillation | retro-only |
+| #379 | 1351 | T3+T5 | 6→5 | fix-incident+closed-loop-design 탈퇴 | retro-only |
+| #380 | 1371 | T5 | 5→6 | worker-triage 탈퇴, fix-incident/review-code 진입 | retro-only |
+| #381 | 1387 | T5 | 6→7 | closed-loop-design window shift artifact | retro-only |
+
+oscillation_n = 223 (SE #374 당시 216 → +7). 8 연속 retro-only = SKILL 구조 고도 안정.
+
+## 자가 진단에서 학습하기
+
+연속 retro-only가 쌓이면 두 가지를 확인해볼 수 있다:
+
+1. **trigger 조건 과민 여부**: retro-only가 너무 자주 발생하면 trigger threshold를 높이는 것 검토
+2. **oscillation 영구화**: 매 SE마다 같은 chain들이 명단에 오르내리면 → "자연 oscillation chain" 명시 (SKILL.md MIGRATION-PATH 에 패턴 기록으로 충분)
+
+현재 허브: trigger 5 (20사이클 주기)가 curate/explore 2-chain dominance 덕분에 자주 발화. 하지만 retro-only로 종료되므로 threshold 조정 불필요 — "주기적 건강검진"으로 기능하고 있음.

@@ -4,6 +4,22 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.131] — 2026-07-07
+
+### Added
+- wiki entry #325 `harness-engineering/skill-evolution-retro-only-stability-signal` (cycle 1388): skill-evolution retro-only = SKILL 안정 확인 신호. SE #374-#381 8연속 retro-only / oscillation_n=223 / window shift artifact 판별 방법. chain dormancy (#321)의 거버넌스 레이어 대응.
+
+### Changed
+- wiki 406 entries.
+
+## [0.9.130] — 2026-07-07
+
+### Added
+- wiki entry #324 `context-engineering/wiki-entry-compound-value-network-density` (cycle 1386): 위키 엔트리 복리 가치 — 연결 밀도 증가로 인한 지식 네트워크 효과. 404 entries = 메타 패턴 작성 단계 진입.
+
+### Changed
+- wiki 405 entries.
+
 ## [0.9.129] — 2026-07-07
 
 ### Added
