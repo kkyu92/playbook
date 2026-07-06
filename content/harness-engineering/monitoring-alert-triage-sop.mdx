@@ -1,0 +1,120 @@
+---
+title: 모니터링 알림 triage SOP — 실제 incident vs false positive 판별 흐름
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - monitoring
+  - incident-triage
+  - sop
+  - false-positive
+  - github-actions
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/monitoring-window-lag-false-positive-detection
+  - harness-engineering/inbound-incident-branch-type-triage-matrix
+  - harness-engineering/automated-incident-closure-grace-period-design
+  - harness-engineering/github-actions-0s-failure-self-report-blind-spot
+status: complete
+description: 모니터링 시스템이 alert를 생성했을 때 실제 incident인지 false positive인지 판별하는 표준 절차. 4단계 흐름으로 불필요한 대응을 줄이고 실제 문제에 집중.
+type: entry
+source: harness-engineering
+---
+
+모니터링 알림(issue, alert, notification)이 들어왔을 때 즉각 대응하기 전에 실제 incident인지 false positive인지 판별하는 표준 절차.
+
+## 4단계 triage 흐름
+
+```
+[alert 수신]
+     ↓
+1. 소스 분석 — 어떤 모니터링 시스템에서 왔는가?
+     ↓
+2. 현재 상태 확인 — 지금도 실패가 발생하고 있는가?
+     ↓
+3. 원인 변화 확인 — 최근 fix/변경이 있었는가?
+     ↓
+4. 분류 및 대응 — 실제 / 진행 중 / historical / false positive
+```
+
+### 1단계 — 소스 분석
+
+| 소스 레이블 | 의미 | 신뢰도 |
+|---|---|---|
+| `hub-dispatch` | 워커 레포에서 자동 인바운드 (실시간) | 높음 |
+| `inbound, incident` | 워커 레포 실시간 CI 실패 | 높음 |
+| `hub-self-report` | 허브 워크플로 자체 감시 (배치 기반) | 중간 (window lag 가능) |
+| `organism` | silent-skip-tracker 감지 | 중간 (skip 이면 비정상) |
+
+**hub-self-report + 배치 모니터링**: window lag false positive 주의. 즉각 대응 전 2단계 필수.
+
+### 2단계 — 현재 상태 확인
+
+```bash
+# 해당 워크플로/서비스의 최근 5건 확인
+gh run list --workflow <wf.yml> --limit 5 --json conclusion,createdAt,event
+
+# 최근 schedule run 결과
+gh run list --workflow <wf.yml> --event schedule --limit 3
+```
+
+**판단 기준**:
+- 최근 1-2건이 `success` → **active failure 아님** (2단계 통과 → false positive 가능성)
+- 최근 1-2건도 `failure` → **active failure** → 즉각 대응
+
+### 3단계 — 원인 변화 확인
+
+```bash
+# 최근 fix commit이 있는가?
+git log --oneline --all -- .github/workflows/<wf.yml> | head -5
+# 관련 PR이 최근 merge됐는가?
+gh pr list --state merged --limit 10 | grep -i <workflow-name>
+```
+
+**판단 기준**:
+- fix commit이 alert 생성 **이전**에 merge됨 → **historical false positive** (모니터링 창 lag)
+- fix commit이 **없음** → active failure 가능성 높음
+
+### 4단계 — 분류 및 대응
+
+| 분류 | 조건 | 대응 |
+|---|---|---|
+| **active failure** | 최근 run도 failure + fix 없음 | 즉각 fix-incident chain 투입 |
+| **진행 중 fix** | 최근 run failure + fix merge 직후 | 모니터링 유지, grace 대기 |
+| **historical artifact** | 최근 run success + fix 이전 commit | issue close (false positive) |
+| **grace period** | inbound CI 실패, 생성 < 3d | 대기 (auto-close 예정) |
+| **dependabot** | dependabot 브랜치 출처 | issue close (expected failure) |
+
+## 사례 적용
+
+**cycle 1370 issue #2266** (hub-self-report 0s failure 23건):
+- 1단계: `hub-self-report` → window lag 주의
+- 2단계: schedule run 2026-07-06 22:43 UTC = SUCCESS → active failure 아님
+- 3단계: PR #2240 merged 2026-07-05 (alert 생성 이전) → fix 이미 배포
+- 4단계: **historical artifact** → CLOSE
+
+**cycle 1370 issue #2243** (dependabot branch CI 실패):
+- 1단계: `inbound, incident` → 높은 신뢰도이나 branch 확인 필요
+- 2단계: 최근 run failure → active (dependabot 브랜치)
+- 3단계: dependabot commit은 main에 없음 → fix 개념 없음
+- 4단계: **dependabot** → CLOSE (expected failure)
+
+**cycle 1370 issue #2246/#2245** (moneyball main CI 실패):
+- 1단계: `inbound, incident` → 높은 신뢰도
+- 2단계: 실패 확인 (P1 known issue)
+- 3단계: fix 없음 (사용자 영역 — moneyball repo)
+- 4단계: **grace period** → LEAVE OPEN (auto-close ~2026-07-09)
+
+## 자동화 포인트
+
+진단 루틴에서 이 SOP를 자동화할 수 있는 지점:
+
+```bash
+# open hub-self-report issues 있으면 자동 SOP 적용
+gh issue list --state open --label hub-self-report --limit 5 --json number,title \
+  | jq -r '.[] | "Issue #\(.number): \(.title)"'
+# 각 이슈에 대해 2-3단계 체크 자동화 가능
+```
+
+현재 허브는 수동 triage (cycle 1370 worker-incident-triage chain). 향후 closed-loop-design으로 자동화 가능.
