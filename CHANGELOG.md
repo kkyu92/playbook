@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.121] — 2026-07-07
+
+### Added
+- wiki entry #315 `harness-engineering/ai-agent-external-version-confidence-calibration` (cycle 1366): AI 에이전트 외부 버전 추천 시 학습 컷오프 이후 릴리즈 불확실성 명시 패턴. repo 사용 현황이 AI 지식보다 우선. cycle 1350 checkout@v5 오진 사례.
+
+### Changed
+- wiki 396 entries.
+
 ## [0.9.120] — 2026-07-07
 
 ### Added
