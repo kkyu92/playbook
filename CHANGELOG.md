@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.122] — 2026-07-07
+
+### Added
+- wiki entry #316 `harness-engineering/github-actions-workflow-fix-end-to-end-checklist` (cycle 1368): GH Actions 워크플로 픽스 E2E 체크리스트. BRANCHED 환경, 0s 실패 진단, 교차 버전 감사, 인라인 스크립트 안전 패턴, fix-stacking 방지 4-phase 종합. cycle 1350-1368 세션 패턴 synthesis.
+
+### Changed
+- wiki 397 entries.
+
 ## [0.9.121] — 2026-07-07
 
 ### Added
