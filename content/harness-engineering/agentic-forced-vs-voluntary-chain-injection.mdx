@@ -1,0 +1,99 @@
+---
+title: 에이전틱 사이클 강제 vs 자발 chain 주입 — 자기 조절 다양성 메커니즘
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - agentic
+  - chain-distribution
+  - self-regulation
+  - skill-evolution
+  - batch-session
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/agentic-chain-dormancy-as-health-signal
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+status: complete
+description: N-cycle batch session에서 LLM이 자유롭게 선택하는 "자발적 chain"과 조건이 충족되면 강제로 실행되는 "강제 chain"이 공존한다. 강제 chain이 자발적 alternation lock에서 탈출하는 다양성 주입 역할을 담당.
+type: entry
+source: harness-engineering
+---
+
+에이전틱 사이클 시스템에서 매 사이클 chain 선택은 두 가지 경로가 있다:
+
+1. **자발적 chain (voluntary)**: LLM이 진단 결과를 보고 자유롭게 선택
+2. **강제 chain (forced)**: 조건이 충족되면 LLM 자율과 무관하게 실행
+
+두 경로의 상호작용이 batch session 전체의 chain 다양성을 결정한다.
+
+## 자발적 chain의 패턴
+
+LLM이 자유롭게 선택할 때, 성공 경험이 있는 chain을 반복하는 경향이 있다:
+
+```
+자발적 선택 패턴:
+explore-idea → curate → explore-idea → curate → ...
+(2-chain alternation lock)
+```
+
+장기 batch session(N=20+)에서 이 패턴은 안정적이지만 폐쇄적이다:
+- curate/explore 80%+ 점유 (cycle 1351-1370 증거)
+- 다른 chain은 외부 trigger 없이는 선택되지 않음
+
+## 강제 chain의 역할
+
+강제 chain이 실행되는 조건:
+
+| Chain | 강제 조건 | 트리거 소스 |
+|---|---|---|
+| `skill-evolution` | skill-evolution-pending 마커 존재 | 직전 사이클 retro (trigger 5 등) |
+| `worker-incident-triage` | `hub-dispatch`/`inbound` open issue 존재 | 외부 워커 레포 CI 실패 |
+| `fix-incident` | 배포/워크플로 버그 명확히 진단됨 | GH run failure / open bug issue |
+| `closed-loop-design` | 자동화 루프 4차원 결손 명확 | silent-skip / visibility 부재 |
+
+강제 chain은 **외부 세계의 상태 변화**가 허브 시스템에 전달되는 채널이다.
+
+## cycle 1370-1389 (N=20) 사례 분석
+
+```
+사이클 1370: worker-incident-triage (강제 — open issues 4건)
+사이클 1371: skill-evolution     (강제 — SE pending marker)
+사이클 1372: explore-idea        (자발)
+사이클 1373: curate              (자발)
+사이클 1374: explore-idea        (자발)
+...
+사이클 1380: explore-idea        (자발)
+사이클 1381: curate              (자발)
+```
+
+강제 chain 2개 (1370, 1371) = batch의 10%. 자발적 chain 18개 = batch의 90%.
+
+강제 chain이 없었다면: 20사이클 모두 curate/explore alternation. 강제 chain 2개로:
+- 외부 incidents 처리 완료 (4 issues triaged/closed)
+- skill-evolution SE #380 (dormancy pattern 기록)
+- 이 두 작업에서 나온 패턴이 이후 explore-idea 사이클의 주제가 됨
+
+## 다양성 주입 메커니즘
+
+```
+강제 chain 실행
+     ↓
+새로운 영역 탐색 (incident 처리 / skill 갱신)
+     ↓
+해당 영역에서 새 패턴/학습 발견
+     ↓
+이후 자발적 explore-idea 사이클에서 해당 패턴을 위키 엔트리로 문서화
+```
+
+cycle 1370 worker-incident-triage → cycle 1372-1380 entries #317-#321 모두 cycle 1370 작업에서 파생. 강제 chain 1회가 explore-idea 5회 분의 소재를 생성.
+
+## 설계 함의
+
+좋은 사이클 시스템은:
+1. **자발적 chain**: 안정적 운영 (curate/explore → 지속적 지식 축적)
+2. **강제 chain**: 외부 변화 감지 + 다양성 주입
+3. **강제 chain → 자발적 chain 소재**: 학습 loop 완성
+
+강제 chain이 너무 많으면 자발적 chain의 연속성 파괴. 너무 없으면 alternation lock. 10-20% 비율이 경험적 균형점 (허브 N=20 사이클 증거).
