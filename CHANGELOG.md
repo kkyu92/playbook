@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.124] — 2026-07-07
+
+### Added
+- wiki entry #318 `harness-engineering/inbound-incident-branch-type-triage-matrix` (cycle 1374): 워커 inbound CI 실패 소스 브랜치 타입별 분류 매트릭스. main/PR/dependabot/stale 분류, incident-auto-close.yml 연동 동작, cycle 1370 사례.
+
+### Changed
+- wiki 399 entries.
+
 ## [0.9.123] — 2026-07-07
 
 ### Added
