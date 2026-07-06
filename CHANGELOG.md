@@ -4,6 +4,15 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.129] — 2026-07-07
+
+### Added
+- wiki entry #323 `context-engineering/agentic-incident-knowledge-crystallization` (cycle 1384): 에이전틱 incident knowledge 결정화 — 단일 incident에서 방사되는 엔트리 클러스터. cycle 1370 사례: 1 incident → 6개 엔트리 × 10 사이클 결정화. dense batch vs sparse session 비교.
+- wiki entry #322 `harness-engineering/agentic-forced-vs-voluntary-chain-injection` (cycle 1382): 에이전틱 사이클 강제 vs 자발 chain 주입 다양성 메커니즘. 2-chain alternation lock + 강제 chain 10-20% 다양성 주입. cycle 1370 → entries #317-#321 파생.
+
+### Changed
+- wiki 404 entries.
+
 ## [0.9.128] — 2026-07-07
 
 ### Added
