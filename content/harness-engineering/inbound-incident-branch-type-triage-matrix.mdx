@@ -1,0 +1,90 @@
+---
+title: 워커 inbound CI 실패 — 소스 브랜치 타입별 분류 매트릭스
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - incident-triage
+  - ci-failure
+  - github-actions
+  - worker-incident-triage
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - harness-engineering/monitoring-window-lag-false-positive-detection
+status: complete
+description: 워커 레포(moneyball/blog-autopilot)에서 inbound되는 CI 실패 incident를 소스 브랜치 타입(main/PR/dependabot/stale)에 따라 분류하는 매트릭스. incident-auto-close.yml과의 연동 동작 포함.
+type: entry
+source: harness-engineering
+---
+
+워커 레포(moneyball, blog-autopilot)의 CI 실패가 인바운드될 때, 소스 브랜치 타입에 따라 처리 방법이 다르다.
+
+## 분류 매트릭스
+
+| 소스 브랜치 타입 | 예시 | 실제 incident? | 처리 방법 | incident-auto-close 동작 |
+|---|---|---|---|---|
+| **main** | `main (abc1234)` | ✅ 실제 incident | 조사 + 워커 fix 권고 | grace 3d 후 commit hash 매칭 시 auto-close |
+| **PR 브랜치** | `feature/some-change` | 🟡 조사 필요 | PR 내용 확인 후 판단 | hash가 main에 merge되면 auto-close 가능 |
+| **dependabot 브랜치** | `dependabot/npm_and_yarn/pkg-1.2.3` | ❌ 예상된 실패 | manual close (not real incident) | hash가 main에 없음 → auto-close X |
+| **stale / 오래된** | 30d+ 전 main commit | 🕐 이미 해결 가능 | auto-close 기다리거나 manual | grace period 충족 시 auto-close |
+
+## dependabot 브랜치 처리 특이 사항
+
+dependabot은 의존성 업데이트를 PR로 제안하기 위해 임시 브랜치를 생성한다. CI가 이 브랜치에서 실패할 수 있는 상황:
+
+1. **의존성 업데이트 자체가 호환성 문제 유발** — 정상적인 dependabot 동작 (PR reject 대상)
+2. **기존 코드의 audit gate 실패** — 업데이트와 무관한 기존 취약점
+
+두 경우 모두 hub의 `incident-auto-close.yml` 자동 처리 대상이 아니다:
+- dependabot commit hash는 워커 main에 merge되지 않음
+- → `MERGED = gh api .../commits/$HASH` = empty → skip
+
+**처리**: manual close (not a real production incident).
+
+```bash
+# dependabot 브랜치 확인
+echo "$INC_TITLE" | grep -q "dependabot/" && echo "dependabot branch — manual close"
+```
+
+## incident-auto-close.yml 적용 흐름
+
+```
+inbound issue 생성
+  ↓
+소스 브랜치 타입 파악 (title/body의 branch 정보)
+  ↓
+[main branch] → grace 3d 대기 → commit hash가 워커 main에 있으면 → auto-close
+[dependabot]  → auto-close X → manual triage 필요
+[PR branch]   → merge 여부 확인 → 조사 후 결정
+[stale]       → grace 3d 이미 경과 → hash 매칭 시 즉시 auto-close 가능
+```
+
+## 사례 — cycle 1370 (2026-07-07)
+
+**main 브랜치 incidents** (`issue #2246`, `#2245`):
+- `moneyball main` CI 실패 (ws/vite 취약점 — P1 known issue)
+- 생성일: 2026-07-06. grace 3d → auto-close 예정: ~2026-07-09
+- 처리: LEAVE OPEN (auto-close 대기)
+
+**dependabot 브랜치 incident** (`issue #2243`):
+- `dependabot/npm_and_yarn/lint-format-e6248b8319` CI 실패
+- commit hash가 moneyball main에 없음 → auto-close X
+- 처리: MANUAL CLOSE (expected failure, not real incident)
+
+## 분류 체크리스트
+
+```bash
+# inbound issue title 파싱
+TITLE=$(gh issue view $NUM --json title --jq .title)
+
+# 1. main 브랜치인가?
+echo "$TITLE" | grep -qE "CI 실패: main" && echo "→ main: auto-close queue"
+
+# 2. dependabot인가?
+echo "$TITLE" | grep -qE "dependabot/" && echo "→ dependabot: manual close"
+
+# 3. PR 브랜치인가?
+echo "$TITLE" | grep -qvE "main|dependabot/" && echo "→ PR branch: investigate"
+```
