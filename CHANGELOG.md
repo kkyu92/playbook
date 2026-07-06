@@ -4,6 +4,19 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.123] — 2026-07-07
+
+### Added
+- wiki entry #317 `harness-engineering/monitoring-window-lag-false-positive-detection` (cycle 1372): 모니터링 시간 창 lag — fix 배포 후 생성되는 false positive 알림 판별. last-N-runs 창 기반 집계의 false positive 패턴, 판별 체크리스트, guard 옵션 A/B/C. cycle 1370 issue #2266 사례.
+
+### Fixed
+- `incident-auto-close.yml` local `actions/checkout@v5 → @v4` (BRANCHED 해소 시 regression 방지). cycle 1370.
+
+### Changed
+- wiki 398 entries.
+- Issue #2266 closed (monitoring window lag false positive). Issue #2243 closed (dependabot branch expected failure). cycle 1370 worker-incident-triage.
+- wiki entries `github-actions-0s-failure-self-report-blind-spot`, `github-actions-workflow-zero-second-failure-diagnosis` cycle 1370 evidence 갱신.
+
 ## [0.9.122] — 2026-07-07
 
 ### Added
