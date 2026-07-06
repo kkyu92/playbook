@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.127] — 2026-07-07
+
+### Added
+- wiki entry #321 `harness-engineering/agentic-chain-dormancy-as-health-signal` (cycle 1380): 에이전틱 chain 비발화 = 건강 신호 해석 패턴. 품질 chain(review-code/design-system) dormancy = 품질 안정, incident chain(fix-incident/worker-triage) dormancy = 활성 문제 없음. cycle 1371 SE #380 review-code dormancy 사례.
+
+### Changed
+- wiki 402 entries.
+
 ## [0.9.126] — 2026-07-07
 
 ### Added
