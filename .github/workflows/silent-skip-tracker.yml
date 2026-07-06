@@ -100,3 +100,93 @@ jobs:
           done
 
           echo "Total issues created: $CREATED"
+
+      - name: Scan for 0s YAML parse failures (cross-workflow)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # 0s failure = YAML validation error (jobs[] empty, self-report step cannot run).
+          # Cross-workflow scan: any workflow with 3+ consecutive 0s failures = YAML parse issue.
+          THRESHOLD=3
+          KST_NOW=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+
+          # Collect last 200 runs
+          gh run list --repo "$REPO" --limit 200 \
+            --json conclusion,startedAt,updatedAt,workflowName,databaseId,headSha \
+            > /tmp/all_runs.json 2>/dev/null || echo "[]" > /tmp/all_runs.json
+
+          # Filter: failure + duration < 10s (0s YAML parse failures)
+          python3 -c "
+          import json
+          from datetime import datetime
+          runs = json.load(open('/tmp/all_runs.json'))
+          zero = [r for r in runs
+                  if r.get('conclusion') == 'failure'
+                  and (lambda s, u: (u - s).total_seconds() < 10)(
+                    datetime.fromisoformat(r['startedAt'].replace('Z','+00:00')),
+                    datetime.fromisoformat(r['updatedAt'].replace('Z','+00:00'))
+                  )]
+          json.dump(zero, open('/tmp/zero_failures.json','w'))
+          from collections import Counter
+          counts = Counter(r['workflowName'] for r in zero)
+          json.dump(dict(counts), open('/tmp/zero_counts.json','w'))
+          print('0s failure counts:', dict(counts))
+          "
+
+          # Create issues for workflows exceeding threshold
+          python3 -c "
+          import json, subprocess, os
+
+          counts = json.load(open('/tmp/zero_counts.json'))
+          zero_runs = json.load(open('/tmp/zero_failures.json'))
+          repo = os.environ['REPO']
+          kst_now = '$KST_NOW'
+          threshold = $THRESHOLD
+          created = 0
+
+          for wf_name, count in counts.items():
+            if count < threshold:
+              continue
+            wf_slug = wf_name.replace(' ', '-').lower()[:30]
+            wf_runs = [r for r in zero_runs if r['workflowName'] == wf_name]
+            latest = wf_runs[0] if wf_runs else {}
+            latest_id = latest.get('databaseId', '?')
+            head_sha = latest.get('headSha', '?')[:8]
+            fp = 'zero-failure-' + wf_slug + '-' + head_sha
+
+            existing = subprocess.run(
+              ['gh','issue','list','--repo',repo,'--state','open',
+               '--search','in:title ' + fp,'--json','number','--jq','.[0].number // empty'],
+              capture_output=True, text=True).stdout.strip()
+            if existing:
+              print('SKIP duplicate:', fp, 'issue #' + existing)
+              continue
+
+            run_url = 'https://github.com/' + repo + '/actions/runs/' + str(latest_id)
+            body_lines = [
+              run_url, '',
+              '0s failure: ' + str(count) + ' occurrences detected (last 200 runs).',
+              'Workflow file issue: YAML syntax error, missing action version, or permissions.',
+              'In-workflow self-report step cannot fire at YAML validation level.',
+              '',
+              'Diagnose: gh run view ' + str(latest_id) + ' --repo ' + repo,
+              'Ref: harness-engineering/github-actions-0s-failure-self-report-blind-spot',
+              '', '---', 'fp: ' + fp
+            ]
+            body = '\n'.join(body_lines)
+            title = '[0s-failure] ' + wf_name + ' [' + fp + '] @ ' + kst_now
+
+            result = subprocess.run(
+              ['gh','issue','create','--repo',repo,
+               '--title',title,'--label','hub-self-report','--body',body],
+              capture_output=True, text=True)
+            if result.returncode == 0:
+              print('Created 0s-failure issue for ' + wf_name + ' (' + str(count) + ' occurrences)')
+              created += 1
+            else:
+              print('ERROR:', result.stderr[:200])
+          print('Total 0s-failure issues created:', created)
+          "
