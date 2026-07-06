@@ -1,0 +1,118 @@
+---
+title: 모니터링 시간 창 lag — fix 배포 후 생성되는 false positive 알림 판별
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - monitoring
+  - false-positive
+  - github-actions
+  - observability
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/github-actions-0s-failure-self-report-blind-spot
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - infrastructure/github-actions-monitoring-smoke-alert-isolation
+status: complete
+description: 모니터링이 last-N-runs 창 기반으로 동작할 때 fix 배포 이후에도 창 안의 historical failures를 감지해 issue를 생성하는 false positive 패턴. 판별 체크리스트와 guard 방법.
+type: entry
+source: harness-engineering
+---
+
+모니터링이 고정 창(last-N-runs)으로 실패를 집계할 때, fix가 이미 배포됐어도 창 안에 과거 failures가 남아 있으면 alert를 생성한다.
+
+## 패턴
+
+```
+[실패 시작] ──── [fix 배포] ──── [모니터링 실행] ──── [alert 생성]
+    │                │                  │                   │
+ failures           fix             sees old               issue
+ accumulate        merged           failures in            created ← false positive
+                                    last-N window
+```
+
+모니터링이 schedule 기반(일 1회 등)이면 fix 후 첫 실행까지 수 시간 지연이 발생한다. 이 지연 동안 창 안의 historical failures는 그대로이므로 첫 실행에서 alert를 생성한다.
+
+## 사례 — cycle 1370 (2026-07-07)
+
+| 항목 | 값 |
+|---|---|
+| 워크플로 | `incident-auto-close.yml` |
+| 실패 기간 | 2026-07-03 ~ 2026-07-05 (YAML 파싱 오류) |
+| Fix 배포 | 2026-07-05 23:27 UTC (PR #2240 merged) |
+| 모니터링 실행 | 2026-07-06 21:00 UTC (silent-skip-tracker schedule) |
+| Alert 생성 | 2026-07-06 22:05 UTC (issue #2266) |
+| Fix 후 schedule run | 2026-07-06 22:43 UTC → SUCCESS |
+
+모니터링이 마지막 200 runs를 스캔해 23건의 0s failures를 감지 → alert 생성. 하지만 23건 모두 PR #2240 이전의 historical data였다.
+
+## 판별 체크리스트
+
+alert을 받았을 때 false positive 여부 확인:
+
+```bash
+# 1. 최근 5건 실패 확인 (active failure인가?)
+gh run list --workflow <workflow.yml> --limit 5 --json conclusion,createdAt \
+  | jq '.[] | {conclusion, createdAt}'
+
+# 2. schedule/dispatch run 최근 결과
+gh run list --workflow <workflow.yml> --event schedule --limit 3 \
+  | grep -E "success|failure"
+
+# 3. fix commit이 alert 생성 이전인가?
+git log --oneline --all -- .github/workflows/<workflow.yml> | head -5
+# fix commit의 merge date vs alert 생성 date 비교
+```
+
+**false positive 신호**:
+- 최근 5건에 `failure` 없음 (모두 `success`)
+- schedule run 최근 결과 = SUCCESS
+- fix commit merge date < alert 생성 date
+
+## 왜 발생하는가
+
+모니터링 창(last-N-runs)은 fix 배포를 인식하지 못한다. 창 안의 데이터가 바뀌는 것은 runs가 새로 쌓이면서 오래된 data가 밀려나갈 때뿐이다.
+
+```
+창 크기 = 200 runs
+fix 후 runs 생성 속도 = schedule 기반 (하루 1-2건)
+historical failures 창 밖으로 나가는 시간 ≈ 수 주
+```
+
+결과: fix 직후 수 주간은 창 안에 historical failures가 남아 있어 모니터링이 계속 alert를 생성할 수 있다.
+
+## Guard 방법
+
+### 옵션 A: 모니터링에 "최근 N개" 제한 추가
+
+```python
+# last 200 runs 전체 대신 최근 24시간 runs만 검사
+from datetime import datetime, timezone, timedelta
+cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+recent_failures = [r for r in zero_failures
+                   if datetime.fromisoformat(r['startedAt'].replace('Z','+00:00')) > cutoff]
+```
+
+**트레이드오프**: 창이 짧아지면 낮은 빈도 실패를 감지하지 못할 수 있음.
+
+### 옵션 B: 연속 실패 조건 추가
+
+count 기반 대신 "최근 N건이 모두 failure" 조건:
+
+```bash
+# 최근 5건 중 모두 failure인지 확인
+RECENT=$(gh run list --workflow "$WF" --limit 5 --json conclusion | jq -r '.[].conclusion')
+ALL_FAIL=$(echo "$RECENT" | grep -c "^failure$")
+[ "$ALL_FAIL" -eq 5 ] && echo "active failure" || echo "not all failed"
+```
+
+**장점**: fix 후 1건이라도 success가 있으면 alert 생성 안 함. false positive 원천 차단.
+
+### 옵션 C (현재 허브 적용): 수동 판별 체크리스트
+
+alert 발생 시 위 체크리스트로 수동 판별. false positive 확인 → issue close. 모니터링 수정 없음.
+
+## 적용 우선순위
+
+현재 허브는 옵션 C (수동). schedule 기반 모니터링의 false positive rate가 높아지면 옵션 B(연속 실패 조건)로 개선 권장. 옵션 A는 낮은 빈도 실패 감지 누락 위험으로 비권장.
