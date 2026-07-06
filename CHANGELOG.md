@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.128] — 2026-07-07
+
+### Added
+- wiki entry #322 `harness-engineering/agentic-forced-vs-voluntary-chain-injection` (cycle 1382): 에이전틱 사이클 강제 vs 자발 chain 주입 다양성 메커니즘. LLM 자유 선택이 2-chain alternation lock을 만들 때 강제 chain(skill-evolution/worker-triage)이 다양성 주입. cycle 1370 강제 chain 1회 → entries #317-#321 5개 파생.
+
+### Changed
+- wiki 403 entries.
+
 ## [0.9.127] — 2026-07-07
 
 ### Added
