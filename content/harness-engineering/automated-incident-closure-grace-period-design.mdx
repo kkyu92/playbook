@@ -1,0 +1,101 @@
+---
+title: 자동 incident 종결 grace period 설계 — 성급한 close 방지
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - incident-management
+  - automation
+  - grace-period
+  - closed-loop
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/inbound-incident-branch-type-triage-matrix
+  - harness-engineering/monitoring-window-lag-false-positive-detection
+status: complete
+description: 자동 incident 종결 워크플로에 grace period가 필요한 이유와 적정 값 설계. fingerprint commit이 워커 main에 merge됐더라도 즉시 close하면 false positive close가 발생한다.
+type: entry
+source: harness-engineering
+---
+
+자동 incident 종결 시스템(incident-auto-close.yml)은 "워커 fix merge 확인"만으로 즉시 close하지 않고 **N일 grace period**를 두어 성급한 close를 방지한다.
+
+## 왜 grace period가 필요한가
+
+### 문제 1 — 일시적(transient) CI 실패
+
+CI가 실패한 시점의 fingerprint commit이 워커 main에 있더라도, 그 commit이 fix를 포함한다는 보장이 없다. fix commit이 별도로 push되는 경우:
+
+```
+[실패] commit A (버그 포함) → CI fail → inbound incident 생성
+                                         │
+[fix]  commit B (버그 수정)              │
+       ↓                                 │
+       워커 main에 merge                 │
+       ↓                                 │
+[auto-close 시도] commit A의 hash가 main에 있는가? → YES (A는 B에 의해 fix됐지만 여전히 main history에 있음)
+```
+
+grace period 없이 즉시 close하면: commit A를 포함한 배포가 아직 트래픽을 받고 있을 수 있고, incident가 재발할 수 있다.
+
+### 문제 2 — CI 재실행 시간 필요
+
+fix commit merge 후 CI 재실행까지 수 분~수십 분이 걸린다. CI가 GREEN 되기 전에 incident를 close하면 실제 fix 확인 전에 닫히는 것이다.
+
+### 문제 3 — fix가 즉시 배포되지 않는 경우
+
+fix가 main에 merge됐지만 배포(Vercel/서버)가 지연되는 경우, incident를 close해도 사용자는 여전히 영향을 받고 있을 수 있다.
+
+## 허브 incident-auto-close.yml의 grace period 설계
+
+```yaml
+GRACE_DAYS: 3  # 72시간
+```
+
+**조건**: `incident 생성 시각 + GRACE_DAYS ≤ 현재 시각`
+
+```bash
+CREATED_EPOCH=$(date -u -d "$INC_CREATED" +%s)
+AGE=$((NOW - CREATED_EPOCH))
+if [ "$AGE" -lt "$GRACE_SEC" ]; then
+  SKIPPED=$((SKIPPED+1))
+  continue
+fi
+```
+
+3일은 다음을 보장하기 위한 경험값:
+1. CI 재실행 + GREEN 확인 (일반적으로 수 분, 최대 30분)
+2. 배포 완료 (Vercel 배포 수 분)
+3. 사용자 feedback loop 완료 (1-2일이면 재발 여부 확인 가능)
+4. monitoring false positive 필터링 (모니터링 주기가 24h이므로 3d = 3회 체크)
+
+## grace period 기간 중 인바운드 이슈 상태
+
+grace period 동안 인바운드 이슈는 **정상적으로 OPEN 상태**다. 이는:
+
+- 처리 실패가 아니라 **의도된 대기**
+- 자동 시스템이 올바르게 동작하고 있는 신호
+- 수동 close/triage 불필요
+
+**cycle 1370 사례** (`#2246`, `#2245`):
+```
+생성: 2026-07-06T05:03 (moneyball main CI 실패)
+grace 3d → auto-close 예정: ~2026-07-09T05:03
+현재 상태: OPEN (정상 — 아직 grace period 중)
+```
+
+## grace period 값 조정 기준
+
+| 상황 | 권장 값 | 이유 |
+|---|---|---|
+| 소규모 서비스, 빠른 배포 | 1-2일 | 배포 지연 없음 |
+| 다수 사용자, 중요 서비스 | 3-7일 | 사용자 feedback 수렴 충분 |
+| 현재 허브 (moneyball inbound) | 3일 | 빠른 cycle + 모니터링 24h × 3회 |
+
+## false positive close 방지 효과
+
+grace period + fingerprint commit 매칭의 조합:
+1. 짧은 transient 실패: 같은 fingerprint commit이 짧은 grace 후 close → transient 자연 소멸
+2. 지속적 실패: grace 경과 후에도 재발 → 별도 inbound issue 생성 → 재집계
+3. 성급한 close 없음 → 사용자 재오픈 없음
