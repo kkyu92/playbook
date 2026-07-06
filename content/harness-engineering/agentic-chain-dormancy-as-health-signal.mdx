@@ -1,0 +1,95 @@
+---
+title: 에이전틱 chain 비발화 = 건강 신호 — dormancy 해석 패턴
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - agentic
+  - chain-distribution
+  - dormancy
+  - health-signal
+  - skill-evolution
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/agentic-chain-distribution-phase-fingerprint
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+  - harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
+status: complete
+description: 사이클 pool에서 특정 chain이 20+회 비발화(dormant)일 때, 이는 시스템 실패가 아니라 해당 영역이 건강하다는 신호다. chain 타입별 dormancy 해석 방법.
+type: entry
+source: harness-engineering
+---
+
+아이런틱 사이클 시스템에서 특정 chain이 오랫동안 선택되지 않는 현상(dormancy)은 두 가지로 해석할 수 있다:
+1. **시스템 오류**: chain trigger가 실제 상황을 감지하지 못함
+2. **건강 신호**: chain이 트리거되어야 할 상황 자체가 없음
+
+대부분의 경우, 잘 설계된 chain pool에서 dormancy는 **2번 건강 신호**다.
+
+## chain 타입별 dormancy 해석
+
+### 품질/부채 감지 chain (dormancy = 적극적 건강 신호)
+
+| Chain | 트리거 조건 | Dormancy의 의미 |
+|---|---|---|
+| `review-code` | 스크립트 품질 저하 / 복잡도 누적 / 테스트 부족 | 코드 품질 안정, 부채 없음 |
+| `design-system` | DESIGN.md 오래됨 / 컴포넌트 균열 | 디자인 일관성 유지 중 |
+| `polish-ui` | UI 부채 / 모바일 깨짐 / 디자인 일관성 균열 | UI 안정, 시각적 부채 없음 |
+
+이 chain들이 dormant = "현재 이 영역에서 개선이 필요한 것이 없다".
+
+### incident/이슈 감지 chain (dormancy = 수동적 건강 신호)
+
+| Chain | 트리거 조건 | Dormancy의 의미 |
+|---|---|---|
+| `fix-incident` | 워크플로/배포 버그, silent fail | 버그 없는 안정 운영 중 |
+| `worker-incident-triage` | hub-dispatch open issue / 워커 inbound | 워커 레포 인바운드 없음, 이슈 큐 비어 있음 |
+| `closed-loop-design` | 자동화 루프 4차원 결손 | 자동화 루프 완결 상태 |
+
+이 chain들이 dormant = "현재 처리해야 할 문제가 없다".
+
+### 메타 chain (dormancy = 시스템 안정 신호)
+
+| Chain | 트리거 조건 | Dormancy의 의미 |
+|---|---|---|
+| `expand-scope` | 장기 미진행 TODOS / 사이클 N milestone | 점진적 개선으로 충분 |
+| `dimension-cycle` | 위 모든 chain에 해당 없음 | 구체적 작업 항상 있음 (fallback 불필요) |
+
+## 실제 사례 — cycle 1371 SE #380
+
+SE #380 분석 (window 1351-1370):
+- **review-code**: 20 cycle 0회 → dormancy 확인
+- **fix-incident**: 20 cycle 0회 (cycle 1350 fix 이후 재dormancy) → 워크플로 안정
+- **polish-ui, design-system**: 지속 dormant → UI/디자인 안정
+
+진단: "review-code 20 cycle 신규 dormancy = code quality 안정 phase 진입"
+
+```
+SE #378: review-code 2회 발화 (code quality issues)
+          ↓
+SE #380: review-code 0회 발화 (quality issues resolved → stable)
+```
+
+review-code가 fired되다가 dormant로 전환 = 품질 부채 해소 완료.
+
+## 잘못된 해석을 피하는 방법
+
+dormancy를 시스템 오류로 잘못 해석하면:
+- dormant chain을 강제 발화 (잡음 생성)
+- "사용하지 않는 chain은 필요 없다" 결론으로 chain 삭제
+- trigger를 낮춰 민감도 과도 증가
+
+**안전 체크**: dormant chain의 마지막 발화 시점과 그 당시 상황 검토.
+- 마지막 발화 후 영역이 개선됐으면 → 건강 신호 (dormancy 유지)
+- 마지막 발화 후 영역이 더 악화됐으면 → trigger 재검토 필요
+
+## skill-evolution 트리거와의 관계
+
+`skill-evolution` trigger 5 = "직전 20 cycle 동안 chain 1개 0회 발화". 발화 목적은 chain 강제 발화가 아니라 **SKILL 갱신 기회 탐색**:
+
+- dormancy가 의도된 결과인지 확인
+- chain trigger가 현재 project phase에 적합한지 검토
+- "0회 chain 항구화" 패턴 기록 (dormancy evidence 누적)
+
+cycle 1371 SE #380: review-code 신규 dormancy + fix-incident 재dormancy → "자연 dormancy 확인, SKILL 변경 불필요" → retro-only.
