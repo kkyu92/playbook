@@ -1,0 +1,104 @@
+---
+title: 에이전틱 incident knowledge 결정화 — 단일 incident에서 방사되는 엔트리 클러스터
+category: context-engineering
+date: "2026-07-07"
+tags:
+  - knowledge-management
+  - incident-learning
+  - wiki
+  - agentic
+  - context-engineering
+confidence: 2
+last_verified: "2026-07-07"
+connections:
+  - context-engineering/agentic-wiki-confidence-lifecycle
+  - harness-engineering/agentic-forced-vs-voluntary-chain-injection
+  - harness-engineering/monitoring-alert-triage-sop
+status: complete
+description: 단일 incident를 처리하면 즉각 고치는 것 이상의 학습이 발생한다. 이 학습은 사이클을 거치며 점진적으로 결정화되어 관련 패턴의 엔트리 클러스터를 생성한다. 허브 N=20 사이클 증거.
+type: entry
+source: context-engineering
+---
+
+한 번의 incident 처리는 즉각적 fix 이상을 남긴다. 처리 과정에서 관찰한 패턴들이 시간을 두고 점차 뚜렷해지며, 관련 wiki 엔트리 클러스터를 형성한다.
+
+## 결정화 구조
+
+```
+[단일 incident] (T=0)
+     ↓ 즉각적 처리
+[fix + 기존 엔트리 갱신] (T+1 cycle)
+     ↓ 패턴 추출 시작
+[1차 결정화: 핵심 패턴 엔트리] (T+2 cycle)
+     ↓ 추가 관찰
+[2차 결정화: 파생 패턴 엔트리들] (T+3~6 cycle)
+     ↓ 메타 이해
+[3차 결정화: 메타 패턴 엔트리] (T+7+ cycle)
+```
+
+단일 incident → 엔트리 1~7개 클러스터 생성이 전형적 패턴.
+
+## 사례 — cycle 1370 (2026-07-07)
+
+### T=0: incident 처리 (cycle 1370 — worker-incident-triage)
+
+- `incident-auto-close.yml` 0s failure 23건 (issue #2266)
+- moneyball CI 실패 inbound (#2246, #2245, #2243)
+- local `@v5 → @v4` 패치
+- 기존 엔트리 2개 갱신 (github-actions-workflow-zero-second-failure-diagnosis, 0s-failure-self-report-blind-spot)
+
+### T+1~6: 결정화 사이클 (cycles 1372-1382)
+
+```
+T+2 (cycle 1372): #317 monitoring-window-lag-false-positive-detection
+      ↑ 가장 명확한 패턴 — 즉시 결정화
+
+T+4 (cycle 1374): #318 inbound-incident-branch-type-triage-matrix
+      ↑ 분류 매트릭스 — 추가 정리 후 결정화
+
+T+6 (cycle 1376): #319 automated-incident-closure-grace-period-design
+      ↑ 설계 근거 — 처리 중 관찰한 grace period 이해
+
+T+8 (cycle 1378): #320 monitoring-alert-triage-sop
+      ↑ 합성 SOP — #317-#319를 통합한 메타 절차
+
+T+10 (cycle 1380): #321 agentic-chain-dormancy-as-health-signal
+      ↑ 간접 파생 — cycle 1371 SE #380 에서 review-code dormancy 관찰
+
+T+12 (cycle 1382): #322 agentic-forced-vs-voluntary-chain-injection
+      ↑ 최고 추상화 — cycle 1370 작업 자체가 meta-pattern의 증거
+```
+
+10개 사이클에 걸쳐 6개 엔트리 생성. 엔트리당 1.67 사이클 소요.
+
+## 결정화 속도 결정 요인
+
+| 요인 | 빠른 결정화 | 느린 결정화 |
+|---|---|---|
+| 패턴 명확도 | 즉각 패턴 보임 | 여러 관찰 필요 |
+| 추상화 수준 | 구체적 절차 | 메타 개념 |
+| 사전 지식 연결 | 연결되는 기존 엔트리 없음 | 기존 엔트리 다수 수정 필요 |
+| 사이클 밀도 | N=20 dense batch | N=1 sparse session |
+
+## 밀도-결정화 상관관계
+
+**밀도 높은 batch session (N=20)**:
+- 동일 incident 발생 후 다수 사이클이 연속 진행
+- 패턴이 아직 기억에 있는 상태에서 추가 관찰 가능
+- 결정화 속도 빠름, 에너지 낮음
+
+**sparse single session (N=1)**:
+- 다음 세션까지 시간 간격 존재
+- 이전 context 재로드 필요 (handoff 비용)
+- 결정화 느림, 에너지 높음
+
+N=20 dense batch가 single session 대비 결정화 효율이 높은 이유.
+
+## 관리 방법
+
+결정화를 체계화하기 위한 실용적 접근:
+
+1. **incident 처리 직후**: 즉각 명확한 패턴 1개만 엔트리화 (무리하게 여러 개 X)
+2. **이후 사이클**: explore-idea에서 자연스럽게 파생 패턴 선택
+3. **메타 이해**: 충분한 파생 엔트리가 쌓인 후 SOP/framework 엔트리 작성
+4. **종결 신호**: "이 incident에서 더 뽑을 패턴이 없다" 느낌 = 결정화 완료
