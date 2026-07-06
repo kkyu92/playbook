@@ -1,0 +1,149 @@
+---
+title: GH Actions 워크플로 픽스 End-to-End 체크리스트 — BRANCHED 환경 포함
+category: harness-engineering
+date: "2026-07-07"
+tags:
+  - github-actions
+  - checklist
+  - workflow-fix
+  - branched-state
+  - harness-engineering
+confidence: 3
+last_verified: "2026-07-07"
+connections:
+  - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+  - harness-engineering/github-actions-fix-stacking-anti-pattern
+  - harness-engineering/github-actions-cross-workflow-version-consistency-audit
+  - harness-engineering/branched-state-origin-main-targeted-fix-bypass
+  - harness-engineering/branched-state-local-fix-quality-drift
+  - harness-engineering/github-actions-inline-script-safe-patterns
+  - harness-engineering/ai-agent-external-version-confidence-calibration
+status: complete
+description: GH Actions 워크플로 수정 시 BRANCHED 상태, 0s 실패 블라인드스폿, 버전 감사, 인라인 스크립트 안전 패턴, fix-stacking 방지를 포함한 end-to-end 체크리스트. 이 세션(cycle 1350-1366) 패턴 종합.
+type: entry
+source: harness-engineering
+---
+
+GH Actions 워크플로 수정 시 발생하는 주요 함정을 단계별로 차단하는 체크리스트.
+
+## Phase 1 — 진단 (Fix 전)
+
+### 1a. 실패 유형 식별
+
+```bash
+# duration 확인 — 0s이면 YAML 파싱 실패
+gh run list --workflow=<wf>.yml --limit 5
+
+# 0s failure: jobs[] empty, 모든 if:failure() 미실행
+gh run view <run-id> --json conclusion,jobs | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['conclusion'], len(d['jobs']), 'jobs')"
+```
+
+0s = YAML 문제 (→ entry: `github-actions-workflow-zero-second-failure-diagnosis`)
+
+### 1b. YAML 로컬 유효성 검사
+
+```bash
+python3 -c "import yaml; yaml.safe_load(open('.github/workflows/<wf>.yml'))" && echo "YAML OK"
+```
+
+⚠️ 통과해도 YAML 구조 오류 가능 (GH Actions 파서가 더 엄격). 특히 `run: |` 블록 내 heredoc 주의.
+
+### 1c. 실제 원인 단독 확인 (fix-stacking 방지)
+
+- 단 하나의 가설만 테스트
+- 실패 시 롤백 후 다른 가설 시도
+- "혹시 모르니" 추가 변경 = fix-stacking 신호 (→ entry: `github-actions-fix-stacking-anti-pattern`)
+
+---
+
+## Phase 2 — 변경 전 감사
+
+### 2a. 교차 워크플로 버전 감사 (version 변경 시)
+
+```bash
+# 변경하려는 action 버전 전체 사용 현황
+grep -r "actions/<name>@" .github/workflows/ | sort | uniq
+
+# 성공한 다른 workflow가 같은 버전 쓰면 → 해당 버전 유효
+gh run list --workflow=<other-wf>.yml --limit 3
+```
+
+다른 workflow가 사용 중 + CI 성공 = 해당 버전 유효. AI 지식보다 repo 현황 우선.
+(→ entry: `github-actions-cross-workflow-version-consistency-audit`)
+
+### 2b. AI 버전 추천 교차 검증
+
+AI가 "버전 X가 최신"이라고 추천하면:
+- 현재 코드 버전 > AI 추천 버전 → AI 학습 컷오프 이후 릴리즈 가능
+- repo 다른 파일 우선 확인 (→ entry: `ai-agent-external-version-confidence-calibration`)
+
+### 2c. 인라인 스크립트 안전 패턴 확인 (스크립트 변경 시)
+
+| 패턴 | 위험 |
+|---|---|
+| `python3 - <<'PYEOF'` column-0 | YAML 파서 깨짐 — 금지 |
+| `python3 -c "..."` 멀티라인 | IndentationError — 10줄 이상 시 별도 파일 |
+| `python3 -c "..."` 단일라인 | 안전 |
+| `cat > /tmp/script.py << 'EOF'` | 안전 (EOF는 `run:` 들여쓰기 내 위치) |
+
+(→ entry: `github-actions-inline-script-safe-patterns`)
+
+---
+
+## Phase 3 — BRANCHED 상태 처리
+
+### 3a. BRANCHED 여부 확인
+
+```bash
+git rev-list --left-right --count origin/main...main
+# left=origin-only / right=local-only
+# 양방향 값 > 0 = BRANCHED
+```
+
+### 3b. Fix 방식 결정
+
+| 상황 | 방식 |
+|---|---|
+| origin/main에 버그 + 즉각 수정 필요 | origin/main 기반 fix 브랜치 → PR (→ entry: `branched-state-origin-main-targeted-fix-bypass`) |
+| 로컬 전용 변경 (콘텐츠/docs) | local main에 직접 commit OK |
+| 워크플로/스크립트 변경 | CI 검증 필요 → origin/main 기반 PR 권장 |
+
+로컬에만 있는 워크플로 변경 = draft quality (→ entry: `branched-state-local-fix-quality-drift`)
+
+### 3c. origin/main 기반 PR 체크리스트
+
+```bash
+git stash
+git checkout -b fix/<slug> origin/main
+# 변경 적용
+python3 -c "import yaml; yaml.safe_load(open('.github/workflows/<wf>.yml'))" && echo OK
+git add .github/workflows/<wf>.yml
+git commit -m "fix(workflow): <설명>"
+git push -u origin fix/<slug>
+gh pr create ...
+git checkout main && git stash pop
+```
+
+---
+
+## Phase 4 — PR 완료 후
+
+```bash
+# CI 결과 확인
+gh run list --limit 5
+
+# 0s 실패 없음 확인 (silent 감지)
+gh run list --limit 20 --json conclusion,startedAt,updatedAt | python3 -c "..."
+```
+
+---
+
+## 이 체크리스트가 방지하는 실수 목록 (cycle 1350 증거)
+
+| 실수 | 방지 phase |
+|---|---|
+| PYEOF heredoc YAML 파싱 오류 4일 미감지 | Phase 1a (0s 감지) |
+| v5 → v4 불필요 변경 (AI 컷오프) | Phase 2a + 2b |
+| 멀티라인 python3 -c IndentationError | Phase 2c |
+| 로컬 fix CI 미검증 | Phase 3b |
+| 원인 미확정 복합 fix | Phase 1c |
