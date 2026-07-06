@@ -112,3 +112,11 @@ grep -r "<wf-name>" .github/workflows/ | grep -v "<wf-file>"
 ## 재발 사례
 
 **cycle 1318 (2026-07-04)**: `incident-auto-close.yml` 가 `push` 이벤트로 0s failure (5회 연속). 로컬 버전 YAML 정상, origin 버전 `push` 트리거 없음. 원인 미확정 — BRANCHED state 조사 carry-over.
+
+**cycle 1370 (2026-07-07) — root cause 확정**: cycle 1318 carry-over 해결.
+
+- **원인**: `incident-auto-close.yml` 로컬 첫 fix (commit `79b131a6`) 가 `actions/checkout@v5` 사용 (존재 X). 이후 bot이 shadow branch 에서 `@v5 → @v4` 재수정 (commit `87d82c7b`) → PR #2240 merged 2026-07-05.
+- **0s failure 메커니즘**: auto-ingest shadow branch (`auto-ingest/geeknews-*`) 가 `@v5` 버전의 workflow 파일 포함한 채 push됨. GH Actions 가 해당 브랜치 HEAD의 workflow 파일로 실행 시도 → `@v5` 액션 존재하지 않아 < 10s 실패.
+- **모니터링 false positive 패턴**: silent-skip-tracker 가 PR #2240 merge (2026-07-05) 이후에 실행 (2026-07-06 21:00 UTC) 하여 last-200-runs 창에서 historical failures 23건 감지 → issue #2266 생성 (이미 fix 배포 후). Schedule run은 origin/main (`@v4`) 기준으로 실행되어 정상 SUCCESS.
+- **Fix**: local main `@v5 → @v4` 패치 (BRANCHED 해소 시 regression 방지). Issue #2266 false positive 확인 후 close.
+- **교훈**: monitoring 시간 창(last-N-runs) 기반 감지는 이미 fix된 과거 failures 를 fix 이후에 보고할 수 있음. Schedule run success 확인을 병행하면 false positive 판별 가능.

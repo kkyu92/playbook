@@ -110,3 +110,19 @@ gh run list --limit 20 --json conclusion,durationMs,workflowName \
 **즉각 개선 가능한 것**: 진단 step에서 `0s failure` 자동 플래그 추가 → key_findings에 박제.
 
 **중장기**: silent-skip-tracker에 0초 실패 탐지 통합 (옵션 B) — closed-loop design chain 후보.
+
+## 주의 — 모니터링 시간 창 false positive (cycle 1370 사례)
+
+**cycle 1370 (2026-07-07)**: silent-skip-tracker 의 `Scan for 0s YAML parse failures` step 이 PR #2240 (fix 배포 2026-07-05) 이후 다음날 실행되면서 last-200-runs 창에 포함된 historical 23건 감지 → issue #2266 생성.
+
+실제로는:
+- Fix 배포 후 schedule run (2026-07-06 22:43 UTC) = SUCCESS
+- 23건 failures = fix 이전 historical data (2026-07-03 ~ 2026-07-05)
+- 이슈 생성 시점에 이미 fix 완료 → false positive
+
+**false positive 판별 체크리스트**:
+1. `gh run list --workflow <wf> --limit 5` → 최근 5건 중 failure 있는가?
+2. schedule/dispatch run 이 최근 SUCCESS 인가?
+3. fix commit이 issue 생성 시점 이전에 merge 됐는가?
+
+모두 "no" / "yes" / "yes" 이면 false positive — 모니터링 창 lag 현상.
