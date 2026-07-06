@@ -4,6 +4,15 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.126] — 2026-07-07
+
+### Added
+- wiki entry #320 `harness-engineering/monitoring-alert-triage-sop` (cycle 1378): 모니터링 알림 triage SOP. 4단계 흐름(소스 분석→현재 상태→원인 변화→분류+대응). hub-self-report/hub-dispatch 신뢰도 차이 포함. 사이클 1370 3개 이슈 사례 적용.
+- wiki entry #319 `harness-engineering/automated-incident-closure-grace-period-design` (cycle 1376): 자동 incident 종결 grace period 설계. transient 실패/배포 전파/모니터링 피드백 루프를 위한 3일 grace period 근거.
+
+### Changed
+- wiki 401 entries.
+
 ## [0.9.125] — 2026-07-07
 
 ### Added
