@@ -1,0 +1,83 @@
+---
+title: Inbound Incident 배치 close 적격 판별 결정 트리 — JIT 검색 기반 자율 triage
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - worker-incident-triage
+  - batch-close
+  - decision-tree
+  - jit-search
+  - autonomous-operation
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
+  - harness-engineering/inbound-incident-branch-type-triage-matrix
+  - context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi
+  - harness-engineering/automated-incident-closure-grace-period-design
+status: complete
+description: worker-incident-triage chain에서 inbound incident을 배치 close할 수 있는지 판별하는 결정 트리. JIT 검색 결과를 분기 조건으로 사용해 자율 triage 정확도를 높인다.
+type: entry
+source: explore-idea
+---
+
+## 결정 트리
+
+```
+[Step 1] fingerprint 패턴 분석
+  동일 fingerprint 다수 (>10건) 존재?
+  → YES: Step 2로
+  → NO: 개별 조사 필요 (fix-incident 또는 worker 확인)
+
+[Step 2] JIT search — TODOS 추적 항목 존재 확인
+  query: "이슈 핵심 증상 + 출처"
+  hit score ≥ 0.85 + TODOS 항목 언급?
+  → YES: batch-close (TODOS 카운터 갱신)
+  → NO: Step 3으로
+
+[Step 3] JIT search — 기존 wiki/solution 존재 확인
+  hit score ≥ 0.85 + 처리 방법 명시?
+  → YES: batch-close (wiki 참조 + R6 액션 안내)
+  → NO: Step 4로
+
+[Step 4] R6 여부 확인
+  루트 원인이 hub 자율 처리 불가 (worker repo / user 재인증)?
+  → YES: close (R6 안내 comment) + TODOS 신규 항목
+  → NO: fix-incident chain으로 전환
+```
+
+## 케이스별 적용
+
+| 케이스 | 판별 결과 | 처리 |
+|---|---|---|
+| moneyball CI 실패 × 60건 (ws/vite 취약점) | Step 1 YES → Step 2 YES | batch-close, TODOS 카운터 264→324 |
+| Claude CLI auth failure #2362 | Step 1 NO → Step 3 YES | batch-close, wiki/runbook 참조 |
+| 신규 CI 패턴 (처음 보는 에러) | Step 1 NO → Step 3 NO → Step 4 | fix-incident 또는 TODOS 신규 |
+| hub.yml 워크플로 silent fail | Step 4 NO | fix-incident chain 전환 |
+
+## JIT 검색 쿼리 설계
+
+**효과적인 쿼리 패턴**:
+- `"[출처] [증상 키워드]"`: `"moneyball CI 실패 ws vite 취약점"` → TODOS 추적 항목 발견
+- `"[서비스] [이슈 타입] [환경]"`: `"claude cli 인증 실패 blog-autopilot healthcheck"` → wiki entry 발견
+
+**쿼리 실패 시**: threshold 미달(score < 0.85)이면 키워드를 바꿔 1회 재시도. 그래도 미달 → Step 4 진행.
+
+## 배치 close comment 품질
+
+배치 close 시 comment는 다음을 포함:
+1. **근거**: "TODOS [P1] 추적 중인 known issue"
+2. **현황**: 카운터 (264→324건) 또는 wiki 링크
+3. **액션**: R6 사용자 액션 명시 ("moneyball 레포에서 pnpm update ws vite")
+4. **사이클**: "cycle N worker-incident-triage"
+
+단순 "duplicate" close는 지양 — 사용자가 이슈를 보았을 때 컨텍스트를 즉시 파악할 수 있어야 한다.
+
+## 자율 triage 범위
+
+hub가 사용자 확인 없이 자율로 할 수 있는 triage:
+- 동일 fingerprint 다수 → JIT hit → 배치 close: **자율 허용**
+- R6 신규 패턴 발견 → TODOS 신규 항목 + close: **자율 허용**
+- Worker repo 코드 직접 수정: **불가 (R6 사용자 영역)**
+- 사용자 자격증명 갱신 (claude login 등): **불가 (R6 사용자 영역)**
