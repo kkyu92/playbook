@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.138] — 2026-07-08
+
+### Added
+- wiki entry #332 `harness-engineering/agentic-diagnosis-source-priority-open-issue-first` (cycle 1404): 진단 source 우선순위 — open issue 항상 첫 번째. 외부 이벤트 시간 민감도. chain별 주 source 매핑.
+
+### Changed
+- wiki 413 entries.
+
 ## [0.9.137] — 2026-07-08
 
 ### Added

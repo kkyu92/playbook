@@ -1,0 +1,81 @@
+---
+title: 자율 에이전트 진단 source 우선순위 — open issue 우선 스캔 근거
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - diagnosis
+  - open-issue
+  - priority
+  - chain-selection
+  - harness-engineering
+  - agentic
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+  - harness-engineering/agentic-batch-close-eligibility-decision-tree
+  - harness-engineering/agentic-next-chain-recommendation-override-pattern
+status: complete
+description: develop-cycle-hub 진단 단계에서 open GH issues를 항상 첫 번째로 스캔하는 이유. 외부 이벤트(worker dispatch)는 허브 내부 계획(TODOS/plans)보다 시간 민감도가 높아 우선 처리가 ROI 기준에서 합리적이다.
+type: entry
+source: explore-idea
+---
+
+## 진단 source 스캔 순서
+
+```
+1. gh issue list (open issues) — 항상 첫 번째
+2. ls plans/*.md (approved plans)
+3. pnpm run lint:wiki (orphan/stale)
+4. TODOS.md (carry-over 항목)
+5. gh run list (CI/cron 상태)
+```
+
+## open issue 우선 근거
+
+### 1. 외부 이벤트 = 시간 민감도 높음
+
+open issue는 worker(moneyball, blog-autopilot)에서 파견된 실시간 신호다. 방치하면:
+- incident-auto-close.yml 3일 grace period 내 자동 close 될 수 있지만 (원인 미해결)
+- 사용자가 GitHub 알림을 통해 이슈를 보고 직접 처리할 수도 있음 (허브 가치 감소)
+- 누적 시 issue tracker noise 증가
+
+### 2. TODOS/plans = 허브 내부 계획 = 시간 덜 민감
+
+TODOS carry-over 항목은 이미 사이클 N에서 인지한 것들. 다음 사이클에서 처리해도 지연 비용 낮음. Plans는 사전 검토된 approved 상태이므로 긴급하지 않음.
+
+### 3. open issue 수 = 즉각 chain selection 결정
+
+```
+open issues ≥ 1건 → worker-incident-triage (또는 fix-incident) 즉시 선택
+open issues = 0건 → 내부 source (plans/TODOS/lint) 로 이동
+```
+
+단순 결정 규칙이므로 진단 비용 최소화.
+
+## 체인별 우선 source 매핑
+
+각 chain이 어떤 diagnosis source에서 주로 발화하는지:
+
+| chain | 주 source | 부 source |
+|---|---|---|
+| worker-incident-triage | gh issue list (inbound) | git log (worker CI) |
+| fix-incident | gh issue list (bug/incident) | CI run fails |
+| explore-idea | TODOS "Next-Up" / gap 발견 | lint 결과 |
+| curate | lint:wiki output / dashboard lag | CHANGELOG 미갱신 |
+| closed-loop-design | gh run list (skipped) | silent-skip-tracker |
+| skill-evolution | SE pending marker / cycle JSON | (trigger 자동) |
+
+## 0건 이후 fallback 순서
+
+open issues = 0건 시:
+1. **Approved plans 존재** → plan 처리 (explore-idea/fix-incident)
+2. **Approved plans 없음** → next_recommended_chain 힌트 활용
+3. **힌트 없거나 무의미** → lint:wiki + TODOS 스캔으로 자율 판단
+
+## 과잉 스캔 방지
+
+모든 source를 항상 완전히 스캔하면 context 낭비. 실용 규칙:
+- open issues ≥ 10건 → 이슈만 처리, lint/TODOS 스캔 skip
+- open issues = 0건 → 빠른 lint:wiki + TODOS 스캔 (git log 심층 불필요)
+- CI 연속 fail 발견 → fix-incident 즉시 진입, 다른 source 추가 스캔 X
