@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.137] — 2026-07-08
+
+### Added
+- wiki entry #331 `harness-engineering/agentic-next-chain-recommendation-override-pattern` (cycle 1402): next_recommended_chain 추천 신호 vs 합법적 오버라이드 패턴. cycle 1390-1401 hit rate 83% (2 misses = open issue + SE 마커).
+
+### Changed
+- wiki 412 entries.
+
 ## [0.9.136] — 2026-07-08
 
 ### Added

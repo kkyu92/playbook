@@ -1,0 +1,64 @@
+---
+title: next_recommended_chain 추천 신호 vs 오버라이드 패턴 — 언제 따르고 언제 무시하는가
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - cycle-state
+  - chain-selection
+  - recommendation-signal
+  - override
+  - harness-engineering
+  - agentic
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+  - harness-engineering/agentic-forced-vs-voluntary-chain-injection
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+status: complete
+description: cycle_state.retro.next_recommended_chain은 다음 사이클 chain 선택에 힌트를 제공하지만 강제가 아니다. 정상 override 사유와 그렇지 않은 경우를 구분해 신호 품질을 유지한다.
+type: entry
+source: explore-idea
+---
+
+## 추천 신호의 역할
+
+`next_recommended_chain` 은 매 사이클 retro에서 박제되는 비강제 힌트다:
+- **강제 X**: 진단 결과 + chain pool 규칙이 우선
+- **참고 O**: 직전 사이클 맥락을 메인(LLM)이 결정에 반영
+
+## 합법적 오버라이드 사유
+
+| 상황 | 추천 | 실제 선택 | 이유 |
+|---|---|---|---|
+| open issue 존재 | explore-idea | worker-incident-triage | 진단 우선순위 규칙 (open issue = 최우선) |
+| SE pending 마커 | explore-idea | skill-evolution | 강제 발화 (마커 = 명시적 override) |
+| streak guard 발동 | explore-idea | curate (강제) | 동일 chain 3회+ 연속 fail 방어 |
+| 사용자 개입 | curate | (사용자 지시) | 사용자 최고 우선순위 |
+
+## 비합법적 오버라이드 (피해야 할 패턴)
+
+| 패턴 | 문제 |
+|---|---|
+| "이번엔 다른 게 더 좋을 것 같아서" (근거 없이) | 직전 맥락 무시 — 불필요한 다양성 |
+| 추천을 보지 않고 chain 선택 | cycle_state carry-over 목적 무력화 |
+| 항상 curate 선택 (추천 무관) | explore-idea 성장 차단 |
+
+## 추천 신호 정확도 (cycles 1390-1401)
+
+| 이전 추천 | 실제 chain | 일치? | 이유 |
+|---|---|---|---|
+| explore-idea (1389) | worker-incident-triage (1390) | ✗ | open issues 61건 (합법적) |
+| explore-idea (1390) | explore-idea (1391) | ✓ | 정상 |
+| curate (1391) | curate (1392) | ✓ | 정상 |
+| explore-idea (1392) | explore-idea (1393) | ✓ | 정상 |
+| curate (1393~1398) | curate (1394~1399) | ✓ | 정상 교차 |
+| curate (1400) | skill-evolution (1401) | ✗ | SE pending 마커 (합법적) |
+
+hit rate: 10/12 = 83%. 2 misses = 모두 합법적 override.
+
+## 추천 신호 유지 원칙
+
+1. **매 사이클 retro에 박제 의무**: 빠진 사이클의 다음 사이클은 carry-over 없이 맥락 손실
+2. **합법적 override = 신호 약화 아님**: open issue / SE 마커 = 정상 메커니즘
+3. **추천이 3 사이클 이상 계속 무시되면**: 진단 source 다양성 점검 (한 source 만 봤는지 확인)
