@@ -1,0 +1,94 @@
+---
+title: 자율 에이전트 chain pool 반응형 vs 능동형 분류 — 자연 유휴 상태 설계
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - chain-pool
+  - reactive
+  - proactive
+  - steady-state
+  - worker-incident-triage
+  - harness-engineering
+  - agentic
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/agentic-chain-dormancy-as-health-signal
+  - harness-engineering/agentic-forced-vs-voluntary-chain-injection
+  - harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
+  - harness-engineering/agentic-hub-phase-lock-steady-state
+status: complete
+description: develop-cycle-hub chain pool은 외부 이벤트로 활성화되는 반응형 chain과 항상 실행 가능한 능동형 chain으로 나뉜다. 반응형 chain은 이벤트 부재 시 자연 휴면, 능동형 chain이 유휴 상태를 채운다. 이 구조가 healthy steady-state 루프를 만든다.
+type: entry
+source: explore-idea
+---
+
+## 분류
+
+### 반응형 chain (Reactive) — 외부 이벤트 트리거
+
+| chain | 활성화 조건 | 이벤트 없을 때 |
+|---|---|---|
+| `worker-incident-triage` | open issue 존재 (`gh issue list` ≥ 1건) | 자연 휴면 |
+| `fix-incident` | 버그/regression 감지 (git log debug: 연속, CI 실패) | 자연 휴면 |
+| `closed-loop-design` | 자동화 루프 4차원 결손 감지 | 자연 휴면 |
+| `skill-evolution` | trigger 5개 중 하나 충족 (N%50, 0회 chain 등) | 자연 휴면 |
+
+### 능동형 chain (Proactive) — 항상 실행 가능
+
+| chain | 활성화 조건 | 유휴 상태 기여 |
+|---|---|---|
+| `explore-idea` | 신규 위키 gap 존재 (always true at scale) | 무한 유휴 채움 |
+| `curate` | CHANGELOG 미갱신 / orphan 존재 / dashboard 갱신 필요 | 주기적 유휴 채움 |
+| `review-code` | 코드 품질 부채 감지 | 낮은 빈도 유휴 채움 |
+
+### 메타 chain (Meta)
+
+| chain | 역할 |
+|---|---|
+| `expand-scope` | 메타 기획, 메인 자율 (4가지 조건) |
+| `design-system` | 시스템 디자인, 메인 자율 (4가지 조건) |
+| `dimension-cycle` | 위 어디에도 안 맞을 때 fallback |
+
+## 자연 유휴 상태 설계
+
+반응형 chain의 이벤트가 없으면 능동형 chain이 loop를 채운다:
+
+```
+이벤트 없음 → 반응형 모두 휴면
+         → 능동형 (explore-idea + curate) 교차 반복
+         → "유휴 = 안정" (healthy steady-state)
+```
+
+## cycle 1370-1392 증거
+
+cycles 1370-1392 분포 (22 사이클):
+- explore-idea: 9회 (40%) — 능동형
+- curate: 8회 (36%) — 능동형
+- skill-evolution: 2회 (9%) — 반응형 (trigger 충족)
+- worker-incident-triage: 2회 (9%) — 반응형 (open issues)
+- 기타: 1회 (4%)
+
+반응형 4종 (fix-incident, closed-loop-design, worker-triage, SE) 중 실제 발화: 2종. 이벤트 있을 때만 활성화 → 나머지 90%는 능동형.
+
+## 반응형 chain의 "일시적 중단" 패턴
+
+반응형 chain이 활성화될 때:
+1. 능동형 루프 **일시 중단** (1-3 사이클)
+2. 이벤트 처리 완료 (triage, fix, skill-evolution)
+3. **능동형 루프 재개** (curate/explore-idea 자연 복귀)
+
+```
+cycle 1389: curate (능동형)
+cycle 1390: worker-incident-triage (반응형 — 61건 issues)
+cycle 1391: explore-idea (능동형 복귀)
+cycle 1392: curate (능동형)
+```
+
+4 사이클 주기에서 1 사이클만 반응형 = 25% 중단 강도. 이벤트 규모(61건)에 비해 중단 비용 낮음 (1 사이클).
+
+## 설계 원칙
+
+**능동형 chain이 무한 backlog를 제공해야 한다**: `explore-idea`의 "항상 새 gap 존재" 보장이 반응형 이벤트 부재 기간을 생산적으로 채운다. 만약 능동형 backlog가 고갈되면 루프가 dimension-cycle fallback으로 퇴행.
+
+**반응형 chain은 interrupt handler**: OS 인터럽트처럼, 일반 흐름을 잠시 중단하고 처리 후 복귀. 인터럽트 처리 비용(사이클 수) = 이벤트 복잡도에 비례.
