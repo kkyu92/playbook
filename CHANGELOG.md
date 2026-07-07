@@ -4,6 +4,16 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.132] — 2026-07-08
+
+### Added
+- wiki entry #326 `harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal` (cycle 1391): 동일 지문 CI 실패 누적 속도 = R6 루트 원인 미해결 신호. 배치 트리아지 vs fix-incident 분기 기준, TODOS 카운터 전략, JIT search 결정 변경 패턴. cycle 1390 60건 ws/vite incident evidence.
+
+### Changed
+- TODOS.md [P1] moneyball CI 카운터 264→324건 (cycle 1390, 60건 배치 close).
+- TODOS.md [P0] BRANCHED 468/258 갱신.
+- wiki 407 entries.
+
 ## [0.9.131] — 2026-07-07
 
 ### Added
