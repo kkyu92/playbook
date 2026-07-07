@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.140] — 2026-07-08
+
+### Added
+- wiki entry #334 `harness-engineering/agentic-diagnosis-depth-adaptive-minimal-vs-thorough` (cycle 1408): 진단 깊이 적응 전략. 배치 위치/이슈 존재/직전 사이클 성공에 따라 최소-표준-심층 선택. 과잉 진단 비용 방지.
+
+### Changed
+- wiki 415 entries.
+
 ## [0.9.139] — 2026-07-08
 
 ### Added

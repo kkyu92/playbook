@@ -1,0 +1,66 @@
+---
+title: 자율 에이전트 진단 깊이 적응 전략 — 최소 vs 심층 스캔 기준
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - diagnosis
+  - adaptive
+  - context-efficiency
+  - scan-depth
+  - harness-engineering
+  - agentic
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/agentic-diagnosis-source-priority-open-issue-first
+  - harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+status: complete
+description: 매 사이클 진단 깊이는 고정이 아니라 컨텍스트 상황에 따라 조정된다. open issue 존재 여부, 배치 위치(처음/중간/끝), 직전 사이클 신호 강도에 따라 최소 스캔으로 충분할 때가 있다.
+type: entry
+source: explore-idea
+---
+
+## 진단 깊이 스펙트럼
+
+```
+최소 스캔 (30초):     gh issue list → 있으면 즉시 chain 선택
+표준 스캔 (2-3분):    issues + plans + lint:wiki + TODOS 훑기
+심층 스캔 (5-10분):   전체 source + gh run list + scan-promotions + git log
+```
+
+## 깊이 결정 기준
+
+| 조건 | 권장 깊이 | 이유 |
+|---|---|---|
+| open issues ≥ 10건 | 최소 | 명확한 chain 선택 — 추가 스캔 불필요 |
+| open issues = 0 + next_recommended 신뢰 | 표준 | 추천 힌트 있으면 심층 불필요 |
+| 배치 첫 번째 사이클 | 심층 | 직전 세션 이후 누적 변화 파악 필요 |
+| 배치 마지막 1-2 사이클 | 표준 | 정리 작업, 심층 새 발견 불필요 |
+| 이전 사이클 fail | 심층 | 실패 원인 탐색 필요 |
+| 이전 사이클 success (stable 패턴) | 최소-표준 | 안정적 패턴 유지 |
+
+## 배치 위치별 권장 깊이
+
+```
+사이클 1-3 (배치 시작):    심층 (누적 파악)
+사이클 4-N-3 (중간):       표준 (패턴 유지)
+사이클 N-2 ~ N (마지막):   표준 (close-out)
+```
+
+## 과잉 진단 비용
+
+심층 스캔을 매 사이클 실행 시:
+- context 소비 증가 (git log 20 + lint:wiki output + gh run list)
+- 실제 chain 작업 시간 감소
+- 발견 대비 효용 감소 (stable phase에서 새 발견 희박)
+
+rule: **진단 output이 chain 선택을 바꿀 가능성이 낮으면 shallow 스캔으로 전환**.
+
+## 이 배치 (1390-1408) 적용 사례
+
+| 사이클 | 진단 깊이 | 이유 |
+|---|---|---|
+| 1390 (첫 번째) | 심층 | 직전 세션 이후 이슈 누적 확인 (61건 발견) |
+| 1391-1399 (중간) | 최소-표준 | open issues 0, stable alternation |
+| 1400 (milestone) | 표준 | milestone + SE trigger 평가 |
+| 1401-1408 (마지막) | 표준 | 안정 패턴 + 마무리 |
