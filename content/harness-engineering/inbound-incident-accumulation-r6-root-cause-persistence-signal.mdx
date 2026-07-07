@@ -1,0 +1,94 @@
+---
+title: 동일 지문 incident 누적 속도 — R6 루트 원인 미해결 신호와 배치 트리아지 ROI
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - incident-triage
+  - worker-incident-triage
+  - r6-boundary
+  - batch-triage
+  - todos-counter
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/inbound-incident-branch-type-triage-matrix
+  - project-ops/todos-priority-recurring-issue-counter-pattern
+  - infrastructure/claude-plan-rate-limit-cron-automation-resilience
+status: complete
+description: 동일 fingerprint의 CI 실패 incident가 수십~수백 건 누적될 때, 이는 루트 원인이 R6(사용자 영역) 미해결 상태임을 나타내는 신호다. 개별 triage가 아닌 배치 close + TODOS 카운터 갱신이 올바른 대응이다.
+type: entry
+source: explore-idea
+---
+
+## 패턴
+
+워커 레포(moneyball, blog-autopilot)에서 동일 지문의 CI 실패가 반복 인바운드될 때:
+
+- **accumulation rate ≥ 10건/일**: 루트 원인이 해결되지 않은 채 ongoing
+- **fingerprint 동일** (예: `ci-main-{hash}`, 모두 동일 audit gate 실패): 개별 incident가 아닌 구조적 문제
+- **루트 원인이 R6(사용자 영역)**: 허브 자율 수정 불가 — worker repo pnpm update, secret 갱신 등
+
+```
+TODOS [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16)
+  batch-close 누적: 164건 + 19건 + 80건 + 1건 + 60건 = 324건 (cycle 1390, 4개월)
+  → 루트 원인 미해결 4개월 = R6 미처리 상태 지속
+```
+
+## 올바른 대응: 배치 close + TODOS 카운터
+
+### 잘못된 대응 (피해야 할 패턴)
+
+```
+❌ 60건 각각 조사 → 개별 원인 분석 → 60개 comment 개별 작성
+❌ fix-incident chain 선택 (worker repo 수정 불가)
+❌ 건당 새 TODOS 항목 추가 (기존 추적 중복)
+```
+
+### 올바른 대응
+
+```
+✅ JIT search → TODOS 기존 추적 항목 확인 (중복 방지)
+✅ 동일 fingerprint 전체 batch close (1 comment 템플릿)
+✅ TODOS 카운터 갱신 (264건 → 324건)
+✅ R6 액션 명확히 박제 (사용자 결정 영역 유지)
+```
+
+## close comment 템플릿
+
+```
+TODOS [P1] 추적 중인 known issue (${취약점명}) 배치 클로즈.
+현황: TODOS.md [P1] ${항목명} 참조 — 사용자 영역 (${워커 repo} ${필요한 액션}).
+누적 close 카운터: ${이전}→${현재}건 (cycle ${N}).
+```
+
+## fix-incident vs worker-incident-triage 분기
+
+| 구분 | fix-incident | worker-incident-triage (배치) |
+|---|---|---|
+| 루트 원인 위치 | playbook 레포 (자율 수정 가능) | worker 레포 또는 R6 (사용자 영역) |
+| 해결 방법 | 코드 수정 → commit → CI green | close + TODOS 카운터 갱신 |
+| JIT search 결과 | 기존 solution 없음 or 새 패턴 | 기존 TODOS 추적 항목 발견 |
+| 건당 처리 비용 | 높음 (조사 필요) | 낮음 (batch close 가능) |
+
+**분기 신호**: JIT search에서 기존 TODOS 카운터 추적 항목 발견 → 자동으로 worker-incident-triage 배치 모드 전환.
+
+## accumulation velocity로 SLA 상태 파악
+
+```
+accumulation rate = 신규 건수 / 경과 일수
+rate ≤ 1/일: 단발성 or 해결 진행 중
+rate 1-10/일: 루트 원인 활성 but 제어 가능
+rate ≥ 10/일: 루트 원인 완전 미해결 + 고속 누적
+```
+
+4개월 324건 = 평균 2.7건/일. 실제 2026-07-07 기준 60건/4일 = 15건/일(최근 surge) → 루트 원인 미변화 + 워커 배포 빈도 증가.
+
+## JIT search 결정 변경 패턴
+
+cycle 1390에서:
+1. JIT search: `pnpm run search "moneyball CI 실패 ws vite 취약점"` → TODOS counter pattern entry 발견 (score 0.89)
+2. **결정 변경**: 60건 개별 분석 → 배치 close + 카운터 갱신으로 전환
+3. 절감: ~59건 × (개별 분석 비용) = 대부분의 처리 시간 절감
+
+JIT search가 "기존 패턴 이미 알고 있다"를 증명하면, 개별 처리 대신 배치 처리로 즉시 전환.
