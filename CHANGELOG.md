@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.133] — 2026-07-08
+
+### Added
+- wiki entry #327 `context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi` (cycle 1393): JIT 검색 작업 예방 게이트 — 기존 해결책 발견 시 재분석 단락. 비대칭 ROI (search 1회 << 방지된 분석 비용). cycle 1390 2케이스 evidence.
+
+### Changed
+- wiki 408 entries.
+
 ## [0.9.132] — 2026-07-08
 
 ### Added
