@@ -2,14 +2,14 @@
 
 ## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1350 갱신)
 
-**What**: auto-ingest PR 24건+ blocked (pnpm audit CVE). ~~cycle 1270 추가: incident-auto-close.yml YAML fix (79b131a6) local-only~~ **✅ cycle 1350 별도 fix PR #2240 MERGED (origin/main 직접 fix)**. cycle 1290 추가: gemini-key-health.yml GH_REPO fix (f8ca916d) local-only. cycle 1296 추가: gemini-key-health.yml 503 TRANSIENT fix (e7c31f3c) local-only. BRANCHED **local 466 / origin 155** (cycle 1389 갱신).
+**What**: auto-ingest PR 24건+ blocked (pnpm audit CVE). ~~cycle 1270 추가: incident-auto-close.yml YAML fix (79b131a6) local-only~~ **✅ cycle 1350 별도 fix PR #2240 MERGED (origin/main 직접 fix)**. cycle 1290 추가: gemini-key-health.yml GH_REPO fix (f8ca916d) local-only. cycle 1296 추가: gemini-key-health.yml 503 TRANSIENT fix (e7c31f3c) local-only. BRANCHED **local 468 / origin 258** (cycle 1390 갱신).
 **Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) origin 미반영. PR base = origin → audit gate fail. gemini-key-health.yml fix 도 push 필요.
 **Action (R6 사용자 영역)**: `git pull --rebase origin main` 후 `git push origin main` → PR audit 자동 재실행 + gemini-key-health fix 반영.
 
 ## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 135건)
 
 **What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
-**Why**: CI 전체 블로킹. 허브 batch-close 누적: 164건(1110-1190) + 19건(1201) + **80건(1210)** + **1건(#2220, cycle 1310)** = **264건 총 close** (2026-07-04 갱신). playbook 자체는 cycle 1112 fix 완료.
+**Why**: CI 전체 블로킹. 허브 batch-close 누적: 164건(1110-1190) + 19건(1201) + **80건(1210)** + **1건(#2220, cycle 1310)** + **60건(cycle 1390, #2245-#2361)** = **324건 총 close** (2026-07-08 갱신). playbook 자체는 cycle 1112 fix 완료.
 **Action (사용자 영역)**: moneyball 레포에서 `pnpm update ws vite` → CI 재확인 → push.
 
 ---
