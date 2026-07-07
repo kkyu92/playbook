@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.136] — 2026-07-08
+
+### Added
+- wiki entry #330 `project-ops/r6-todos-long-lived-accepted-constraint-vs-pending` (cycle 1399): R6 TODOS 항목 잔류 기간별 분류. 100+ 사이클 = 수용된 제약 (압박 없이 추적). BRANCHED 279 사이클 evidence.
+
+### Changed
+- wiki 411 entries.
+
 ## [0.9.135] — 2026-07-08
 
 ### Added
