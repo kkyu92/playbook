@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.139] — 2026-07-08
+
+### Added
+- wiki entry #333 `harness-engineering/curate-chain-three-mandatory-artifacts` (cycle 1406): curate cycle 3 필수 아티팩트 (CHANGELOG + dashboard + 조건부 embed). explore-idea+curate = 작성+발행 쌍.
+
+### Changed
+- wiki 414 entries.
+
 ## [0.9.138] — 2026-07-08
 
 ### Added

@@ -1,0 +1,91 @@
+---
+title: curate chain 3 필수 아티팩트 — explore-idea 발행 레코드 완성
+category: harness-engineering
+date: "2026-07-08"
+tags:
+  - curate
+  - changelog
+  - dashboard
+  - embed-content
+  - publication-record
+  - harness-engineering
+confidence: 2
+last_verified: "2026-07-08"
+connections:
+  - harness-engineering/curate-cycle-compound-maintenance-value
+  - harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+  - context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance
+status: complete
+description: 매 curate 사이클은 CHANGELOG + dashboard + (조건부) embed-content 3개 아티팩트를 생산한다. explore-idea가 만든 entry를 정식 레코드에 등재하는 "발행" 단계다. 하나라도 누락 시 다음 세션에서 컨텍스트 손실 발생.
+type: entry
+source: explore-idea
+---
+
+## 3 필수 아티팩트
+
+| 아티팩트 | 명령 | 의무도 |
+|---|---|---|
+| CHANGELOG 갱신 | CHANGELOG.md 직접 편집 | **필수** (매 curate) |
+| dashboard 갱신 | `node scripts/dashboard-update.mjs` | **필수** (매 curate) |
+| embed-content 갱신 | `pnpm embed-content` | **조건부** (entry 수 변화 시) |
+
+## explore-idea + curate = 작성 + 발행
+
+```
+explore-idea: entry 파일 생성 (content/*.mdx)
+               ↓
+curate: CHANGELOG 등재 + dashboard 반영 + embed 갱신
+         ↓
+다음 세션: JIT search가 새 entry 발견 가능
+```
+
+explore-idea 없이 curate만 하면 → 발행할 내용 없음 (단순 CHANGELOG 수치 갱신).
+curate 없이 explore-idea만 하면 → entry 존재하지만 공식 레코드에 없음 (draft 상태).
+
+## 아티팩트 누락 시 결과
+
+### CHANGELOG 누락
+
+- 다음 batch 시작 시: "마지막 entry 번호가 몇이지?" 컨텍스트 손실
+- `git log` 로 복구 가능하지만 추가 비용
+- CHANGELOG 갱신 없이 여러 사이클 지나면 cumulative lag 발생
+
+### dashboard 누락
+
+- `closed-loop-health.mdx` 의 cycle count stale
+- skill-evolution trigger 5 평가 시 cycle JSON tail-20 사용 — dashboard 무관하지만 cycle count 전시 정확도 저하
+
+### embed-content 누락
+
+- JIT search 가 새 entry를 발견 못함
+- entry 생성 후 첫 search = false negative 가능
+- embed-content는 CI cron(`🧠 Embed Content Index`)이 주기적으로 갱신 → 조건부 의무
+
+## 운영 패턴
+
+### 언제 embed-content 필요한가
+
+```
+매 curate마다 필요: NO
+entry 수 변화 시만: YES
+
+변화 감지:
+  git diff --stat | grep -c "\.mdx" > 0 → embed 필요
+  git diff --stat | grep -c "\.mdx" = 0 → embed 불필요
+```
+
+실제로 GH Actions `🧠 Embed Content Index` cron이 매일 자동 실행하므로 로컬 embed-content는 "당일 배치 완료 후 즉시 JIT 반영 필요" 시에만 실행.
+
+## 효율적인 curate 순서
+
+```bash
+# 1. dashboard 갱신 (자동 스크립트)
+node scripts/dashboard-update.mjs
+
+# 2. CHANGELOG 갱신 (수동 편집)
+# [버전+1] → Added: entry #N + Changed: wiki X entries
+
+# 3. commit + (선택적) embed
+git add CHANGELOG.md content/reports/closed-loop-health.mdx
+git commit -m "content: curate — CHANGELOG 0.9.X + dashboard cycle N"
+```
