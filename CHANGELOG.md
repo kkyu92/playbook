@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.135] — 2026-07-08
+
+### Added
+- wiki entry #329 `harness-engineering/agentic-batch-close-eligibility-decision-tree` (cycle 1397): JIT 검색 기반 inbound incident 배치 close 적격 판별 4단계 결정 트리. fingerprint → TODOS hit → wiki hit → R6 여부.
+
+### Changed
+- wiki 410 entries.
+
 ## [0.9.134] — 2026-07-08
 
 ### Added
