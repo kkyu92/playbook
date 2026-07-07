@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.134] — 2026-07-08
+
+### Added
+- wiki entry #328 `harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy` (cycle 1395): chain pool 반응형(이벤트 트리거) vs 능동형(상시 실행) 분류. 능동형이 유휴 상태 채움 — explore-idea/curate 90% steady-state 설계 원리.
+
+### Changed
+- wiki 409 entries.
+
 ## [0.9.133] — 2026-07-08
 
 ### Added
