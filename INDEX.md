@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-07T21:05:36.843Z
+Updated: 2026-07-08T07:48:25.515Z
 
-## 엔트리 (468개)
+## 엔트리 (469개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -302,6 +302,7 @@ Updated: 2026-07-07T21:05:36.843Z
 - [Playbook Journal 055 — incident wave 2026-06-10/11 — SUPABASE_URL + esbuild CVE family (8 fingerprints batch close, cycle 1169)](wiki/journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c) — confidence: 3, status: in-progress
 - [Playbook Journal 056 — cycle 1311 explore-idea (lite) post-wave-99 saturation redirect spec](wiki/journal/playbook-journal-056-cycle-1311-explore-idea-lite-post-wave-99-saturati) — confidence: 3, status: in-progress
 - [Playbook Journal 057 — P1-P4 패턴 추출 — sparse detection / silent LLM fallback / registry sweep / alert cascade (cycle 1400)](wiki/journal/playbook-journal-057-p1-p4-sparse-detection-silent-llm-fallback-registr) — confidence: 3, status: in-progress
+- [Playbook Journal 058 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)](wiki/journal/playbook-journal-058-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -2573,6 +2574,7 @@ Updated: 2026-07-07T21:05:36.843Z
 - journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-056-cycle-1311-explore-idea-lite-post-wave-99-saturati ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-057-p1-p4-sparse-detection-silent-llm-fallback-registr ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-058-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151 ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/claude-code-cost-optimization-strategies
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ project-ops/operational-resilience-emergency-management-tooling
 - project-ops/ai-agent-runaway-cost-prevention-control-systems ↔ reports/ai-model-performance-cost-efficiency-reporting
