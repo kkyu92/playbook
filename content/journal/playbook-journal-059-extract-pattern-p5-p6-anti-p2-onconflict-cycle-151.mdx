@@ -1,0 +1,50 @@
+---
+title: "Playbook Journal 059 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)"
+category: harness-engineering
+date: "2026-07-08"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260708-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151-0aa8b956bdcb111c8617ebf2bdb13e.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+
+P5 (quality_guard): DB_CONSTRAINTS 단일 소스 + ESLint no-restricted-syntax
+- onConflict raw string → CI error 차단 패턴
+- wave 221-227 7 cycle 재발 0건 evidence
+
+P6 (ai_agent): 모델 팩터 실측 적중률 집계
+- factors JSONB + is_correct XOR home_win_prob >= 0.5
+- sp_fip/xFIP 65.7% 최강, sfr 50.0% 노이즈 수준 확인
+
+Anti-P2 (anti_pattern): 데이터 수집 결손 → normalize(0,0) = 0.5 → 가중치 사문화
+- WAR 8% + park_factor 4% = 12% 무기여 확인 (cycle 1517)
+- fix-incident carry-over
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
