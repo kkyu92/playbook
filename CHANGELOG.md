@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.142] — 2026-07-09
+
+### Added
+- wiki entry #336 `infrastructure/eslint-major-bump-plugin-compatibility-crash` (cycle 1413): eslint@9→10 메이저 bump + eslint-plugin-react@7.x resolveBasedir crash. dependabot PR 단독 업그레이드 시 CI lint 실패 패턴.
+
+### Changed
+- wiki 417 entries.
+
 ## [0.9.141] — 2026-07-09
 
 ### Added
