@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.143] — 2026-07-09
+
+### Added
+- wiki entry #337 `harness-engineering/ci-failure-detection-latency-manual-hub-mode` (cycle 1415): zero-touch INACTIVE 수동 모드 시 CI 실패 감지 지연 (~10시간). 인바운드 issue 생성은 되지만 자동 트리아지 없음. closed-loop-design 개선 후보.
+
+### Changed
+- wiki 418 entries.
+
 ## [0.9.142] — 2026-07-09
 
 ### Added
