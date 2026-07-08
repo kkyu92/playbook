@@ -1,0 +1,64 @@
+---
+title: CI 실패 감지 지연 — zero-touch INACTIVE 수동 모드의 관측 공백
+category: harness-engineering
+date: "2026-07-09"
+tags:
+  - ci-cd
+  - zero-touch
+  - observability
+  - manual-mode
+  - latency
+  - hub-mode
+confidence: 2
+connections: [harness-engineering/agentic-batch-close-eligibility-decision-tree, infrastructure/cross-fork-ci-failure-fix-propagation-boundary]
+status: complete
+description: watch.sh INACTIVE (수동 모드) 시 워커 CI 실패는 허브 세션이 명시적으로 시작될 때까지 미처리. 인바운드 issue 생성은 되지만 자동 트리아지 없음 — CI 실패가 수 시간 지속될 수 있음.
+type: entry
+source: manual
+---
+
+## 패턴
+
+```
+워커 CI 실패 발생
+  ↓
+inbound issue 자동 생성 (허브 playbook repo)
+  ↓
+watch.sh INACTIVE → 허브 세션 자동 시작 X
+  ↓
+사용자 /develop-cycle-hub N 명시 호출까지 대기
+  ↓
+[0 ~ 수 시간 감지 지연]
+```
+
+## 실측 사례 (2026-07-08)
+
+| 이벤트 | 시각 (KST) |
+|---|---|
+| pnpm lockfile 원인 CI 첫 실패 (issue #2365) | 13:20 |
+| 38번째 CI 실패 issue #2416 생성 | 17:37 |
+| 사용자 `/develop-cycle-hub 20` 호출 | 23:20 |
+| pnpm-lock.yaml 수정 + CI green | 23:27 |
+| **총 CI 실패 지속 시간** | **~10시간** |
+
+## 원인 구조
+
+- **zero-touch watch.sh ACTIVE 시**: 매 사이클 자동 시작 → inbound issue 발생 시 다음 사이클에서 처리. 지연 ≤ 1 사이클 (보통 30~60분).
+- **zero-touch INACTIVE (수동 모드) 시**: 사용자 명시 호출이 유일한 trigger. inbound issue 누적만 됨.
+
+## 현재 미티게이션
+
+1. `deploy-drift-alert` 워크플로 (moneyball) — Vercel 배포 실패 시 alert
+2. `health-alert` 워크플로 — 런타임 에러 감지
+3. inbound issue 자동 생성 — 가시성은 있지만 자동 처리 없음
+
+## 개선 방향 (closed-loop-design 후보)
+
+- **CI staleness alert**: `gh run list --workflow CI --status failure` 를 cron으로 체크, N건 이상 연속 실패 시 slack/email 알림
+- **watch.sh 재활성화**: zero-touch ACTIVE 시 지연 1 사이클 → 수동 모드 대비 10배 이상 개선
+- **임계값 기반 자동 fire**: inbound issue count ≥ N 시 watch.sh 강제 1 사이클 fire
+
+## 관련 패턴
+
+- watch.sh ACTIVE 시 1 세션 = 1 사이클 룰 → CI 실패 자동 트리아지 1 사이클 내 처리
+- manual 모드는 사용자 컨트롤 최대화 (R6) 대신 CI 실패 latency 감수
