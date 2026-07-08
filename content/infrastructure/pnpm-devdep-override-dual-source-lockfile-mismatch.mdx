@@ -1,0 +1,97 @@
+---
+title: pnpm devDependency + pnpm.overrides 동일 패키지 → 락파일 specifier mismatch
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - pnpm
+  - lockfile
+  - ci-cd
+  - frozen-lockfile
+  - overrides
+  - dep-bump
+confidence: 3
+connections: [infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern, infrastructure/cross-fork-ci-failure-fix-propagation-boundary]
+status: complete
+description: 같은 패키지가 devDependencies와 pnpm.overrides 양쪽에 존재할 때 dep bump 후 락파일 재생성을 안 하면 ERR_PNPM_OUTDATED_LOCKFILE 발생 — CI 전체 동시 실패.
+type: entry
+source: manual
+---
+
+## 문제
+
+`pnpm install --frozen-lockfile` CI 에서:
+
+```
+ERR_PNPM_OUTDATED_LOCKFILE Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not up to date with <ROOT>/package.json
+
+specifiers in the lockfile don't match specifiers in package.json:
+* 1 dependencies are mismatched:
+  - turbo (lockfile: ^2.10.4, manifest: >=2.9.14)
+```
+
+`package.json` 을 직접 확인하면 `devDependencies.turbo: "^2.10.4"` 인데 CI 가 `manifest: >=2.9.14` 라고 표시. 혼란스럽다.
+
+## 원인
+
+같은 패키지가 두 곳에 동시 존재:
+
+```json
+{
+  "devDependencies": {
+    "turbo": "^2.10.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "turbo": ">=2.9.14"
+    }
+  }
+}
+```
+
+pnpm 은 override 가 있으면 override 의 specifier 를 "유효 specifier" 로 취급. 락파일 `importers.` 섹션에 기록되는 specifier 는 override 기반 (`>=2.9.14`) 이어야 한다.
+
+dep bump 사이클에서 `turbo ^2→^2.10.4` 로 올리면서 `package.json` devDependencies 만 수정하고 `pnpm install` 미실행 시, 락파일 importer 에 `^2.10.4` (구 devDep 값) 가 남는다. 이후 CI `--frozen-lockfile` 가 `^2.10.4` vs `>=2.9.14` 비교 → mismatch 감지.
+
+## 실측 사례 (2026-07-08)
+
+- `turbo` 가 cycle 859 보안 패치에서 `pnpm.overrides` 에 `>=2.9.14` 추가됨
+- cycle 1518 (2026-07-08 새벽) dep bump 에서 `turbo ^2→^2.10.4` 만 package.json 수정
+- pnpm install 미실행 → 락파일 importer `^2.10.4` 잔류
+- 이후 push 전체 (main/develop-cycle/dependabot/fix 브랜치) CI 38건 동시 실패
+- 수정: `pnpm install` (--no-frozen-lockfile) 실행 → importer specifier `>=2.9.14` 로 동기화 → CI green
+
+## 재현 조건
+
+1. `package.json` 에 동일 패키지가 `devDependencies` + `pnpm.overrides` 양쪽 존재
+2. `devDependencies` 버전 범위가 `pnpm.overrides` 범위와 다른 상태로 락파일 생성됨
+3. CI `pnpm install --frozen-lockfile` 실행 → mismatch 오류
+
+## 수정
+
+```bash
+pnpm install  # --frozen-lockfile 없이 재생성
+pnpm install --frozen-lockfile  # 검증
+```
+
+## 예방
+
+dep bump 사이클에서 `package.json` 의 패키지 변경 시, 해당 패키지가 `pnpm.overrides` 에도 존재하는지 확인:
+
+```bash
+python3 -c "
+import json
+d = json.load(open('package.json'))
+dev = set(d.get('devDependencies', {}).keys()) | set(d.get('dependencies', {}).keys())
+overrides = set(d.get('pnpm', {}).get('overrides', {}).keys())
+dual = dev & overrides
+print('dual-source packages:', dual or 'none')
+"
+```
+
+dual-source 패키지 변경 후에는 반드시 `pnpm install` 실행.
+
+또는: 직접 dep 이 이미 최신 버전이면 `pnpm.overrides` 항목 제거 검토 (direct dep 이 override 역할 겸임).
+
+## 관련 패턴
+
+- [pnpm-transitive-cve-audit-gate-fix-pattern](infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern) — overrides 는 본래 간접 dep 용. 직접 dep 과 중복 시 이 패턴 발생
