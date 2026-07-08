@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.145] — 2026-07-09
+
+### Added
+- wiki entry #339 `frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis` (cycle 1419): 예측 모델 팩터 사문화 탐지. WAR 8% + park_factor 4% = 12% 가중치 실제 기여 0%. 데이터 버그가 오류 아닌 그럴듯한 값 반환 → 지표 경보 없이 사문화. moneyball W28 실측 사례.
+
+### Changed
+- wiki 420 entries.
+
 ## [0.9.144] — 2026-07-09
 
 ### Added
@@ -19,14 +27,6 @@
 
 ### Changed
 - wiki 419 entries.
-
-## [0.9.143] — 2026-07-09
-
-### Added
-- wiki entry #337 `harness-engineering/ci-failure-detection-latency-manual-hub-mode` (cycle 1415): zero-touch INACTIVE 수동 모드 시 CI 실패 감지 지연 (~10시간). 인바운드 issue 생성은 되지만 자동 트리아지 없음. closed-loop-design 개선 후보.
-
-### Changed
-- wiki 418 entries.
 
 ## [0.9.142] — 2026-07-09
 
