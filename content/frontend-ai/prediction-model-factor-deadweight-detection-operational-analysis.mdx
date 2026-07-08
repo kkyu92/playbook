@@ -1,0 +1,114 @@
+---
+title: 예측 모델 요소 사문화 탐지 — 운영 분석으로 0 기여 팩터 12% 검출
+category: frontend-ai
+date: "2026-07-09"
+tags:
+  - prediction-model
+  - dead-weight
+  - operational-analysis
+  - data-quality
+  - feature-engineering
+  - ml-monitoring
+confidence: 2
+connections: [frontend-ai/hardcoded-baseline-accuracy-threshold-staleness, frontend-ai/user-behavior-prediction-ai-model-integration, project-ops/question-own-defaults]
+status: complete
+description: 예측 모델 팩터가 코드상 가중치(8%+4%)를 가지더라도 데이터 버그로 실제 기여도 0%인 상태. 운영 분석(W28 주간 리뷰)으로 WAR+park_factor 12% 사문화 탐지 → 즉시 수정 또는 가중치 0 처리 필요.
+type: entry
+source: manual
+---
+
+## 문제
+
+모델 팩터가 **코드상 가중치**를 가지지만 **실제 기여도 = 0** 인 상태:
+
+```typescript
+// 가중치 테이블: WAR 8%, park_factor 4% 할당됨
+const FACTOR_WEIGHTS = {
+  war: 0.08,
+  park_factor: 0.04,
+  // ...
+};
+```
+
+그러나 실제 연산:
+
+```typescript
+// ❌ WAR: stub 미제거
+// total_war = 0.0 (전 팀) → normalize(0, 0) = 0.5 고착
+const warScore = normalize(team.total_war, minWar, maxWar);
+// min=0, max=0 → (0-0)/(0-0) = NaN → fallback 0.5
+
+// ❌ park_factor: 키 타입 mismatch
+// homeCode = "LG" (팀 코드) vs DEFAULT_PARK_FACTORS["잠실구장"] (경기장명)
+const parkFactor = DEFAULT_PARK_FACTORS[homeCode] ?? 1.0;
+// homeCode로 lookup → 항상 undefined → 1.0 반환 (중립값)
+```
+
+**효과**: WAR 8% + park_factor 4% = 12% 가중치가 예측에 실질적 기여 0.
+
+## 실측 사례 (moneyball W28, 2026-07-08)
+
+| 팩터 | 할당 가중치 | 실제 기여 | 원인 |
+|---|---|---|---|
+| WAR | 8% | 0% | total_war=0.0 전 팀 → normalize(0,0)=0.5 고착 |
+| park_factor | 4% | 0% | homeCode(팀코드) vs 경기장명 키 mismatch |
+| **합계** | **12%** | **0%** | 데이터 버그 2건 |
+
+fix commit: `94ad4a17` (park_factor 키 수정)
+
+## 왜 탐지가 늦어지나
+
+1. 모델 정확도 지표가 "정상 범위" 내 존재 → 이상 미감지
+2. 팩터별 기여도 breakdown 로깅 부재
+3. normalize() 입력값 0/0 케이스 → NaN 아닌 0.5 반환 (silent wrong)
+4. lookup mismatch → undefined → default 1.0 (중립값, 오류 X)
+
+**공통 패턴**: 버그가 오류 아닌 "그럴듯한 값" 반환 → 지표 경보 X.
+
+## 수정 패턴
+
+```typescript
+// ✅ park_factor: 올바른 키 사용
+const parkFactor = DEFAULT_PARK_FACTORS[game.stadium ?? ''] ?? 1.0;
+// game.stadium = "잠실구장" (경기장 전체명) — 키 타입 정합
+
+// ✅ WAR: normalize edge case 방어
+function normalize(val: number, min: number, max: number): number {
+  if (max === min) return 0; // 분산 0 = 데이터 없음 → 중립 기여 X
+  return (val - min) / (max - min);
+}
+```
+
+## 탐지 방법 — 팩터 기여도 모니터링
+
+```typescript
+// 팩터별 실제 기여도 로깅 추가
+const factorContributions = Object.entries(FACTOR_WEIGHTS).map(([key, weight]) => {
+  const rawValue = computeFactorValue(key, data);
+  return { key, weight, rawValue, effective: weight * rawValue };
+});
+
+// 경보: 가중치 > 0 인데 effective = 상수 고착 시
+const deadFactors = factorContributions.filter(f =>
+  f.weight > 0 && isConstant(f.rawValue, recentN)
+);
+if (deadFactors.length > 0) {
+  console.warn('사문화 팩터 감지:', deadFactors.map(f => f.key));
+}
+```
+
+## 점검 기준
+
+팩터가 추가된 후 첫 운영 리뷰 시:
+
+1. **팩터 값 분산 확인** — 전체 입력에 대해 상수면 사문화 의심
+2. **lookup 키 타입 정합** — lookup table 키와 실제 데이터 키가 같은 타입/포맷인가
+3. **normalize edge case** — min == max 케이스 처리 (데이터 없음 = 0 기여)
+4. **stub 잔재 확인** — "TODO: 실 데이터 연결" 주석 또는 하드코딩 0/빈배열
+
+[question-own-defaults](project-ops/question-own-defaults) 프로토콜 + [hardcoded-baseline-accuracy-threshold-staleness](frontend-ai/hardcoded-baseline-accuracy-threshold-staleness) 패턴과 동일 근원.
+
+## 관련 패턴
+
+- [hardcoded-baseline-accuracy-threshold-staleness](frontend-ai/hardcoded-baseline-accuracy-threshold-staleness): 상수 사문화 — 기준선 값이 모델 개선 후 stale
+- normalize(0,0) silent fallback → 0.5 고착 = 설계상 예외처리지만 운영상 신호 소실
