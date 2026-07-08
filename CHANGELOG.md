@@ -4,6 +4,17 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.141] — 2026-07-09
+
+### Added
+- wiki entry #335 `infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch` (cycle 1411): pnpm devDependency + pnpm.overrides 동일 패키지 → 락파일 specifier mismatch. dep bump 후 pnpm install 미실행 시 CI 전체 동시 실패. 실측: cycle 1410 38건 CI failures.
+
+### Fixed
+- curate(cycle 1412): orphan links 3건 수정 — `harness-engineering/github-actions-inline-script-safe-patterns` → `infrastructure/github-actions-inline-script-safe-patterns` (3 entries: branched-state-local-fix-quality-drift, github-actions-cross-workflow-version-consistency-audit, github-actions-workflow-fix-end-to-end-checklist).
+
+### Changed
+- wiki 416 entries.
+
 ## [0.9.140] — 2026-07-08
 
 ### Added
