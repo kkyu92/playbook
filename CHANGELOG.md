@@ -12,6 +12,22 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.144] — 2026-07-09
+
+### Added
+- wiki entry #338 `frontend-ai/hardcoded-baseline-accuracy-threshold-staleness` (cycle 1417): 하드코딩 정확도 기준선 사문화 패턴. 모델 개선 시 상수값 갱신 누락 → 오도적 UI 표시. 동적 계산 전환 권장.
+
+### Changed
+- wiki 419 entries.
+
+## [0.9.143] — 2026-07-09
+
+### Added
+- wiki entry #337 `harness-engineering/ci-failure-detection-latency-manual-hub-mode` (cycle 1415): zero-touch INACTIVE 수동 모드 시 CI 실패 감지 지연 (~10시간). 인바운드 issue 생성은 되지만 자동 트리아지 없음. closed-loop-design 개선 후보.
+
+### Changed
+- wiki 418 entries.
+
 ## [0.9.142] — 2026-07-09
 
 ### Added
