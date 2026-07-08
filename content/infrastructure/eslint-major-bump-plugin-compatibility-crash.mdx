@@ -1,0 +1,76 @@
+---
+title: eslint 메이저 버전 업 — 플러그인 호환성 충돌 (eslint@9→10)
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - eslint
+  - dependency-compatibility
+  - ci-cd
+  - dependabot
+  - major-bump
+confidence: 2
+connections: [infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch, infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern]
+status: complete
+description: eslint 메이저 버전 업(9→10) 시 eslint-plugin-react@7.x 호환성 충돌 — resolveBasedir crash. dependabot 이 eslint 만 올리고 플러그인은 놔두면 CI 실패.
+type: entry
+source: manual
+---
+
+## 문제
+
+dependabot PR 이 eslint를 9.x→10.x 로 올린 후 CI lint 실패:
+
+```
+Occurred while linting /path/to/file.ts
+    at resolveBasedir (...eslint-plugin-react/lib/util/version.js:31:100)
+    at detectReactVersion (...)
+    at getReactVersionFromContext (...)
+```
+
+eslint@10 이 내부 API 를 변경 → eslint-plugin-react@7.x 의 React 버전 감지 로직 크래시.
+
+## 원인
+
+- `eslint-plugin-react@7.x` 는 eslint@9.x 이하 내부 API 에 의존
+- eslint@10 이 해당 API 변경 → `resolveBasedir` crash
+- dependabot 은 `lint-format` 그룹 (eslint 포함) 만 올리고, `eslint-plugin-react` 는 별도 그룹에 없으면 미업데이트
+
+## 수정
+
+### 방법 A — dependabot PR 닫기 (eslint 9.x 유지)
+
+```bash
+gh pr close <pr-number> --comment "eslint-plugin-react@7 incompatible with eslint@10. Keeping eslint@9."
+```
+
+### 방법 B — eslint-plugin-react 8.x 업그레이드 (eslint@10 수용)
+
+`eslint-plugin-react@8.x` 가 eslint@10 호환. 단 v8 breaking change 확인 필요.
+
+```bash
+pnpm add -D eslint-plugin-react@^8
+pnpm install
+pnpm lint  # 검증
+```
+
+## 감지 방법
+
+dependabot PR 중 `eslint` 메이저 버전 포함 시 lint CI 결과 확인:
+
+```bash
+gh run view <run-id> --log-failed | grep "resolveBasedir\|detectReactVersion"
+```
+
+## 실측 사례 (2026-07-08)
+
+| 상황 | 내용 |
+|---|---|
+| PR | dependabot: eslint 9.39.4 → 10.6.0 (lint-format group) |
+| 실패 | `resolveBasedir crash` in eslint-plugin-react@7.37.5 |
+| 조치 | PR 닫기 (eslint 9.x 유지) |
+| 교훈 | 메이저 bump 시 peer dep 호환성 먼저 확인 |
+
+## 관련 패턴
+
+- dependabot 이 관련 플러그인 없이 eslint 메이저 bump 시도 = 수동 검토 필요
+- eslint v10 출시 기준: `eslint-plugin-react@8.0+` 이 공식 v10 지원 (7.x는 미지원)
