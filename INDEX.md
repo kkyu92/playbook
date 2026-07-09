@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:29:58.766Z
+Updated: 2026-07-09T23:30:39.630Z
 
-## 엔트리 (427개)
+## 엔트리 (428개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -375,6 +375,7 @@ Updated: 2026-07-09T23:29:58.766Z
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
 - [Tailwind Typography prose + MDX 컴포넌트 오버라이드 — 위키 스타일 통합 패턴](wiki/infrastructure/tailwind-prose-mdx-component-override) — confidence: 2, status: complete
 - [Tailwind CSS v4 @theme CSS 설정 전환 — tailwind.config.js 제거 패턴](wiki/infrastructure/tailwind-v4-css-theme-config-migration) — confidence: 2, status: complete
+- [TypeScript satisfies 연산자 — 타입 확인 + 타입 확장 방지](wiki/infrastructure/typescript-satisfies-operator-type-narrowing-without-widening) — confidence: 2, status: complete
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [Vercel 배포 한도 초과 → PR auto-merge 영구 차단 패턴](wiki/infrastructure/vercel-deploy-rate-limit-auto-merge-blocked) — confidence: 2, status: complete
 - [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
@@ -1762,6 +1763,8 @@ Updated: 2026-07-09T23:29:58.766Z
 - infrastructure/tailwind-prose-mdx-component-override ↔ infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config
 - infrastructure/tailwind-v4-css-theme-config-migration ↔ infrastructure/eslint-major-bump-plugin-compatibility-crash
 - infrastructure/tailwind-v4-css-theme-config-migration ↔ frontend-ai/user-behavior-prediction-ai-model-integration
+- infrastructure/typescript-satisfies-operator-type-narrowing-without-widening ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
+- infrastructure/typescript-satisfies-operator-type-narrowing-without-widening ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation

@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.153] — 2026-07-10
+
+### Added
+- wiki entry #347 `infrastructure/typescript-satisfies-operator-type-narrowing-without-widening` (cycle 1435): TypeScript satisfies 연산자. 타입 준수 확인 + 좁은 추론 타입 보존. as 단언 안전 대안, 설정 객체/enum 대체 패턴.
+
+### Changed
+
 ## [0.9.152] — 2026-07-10
 
 ### Added

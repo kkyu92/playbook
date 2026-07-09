@@ -1,0 +1,121 @@
+---
+title: TypeScript satisfies 연산자 — 타입 확인 + 타입 확장 방지
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - typescript
+  - type-system
+  - satisfies
+  - type-narrowing
+  - strict-mode
+confidence: 2
+connections: [infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary, infrastructure/nextjs-hmac-cookie-private-site-auth]
+status: complete
+description: TypeScript 4.9 satisfies 연산자로 변수가 특정 타입을 만족하는지 확인하면서도 더 좁은 추론 타입을 보존하는 패턴. as 타입 단언의 안전한 대안.
+type: entry
+source: manual
+---
+
+## 문제
+
+`as Type` 단언은 실제 타입 안전성을 포기하고, 명시적 타입 주석(`const x: Type = ...`)은 더 구체적인 추론 타입을 잃어버린다. 둘 다 타입 좁혀짐(narrowing)과 타입 준수 확인을 동시에 만족하지 못한다.
+
+## satisfies 패턴
+
+```typescript
+type Color = 'red' | 'green' | 'blue';
+
+const palette = {
+  red: [255, 0, 0],
+  green: '#00ff00',
+  blue: [0, 0, 255],
+} satisfies Record<Color, string | number[]>;
+
+// 명시적 타입 없이도 각 프로퍼티 타입 보존
+palette.red.map(v => v * 2);   // OK: red는 number[]로 추론
+palette.green.toUpperCase();    // OK: green은 string으로 추론
+
+// Record<Color, string | number[]> 준수 체크도 수행
+const badPalette = {
+  red: [255, 0, 0],
+  // green 누락
+  blue: 'not-a-color', // string | number[] 준수
+} satisfies Record<Color, string | number[]>; // Error: 'green' missing
+```
+
+## as vs 명시적 타입 vs satisfies 비교
+
+```typescript
+// ❌ as: 타입 체크 우회, 좁은 타입 유지되지만 위험
+const x = { a: 1 } as { a: number; b: string }; // b 없어도 에러 X
+
+// ❌ 명시적 타입: 체크 됨, 하지만 좁은 타입 손실
+const y: Record<string, number | string> = { a: 1, b: 'hello' };
+y.a.toFixed(2); // Error: string | number에 toFixed 없음
+
+// ✅ satisfies: 체크 됨, 좁은 타입 보존
+const z = { a: 1, b: 'hello' } satisfies Record<string, number | string>;
+z.a.toFixed(2); // OK: a는 number로 추론
+z.b.toUpperCase(); // OK: b는 string으로 추론
+```
+
+## 실용 패턴
+
+### 설정 객체 타입 검증
+
+```typescript
+type Config = {
+  endpoint: string;
+  timeout: number;
+  retries?: number;
+};
+
+const config = {
+  endpoint: 'https://api.example.com',
+  timeout: 5000,
+} satisfies Config; // retries 누락 = 선택적이라 OK
+
+// endpoint는 string 리터럴 타입으로 추론 (string 아님)
+type Endpoint = typeof config.endpoint; // 'https://api.example.com'
+```
+
+### Next.js 라우트 핸들러 메서드 맵
+
+```typescript
+type RouteHandlers = {
+  GET?: (req: Request) => Response | Promise<Response>;
+  POST?: (req: Request) => Response | Promise<Response>;
+};
+
+export const { GET, POST } = {
+  GET: async (req) => Response.json({ ok: true }),
+  POST: async (req) => {
+    const body = await req.json();
+    return Response.json(body);
+  },
+} satisfies RouteHandlers;
+```
+
+### enum 대체 const 객체
+
+```typescript
+const Direction = {
+  Up: 'UP',
+  Down: 'DOWN',
+  Left: 'LEFT',
+  Right: 'RIGHT',
+} as const satisfies Record<string, Uppercase<string>>;
+
+type Direction = (typeof Direction)[keyof typeof Direction];
+// 'UP' | 'DOWN' | 'LEFT' | 'RIGHT'
+```
+
+## 제약
+
+- `satisfies`는 **표현식 레벨**만 — 함수 매개변수에는 사용 불가
+- TypeScript 4.9+. tsconfig `strict: true` 권장 (좁은 타입 정확도 의존)
+- `satisfies`는 **검사만**. 런타임 타입 가드(Zod 등) 대체 X
+
+## Related
+
+- [Next.js React Suspense 스트리밍](/wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — TypeScript strict mode와 조합되는 Server Component 타입 패턴
