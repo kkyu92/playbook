@@ -1,0 +1,120 @@
+---
+title: Zod v4 런타임 스키마 검증 — Next.js API/Server Actions 경계 방어
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - zod
+  - typescript
+  - validation
+  - runtime
+  - api-route
+  - server-actions
+  - type-safety
+confidence: 2
+connections: [infrastructure/typescript-satisfies-operator-type-narrowing-without-widening, infrastructure/nextjs-parallel-intercepting-routes-modal-pattern]
+status: complete
+description: Zod v4로 Next.js API Route와 Server Actions의 외부 입력(request body, form data)을 런타임에 검증하는 패턴. 빌드 타임 TypeScript 타입과 런타임 검증 스키마를 단일 소스에서 파생.
+type: entry
+source: manual
+---
+
+## 문제
+
+TypeScript 타입은 컴파일 타임만 보호한다. API Route가 받는 `request.json()`, Server Action의 `formData` 값은 런타임에 어떤 형태로도 올 수 있다. `as UserInput` 단언은 실제 런타임 데이터를 검증하지 않는다.
+
+## Zod v4 기본 패턴
+
+```typescript
+// lib/schemas/user.ts
+import { z } from 'zod/v4';  // v4 import path
+
+export const UserInputSchema = z.object({
+  name: z.string().min(1).max(100),
+  email: z.email(),
+  age: z.number().int().min(0).max(150).optional(),
+});
+
+export type UserInput = z.infer<typeof UserInputSchema>;
+```
+
+### API Route 검증
+
+```typescript
+// app/api/users/route.ts
+import { z } from 'zod/v4';
+import { UserInputSchema } from '@/lib/schemas/user';
+
+export async function POST(request: Request) {
+  const body = await request.json().catch(() => null);
+  
+  const parsed = UserInputSchema.safeParse(body);
+  if (!parsed.success) {
+    return Response.json(
+      { error: parsed.error.flatten() },
+      { status: 400 }
+    );
+  }
+
+  const user = await createUser(parsed.data); // typed UserInput
+  return Response.json(user, { status: 201 });
+}
+```
+
+### Server Actions 검증
+
+```typescript
+// app/actions/user.ts
+'use server';
+
+import { z } from 'zod/v4';
+import { UserInputSchema } from '@/lib/schemas/user';
+
+export async function createUserAction(formData: FormData) {
+  const raw = Object.fromEntries(formData);
+  const parsed = UserInputSchema.safeParse(raw);
+  
+  if (!parsed.success) {
+    return { error: parsed.error.flatten().fieldErrors };
+  }
+  
+  return { data: await createUser(parsed.data) };
+}
+```
+
+## Zod v4 변경 사항
+
+| 변경점 | v3 | v4 |
+|---|---|---|
+| import | `from 'zod'` | `from 'zod/v4'` (호환 래퍼 O) |
+| 에러 접근 | `.flatten()` | `.flatten()` 유지 + `.format()` 개선 |
+| email | `z.string().email()` | `z.email()` (단축) |
+| 성능 | 기준 | parse ~2-3× 빠름 |
+| 번들 크기 | ~13KB | ~9KB (core) |
+
+## 재사용 패턴: 스키마 파생
+
+```typescript
+// 기존 스키마에서 partial/pick/omit 파생
+const UpdateUserSchema = UserInputSchema.partial();
+const CreateUserPayload = UserInputSchema.omit({ age: true });
+
+// discriminated union (API 응답 타입 모델링)
+const ApiResponseSchema = z.discriminatedUnion('status', [
+  z.object({ status: z.literal('ok'), data: UserInputSchema }),
+  z.object({ status: z.literal('error'), message: z.string() }),
+]);
+```
+
+## 에러 메시지 커스터마이징
+
+```typescript
+const UserInputSchema = z.object({
+  name: z.string({ error: '이름을 입력하세요' }).min(1, '최소 1자 이상'),
+  email: z.email('유효한 이메일 주소를 입력하세요'),
+});
+```
+
+## Related
+
+- [TypeScript satisfies 연산자](/wiki/infrastructure/typescript-satisfies-operator-type-narrowing-without-widening) — 빌드 타임 타입 좁히기 + Zod 런타임 검증 조합
+- [Next.js 병렬+인터셉팅 라우트 모달](/wiki/infrastructure/nextjs-parallel-intercepting-routes-modal-pattern) — Server Actions 기반 모달 폼 제출 패턴

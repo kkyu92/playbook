@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.155] — 2026-07-10
+
+### Added
+- wiki entry #349 `infrastructure/zod-v4-runtime-schema-validation-nextjs-api` (cycle 1439): Zod v4 런타임 스키마 검증. API Route + Server Actions 경계 방어. v3→v4 변경점, 스키마 파생 패턴.
+
+### Changed
+
 ## [0.9.154] — 2026-07-10
 
 ### Added

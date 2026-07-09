@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:31:47.399Z
+Updated: 2026-07-09T23:32:23.235Z
 
-## 엔트리 (429개)
+## 엔트리 (430개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -385,6 +385,7 @@ Updated: 2026-07-09T23:31:47.399Z
 - [위키 지식 ROI 3축 측정 패턴 — 생산 vs 소비 균형 진단](wiki/infrastructure/wiki-knowledge-roi-3axis-measurement) — confidence: 3, status: complete
 - [Worker Lesson Velocity Signal — Pull(b) 학습 속도 proxy 측정 패턴](wiki/infrastructure/worker-lesson-velocity-signal) — confidence: 2, status: complete
 - [Zero-Touch Develop Cycle Session Management — 1세션 1사이클 자동화 아키텍처](wiki/infrastructure/zero-touch-develop-cycle-session-management) — confidence: 3, status: complete
+- [Zod v4 런타임 스키마 검증 — Next.js API/Server Actions 경계 방어](wiki/infrastructure/zod-v4-runtime-schema-validation-nextjs-api) — confidence: 2, status: complete
 
 ### Frontend + AI
 - [AI 모델 추론 시각화 — 사용자 친화적 프론트엔드 디자인 패턴](wiki/frontend-ai/ai-inference-visualization-design-patterns) — confidence: 1, status: draft
@@ -1774,6 +1775,8 @@ Updated: 2026-07-09T23:31:47.399Z
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/vercel-deploy-rate-limit-auto-merge-blocked ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
+- infrastructure/zod-v4-runtime-schema-validation-nextjs-api ↔ infrastructure/typescript-satisfies-operator-type-narrowing-without-widening
+- infrastructure/zod-v4-runtime-schema-validation-nextjs-api ↔ infrastructure/nextjs-parallel-intercepting-routes-modal-pattern
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-043-lesson-pending-bulk-close-vercel-deploy-cycle-513
