@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.148] — 2026-07-09
+
+### Added
+- wiki entry #342 `infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config` (cycle 1425): next-mdx-remote/rsc + Shiki 코드 하이라이팅 설정. 커스텀 테마, 언어 추가, 메타데이터(파일명/라인 하이라이트), RSC 싱글톤 패턴.
+
+### Changed
+- wiki 423 entries.
+
 ## [0.9.147] — 2026-07-09
 
 ### Added
