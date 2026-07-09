@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.152] — 2026-07-10
+
+### Added
+- wiki entry #346 `infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary` (cycle 1433): Next.js App Router React Suspense 스트리밍 SSR. loading.tsx 전체 경계 + 세분화 Suspense 병렬 스트림. 느린 데이터 TTFB 최적화.
+
+### Changed
+
 ## [0.9.151] — 2026-07-10
 
 ### Added

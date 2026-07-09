@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1117,
+  "totalInvocations": 1125,
   "skipped": 28,
-  "searched": 1089,
-  "hit": 491,
-  "noMatch": 598,
-  "lastUpdated": "2026-07-09T23:24:56.742Z",
+  "searched": 1097,
+  "hit": 496,
+  "noMatch": 601,
+  "lastUpdated": "2026-07-09T23:28:35.757Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -80,12 +80,12 @@
     "agents/multi-persona-llm-output-validation-enhancement": 1,
     "journal/playbook-journal-022-factor-attribution-cycle-11-head-to-head-sfr-0-vs-": 1,
     "retros/2026-05-13-cycles-486-487": 6,
-    "evaluation/claude-code-generation-validation-pipeline-extension": 1,
+    "evaluation/claude-code-generation-validation-pipeline-extension": 2,
     "solutions/react/2026-05-14-react-hooks-purity-recurrence": 1,
     "context-engineering/debug-page-silent-drift-trap": 12,
     "journal/playbook-journal-029-lesson-pending-false-positive-batch-close": 4,
     "retros/2026-05-12-cycles-350-355": 11,
-    "frontend-ai/nextjs-security-patching-defense-logic-reinforcement": 3,
+    "frontend-ai/nextjs-security-patching-defense-logic-reinforcement": 6,
     "infrastructure/npm-pnpm-supply-chain-security-enhancement": 2,
     "infrastructure/llm-agent-artifact-first-diagnosis": 1,
     "harness-engineering/deepseek-v4-pro-llm-backend-integration": 1,
@@ -148,7 +148,7 @@
     "harness-engineering/agentic-hub-phase-lock-steady-state": 1,
     "retros/2026-05-13-cycles-424-425": 1,
     "retros/2026-05-12-cycles-361-362": 4,
-    "infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage": 4,
+    "infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage": 5,
     "infrastructure/db-query-type-safety-assert-select-ok-pattern": 7,
     "infrastructure/agentic-ci-deploy-budget-batch-push-policy": 1,
     "retros/2026-05-21-cycles-968-970": 1,
@@ -283,16 +283,18 @@
     "project-ops/open-source-supply-chain-security-llm-tools-hardening": 1,
     "infrastructure/nextjs-instrumentation-location": 1,
     "journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr": 1,
-    "frontend-ai/generative-ai-ui-ux-design-patterns": 1,
+    "frontend-ai/generative-ai-ui-ux-design-patterns": 2,
     "project-ops/prompt-model-version-management-large-scale-ai": 1,
-    "infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard": 2,
+    "infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard": 3,
     "context-engineering/enriching-local-data-with-description-md-sidecars": 1,
     "android-ai/gomodel-llm-gateway-introduction-strategy": 1,
     "prompt-engineering/llm-prompt-caching-cost-optimization-patterns": 1,
     "frontend-ai/claude-code-html-output-ux-enhancement": 1,
     "frontend-ai/ai-inference-visualization-design-patterns": 1,
     "frontend-ai/kuku-concepts-playbook-local-markdown-enhancement": 1,
-    "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1
+    "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1,
+    "prompt-engineering/llm-interactive-ui-frontend-implementation": 1,
+    "project-ops/react-doctor-ai-code-validation-pipeline": 1
   },
   "noMatchQueries": [
     {
@@ -1089,6 +1091,21 @@
       "query": "diagnosis phase time budget minimal scan fast vs thorough tradeoff",
       "timestamp": "2026-07-07T23:50:47.729Z",
       "topScore": 0.8342
+    },
+    {
+      "query": "TypeScript satisfies operator type narrowing",
+      "timestamp": "2026-07-09T23:28:13.312Z",
+      "topScore": 0.8338
+    },
+    {
+      "query": "CSS Container Queries responsive component design",
+      "timestamp": "2026-07-09T23:28:29.952Z",
+      "topScore": 0.8425
+    },
+    {
+      "query": "Web Vitals INP Interaction Next Paint optimization",
+      "timestamp": "2026-07-09T23:28:35.019Z",
+      "topScore": 0.8419
     }
   ],
   "noMatchQueryCounts": {
@@ -1232,7 +1249,10 @@
     "agentic hub operational state BRANCHED local origin asymmetry indicator health": 1,
     "commit prefix taxonomy policy content data feat fix meta state vs content distinction": 1,
     "curate cycle mandatory artifacts three outputs publication record canonical": 1,
-    "diagnosis phase time budget minimal scan fast vs thorough tradeoff": 1
+    "diagnosis phase time budget minimal scan fast vs thorough tradeoff": 1,
+    "TypeScript satisfies operator type narrowing": 1,
+    "CSS Container Queries responsive component design": 1,
+    "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1161
+  "totalQueries": 1169
 }

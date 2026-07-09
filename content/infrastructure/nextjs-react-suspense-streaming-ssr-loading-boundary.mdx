@@ -1,0 +1,127 @@
+---
+title: Next.js App Router React Suspense 스트리밍 — SSR 점진적 로딩 패턴
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - nextjs
+  - react
+  - suspense
+  - streaming
+  - ssr
+  - loading
+  - app-router
+  - server-components
+confidence: 2
+connections: [infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card, infrastructure/nextjs-hmac-cookie-private-site-auth]
+status: complete
+description: Next.js App Router에서 React Suspense와 스트리밍 SSR로 느린 데이터 페치가 있는 페이지를 점진적으로 렌더링하는 패턴. loading.tsx 파일 기반 자동 경계, 세분화된 Suspense 경계로 TTFB 최적화.
+type: entry
+source: manual
+---
+
+## 문제
+
+느린 DB 쿼리나 외부 API가 포함된 페이지는 전통적 SSR에서 최초 바이트(TTFB)가 전체 데이터 로딩 시간만큼 지연된다. 사용자는 빈 화면 또는 전체 페이지 로딩 스피너를 본다.
+
+## 핵심 패턴
+
+Next.js App Router는 Suspense 경계 단위로 HTML을 스트리밍한다. 빠른 컴포넌트(헤더, 사이드바)는 즉시 전송되고, 느린 컴포넌트(데이터 목록)는 준비되는 대로 점진 전송된다.
+
+### loading.tsx — 전체 페이지 경계
+
+```
+app/
+  dashboard/
+    loading.tsx    ← 전체 페이지 Suspense 폴백
+    page.tsx       ← async Server Component
+```
+
+```tsx
+// app/dashboard/loading.tsx
+export default function Loading() {
+  return <DashboardSkeleton />;
+}
+
+// app/dashboard/page.tsx
+export default async function Page() {
+  const stats = await fetchStats(); // 느린 쿼리
+  return <Dashboard stats={stats} />;
+}
+```
+
+### 세분화된 Suspense 경계
+
+```tsx
+// app/dashboard/page.tsx
+import { Suspense } from 'react';
+
+export default function Page() {
+  return (
+    <div>
+      <Header />          {/* 즉시 렌더 */}
+      <Suspense fallback={<StatsSkeleton />}>
+        <SlowStats />     {/* 독립 스트림 */}
+      </Suspense>
+      <Suspense fallback={<ListSkeleton />}>
+        <SlowList />      {/* 독립 스트림 */}
+      </Suspense>
+    </div>
+  );
+}
+
+async function SlowStats() {
+  const data = await fetchStats(); // 각자 독립 await
+  return <Stats data={data} />;
+}
+```
+
+## 스트리밍 동작
+
+```
+HTTP Response 시작 (즉시)
+  ├─ <html><head>...</head><body>
+  ├─ <Header /> 렌더 완료 → flush
+  ├─ <div> 스켈레톤 UI 전송 → flush
+  │
+  ├─ [SlowStats 완료] → 실제 콘텐츠 replacement HTML + script 전송
+  └─ [SlowList 완료] → 실제 콘텐츠 replacement HTML + script 전송
+```
+
+React는 완성된 컴포넌트를 `<template>` + 인라인 `<script>`로 전송해 클라이언트가 스켈레톤을 교체한다. JS hydration 없이 HTML swap만으로 동작.
+
+## generateStaticParams + Suspense 조합
+
+정적 경로지만 일부 데이터가 동적인 경우:
+
+```tsx
+// app/wiki/[slug]/page.tsx
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs(); // 빌드 시 실행
+  return slugs.map((slug) => ({ slug }));
+}
+
+export default async function Page({ params }) {
+  return (
+    <article>
+      <StaticContent slug={params.slug} />  {/* ISR 캐시 */}
+      <Suspense fallback={<CommentsSkeleton />}>
+        <DynamicComments slug={params.slug} /> {/* 매 요청 */}
+      </Suspense>
+    </article>
+  );
+}
+```
+
+## 주의 사항
+
+| 상황 | 결과 |
+|---|---|
+| `export const dynamic = 'force-static'` | Suspense 내부도 빌드 시 실행 — 스트리밍 X |
+| `cookies()` / `headers()` 호출 | 전체 페이지 동적 렌더로 전환 |
+| 중첩 Suspense | 외부 경계가 내부 포함해 한꺼번에 flush 가능 |
+| error.tsx | Suspense 경계별 독립 에러 처리 |
+
+## Related
+
+- [Next.js next/og ImageResponse](/wiki/infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card) — Metadata 레이어, Suspense와 분리되는 Edge 생성
+- [Next.js HMAC 쿠키 비공개 사이트 인증](/wiki/infrastructure/nextjs-hmac-cookie-private-site-auth) — 인증 레이어 + 동적 렌더링 조합
