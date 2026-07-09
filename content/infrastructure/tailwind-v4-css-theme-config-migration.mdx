@@ -1,0 +1,128 @@
+---
+title: Tailwind CSS v4 @theme CSS 설정 전환 — tailwind.config.js 제거 패턴
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - tailwindcss
+  - v4
+  - configuration
+  - css-variables
+  - migration
+  - breaking-change
+confidence: 2
+connections: [infrastructure/eslint-major-bump-plugin-compatibility-crash, frontend-ai/user-behavior-prediction-ai-model-integration]
+status: complete
+description: Tailwind CSS v4는 tailwind.config.js를 제거하고 CSS 네이티브 @theme 블록으로 커스텀 색상/폰트/간격을 정의. 기존 v3 config 마이그레이션 시 @theme 구문, CSS 변수 참조 방식, 플러그인 @plugin 디렉티브 차이 파악 필수.
+type: entry
+source: manual
+---
+
+## 변경 개요
+
+Tailwind CSS v4 핵심 변경:
+
+| 항목 | v3 | v4 |
+|---|---|---|
+| 설정 파일 | `tailwind.config.js` | CSS `@theme {}` 블록 |
+| 커스텀 색상 | `theme.extend.colors` | `--color-*` CSS 변수 |
+| 폰트 | `theme.extend.fontFamily` | `--font-*` CSS 변수 |
+| 플러그인 | `plugins: [require('...')]` | `@plugin '...'` |
+| content paths | `content: [...]` | 자동 감지 (설정 불필요) |
+
+## @theme 블록 예시
+
+```css
+/* globals.css 또는 app.css */
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #0066cc;
+  --color-brand-hover: #0052a3;
+
+  --font-sans: 'Noto Sans KR', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --spacing-section: 4rem;
+}
+
+@plugin '@tailwindcss/typography';
+```
+
+JSX/HTML에서 그대로 사용:
+
+```tsx
+<div className="text-brand font-sans p-section" />
+// → CSS 변수값 적용
+```
+
+## v3 → v4 마이그레이션 패턴
+
+### 색상 이전
+
+```js
+// v3 tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#0066cc',
+      }
+    }
+  }
+}
+```
+
+```css
+/* v4 CSS */
+@theme {
+  --color-brand: #0066cc;
+}
+```
+
+### 플러그인 이전
+
+```js
+// v3
+plugins: [require('@tailwindcss/typography')]
+```
+
+```css
+/* v4 */
+@plugin '@tailwindcss/typography';
+```
+
+### 임의값 CSS 변수 참조
+
+```tsx
+// v3: arbitrary values
+<div className="text-[#0066cc]" />
+
+// v4: CSS 변수 직접 참조
+<div className="text-(--color-brand)" />
+// 또는 @theme 에서 --color-brand 정의 후
+<div className="text-brand" />
+```
+
+## content 경로 설정 제거
+
+v3에서 필수였던 `content` 배열 제거:
+
+```js
+// v3 — 필수
+content: ['./src/**/*.{js,ts,jsx,tsx}']
+
+// v4 — 자동 감지, 설정 불필요
+// @import "tailwindcss"; 만으로 동작
+```
+
+Next.js App Router 프로젝트: `app/`, `components/`, `pages/` 자동 스캔.
+
+## 주의 사항
+
+- `@theme` 블록은 `:root` CSS 변수로 컴파일됨 — DevTools 에서 확인 가능
+- v4 CSS 변수 네이밍: `--color-*`, `--font-*`, `--spacing-*` prefix 규칙 엄격 (임의 이름 X)
+- `tailwind.config.js` 남아있으면 v4에서 무시 — 삭제 or 명시적 제거
+
+## 관련 패턴
+
+- [eslint-major-bump-plugin-compatibility-crash](infrastructure/eslint-major-bump-plugin-compatibility-crash): 메이저 버전 업 시 플러그인 호환성 패턴 (동일 문제 구조)
