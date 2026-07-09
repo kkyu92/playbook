@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.156] — 2026-07-10
+
+### Added
+- wiki entry #350 `infrastructure/css-container-queries-component-responsive-design` (cycle 1441): CSS @container 컴포넌트 기반 반응형. viewport 대신 부모 크기 기준. Tailwind 4 @container 유틸리티 포함.
+
+### Changed
+
 ## [0.9.155] — 2026-07-10
 
 ### Added

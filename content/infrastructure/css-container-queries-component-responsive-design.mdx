@@ -1,0 +1,112 @@
+---
+title: CSS Container Queries — 컴포넌트 기반 반응형 디자인
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - css
+  - container-queries
+  - responsive
+  - tailwind
+  - component-design
+confidence: 2
+connections: [infrastructure/nextjs-parallel-intercepting-routes-modal-pattern, infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card]
+status: complete
+description: CSS Container Queries(@container)로 viewport 대신 부모 컨테이너 크기를 기준으로 컴포넌트를 반응형으로 만드는 패턴. Tailwind 4 @container 유틸리티 포함.
+type: entry
+source: manual
+---
+
+## 문제
+
+미디어 쿼리는 viewport 기준이라 같은 컴포넌트가 사이드바 안, 메인 컬럼 안, 팝업 안 등 다른 컨텍스트에 배치되면 각 배치마다 별도 미디어 쿼리를 작성해야 한다. 컴포넌트가 자신의 사용 환경을 모른다.
+
+## 핵심 패턴
+
+```css
+/* 컨테이너 등록 */
+.card-container {
+  container-type: inline-size;  /* 가로 크기 기반 */
+  container-name: card;         /* 이름 (선택) */
+}
+
+/* 컨테이너 크기 기반 스타일 */
+@container card (min-width: 400px) {
+  .card {
+    display: flex;
+    flex-direction: row;
+  }
+  .card-image {
+    width: 200px;
+    flex-shrink: 0;
+  }
+}
+
+@container card (max-width: 399px) {
+  .card {
+    display: block;
+  }
+}
+```
+
+```html
+<!-- 어느 컨텍스트에 넣어도 컨테이너 크기에 반응 -->
+<aside class="card-container" style="width: 250px">
+  <div class="card">...</div>  <!-- 세로 레이아웃 -->
+</aside>
+
+<main class="card-container" style="width: 600px">
+  <div class="card">...</div>  <!-- 가로 레이아웃 -->
+</main>
+```
+
+## Tailwind 4 — @container 유틸리티
+
+```html
+<!-- Tailwind 4: @container + @md: 접두사 -->
+<div class="@container">
+  <div class="flex flex-col @md:flex-row gap-4">
+    <img class="w-full @md:w-48 flex-shrink-0" />
+    <div class="flex-1">...</div>
+  </div>
+</div>
+```
+
+Tailwind 4 기본 @container 중단점: `@xs`(320px), `@sm`(384px), `@md`(448px), `@lg`(512px), `@xl`(576px), `@2xl`(672px).
+
+커스텀 중단점:
+```css
+/* tailwind.config.ts */
+theme: {
+  containers: {
+    'narrow': '300px',
+    'wide': '800px',
+  }
+}
+```
+
+## container-type 값
+
+| 값 | 기준 | 용도 |
+|---|---|---|
+| `inline-size` | 가로 크기만 | 대부분의 반응형 레이아웃 |
+| `size` | 가로 + 세로 | 세로 비율도 필요한 경우 |
+| `normal` | 스타일 컨테이너만 | `container-name` + style 쿼리만 |
+
+## 중첩 컨테이너
+
+```css
+.outer { container-type: inline-size; container-name: outer; }
+.inner { container-type: inline-size; container-name: inner; }
+
+@container inner (min-width: 200px) { ... }  /* inner 기준 */
+@container outer (min-width: 600px) { ... }  /* outer 기준 */
+```
+
+## 브라우저 지원 (2026-07)
+
+Chrome 105+, Firefox 110+, Safari 16+. 전 세계 ~96% 지원. IE 미지원.
+
+## Related
+
+- [Next.js 병렬+인터셉팅 라우트 모달](/wiki/infrastructure/nextjs-parallel-intercepting-routes-modal-pattern) — 모달 내부 카드 컴포넌트에 @container 적용 시 컨텍스트 무관 반응형
+- [Next.js next/og ImageResponse](/wiki/infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card) — OG 이미지 레이아웃과 실제 페이지 레이아웃 @container 일관성

@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:32:32.463Z
+Updated: 2026-07-09T23:33:10.745Z
 
-## 엔트리 (430개)
+## 엔트리 (431개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -341,6 +341,7 @@ Updated: 2026-07-09T23:32:32.463Z
 - [Cron Natural Fire — 운영 환경 검증 패턴](wiki/infrastructure/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
 - [Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정](wiki/infrastructure/cross-fork-ci-failure-fix-propagation-boundary) — confidence: 3, status: complete
 - [Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop](wiki/infrastructure/cross-fork-feedback-sync) — confidence: 2, status: draft
+- [CSS Container Queries — 컴포넌트 기반 반응형 디자인](wiki/infrastructure/css-container-queries-component-responsive-design) — confidence: 2, status: complete
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/infrastructure/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/infrastructure/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
 - [Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴](wiki/infrastructure/develop-cycle-feature-branch-vercel-dispatch-noise) — confidence: 3, status: complete
@@ -1679,6 +1680,8 @@ Updated: 2026-07-09T23:32:32.463Z
 - infrastructure/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
 - infrastructure/cross-fork-ci-failure-fix-propagation-boundary ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
 - infrastructure/cross-fork-feedback-sync ↔ project-ops/question-own-defaults
+- infrastructure/css-container-queries-component-responsive-design ↔ infrastructure/nextjs-parallel-intercepting-routes-modal-pattern
+- infrastructure/css-container-queries-component-responsive-design ↔ infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/nextjs-instrumentation-location
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/fail-loud-partial-adoption-escape-hatch-trap
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/recurring-file-bug-accumulator-pattern
