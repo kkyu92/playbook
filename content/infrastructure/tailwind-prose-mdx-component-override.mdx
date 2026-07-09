@@ -1,0 +1,140 @@
+---
+title: Tailwind Typography prose + MDX 컴포넌트 오버라이드 — 위키 스타일 통합 패턴
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - tailwindcss
+  - typography
+  - prose
+  - mdx
+  - component-override
+  - nextjs
+  - wiki
+confidence: 2
+connections: [infrastructure/tailwind-v4-css-theme-config-migration, infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config]
+status: complete
+description: MDX 렌더링 시 @tailwindcss/typography prose 기본 스타일에 커스텀 컴포넌트 오버라이드 적용. 헤딩 앵커, Shiki 코드 블록 스타일 충돌 해결, 링크 처리, 위키 특화 컴포넌트 주입 패턴.
+type: entry
+source: manual
+---
+
+## 기본 설정
+
+```tsx
+// components/mdx-renderer.tsx
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
+
+const components: MDXRemoteProps['components'] = {
+  // 헤딩에 앵커 링크 추가
+  h2: ({ children, ...props }) => (
+    <h2 {...props} className="group relative">
+      {children}
+      <a href={`#${props.id}`} className="ml-2 opacity-0 group-hover:opacity-100">#</a>
+    </h2>
+  ),
+  // 외부 링크 새탭 처리
+  a: ({ href, children, ...props }) => {
+    const isExternal = href?.startsWith('http');
+    return (
+      <a href={href} {...props}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+      >
+        {children}
+      </a>
+    );
+  },
+};
+
+export function MdxRenderer({ source }: { source: string }) {
+  return (
+    <div className="prose dark:prose-invert max-w-none">
+      <MDXRemote source={source} components={components} />
+    </div>
+  );
+}
+```
+
+## Shiki vs prose 충돌 해결
+
+`@tailwindcss/typography`가 `code` 요소에 기본 스타일(배경색, 폰트) 적용 → Shiki 테마와 충돌.
+
+### 방법 A — not-prose wrapper
+
+```tsx
+// MDX 안 코드 블록에 자동으로 not-prose 적용
+pre: ({ children, ...props }) => (
+  <div className="not-prose">
+    <pre {...props}>{children}</pre>
+  </div>
+),
+```
+
+### 방법 B — prose 커스텀으로 코드 스타일 제거
+
+```css
+/* globals.css */
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  background: none;
+  padding: 0;
+  font-weight: inherit;
+}
+/* Shiki가 pre > code 스타일을 담당 */
+```
+
+### 방법 C — Tailwind v4 @theme 재정의
+
+```css
+@theme {
+  /* prose code 배경 투명 처리 */
+  --tw-prose-code-bg: transparent;
+}
+```
+
+## 위키 특화 컴포넌트 주입
+
+```tsx
+// 위키 내부 링크 처리 ([[entry-name]] 패턴)
+import { WikiLink } from '@/components/wiki-link';
+import { Callout } from '@/components/callout';
+import { Mermaid } from '@/components/mermaid';
+
+const components = {
+  // MDX에서 <Callout type="warning"> 사용 가능
+  Callout,
+  // MDX에서 <Mermaid> 사용 가능
+  Mermaid,
+  // 기존 HTML 태그 오버라이드
+  a: WikiLinkResolver,  // [[내부링크]] vs 외부링크 분기
+};
+```
+
+## prose 다크모드 설정 (Tailwind v4)
+
+```tsx
+// prose-invert = 다크모드 자동 전환
+<div className="prose dark:prose-invert">
+
+// Tailwind v4: dark: 변형자가 prefers-color-scheme 또는 .dark 클래스
+// html.dark 클래스 기반:
+<div className="prose dark:prose-invert">
+```
+
+```css
+/* globals.css — dark 클래스 트리거 설정 */
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+## 주의사항
+
+- `prose max-w-none`: 기본 prose는 `max-w-65ch` 적용 → 위키 레이아웃이 외부에서 width 제어 시 필요
+- `components` 객체는 매 렌더마다 재생성 금지 → Server Component에서는 module level에 정의
+- `prose-sm` / `prose-lg`: 크기 variant — 위키 본문은 기본(prose)로 충분
+
+## 관련 패턴
+
+- [tailwind-v4-css-theme-config-migration](infrastructure/tailwind-v4-css-theme-config-migration): v4 @theme 설정 위치
+- [nextjs-mdx-remote-shiki-syntax-highlight-config](infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config): Shiki 코드 블록 렌더링
