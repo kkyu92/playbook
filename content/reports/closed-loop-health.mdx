@@ -19,24 +19,24 @@ description: >-
   develop-cycle-hub 자율 사이클의 4차원 metric 자동 박제 페이지. cycle retro 끝 + cron daily 자동
   갱신.
 auto_updated: true
-last_updated: '2026-07-08T23:56:42.742Z'
-last_cycle: 1419
+last_updated: '2026-07-09T00:01:13.131Z'
+last_cycle: 1421
 source: manual
 ---
 # Closed-Loop Health Dashboard
 
 > **자동 갱신** — develop-cycle-hub 매 사이클 retro 끝 + cron daily.
-> 직전 cycle: **1419**. 마지막 update: 2026-07-08T23:56:42.733Z.
+> 직전 cycle: **1421**. 마지막 update: 2026-07-09T00:01:13.126Z.
 
 ## 4차원 Metric
 
 | 차원 | Metric | 현재 |
 |---|---|---|
 | **Input** | dispatch 누적 (lesson / meta-pattern / chain-evolution) | 10 / 29 / 1 |
-| **Process** | chain pool 분포 (직전 20) | curate=9 / explore-idea=9 / skill-evolution=1 / worker-incident-triage=1 |
-| **Process** | retro-only 비율 | 1/20 (5%) |
+| **Process** | chain pool 분포 (직전 20) | explore-idea=10 / curate=9 / worker-incident-triage=1 |
+| **Process** | retro-only 비율 | 0/20 (0%) |
 | **Output** | PR ship (직전 10) | 0 |
-| **Feedback** | 0회 chain (직전 20) | fix-incident, polish-ui, review-code, closed-loop-design, dimension-cycle, expand-scope, design-system |
+| **Feedback** | 0회 chain (직전 20) | fix-incident, polish-ui, review-code, closed-loop-design, dimension-cycle, expand-scope, design-system, skill-evolution |
 
 ## skill-evolution Trigger 평가
 
@@ -44,19 +44,19 @@ source: manual
 |---|---|---|---|---|
 | 1 | `chain-evolution` commit 누적 | 1 | 5 | ❌ |
 | 2 | 같은 chain 5회 연속 fail | N/A | 5 | ❌ |
-| 3 | `cycle_n % 50 == 0` (milestone) | 1419 | 50 | ❌ |
+| 3 | `cycle_n % 50 == 0` (milestone) | 1421 | 50 | ❌ |
 | 4 | `meta-pattern` body "SKILL 갱신 필요" | 없음 | 1 | ❌ |
-| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 7 | 자율 | ✅ |
+| 5 | 0회 chain (직전 20) + skip 조건 미충족 | 8 | 자율 | ✅ |
 
 ## 최근 Cycles (직전 5)
 
 | Cycle | Chain | Outcome | PR |
 |---|---|---|---|
+| 1421 | explore-idea | success | — |
+| 1420 | curate | success | — |
 | 1419 | explore-idea | success | — |
 | 1418 | curate | success | — |
 | 1417 | explore-idea | success | — |
-| 1416 | curate | success | — |
-| 1415 | explore-idea | success | — |
 
 ## Methodology
 
