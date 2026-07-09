@@ -1,0 +1,142 @@
+---
+title: next-mdx-remote/rsc + Shiki 코드 하이라이팅 설정 — App Router RSC 패턴
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - mdx
+  - shiki
+  - next-mdx-remote
+  - syntax-highlighting
+  - nextjs
+  - app-router
+  - rsc
+confidence: 2
+connections: [infrastructure/tailwind-v4-css-theme-config-migration, infrastructure/nextjs-hmac-cookie-private-site-auth]
+status: complete
+description: Next.js App Router에서 next-mdx-remote/rsc + Shiki 코드 블록 하이라이팅 설정. 커스텀 테마, 언어 추가, 코드 메타데이터(파일명/라인 하이라이트), RSC 환경 주의사항.
+type: entry
+source: manual
+---
+
+## 기본 설정
+
+```typescript
+// app/wiki/[...slug]/page.tsx (Server Component)
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import rehypeShiki from '@shikijs/rehype';
+
+const options = {
+  mdxOptions: {
+    rehypePlugins: [
+      [rehypeShiki, {
+        themes: {
+          light: 'github-light',
+          dark: 'github-dark',
+        },
+        // 언어 자동 감지 (미지정 시)
+        defaultLanguage: 'text',
+      }],
+    ],
+  },
+};
+
+export default async function WikiPage({ params }) {
+  const { content } = await getEntry(params.slug);
+  return <MDXRemote source={content} options={options} />;
+}
+```
+
+## 커스텀 테마
+
+```typescript
+// 내장 테마 목록: https://shiki.style/themes
+// catppuccin-latte / catppuccin-mocha / tokyo-night / dracula 등
+
+[rehypeShiki, {
+  themes: {
+    light: 'catppuccin-latte',
+    dark: 'catppuccin-mocha',
+  },
+}]
+```
+
+CSS 다크모드 연동:
+
+```css
+/* globals.css */
+.shiki.catppuccin-latte { /* light */ display: block; }
+.shiki.catppuccin-mocha { /* dark */ display: none; }
+
+@media (prefers-color-scheme: dark) {
+  .shiki.catppuccin-latte { display: none; }
+  .shiki.catppuccin-mocha { display: block; }
+}
+```
+
+## 커스텀 언어 추가
+
+기본 포함 안 된 언어 (KQL, Cypher 등):
+
+```typescript
+import { createHighlighter } from 'shiki';
+
+const highlighter = await createHighlighter({
+  themes: ['github-dark'],
+  langs: ['typescript', 'python', 'bash'],
+});
+
+// 커스텀 TextMate grammar 추가
+await highlighter.loadLanguage({
+  name: 'kql',
+  scopeName: 'source.kql',
+  // ... TextMate grammar JSON
+});
+```
+
+## 코드 블록 메타데이터 활용
+
+````mdx
+```typescript filename="lib/auth.ts" {3-5}
+// 파일명 + 3~5행 하이라이트
+export function signToken(value: string) {
+  const sig = createHmac(...);
+  return sig;
+}
+```
+````
+
+메타데이터 파싱 — `@shikijs/rehype`은 기본 미지원, 추가 플러그인 필요:
+
+```typescript
+import rehypeShikiFromHighlighter from '@shikijs/rehype/core';
+
+// meta 파싱용 transformers
+import { transformerMetaHighlight } from '@shikijs/transformers';
+
+[rehypeShikiFromHighlighter, highlighter, {
+  transformers: [transformerMetaHighlight()],
+}]
+```
+
+## RSC 환경 주의사항
+
+- `next-mdx-remote/rsc` = 서버에서만 실행 — `'use client'` 컴포넌트 내 불가
+- Shiki highlighter 인스턴스 = 무거움 → 싱글톤 패턴 권장 (모듈 레벨 초기화)
+- `rehypeShiki` (자동 highlighter 생성) vs `rehypeShikiFromHighlighter` (재사용 highlighter) → 빌드 성능 차이
+
+```typescript
+// ✅ 싱글톤 패턴 — 여러 페이지에서 highlighter 재사용
+let _highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null;
+
+export async function getHighlighter() {
+  if (!_highlighter) {
+    _highlighter = await createHighlighter({ themes: [...], langs: [...] });
+  }
+  return _highlighter;
+}
+```
+
+## 관련 패턴
+
+- Mermaid 다이어그램도 MDX 안 렌더링 가능 — `rehype-mermaid` 플러그인 (Shiki와 공존)
+- `@tailwindcss/typography` prose 스타일 + Shiki 테마 충돌 시: `code` 요소에 `not-prose` 적용
