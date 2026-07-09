@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:30:55.837Z
+Updated: 2026-07-09T23:31:37.282Z
 
-## 엔트리 (428개)
+## 엔트리 (429개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -361,6 +361,7 @@ Updated: 2026-07-09T23:30:55.837Z
 - [Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패](wiki/infrastructure/nextjs-instrumentation-location) — confidence: 3, status: complete
 - [next-mdx-remote/rsc + Shiki 코드 하이라이팅 설정 — App Router RSC 패턴](wiki/infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config) — confidence: 2, status: complete
 - [Next.js next/og ImageResponse — Edge 동적 OG 이미지 생성](wiki/infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card) — confidence: 2, status: complete
+- [Next.js 병렬 라우트 + 인터셉팅 라우트 — 모달 URL 패턴](wiki/infrastructure/nextjs-parallel-intercepting-routes-modal-pattern) — confidence: 2, status: complete
 - [Next.js App Router React Suspense 스트리밍 — SSR 점진적 로딩 패턴](wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — confidence: 2, status: complete
 - [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
@@ -1724,6 +1725,8 @@ Updated: 2026-07-09T23:30:55.837Z
 - infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/pnpm-catalog-workspace-version-management
 - infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
+- infrastructure/nextjs-parallel-intercepting-routes-modal-pattern ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
+- infrastructure/nextjs-parallel-intercepting-routes-modal-pattern ↔ infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card
 - infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/typescript-satisfies-operator-type-narrowing-without-widening
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security

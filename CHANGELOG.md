@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.154] — 2026-07-10
+
+### Added
+- wiki entry #348 `infrastructure/nextjs-parallel-intercepting-routes-modal-pattern` (cycle 1437): Next.js @slot 병렬 라우트 + (.) 인터셉팅 라우트 조합 모달 패턴. URL 공유 가능 + 새 탭 전체 페이지 지원.
+
+### Changed
+
 ## [0.9.153] — 2026-07-10
 
 ### Added

@@ -1,0 +1,143 @@
+---
+title: Next.js 병렬 라우트 + 인터셉팅 라우트 — 모달 URL 패턴
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - nextjs
+  - app-router
+  - parallel-routes
+  - intercepting-routes
+  - modal
+  - routing
+confidence: 2
+connections: [infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary, infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card]
+status: complete
+description: Next.js App Router 병렬 라우트(@slot)와 인터셉팅 라우트((.))를 조합해 Instagram 스타일 모달을 구현하는 패턴. URL 공유 가능 + 새 탭 전체 페이지 지원.
+type: entry
+source: manual
+---
+
+## 문제
+
+SNS나 사진 갤러리에서 항목 클릭 시 모달이 열리되, URL이 바뀌어 공유 가능하고, 새 탭에서 열면 전체 페이지가 보여야 한다. 전통적 `useState` 기반 모달은 URL 동기화가 안 되고, 직접 URL 접근 시 모달 UI가 없다.
+
+## 핵심 패턴
+
+병렬 라우트(`@slot`)로 같은 레이아웃 안에 독립 렌더링 슬롯을 두고, 인터셉팅 라우트(`(.)`, `(..)`)로 탐색 시 해당 경로를 가로채 모달로 보여준다.
+
+```
+app/
+  layout.tsx              ← @modal 슬롯 수신
+  @modal/
+    (.)photo/[id]/
+      page.tsx            ← 인터셉트 시 모달 렌더
+    default.tsx           ← null (모달 없을 때)
+  photo/
+    [id]/
+      page.tsx            ← 직접 접근 시 전체 페이지
+  page.tsx                ← 갤러리 목록
+```
+
+### layout.tsx — 슬롯 수신
+
+```tsx
+// app/layout.tsx
+export default function Layout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
+  return (
+    <html>
+      <body>
+        {children}
+        {modal}
+      </body>
+    </html>
+  );
+}
+```
+
+### 인터셉팅 라우트 모달
+
+```tsx
+// app/@modal/(.)photo/[id]/page.tsx
+import { Modal } from '@/components/modal';
+
+export default async function PhotoModal({ params }) {
+  const photo = await getPhoto(params.id);
+  return (
+    <Modal>
+      <img src={photo.url} alt={photo.title} />
+    </Modal>
+  );
+}
+```
+
+### 클라이언트 모달 컴포넌트
+
+```tsx
+// components/modal.tsx
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef } from 'react';
+
+export function Modal({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    dialogRef.current?.showModal();
+  }, []);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      onClose={() => router.back()}
+      onClick={(e) => e.target === e.currentTarget && router.back()}
+    >
+      {children}
+    </dialog>
+  );
+}
+```
+
+### default.tsx — 슬롯 기본값
+
+```tsx
+// app/@modal/default.tsx
+export default function Default() {
+  return null; // 모달 없을 때 아무것도 렌더 안 함
+}
+```
+
+## 동작 흐름
+
+```
+갤러리(/gallery) 에서 항목 클릭
+  └─ /photo/123 탐색 시작
+       ├─ (.)photo/[id] 인터셉트 감지
+       ├─ URL = /photo/123 변경
+       ├─ @modal 슬롯 = PhotoModal 렌더 (모달)
+       └─ children = 갤러리 목록 유지
+
+/photo/123 직접 접근 또는 새 탭
+  └─ 인터셉트 없음
+       └─ photo/[id]/page.tsx 전체 페이지 렌더
+```
+
+## 인터셉팅 경로 레벨 규칙
+
+| 표기 | 의미 | 예시 |
+|---|---|---|
+| `(.)slug` | 같은 레벨 인터셉트 | `app/@modal/(.)photo` → `app/photo` |
+| `(..)slug` | 한 레벨 위 인터셉트 | `app/feed/@modal/(..)photo` → `app/photo` |
+| `(...)slug` | 루트부터 인터셉트 | 어느 depth에서나 `app/photo` 인터셉트 |
+
+## Related
+
+- [Next.js React Suspense 스트리밍](/wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — 병렬 라우트 슬롯 내부에도 Suspense 경계 적용 가능
+- [Next.js next/og ImageResponse](/wiki/infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card) — 모달 내용 페이지에 OG 이미지 자동 생성 조합
