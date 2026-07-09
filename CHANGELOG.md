@@ -4,6 +4,14 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.160] — 2026-07-10
+
+### Added
+- wiki entry #354 `infrastructure/react-useoptimistic-optimistic-ui-update-pattern` (cycle 1449): React 19 useOptimistic 낙관적 UI 업데이트. Server Action 응답 전 즉시 표시, 실패 시 자동 롤백. 목록 추가/삭제 패턴.
+
+### Changed
+- wiki 434 entries → 435 entries.
+
 ## [0.9.159] — 2026-07-10
 
 ### Added

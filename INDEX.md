@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:35:49.446Z
+Updated: 2026-07-09T23:36:30.154Z
 
-## 엔트리 (434개)
+## 엔트리 (435개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -374,6 +374,7 @@ Updated: 2026-07-09T23:35:49.446Z
 - [pnpm devDependency + pnpm.overrides 동일 패키지 → 락파일 specifier mismatch](wiki/infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch) — confidence: 3, status: complete
 - [pnpm 간접 의존성 CVE — audit gate CI 실패 + overrides/pin 수정 패턴](wiki/infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern) — confidence: 3, status: complete
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/infrastructure/post-ship-meta-documentation-drift) — confidence: 2, status: complete
+- [React useOptimistic — 낙관적 UI 업데이트 패턴](wiki/infrastructure/react-useoptimistic-optimistic-ui-update-pattern) — confidence: 2, status: complete
 - [Real-time AI Service Load Balancing: API Gateway Design for Scalable Inference](wiki/infrastructure/realtime-ai-service-load-balancing-api-gateway-design) — confidence: 1, status: draft
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/infrastructure/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
@@ -1758,6 +1759,8 @@ Updated: 2026-07-09T23:35:49.446Z
 - infrastructure/pnpm-catalog-workspace-version-management ↔ infrastructure/eslint-major-bump-plugin-compatibility-crash
 - infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
 - infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
+- infrastructure/react-useoptimistic-optimistic-ui-update-pattern ↔ infrastructure/nextjs-server-actions-form-mutation-api-route-alternative
+- infrastructure/react-useoptimistic-optimistic-ui-update-pattern ↔ infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ project-ops/api-harness-large-scale-ai-service-integration
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ project-ops/ai-service-high-availability-fallback-retry-strategies

@@ -1,0 +1,137 @@
+---
+title: React useOptimistic — 낙관적 UI 업데이트 패턴
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - react
+  - useoptimistic
+  - optimistic-ui
+  - server-actions
+  - ux
+  - mutation
+confidence: 2
+connections: [infrastructure/nextjs-server-actions-form-mutation-api-route-alternative, infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization]
+status: complete
+description: React 19 useOptimistic 훅으로 Server Action 응답을 기다리지 않고 UI를 즉시 업데이트하는 낙관적 UI 패턴. 서버 응답 실패 시 자동 롤백.
+type: entry
+source: manual
+---
+
+## 문제
+
+Server Actions나 API 호출은 네트워크 왕복 시간(RTT)이 필요하다. 사용자가 "좋아요" 버튼을 누른 후 서버 응답을 기다리는 동안 UI가 지연되면 반응성이 떨어진다.
+
+## useOptimistic 패턴
+
+```tsx
+'use client';
+
+import { useOptimistic, useTransition } from 'react';
+import { toggleLike } from '@/app/actions/like';
+
+interface Post {
+  id: string;
+  likes: number;
+  isLiked: boolean;
+}
+
+export function LikeButton({ post }: { post: Post }) {
+  const [optimisticPost, addOptimistic] = useOptimistic(
+    post,
+    (currentState, likeToggle: boolean) => ({
+      ...currentState,
+      isLiked: likeToggle,
+      likes: currentState.likes + (likeToggle ? 1 : -1),
+    })
+  );
+
+  const [isPending, startTransition] = useTransition();
+
+  async function handleLike() {
+    const newLiked = !optimisticPost.isLiked;
+    
+    startTransition(async () => {
+      addOptimistic(newLiked); // 즉시 UI 업데이트 (낙관적)
+      
+      try {
+        await toggleLike(post.id, newLiked); // 서버에 실제 반영
+      } catch {
+        // 실패 시 useOptimistic이 자동으로 원본 post 값으로 롤백
+      }
+    });
+  }
+
+  return (
+    <button onClick={handleLike} disabled={isPending}>
+      {optimisticPost.isLiked ? '❤️' : '🤍'} {optimisticPost.likes}
+    </button>
+  );
+}
+```
+
+## 동작 원리
+
+```
+사용자 클릭
+  ├─ addOptimistic(newValue) → optimisticPost 즉시 업데이트 (렌더 없이)
+  │    └─ UI = 낙관적 값으로 즉시 표시 (서버 응답 기다리지 않음)
+  │
+  ├─ Server Action 실행 (백그라운드)
+  │    ├─ 성공 → optimisticPost를 서버 실제 값으로 교체 (보통 동일)
+  │    └─ 실패 → optimisticPost를 원본 post 값으로 자동 롤백
+  │
+  └─ startTransition 완료 → isPending = false
+```
+
+## 목록 낙관적 추가/삭제
+
+```tsx
+'use client';
+
+import { useOptimistic } from 'react';
+import { addTodo, deleteTodo } from '@/app/actions/todo';
+
+export function TodoList({ todos }: { todos: Todo[] }) {
+  const [optimisticTodos, dispatch] = useOptimistic(
+    todos,
+    (state, action: { type: 'add'; todo: Todo } | { type: 'delete'; id: string }) => {
+      if (action.type === 'add') return [...state, action.todo];
+      if (action.type === 'delete') return state.filter(t => t.id !== action.id);
+      return state;
+    }
+  );
+
+  async function handleAdd(formData: FormData) {
+    const tempTodo = { id: crypto.randomUUID(), title: String(formData.get('title')) };
+    
+    startTransition(async () => {
+      dispatch({ type: 'add', todo: tempTodo });
+      await addTodo(formData); // 서버에서 실제 ID로 교체됨
+    });
+  }
+
+  return (
+    <ul>
+      {optimisticTodos.map(todo => (
+        <li key={todo.id} style={{ opacity: todo.id.startsWith('temp') ? 0.5 : 1 }}>
+          {todo.title}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## 주의사항
+
+| 상황 | 동작 |
+|---|---|
+| Server Action 성공 | 서버 실제 데이터로 교체 (optimistic 값 대체) |
+| Server Action 실패 (throw) | 원본 상태로 자동 롤백 |
+| 연속 클릭 | 각 addOptimistic 호출 → 단일 action 완료 전까지 optimistic 누적 가능 |
+| startTransition 없이 사용 | useOptimistic의 롤백 보장 깨짐 — **반드시 startTransition 안에서 호출** |
+
+## Related
+
+- [Next.js Server Actions](/wiki/infrastructure/nextjs-server-actions-form-mutation-api-route-alternative) — useOptimistic과 함께 사용되는 Server Action 뮤테이션
+- [Core Web Vitals INP 최적화](/wiki/infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization) — 낙관적 업데이트로 인터랙션 응답 시간 단축 → INP 개선

@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1126,
+  "totalInvocations": 1127,
   "skipped": 28,
-  "searched": 1098,
-  "hit": 497,
+  "searched": 1099,
+  "hit": 498,
   "noMatch": 601,
-  "lastUpdated": "2026-07-09T23:35:04.625Z",
+  "lastUpdated": "2026-07-09T23:35:57.029Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -283,7 +283,7 @@
     "project-ops/open-source-supply-chain-security-llm-tools-hardening": 1,
     "infrastructure/nextjs-instrumentation-location": 2,
     "journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr": 1,
-    "frontend-ai/generative-ai-ui-ux-design-patterns": 2,
+    "frontend-ai/generative-ai-ui-ux-design-patterns": 3,
     "project-ops/prompt-model-version-management-large-scale-ai": 1,
     "infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard": 3,
     "context-engineering/enriching-local-data-with-description-md-sidecars": 1,
@@ -294,7 +294,7 @@
     "frontend-ai/kuku-concepts-playbook-local-markdown-enhancement": 1,
     "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1,
     "prompt-engineering/llm-interactive-ui-frontend-implementation": 1,
-    "project-ops/react-doctor-ai-code-validation-pipeline": 1
+    "project-ops/react-doctor-ai-code-validation-pipeline": 2
   },
   "noMatchQueries": [
     {
@@ -1254,5 +1254,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1170
+  "totalQueries": 1171
 }
