@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:26:38.135Z
+Updated: 2026-07-09T23:27:49.126Z
 
 ## 엔트리 (426개)
 
@@ -1041,6 +1041,7 @@ Updated: 2026-07-09T23:26:38.135Z
 - context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ context-engineering/agentic-post-feature-drift-sweep-gap1-cadence
 - context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ infrastructure/agentic-feature-saturation-sequential-batch-delivery
 - context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ context-engineering/silent-drift-family-pattern
+- context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card
 - context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ context-engineering/agentic-supervisor-session-liveness-contract
 - context-engineering/agentic-incident-knowledge-crystallization ↔ context-engineering/agentic-wiki-confidence-lifecycle
 - context-engineering/agentic-incident-knowledge-crystallization ↔ harness-engineering/agentic-forced-vs-voluntary-chain-injection
@@ -1720,7 +1721,6 @@ Updated: 2026-07-09T23:26:38.135Z
 - infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/tailwind-v4-css-theme-config-migration
 - infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/pnpm-catalog-workspace-version-management
-- infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ context-engineering/agentic-feature-page-incremental-layer-decomposition
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/sentry-pii-scrubbing-beforesend
