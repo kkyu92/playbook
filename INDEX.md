@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:32:23.235Z
+Updated: 2026-07-09T23:32:32.463Z
 
 ## 엔트리 (430개)
 
@@ -1769,13 +1769,13 @@ Updated: 2026-07-09T23:32:23.235Z
 - infrastructure/tailwind-v4-css-theme-config-migration ↔ infrastructure/eslint-major-bump-plugin-compatibility-crash
 - infrastructure/tailwind-v4-css-theme-config-migration ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - infrastructure/typescript-satisfies-operator-type-narrowing-without-widening ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
+- infrastructure/typescript-satisfies-operator-type-narrowing-without-widening ↔ infrastructure/zod-v4-runtime-schema-validation-nextjs-api
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/vercel-deploy-rate-limit-auto-merge-blocked ↔ infrastructure/vercel-ignore-command-preview-skip
 - infrastructure/vercel-env-oauth-security-enhancement ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
-- infrastructure/zod-v4-runtime-schema-validation-nextjs-api ↔ infrastructure/typescript-satisfies-operator-type-narrowing-without-widening
 - infrastructure/zod-v4-runtime-schema-validation-nextjs-api ↔ infrastructure/nextjs-parallel-intercepting-routes-modal-pattern
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471
 - journal/playbook-journal-000-bootstrap ↔ journal/playbook-journal-042-lesson-pending-ci-flake-reminder-bulk-close-cycle-
