@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.146] — 2026-07-09
+
+### Added
+- wiki entry #340 `infrastructure/tailwind-v4-css-theme-config-migration` (cycle 1421): Tailwind CSS v4 @theme CSS 설정 전환. tailwind.config.js 제거 → CSS 변수 기반 @theme 블록으로 색상/폰트/간격 정의. @plugin 디렉티브, content 자동 감지.
+
+### Changed
+- wiki 421 entries.
+
 ## [0.9.145] — 2026-07-09
 
 ### Added
