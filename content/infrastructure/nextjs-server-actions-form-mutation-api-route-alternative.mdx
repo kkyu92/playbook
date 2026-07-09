@@ -1,0 +1,144 @@
+---
+title: Next.js Server Actions — API Route 없는 폼 제출 및 뮤테이션
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - nextjs
+  - server-actions
+  - form
+  - mutation
+  - app-router
+  - progressive-enhancement
+confidence: 2
+connections: [infrastructure/zod-v4-runtime-schema-validation-nextjs-api, infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization]
+status: complete
+description: Next.js Server Actions로 API Route 없이 Server에서 직접 폼 제출과 데이터 변경을 처리하는 패턴. Progressive Enhancement, useActionState 훅, revalidatePath로 캐시 무효화.
+type: entry
+source: manual
+---
+
+## 문제
+
+전통적 방식은 폼 제출 → `fetch('/api/submit')` → API Route → DB 변경 순서라 왕복이 발생하고, 별도 API 파일 관리가 필요하다. JS 비활성화 시 동작하지 않는 문제도 있다.
+
+## 핵심 패턴
+
+Server Actions는 `'use server'` 지시어로 표시된 서버 함수. `<form action={serverAction}>` 으로 폼에 직접 연결하면 API Route 없이 서버에서 폼 데이터를 처리한다.
+
+### 기본 Server Action
+
+```typescript
+// app/actions/todo.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod/v4';
+import { db } from '@/lib/db';
+
+const CreateTodoSchema = z.object({
+  title: z.string().min(1).max(200),
+});
+
+export async function createTodo(formData: FormData) {
+  const parsed = CreateTodoSchema.safeParse({
+    title: formData.get('title'),
+  });
+  
+  if (!parsed.success) {
+    return { error: parsed.error.flatten().fieldErrors };
+  }
+
+  await db.todo.create({ data: parsed.data });
+  revalidatePath('/todos'); // 캐시 무효화 → 자동 리페치
+}
+```
+
+### 폼 연결 — Progressive Enhancement
+
+```tsx
+// app/todos/page.tsx
+import { createTodo } from '@/app/actions/todo';
+
+export default function TodoPage() {
+  return (
+    <form action={createTodo}>
+      <input name="title" type="text" required />
+      <button type="submit">추가</button>
+    </form>
+  );
+}
+```
+
+JS 비활성화 시에도 HTML 기본 폼 제출로 동작 (Progressive Enhancement).
+
+### useActionState — 상태 + 에러 처리
+
+```tsx
+'use client';
+
+import { useActionState } from 'react';
+import { createTodo } from '@/app/actions/todo';
+
+export default function TodoForm() {
+  const [state, formAction, isPending] = useActionState(createTodo, null);
+
+  return (
+    <form action={formAction}>
+      <input name="title" />
+      {state?.error?.title && (
+        <p role="alert">{state.error.title[0]}</p>
+      )}
+      <button type="submit" disabled={isPending}>
+        {isPending ? '추가 중...' : '추가'}
+      </button>
+    </form>
+  );
+}
+```
+
+Server Action은 `(prevState, formData) => Promise<State>` 시그니처로 변경:
+
+```typescript
+export async function createTodo(prevState: unknown, formData: FormData) {
+  // prevState = 이전 action 반환값
+  const parsed = CreateTodoSchema.safeParse({ title: formData.get('title') });
+  if (!parsed.success) return { error: parsed.error.flatten().fieldErrors };
+  
+  await db.todo.create({ data: parsed.data });
+  revalidatePath('/todos');
+  return { success: true };
+}
+```
+
+## 파일 업로드
+
+```typescript
+'use server';
+
+export async function uploadFile(formData: FormData) {
+  const file = formData.get('file') as File;
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  
+  // S3, local storage 등에 저장
+  await saveFile(file.name, buffer);
+  revalidatePath('/files');
+}
+```
+
+## revalidatePath vs redirect
+
+```typescript
+import { revalidatePath, redirect } from 'next/navigation';
+
+// 현재 페이지 유지 + 데이터 갱신
+revalidatePath('/todos');
+
+// 완료 후 다른 페이지로 이동
+redirect('/todos');  // try/catch 밖에서 호출 필수 (내부적으로 throw 사용)
+```
+
+## Related
+
+- [Zod v4 런타임 스키마 검증](/wiki/infrastructure/zod-v4-runtime-schema-validation-nextjs-api) — Server Actions 입력 검증 조합
+- [Core Web Vitals INP 최적화](/wiki/infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization) — useActionState의 isPending으로 인터랙션 피드백 제공

@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.158] — 2026-07-10
+
+### Added
+- wiki entry #352 `infrastructure/nextjs-server-actions-form-mutation-api-route-alternative` (cycle 1445): Next.js Server Actions 폼 제출 + 뮤테이션. API Route 없는 직접 처리. useActionState, revalidatePath, Progressive Enhancement.
+
+### Changed
+
 ## [0.9.157] — 2026-07-10
 
 ### Added
