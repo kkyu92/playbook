@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:29:36.549Z
+Updated: 2026-07-09T23:29:58.766Z
 
 ## 엔트리 (427개)
 
@@ -1722,7 +1722,7 @@ Updated: 2026-07-09T23:29:36.549Z
 - infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/tailwind-v4-css-theme-config-migration
 - infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/pnpm-catalog-workspace-version-management
-- infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card
+- infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
