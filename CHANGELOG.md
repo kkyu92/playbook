@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.147] — 2026-07-09
+
+### Added
+- wiki entry #341 `infrastructure/nextjs-hmac-cookie-private-site-auth` (cycle 1423): Next.js 단일 사용자 비공개 사이트 HMAC 쿠키 인증. ADMIN_PASSWORD + ADMIN_SECRET 환경변수 기반. 미들웨어 서명 검증 + HttpOnly/Secure/SameSite 보안 패턴.
+
+### Changed
+- wiki 422 entries.
+
 ## [0.9.146] — 2026-07-09
 
 ### Added
