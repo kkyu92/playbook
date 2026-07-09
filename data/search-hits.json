@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1125,
+  "totalInvocations": 1126,
   "skipped": 28,
-  "searched": 1097,
-  "hit": 496,
+  "searched": 1098,
+  "hit": 497,
   "noMatch": 601,
-  "lastUpdated": "2026-07-09T23:28:35.757Z",
+  "lastUpdated": "2026-07-09T23:35:04.625Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -279,9 +279,9 @@
     "agents/autonomous-agent-long-run-phase-transition-pattern": 1,
     "evaluation/ml-pipeline-normalization-range-assumption": 1,
     "agents/agentic-context-compaction-trigger-heuristics": 1,
-    "context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement": 2,
+    "context-engineering/e5-multilingual-embedding-query-passage-prefix-requirement": 3,
     "project-ops/open-source-supply-chain-security-llm-tools-hardening": 1,
-    "infrastructure/nextjs-instrumentation-location": 1,
+    "infrastructure/nextjs-instrumentation-location": 2,
     "journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr": 1,
     "frontend-ai/generative-ai-ui-ux-design-patterns": 2,
     "project-ops/prompt-model-version-management-large-scale-ai": 1,
@@ -1254,5 +1254,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1169
+  "totalQueries": 1170
 }

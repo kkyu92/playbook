@@ -1,0 +1,128 @@
+---
+title: Next.js Turbopack — dev/production 빌드 마이그레이션 가이드
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - nextjs
+  - turbopack
+  - webpack
+  - build
+  - bundler
+  - performance
+  - migration
+confidence: 2
+connections: [infrastructure/nextjs-server-actions-form-mutation-api-route-alternative, infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary]
+status: complete
+description: Next.js 15에서 기본값이 된 Turbopack(dev)와 Next.js 16에서 production 빌드 지원이 안정화된 Turbopack 마이그레이션 패턴. webpack 대비 속도 개선과 호환성 주의점.
+type: entry
+source: manual
+---
+
+## 변경 이력
+
+| 버전 | Turbopack 상태 |
+|---|---|
+| Next.js 13 | `--turbo` 플래그로 실험적 dev 지원 시작 |
+| Next.js 14 | dev 모드 안정화 |
+| Next.js 15 | dev 모드 **기본값** (`next dev --turbopack`) |
+| Next.js 16 | production 빌드 지원 안정화 |
+
+## dev 모드 (Next.js 15+)
+
+```bash
+# 자동 (Next.js 15+ 기본)
+next dev
+
+# 명시적 비활성화 (webpack fallback)
+next dev --no-turbopack
+```
+
+`package.json`:
+```json
+{
+  "scripts": {
+    "dev": "next dev",               // Turbopack 사용
+    "dev:webpack": "next dev --no-turbopack"  // 디버깅용 fallback
+  }
+}
+```
+
+## production 빌드 (Next.js 16+)
+
+```bash
+next build  # Turbopack으로 production 빌드
+```
+
+## 성능 지표 (Next.js 공식 벤치마크)
+
+| 지표 | Webpack | Turbopack |
+|---|---|---|
+| 초기 cold start | 기준 | ~76% 빠름 |
+| Fast Refresh (코드 변경) | 기준 | ~96% 빠름 |
+| Production 빌드 | 기준 | 대형 앱 ~35-57% 빠름 |
+
+## 호환성 주의점
+
+### 1. webpack.config.js 커스터마이징
+
+```typescript
+// next.config.ts — Turbopack 전용 설정
+const config: NextConfig = {
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        // webpack의 resolve.alias 대응
+        '@/components': './src/components',
+      },
+      rules: {
+        // webpack의 module.rules 대응
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+};
+```
+
+### 2. 미지원 webpack 플러그인
+
+Turbopack은 webpack 플러그인 시스템을 직접 지원 X. 대안:
+
+| webpack 플러그인 | Turbopack 대안 |
+|---|---|
+| `BundleAnalyzerPlugin` | `@next/bundle-analyzer` (webpack 모드만) |
+| 커스텀 Babel 플러그인 | SWC 트랜스폼 (`experimental.swcPlugins`) |
+| `css-loader` 옵션 | CSS Modules 내장 지원 |
+
+### 3. CSS 처리 차이
+
+```css
+/* Turbopack: @import 상대 경로 엄격 */
+/* ✅ OK */
+@import './variables.css';
+
+/* ❌ webpack은 허용했으나 Turbopack 불가 */
+@import 'variables.css';  /* node_modules 조회 방식 차이 */
+```
+
+## 마이그레이션 체크리스트
+
+```bash
+# 1. dev 모드 Turbopack 실행 + 콘솔 에러 확인
+next dev
+
+# 2. 빌드 테스트
+next build
+
+# 3. 에러 발생 시 webpack fallback으로 비교
+next dev --no-turbopack
+
+# 4. Turbopack 전용 설정 마이그레이션 (resolveAlias, rules)
+```
+
+## Related
+
+- [Next.js Server Actions](/wiki/infrastructure/nextjs-server-actions-form-mutation-api-route-alternative) — Server Actions는 Turbopack dev/prod 모두에서 동작
+- [Next.js React Suspense 스트리밍](/wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — Turbopack 빠른 빌드 → Suspense 경계 변경 빠른 피드백

@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.159] — 2026-07-10
+
+### Added
+- wiki entry #353 `infrastructure/nextjs-turbopack-dev-production-build-migration` (cycle 1447): Next.js Turbopack dev/production 빌드 마이그레이션. 속도 벤치마크, webpack 플러그인 대안, CSS 처리 차이, 마이그레이션 체크리스트.
+
+### Changed
+
 ## [0.9.158] — 2026-07-10
 
 ### Added

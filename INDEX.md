@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:34:57.802Z
+Updated: 2026-07-09T23:35:39.419Z
 
-## 엔트리 (433개)
+## 엔트리 (434개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -367,6 +367,7 @@ Updated: 2026-07-09T23:34:57.802Z
 - [Next.js App Router React Suspense 스트리밍 — SSR 점진적 로딩 패턴](wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — confidence: 2, status: complete
 - [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
 - [Next.js Server Actions — API Route 없는 폼 제출 및 뮤테이션](wiki/infrastructure/nextjs-server-actions-form-mutation-api-route-alternative) — confidence: 2, status: complete
+- [Next.js Turbopack — dev/production 빌드 마이그레이션 가이드](wiki/infrastructure/nextjs-turbopack-dev-production-build-migration) — confidence: 2, status: complete
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
 - [운영 탄력성 강화 - 선제적 비상 관리 도구 구축 및 활용 전략](wiki/infrastructure/operational-resilience-emergency-management-tooling) — confidence: 1, status: draft
 - [pnpm catalog — 워크스페이스 패키지 버전 중앙 관리 (v9+)](wiki/infrastructure/pnpm-catalog-workspace-version-management) — confidence: 2, status: complete
@@ -1739,6 +1740,8 @@ Updated: 2026-07-09T23:34:57.802Z
 - infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/typescript-satisfies-operator-type-narrowing-without-widening
 - infrastructure/nextjs-server-actions-form-mutation-api-route-alternative ↔ infrastructure/zod-v4-runtime-schema-validation-nextjs-api
 - infrastructure/nextjs-server-actions-form-mutation-api-route-alternative ↔ infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization
+- infrastructure/nextjs-turbopack-dev-production-build-migration ↔ infrastructure/nextjs-server-actions-form-mutation-api-route-alternative
+- infrastructure/nextjs-turbopack-dev-production-build-migration ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/sentry-pii-scrubbing-beforesend
