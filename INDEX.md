@@ -1,5 +1,5 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:35:39.419Z
+Updated: 2026-07-09T23:35:49.446Z
 
 ## 엔트리 (434개)
 
@@ -1740,7 +1740,7 @@ Updated: 2026-07-09T23:35:39.419Z
 - infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary ↔ infrastructure/typescript-satisfies-operator-type-narrowing-without-widening
 - infrastructure/nextjs-server-actions-form-mutation-api-route-alternative ↔ infrastructure/zod-v4-runtime-schema-validation-nextjs-api
 - infrastructure/nextjs-server-actions-form-mutation-api-route-alternative ↔ infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization
-- infrastructure/nextjs-turbopack-dev-production-build-migration ↔ infrastructure/nextjs-server-actions-form-mutation-api-route-alternative
+- infrastructure/nextjs-server-actions-form-mutation-api-route-alternative ↔ infrastructure/nextjs-turbopack-dev-production-build-migration
 - infrastructure/nextjs-turbopack-dev-production-build-migration ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
