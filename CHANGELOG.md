@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.150] — 2026-07-09
+
+### Added
+- wiki entry #344 `infrastructure/pnpm-catalog-workspace-version-management` (cycle 1429): pnpm v9+ catalog 기능. 워크스페이스 공유 패키지 버전 pnpm-workspace.yaml 단일 관리. devDependencies+overrides 이중 지정 예방, 명명된 catalog 지원.
+
+### Changed
+- wiki 425 entries.
+
 ## [0.9.149] — 2026-07-09
 
 ### Added
