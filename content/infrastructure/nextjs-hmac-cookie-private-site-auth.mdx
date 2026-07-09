@@ -1,0 +1,126 @@
+---
+title: Next.js 비공개 사이트 HMAC 쿠키 인증 — 단일 사용자 보호 패턴
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - nextjs
+  - hmac
+  - cookie
+  - authentication
+  - middleware
+  - private-site
+  - security
+confidence: 2
+connections: [infrastructure/tailwind-v4-css-theme-config-migration, harness-engineering/github-actions-workflow-fix-end-to-end-checklist]
+status: complete
+description: 개인 허브/위키처럼 단일 사용자만 접근하는 Next.js 앱에 HMAC 서명 쿠키로 비공개 접근 제어. JWT 없이 환경변수 기반 password + secret으로 토큰 서명 → 미들웨어 검증.
+type: entry
+source: manual
+---
+
+## 패턴 개요
+
+OAuth/JWT 오버킬인 개인 비공개 사이트 — HMAC 서명 쿠키로 충분:
+
+```
+로그인 폼 → ADMIN_PASSWORD 대조
+  → 성공: HMAC(token, ADMIN_SECRET) 서명 → 쿠키 저장
+  → 미들웨어: 매 요청 쿠키 서명 검증 → 유효/만료 판단
+```
+
+## 구현 패턴
+
+### 1. 쿠키 서명 유틸리티
+
+```typescript
+// lib/auth.ts
+import { createHmac } from 'crypto';
+
+const SECRET = process.env.ADMIN_SECRET!;  // 16자+ 필수
+
+export function signToken(value: string): string {
+  const sig = createHmac('sha256', SECRET).update(value).digest('hex');
+  return `${value}.${sig}`;
+}
+
+export function verifyToken(cookie: string): boolean {
+  const lastDot = cookie.lastIndexOf('.');
+  if (lastDot === -1) return false;
+  const value = cookie.slice(0, lastDot);
+  const expected = signToken(value);
+  // timing-safe comparison
+  return expected.length === cookie.length &&
+    Buffer.from(expected).equals(Buffer.from(cookie));
+}
+```
+
+### 2. 로그인 라우트
+
+```typescript
+// app/api/login/route.ts
+export async function POST(req: Request) {
+  const { password } = await req.json();
+  if (password !== process.env.ADMIN_PASSWORD) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  const token = signToken(`auth:${Date.now()}`);
+  const res = Response.json({ ok: true });
+  res.headers.set('Set-Cookie',
+    `auth=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`
+  );
+  return res;
+}
+```
+
+### 3. 미들웨어 검증
+
+```typescript
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyToken } from '@/lib/auth';
+
+export function middleware(req: NextRequest) {
+  const token = req.cookies.get('auth')?.value;
+  if (!token || !verifyToken(token)) {
+    const loginUrl = new URL('/login', req.url);
+    return NextResponse.redirect(loginUrl);
+  }
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/((?!login|api/login|_next|favicon).*)'],
+};
+```
+
+## 환경변수
+
+```bash
+ADMIN_PASSWORD=<로그인 비밀번호>  # 로그인 폼 대조용
+ADMIN_SECRET=<16자+ 랜덤>         # HMAC 서명 키
+```
+
+`ADMIN_SECRET` 미설정 or 8자 미만 → 토큰 위조 위험. 16자+ 랜덤 강제.
+
+## 보안 고려사항
+
+| 위협 | 대응 |
+|---|---|
+| 쿠키 탈취 | HttpOnly + Secure 플래그 |
+| CSRF | SameSite=Strict |
+| 타이밍 공격 | Buffer.equals() timing-safe 비교 |
+| 브루트포스 | rate-limit (필요 시 — 단일 사용자라면 DDoS 방어로 충분) |
+| Secret 노출 | 환경변수로 분리, .env 커밋 금지 |
+
+## 단일 사용자 vs 다중 사용자
+
+이 패턴 적합 조건:
+- 단일 관리자/작성자만 접근
+- 세션 무효화가 자주 필요 없음 (ADMIN_SECRET 변경 = 전체 무효화)
+- JWT/OAuth/DB 세션 관리 오버헤드 피하고 싶을 때
+
+다중 사용자 → NextAuth.js 또는 Clerk 사용 권장.
+
+## 관련 패턴
+
+- Next.js Middleware `matcher` 패턴: `/api/`, `_next/`, `favicon` 제외 규칙 → 로그인 루프 방지
