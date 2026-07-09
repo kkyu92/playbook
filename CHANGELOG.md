@@ -12,6 +12,14 @@
 ### Changed
 - wiki 418 entries.
 
+## [0.9.149] — 2026-07-09
+
+### Added
+- wiki entry #343 `infrastructure/tailwind-prose-mdx-component-override` (cycle 1427): Tailwind Typography prose + MDX 컴포넌트 오버라이드. 헤딩 앵커, 외부링크 처리, Shiki 충돌 해결(not-prose/CSS 재정의), 위키 특화 컴포넌트 주입 패턴.
+
+### Changed
+- wiki 424 entries.
+
 ## [0.9.148] — 2026-07-09
 
 ### Added
