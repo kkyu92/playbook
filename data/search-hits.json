@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1116,
+  "totalInvocations": 1117,
   "skipped": 28,
-  "searched": 1088,
-  "hit": 490,
+  "searched": 1089,
+  "hit": 491,
   "noMatch": 598,
-  "lastUpdated": "2026-07-09T00:06:50.874Z",
+  "lastUpdated": "2026-07-09T23:24:56.742Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -68,7 +68,7 @@
     "infrastructure/claude-code-cost-optimization-strategies": 2,
     "retros/2026-05-13-cycles-441-442": 4,
     "retros/2026-05-13-cycles-457-458": 1,
-    "infrastructure/sentry-pii-scrubbing-beforesend": 1,
+    "infrastructure/sentry-pii-scrubbing-beforesend": 2,
     "retros/2026-05-12-cycles-327-330": 4,
     "retros/2026-05-12-cycles-377-378": 3,
     "infrastructure/sentry-serverless-flush": 1,
@@ -291,7 +291,8 @@
     "prompt-engineering/llm-prompt-caching-cost-optimization-patterns": 1,
     "frontend-ai/claude-code-html-output-ux-enhancement": 1,
     "frontend-ai/ai-inference-visualization-design-patterns": 1,
-    "frontend-ai/kuku-concepts-playbook-local-markdown-enhancement": 1
+    "frontend-ai/kuku-concepts-playbook-local-markdown-enhancement": 1,
+    "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1
   },
   "noMatchQueries": [
     {
@@ -1233,5 +1234,5 @@
     "curate cycle mandatory artifacts three outputs publication record canonical": 1,
     "diagnosis phase time budget minimal scan fast vs thorough tradeoff": 1
   },
-  "totalQueries": 1160
+  "totalQueries": 1161
 }

@@ -1,0 +1,138 @@
+---
+title: Next.js next/og ImageResponse — Edge 동적 OG 이미지 생성
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - nextjs
+  - og-image
+  - edge-function
+  - satori
+  - social-card
+  - metadata
+  - opengraph
+confidence: 2
+connections: [infrastructure/pnpm-catalog-workspace-version-management, context-engineering/agentic-feature-page-incremental-layer-decomposition]
+status: complete
+description: Next.js App Router에서 next/og의 ImageResponse를 사용해 동적 OG 이미지를 Edge에서 생성하는 패턴. opengraph-image.tsx 파일 기반 자동 라우팅, Satori JSX→SVG→PNG 변환, 커스텀 폰트 주입까지 포함.
+type: entry
+source: manual
+---
+
+## 문제
+
+블로그, 위키 등 동적 콘텐츠 페이지는 각 페이지마다 고유한 OG 이미지가 필요하다. 정적 이미지는 모든 페이지가 동일해 SNS 공유 시 클릭률이 낮고, puppeteer/playwright 기반 스크린샷 생성은 서버 비용이 크다.
+
+## 핵심 패턴
+
+Next.js App Router는 `opengraph-image.tsx`를 자동으로 `/opengraph-image` 라우트에 매핑하고, `export default`로 반환한 `ImageResponse`를 해당 페이지의 OG 이미지로 사용한다. Edge Runtime에서 Satori(JSX→SVG)→resvg(SVG→PNG) 파이프라인을 실행한다.
+
+```tsx
+// app/wiki/[slug]/opengraph-image.tsx
+import { ImageResponse } from 'next/og';
+
+export const runtime = 'edge';
+export const size = { width: 1200, height: 630 };
+export const contentType = 'image/png';
+
+export default async function Image({ params }: { params: { slug: string } }) {
+  const title = await getEntryTitle(params.slug); // DB/fs 조회
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          background: '#0f172a',
+          width: '100%',
+          height: '100%',
+          padding: '60px',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ fontSize: 48, color: '#f8fafc', fontWeight: 700 }}>
+          {title}
+        </div>
+        <div style={{ fontSize: 24, color: '#94a3b8' }}>playbook.kkyu.dev</div>
+      </div>
+    ),
+    { ...size }
+  );
+}
+```
+
+## 동작 방식
+
+```
+page 요청 (/wiki/nextjs-hmac-cookie)
+  └─ Next.js 라우터가 /wiki/nextjs-hmac-cookie/opengraph-image 자동 생성
+       ├─ Edge Worker 기동 (cold start ~50ms)
+       ├─ opengraph-image.tsx 실행
+       │    ├─ JSX → Satori (SVG) 변환
+       │    └─ resvg-js (WASM) SVG → PNG
+       └─ Cache-Control: public, max-age=31536000 (Vercel 자동)
+```
+
+## 커스텀 폰트 주입
+
+```tsx
+const fontData = await fetch(
+  new URL('/fonts/Pretendard-Bold.woff', process.env.NEXT_PUBLIC_SITE_URL)
+).then((r) => r.arrayBuffer());
+
+return new ImageResponse(
+  (<div style={{ fontFamily: 'Pretendard' }}>...</div>),
+  {
+    ...size,
+    fonts: [{ name: 'Pretendard', data: fontData, weight: 700 }],
+  }
+);
+```
+
+Satori는 WOFF/TTF 지원. OTF 직접 미지원 — WOFF 변환 필요.
+
+## 주요 제약
+
+| 제약 | 내용 |
+|---|---|
+| 지원 CSS | flexbox, 기본 텍스트 속성만. grid/position:fixed/transform X |
+| 이미지 | `<img>` 태그 OK. `next/image` X (Edge에서 미동작) |
+| 외부 fetch | Edge timeout 안에서 완료 필요 (Vercel 25s) |
+| WASM 번들 크기 | resvg-js WASM ~1.8MB — cold start 영향 |
+| 폰트 경로 | `new URL('../fonts/x.woff', import.meta.url)` — Node.js only. Edge에선 절대 URL 필요 |
+
+## generateImageMetadata — 복수 이미지
+
+```tsx
+export function generateImageMetadata() {
+  return [
+    { id: 'dark', alt: 'Dark theme' },
+    { id: 'light', alt: 'Light theme' },
+  ];
+}
+
+export default function Image({ params, id }: { params: ...; id: string }) {
+  const isDark = id === 'dark';
+  // id별 다른 스타일 반환
+}
+```
+
+## generateMetadata 연동
+
+```tsx
+// app/wiki/[slug]/page.tsx
+export async function generateMetadata({ params }) {
+  return {
+    openGraph: {
+      images: [`/wiki/${params.slug}/opengraph-image`],
+    },
+    twitter: { card: 'summary_large_image' },
+  };
+}
+```
+
+`opengraph-image.tsx` 파일만 있으면 `generateMetadata`에서 명시 안 해도 Next.js가 자동 주입한다. 명시하면 URL을 커스터마이징할 수 있다.
+
+## Related
+
+- [Agentic Feature Page Incremental Layer Decomposition](/wiki/context-engineering/agentic-feature-page-incremental-layer-decomposition) — OG 이미지를 Metadata 레이어(v13-C)로 분류한 빌드 순서 패턴

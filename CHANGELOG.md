@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.151] — 2026-07-10
+
+### Added
+- wiki entry #345 `infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card` (cycle 1431): Next.js next/og ImageResponse로 Edge에서 동적 OG 이미지 생성. opengraph-image.tsx 자동 라우팅, Satori JSX→SVG→PNG 파이프라인, 커스텀 폰트 주입, CSS 제약 정리.
+
+### Changed
+
 ## [0.9.143] — 2026-07-09
 
 ### Added

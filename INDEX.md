@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-04T23:53:14.325Z
+Updated: 2026-07-09T23:26:38.135Z
 
-## 엔트리 (389개)
+## 엔트리 (426개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -47,6 +47,7 @@ Updated: 2026-07-04T23:53:14.325Z
 - [자율 에이전트 explore-idea 토픽 탐색 마찰 — 위키 커버리지 성숙도 역방향 지표](wiki/context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal) — confidence: 2, status: complete
 - [Agentic Feature Page Incremental Layer Decomposition — 복잡한 기능 페이지를 N개 원자 레이어로 분해해 순차 구현하는 패턴](wiki/context-engineering/agentic-feature-page-incremental-layer-decomposition) — confidence: 2, status: complete
 - [자율 에이전트 허브-워커 비동기 commit 발산 — 설계 의도 신호 vs 관리 부채 구분](wiki/context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt) — confidence: 2, status: complete
+- [에이전틱 incident knowledge 결정화 — 단일 incident에서 방사되는 엔트리 클러스터](wiki/context-engineering/agentic-incident-knowledge-crystallization) — confidence: 2, status: complete
 - [Agentic Knowledge System Chain Economics — Creation vs Maintenance at Scale](wiki/context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance) — confidence: 4, status: draft
 - [Manual Batch Session vs Zero-Touch — N 사이클 실행 전략 비교](wiki/context-engineering/agentic-manual-batch-vs-zero-touch-session-tradeoffs) — confidence: 3, status: draft
 - [자율 에이전트 메타-체인 fast-path streak guard — domain chain positive streak과의 비대칭 처리](wiki/context-engineering/agentic-meta-chain-fast-path-streak-guard) — confidence: 2, status: complete
@@ -89,38 +90,62 @@ Updated: 2026-07-04T23:53:14.325Z
 - [Hub-Pull Evidence Tracking — from-hub Commit Convention](wiki/context-engineering/hub-pull-evidence-tracking-from-hub-convention) — confidence: 3, status: complete
 - [Hub-Worker Compounding Pattern — 양방향 자동 지식 흐름](wiki/context-engineering/hub-worker-compounding-pattern) — confidence: 4, status: complete
 - [JIT 임베딩 검색 — 위키 규모 성장에도 컨텍스트 비용 O(1) 유지](wiki/context-engineering/jit-embedding-retrieval-context-cost-scale-invariant) — confidence: 3, status: complete
+- [JIT 검색 작업 예방 게이트 — 중복 분석 방지를 통한 비대칭 ROI](wiki/context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi) — confidence: 2, status: complete
 - [Silent Drift Family Pattern — 13 fork + 차원 직교 fork 회귀 패턴 첫 evidence + 강한·약한 의도 보존 분류 동시 적용 + 약한 결론 N=1 메타 lens (entry 자체 dogfood)](wiki/context-engineering/silent-drift-family-pattern) — confidence: 4, status: complete
 - [스테일 시간적 주석 정리 정책 — 사이클/스펙 참조 제거 vs WHY 주석 보존](wiki/context-engineering/stale-temporal-comment-cleanup-policy) — confidence: 2, status: complete
 - [위키 catch-all 카테고리 재분배 패턴 — 머지 대신 outlier 분산으로 정체성 복원](wiki/context-engineering/wiki-catch-all-category-redistribution-pattern) — confidence: 2, status: complete
 - [위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크](wiki/context-engineering/wiki-category-health-rebalance-decision-framework) — confidence: 2, status: complete
 - [위키 카테고리 마이그레이션 실행 런북 — 배치 스크립트 + slug 리맵 패턴](wiki/context-engineering/wiki-category-migration-execution-runbook) — confidence: 2, status: complete
+- [위키 엔트리 복리 가치 — 연결 밀도 증가로 인한 지식 네트워크 효과](wiki/context-engineering/wiki-entry-compound-value-network-density) — confidence: 2, status: complete
 - [Wiki Entry Confidence 승격 경로 — auto-generated 에서 검증된 지식까지](wiki/context-engineering/wiki-entry-confidence-upgrade-path) — confidence: 3, status: complete
 - [위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나](wiki/context-engineering/wiki-jit-search-blind-spot-diagnosis) — confidence: 2, status: complete
 - [Zerostack 통합 — Rust 기반 코딩 에이전트를 활용한 AI 하네스 기능 확장](wiki/context-engineering/zerostack-rust-agent-harness-extension) — confidence: 1, status: draft
 
 ### Harness Engineering
 - [2-chain alternation lock — 주기적 아키텍처 감사 강제 메커니즘](wiki/harness-engineering/agentic-alternation-lock-architectural-audit-mechanism) — confidence: 3, status: complete
+- [Inbound Incident 배치 close 적격 판별 결정 트리 — JIT 검색 기반 자율 triage](wiki/harness-engineering/agentic-batch-close-eligibility-decision-tree) — confidence: 2, status: complete
 - [자율 에이전트 체인 분포 위상 지문 — 발화 패턴으로 프로젝트 단계 진단](wiki/harness-engineering/agentic-chain-distribution-phase-fingerprint) — confidence: 2, status: complete
+- [에이전틱 chain 비발화 = 건강 신호 — dormancy 해석 패턴](wiki/harness-engineering/agentic-chain-dormancy-as-health-signal) — confidence: 2, status: complete
 - [Agentic Chain Saturation Detection — 체인 포화 신호 감지와 pool 재조정](wiki/harness-engineering/agentic-chain-saturation-detection) — confidence: 2, status: complete
 - [Agentic 사이클 Chain 다양성 관리 — 연속 streak 감지 + 순환 강제](wiki/harness-engineering/agentic-cycle-chain-diversity-rebalancing) — confidence: 3, status: draft
 - [로컬 commit 누적과 batch push 타이밍 — 자율 에이전트 R6 결정 가이드](wiki/harness-engineering/agentic-deferred-push-batch-timing-heuristics) — confidence: 3, status: complete
+- [자율 에이전트 진단 깊이 적응 전략 — 최소 vs 심층 스캔 기준](wiki/harness-engineering/agentic-diagnosis-depth-adaptive-minimal-vs-thorough) — confidence: 2, status: complete
+- [자율 에이전트 진단 source 우선순위 — open issue 우선 스캔 근거](wiki/harness-engineering/agentic-diagnosis-source-priority-open-issue-first) — confidence: 2, status: complete
+- [에이전틱 사이클 강제 vs 자발 chain 주입 — 자기 조절 다양성 메커니즘](wiki/harness-engineering/agentic-forced-vs-voluntary-chain-injection) — confidence: 2, status: complete
 - [자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검](wiki/harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check) — confidence: 2, status: complete
 - [자율 에이전트 Gap-Trigger 체인 헬스 점검 패턴 — 지배 체인 억제 구간 방어](wiki/harness-engineering/agentic-gap-trigger-chain-health-check) — confidence: 3, status: complete
 - [자율 에이전트 Hub Phase-Lock — chain pool 삼중 attractor 수렴 패턴](wiki/harness-engineering/agentic-hub-phase-lock-steady-state) — confidence: 3, status: complete
 - [Agentic Loop Analytical Chain — 코드 변경 0의 측정 전용 chain](wiki/harness-engineering/agentic-loop-analytical-chain-lite-mode) — confidence: 2, status: complete
 - [자율 에이전트 N-batch 예측 가능한 결과 — stable attractor 성숙도 지표](wiki/harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor) — confidence: 2, status: complete
+- [next_recommended_chain 추천 신호 vs 오버라이드 패턴 — 언제 따르고 언제 무시하는가](wiki/harness-engineering/agentic-next-chain-recommendation-override-pattern) — confidence: 2, status: complete
+- [자율 에이전트 chain pool 반응형 vs 능동형 분류 — 자연 유휴 상태 설계](wiki/harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy) — confidence: 2, status: complete
 - [자율 에이전트 skill-evolution 버스트 — 슬라이딩 윈도우 결핍률과 회복 패턴](wiki/harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery) — confidence: 2, status: complete
 - [자율 에이전트 Trigger 영구 Opt-Out — 구조적 False Positive 의 비가역적 면제 패턴](wiki/harness-engineering/agentic-trigger-permanent-optout-structural-false-positive) — confidence: 2, status: complete
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
+- [AI 에이전트 외부 버전 추천 시 신뢰도 캘리브레이션 — 학습 컷오프 이후 릴리즈 감지](wiki/harness-engineering/ai-agent-external-version-confidence-calibration) — confidence: 3, status: complete
+- [자동 incident 종결 grace period 설계 — 성급한 close 방지](wiki/harness-engineering/automated-incident-closure-grace-period-design) — confidence: 2, status: complete
 - [backfill-bidirectional 대규모 curate 패스 — 한 번에 위키 전체 교차 연결 보강](wiki/harness-engineering/backfill-bidirectional-curate-pass-pattern) — confidence: 2, status: complete
 - [Vercel rate-limit 차단 PR 내용 구출 — cherry-pick to local main 패턴](wiki/harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main) — confidence: 2, status: complete
 - [BRANCHED 상태 cherry-pick → orphan connection 연쇄 — 진단 및 즉각 수정 패턴](wiki/harness-engineering/branched-state-cherry-pick-orphan-connection-cascade) — confidence: 3, status: complete
+- [BRANCHED 상태 로컬 전용 픽스 품질 드리프트 — CI 미검증 패치의 잠재적 오류](wiki/harness-engineering/branched-state-local-fix-quality-drift) — confidence: 3, status: complete
 - [BRANCHED 상태에서 로컬 lint 신호 오염 — 이미 수정된 문제가 재감지되는 패턴](wiki/harness-engineering/branched-state-local-lint-false-positive-signal-drift) — confidence: 3, status: complete
+- [BRANCHED 상태 우회 — origin/main 기반 타겟 픽스 브랜치 패턴](wiki/harness-engineering/branched-state-origin-main-targeted-fix-bypass) — confidence: 3, status: complete
+- [CI 실패 감지 지연 — zero-touch INACTIVE 수동 모드의 관측 공백](wiki/harness-engineering/ci-failure-detection-latency-manual-hub-mode) — confidence: 2, status: complete
+- [curate chain 3 필수 아티팩트 — explore-idea 발행 레코드 완성](wiki/harness-engineering/curate-chain-three-mandatory-artifacts) — confidence: 2, status: complete
 - [curate 사이클 복합 유지보수 가치 — 단일 사이클에서 4개 유지보수 작업 동시 실행](wiki/harness-engineering/curate-cycle-compound-maintenance-value) — confidence: 3, status: complete
 - [Develop-Cycle Positive Streak Recognition — 성공 streak 자가 의심 차단](wiki/harness-engineering/develop-cycle-positive-streak-recognition) — confidence: 2, status: complete
+- [GH Actions 0초 실패 — in-workflow self-report 맹점 (YAML 파싱 오류)](wiki/harness-engineering/github-actions-0s-failure-self-report-blind-spot) — confidence: 3, status: complete
+- [GH Actions 교차 워크플로 버전 일관성 감사 — 픽스 전 전체 사용 현황 확인](wiki/harness-engineering/github-actions-cross-workflow-version-consistency-audit) — confidence: 3, status: complete
+- [GH Actions 픽스 스태킹 안티패턴 — 미확정 근본 원인 위에 수정 누적](wiki/harness-engineering/github-actions-fix-stacking-anti-pattern) — confidence: 3, status: complete
+- [GH Actions 워크플로 픽스 End-to-End 체크리스트 — BRANCHED 환경 포함](wiki/harness-engineering/github-actions-workflow-fix-end-to-end-checklist) — confidence: 3, status: complete
 - [GH Actions 워크플로 0초 실패 (jobs 없음) — 원인 진단 체크리스트](wiki/harness-engineering/github-actions-workflow-zero-second-failure-diagnosis) — confidence: 2, status: complete
+- [동일 지문 incident 누적 속도 — R6 루트 원인 미해결 신호와 배치 트리아지 ROI](wiki/harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal) — confidence: 2, status: complete
+- [워커 inbound CI 실패 — 소스 브랜치 타입별 분류 매트릭스](wiki/harness-engineering/inbound-incident-branch-type-triage-matrix) — confidence: 2, status: complete
+- [모니터링 알림 triage SOP — 실제 incident vs false positive 판별 흐름](wiki/harness-engineering/monitoring-alert-triage-sop) — confidence: 2, status: complete
+- [모니터링 시간 창 lag — fix 배포 후 생성되는 false positive 알림 판별](wiki/harness-engineering/monitoring-window-lag-false-positive-detection) — confidence: 2, status: complete
 - [review-code 체인 retro-only — 성숙한 코드베이스의 정상 신호](wiki/harness-engineering/review-code-chain-retro-only-mature-codebase-signal) — confidence: 4, status: complete
 - [Skill-Evolution Oscillation — Skip 조건과 Steady-State 패턴](wiki/harness-engineering/skill-evolution-oscillation-skip-condition-steady-state) — confidence: 4, status: complete
+- [skill-evolution retro-only = SKILL 안정 확인 신호 — 거버넌스 레이어 자가 건강 검진](wiki/harness-engineering/skill-evolution-retro-only-stability-signal) — confidence: 2, status: complete
 - [SKILL skip 조건 mode 종속 결함 — zero-touch 회전 vs manual batch session](wiki/harness-engineering/skill-evolution-skip-condition-mode-dependency) — confidence: 3, status: complete
 - [Playbook Journal 000 — 부트스트랩](wiki/journal/playbook-journal-000-bootstrap) — confidence: 3, status: done
 - [Playbook Journal 001 — 구현된 코드를 그린필드로 간주한 드리프트](wiki/journal/playbook-journal-001-drift-greenfield) — confidence: 5, status: complete
@@ -319,27 +344,36 @@ Updated: 2026-07-04T23:53:14.325Z
 - [DB 쿼리 타입 안전성 강제 — assertSelectOk 패턴으로 silent drift 방지](wiki/infrastructure/db-query-type-safety-assert-select-ok-pattern) — confidence: 2, status: complete
 - [LLM Backend Integration: 비용 최적화 에이전틱 워크플로우를 위한 DeepSeek V4 Pro 활용](wiki/infrastructure/deepseek-v4-pro-llm-backend-integration) — confidence: 1, status: draft
 - [Develop-Cycle Feature Branch Vercel/CI Dispatch Noise — 중간 단계 실패 허브 인입 패턴](wiki/infrastructure/develop-cycle-feature-branch-vercel-dispatch-noise) — confidence: 3, status: complete
+- [eslint 메이저 버전 업 — 플러그인 호환성 충돌 (eslint@9→10)](wiki/infrastructure/eslint-major-bump-plugin-compatibility-crash) — confidence: 2, status: complete
 - [Fail-Loud 패턴 부분 적용 함정 — try/catch escape hatch 미제거로 보호막 무력화](wiki/infrastructure/fail-loud-partial-adoption-escape-hatch-trap) — confidence: 2, status: complete
 - [Feature Flag 수명 주기 — 비활성 플래그 dead code 감지 및 정리 타이밍](wiki/infrastructure/feature-flag-dead-code-cleanup-timing) — confidence: 2, status: complete
 - [Gemini API HTTP 상태코드 → key 건강 분류 패턴](wiki/infrastructure/gemini-api-http-status-key-health-classification) — confidence: 2, status: complete
 - [GitHub Actions Billing Block — 진단 및 복구 패턴](wiki/infrastructure/github-actions-billing-block-diagnosis-recovery) — confidence: 3, status: complete
 - [GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)](wiki/infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env) — confidence: 2, status: complete
+- [GH Actions 인라인 스크립트 안전 패턴 — Python/bash 언어 경계 가이드](wiki/infrastructure/github-actions-inline-script-safe-patterns) — confidence: 3, status: complete
 - [GitHub Actions 모니터링 job 설계 — smoke test / alert step 격리](wiki/infrastructure/github-actions-monitoring-smoke-alert-isolation) — confidence: 2, status: complete
 - [GITHUB_TOKEN Anti-Recursion — Workflow Trigger Gap](wiki/infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger) — confidence: 4, status: complete
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/infrastructure/guard-test-pattern) — confidence: 3, status: complete
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/infrastructure/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
 - [LLM Agent Artifact-First Diagnosis — 표면 로그 vs 실제 파일 읽기](wiki/infrastructure/llm-agent-artifact-first-diagnosis) — confidence: 3, status: complete
 - [Next.js 동적 라우트 파라미터 검증 — 크롤러 리터럴 URL 접근 DB 오류 방어](wiki/infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard) — confidence: 2, status: draft
+- [Next.js 비공개 사이트 HMAC 쿠키 인증 — 단일 사용자 보호 패턴](wiki/infrastructure/nextjs-hmac-cookie-private-site-auth) — confidence: 2, status: complete
 - [Next.js 16 instrumentation.ts 위치 — 프레임워크 컨벤션 silent 실패](wiki/infrastructure/nextjs-instrumentation-location) — confidence: 3, status: complete
+- [next-mdx-remote/rsc + Shiki 코드 하이라이팅 설정 — App Router RSC 패턴](wiki/infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config) — confidence: 2, status: complete
+- [Next.js next/og ImageResponse — Edge 동적 OG 이미지 생성](wiki/infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card) — confidence: 2, status: complete
 - [Next.js App Router 세그먼트별 not-found.tsx: 동적 라우트 신뢰 신호 체계](wiki/infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage) — confidence: 3, status: draft
 - [Node.js Supply Chain Security — npm/pnpm 의존성 감사 및 강화 전략](wiki/infrastructure/npm-pnpm-supply-chain-security-enhancement) — confidence: 1, status: draft
 - [운영 탄력성 강화 - 선제적 비상 관리 도구 구축 및 활용 전략](wiki/infrastructure/operational-resilience-emergency-management-tooling) — confidence: 1, status: draft
+- [pnpm catalog — 워크스페이스 패키지 버전 중앙 관리 (v9+)](wiki/infrastructure/pnpm-catalog-workspace-version-management) — confidence: 2, status: complete
+- [pnpm devDependency + pnpm.overrides 동일 패키지 → 락파일 specifier mismatch](wiki/infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch) — confidence: 3, status: complete
 - [pnpm 간접 의존성 CVE — audit gate CI 실패 + overrides/pin 수정 패턴](wiki/infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern) — confidence: 3, status: complete
 - [Post-Ship 메타 문서화 Drift — LLM 에이전트 구현 완료 후 CLAUDE.md 박제 누락 패턴](wiki/infrastructure/post-ship-meta-documentation-drift) — confidence: 2, status: complete
 - [Real-time AI Service Load Balancing: API Gateway Design for Scalable Inference](wiki/infrastructure/realtime-ai-service-load-balancing-api-gateway-design) — confidence: 1, status: draft
 - [서비스 파일 반복 진입 패턴 — 같은 파일 같은 버그 유형 누적 = 설계 부채 신호](wiki/infrastructure/recurring-file-bug-accumulator-pattern) — confidence: 2, status: complete
 - [Sentry PII Scrubbing — beforeSend 훅 vs 대시보드 Sensitive Fields](wiki/infrastructure/sentry-pii-scrubbing-beforesend) — confidence: 3, status: complete
 - [Sentry on Vercel Serverless — captureException 후 flush() await 필수](wiki/infrastructure/sentry-serverless-flush) — confidence: 3, status: complete
+- [Tailwind Typography prose + MDX 컴포넌트 오버라이드 — 위키 스타일 통합 패턴](wiki/infrastructure/tailwind-prose-mdx-component-override) — confidence: 2, status: complete
+- [Tailwind CSS v4 @theme CSS 설정 전환 — tailwind.config.js 제거 패턴](wiki/infrastructure/tailwind-v4-css-theme-config-migration) — confidence: 2, status: complete
 - [Vercel Breach Analysis: Third-Party AI/OAuth Security & Supply Chain Risk Defense](wiki/infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security) — confidence: 1, status: draft
 - [Vercel 배포 한도 초과 → PR auto-merge 영구 차단 패턴](wiki/infrastructure/vercel-deploy-rate-limit-auto-merge-blocked) — confidence: 2, status: complete
 - [Vercel Environment Variables — OAuth Supply Chain Security 강화](wiki/infrastructure/vercel-env-oauth-security-enhancement) — confidence: 1, status: draft
@@ -356,8 +390,10 @@ Updated: 2026-07-04T23:53:14.325Z
 - [Claude Code HTML Output – Enhancing UX with Rich Visualizations and Interactivity](wiki/frontend-ai/claude-code-html-output-ux-enhancement) — confidence: 1, status: draft
 - [AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프](wiki/frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop) — confidence: 1, status: draft
 - [Generative AI UI/UX Patterns — Crafting Adaptive Frontend Experiences](wiki/frontend-ai/generative-ai-ui-ux-design-patterns) — confidence: 1, status: draft
+- [하드코딩 기준선 정확도 임계값 사문화 — 모델 개선 시 동적화 필요](wiki/frontend-ai/hardcoded-baseline-accuracy-threshold-staleness) — confidence: 2, status: complete
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/frontend-ai/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
 - [Next.js Security Hardening — Patching Vulnerabilities and Enhancing Defense](wiki/frontend-ai/nextjs-security-patching-defense-logic-reinforcement) — confidence: 1, status: draft
+- [예측 모델 요소 사문화 탐지 — 운영 분석으로 0 기여 팩터 12% 검출](wiki/frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis) — confidence: 2, status: complete
 - [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 
 ### Project Ops
@@ -381,6 +417,7 @@ Updated: 2026-07-04T23:53:14.325Z
 - [Production Database 보안 강화 - AI 에이전트 가드레일 설계 및 구현](wiki/project-ops/production-db-ai-agent-guardrails) — confidence: 1, status: draft
 - [대규모 AI 시스템: 프롬프트 및 모델 버전 관리 전략](wiki/project-ops/prompt-model-version-management-large-scale-ai) — confidence: 1, status: draft
 - [Question Own Defaults — AI 가 자기 제안/상속값 자가 의심하기](wiki/project-ops/question-own-defaults) — confidence: 3, status: complete
+- [R6 TODOS 장기 잔류 — 미해결 vs 수용된 제약 구분 패턴](wiki/project-ops/r6-todos-long-lived-accepted-constraint-vs-pending) — confidence: 2, status: complete
 - [AI-Generated React Code Validation — Enhancing Pipelines with React Doctor Static Analysis](wiki/project-ops/react-doctor-ai-code-validation-pipeline) — confidence: 1, status: draft
 - [실시간 AI 모델 배포 및 모니터링 시스템 구축 패턴 — MLOps 프로덕션 가이드](wiki/project-ops/realtime-ai-model-deployment-monitoring-patterns) — confidence: 1, status: draft
 - [TODOS.md P-Priority 반복 이슈 카운터 유지 패턴 — 누적 이력 없이 최신 상태만 추적](wiki/project-ops/todos-priority-recurring-issue-counter-pattern) — confidence: 2, status: complete
@@ -1005,6 +1042,9 @@ Updated: 2026-07-04T23:53:14.325Z
 - context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ infrastructure/agentic-feature-saturation-sequential-batch-delivery
 - context-engineering/agentic-feature-page-incremental-layer-decomposition ↔ context-engineering/silent-drift-family-pattern
 - context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt ↔ context-engineering/agentic-supervisor-session-liveness-contract
+- context-engineering/agentic-incident-knowledge-crystallization ↔ context-engineering/agentic-wiki-confidence-lifecycle
+- context-engineering/agentic-incident-knowledge-crystallization ↔ harness-engineering/agentic-forced-vs-voluntary-chain-injection
+- context-engineering/agentic-incident-knowledge-crystallization ↔ harness-engineering/monitoring-alert-triage-sop
 - context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ context-engineering/agentic-skill-evolution-convergence-maturity-signal
 - context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance ↔ infrastructure/agentic-ci-deploy-budget-batch-push-policy
@@ -1173,6 +1213,9 @@ Updated: 2026-07-04T23:53:14.325Z
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ infrastructure/agentic-jit-near-threshold-false-negative-ls-fallback
 - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant ↔ data-engineering/rag-search-performance-evaluation-metrics-design
+- context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi ↔ context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+- context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi ↔ harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
+- context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi ↔ context-engineering/wiki-jit-search-blind-spot-diagnosis
 - context-engineering/silent-drift-family-pattern ↔ project-ops/question-own-defaults
 - context-engineering/silent-drift-family-pattern ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - context-engineering/silent-drift-family-pattern ↔ evaluation/llm-output-validation-automation-failure-prevention
@@ -1190,6 +1233,9 @@ Updated: 2026-07-04T23:53:14.325Z
 - context-engineering/wiki-catch-all-category-redistribution-pattern ↔ context-engineering/wiki-category-migration-execution-runbook
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
 - context-engineering/wiki-category-health-rebalance-decision-framework ↔ context-engineering/wiki-category-migration-execution-runbook
+- context-engineering/wiki-entry-compound-value-network-density ↔ context-engineering/agentic-incident-knowledge-crystallization
+- context-engineering/wiki-entry-compound-value-network-density ↔ context-engineering/wiki-jit-search-blind-spot-diagnosis
+- context-engineering/wiki-entry-compound-value-network-density ↔ context-engineering/agentic-wiki-confidence-lifecycle
 - context-engineering/wiki-entry-confidence-upgrade-path ↔ context-engineering/agentic-pipeline-source-mix-quality-indicator
 - context-engineering/wiki-entry-confidence-upgrade-path ↔ harness-engineering/curate-cycle-compound-maintenance-value
 - context-engineering/wiki-jit-search-blind-spot-diagnosis ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
@@ -1423,6 +1469,8 @@ Updated: 2026-07-04T23:53:14.325Z
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ frontend-ai/kuku-concepts-playbook-local-markdown-enhancement
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
+- frontend-ai/hardcoded-baseline-accuracy-threshold-staleness ↔ project-ops/question-own-defaults
+- frontend-ai/hardcoded-baseline-accuracy-threshold-staleness ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - frontend-ai/kuku-concepts-playbook-local-markdown-enhancement ↔ infrastructure/nextjs-instrumentation-location
 - frontend-ai/kuku-concepts-playbook-local-markdown-enhancement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ infrastructure/nextjs-instrumentation-location
@@ -1431,10 +1479,17 @@ Updated: 2026-07-04T23:53:14.325Z
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - frontend-ai/nextjs-security-patching-defense-logic-reinforcement ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
+- frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ frontend-ai/hardcoded-baseline-accuracy-threshold-staleness
+- frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ frontend-ai/user-behavior-prediction-ai-model-integration
+- frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ project-ops/question-own-defaults
 - harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-cycle-chain-diversity-rebalancing
 - harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/agentic-alternation-lock-architectural-audit-mechanism ↔ context-engineering/agentic-branched-state-production-content-lag
+- harness-engineering/agentic-batch-close-eligibility-decision-tree ↔ harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
+- harness-engineering/agentic-batch-close-eligibility-decision-tree ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
+- harness-engineering/agentic-batch-close-eligibility-decision-tree ↔ context-engineering/jit-search-work-prevention-gate-anti-redundancy-roi
+- harness-engineering/agentic-batch-close-eligibility-decision-tree ↔ harness-engineering/automated-incident-closure-grace-period-design
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-chain-saturation-detection
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
@@ -1443,6 +1498,9 @@ Updated: 2026-07-04T23:53:14.325Z
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
 - harness-engineering/agentic-chain-distribution-phase-fingerprint ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
+- harness-engineering/agentic-chain-dormancy-as-health-signal ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
+- harness-engineering/agentic-chain-dormancy-as-health-signal ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-chain-dormancy-as-health-signal ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - harness-engineering/agentic-chain-saturation-detection ↔ harness-engineering/agentic-hub-phase-lock-steady-state
@@ -1454,6 +1512,14 @@ Updated: 2026-07-04T23:53:14.325Z
 - harness-engineering/agentic-cycle-chain-diversity-rebalancing ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ context-engineering/agentic-branched-state-jit-search-accuracy-degradation
 - harness-engineering/agentic-deferred-push-batch-timing-heuristics ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
+- harness-engineering/agentic-diagnosis-depth-adaptive-minimal-vs-thorough ↔ harness-engineering/agentic-diagnosis-source-priority-open-issue-first
+- harness-engineering/agentic-diagnosis-depth-adaptive-minimal-vs-thorough ↔ harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+- harness-engineering/agentic-diagnosis-source-priority-open-issue-first ↔ harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+- harness-engineering/agentic-diagnosis-source-priority-open-issue-first ↔ harness-engineering/agentic-batch-close-eligibility-decision-tree
+- harness-engineering/agentic-diagnosis-source-priority-open-issue-first ↔ harness-engineering/agentic-next-chain-recommendation-override-pattern
+- harness-engineering/agentic-forced-vs-voluntary-chain-injection ↔ harness-engineering/agentic-chain-dormancy-as-health-signal
+- harness-engineering/agentic-forced-vs-voluntary-chain-injection ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-forced-vs-voluntary-chain-injection ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ infrastructure/agentic-lite-first-scan-gate-execution-pattern
 - harness-engineering/agentic-gap-timer-trigger-dormant-chain-periodic-baseline-check ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - harness-engineering/agentic-gap-trigger-chain-health-check ↔ harness-engineering/develop-cycle-positive-streak-recognition
@@ -1471,11 +1537,23 @@ Updated: 2026-07-04T23:53:14.325Z
 - harness-engineering/agentic-loop-analytical-chain-lite-mode ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ infrastructure/agentic-feature-saturation-sequential-batch-delivery
 - harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
+- harness-engineering/agentic-next-chain-recommendation-override-pattern ↔ harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+- harness-engineering/agentic-next-chain-recommendation-override-pattern ↔ harness-engineering/agentic-forced-vs-voluntary-chain-injection
+- harness-engineering/agentic-next-chain-recommendation-override-pattern ↔ harness-engineering/agentic-hub-phase-lock-steady-state
+- harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy ↔ harness-engineering/agentic-chain-dormancy-as-health-signal
+- harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy ↔ harness-engineering/agentic-forced-vs-voluntary-chain-injection
+- harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy ↔ harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
+- harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/agentic-se-burst-length-window-rate-deficit-recovery ↔ harness-engineering/develop-cycle-positive-streak-recognition
 - harness-engineering/agentic-trigger-permanent-optout-structural-false-positive ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/agentic-git-commit-body-dispatch-transport
 - harness-engineering/agentic-trigger-skip-dual-condition-homeostasis ↔ infrastructure/agentic-retro-soft-scheduling-recommendation-signal
+- harness-engineering/ai-agent-external-version-confidence-calibration ↔ harness-engineering/github-actions-cross-workflow-version-consistency-audit
+- harness-engineering/ai-agent-external-version-confidence-calibration ↔ harness-engineering/github-actions-fix-stacking-anti-pattern
+- harness-engineering/ai-agent-external-version-confidence-calibration ↔ context-engineering/agentic-branched-state-production-content-lag
+- harness-engineering/automated-incident-closure-grace-period-design ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
+- harness-engineering/automated-incident-closure-grace-period-design ↔ harness-engineering/monitoring-window-lag-false-positive-detection
 - harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ harness-engineering/branched-state-cherry-pick-orphan-connection-cascade
 - harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ context-engineering/agentic-wiki-connection-graph-health-metrics
 - harness-engineering/backfill-bidirectional-curate-pass-pattern ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
@@ -1486,9 +1564,22 @@ Updated: 2026-07-04T23:53:14.325Z
 - harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main ↔ harness-engineering/branched-state-cherry-pick-orphan-connection-cascade
 - harness-engineering/branched-state-cherry-pick-orphan-connection-cascade ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
 - harness-engineering/branched-state-cherry-pick-orphan-connection-cascade ↔ infrastructure/vercel-deploy-rate-limit-auto-merge-blocked
+- harness-engineering/branched-state-local-fix-quality-drift ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
+- harness-engineering/branched-state-local-fix-quality-drift ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
+- harness-engineering/branched-state-local-fix-quality-drift ↔ infrastructure/github-actions-inline-script-safe-patterns
+- harness-engineering/branched-state-local-fix-quality-drift ↔ context-engineering/agentic-branched-state-production-content-lag
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/skill-evolution-oscillation-skip-condition-steady-state
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - harness-engineering/branched-state-local-lint-false-positive-signal-drift ↔ project-ops/todos-priority-recurring-issue-counter-pattern
+- harness-engineering/branched-state-origin-main-targeted-fix-bypass ↔ harness-engineering/blocked-pr-content-rescue-cherry-pick-local-main
+- harness-engineering/branched-state-origin-main-targeted-fix-bypass ↔ harness-engineering/branched-state-cherry-pick-orphan-connection-cascade
+- harness-engineering/branched-state-origin-main-targeted-fix-bypass ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/branched-state-origin-main-targeted-fix-bypass ↔ context-engineering/agentic-branched-state-production-content-lag
+- harness-engineering/ci-failure-detection-latency-manual-hub-mode ↔ harness-engineering/agentic-batch-close-eligibility-decision-tree
+- harness-engineering/ci-failure-detection-latency-manual-hub-mode ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
+- harness-engineering/curate-chain-three-mandatory-artifacts ↔ harness-engineering/curate-cycle-compound-maintenance-value
+- harness-engineering/curate-chain-three-mandatory-artifacts ↔ harness-engineering/agentic-reactive-vs-proactive-chain-taxonomy
+- harness-engineering/curate-chain-three-mandatory-artifacts ↔ context-engineering/agentic-knowledge-system-chain-economics-creation-vs-maintenance
 - harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/agentic-chain-distribution-phase-fingerprint
 - harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/backfill-bidirectional-curate-pass-pattern
 - harness-engineering/curate-cycle-compound-maintenance-value ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
@@ -1497,8 +1588,39 @@ Updated: 2026-07-04T23:53:14.325Z
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/worker-lesson-velocity-signal
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
+- harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
+- harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
+- harness-engineering/github-actions-cross-workflow-version-consistency-audit ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/github-actions-cross-workflow-version-consistency-audit ↔ infrastructure/github-actions-inline-script-safe-patterns
+- harness-engineering/github-actions-cross-workflow-version-consistency-audit ↔ harness-engineering/branched-state-local-fix-quality-drift
+- harness-engineering/github-actions-fix-stacking-anti-pattern ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/github-actions-fix-stacking-anti-pattern ↔ harness-engineering/github-actions-cross-workflow-version-consistency-audit
+- harness-engineering/github-actions-fix-stacking-anti-pattern ↔ harness-engineering/branched-state-local-fix-quality-drift
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/github-actions-fix-stacking-anti-pattern
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/github-actions-cross-workflow-version-consistency-audit
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/branched-state-local-fix-quality-drift
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ infrastructure/github-actions-inline-script-safe-patterns
+- harness-engineering/github-actions-workflow-fix-end-to-end-checklist ↔ harness-engineering/ai-agent-external-version-confidence-calibration
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
+- harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
+- harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal ↔ project-ops/todos-priority-recurring-issue-counter-pattern
+- harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal ↔ infrastructure/claude-plan-rate-limit-cron-automation-resilience
+- harness-engineering/inbound-incident-branch-type-triage-matrix ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/inbound-incident-branch-type-triage-matrix ↔ harness-engineering/monitoring-window-lag-false-positive-detection
+- harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/monitoring-window-lag-false-positive-detection
+- harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
+- harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/automated-incident-closure-grace-period-design
+- harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
+- harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
+- harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- harness-engineering/monitoring-window-lag-false-positive-detection ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
+- harness-engineering/skill-evolution-retro-only-stability-signal ↔ harness-engineering/agentic-chain-dormancy-as-health-signal
+- harness-engineering/skill-evolution-retro-only-stability-signal ↔ harness-engineering/agentic-forced-vs-voluntary-chain-injection
+- harness-engineering/skill-evolution-retro-only-stability-signal ↔ harness-engineering/agentic-hub-phase-lock-steady-state
 - harness-engineering/skill-evolution-skip-condition-mode-dependency ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/zero-touch-develop-cycle-session-management
 - infrastructure/agentic-ci-deploy-budget-batch-push-policy ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
@@ -1555,6 +1677,8 @@ Updated: 2026-07-04T23:53:14.325Z
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/nextjs-instrumentation-location
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/fail-loud-partial-adoption-escape-hatch-trap
 - infrastructure/db-query-type-safety-assert-select-ok-pattern ↔ infrastructure/recurring-file-bug-accumulator-pattern
+- infrastructure/eslint-major-bump-plugin-compatibility-crash ↔ infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch
+- infrastructure/eslint-major-bump-plugin-compatibility-crash ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
 - infrastructure/fail-loud-partial-adoption-escape-hatch-trap ↔ project-ops/question-own-defaults
 - infrastructure/fail-loud-partial-adoption-escape-hatch-trap ↔ infrastructure/recurring-file-bug-accumulator-pattern
 - infrastructure/fail-loud-partial-adoption-escape-hatch-trap ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
@@ -1568,6 +1692,9 @@ Updated: 2026-07-04T23:53:14.325Z
 - infrastructure/github-actions-billing-block-diagnosis-recovery ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
 - infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
+- infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
+- infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
+- infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
 - infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/guard-test-pattern ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - infrastructure/guard-test-pattern ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
@@ -1582,12 +1709,18 @@ Updated: 2026-07-04T23:53:14.325Z
 - infrastructure/llm-agent-artifact-first-diagnosis ↔ project-ops/question-own-defaults
 - infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard ↔ infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard ↔ infrastructure/operational-resilience-emergency-management-tooling
+- infrastructure/nextjs-hmac-cookie-private-site-auth ↔ infrastructure/tailwind-v4-css-theme-config-migration
+- infrastructure/nextjs-hmac-cookie-private-site-auth ↔ harness-engineering/github-actions-workflow-fix-end-to-end-checklist
 - infrastructure/nextjs-instrumentation-location ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/nextjs-instrumentation-location ↔ journal/playbook-journal-004-drift-half-working
 - infrastructure/nextjs-instrumentation-location ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/nextjs-instrumentation-location ↔ infrastructure/sentry-serverless-flush
 - infrastructure/nextjs-instrumentation-location ↔ journal/playbook-journal-006-next-js-16-src-app-instrumentation-ts-silent-sentr
 - infrastructure/nextjs-instrumentation-location ↔ infrastructure/vercel-env-oauth-security-enhancement
+- infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/tailwind-v4-css-theme-config-migration
+- infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config ↔ infrastructure/nextjs-hmac-cookie-private-site-auth
+- infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ infrastructure/pnpm-catalog-workspace-version-management
+- infrastructure/nextjs-og-imagereponse-edge-dynamic-social-card ↔ context-engineering/agentic-feature-page-incremental-layer-decomposition
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/npm-pnpm-supply-chain-security-enhancement ↔ infrastructure/sentry-pii-scrubbing-beforesend
@@ -1600,6 +1733,10 @@ Updated: 2026-07-04T23:53:14.325Z
 - infrastructure/operational-resilience-emergency-management-tooling ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - infrastructure/operational-resilience-emergency-management-tooling ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - infrastructure/operational-resilience-emergency-management-tooling ↔ project-ops/ai-service-high-availability-fallback-retry-strategies
+- infrastructure/pnpm-catalog-workspace-version-management ↔ infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch
+- infrastructure/pnpm-catalog-workspace-version-management ↔ infrastructure/eslint-major-bump-plugin-compatibility-crash
+- infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
+- infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch ↔ infrastructure/cross-fork-ci-failure-fix-propagation-boundary
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ project-ops/api-harness-large-scale-ai-service-integration
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - infrastructure/realtime-ai-service-load-balancing-api-gateway-design ↔ project-ops/ai-service-high-availability-fallback-retry-strategies
@@ -1618,6 +1755,10 @@ Updated: 2026-07-04T23:53:14.325Z
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-003-drift-silent-bugs
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-013-vercel-webhook-rapid-iteration-revert-cascade
 - infrastructure/sentry-serverless-flush ↔ journal/playbook-journal-014-sentry-webhook-sub-path-3-no-relay-fp-vercel-deplo
+- infrastructure/tailwind-prose-mdx-component-override ↔ infrastructure/tailwind-v4-css-theme-config-migration
+- infrastructure/tailwind-prose-mdx-component-override ↔ infrastructure/nextjs-mdx-remote-shiki-syntax-highlight-config
+- infrastructure/tailwind-v4-css-theme-config-migration ↔ infrastructure/eslint-major-bump-plugin-compatibility-crash
+- infrastructure/tailwind-v4-css-theme-config-migration ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ journal/playbook-journal-007-sentry-sensitive-fields-beforesend
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ infrastructure/vercel-env-oauth-security-enhancement
 - infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
@@ -1704,6 +1845,8 @@ Updated: 2026-07-04T23:53:14.325Z
 - project-ops/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/prompt-versioning-and-testing
 - project-ops/prompt-model-version-management-large-scale-ai ↔ prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows
 - project-ops/question-own-defaults ↔ project-ops/todos-priority-recurring-issue-counter-pattern
+- project-ops/r6-todos-long-lived-accepted-constraint-vs-pending ↔ project-ops/todos-priority-recurring-issue-counter-pattern
+- project-ops/r6-todos-long-lived-accepted-constraint-vs-pending ↔ harness-engineering/inbound-incident-accumulation-r6-root-cause-persistence-signal
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/prompt-versioning-and-testing
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows ↔ prompt-engineering/dynamic-prompt-routing-multi-llm-cost-performance
