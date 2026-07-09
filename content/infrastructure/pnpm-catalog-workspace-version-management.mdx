@@ -1,0 +1,128 @@
+---
+title: pnpm catalog — 워크스페이스 패키지 버전 중앙 관리 (v9+)
+category: infrastructure
+date: "2026-07-09"
+tags:
+  - pnpm
+  - catalog
+  - monorepo
+  - workspace
+  - version-management
+  - dependency
+confidence: 2
+connections: [infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch, infrastructure/eslint-major-bump-plugin-compatibility-crash]
+status: complete
+description: pnpm v9+ catalog 기능으로 workspace 내 여러 패키지의 공유 의존성 버전을 pnpm-workspace.yaml 단일 위치에서 관리. devDependencies/overrides 이중 지정 문제 예방, 버전 일관성 강제.
+type: entry
+source: manual
+---
+
+## 문제
+
+모노레포에서 같은 패키지를 여러 workspace에서 각각 다른 버전으로 설치:
+
+```
+apps/web/package.json:     "react": "^18.2.0"
+apps/admin/package.json:   "react": "^18.3.0"  ← 불일치
+packages/ui/package.json:  "react": "^18.2.0"
+```
+
+또는 `devDependencies` + `pnpm.overrides` 이중 지정으로 lockfile mismatch 발생.
+(→ [pnpm-devdep-override-dual-source-lockfile-mismatch](infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch))
+
+## pnpm catalog 해결 패턴
+
+### 1. pnpm-workspace.yaml 설정
+
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+catalog:
+  # 공유 의존성 버전 단일 정의
+  react: ^18.3.0
+  react-dom: ^18.3.0
+  typescript: ^5.5.0
+  eslint: ^9.0.0
+
+catalogs:
+  # 명명된 catalog (여러 그룹)
+  react18:
+    react: ^18.3.0
+    react-dom: ^18.3.0
+  react19:
+    react: ^19.0.0
+    react-dom: ^19.0.0
+```
+
+### 2. package.json에서 catalog 참조
+
+```json
+{
+  "dependencies": {
+    "react": "catalog:",       // 기본 catalog 참조
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "eslint": "catalog:react18" // 명명된 catalog 참조
+  }
+}
+```
+
+### 3. 버전 업데이트
+
+```bash
+# pnpm-workspace.yaml 의 catalog 값만 변경
+# → 모든 workspace가 자동으로 새 버전 사용
+
+# 이전: 각 package.json 순회 수정 필요
+# 이후: pnpm-workspace.yaml 1곳만 수정
+```
+
+## overrides vs catalog
+
+| 방식 | 용도 | 락파일 |
+|---|---|---|
+| `pnpm.overrides` | 전이 의존성 버전 강제 (보안 패치 등) | overrides 값이 specifier |
+| `catalog` | 직접 의존성 버전 중앙화 | catalog 값이 specifier |
+
+**이중 지정 방지**: 직접 의존성은 catalog, 전이 의존성은 overrides. 같은 패키지에 둘 다 X.
+
+```json
+// ❌ 이중 지정 — lockfile mismatch 위험
+{
+  "devDependencies": { "turbo": "^2.10.4" },
+  "pnpm": { "overrides": { "turbo": ">=2.9.14" } }
+}
+
+// ✅ catalog으로 통합
+// pnpm-workspace.yaml:
+// catalog:
+//   turbo: ">=2.9.14"
+//
+// package.json:
+// "devDependencies": { "turbo": "catalog:" }
+```
+
+## 버전 검증
+
+```bash
+# catalog 버전과 실제 설치 버전 확인
+pnpm list --recursive | grep "react "
+
+# lockfile에서 catalog 스펙 확인
+grep -A2 "catalog:" pnpm-lock.yaml | head -20
+```
+
+## 주의 사항
+
+- pnpm v9+ 필요 (`pnpm --version` 확인)
+- `catalog:` 참조는 `pnpm install` 시 자동 해석
+- CI에서 `--frozen-lockfile` 사용 시 catalog 변경 후 반드시 `pnpm install` 로 lockfile 재생성
+
+## 관련 패턴
+
+- [pnpm-devdep-override-dual-source-lockfile-mismatch](infrastructure/pnpm-devdep-override-dual-source-lockfile-mismatch): catalog로 예방 가능한 이중 지정 패턴
