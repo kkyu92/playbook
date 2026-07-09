@@ -4,6 +4,13 @@
 
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 기반.
 
+## [0.9.157] — 2026-07-10
+
+### Added
+- wiki entry #351 `infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization` (cycle 1443): INP(Interaction to Next Paint) 최적화. startTransition/useDeferredValue/가상화/scheduler.postTask 패턴.
+
+### Changed
+
 ## [0.9.156] — 2026-07-10
 
 ### Added

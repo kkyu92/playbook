@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-09T23:33:19.892Z
+Updated: 2026-07-09T23:34:01.043Z
 
-## 엔트리 (431개)
+## 엔트리 (432개)
 
 ### Prompt Engineering
 - [Large-Scale LLM Workflows: Dynamic Prompt Management System Architecture](wiki/prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows) — confidence: 1, status: draft
@@ -338,6 +338,7 @@ Updated: 2026-07-09T23:33:19.892Z
 - [Claude Interaction Security: Enhanced Guidelines and Endpoint Protection](wiki/infrastructure/claude-interaction-security-guidelines-endpoint-protection) — confidence: 1, status: draft
 - [Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token](wiki/infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern) — confidence: 4, status: complete
 - [Claude Plan 일일 한도 — cron 자동화에서 rate limit 충돌 패턴과 복구 설계](wiki/infrastructure/claude-plan-rate-limit-cron-automation-resilience) — confidence: 2, status: complete
+- [Core Web Vitals INP 최적화 — Interaction to Next Paint](wiki/infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization) — confidence: 2, status: complete
 - [Cron Natural Fire — 운영 환경 검증 패턴](wiki/infrastructure/cron-natural-fire-production-validation-pattern) — confidence: 3, status: complete
 - [Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정](wiki/infrastructure/cross-fork-ci-failure-fix-propagation-boundary) — confidence: 3, status: complete
 - [Cross-fork Feedback Sync — LLM 자동 분류 + 자가검증 + 반복학습 closed loop](wiki/infrastructure/cross-fork-feedback-sync) — confidence: 2, status: draft
@@ -1676,6 +1677,8 @@ Updated: 2026-07-09T23:33:19.892Z
 - infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token
 - infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ infrastructure/claude-plan-rate-limit-cron-automation-resilience
 - infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
+- infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization ↔ infrastructure/css-container-queries-component-responsive-design
+- infrastructure/core-web-vitals-inp-interaction-to-next-paint-optimization ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - infrastructure/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-actions-billing-block-diagnosis-recovery
 - infrastructure/cron-natural-fire-production-validation-pattern ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
 - infrastructure/cross-fork-ci-failure-fix-propagation-boundary ↔ infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern

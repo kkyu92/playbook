@@ -1,0 +1,155 @@
+---
+title: Core Web Vitals INP 최적화 — Interaction to Next Paint
+category: infrastructure
+date: "2026-07-10"
+tags:
+  - performance
+  - core-web-vitals
+  - inp
+  - web-vitals
+  - react
+  - nextjs
+  - optimization
+confidence: 2
+connections: [infrastructure/css-container-queries-component-responsive-design, infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary]
+status: complete
+description: 2024년 CLS를 대체한 INP(Interaction to Next Paint) 지표 최적화 패턴. 사용자 입력에서 다음 화면 업데이트까지의 지연을 줄이는 React/Next.js 전략.
+type: entry
+source: manual
+---
+
+## 문제
+
+INP(Interaction to Next Paint)는 2024년 3월부터 CLS를 대체한 Core Web Vitals 지표다. 사용자의 모든 인터랙션(클릭, 키입력, 탭) 중 최악의 응답 지연을 측정한다. Good: <200ms, Needs Improvement: 200-500ms, Poor: >500ms.
+
+## INP 구조
+
+```
+인터랙션 발생
+  ├─ Input delay (이벤트 핸들러 실행 대기)
+  ├─ Processing time (이벤트 핸들러 실행)
+  └─ Presentation delay (렌더링 → 화면 업데이트)
+         └─ INP = Input delay + Processing + Presentation
+```
+
+## 최적화 패턴
+
+### 1. startTransition — 긴급/비긴급 업데이트 분리
+
+```tsx
+import { startTransition, useState } from 'react';
+
+function SearchInput() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setQuery(value); // 긴급: 입력값 즉시 반영
+
+    startTransition(() => {
+      setResults(filterResults(value)); // 비긴급: 검색 결과 (가로막지 않음)
+    });
+  }
+
+  return (
+    <>
+      <input value={query} onChange={handleChange} />
+      <ul>{results.map(r => <li key={r.id}>{r.name}</li>)}</ul>
+    </>
+  );
+}
+```
+
+### 2. useDefferredValue — 파생 값 지연
+
+```tsx
+import { useDeferredValue, memo } from 'react';
+
+function App() {
+  const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
+
+  return (
+    <>
+      <input value={query} onChange={e => setQuery(e.target.value)} />
+      <SlowList query={deferredQuery} />  {/* 이전 query 값 유지하며 렌더 */}
+    </>
+  );
+}
+
+const SlowList = memo(function SlowList({ query }) {
+  // 비용이 큰 렌더링 — deferredQuery가 안정될 때만 실행
+  return <ul>{/* ... */}</ul>;
+});
+```
+
+### 3. 이벤트 핸들러 경량화
+
+```tsx
+// ❌ 핸들러 안에서 무거운 동기 작업
+function handleClick() {
+  const result = computeHeavySync(data); // INP 블로킹
+  setState(result);
+}
+
+// ✅ 핸들러 경량 + 비동기 분리
+function handleClick() {
+  setState('loading');
+  setTimeout(() => {
+    const result = computeHeavySync(data); // 다음 프레임에서 실행
+    setState(result);
+  }, 0);
+}
+
+// ✅ scheduler.postTask (Chrome 94+)
+function handleClick() {
+  setState('loading');
+  scheduler.postTask(() => {
+    setState(computeHeavySync(data));
+  }, { priority: 'background' });
+}
+```
+
+### 4. 가상화(Virtualization) — 대형 목록
+
+```tsx
+// react-window로 10,000 항목 리스트 INP 개선
+import { FixedSizeList } from 'react-window';
+
+function VirtualList({ items }) {
+  return (
+    <FixedSizeList
+      height={600}
+      itemCount={items.length}
+      itemSize={50}
+      width="100%"
+    >
+      {({ index, style }) => (
+        <div style={style}>{items[index].name}</div>
+      )}
+    </FixedSizeList>
+  );
+}
+```
+
+## INP 측정
+
+```typescript
+import { onINP } from 'web-vitals';
+
+onINP(({ value, rating, entries }) => {
+  console.log(`INP: ${value}ms (${rating})`);
+  // rating: 'good' | 'needs-improvement' | 'poor'
+  
+  // 최악 인터랙션 분석
+  entries.forEach(e => {
+    console.log(e.name, e.processingStart - e.startTime, 'ms input delay');
+  });
+}, { reportAllChanges: true });
+```
+
+## Related
+
+- [CSS Container Queries](/wiki/infrastructure/css-container-queries-component-responsive-design) — 레이아웃 재계산이 INP에 미치는 영향 최소화
+- [Next.js React Suspense 스트리밍](/wiki/infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary) — 스트리밍으로 초기 렌더 부하 분산 → INP 개선
