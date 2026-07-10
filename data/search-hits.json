@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1127,
+  "totalInvocations": 1128,
   "skipped": 28,
-  "searched": 1099,
-  "hit": 498,
+  "searched": 1100,
+  "hit": 499,
   "noMatch": 601,
-  "lastUpdated": "2026-07-09T23:35:57.029Z",
+  "lastUpdated": "2026-07-10T23:22:32.450Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -41,7 +41,7 @@
     "context-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 10,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 11,
     "harness-engineering/develop-cycle-positive-streak-recognition": 4,
     "retros/2026-05-12-cycles-308-311": 5,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -168,7 +168,7 @@
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 3,
     "agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
-    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 6,
+    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 7,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 3,
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 10,
@@ -1254,5 +1254,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1171
+  "totalQueries": 1172
 }
