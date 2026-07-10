@@ -168,7 +168,14 @@ function resolveArticle(articles, index, label) {
   return article;
 }
 
-// ─── 워커 Issue dispatch (playbook 외 PROJECTS 전체) ─────────
+// ─── 워커 후보 Issue (playbook 허브에 백로그로 축적, 워커 리포 직접 오염 방지) ─────────
+//
+// 2026-07-10 pivot: 이전에는 워커 리포 (blog-autopilot, moneyballscore) 로 직접 dispatch 했으나,
+// 워커 이슈 목록이 Scout 아이디어로 오염되는 문제 발생 (blog-autopilot 32건 누적).
+// 이제 hub (playbook) 에 `scout-idea` + `worker/${id}` 라벨로 백로그 축적 → 사용자 검토 후
+// 채택 판정된 것만 별도 워커 dispatch (또는 skill 실행).
+
+const HUB_REPO = "kkyu92/playbook";
 
 function createDispatchIssue(match, article) {
   const project = PROJECTS.find((p) => p.id === match.project_id);
@@ -181,8 +188,11 @@ function createDispatchIssue(match, article) {
     day: "2-digit",
   });
 
-  const title = `🔭 [Scout] ${match.action_title}`;
+  const title = `🔭 [Scout/${project.id}] ${match.action_title}`;
   const body = `## 긱뉴스 스카우트 — ${today}
+
+### 대상 워커
+- **프로젝트**: \`${project.id}\` (${project.repo})
 
 ### 원본 기사
 - **제목**: ${article.title}
@@ -196,10 +206,11 @@ ${match.reason}
 ${match.action_plan}
 
 ---
-> 🤖 자동 생성 by \`scout-geeknews.mjs\` — 긱뉴스 데일리 스카우트`;
+> 🤖 자동 생성 by \`scout-geeknews.mjs\` — 긱뉴스 데일리 스카우트
+> 채택 시: 워커 리포 dispatch 또는 skill 실행 → 이 이슈 close`;
 
   if (dryRun) {
-    console.log(`   [DRY] Issue to ${project.repo}: ${title}`);
+    console.log(`   [DRY] Issue to ${HUB_REPO} (target=${project.id}): ${title}`);
     return;
   }
 
@@ -208,33 +219,34 @@ ${match.action_plan}
   fs.writeFileSync(tmpFile, body);
 
   try {
-    try {
-      execFileSync(
-        "gh",
-        [
-          "label", "create", "hub-dispatch",
-          "--repo", project.repo,
-          "--color", "1d76db",
-          "--description", "Scout 이 자동 감지한 이식 후보",
-        ],
-        { encoding: "utf-8", timeout: 15000, stdio: "pipe" },
-      );
-    } catch { /* already exists */ }
+    // 라벨 사전 생성 (idempotent, 실패 무시)
+    for (const [name, color, desc] of [
+      ["scout-idea", "1d76db", "Scout 이 자동 감지한 이식 후보 (허브 백로그)"],
+      [`worker/${project.id}`, "0e8a16", `대상 워커: ${project.id}`],
+    ]) {
+      try {
+        execFileSync(
+          "gh",
+          ["label", "create", name, "--repo", HUB_REPO, "--color", color, "--description", desc],
+          { encoding: "utf-8", timeout: 15000, stdio: "pipe" },
+        );
+      } catch { /* already exists */ }
+    }
 
     const result = execFileSync(
       "gh",
       [
         "issue", "create",
-        "--repo", project.repo,
+        "--repo", HUB_REPO,
         "--title", title,
         "--body-file", tmpFile,
-        "--label", "hub-dispatch",
+        "--label", `scout-idea,worker/${project.id}`,
       ],
       { encoding: "utf-8", timeout: 30000 },
     );
-    console.log(`   ✅ Issue: ${result.trim()}`);
+    console.log(`   ✅ Issue (hub backlog): ${result.trim()}`);
   } catch (err) {
-    console.error(`   ❌ Issue 실패 (${project.repo}): ${err.message}`);
+    console.error(`   ❌ Issue 실패 (${HUB_REPO}): ${err.message}`);
   } finally {
     try { fs.unlinkSync(tmpFile); fs.rmdirSync(tmpDir); } catch {}
   }
