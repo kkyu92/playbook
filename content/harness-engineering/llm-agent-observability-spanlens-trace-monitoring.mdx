@@ -1,0 +1,85 @@
+---
+title: "LLM Agent 관측 플랫폼 — Spanlens 오픈소스 트레이스 통합 패턴"
+category: harness-engineering
+date: "2026-06-11"
+tags:
+  - observability
+  - llm-tracing
+  - agent-monitoring
+  - cost-tracking
+  - open-source
+  - spanlens
+confidence: 1
+connections: [harness-engineering/llm-agent-tool-call-reliability-forge-guardrails, evaluation/llm-output-validation-quality-metrics-design]
+status: draft
+description: "LLM 호출과 에이전트 trace를 단일 플랫폼에서 관측하는 오픈소스 패턴. Spanlens 기반 비용 추적 + 비정상 동작 감지 + 파이프라인 디버깅 통합 전략."
+type: entry
+source: scout
+---
+
+LLM 기반 자동화 파이프라인 (blog-autopilot, moneyball predictor 등) 이 복잡해질수록 LLM 호출 비용, 지연 시간, 실패 패턴을 단일 뷰에서 관측하는 인프라가 필요해진다. Spanlens 는 LLM 호출 및 에이전트 trace 를 오픈소스로 집계하는 관측 플랫폼이다.
+
+## 핵심 문제
+
+LLM 파이프라인 운영 시 관측 blind spot 3가지:
+
+1. **비용 추적 불투명**: 어느 단계에서 토큰을 얼마나 쓰는지 모름 → 최적화 포인트 불명확
+2. **비정상 동작 감지 지연**: `writer: claude CLI exit 1` 같은 오류를 로그 스캔 없이는 파악 불가
+3. **에이전트 trace 분산**: 멀티 스텝 에이전트 실행 흐름을 재구성하기 어려움
+
+## Spanlens 패턴
+
+오픈소스 LLM observability 플랫폼. 핵심 기능:
+- **Span 기반 trace**: 에이전트 각 step 을 span 으로 기록 → 전체 실행 흐름 재구성
+- **비용 집계**: provider별 토큰 사용량 + USD 환산 자동 집계
+- **이상 감지**: 비정상 지연 / 실패율 급등 시 alert
+
+## 통합 전략 (Node.js + Claude CLI 환경)
+
+```typescript
+// src/lib/llm.ts — Spanlens trace 래핑 예시
+import { Tracer } from '@spanlens/node';
+
+const tracer = new Tracer({ apiKey: process.env.SPANLENS_API_KEY });
+
+async function callLLM(prompt: string, opts: LLMOpts) {
+  return tracer.trace('llm.call', async (span) => {
+    span.setAttributes({
+      'llm.model': opts.model ?? 'sonnet',
+      'llm.prompt_tokens': estimate(prompt),
+      'niche': opts.niche,
+    });
+    const result = await spawnClaudeOnce(prompt, opts);
+    span.setAttributes({ 'llm.completion_tokens': result.tokens });
+    return result;
+  });
+}
+```
+
+기존 `spawnClaudeOnce()` 래핑 → 코드 변경 최소화.
+
+## 도입 가치 vs 비용
+
+| 항목 | 가치 | 비용 |
+|---|---|---|
+| 비용 추적 | 월별 LLM spend 정확 파악 | SPANLENS_API_KEY 관리 |
+| 실패 감지 | auto-discard 배치 실패 즉시 alert | 코드 래핑 1~2h |
+| trace 재구성 | 에이전트 hang 디버깅 시간 절약 | 외부 SaaS 의존 (셀프호스팅 가능) |
+
+**자동화 가치 계산**: auto-discard 배치 실패 1건 진단 시간 ~30분 × 월 2회 = 1h 절약. 통합 1~2h → BEP 1-2 발생 후 ROI 전환.
+
+## 관련 패턴
+
+- **대안**: LangSmith (Langchain 에코시스템), Langfuse (오픈소스), Helicone (OpenAI 전용)
+- **자체 구현**: `data/pipeline-runs.jsonl` append + 간단 집계 스크립트 — 외부 의존 없음, 기능 제한
+
+## blog-autopilot 적용 메모
+
+- `src/lib/llm.ts:65 spawnClaudeOnce()` 래핑 포인트
+- `BLOG_LLM_MODEL_OVERRIDE` 모델별 비용 분리 측정 가능
+- auto-discard 발생 시 span 에 `error: exit_code=1` 자동 박제
+
+## 관련 항목
+
+- [[llm-agent-tool-call-reliability-forge-guardrails]] — LLM 에이전트 신뢰성 패턴
+- [[llm-output-validation-quality-metrics-design]] — LLM 출력 품질 측정

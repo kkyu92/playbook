@@ -1,0 +1,81 @@
+---
+title: "위키 Journal Append-Only 구조와 Long In-Progress 오경보 — lint 정책 충돌 해결"
+category: harness-engineering
+date: "2026-06-15"
+tags:
+  - wiki
+  - journal
+  - lint
+  - append-only
+  - false-positive
+  - status
+confidence: 2
+connections:
+  - harness-engineering/wiki-jit-search-blind-spot-diagnosis
+  - harness-engineering/agentic-wiki-confidence-lifecycle
+status: complete
+description: "journal/ 엔트리의 append-only 정책과 lint Long In-Progress 경고의 구조적 충돌. status 필드를 수정할 수 없어 경고가 영구 누적되는 패턴 진단 + 해결법."
+type: entry
+source: meta
+---
+
+journal 엔트리는 `append-only` (CLAUDE.md 규칙: "Journal은 append-only — 수정 금지"). 그런데 lint-content.mjs 는 `status: in-progress` + 30일+ 를 Long In-Progress 경고로 발화한다. journal 엔트리가 과거 사건 기록으로 완료됐어도 status 를 `complete` 로 수정할 수 없다 → **구조적 오경보 누적**.
+
+## 문제 발생 메커니즘
+
+```
+journal 엔트리 생성 시 status: in-progress
+       ↓
+작업 완료, 사건 마무리
+       ↓
+CLAUDE.md: append-only → status 수정 불가
+       ↓
+30일 경과 → lint Long In-Progress ⚠️ 경고 발화
+       ↓
+해소 방법 없음 → 영구 오경보
+```
+
+## 실측 (2026-06-15, N=328 entries)
+
+- Long In-Progress 경고: 24건
+- 24건 모두 `journal/` 엔트리
+- non-journal Long In-Progress: 0건
+- 경과 기간: 32~48일 (모두 6개월 미달)
+
+→ lint 경고 24건 = 100% false positive (구조적 원인)
+
+## 해결법 선택지
+
+### A — lint 에서 journal 제외 ✅ (채택, 2026-06-15 fix: `3499d1b`)
+
+`checkInProgressOldEntries()` 에 `journal/` prefix skip 추가.
+
+```javascript
+if (e.slug.startsWith("journal/")) continue;  // append-only → status 수정 불가
+```
+
+결과: Long In-Progress 24건 → 0건. 실제 non-journal in-progress 엔트리만 경고.
+
+### B — journal 생성 시 status: complete 강제
+
+새로 생성되는 journal 엔트리가 `status: complete` 로 생성 → 과거 24건은 여전히 in-progress.
+마이그레이션 필요 (append-only 위반 없이 불가).
+
+### C — lint 경고 무시 (anti-pattern)
+
+false positive 방치 → 경고 신뢰도 하락. 실제 in-progress 비-journal 엔트리 묻힘.
+
+## 예방: journal 엔트리 생성 기본값
+
+신규 journal 엔트리 생성 시 `status: complete` 로 시작. 실제 작업 중인 경우만 `in-progress`.
+
+```yaml
+status: complete  # 기본값 — 사건 기록은 생성 시점에 이미 완료 상태
+```
+
+journal 은 "과거 사건의 기록"이므로 생성 시 이미 완료 상태가 의미론적으로 정확.
+
+## 관련 항목
+
+- [[harness-engineering/wiki-jit-search-blind-spot-diagnosis]] — 0-hit 엔트리 사각지대 (JIT unused)
+- [[harness-engineering/agentic-wiki-confidence-lifecycle]] — 위키 엔트리 lifecycle

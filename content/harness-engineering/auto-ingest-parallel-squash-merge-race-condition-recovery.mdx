@@ -1,0 +1,121 @@
+---
+title: Auto-Ingest 병렬 Squash-Merge 경쟁 조건 감지와 자동 복구 패턴
+category: harness-engineering
+date: "2026-06-29"
+tags:
+  - ci-cd
+  - github-actions
+  - race-condition
+  - auto-ingest
+  - squash-merge
+  - rebase
+  - retry-mechanism
+  - parallel-merge
+  - automation
+  - harness-engineering
+confidence: 4
+connections: [harness-engineering/agentic-ci-deploy-budget-batch-push-policy, harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix, harness-engineering/concurrent-fault-tolerant-ai-workflow-design-patterns]
+status: complete
+description: Auto-ingest 브랜치가 병렬로 동시에 squash-merge 시도할 때 발생하는 경쟁 조건(merge conflicts)을 감지하고, git rebase -X ours + force-push 자동 재트리거로 복구하는 ai-review.yml 패턴. 900+ 사이클 운영에서 검증.
+type: entry
+source: harness-engineering
+---
+
+Auto-ingest 파이프라인에서 여러 브랜치가 동시에 squash-merge를 시도할 때 경쟁 조건이 발생한다. Rebase 단계는 성공했어도 merge API 호출 시점에 이미 다른 브랜치가 main을 앞서 있으면 GitHub는 `"Pull Request has merge conflicts"` 또는 `"not mergeable"` 응답을 반환한다.
+
+## 경쟁 조건 발생 메커니즘
+
+```
+T0: Branch-A, Branch-B 모두 origin/main@c1 기준으로 rebase 완료
+T1: Branch-A squash-merge 성공 → main = c2
+T2: Branch-B merge API 호출 → main = c2지만 Branch-B는 c1 기준 → "merge conflicts"
+```
+
+워크플로가 병렬로 뜨는 상황 — push 이벤트 10개가 동시 트리거될 때마다 재발 가능.
+
+## 해결 전략: 감지 → 재트리거 루프
+
+단순 재시도(retry) 대신 **force-push로 새 워크플로 런 트리거** 전략을 채택. 재시도를 워크플로 안에서 직접 처리하지 않고 GitHub Actions 트리거 메커니즘을 재활용해 clean state로 다시 시작.
+
+### 1단계: Squash Merge에서 경쟁 조건 감지
+
+```javascript
+// ai-review.yml — Squash Merge step
+const isAutoIngest = context.ref.startsWith('refs/heads/auto-ingest/');
+
+try {
+  await github.rest.pulls.merge({
+    ...
+    merge_method: 'squash',
+  });
+  core.setOutput('merged', 'true');
+} catch (err) {
+  if (isAutoIngest && (
+    err.message.includes('merge conflicts') ||
+    err.message.includes('not mergeable')
+  )) {
+    // 경쟁 조건 감지 — 재트리거로 복구 (실패 처리 X)
+    core.setOutput('retry', 'true');
+    core.warning(`race condition — re-triggering: ${err.message}`);
+  } else {
+    // 비 auto-ingest 또는 다른 에러 — 실패 처리
+    core.setFailed(err.message);
+  }
+}
+```
+
+### 2단계: -X ours rebase + force-push로 재트리거
+
+```yaml
+- name: Auto-ingest retry (re-trigger via force-push)
+  if: steps.merge.outputs.retry == 'true'
+  run: |
+    git fetch origin main
+    git checkout -- .       # pnpm build 생성 파일 제거 (unstaged 방지)
+    git rebase origin/main -X ours
+    git push origin HEAD:${{ github.ref_name }} --force-with-lease
+```
+
+`-X ours` 전략: 충돌 시 현재 브랜치(자동 생성 콘텐츠)를 우선. Auto-ingest는 LLM 생성 콘텐츠라 다른 콘텐츠 브랜치와 내용이 겹치지 않으므로 안전.
+
+`git checkout -- .` 필수: Test Gate(`pnpm build`)가 생성하는 unstaged 파일이 있으면 `rebase` 명령이 `"cannot rebase: You have unstaged changes"` 오류로 중단. 빌드 생성 파일을 정리 후 rebase.
+
+### 3단계: Rebase 단계 전략도 동일 적용
+
+```yaml
+- name: Rebase onto main
+  run: |
+    REBASE_STRATEGY=""
+    if [[ "${{ github.ref_name }}" == auto-ingest/* ]]; then
+      REBASE_STRATEGY="-X ours"
+    fi
+    if git rebase origin/main $REBASE_STRATEGY; then
+      git push origin HEAD:${{ github.ref_name }} --force-with-lease
+      echo "status=ok" >> $GITHUB_OUTPUT
+    fi
+```
+
+Auto-ingest 브랜치는 초기 rebase에서도 `-X ours` 적용. 비 auto-ingest 브랜치는 기존 동작 유지(충돌 시 수동 해결 comment 남김).
+
+## 설계 근거
+
+| 접근 | 이유 |
+|------|------|
+| 재트리거 (force-push) vs 직접 재시도 | 직접 재시도는 같은 race에 재진입 가능. Force-push는 새 런에서 fresh fetch + rebase |
+| `-X ours` 전략 | 자동 생성 콘텐츠는 수동 충돌 해결 불필요. 항상 최신 rebased 버전이 정답 |
+| `checkout -- .` | pnpm build 빌드 결과물(content-manifest 등) 정리 — 재시도 루프에서만 필요 |
+| auto-ingest 전용 분기 | 수동 큐레이션 브랜치는 경쟁 조건 발생 빈도 낮고 충돌 시 내용 검토 필요 |
+
+## 운영 시 주의
+
+**브랜치 생성 위치**: auto-ingest 브랜치를 로컬 main에서 생성하면 BRANCHED 상태에서 불필요한 rebase overhead가 발생. `origin/main` 직접 기반으로 생성:
+
+```bash
+# 나쁜: local main (BRANCHED 상태면 즉시 rebase 필요)
+git checkout -b auto-ingest/lesson-slug
+
+# 좋은: origin/main 직접 기반
+git checkout -B auto-ingest/lesson-slug origin/main
+```
+
+**배치 동시성**: 20개 이상 auto-ingest 브랜치가 동시에 워크플로 실행 중이면 경쟁 조건 확률이 높아진다. Retry 메커니즘이 이를 처리하지만, 브랜치 수가 많을수록 전체 수렴 시간이 늘어난다(지수적 감소). 관찰: 20개 → 14개 → 5개 수렴까지 약 2시간 소요.

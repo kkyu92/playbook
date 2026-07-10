@@ -1,0 +1,95 @@
+---
+title: "Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정"
+category: harness-engineering
+date: "2026-06-17"
+tags:
+  - multi-fork
+  - cross-fork
+  - ci-failure
+  - security-patch
+  - worker-incident-triage
+  - fix-propagation
+  - user-territory
+  - closed-loop
+confidence: 3
+connections:
+  - harness-engineering/hub-worker-compounding-pattern
+  - infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern
+status: complete
+description: "multi-fork (허브 + 워커) 아키텍처에서 허브가 워커 CI 실패를 트리아지/close 할 수 있지만 워커 코드를 직접 수정할 수 없는 구조적 경계. 허브 TODOS.md 박제 ≠ 워커 자동 수정. 누적 36건 ws/vite CVE wave evidence (2026-06-16~17)."
+type: entry
+source: manual
+---
+
+## 문제
+
+허브(playbook)가 워커(moneyball) CI 실패를 감지하고 issue close + TODOS.md 박제까지 할 수 있다. 하지만 **워커 레포의 코드를 직접 수정할 수 없다**. 이 경계 때문에 허브 트리아지 완료 ≠ 실제 CI 수정으로 이어진다.
+
+```
+워커 CI 실패 → 허브 inbound issue 생성
+허브: pnpm search → 기존 solution 확인 → root cause 분류 → issue close + TODOS.md [P1]
+↓
+그러나:
+허브 TODOS.md [P1] → 워커 develop-cycle 은 이 파일을 읽지 않음
+워커: 동일 CI 실패 → 다음 push → 다음 inbound issue 생성
+→ 무한 반복
+```
+
+## 실측 (2026-06-16~17)
+
+| 지표 | 값 |
+|---|---|
+| 원인 | ws `<8.21.0` + vite `<=8.0.15` (moneyball 미수정) |
+| 허브 batch-close | 36건 (cycle 1110~1115) |
+| 허브 fix | playbook 자체 vite/protobufjs patch (cycle 1112) |
+| 워커 fix | ❌ 미완 (사용자 영역) |
+| 반복 주기 | 매 moneyball push마다 새 issue 생성 (시간당 5~10건) |
+
+## 구조적 경계
+
+```
+허브 develop-cycle 권한:
+  ✅ 허브 레포(playbook) 코드 수정
+  ✅ GH issue close/comment
+  ✅ TODOS.md 박제
+  ✅ 워커 패턴 분류 + solution doc 갱신
+
+  ❌ 워커(moneyball) 레포 코드 수정
+  ❌ 워커 레포 pnpm update 실행
+  ❌ 워커 레포 push
+  ❌ 워커 develop-cycle에 지시 전송 (비동기 채널 없음)
+```
+
+## 대응 패턴
+
+### 1. TODOS.md [P1] 박제 (현행)
+
+허브가 할 수 있는 최대 = 사용자에게 명시적 action item 박제.
+
+```markdown
+## [P1] moneyball CI fix
+Action: moneyball 레포에서 `pnpm update ws vite` → push
+```
+
+누적 건수로 긴급도 표시: `⚠️ 매 cycle 새 issue 생성 중 — 조기 fix 권장`.
+
+### 2. 워커 레포 fix commit message 약속 (사용자 주도)
+
+워커에서 fix 완료 시 `fix(security):` prefix commit → 허브 inbound 자동 종료 패턴.
+
+### 3. fast-path issue close (현행)
+
+같은 root cause = 새 분석 없이 즉시 close + 기존 solution 링크. 허브 context 소비 최소화.
+
+## 예방: 워커 develop-cycle에 security audit chain 추가
+
+워커(moneyball) develop-cycle 에 `pnpm audit --audit-level=high` 를 smoke test step으로 추가하면 워커 자체 cycle에서 감지 → fix-incident chain 발화 → 워커 레포 내에서 자율 수정 가능.
+
+현재 워커 smoke test = `pnpm test` (vitest). audit step 부재 = 허브에서만 감지되는 blind spot.
+
+## 관련 패턴
+
+- 허브 triage 완료 ≠ 워커 fix = "hub triage boundary"
+- 같은 패턴의 이전 사례: protobufjs CVE (cycle 452) — PR merge 로 해소
+- [[harness-engineering/hub-worker-compounding-pattern]] — 양방향 흐름 설계
+- [[infrastructure/pnpm-transitive-cve-audit-gate-fix-pattern]] — CVE fix 방법론

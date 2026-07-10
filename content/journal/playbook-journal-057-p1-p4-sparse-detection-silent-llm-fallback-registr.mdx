@@ -1,0 +1,45 @@
+---
+title: "Playbook Journal 057 — P1-P4 패턴 추출 — sparse detection / silent LLM fallback / registry sweep / alert cascade (cycle 1400)"
+category: harness-engineering
+date: "2026-06-26"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: P1-P4 패턴 추출 — sparse detection / silent LLM fallback / registry sweep / alert cascade (cycle 1400) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260626-p1-p4-sparse-detection-silent-llm-fallback-registr-2322b23ee1d532a4ec3332941ac984.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 1400
+chain: operational-analysis (lite)
+
+P1 (ai_agent): neutral-factor sparse detection — countNeutralFactors + PREDICTION_SPARSE_THRESHOLD=5 + Sentry 별도 채널
+P2 (anti_pattern): silent LLM fallback masking — judgeResult.data||fallback 22일 미감지, confidence=0.3 flat이 DB 집계로만 탐지 가능
+P3 (quality_guard): registry sweep wave — 1 grep pattern → shared 상수 → guard test, wave 163개 누적
+P4 (data_pipeline): alert cascade by pipeline mode — predict_final/verify/postview/sparse 4 layer
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_

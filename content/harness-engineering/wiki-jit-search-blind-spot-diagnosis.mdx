@@ -1,0 +1,99 @@
+---
+title: "위키 JIT 검색 사각지대 진단 — 0-hit 엔트리 왜 안 걸리나"
+category: harness-engineering
+date: "2026-06-15"
+tags:
+  - wiki
+  - JIT
+  - search
+  - blind-spot
+  - embedding
+  - lazy-enrichment
+confidence: 2
+connections:
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback
+  - harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
+status: complete
+description: "lint JIT Unused 목록 엔트리가 왜 검색에 걸리지 않는지 원인 분류 + 대응 결정 프레임워크. confidence=1 auto-ingest 구조적 사각지대 vs. 보강 가능한 사각지대 구분."
+type: entry
+source: meta
+---
+
+`lint JIT Unused` = `search-hits.json` 에서 hit 0인 엔트리. 30일 이상 hit 0 이면 lint 경고. **이 경고가 의미하는 것과 아닌 것을 구분하는 게 핵심**.
+
+## 사각지대 원인 분류
+
+### 유형 A — 구조적 사각지대 (confidence=1 auto-ingest)
+
+RSS/GeeKNews 자동 수집 → 제목 + 요약만 있는 얕은 엔트리. 쿼리는 "내가 실제로 검색할 자연어"인데, 엔트리는 SEO 헤드라인 스타일 — 의미 공간 불일치.
+
+**진단**: `confidence: 1` + JIT unused + 날짜 30일+
+
+**대응**: lazy enrichment 정책 적용 — 실 사용 필요가 생길 때만 보강. 즉각 보강 X. 6개월 이상 unused 유지 → `_archive/` 이동 검토.
+
+### 유형 B — 카테고리 이탈 사각지대
+
+엔트리 내용은 좋은데 카테고리가 잘못됨. 예: 인프라 패턴인데 `agents/` 에 있으면 "인프라 검색"에서 안 걸림. embedding centroid 가 category 레이블 영향 받음.
+
+**진단**: confidence=2+ + JIT unused + `category-rebalance.mjs` outlier 판정
+
+**대응**: `mv content/wrong-cat/entry.mdx content/right-cat/` + connections 확인.
+
+### 유형 C — 제목 과잉 엔지니어링
+
+"LLM-Agent-Tool-Use-Design-Patterns-Orchestration" 같은 명사 나열 제목. 검색 쿼리는 "에이전트 도구 사용 패턴" 자연어. 코사인 유사도 밀리는 구간.
+
+**진단**: 제목이 kebab-case-noun-stacking + content 자체는 relevant
+
+**대응**: title frontmatter 수정 (자연어 형태) — 단기 fix. 근본 해결은 embed 재생성.
+
+### 유형 D — 고립 엔트리 (connections 0)
+
+connections 없으면 지식 그래프에서 고립. JIT 검색은 embedding 기반이라 connections 직접 영향 없지만, **고립 = 다른 엔트리 검색 시 연결로 발견 X**.
+
+**진단**: `lint Isolated Nodes` 목록과 JIT Unused 교집합
+
+**대응**: 관련 엔트리 connections 에 추가 (양방향).
+
+## 결정 프레임워크
+
+```
+0-hit 엔트리 발견
+  ├── confidence=1? → lazy enrichment (즉시 보강 X)
+  │     └── 6개월+ 유지? → archive 검토
+  ├── category-rebalance outlier? → 카테고리 이동
+  ├── 제목 과잉 엔지니어링? → title 수정 + embed 재생성
+  └── connections=0? → 관련 entry connections 양방향 추가
+```
+
+## 측정
+
+```bash
+# 현재 0-hit 엔트리 수 (30일+)
+node scripts/lint-content.mjs 2>/dev/null | grep "JIT Unused"
+
+# 유형 A (confidence=1) 비율
+python3 -c "
+import json, re
+from pathlib import Path
+hits_data = json.load(open('data/search-hits.json'))
+hits = hits_data.get('hits', {})
+entries = list(Path('content').rglob('*.mdx'))
+unused_conf1 = [str(e) for e in entries if e.stem not in hits]
+print(f'roughly {len(unused_conf1)}/{len(entries)} files never hit')
+" 2>/dev/null
+```
+
+## 허브 실측 (2026-06-15, N=327 entries)
+
+- JIT Unused: 75건 (23% of 327)
+- 대부분 유형 A (confidence=1 auto-ingest, 30일+ stale)
+- 유형 B: category-rebalance.mjs N < 30 skip (entries < 30이 아니라 총 N=268 시점에 분석함, 이후 측정 대기)
+- 대응: lazy enrichment 정책 유지 (6개월 기준 archiving 은 2026-11 이후 적용)
+
+## 관련 항목
+
+- [[harness-engineering/wiki-knowledge-roi-3axis-measurement]] — 3축 ROI 측정 (hit rate 포함)
+- [[harness-engineering/agentic-jit-near-threshold-false-negative-ls-fallback]] — threshold 근처 false negative 패턴
+- [[harness-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal]] — 커버리지 성숙도 역방향 지표

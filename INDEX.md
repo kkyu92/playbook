@@ -25,6 +25,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [온디바이스 LLM 추론 효율화 패턴 — 경량 모델 최적화 및 배포 전략](wiki/prompt-engineering/on-device-llm-inference-efficiency-patterns) — confidence: 1, status: draft
 - [Prompt Engineering을 위한 견고한 프롬프트 버전 관리 및 테스트 전략](wiki/prompt-engineering/prompt-versioning-and-testing) — confidence: 1, status: draft
 - [RAG 시스템 프롬프트 최적화 — 검색 증강 생성 성능 극대화 전략](wiki/prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation) — confidence: 1, status: draft
+- [RAG Prompt Optimization: Maximizing Generation Accuracy and Efficiency](wiki/prompt-engineering/rag-prompt-optimization-techniques) — confidence: 1, status: draft
 - [Prompt Engineering: Zero-shot/Few-shot Design Patterns for LLMs](wiki/prompt-engineering/zero-few-shot-prompt-design-patterns-llm) — confidence: 1, status: draft
 
 ### Context Engineering
@@ -203,6 +204,10 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Playbook Journal 053 — silent drift family 사례 15 재발 — cycle 1076/1077 retro local push 누락 (cycle 1078 자연 발견)](wiki/journal/playbook-journal-053-silent-drift-family-15-cycle-1076-1077-retro-local) — confidence: 3, status: in-progress
 - [Playbook Journal 054 — lesson-pending 23건 batch wave 3 (cycle 1095, N=3 trigger) (#1495)](wiki/journal/playbook-journal-054-lesson-pending-23-batch-wave-3-cycle-1095-n-3-trig) — confidence: 3, status: completed
 - [Playbook Journal 055 — incident wave 2026-06-10/11 — SUPABASE_URL + esbuild CVE family (8 fingerprints batch close, cycle 1169)](wiki/journal/playbook-journal-055-incident-wave-2026-06-10-11-supabase-url-esbuild-c) — confidence: 3, status: in-progress
+- [Playbook Journal 056 — cycle 1311 explore-idea (lite) post-wave-99 saturation redirect spec](wiki/journal/playbook-journal-056-cycle-1311-explore-idea-lite-post-wave-99-saturati) — confidence: 3, status: in-progress
+- [Playbook Journal 057 — P1-P4 패턴 추출 — sparse detection / silent LLM fallback / registry sweep / alert cascade (cycle 1400)](wiki/journal/playbook-journal-057-p1-p4-sparse-detection-silent-llm-fallback-registr) — confidence: 3, status: in-progress
+- [Playbook Journal 058 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)](wiki/journal/playbook-journal-058-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151) — confidence: 3, status: in-progress
+- [Playbook Journal 059 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)](wiki/journal/playbook-journal-059-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -229,12 +234,15 @@ Updated: 2026-07-09T23:36:30.154Z
 - [AI Agent Cost Control — Preventing Runaway Cloud Resource Consumption](wiki/agents/ai-agent-runaway-cost-prevention-control-systems) — confidence: 1, status: draft
 - [AI Agent Safety & Constraint Control: Design Patterns for Production Environments](wiki/agents/ai-agent-safety-constraint-control-design-patterns) — confidence: 1, status: draft
 - [AI Agent Self-Correction: Design Principles for Robust Autonomy](wiki/agents/ai-agent-self-correction-design-principles) — confidence: 1, status: draft
+- [AI Agent Shared Brain System: Enhancing Context Persistence and Collaboration](wiki/agents/ai-agent-shared-brain-system-context-persistence-collaborati) — confidence: 1, status: draft
 - [AI Agent Guardrails: Superpowers Pattern으로 의도 정렬 구현](wiki/agents/ai-agent-superpowers-guardrails-intent-alignment) — confidence: 1, status: draft
 - [AI Agent Execution & Knowledge Integration — 투명한 작업 진행 및 결과 공유](wiki/agents/ai-agent-transparent-execution-knowledge-integration) — confidence: 1, status: draft
 - [AI Collaboration 5 Principles — Playbook Agent Workflow Optimization](wiki/agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi) — confidence: 1, status: draft
 - [Antigravity 2.0 & Managed Agents API — AI 에이전트 개발 및 오케스트레이션 가이드](wiki/agents/antigravity-managed-agents-api-integration-review) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/agents/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
 - [Autonomous Agents: Long-Term Memory Management Strategies](wiki/agents/autonomous-agent-long-term-memory-management) — confidence: 1, status: draft
+- [자율 에이전트 다단계 의사결정 설계 — 복잡한 목표 달성을 위한 아키텍처 패턴](wiki/agents/autonomous-agent-multi-stage-decision-making-patterns) — confidence: 1, status: draft
+- [자율 에이전트 추론 과정 디버깅 및 최적화 — 신뢰성과 성능 향상 기법](wiki/agents/autonomous-agent-reasoning-debugging-optimization) — confidence: 1, status: draft
 - [Autonomous AI Agent Decision Logic – Implementation Patterns for Complex Environments](wiki/agents/autonomous-ai-agent-decision-logic-implementation-patterns) — confidence: 1, status: draft
 - [코딩 에이전트의 코드 기반 작업 처리 패턴 - Harness 설계 및 구현 전략](wiki/agents/code-based-agent-task-patterns-harness-design) — confidence: 1, status: draft
 - [다중 에이전트 시스템: 협업 및 충돌 해결 디자인 패턴](wiki/agents/collaboration-conflict-resolution-multi-agent-systems) — confidence: 1, status: draft
@@ -242,6 +250,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [대규모 AI 시스템 분산형 하네스 디자인 패턴: 안정성 및 확장성 확보](wiki/agents/distributed-ai-harness-design) — confidence: 1, status: draft
 - [엔터프라이즈 에이전트 관리 패턴: 확장 가능하고 거버넌스 가능한 LLM 에이전트 오케스트레이션](wiki/agents/enterprise-agent-management-patterns-llm-orchestration) — confidence: 1, status: draft
 - [AI 에이전트 외부 툴 연동 설계 — 실제 업무 자동화를 위한 필수 전략](wiki/agents/external-tool-integration-for-ai-agents) — confidence: 1, status: draft
+- [Gemini 3.5 Flash — Agentic AI 및 코딩 최적화 모델 성능 평가](wiki/agents/gemini-3-5-flash-agentic-coding-evaluation-integration) — confidence: 1, status: draft
 - [GLM 5.2 Integration — Agent Functionality Expansion and Validation Enhancement](wiki/agents/glm-5-2-agent-extension-validation-enhancement) — confidence: 1, status: draft
 - [Google Agents CLI: AI 에이전트 개발 및 배포 가속화](wiki/agents/google-agents-cli-agent-development-acceleration) — confidence: 1, status: draft
 - [GPT-5.5 Agent Model — Advanced Evaluation and Workflow Integration](wiki/agents/gpt-5-5-agent-model-evaluation-integration-strategies) — confidence: 1, status: draft
@@ -252,6 +261,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
 - [LLM Agent 동적 툴 선택 — 복잡한 작업 자동화를 위한 최적화 전략](wiki/agents/llm-agent-dynamic-tool-selection-optimization) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
+- [LLM 에이전트 장기 기억 시스템 디자인 — 지속적인 학습과 복잡한 작업 수행 전략](wiki/agents/llm-agent-long-term-memory-system-design) — confidence: 1, status: draft
 - [LLM Agent 장기기억 및 도구 사용 패턴 — 복잡한 태스크 수행을 위한 핵심 전략](wiki/agents/llm-agent-long-term-memory-tool-use-patterns) — confidence: 1, status: draft
 - [LLM Agent Goal Management — Enhancing Persistent Objective Achievement for Long-Term Tasks](wiki/agents/llm-agent-persistent-goal-management-long-term-tasks) — confidence: 1, status: draft
 - [LLM Agent Tool Call Reliability — Enhancing with Forge Guardrails](wiki/agents/llm-agent-tool-call-reliability-forge-guardrails) — confidence: 1, status: draft
@@ -263,6 +273,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Multi-Agent System Collaboration Patterns: Orchestrating Complex Problem Solving](wiki/agents/multi-agent-collaboration-complex-problem-solving) — confidence: 1, status: draft
 - [Multi-Agent System Collaboration — Design Patterns for Complex Task Execution](wiki/agents/multi-agent-collaboration-complex-task-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Collaboration — Design Patterns for Complex Task Resolution](wiki/agents/multi-agent-collaboration-design-patterns) — confidence: 1, status: draft
+- [멀티 에이전트 시스템 협업: 통신 프로토콜 및 조정 메커니즘 설계](wiki/agents/multi-agent-collaboration-protocol-design) — confidence: 1, status: draft
 - [Multi-Agent Collaboration Patterns — Efficient System Design for Complex Tasks](wiki/agents/multi-agent-collaboration-system-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
@@ -271,6 +282,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Multi-Persona LLM Validation — Output Robustness Enhancement](wiki/agents/multi-persona-llm-output-validation-enhancement) — confidence: 1, status: draft
 - [다단계 자율 에이전트 워크플로우: 태스크 스케줄링 및 모니터링 전략](wiki/agents/multi-stage-agent-task-scheduling-monitoring) — confidence: 1, status: draft
 - [다중 도구 AI 에이전트 설계 패턴 — 복합 기능 오케스트레이션](wiki/agents/multi-tool-ai-agent-design-patterns-orchestration) — confidence: 1, status: draft
+- [멀티모달 에이전트 디자인 패턴 — 다양한 인지 능력 통합 전략](wiki/agents/multimodal-agent-design-patterns) — confidence: 1, status: draft
 - [Multimodal AI Agent Tool Use — Strategic Integration for Complex Tasks](wiki/agents/multimodal-ai-agent-effective-tool-integration) — confidence: 1, status: draft
 - [Multimodal AI Agents — Real-time Decision Logic Implementation](wiki/agents/multimodal-ai-agent-realtime-decision-logic) — confidence: 1, status: draft
 - [Multimodal AI Agent Tool Use Design - Enhancing Capabilities through Strategic Integration](wiki/agents/multimodal-ai-agent-tool-usage-design) — confidence: 1, status: draft
@@ -280,6 +292,8 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Paca: AI 에이전트 협업 프로젝트 관리 플랫폼 도입 검토](wiki/agents/paca-ai-agent-project-management-tool-review) — confidence: 1, status: draft
 - [Qwen3.6-Max-Preview LLM — 에이전틱 코딩 및 지시 이행 성능 평가](wiki/agents/qwen3-6-max-preview-llm-agentic-coding-evaluation) — confidence: 1, status: draft
 - [Qwen3.7-Max Evaluation: Agent Model Performance and Integration Strategies](wiki/agents/qwen3-7-max-agent-model-evaluation-integration) — confidence: 1, status: draft
+- [RAG Agent Optimization — 성능 및 신뢰성 향상 전략](wiki/agents/rag-agent-performance-reliability-optimization) — confidence: 1, status: draft
+- [Reinforcement Learning for Autonomous Agents — Behavior Planning and Control Strategies](wiki/agents/reinforcement-learning-autonomous-agent-behavior-control) — confidence: 1, status: draft
 - [Ruflo Platform — Claude Code 기반 멀티 에이전트 오케스트레이션 강화](wiki/agents/ruflo-multi-agent-orchestration-claude-code-playbooks) — confidence: 1, status: draft
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/agents/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/agents/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
@@ -287,7 +301,10 @@ Updated: 2026-07-09T23:36:30.154Z
 ### Evaluation
 - [OOS D-Day 도달 시 예측 평가 프로토콜](wiki/evaluation/agentic-oos-dday-arrival-evaluation-protocol) — confidence: 2, status: draft
 - [Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜](wiki/evaluation/agentic-precommit-prediction-oos-track-record) — confidence: 2, status: complete
+- [AI Agent Prompt Injection — GitLost 취약점 대응 강화 전략](wiki/evaluation/ai-agent-prompt-injection-gitlost-defense-strategy) — confidence: 1, status: draft
+- [AI-Driven Vulnerability Management — Enhancing Guard Tests with Autonomous Discovery and Remediation](wiki/evaluation/ai-vulnerability-guard-test-enhancement) — confidence: 1, status: draft
 - [Claude Code Generation Reliability — Enhanced Validation Pipeline](wiki/evaluation/claude-code-generation-validation-pipeline-extension) — confidence: 1, status: draft
+- [Claude Code Extended Thinking — 불투명한 추론 의존도 재평가](wiki/evaluation/claude-extended-thinking-dependency-reassessment) — confidence: 1, status: draft
 - [Generative AI Hallucination: Automated Detection and Evaluation Methods](wiki/evaluation/generative-ai-hallucination-automated-detection-evaluation) — confidence: 1, status: draft
 - [생성형 AI 모델 평가 — 정량적 및 정성적 접근법](wiki/evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth) — confidence: 1, status: draft
 - [LLM Agent 관측 플랫폼 — Spanlens 오픈소스 트레이스 통합 패턴](wiki/evaluation/llm-agent-observability-spanlens-trace-monitoring) — confidence: 1, status: draft
@@ -335,6 +352,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Claude Code Harness 비용 최적화 — 재평가 및 전략 수립](wiki/infrastructure/claude-code-harness-cost-optimization-reassessment) — confidence: 1, status: draft
 - [Claude Code Harness Reassessment 
  Multi-LLM Abstraction for Vendor Lock-in Mitigation](wiki/infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation) — confidence: 1, status: draft
+- [Claude Code 사용: 보안 및 컴플라이언스 위험 평가와 대안 전략](wiki/infrastructure/claude-code-security-compliance-risk-alternatives) — confidence: 1, status: draft
 - [Claude Interaction Security: Enhanced Guidelines and Endpoint Protection](wiki/infrastructure/claude-interaction-security-guidelines-endpoint-protection) — confidence: 1, status: draft
 - [Claude Max 구독 GH Actions 패턴 — Self-Hosted Runner + 직접 CLI vs OAuth Token](wiki/infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern) — confidence: 4, status: complete
 - [Claude Plan 일일 한도 — cron 자동화에서 rate limit 충돌 패턴과 복구 설계](wiki/infrastructure/claude-plan-rate-limit-cron-automation-resilience) — confidence: 2, status: complete
@@ -432,12 +450,14 @@ Updated: 2026-07-09T23:36:30.154Z
 - [TODOS.md P-Priority 반복 이슈 카운터 유지 패턴 — 누적 이력 없이 최신 상태만 추적](wiki/project-ops/todos-priority-recurring-issue-counter-pattern) — confidence: 2, status: complete
 
 ### Data Engineering
+- [bigset: Knowledge Hub Data Automation with Natural Language Web Scraping](wiki/data-engineering/bigset-structured-data-collection-knowledge-hubs) — confidence: 1, status: draft
 - [LLM 데이터셋 구축: 고품질 학습 및 파인튜닝 전략](wiki/data-engineering/llm-data-acquisition-high-quality-datasets) — confidence: 1, status: draft
 - [LLM Fine-tuning 데이터셋 준비 – 고품질 데이터 구축 전략](wiki/data-engineering/llm-fine-tuning-dataset-preparation-strategies) — confidence: 1, status: draft
 - [LLM 파인튜닝 데이터셋 — 고품질 데이터 구축 및 관리 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-construction-management) — confidence: 1, status: draft
 - [LLM Fine-tuning Data Quality — Strategies for High-Impact Dataset Construction](wiki/data-engineering/llm-fine-tuning-high-quality-data-construction) — confidence: 1, status: draft
 - [LLM Fine-tuning — 고품질 데이터셋 전처리 및 정제 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement) — confidence: 1, status: draft
 - [RAG 시스템 데이터 전처리 — 임베딩 최적화 전략](wiki/data-engineering/rag-data-preprocessing-embedding-optimization-strategies) — confidence: 1, status: draft
+- [RAG 시스템 성능 향상 — 효과적인 데이터 전처리 전략](wiki/data-engineering/rag-data-preprocessing-for-performance-gain) — confidence: 1, status: draft
 - [RAG 시스템 임베딩 업데이트 파이프라인 — 실시간 정보 반영 및 성능 유지 전략](wiki/data-engineering/rag-embedding-update-pipeline-realtime-strategies) — confidence: 1, status: draft
 - [RAG Search Performance Evaluation - Designing Robust Metrics](wiki/data-engineering/rag-search-performance-evaluation-metrics-design) — confidence: 1, status: draft
 - [Vector DB: 임베딩 데이터 최적화 패턴과 RAG 성능 향상 전략](wiki/data-engineering/vector-db-embedding-data-optimization-patterns) — confidence: 1, status: draft
@@ -454,9 +474,11 @@ Updated: 2026-07-09T23:36:30.154Z
 - [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
 - [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
 - [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
+- [Android 온디바이스 LLM 양자화: Gemma 4 QAT 모델 적용 전략](wiki/android-ai/on-device-llm-quantization-gemma-4-qat-application) — confidence: 1, status: draft
 - [On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준](wiki/android-ai/on-device-llm-quantization-patterns-android) — confidence: 1, status: draft
 
 ### Reports
+- [AI 모델 성능 및 비용 효율성 보고서 작성 — 표준화된 방법론](wiki/reports/ai-model-performance-cost-efficiency-reporting) — confidence: 1, status: draft
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
 - [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: complete
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
@@ -561,6 +583,9 @@ Updated: 2026-07-09T23:36:30.154Z
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/ai-agent-self-correction-design-principles
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/ai-agent-harness-architecture-go-micro-patterns
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/claude-fable-5-safeguards-prompt-engineering-recalibration
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/ai-agent-prompt-injection-gitlost-defense-strategy
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/ai-agent-self-correction-design-principles ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
@@ -675,6 +700,19 @@ Updated: 2026-07-09T23:36:30.154Z
 - agents/external-tool-integration-for-ai-agents ↔ agents/mirage-ai-agent-unified-filesystem-integration
 - agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-tool-usage-design
+- agents/external-tool-integration-for-ai-agents ↔ harness-engineering/multi-llm-api-integration-harness-patterns
+- agents/external-tool-integration-for-ai-agents ↔ agents/llm-autonomous-agents-tool-use-planning-implementation
+- agents/external-tool-integration-for-ai-agents ↔ harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement
+- agents/external-tool-integration-for-ai-agents ↔ agents/opentag-slack-playbook-worker-automation-poc
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/llm-agent-autonomy-complex-problem-solving
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/google-agents-cli-agent-development-acceleration
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ harness-engineering/agentic-coding-claude-harness-playbook-strategy
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ harness-engineering/multi-llm-routing-design-patterns-cost-performance
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ infrastructure/claude-code-security-compliance-risk-alternatives
+- agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ harness-engineering/llm-api-dependency-reassessment-model-diversification
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/glm-5-2-agent-extension-validation-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
@@ -788,6 +826,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/paca-ai-agent-project-management-tool-review
+- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-protocol-design
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
@@ -809,12 +848,13 @@ Updated: 2026-07-09T23:36:30.154Z
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multimodal-ai-agent-realtime-decision-logic
+- agents/multi-agent-decision-making-patterns ↔ agents/reinforcement-learning-autonomous-agent-behavior-control
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/paca-ai-agent-project-management-tool-review
-- agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/multi-agent-system-efficient-interaction-design-patterns ↔ harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
@@ -871,7 +911,6 @@ Updated: 2026-07-09T23:36:30.154Z
 - agents/ouroboros-agent-performance-cost-optimization ↔ infrastructure/claude-code-harness-cost-optimization-reassessment
 - agents/paca-ai-agent-project-management-tool-review ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - agents/paca-ai-agent-project-management-tool-review ↔ project-ops/ai-project-planning-roadmap-initial-strategy
-- agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/prompt-versioning-and-testing
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ agents/qwen3-7-max-agent-model-evaluation-integration
 - agents/qwen3-7-max-agent-model-evaluation-integration ↔ context-engineering/agentic-coding-claude-harness-playbook-strategy
@@ -1841,6 +1880,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - project-ops/ai-model-serving-mlops-pipeline-design-patterns ↔ project-ops/large-scale-ai-deployment-harness-system-design
 - project-ops/ai-model-serving-mlops-pipeline-design-patterns ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- project-ops/ai-project-planning-roadmap-initial-strategy ↔ harness-engineering/llm-api-dependency-risk-mitigation-strategy
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-project-planning-roadmap-initial-strategy ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/ai-service-high-availability-fallback-retry-strategies ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
@@ -1854,6 +1894,7 @@ Updated: 2026-07-09T23:36:30.154Z
 - project-ops/claude-api-key-security-audit-usage-pattern-validation ↔ project-ops/production-db-ai-agent-guardrails
 - project-ops/claude-api-key-security-audit-usage-pattern-validation ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
+- project-ops/generative-ai-mlops-pipeline-design-patterns ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - project-ops/generative-ai-mlops-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
 - project-ops/large-scale-ai-deployment-harness-system-design ↔ prompt-engineering/llm-scalable-service-architecture-patterns

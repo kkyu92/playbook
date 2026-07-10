@@ -1,0 +1,78 @@
+---
+title: "위키 카테고리 건강도 진단 — coherence 기반 rebalance 결정 프레임워크"
+category: harness-engineering
+date: "2026-06-15"
+tags:
+  - wiki
+  - category
+  - coherence
+  - rebalance
+  - embedding
+  - knowledge-graph
+confidence: 2
+connections:
+  - harness-engineering/wiki-knowledge-roi-3axis-measurement
+  - harness-engineering/agentic-wiki-connection-graph-health-metrics
+status: complete
+description: "category-rebalance.mjs 기반 카테고리 건강도 지표 (coherence / cross-sim / outlier) 해석법과 rebalance 결정 프레임워크. 언제 머지/분리/이동해야 하는지 기준과 anti-pattern 카탈로그."
+type: entry
+source: meta
+---
+
+위키 엔트리가 300+ 건을 넘으면 카테고리 구조가 실제 지식 경계와 어긋나기 시작한다. lint CLEAN 이어도 카테고리별 인트라-coherence 와 크로스-similarity 가 의미있는 건강도 신호를 보낸다.
+
+## 핵심 지표 3개
+
+### 1. Coherence Score (인트라-카테고리 밀집도)
+
+카테고리 내 엔트리 벡터의 평균 코사인 유사도. 0.90+ = 잘 정의된 카테고리. 0.85 미만 = 잡탕 카테고리.
+
+```bash
+node scripts/category-rebalance.mjs
+```
+
+### 2. Cross-Category Similarity (카테고리 간 경계 선명도)
+
+카테고리 centroid 간 코사인 유사도. **0.99 근접 = 두 카테고리가 사실상 같음** → 머지 검토.
+
+실제 사례 (2026-06-02, N=268):
+- `harness-engineering` ↔ `context-engineering`: 0.993 → 경계 불명확
+- `infrastructure` ↔ `harness-engineering`: 0.991 → 인프라가 harness 하위 집합
+
+### 3. Outlier Rate (엔트리 카테고리 정합도)
+
+각 엔트리가 현재 카테고리 centroid 보다 다른 카테고리 centroid 에 더 가까우면 outlier. outlier ≥ 카테고리의 30% = 카테고리 정의 혼란 신호.
+
+## 결정 프레임워크
+
+| 증상 | 원인 | 대응 |
+|---|---|---|
+| Cross-sim ≥ 0.99 양 카테고리 모두 coherence 양호 | 두 도메인이 수렴 | 머지 (하나를 다른 것의 하위 디렉토리로) |
+| Coherence 0.85 미만, outlier 30%+ | 카테고리가 너무 광범위 | 분리 (tag 기반 sub-grouping 후 split) |
+| outlier 엔트리 N개, 이동하면 suggestedSim +0.03+ | 단순 mis-categorization | 개별 이동 (`mv content/A/x.mdx content/B/`) |
+| GATE_CLUSTER 미달 카테고리 (10건 미만) | 너무 작은 카테고리 | 인접 카테고리와 머지 또는 `reports/` 로 통합 |
+
+## 실행 주기
+
+`scripts/category-rebalance.mjs` 는 self-gating (N_total < 30 시 silent skip). 300+ entries 에서 의미있는 신호. **분기 1회 (90일)** 가 적절 — 더 자주 실행하면 일시적 pulsation 을 신호로 오인.
+
+**trigger**: `scan-promotions.mjs` 실행 후 "카테고리 불균형" 경고 또는 lint 에서 특정 카테고리 orphan 집중.
+
+## Anti-Pattern 카탈로그
+
+### 1. 지표 하나만 보는 오류
+coherence 만 보고 결정 X. cross-sim 이 낮아도 두 카테고리가 의도적으로 분리된 도메인일 수 있음. 3가지 지표 종합 필요.
+
+### 2. 소규모 pulsation 에 즉각 반응
+outlier 엔트리 1-2개 발생 시 즉시 이동 X. 30%+ 임계값 필요. 단발성 오류는 entry 수정으로 해결.
+
+### 3. 대규모 일괄 이동
+165개 outlier 를 한 번에 이동 = PR 충돌 + INDEX.md 머지 위험. **20건씩 분할** + 각 batch 후 `node scripts/generate-content-manifest.mjs` 재생성.
+
+### 4. Cross-sim 0.99 에서 자동 머지
+cross-sim 이 높아도 의도적 분리가 있을 수 있음 (예: `harness-engineering` vs `context-engineering` — 전자는 인프라/워크플로, 후자는 프롬프트/LLM 컨텍스트). 실제 entry 내용 읽고 결정.
+
+## 관련 항목
+
+- [[harness-engineering/wiki-knowledge-roi-3axis-measurement]] — wiki ROI 3축 측정 (생산/소비 균형)
+- [[harness-engineering/agentic-wiki-connection-graph-health-metrics]] — connections 기반 그래프 건강도
