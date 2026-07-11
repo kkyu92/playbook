@@ -64,13 +64,13 @@ git stash pop
 | BRANCHED = 0 (sync) | 정확 | 100% |
 | origin 1-10 ahead | 대체로 정확 | 85%+ |
 | origin 10+ ahead | 확인 필요 | 70% |
-| **origin 20+ ahead** | **의심** | **<60%** |
+| **origin 20+ ahead** | **의심** | **&lt;60%** |
 
 origin이 20+ 커밋 앞선 상태에서 curate 진단 시 → lint 결과를 맹신하지 말고 origin 버전 교차 검증 필요.
 
 ## 적절한 대응
 
-1. **로컬 lint 결과 확인 시**: origin/main 기준으로 교차 검증 (git show origin/main:<file>)
+1. **로컬 lint 결과 확인 시**: origin/main 기준으로 교차 검증 (`git show origin/main:<file>`)
 2. **curate chain 진입 전**: BRANCHED 정도 확인 (origin M ahead)
 3. **origin 20+ ahead**: 로컬 fix 시도 대신 retro-only + 메모 박제 (이미 수정됐을 가능성 높음)
 4. **장기 해결책**: 사용자가 `git pull --rebase origin main + git push origin main` → BRANCHED 해소
