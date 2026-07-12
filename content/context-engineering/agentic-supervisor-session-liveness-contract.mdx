@@ -1,5 +1,5 @@
 ---
-title: "에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드"
+title: 에이전트 세션 생존 계약 — Supervisor PID 핸드셰이크와 장기 감지 실패 모드
 category: context-engineering
 date: "2026-05-20"
 tags:
@@ -14,13 +14,9 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-05-20"
-connections:
-  - infrastructure/zero-touch-develop-cycle-session-management
-  - context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
-  - context-engineering/drift-detection-methodology
-  - agents/agentic-long-running-carryover-human-checkpoint-boundary
+connections: [infrastructure/zero-touch-develop-cycle-session-management, context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt, agents/agentic-long-running-carryover-human-checkpoint-boundary]
 status: complete
-description: "watch.sh/launchd 같은 supervisor 프로그램이 LLM 세션의 생존을 감지할 때 발생하는 두 가지 대표 실패 모드 — ISO 8601 타임스탬프 파싱 오류(cycle 495)와 next_n=0 자기 종료 누락(cycle 642) — 의 원인, 파급 효과, 그리고 epoch 기반 3요소 계약 패턴."
+description: watch.sh/launchd 같은 supervisor 프로그램이 LLM 세션의 생존을 감지할 때 발생하는 두 가지 대표 실패 모드 — ISO 8601 타임스탬프 파싱 오류(cycle 495)와 next_n=0 자기 종료 누락(cycle 642) — 의 원인, 파급 효과, 그리고 epoch 기반 3요소 계약 패턴.
 type: entry
 source: explore-idea
 ---
