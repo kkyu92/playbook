@@ -1,10 +1,13 @@
 # TODOS
 
-## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1350 갱신)
+## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1452 갱신)
 
-**What**: auto-ingest PR 24건+ blocked (pnpm audit CVE). ~~cycle 1270 추가: incident-auto-close.yml YAML fix (79b131a6) local-only~~ **✅ cycle 1350 별도 fix PR #2240 MERGED (origin/main 직접 fix)**. cycle 1290 추가: gemini-key-health.yml GH_REPO fix (f8ca916d) local-only. cycle 1296 추가: gemini-key-health.yml 503 TRANSIENT fix (e7c31f3c) local-only. BRANCHED **local 571 / origin 321** (cycle 1449 갱신).
-**Root cause**: local cycle 1112/1117 fix (vite ^8.0.16 + protobufjs >=8.4.1) origin 미반영. PR base = origin → audit gate fail. gemini-key-health.yml fix 도 push 필요.
-**Action (R6 사용자 영역)**: `git pull --rebase origin main` 후 `git push origin main` → PR audit 자동 재실행 + gemini-key-health fix 반영.
+**What**: auto-ingest PR CI blocked. BRANCHED **local 5 ahead / origin 53 ahead** (cycle 1452 갱신).
+**Local fixes 미반영 목록**:
+- `b34922da` (2026-07-12): MDX JSX 파싱 에러 3건 수정 — `<60%`, `<200ms`, `<file>` → `&lt;` 엔티티. 이 fix 없으면 daily ingest PR CI (`pnpm build` prebuild) 계속 실패.
+- gemini-key-health.yml GH_REPO fix (f8ca916d) + 503 TRANSIENT fix (e7c31f3c)
+**Root cause**: BRANCHED steady-state. 로컬 fix 누적 → origin push 없이 daily ingest PR base = origin → CI fail.
+**Action (R6 사용자 영역)**: `git pull --rebase origin main` 후 `git push origin main` → PR CI 자동 재실행.
 
 ## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 135건)
 
