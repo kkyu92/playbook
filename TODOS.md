@@ -1,13 +1,10 @@
 # TODOS
 
-## [P0] R6 push — playbook hub local fix origin 미반영 (cycle 1120 진단, N=4 재발, 1452 갱신)
+## [DONE 2026-07-15] R6 push — BRANCHED stale 해소 (cycle 1454 triage)
 
-**What**: auto-ingest PR CI blocked. BRANCHED **local 5 ahead / origin 53 ahead** (cycle 1452 갱신).
-**Local fixes 미반영 목록**:
-- `b34922da` (2026-07-12): MDX JSX 파싱 에러 3건 수정 — `<60%`, `<200ms`, `<file>` → `&lt;` 엔티티. 이 fix 없으면 daily ingest PR CI (`pnpm build` prebuild) 계속 실패.
-- gemini-key-health.yml GH_REPO fix (f8ca916d) + 503 TRANSIENT fix (e7c31f3c)
-**Root cause**: BRANCHED steady-state. 로컬 fix 누적 → origin push 없이 daily ingest PR base = origin → CI fail.
-**Action (R6 사용자 영역)**: `git pull --rebase origin main` 후 `git push origin main` → PR CI 자동 재실행.
+**상태**: ✅ DONE — cycle 1454 진단 시 `git rev-list --left-right --count origin/main...main` = `56 0` (pull 전) → `0 0` (pull 후). 완전 동기화.
+**해소 경위**: git pull --ff-only origin main 적용. b34922da 언급된 phantom hash (존재하지 않음). 실 MDX fix = 0d78ca73 (이미 origin에 포함). TODOS P0 stale 확정.
+**결론**: BRANCHED steady-state — 사용자 batch 머지 시 자연 해소. P0 항목 종료.
 
 ## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 135건)
 
