@@ -1,0 +1,59 @@
+---
+title: "Playbook Journal 061 — cycle 1561 explore-idea (lite) post-axis A/C forward spec (#2633)"
+category: harness-engineering
+date: "2026-07-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: cycle 1561 explore-idea (lite) post-axis A/C forward spec (#2633) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260713-cycle-1561-explore-idea-lite-post-axis-a-c-forward-e3ced223512d4a52f35caa618b5fad.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 1561
+chain: explore-idea (lite)
+motive: cycle 1547 spec 축 A (cycle 1550 완료) + 축 C (cycle 1549 완료) 이후 신규 forward path 박제. improvement saturation trigger fire (직전 15 사이클 review-code+fix-incident+polish-ui+info-arch 12/15 = threshold) → 신규 direction 점검.
+
+## 완료 축 결과 요약
+- **축 A** (cycle 1550): LLM 부가가치 5.0pp 확정 (CE 58.8% vs 비CE 63.8%, overlap 월 3/3 격차 identical → temporal bias 배제, Brier CE 0.3134 vs 비CE 0.2534)
+- **축 C** (cycle 1549): n=178/n=165/n=187 = 시점별 스냅샷 + shadow/cohort 분리 = 자연 시간 흐름 (표본 미스매치 X)
+
+## 신규 축 D — LLM debate 복구 후 CE cohort 자연 축소 monitor (op-analysis lite carry-over)
+- 사용자 Anthropic 크레딧 충전 이행 후 debate 성공률 회복 monitor
+- CE cohort 신규 유입 rate + overall Brier 개선 방향 예측
+
+## 신규 축 E — CE cohort backfill 140건 재확인 (review-code lite carry-over)
+- scripts/cohort-cleanup.ts --dry-run 우선
+- hybrid criteria → 단일 criteria 재분류 안전성 진단
+
+## Tier rubric
+- 축 D/E = Tier 2 (사용자 크레딧 충전 or 사용자 결정 대기)
+- 축 B (HOME_ADVANTAGE) = 사용자 결정 대기 유지, B-3 (v1.8 stay) 우세 방향 hint
+
+self-verification: 5축 rubric 적용 / 자가 의심 X (evidence only) / 결정 X (사용자 영역 명시)
+
+carry-over: 다음 op-analysis lite (축 D) / 다음 review-code lite (축 E) / plan #24 draft (축 A+B+D 통합 시)
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
