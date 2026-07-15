@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-14T21:08:38.762Z
+Updated: 2026-07-15T21:05:43.411Z
 
-## 엔트리 (562개)
+## 엔트리 (566개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -139,6 +139,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - [자율 에이전트 Trigger-Skip 이중 조건 자가 오실레이션 — skill-evolution Homeostasis 패턴](wiki/harness-engineering/agentic-trigger-skip-dual-condition-homeostasis) — confidence: 2, status: complete
 - [AI 에이전트 외부 버전 추천 시 신뢰도 캘리브레이션 — 학습 컷오프 이후 릴리즈 감지](wiki/harness-engineering/ai-agent-external-version-confidence-calibration) — confidence: 3, status: complete
 - [AI Agent Harness Architecture: Go Micro Patterns for Robust Orchestration](wiki/harness-engineering/ai-agent-harness-architecture-go-micro-patterns) — confidence: 1, status: draft
+- [AI Agent Harness: 결정론적 제어로 신뢰할 수 있는 출력 보장](wiki/harness-engineering/ai-agent-harness-deterministic-control-enhancement) — confidence: 1, status: draft
 - [AI 에이전트 프롬프트 하네스 표준화: oh-my-harness CLI 활용 전략](wiki/harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness) — confidence: 1, status: draft
 - [Harness 기반 AI 모델 배포 자동화: 대규모 애플리케이션 업데이트 전략](wiki/harness-engineering/ai-model-deployment-automation-with-harness) — confidence: 1, status: draft
 - [AI Model Router — 동적 LLM 라우팅으로 비용 및 성능 최적화](wiki/harness-engineering/ai-model-router-cost-performance-optimization) — confidence: 1, status: draft
@@ -368,6 +369,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Task Coordination: Strategies for Collaborative Goal Achievement](wiki/agents/multi-agent-task-collaboration-coordination-strategies) — confidence: 1, status: draft
+- [Multi-Agent Systems: Task Decomposition and Dynamic Role Assignment Strategies](wiki/agents/multi-agent-task-decomposition-role-assignment) — confidence: 1, status: draft
 - [Multi-LLM Agent Workload Partitioning: Practical Implementation Patterns](wiki/agents/multi-llm-agent-workload-partitioning-patterns) — confidence: 1, status: draft
 - [Multi-Persona LLM Validation — Output Robustness Enhancement](wiki/agents/multi-persona-llm-output-validation-enhancement) — confidence: 1, status: draft
 - [다단계 자율 에이전트 워크플로우: 태스크 스케줄링 및 모니터링 전략](wiki/agents/multi-stage-agent-task-scheduling-monitoring) — confidence: 1, status: draft
@@ -578,6 +580,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
 - [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
 - [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
+- [On-Device LLM Quantization — Android Eco-system Benchmarking and Implementation](wiki/android-ai/on-device-llm-quantization-android-benchmarking) — confidence: 1, status: draft
 - [Android 온디바이스 LLM 양자화: Gemma 4 QAT 모델 적용 전략](wiki/android-ai/on-device-llm-quantization-gemma-4-qat-application) — confidence: 1, status: draft
 - [On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준](wiki/android-ai/on-device-llm-quantization-patterns-android) — confidence: 1, status: draft
 
@@ -586,6 +589,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
 - [AI 프로젝트 가치 측정 — 성과 보고 프레임워크 구축](wiki/reports/ai-project-value-measurement-performance-reporting) — confidence: 1, status: draft
 - [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: complete
+- [LLM 서비스 UX 데이터 기반 성능 보고서 작성 패턴 — 핵심 지표 및 분석 방법론](wiki/reports/llm-service-ux-data-performance-reporting-patterns) — confidence: 1, status: draft
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
 
@@ -648,6 +652,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-inference-reliability-validation-harness
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-validation-automation-failure-prevention
 - agents/ai-agent-control-validation-mechanisms ↔ agents/autonomous-agent-reliability-stability-patterns
+- agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
 - agents/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
@@ -693,6 +698,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/self-correction-adaptive-learning-loops-implementation
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-agent-reliability-stability-patterns
+- agents/ai-agent-robust-tool-error-recovery ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
@@ -826,6 +832,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ agents/llm-autonomous-agent-self-reflection-tool-use-patterns
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ harness-engineering/agent-loop-patterns-autonomous-task-completion
+- agents/autonomous-ai-agent-task-planning-execution-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/code-based-agent-task-patterns-harness-design ↔ infrastructure/guard-test-pattern
 - agents/code-based-agent-task-patterns-harness-design ↔ evaluation/llm-api-dependency-risk-mitigation-strategy
 - agents/code-based-agent-task-patterns-harness-design ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -847,6 +854,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/collaborative-agent-workflow-design-orchestration ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/collaborative-agent-workflow-design-orchestration ↔ agents/optimizing-multi-agent-interaction-collaboration
 - agents/collaborative-agent-workflow-design-orchestration ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
+- agents/collaborative-agent-workflow-design-orchestration ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ agents/enterprise-agent-management-patterns-llm-orchestration
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
@@ -1057,6 +1065,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-complex-task-patterns ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/multi-agent-collaboration-complex-task-patterns ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
+- agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
@@ -1074,6 +1083,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-collaboration-system-design-patterns ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
+- agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
@@ -1089,8 +1099,10 @@ Updated: 2026-07-14T21:08:38.762Z
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-stage-agent-task-scheduling-monitoring
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/paca-ai-agent-project-management-tool-review
+- agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-agent-task-decomposition-role-assignment
+- agents/multi-agent-task-decomposition-role-assignment ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/multi-agent-task-decomposition-role-assignment ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/claude-code-agent-view-worker-management-integration
-- agents/multi-llm-agent-workload-partitioning-patterns ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/agent-parallel-execution-isolation-git-worktree-patterns
@@ -1195,6 +1207,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - android-ai/aicore ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - android-ai/aicore ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - android-ai/aicore ↔ frontend-ai/user-behavior-prediction-ai-model-integration
+- android-ai/aicore ↔ android-ai/on-device-llm-quantization-android-benchmarking
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/gemini-nano
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/firebase-ai-logic-android-client-sdk
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/on-device-llm-quantization-patterns-android
@@ -1202,6 +1215,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/mediapipe
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ evaluation/llm-api-dependency-risk-mitigation-strategy
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ prompt-engineering/llm-scalable-service-architecture-patterns
+- android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/on-device-llm-quantization-android-benchmarking
 - android-ai/android-background-ai-workflow-workmanager ↔ frontend-ai/ai-inference-visualization-design-patterns
 - android-ai/android-background-ai-workflow-workmanager ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - android-ai/android-background-ai-workflow-workmanager ↔ journal/playbook-journal-031-w20-20-calibration-cycle-308
@@ -1222,6 +1236,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - android-ai/gemini-nano ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - android-ai/gemini-nano ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - android-ai/gemini-nano ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
+- android-ai/gemini-nano ↔ android-ai/on-device-llm-quantization-android-benchmarking
 - android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - android-ai/genkit-android-backend-genai-framework ↔ android-ai/gomodel-llm-gateway-introduction-strategy
 - android-ai/genkit-android-backend-genai-framework ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
@@ -1252,6 +1267,10 @@ Updated: 2026-07-14T21:08:38.762Z
 - android-ai/ml-kit ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - android-ai/ml-kit ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - android-ai/ml-kit ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/on-device-llm-quantization-android-benchmarking ↔ android-ai/on-device-llm-quantization-gemma-4-qat-application
+- android-ai/on-device-llm-quantization-android-benchmarking ↔ android-ai/on-device-llm-quantization-patterns-android
+- android-ai/on-device-llm-quantization-android-benchmarking ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
+- android-ai/on-device-llm-quantization-android-benchmarking ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/gemini-nano
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/on-device-llm-quantization-patterns-android
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/android-ai-edge-vs-cloud-decision-framework
@@ -1650,6 +1669,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- data-engineering/rag-search-performance-evaluation-metrics-design ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/vector-db-embedding-data-optimization-patterns
@@ -1702,11 +1722,11 @@ Updated: 2026-07-14T21:08:38.762Z
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/bifrost-high-speed-enterprise-ai-gateway-integration
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/prompt-model-version-management-large-scale-ai
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/react-doctor-ai-code-validation-pipeline
-- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-028-cycle-60-fancy-stats-ts-silent-fallback-risk-sfr-0
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ prompt-engineering/llm-generated-content-ai-smell-detection-prompt-defense
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
@@ -1734,6 +1754,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-ops-pipeline-design-patterns-production-strategy
+- evaluation/llm-inference-reliability-validation-harness ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ evaluation/llm-ops-pipeline-design-patterns-production-strategy
@@ -1778,6 +1799,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-validation-automation-failure-prevention ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-validation-automation-failure-prevention ↔ project-ops/software-factory-playbook-architecture-enhancement
+- evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ agents/ai-agent-self-correction-design-principles
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471
@@ -1806,6 +1828,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/claude-code-html-output-ux-enhancement
+- evaluation/llm-ux-evaluation-metrics-design-measurement ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
@@ -1844,6 +1867,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ frontend-ai/user-behavior-prediction-ai-model-integration
+- frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/user-behavior-prediction-ai-model-integration
@@ -1965,6 +1989,9 @@ Updated: 2026-07-14T21:08:38.762Z
 - harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/microservice-harness-architecture-large-scale-ai
 - harness-engineering/ai-agent-harness-architecture-go-micro-patterns ↔ harness-engineering/vhk-ai-coding-harness-design-principles
+- harness-engineering/ai-agent-harness-deterministic-control-enhancement ↔ harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness
+- harness-engineering/ai-agent-harness-deterministic-control-enhancement ↔ harness-engineering/llm-response-quality-automated-harness-testing
+- harness-engineering/ai-agent-harness-deterministic-control-enhancement ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/efficient-large-scale-llm-deployment-mlops
@@ -2129,6 +2156,7 @@ Updated: 2026-07-14T21:08:38.762Z
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/llm-response-quality-automated-harness-testing ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ agents/multi-agent-collaboration-complex-problem-solving
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ project-ops/software-factory-playbook-architecture-enhancement
@@ -2464,6 +2492,8 @@ Updated: 2026-07-14T21:08:38.762Z
 - reports/ai-model-performance-cost-efficiency-reporting ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/closed-loop-health
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/ai-project-value-measurement-performance-reporting
+- reports/ai-model-performance-cost-efficiency-reporting ↔ reports/llm-service-ux-data-performance-reporting-patterns
+- reports/ai-project-kpi-dashboard-building-strategy ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - reports/ai-project-value-measurement-performance-reporting ↔ reports/ai-project-kpi-dashboard-building-strategy
 - reports/ai-project-value-measurement-performance-reporting ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - reports/ai-project-value-measurement-performance-reporting ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -2626,7 +2656,6 @@ Updated: 2026-07-14T21:08:38.762Z
 - harness-engineering/large-scale-llm-harness-deployment-operation-patterns ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
-- harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/production-llm-service-harness-system-design-patterns ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/realtime-llm-inference-deployment-monitoring-patterns ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - project-ops/ai-sre-principles-project-control-tower-enhancement ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
