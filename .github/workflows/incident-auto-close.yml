@@ -59,7 +59,7 @@ jobs:
 
       - name: Match fingerprint commit + worker main + grace period
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}  # PAT required for cross-repo (moneyball) read access
         run: |
           set -euo pipefail
 
@@ -92,8 +92,8 @@ jobs:
             done
             [ -z "$WORKER_REPO" ] && WORKER_REPO=kkyu92/moneyballscore  # default
 
-            # 워커 main 에 commit 있나
-            MERGED=$(gh api "repos/$WORKER_REPO/commits/$HASH" 2>/dev/null | jq -r '.sha // empty')
+            # 워커 main 에 commit 있나 (GH_PAT 으로 cross-repo 접근 / 실패 시 "" 반환)
+            MERGED=$(gh api "repos/$WORKER_REPO/commits/$HASH" 2>/dev/null | jq -r '.sha // ""' 2>/dev/null || true)
             if [ -z "$MERGED" ]; then
               SKIPPED=$((SKIPPED+1))
               continue
