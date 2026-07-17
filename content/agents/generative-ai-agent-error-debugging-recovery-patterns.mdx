@@ -1,0 +1,148 @@
+---
+title: "Generative AI Agents: Error Debugging and Recovery for Stable Operations"
+category: agents
+date: "2026-07-17"
+tags:
+  - AI Agents
+  - Debugging
+  - ErrorHandling
+  - Resilience
+  - Observability
+  - Recovery
+  - agents
+confidence: 1
+connections: [agents/ai-agent-robust-tool-error-recovery, agents/ai-agent-self-correction-design-principles, agents/autonomous-agent-reliability-stability-patterns, agents/autonomous-agent-reasoning-debugging-optimization, agents/autonomous-agent-feedback-loop-design-patterns, evaluation/llm-agent-observability-spanlens-trace-monitoring, context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix]
+status: draft
+description: Strategies and patterns for diagnosing, debugging, and recovering from uncertain behaviors in generative AI agents to ensure stable and reliable operations in real-world deployments.
+type: entry
+source: gap-pull
+---
+
+생성형 AI 에이전트는 복잡한 작업을 자동화하는 데 강력한 잠재력을 지니지만, 실무 환경에서 그 동작은 종종 예측 불가능하고 불안정할 수 있습니다. 이러한 불확실한 동작을 진단하고 개선하여 에이전트의 안정성을 확보하는 것은 성공적인 배포의 핵심입니다. 이 엔트리는 에이전트의 오류를 디버깅하고 복구하기 위한 구체적인 방법론과 패턴을 제시합니다.
+
+## 불확실한 에이전트 동작 진단
+에이전트의 불안정한 동작을 해결하기 위한 첫걸음은 문제의 근원을 정확히 파악하는 것입니다. 이를 위해서는 체계적인 진단 접근 방식이 필요합니다.
+
+### 1. 관측성 계층 (Observability Layer) 구축
+에이전트의 내부 상태와 외부 상호작용을 투명하게 관찰할 수 있도록 관측성 계층을 구축하는 것이 필수적입니다. 이는 다음을 포함합니다:
+*   **구조화된 로깅 (Structured Logging)**: 에이전트의 각 단계(계획, 툴 호출, 추론 결과, 에러 발생)에서 중요한 정보를 일관된 형식으로 기록합니다. 이는 문제 발생 시 신속한 원인 분석을 가능하게 합니다.
+*   **분산 트레이싱 (Distributed Tracing)**: 에이젠트가 여러 툴, 서비스, 또는 다른 에이전트와 상호작용할 때, 요청의 전체 흐름을 시각화합니다. OpenTelemetry나 SpanLens와 같은 도구는 에이전트의 복잡한 실행 경로에서 병목 현상이나 오류 지점을 식별하는 데 도움을 줍니다.
+*   **메트릭 (Metrics)**: 에이전트의 성능(예: 응답 시간, 성공률), 리소스 사용량(토큰 사용량, API 호출 수), 오류율 등을 모니터링합니다. 이는 시스템의 전반적인 상태를 파악하고 이상 징후를 조기에 감지하는 데 중요합니다.
+
+### 2. 이상 감지 패턴 (Anomaly Detection Patterns)
+에이전트의 출력이나 동작에서 예상치 못한 패턴을 자동으로 감지하는 메커니즘을 구현합니다.
+*   **출력 유효성 검사 (Output Validation)**: 에이전트가 생성한 출력(예: 코드, JSON, 자연어 응답)이 예상 형식, 길이, 내용 제약 조건을 준수하는지 확인합니다. 스키마 유효성 검사나 정규 표현식을 활용할 수 있습니다.
+*   **행동 이상 감지 (Behavioral Anomaly Detection)**: 에이전트의 툴 호출 빈도, 특정 툴의 실패율, 평균적인 토큰 소비량 등 평소와 다른 행동 패턴을 감지하여 경고를 발생시킵니다.
+*   **비용 스파이크 감지 (Cost Spike Detection)**: 불필요한 LLM 호출 반복이나 비효율적인 툴 사용으로 인한 예상치 못한 비용 증가를 감지합니다.
+
+### 3. 맥락 기반 디버깅 (Contextual Debugging)
+에이전트의 `thought` 또는 내부 `monologue`를 분석하여 왜 특정 결정을 내렸는지 이해합니다. RAG(Retrieval Augmented Generation) 에이전트의 경우, 어떤 문서를 검색하고 활용했는지 확인함으로써 Hallucination이나 잘못된 추론의 원인을 파악할 수 있습니다.
+
+## 오류 복구 패턴
+에이전트의 오류가 감지되면, 시스템은 안정적인 동작을 위해 적절한 복구 메커니즘을 작동시켜야 합니다.
+
+### 1. 재시도 및 지수적 백오프 (Retry with Exponential Backoff)
+네트워크 불안정, 일시적인 API 오류 등 transient 한 오류에 대해 작업을 재시도하는 가장 기본적인 패턴입니다. 재시도 간격은 오류가 해결될 시간을 주기 위해 점진적으로 늘리는 지수적 백오프를 적용합니다.
+
+### 2. 대체 경로 및 폴백 (Alternative Paths & Fallbacks)
+특정 툴이나 서비스가 지속적으로 실패할 경우, 미리 정의된 대체 툴이나 폴백 로직을 사용하도록 에이전트를 설계합니다. 예를 들어, 특정 검색 API가 응답하지 않으면 다른 검색 API를 시도하거나, 캐시된 데이터를 사용하도록 합니다.
+
+### 3. 자가 수정 루프 (Self-Correction Loops)
+LLM의 추론 능력을 활용하여 발생한 오류를 분석하고, 스스로 수정 계획을 세워 실행하도록 합니다. 에이전트는 다음과 같은 단계를 거칠 수 있습니다:
+1.  **오류 진단**: 에러 메시지, 로그, 현재 상태 등을 LLM에 제공하여 문제의 원인을 분석하게 합니다.
+2.  **수정 계획 수립**: LLM이 분석 결과를 바탕으로 문제를 해결하기 위한 일련의 단계를 생성합니다.
+3.  **실행 및 검증**: 생성된 계획을 실행하고, 수정 작업이 성공했는지 다시 검증합니다.
+
+### 4. 휴먼-인-더-루프 (Human-in-the-Loop)
+자동화된 복구 메커니즘으로 해결할 수 없는 복잡하거나 치명적인 오류의 경우, 인간 운영자의 개입을 유도합니다. 이는 에이전트가 학습할 수 있는 새로운 오류 유형을 식별하고, 시스템의 안전을 보장하는 데 필수적입니다. 에이전트는 문제 상황을 명확히 설명하고, 관련 진단 정보를 제공하며, 인간의 결정을 기다릴 수 있어야 합니다.
+
+### 5. 상태 저장 및 재개 (State Persistence & Resumption)
+장기 실행(long-running) 태스크의 경우, 에이전트의 진행 상태를 주기적으로 저장하여 오류 발생 시 중단된 지점부터 작업을 재개할 수 있도록 합니다. 이는 작업의 무결성을 유지하고 리소스 낭비를 줄입니다.
+
+## 강건한 툴 사용 (Robust Tool Use)
+에이전트가 외부 툴과 상호작용할 때 발생하는 오류는 흔하며, 이에 대한 강건한 처리가 필요합니다.
+
+*   **툴 입/출력 유효성 검사 (Tool Input/Output Validation)**: 툴에 전달하는 인자와 툴의 반환 값을 항상 검증합니다. 이는 잘못된 입력으로 인한 툴 오류나 툴의 비정상적인 출력으로 인한 에이전트의 오동작을 방지합니다.
+*   **툴 실행 가드레일 (Tool Execution Guardrails)**: 툴 실행에 시간 제한(timeout), 리소스 제한을 두어 무한 루프나 시스템 리소스 고갈을 방지합니다.
+*   **멱등성 (Idempotency)**: 툴이 여러 번 호출되어도 동일한 결과를 보장하도록 설계하여 재시도 메커니즘이 안전하게 작동하도록 합니다.
+
+## 코드 예시: 에이전트 툴 호출 복구
+다음 Python 코드는 에이전트가 외부 툴을 호출할 때 발생할 수 있는 transient 오류를 `tenacity` 라이브러리를 사용하여 재시도하는 예시입니다.
+
+```python
+import random
+import time
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+
+class ToolError(Exception):
+    """Custom exception for tool failures."""
+    pass
+
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=10),
+    retry=retry_if_exception_type(ToolError),
+    reraise=True # Re-raise the exception after all retries fail
+)
+def call_external_tool(query: str) -> str:
+    """
+    Simulates calling an external tool with potential transient failures.
+    Raises ToolError randomly to simulate a failure.
+    """
+    print(f"Attempting to call tool with query: '{query}'...")
+    if random.random() < 0.6: # 60% chance of failure
+        print("Tool call failed! Retrying...")
+        raise ToolError(f"Failed to process query '{query}' due to transient error.")
+    print(f"Tool call successful for query: '{query}'")
+    return f"Result for {query} processed at {time.time()}"
+
+def agent_task(task_query: str):
+    print(f"Agent received task: {task_query}")
+    try:
+        result = call_external_tool(task_query)
+        print(f"Agent completed task with result: {result}")
+        return result
+    except ToolError as e:
+        print(f"Agent failed to complete task after multiple retries: {e}")
+        # Fallback mechanism could be implemented here
+        return "Failed to get result from tool after multiple attempts."
+
+# Example usage:
+if __name__ == "__main__":
+    print("\n--- First Agent Task ---")
+    agent_task("fetch latest news")
+    print("\n--- Second Agent Task ---")
+    agent_task("summarize report")
+
+```
+
+이 예제에서는 `call_external_tool` 함수에 `@retry` 데코레이터를 적용하여 `ToolError`가 발생했을 때 최대 3번까지 지수적으로 증가하는 대기 시간(1초, 2초, 4초 등)을 가지고 재시도합니다. 모든 재시도가 실패하면 `ToolError`를 다시 발생시켜 `agent_task` 함수에서 최종적으로 처리하게 합니다.
+
+## Mermaid Diagram: 에이전트 오류 감지 및 복구 흐름
+
+```mermaid
+flowchart TD
+    A[에이전트 시작/계획] --> B{외부 툴 호출?}
+    B -- 예 --> C[외부 툴 호출]
+    C --> D{툴 응답 수신?}
+    D -- 아니오 --> E[오류 감지: 네트워크, Timeout]
+    D -- 예 --> F{응답 유효성 검사 통과?}
+    F -- 아니오 --> G[오류 감지: 잘못된 형식/내용]
+    F -- 예 --> H[에이전트 다음 단계 진행]
+    H --> B
+
+    E --> I{재시도 가능? (횟수/종류)}
+    I -- 예 --> J[재시도 + 지수적 백오프]
+    J --> C
+    I -- 아니오 --> K{대체 경로/폴백 존재?}
+    K -- 예 --> L[대체 툴/로직 사용]
+    L --> B
+    K -- 아니오 --> M{자가 수정 시도 가능?}
+    M -- 예 --> N[LLM 기반 오류 진단 및 재계획]
+    N --> B
+    M -- 아니오 --> O[휴먼-인-더-루프 개입 요청]
+    O --> P[종료/대기]
+
+    G --> I
+
+    subgraph Error Handling & Recovery [
