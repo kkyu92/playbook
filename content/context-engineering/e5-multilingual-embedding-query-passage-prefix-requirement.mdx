@@ -11,7 +11,7 @@ tags:
   - semantic-search
   - harness-engineering
 confidence: 4
-connections: [infrastructure/wiki-knowledge-roi-3axis-measurement, context-engineering/agentic-branched-state-jit-search-accuracy-degradation, reports/closed-loop-health]
+connections: [infrastructure/wiki-knowledge-roi-3axis-measurement, context-engineering/agentic-branched-state-jit-search-accuracy-degradation, reports/closed-loop-health, data-engineering/on-device-vector-db-jit-semantic-search-lsm-hnsw]
 status: complete
 description: multilingual-e5-small 모델은 쿼리와 문서 임베딩에 비대칭 접두사("query:" / "passage:")를 요구한다. 접두사 없이 인덱싱하면 벡터 공간 불일치 → hit rate 27% (73% miss). 접두사 적용 후 genuine match 0.86-0.90 범위 분리. 공유 설정 모듈 패턴으로 역할 swap 버그 방지.
 type: entry
