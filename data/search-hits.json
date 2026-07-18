@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1130,
-  "skipped": 28,
-  "searched": 1102,
-  "hit": 501,
+  "totalInvocations": 1133,
+  "skipped": 29,
+  "searched": 1104,
+  "hit": 503,
   "noMatch": 601,
-  "lastUpdated": "2026-07-14T23:26:32.209Z",
+  "lastUpdated": "2026-07-18T23:25:52.214Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -23,7 +23,7 @@
     "solutions/README.md/README": 4,
     "solutions/mdx/2026-04-20-llm-curly-brace-jsx-trap": 6,
     "solutions/llm-generation/2026-04-26-mermaid-subgraph-invalid-id-bracket-label": 2,
-    "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 6,
+    "journal/playbook-journal-012-agent-loop-carry-over-6-cycles-main-push-drift-cas": 7,
     "reports/closed-loop-health": 38,
     "journal/playbook-journal-001-drift-greenfield": 1,
     "harness-engineering/guard-test-pattern": 8,
@@ -41,7 +41,7 @@
     "context-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 11,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 12,
     "harness-engineering/develop-cycle-positive-streak-recognition": 4,
     "retros/2026-05-12-cycles-308-311": 5,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -136,7 +136,7 @@
     "evaluation/llm-document-integrity-validation-pipeline-enhancement": 2,
     "context-engineering/agentic-commit-body-subtype-dispatch-transport": 6,
     "context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification": 3,
-    "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 8,
+    "solutions/ci-github-actions/2026-05-21-worker-unconditional-inject-test-mismatch": 9,
     "context-engineering/agentic-post-feature-drift-sweep-gap1-cadence": 4,
     "infrastructure/agentic-cron-zero-output-silent-success-detection": 2,
     "retros/2026-05-12-cycles-323-326": 5,
@@ -245,7 +245,7 @@
     "journal/playbook-journal-051-issue-agent-401-rc-claude-code-oauth-token": 1,
     "retros/2026-05-22-cycles-988-992": 1,
     "retros/2026-05-22-cycles-993-997": 3,
-    "harness-engineering/inbound-incident-branch-type-triage-matrix": 7,
+    "harness-engineering/inbound-incident-branch-type-triage-matrix": 8,
     "retros/2026-05-20-cycle-909": 1,
     "retros/2026-05-22-cycles-980-987": 2,
     "harness-engineering/automated-incident-closure-grace-period-design": 1,
@@ -294,7 +294,8 @@
     "frontend-ai/kuku-concepts-playbook-local-markdown-enhancement": 1,
     "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1,
     "prompt-engineering/llm-interactive-ui-frontend-implementation": 1,
-    "project-ops/react-doctor-ai-code-validation-pipeline": 2
+    "project-ops/react-doctor-ai-code-validation-pipeline": 2,
+    "infrastructure/agentic-worker-dispatch-filter-registration-gap": 1
   },
   "noMatchQueries": [
     {
@@ -1254,5 +1255,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1174
+  "totalQueries": 1177
 }
