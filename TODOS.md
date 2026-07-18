@@ -6,6 +6,14 @@
 **해소 경위**: git pull --ff-only origin main 적용. b34922da 언급된 phantom hash (존재하지 않음). 실 MDX fix = 0d78ca73 (이미 origin에 포함). TODOS P0 stale 확정.
 **결론**: BRANCHED steady-state — 사용자 batch 머지 시 자연 해소. P0 항목 종료.
 
+## [P1] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip (2026-07-19, cycle 1458)
+
+**What**: Vercel 배포 실패 inbound 이슈가 abbreviated SHA (11자) 를 사용. `incident-auto-close.yml` 은 `grep -oE '[a-f0-9]{40}'` (40자 SHA 필수) 로 추출 → Vercel 이슈는 항상 skip → **영구 수동 트리아지 필요**.
+**Why**: cycle 1458에서 #2736/#2741/#2744/#2747 (Jul 17 Vercel) 4건 수동 close 시 발견. 매 Vercel 배포 실패 발생마다 반복 노출.
+**Action**: `incident-auto-close.yml` 의 HASH 추출 로직을 `grep -oE '[a-f0-9]{7,40}'` (7자 이상 허용) 으로 수정, 또는 Vercel ingest 스크립트에서 full SHA 사용. — fix-incident chain 대상.
+
+---
+
 ## [P1] moneyball CI fix — ws/vite 취약점 (2026-06-16, 반복 누적 135건)
 
 **What**: moneyball `pnpm audit --audit-level=high` 실패. ws <8.21.0 (Memory exhaustion DoS) + vite <=8.0.15 (server.fs.deny bypass).
