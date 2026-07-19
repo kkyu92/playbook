@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-19T21:04:24.486Z
+Updated: 2026-07-19T21:42:41.214Z
 
-## 엔트리 (579개)
+## 엔트리 (580개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -290,6 +290,7 @@ Updated: 2026-07-19T21:04:24.486Z
 - [Playbook Journal 058 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)](wiki/journal/playbook-journal-058-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151) — confidence: 3, status: in-progress
 - [Playbook Journal 059 — extract-pattern P5/P6/Anti-P2 — onConflict 단일소스·팩터 적중률·데이터 결손 사문화 (cycle 1517)](wiki/journal/playbook-journal-059-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151) — confidence: 3, status: in-progress
 - [Playbook Journal 061 — cycle 1561 explore-idea (lite) post-axis A/C forward spec (#2633)](wiki/journal/playbook-journal-061-cycle-1561-explore-idea-lite-post-axis-a-c-forward) — confidence: 3, status: in-progress
+- [Playbook Journal 062 — CI pnpm audit 410 Gone — npm 구 endpoint 퇴역 incident (25 fingerprint)](wiki/journal/playbook-journal-062-ci-pnpm-audit-410-gone-npm-endpoint-incident-25-fi) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -2478,6 +2479,7 @@ Updated: 2026-07-19T21:04:24.486Z
 - journal/playbook-journal-058-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-059-extract-pattern-p5-p6-anti-p2-onconflict-cycle-151 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-061-cycle-1561-explore-idea-lite-post-axis-a-c-forward ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-062-ci-pnpm-audit-410-gone-npm-endpoint-incident-25-fi ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
