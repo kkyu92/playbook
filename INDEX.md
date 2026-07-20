@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-20T06:54:26.585Z
+Updated: 2026-07-20T09:16:01.828Z
 
-## 엔트리 (582개)
+## 엔트리 (583개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -293,6 +293,7 @@ Updated: 2026-07-20T06:54:26.585Z
 - [Playbook Journal 061 — cycle 1561 explore-idea (lite) post-axis A/C forward spec (#2633)](wiki/journal/playbook-journal-061-cycle-1561-explore-idea-lite-post-axis-a-c-forward) — confidence: 3, status: in-progress
 - [Playbook Journal 062 — CI pnpm audit 410 Gone — npm 구 endpoint 퇴역 incident (25 fingerprint)](wiki/journal/playbook-journal-062-ci-pnpm-audit-410-gone-npm-endpoint-incident-25-fi) — confidence: 3, status: in-progress
 - [Playbook Journal 063 — post-break regression pattern — away team systematic wins + CE fallback compound effect](wiki/journal/playbook-journal-063-post-break-regression-pattern-away-team-systematic) — confidence: 3, status: in-progress
+- [Playbook Journal 064 — WAR data gap post-break compound effect — Fancy Stats top-50 + normalization bug](wiki/journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -2484,6 +2485,7 @@ Updated: 2026-07-20T06:54:26.585Z
 - journal/playbook-journal-061-cycle-1561-explore-idea-lite-post-axis-a-c-forward ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-062-ci-pnpm-audit-410-gone-npm-endpoint-incident-25-fi ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-063-post-break-regression-pattern-away-team-systematic ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
