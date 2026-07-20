@@ -6,6 +6,12 @@
 **해소 경위**: git pull --ff-only origin main 적용. b34922da 언급된 phantom hash (존재하지 않음). 실 MDX fix = 0d78ca73 (이미 origin에 포함). TODOS P0 stale 확정.
 **결론**: BRANCHED steady-state — 사용자 batch 머지 시 자연 해소. P0 항목 종료.
 
+## [P2] moneyball deploy drift — production 2 commits behind (2026-07-21, cycle 1460)
+
+**What**: production `ca6daa9` (cycle 1939 wave-564), main HEAD `90b9bf9` (cycle 1940 wave-565). 2 commits behind. `vercel ls --prod` 최신 deploy = 2026-07-20 16:52 UTC.
+**Why**: Vercel daily deploy 한도 hit 가능성 (2026-07-20 moneyball cycles 다수 push). 한도 reset (자정 UTC) 후 다음 push 시 자동 해소 예정.
+**Action**: moneyball 다음 cycle push 시 자동 Vercel trigger → 해소 예상. 또는 `vercel --prod` manual trigger (moneyball 디렉토리).
+
 ## [P1] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip (2026-07-19, cycle 1458)
 
 **What**: Vercel 배포 실패 inbound 이슈가 abbreviated SHA (11자) 를 사용. `incident-auto-close.yml` 은 `grep -oE '[a-f0-9]{40}'` (40자 SHA 필수) 로 추출 → Vercel 이슈는 항상 skip → **영구 수동 트리아지 필요**.
