@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-21T07:57:49.291Z
+Updated: 2026-07-21T08:04:22.776Z
 
-## 엔트리 (588개)
+## 엔트리 (589개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -295,6 +295,7 @@ Updated: 2026-07-21T07:57:49.291Z
 - [Playbook Journal 063 — post-break regression pattern — away team systematic wins + CE fallback compound effect](wiki/journal/playbook-journal-063-post-break-regression-pattern-away-team-systematic) — confidence: 3, status: in-progress
 - [Playbook Journal 064 — WAR data gap post-break compound effect — Fancy Stats top-50 + normalization bug](wiki/journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat) — confidence: 3, status: in-progress
 - [Playbook Journal 065 — CE fallback + post-break = confidence floor compound effect](wiki/journal/playbook-journal-065-ce-fallback-post-break-confidence-floor-compound-e) — confidence: 3, status: in-progress
+- [Playbook Journal 066 — CE fallback + post-break = confidence floor compound effect](wiki/journal/playbook-journal-066-ce-fallback-post-break-confidence-floor-compound-e) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -2514,6 +2515,7 @@ Updated: 2026-07-21T07:57:49.291Z
 - journal/playbook-journal-063-post-break-regression-pattern-away-team-systematic ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-065-ce-fallback-post-break-confidence-floor-compound-e ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-066-ce-fallback-post-break-confidence-floor-compound-e ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
