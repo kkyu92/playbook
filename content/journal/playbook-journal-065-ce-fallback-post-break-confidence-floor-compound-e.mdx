@@ -1,0 +1,51 @@
+---
+title: "Playbook Journal 065 — CE fallback + post-break = confidence floor compound effect"
+category: harness-engineering
+date: "2026-07-21"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: CE fallback + post-break = confidence floor compound effect (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260721-ce-fallback-post-break-confidence-floor-compound-e-7800473b0ff903c2c3a3b052b1df73.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 1955
+chain: operational-analysis (lite)
+
+사례: 올스타 브레이크 후 (7/16-19, n=18) acc=27.8% vs 전체 57.1%
+원인:
+  - CREDIT_EXHAUSTED 6th recurrence 지속 → debate 100% fallback
+  - debate_version=NULL → home_win_prob ≈ 0.5 (near-random)
+  - confidence = 2*|home_win_prob-0.5| = 11-14% (floor 효과)
+  - 포스트브레이크 팀 패턴 불확실성 복합
+결론: CE fallback 단독으로도 정확도 baseline 이하 (50% 미만) 가능
+  소표본 (n=18) 고려 필요하나 패턴 명확
+박제 위치: memory/op-analysis-ce-postbreak-pattern.md 신규
+다음 행동: Anthropic 크레딧 충전 (사용자 영역, carry-over)
+
+v1.8 현황: n=205, acc=57.1%, Brier≈0.2533
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
