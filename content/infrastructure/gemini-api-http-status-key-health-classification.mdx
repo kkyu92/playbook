@@ -12,7 +12,7 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-07-03"
-connections: [infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked, infrastructure/github-actions-monitoring-smoke-alert-isolation]
+connections: [infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture, infrastructure/vercel-deploy-rate-limit-auto-merge-blocked, infrastructure/github-actions-monitoring-smoke-alert-isolation, harness-engineering/gemini-flash-model-upgrade-optimization]
 status: complete
 description: Gemini API 상태코드를 key 건강 기준으로 분류. 503(일시적 과부하)을 unhealthy 로 오분류하면 false-positive alert 발생. 영구 실패(401/403/limit:0)와 일시 실패(503/500) 구분이 핵심.
 type: entry
