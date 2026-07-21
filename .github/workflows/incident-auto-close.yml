@@ -74,8 +74,8 @@ jobs:
             INC_BODY=$(echo "$row" | jq -r .body)
             INC_CREATED=$(echo "$row" | jq -r .createdAt)
 
-            # commit hash 추출 (title 또는 body 의 40자 sha)
-            HASH=$(echo "$INC_TITLE $INC_BODY" | grep -oE '[a-f0-9]{40}' | head -1 || true)
+            # commit hash 추출 (title 또는 body 의 sha — 7~40자 abbreviated/full 허용)
+            HASH=$(echo "$INC_TITLE $INC_BODY" | grep -oE '[a-f0-9]{7,40}' | head -1 || true)
             if [ -z "$HASH" ]; then
               SKIPPED=$((SKIPPED+1))
               continue

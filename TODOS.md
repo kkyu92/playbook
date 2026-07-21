@@ -12,11 +12,11 @@
 **Why**: Vercel daily deploy 한도 hit 가능성 (2026-07-20 moneyball cycles 다수 push). 한도 reset (자정 UTC) 후 다음 push 시 자동 해소 예정.
 **Action**: moneyball 다음 cycle push 시 자동 Vercel trigger → 해소 예상. 또는 `vercel --prod` manual trigger (moneyball 디렉토리).
 
-## [P1] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip (2026-07-19, cycle 1458)
+## [DONE 2026-07-22 cycle 1461] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip
 
 **What**: Vercel 배포 실패 inbound 이슈가 abbreviated SHA (11자) 를 사용. `incident-auto-close.yml` 은 `grep -oE '[a-f0-9]{40}'` (40자 SHA 필수) 로 추출 → Vercel 이슈는 항상 skip → **영구 수동 트리아지 필요**.
 **Why**: cycle 1458에서 #2736/#2741/#2744/#2747 (Jul 17 Vercel) 4건 수동 close 시 발견. 매 Vercel 배포 실패 발생마다 반복 노출.
-**Action**: `incident-auto-close.yml` 의 HASH 추출 로직을 `grep -oE '[a-f0-9]{7,40}'` (7자 이상 허용) 으로 수정, 또는 Vercel ingest 스크립트에서 full SHA 사용. — fix-incident chain 대상.
+**Fix (cycle 1461)**: `incident-auto-close.yml:78` `grep -oE '[a-f0-9]{40}'` → `grep -oE '[a-f0-9]{7,40}'` (7~40자 허용). GitHub API 는 abbreviated SHA 수용 — 오탐 시 `gh api` fail gracefully 로 안전 차단.
 
 ---
 
