@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1133,
+  "totalInvocations": 1134,
   "skipped": 29,
-  "searched": 1104,
-  "hit": 503,
+  "searched": 1105,
+  "hit": 504,
   "noMatch": 601,
-  "lastUpdated": "2026-07-18T23:25:52.214Z",
+  "lastUpdated": "2026-07-22T23:24:50.113Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -41,7 +41,7 @@
     "context-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 12,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 13,
     "harness-engineering/develop-cycle-positive-streak-recognition": 4,
     "retros/2026-05-12-cycles-308-311": 5,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -1255,5 +1255,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1177
+  "totalQueries": 1178
 }

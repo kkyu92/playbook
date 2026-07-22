@@ -6,11 +6,11 @@
 **해소 경위**: git pull --ff-only origin main 적용. b34922da 언급된 phantom hash (존재하지 않음). 실 MDX fix = 0d78ca73 (이미 origin에 포함). TODOS P0 stale 확정.
 **결론**: BRANCHED steady-state — 사용자 batch 머지 시 자연 해소. P0 항목 종료.
 
-## [P2] moneyball deploy drift — production 2 commits behind (2026-07-21, cycle 1460)
+## [P2] moneyball deploy drift — 재발 (2026-07-22 cycle 1462, "silent drift family 9/10" 자체 경보)
 
-**What**: production `ca6daa9` (cycle 1939 wave-564), main HEAD `90b9bf9` (cycle 1940 wave-565). 2 commits behind. `vercel ls --prod` 최신 deploy = 2026-07-20 16:52 UTC.
-**Why**: Vercel daily deploy 한도 hit 가능성 (2026-07-20 moneyball cycles 다수 push). 한도 reset (자정 UTC) 후 다음 push 시 자동 해소 예정.
-**Action**: moneyball 다음 cycle push 시 자동 Vercel trigger → 해소 예상. 또는 `vercel --prod` manual trigger (moneyball 디렉토리).
+**What**: production `0b4d4b6` vs main HEAD `4042151a` (cycle 1995 lockfile fix), gap 11h. moneyball `deploy-drift-alert` 워크플로 자체가 3회 연속 (18:19 / 20:19 / 22:14 / 23:15 UTC) 실패 경보 — 알림 메시지가 직접 "사례 9/10 silent drift family 재발 의심" 명시.
+**Why**: cycle 1460 (2026-07-21) 과 동일 패턴 재발 — Vercel deploy 트리거 누락 반복. cycle 1460 당시 "다음 push 시 자동 해소 예상" 가정이 틀림 (해소 안 되고 새 drift 로 재발).
+**Action (사용자 결정 영역 — Vercel 배포 트리거는 moneyball 워커 자체 인프라)**: moneyball 세션에서 `vercel --prod` manual trigger 또는 deploy-drift-alert 워크플로 자체 조사 필요 (자동 해소 가정 재검증). 허브 쪽은 triage + carry-over 만 (cycle 1462).
 
 ## [DONE 2026-07-22 cycle 1461] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip
 
