@@ -1,0 +1,42 @@
+---
+title: Agent-Human Equivalence — Unified Communication Protocol Design for Hybrid Systems
+category: harness-engineering
+date: "2026-07-22"
+tags:
+  - Agent Equivalence
+  - Human-AI Protocol
+  - WebSocket
+  - Unified API
+  - Harness Engineering
+  - Hybrid Systems
+  - harness-engineering
+confidence: 1
+connections: [agents/multi-agent-collaboration-protocol-design, agents/multi-agent-system-efficient-interaction-design-patterns, harness-engineering/ai-agent-harness-architecture-go-micro-patterns, harness-engineering/hub-worker-automation-loop-resilience-external-control, context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt, agents/ai-agent-control-validation-mechanisms, prompt-engineering/llm-call-orchestration-reliability-enhancement]
+status: draft
+description: Explores the design and implementation of communication protocols where AI agents and human users interact through a single, unified interface, leveraging the OpenMMO 'Agent-Human Equivalence' concept.
+type: entry
+source: scout
+---
+
+에이전트-인간 동등성 (Agent-Human Equivalence) 기반 통신 프로토콜 설계는 AI 에이전트와 인간 사용자가 동일한 방식으로 시스템과 상호작용하도록 하는 접근 방식입니다. 이는 엑스엘게임즈 창업자 송재경 님의 OpenMMO 프로젝트에서 영감을 받은 개념으로, AI 에이전트와 인간 플레이어가 완전히 동일한 WebSocket 프로토콜을 사용하며 서버는 둘을 구분할 수 없는 점이 핵심입니다. 이 원칙을 playbook의 허브 (hub)와 워커 (worker), 그리고 인간 사용자 간의 상호작용에 적용하면 시스템 아키텍처를 간소화하고, 테스트 용이성을 높이며, 미래 확장성을 확보할 수 있습니다. 2026년 현재, 인간과 AI의 협업이 점점 중요해지는 상황에서 이러한 통합된 접근 방식은 하이브리드 시스템 (hybrid systems) 설계의 필수 요소로 부상하고 있습니다. 
+
+## 핵심 원칙: 단일 프로토콜 인터페이스
+
+에이전트-인간 동등성 프로토콜의 핵심은 시스템의 모든 상호작용 주체 (actors)가 하나의 통일된 프로토콜 인터페이스를 사용하도록 하는 것입니다. 이는 다음과 같은 이점을 제공합니다:
+
+*   **아키텍처 간소화 (Architectural Simplification)**: 인간 사용자를 위한 프런트엔드와 AI 에이전트를 위한 API를 별도로 개발하고 유지보수할 필요가 없습니다. 단일 인터페이스는 코드 중복을 줄이고 일관성을 유지합니다.
+*   **개발 및 운영 오버헤드 감소 (Reduced Development & Operational Overhead)**: 새로운 기능 추가 시, 인간과 AI 모두 동일한 프로토콜을 사용하므로 양쪽 클라이언트에 대한 개별적인 프로토콜 변경이 필요 없습니다. 이는 배포 및 테스트 프로세스를 효율화합니다.
+*   **유연성 및 동적 역할 전환 (Flexibility & Dynamic Role Switching)**: 시스템 내에서 에이전트와 인간의 역할이 유연하게 전환되거나 혼합될 수 있습니다. 예를 들어, 인간이 하던 작업을 에이전트가 이어받거나, 에이전트가 생성한 결과물을 인간이 검토하고 다시 에이전트에게 지시를 내리는 복잡한 워크플로우를 매끄럽게 지원합니다.
+*   **테스트 용이성 (Testability)**: 인간 사용자의 행동을 모방하는 AI 에이전트 테스트 스크립트를 작성하기 용이합니다. 동일한 프로토콜을 사용하므로, 에이전트가 수행하는 모든 동작은 인간이 수행할 수 있는 동작의 유효성 검증 로직을 그대로 거치게 됩니다.
+
+## 프로토콜 설계 및 구현
+
+에이전트-인간 동등성 프로토콜은 일반적으로 WebSocket과 같은 양방향 (bidirectional) 통신 채널을 기반으로 설계됩니다. 메시지 페이로드 (message payload)는 JSON과 같은 구조화된 데이터 형식을 사용하여 액션 (actions), 관찰 (observations), 에러 (errors), 지식 업데이트 (knowledge updates) 등 다양한 유형의 상호작용을 처리합니다.
+
+### 통합 메시지 구조 (Unified Message Structure)
+
+모든 메시지는 `type`, `id` (선택 사항), `sender` (Agent 또는 Human), `payload`를 포함하는 공통 구조를 가집니다.
+
+```json
+{
+  
