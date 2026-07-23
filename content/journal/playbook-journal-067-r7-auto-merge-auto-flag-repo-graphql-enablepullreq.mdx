@@ -1,0 +1,51 @@
+---
+title: "Playbook Journal 067 — R7 auto-merge --auto flag 실패 — repo GraphQL enablePullRequestAutoMerge 비활성"
+category: harness-engineering
+date: "2026-07-23"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: R7 auto-merge --auto flag 실패 — repo GraphQL enablePullRequestAutoMerge 비활성 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260723-r7-auto-merge-auto-flag-repo-graphql-enablepullreq-23c9639f9b1d2dcb63c31f5a5d4545.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2000
+
+CLAUDE.md R7 (자동 머지 정책) 이 `gh pr merge <#> --squash --auto --delete-branch` 를
+전제하나, 본 repo 는 GitHub 설정상 "Allow auto-merge" 가 비활성화되어 있어
+`--auto` 플래그가 `GraphQL: Auto merge is not allowed for this repository
+(enablePullRequestAutoMerge)` 로 즉시 실패함 (PR #2856 실측, cycle 2000).
+
+**대응**: `--auto` 실패 시 fallback — CI checks green 확인 후 `--auto` 없이
+`gh pr merge <#> --squash --delete-branch` 직접 실행. develop-cycle 세션은
+Monitor 로 `gh pr checks` 를 polling 하여 전부 non-pending 될 때까지 대기 후 merge.
+
+**후속 (사용자 영역)**: repo Settings → General → Pull Requests → "Allow auto-merge"
+체크 시 향후 사이클부터 `--auto` 정상 작동. 본 메인은 repo 설정 변경 API 권한 없음
+(GitHub REST `PATCH /repos/{owner}/{repo}` 의 `allow_auto_merge` 필드로 사용자가
+직접 활성화 가능 — 참고용, 본 메인 자율 변경 대상 아님).
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
