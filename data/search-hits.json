@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1134,
+  "totalInvocations": 1135,
   "skipped": 29,
-  "searched": 1105,
-  "hit": 504,
+  "searched": 1106,
+  "hit": 505,
   "noMatch": 601,
-  "lastUpdated": "2026-07-22T23:24:50.113Z",
+  "lastUpdated": "2026-07-23T23:26:02.110Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -92,7 +92,7 @@
     "infrastructure/post-ship-meta-documentation-drift": 4,
     "solutions/develop-cycle-hub/2026-05-14-fake-batch-anti-pattern": 4,
     "agents/ruflo-multi-agent-orchestration-claude-code-playbooks": 1,
-    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 8,
+    "harness-engineering/agentic-loop-analytical-chain-lite-mode": 9,
     "context-engineering/ai-agent-remote-management-ux-persistent-web-terminals": 1,
     "infrastructure/wiki-knowledge-roi-3axis-measurement": 20,
     "retros/2026-05-19-cycles-801-804": 6,
@@ -103,7 +103,7 @@
     "retros/2026-05-08-cycles-265-280": 1,
     "retros/2026-05-12-cycles-342-346": 5,
     "infrastructure/agentic-lite-first-scan-gate-execution-pattern": 3,
-    "journal/playbook-journal-005-moneyballscore-playbook-e2e": 2,
+    "journal/playbook-journal-005-moneyballscore-playbook-e2e": 3,
     "infrastructure/vercel-ignore-command-preview-skip": 4,
     "journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471": 2,
     "context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt": 2,
@@ -1255,5 +1255,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1178
+  "totalQueries": 1179
 }

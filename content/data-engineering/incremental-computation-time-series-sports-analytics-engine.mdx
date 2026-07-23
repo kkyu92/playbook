@@ -1,0 +1,52 @@
+---
+title: 증분 계산(Incremental Computation) — 시계열 스포츠 분석 엔진 재계산 비용 절감
+category: data-engineering
+date: "2026-07-24"
+tags:
+  - incremental-computation
+  - time-series
+  - rolling-average
+  - dataflow
+  - moneyballscore
+  - data-engineering
+workers:
+  - moneyball
+confidence: 1
+last_verified: "2026-07-24"
+connections:
+  - context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+status: draft
+description: 새 경기 데이터 도착 시 전체 재계산 대신 변경분만 갱신하는 증분 계산 패턴. 롤링 평균/최근 폼 지표처럼 결합 가능(associative) 연산에 한정해 적용 가능하며, 무분별한 도입은 정합성 버그 위험이 더 크다.
+type: entry
+source: scout
+---
+
+## 문제: 시계열 통계는 매 경기마다 전체를 다시 계산할 필요 없다
+
+moneyballscore 류 DB 기반 분석 엔진은 경기 결과가 들어올 때마다 롤링 평균, 최근 N경기 폼 지표, 팀별 누적 스탯을 다시 계산한다. 데이터가 append-only(과거 경기 결과는 안 바뀜)라면, 전체 재계산은 낭비다 — 새 row 1개가 바꾸는 값은 그 row 가 걸친 윈도우뿐이다.
+
+증분 계산은 "전체 재계산 → 변경분만 갱신"으로 바꾸는 패턴이다. 핵심 전제: 대상 연산이 **결합 가능(associative)** 하거나 **감산 가능(invertible)** 해야 한다.
+
+## 적용 가능한 연산 vs 위험한 연산
+
+| 연산 | 증분 가능? | 이유 |
+|---|---|---|
+| 누적 합계 / 카운트 | ✅ | `new_sum = old_sum + delta` |
+| 고정 윈도우 롤링 평균 (최근 N경기) | ✅ (조건부) | `new_avg = old_avg + (in - out)/N` — 윈도우 이탈분(out) 을 알아야 함 |
+| 최근 폼 지표 (last-5 win rate 등) | ✅ | 슬라이딩 윈도우 + 이탈 원소 추적 |
+| 중앙값(median) | ⚠️ | 결합 불가 — 증분 갱신 시 자료구조(order statistics tree) 필요, 순수 산술로 불가 |
+| 상대 순위/랭킹 | ⚠️ | 다른 팀 데이터 변경에 의존 — 국소 갱신이 전역 재정렬을 유발할 수 있음 |
+| 회귀/모델 재학습 기반 예측 | ❌ | 증분 학습 별도 알고리즘 필요 (SGD warm-start 등) — 단순 산술 갱신 불가 |
+
+**함정**: "롤링 평균 증분화"는 안전해 보이지만 윈도우 이탈 원소(가장 오래된 경기)를 정확히 추적 못 하면 drift 누적 — 매 경기 오차가 조금씩 쌓여 N경기 후 실제 값과 어긋난다. 이 오차는 조용히 쌓이므로 (silent drift) 주기적 전체 재계산으로 checksum 검증하는 안전장치가 없으면 발견이 늦다.
+
+## 도입 판단 기준
+
+1. **재계산 비용이 실제 병목인가** — 경기 수 × 팀 수가 작으면 (야구 시즌 단위) 전체 재계산이 이미 충분히 빠를 수 있다. 최적화 전에 실측(프로파일링) 먼저.
+2. **연산이 결합 가능한가** — 위 표에서 ✅ 항목만 우선 대상.
+3. **정합성 검증 루틴이 있는가** — 증분 값과 전체 재계산 값을 주기적(예: 일 1회) 대조하는 checksum 없이 도입하면 drift 발견이 늦어진다. [[agentic-loop-analytical-chain-lite-mode]] 의 "lite mode 21 cycle 안정 확인" 패턴처럼, 증분 파이프라인도 별도 lite 검증 루틴을 병행하는 게 안전하다.
+
+## 결론
+
+moneyballscore 처럼 시즌 단위로 경기 수가 제한적인 도메인에서는 증분 계산 도입 전에 실제 재계산 비용을 먼저 측정해야 한다. 병목이 확인되면 롤링 평균 · 최근 폼 지표처럼 결합 가능한 연산부터 국소 적용하고, 중앙값 · 랭킹 · 모델 재학습처럼 결합 불가능한 연산은 대상에서 제외한다. 정합성 checksum 없는 증분화는 재계산 비용 절감보다 drift 버그 위험이 크다.

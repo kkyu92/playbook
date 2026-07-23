@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-27T21:03:56.077Z
+Updated: 2026-07-23T23:26:46.157Z
 
-## 엔트리 (619개)
+## 엔트리 (598개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -21,8 +21,6 @@ Updated: 2026-07-27T21:03:56.077Z
 - [LLM Prompt Injection Defense – Robust Guardrails Implementation](wiki/prompt-engineering/llm-prompt-injection-defense-rules-implementation) — confidence: 1, status: draft
 - [LLM Prompt Optimization: Role Definition and Constraint Design](wiki/prompt-engineering/llm-prompt-optimization-role-definition-constraint-design) — confidence: 1, status: draft
 - [LLM 기반 서비스 확장 아키텍처 — 고성능, 저비용 시스템 설계 패턴](wiki/prompt-engineering/llm-scalable-service-architecture-patterns) — confidence: 1, status: draft
-- [LLM Token Optimization 
-Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm-token-waste-detection-cli) — confidence: 1, status: draft
 - [LLM Workflow Orchestration: Complex Business Logic Automation Patterns](wiki/prompt-engineering/llm-workflow-orchestration-business-logic-patterns) — confidence: 1, status: draft
 - [Multi-LLM Routing Patterns - 비용 효율적이고 성능 좋은 LLM 애플리케이션 디자인](wiki/prompt-engineering/multi-llm-routing-design-patterns-cost-performance) — confidence: 1, status: draft
 - [Multi-turn Conversation Prompt Design - LLM 애플리케이션 성능 및 사용자 경험 최적화](wiki/prompt-engineering/multi-turn-conversation-prompt-design-patterns) — confidence: 1, status: draft
@@ -78,14 +76,12 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive](wiki/context-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption) — confidence: 2, status: draft
 - [Agentic Worker Ambient Context Rule Starvation — 재발 패턴이 shared-rules 에 박제되지 않아 워커 ambient context 전파 실패](wiki/context-engineering/agentic-worker-ambient-context-rule-starvation) — confidence: 2, status: complete
 - [자율 에이전트 Worker-Incident 트리아지 — Transient vs Structural CI 실패 자동 분류](wiki/context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification) — confidence: 2, status: complete
-- [AI 에이전트 코드베이스 위키 강화 — 맥락적 지식 통합 전략](wiki/context-engineering/ai-agent-codebase-wiki-contextual-enhancement) — confidence: 1, status: draft
 - [AI Agent Context Layer — Data Warehouse 상호작용을 위한 구조화된 지식 통합](wiki/context-engineering/ai-agent-context-layer-data-warehousing) — confidence: 1, status: draft
 - [AI 에이전트 맥락 관리 — 프로젝트의 지속적인 기억 구축](wiki/context-engineering/ai-agent-context-management-project-memory) — confidence: 1, status: draft
 - [AI Agent Long-Term Memory — Scalable System Design and Integration](wiki/context-engineering/ai-agent-long-term-memory-system-integration) — confidence: 1, status: draft
 - [AI Agent Remote Management UX: Persistent Web Terminals for Enhanced Session Longevity](wiki/context-engineering/ai-agent-remote-management-ux-persistent-web-terminals) — confidence: 1, status: draft
 - [Ambient Knowledge Injection via Symlink](wiki/context-engineering/ambient-knowledge-injection) — confidence: 3, status: complete
 - [배치 세션 콘텐츠 추가 → JIT 검색 공백 — 신규 entry가 검색에 안 잡히는 원인과 대응](wiki/context-engineering/batch-session-content-jit-search-coverage-gap) — confidence: 2, status: complete
-- [Claude 5 Context Engineering: 최신 모델을 위한 프롬프트 최적화](wiki/context-engineering/claude-5-context-engineering-prompt-optimization) — confidence: 1, status: draft
 - [Claude 5 Fable Integration — Advanced LLM Worker Harness for Compounding Automation](wiki/context-engineering/claude-5-fable-llm-worker-harness-compounding-automation) — confidence: 1, status: draft
 - [Claude Code Context Engineering - Playbook 기반 복잡한 도메인 문제 해결 전략](wiki/context-engineering/claude-code-advanced-context-playbook-strategy) — confidence: 1, status: draft
 - [Claude Code 에이전트 영구 메모리 — CTX 도입을 통한 세션 지속성 확보](wiki/context-engineering/claude-code-agent-persistent-memory-ctx-integration) — confidence: 1, status: draft
@@ -150,7 +146,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Agent Harness Architecture: Go Micro Patterns for Robust Orchestration](wiki/harness-engineering/ai-agent-harness-architecture-go-micro-patterns) — confidence: 1, status: draft
 - [AI 에이전트 프롬프트 하네스 표준화: oh-my-harness CLI 활용 전략](wiki/harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness) — confidence: 1, status: draft
 - [Harness 기반 AI 모델 배포 자동화: 대규모 애플리케이션 업데이트 전략](wiki/harness-engineering/ai-model-deployment-automation-with-harness) — confidence: 1, status: draft
-- [AI 모델 성능 모니터링 및 자동 롤백 시스템 - 프로덕션 안정성 확보](wiki/harness-engineering/ai-model-performance-monitoring-automated-rollback) — confidence: 1, status: draft
 - [AI Model Router — 동적 LLM 라우팅으로 비용 및 성능 최적화](wiki/harness-engineering/ai-model-router-cost-performance-optimization) — confidence: 1, status: draft
 - [Auto-Ingest 병렬 Squash-Merge 경쟁 조건 감지와 자동 복구 패턴](wiki/harness-engineering/auto-ingest-parallel-squash-merge-race-condition-recovery) — confidence: 4, status: complete
 - [자동 incident 종결 grace period 설계 — 성급한 close 방지](wiki/harness-engineering/automated-incident-closure-grace-period-design) — confidence: 2, status: complete
@@ -172,8 +167,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Claude Code Harness: 컨텍스트 격리 및 세션/캐시 누출 방지 강화](wiki/harness-engineering/claude-code-harness-session-cache-leakage-prevention) — confidence: 1, status: draft
 - [Claude Code 하네스 워크플로 최적화 — 병렬 에이전트 개발을 위한 Git Worktree 활용 전략](wiki/harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees) — confidence: 1, status: draft
 - [Claude Code Harness: Token Optimization via Code Graph Integration](wiki/harness-engineering/claude-code-token-optimization-code-graph-integration) — confidence: 1, status: draft
-- [Claude Code Workflow Iteration — Large-Scale Code Migration Optimization](wiki/harness-engineering/claude-code-workflow-iteration-optimization) — confidence: 1, status: draft
-- [Claude Cookbook 패턴 — 에이전트 및 RAG 시스템 견고성 강화](wiki/harness-engineering/claude-cookbook-agent-rag-harness-patterns) — confidence: 1, status: draft
 - [Claude 'Extended Thinking' Output: LLM Harness 설계 및 프롬프트 엔지니어링 재평가](wiki/harness-engineering/claude-extended-thinking-harness-reassessment) — confidence: 1, status: draft
 - [Closed-Loop 자동화 설계 철학 — 피드백 차원이 핵심인 이유](wiki/harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension) — confidence: 2, status: draft
 - [Cross-Fork CI 실패 수정 전파 경계 — 허브 트리아지 ≠ 워커 코드 수정](wiki/harness-engineering/cross-fork-ci-failure-fix-propagation-boundary) — confidence: 3, status: complete
@@ -212,10 +205,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Claude API 의존성 재평가 — LLM 다변화 전략 및 대체 모델 탐색](wiki/harness-engineering/llm-api-dependency-reassessment-model-diversification) — confidence: 1, status: draft
 - [LLM API 성능 최적화 패턴: 대규모 애플리케이션 효율성 및 비용 관리](wiki/harness-engineering/llm-api-performance-optimization-patterns) — confidence: 1, status: draft
 - [LLM 애플리케이션 배포 및 스케일링: 효율적인 생산 환경 디자인 패턴](wiki/harness-engineering/llm-app-deployment-scaling-design-patterns) — confidence: 1, status: draft
-- [LLM 애플리케이션 CI/CD 워크플로우 설계 — 안정적인 운영을 위한 지속적 통합 및 배포](wiki/harness-engineering/llm-application-cicd-workflow-design-patterns) — confidence: 1, status: draft
 - [LLM Engine Integration Harness — Multi-Model Orchestration Patterns](wiki/harness-engineering/llm-engine-integration-harness-design-patterns) — confidence: 1, status: draft
-- [대규모 LLM 추론 워크로드 로드 밸런싱 — 고성능 및 확장성 아키텍처](wiki/harness-engineering/llm-inference-distributed-load-balancing-architecture) — confidence: 1, status: draft
-- [LLM Output Validation: Evolving Towards Dark Factory Automation](wiki/harness-engineering/llm-output-validation-dark-factory-evolution) — confidence: 1, status: draft
 - [대규모 LLM 병렬 처리 Harness 설계: 성능 및 비용 최적화 전략](wiki/harness-engineering/llm-parallel-processing-harness-design) — confidence: 1, status: draft
 - [LLM Response Quality Improvement - Automated Harness Testing Implementation](wiki/harness-engineering/llm-response-quality-automated-harness-testing) — confidence: 1, status: draft
 - [LLM 워크플로우 오케스트레이션 — 복잡한 AI 애플리케이션 스케일링](wiki/harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications) — confidence: 1, status: draft
@@ -310,7 +300,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 064 — WAR data gap post-break compound effect — Fancy Stats top-50 + normalization bug](wiki/journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat) — confidence: 3, status: in-progress
 - [Playbook Journal 065 — CE fallback + post-break = confidence floor compound effect](wiki/journal/playbook-journal-065-ce-fallback-post-break-confidence-floor-compound-e) — confidence: 3, status: in-progress
 - [Playbook Journal 066 — CE fallback + post-break = confidence floor compound effect](wiki/journal/playbook-journal-066-ce-fallback-post-break-confidence-floor-compound-e) — confidence: 3, status: in-progress
-- [Playbook Journal 067 — R7 auto-merge --auto flag 실패 — repo GraphQL enablePullRequestAutoMerge 비활성](wiki/journal/playbook-journal-067-r7-auto-merge-auto-flag-repo-graphql-enablepullreq) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -323,7 +312,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [2026년 28주차 학습 리포트](wiki/reports/week-2026-28) — confidence: 5, status: complete
 - [2026년 29주차 학습 리포트](wiki/reports/week-2026-29) — confidence: 5, status: complete
 - [2026년 30주차 학습 리포트](wiki/reports/week-2026-30) — confidence: 5, status: complete
-- [2026년 31주차 학습 리포트](wiki/reports/week-2026-31) — confidence: 5, status: complete
 
 ### Agents
 - [AI Agent 고급 도구 사용 패턴 — 복잡성 관리와 신뢰성 확보](wiki/agents/advanced-ai-agent-tool-use-patterns) — confidence: 1, status: draft
@@ -340,7 +328,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Agent Harness Verticalization: 핵심 가치 사슬 통합 전략](wiki/agents/ai-agent-harness-verticalization-strategy) — confidence: 1, status: draft
 - [AI 에이전트 기반 개발 워크플로 자동화 — 이슈 감지부터 PR 생성까지](wiki/agents/ai-agent-issue-pr-workflow-automation) — confidence: 1, status: draft
 - [AI Agent Output Versioning: Advanced Management with DeltaDB Concepts](wiki/agents/ai-agent-output-versioning-deltadb-concepts) — confidence: 1, status: draft
-- [AI Agent Orchestration - Playbook의 병렬 작업 관제 및 자동 병합 전략](wiki/agents/ai-agent-parallel-task-orchestration-and-auto-merge) — confidence: 1, status: draft
 - [AI Agent Persistent Memory: Bridging Session Gaps with Automated Context Management](wiki/agents/ai-agent-persistent-memory-automated-context-management) — confidence: 1, status: draft
 - [AI Agent Development — RAG Integration for Enhanced Knowledge and Reduced Hallucinations](wiki/agents/ai-agent-rag-integration-hallucination-reduction) — confidence: 1, status: draft
 - [AI 에이전트 견고성 — 도구 활용 오류 처리 및 자가 복구 구현](wiki/agents/ai-agent-robust-tool-error-recovery) — confidence: 1, status: draft
@@ -351,14 +338,11 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Agent Guardrails: Superpowers Pattern으로 의도 정렬 구현](wiki/agents/ai-agent-superpowers-guardrails-intent-alignment) — confidence: 1, status: draft
 - [AI Agent Execution & Knowledge Integration — 투명한 작업 진행 및 결과 공유](wiki/agents/ai-agent-transparent-execution-knowledge-integration) — confidence: 1, status: draft
 - [AI Collaboration 5 Principles — Playbook Agent Workflow Optimization](wiki/agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi) — confidence: 1, status: draft
-- [AI Agent & Human Collaboration — Unified Workspace Architecture via Buzz](wiki/agents/ai-human-collaborative-workspace-architecture-buzz) — confidence: 1, status: draft
 - [Antigravity 2.0 & Managed Agents API — AI 에이전트 개발 및 오케스트레이션 가이드](wiki/agents/antigravity-managed-agents-api-integration-review) — confidence: 1, status: draft
 - [자율 에이전트 — 복잡한 의사결정 로직 구현 패턴](wiki/agents/autonomous-agent-complex-decision-logic-patterns) — confidence: 1, status: draft
 - [자율 AI 에이전트 — 동적 계획 및 목표 달성 전략 구현 패턴](wiki/agents/autonomous-agent-dynamic-planning-goal-strategies) — confidence: 1, status: draft
 - [Autonomous Agent Feedback Loops — Design Patterns for Stability and Performance](wiki/agents/autonomous-agent-feedback-loop-design-patterns) — confidence: 1, status: draft
-- [Autonomous Agent Error Handling and Recovery Patterns - Strategies for Robust LLM Systems](wiki/agents/autonomous-agent-llm-error-handling-recovery-patterns) — confidence: 1, status: draft
 - [자율 에이전트 장기 운영 단계 전이 패턴](wiki/agents/autonomous-agent-long-run-phase-transition-pattern) — confidence: 3, status: complete
-- [자율 에이전트 장기 기억 구현: 전략 및 시스템 설계](wiki/agents/autonomous-agent-long-term-memory-implementation) — confidence: 1, status: draft
 - [Autonomous Agents: Long-Term Memory Management Strategies](wiki/agents/autonomous-agent-long-term-memory-management) — confidence: 1, status: draft
 - [자율 에이전트 다단계 의사결정 설계 — 복잡한 목표 달성을 위한 아키텍처 패턴](wiki/agents/autonomous-agent-multi-stage-decision-making-patterns) — confidence: 1, status: draft
 - [자율 에이전트 추론 과정 디버깅 및 최적화 — 신뢰성과 성능 향상 기법](wiki/agents/autonomous-agent-reasoning-debugging-optimization) — confidence: 1, status: draft
@@ -385,7 +369,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [LLM 에이전트 자율성 — 복잡한 문제 해결을 위한 설계](wiki/agents/llm-agent-autonomy-complex-problem-solving) — confidence: 1, status: draft
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
 - [LLM Agent 동적 툴 선택 — 복잡한 작업 자동화를 위한 최적화 전략](wiki/agents/llm-agent-dynamic-tool-selection-optimization) — confidence: 1, status: draft
-- [LLM Agent Tooling - 외부 툴 연동 및 제어 패턴](wiki/agents/llm-agent-external-tool-integration-control) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
 - [LLM 에이전트 장기 기억 시스템 디자인 — 지속적인 학습과 복잡한 작업 수행 전략](wiki/agents/llm-agent-long-term-memory-system-design) — confidence: 1, status: draft
 - [LLM Agent 장기기억 및 도구 사용 패턴 — 복잡한 태스크 수행을 위한 핵심 전략](wiki/agents/llm-agent-long-term-memory-tool-use-patterns) — confidence: 1, status: draft
@@ -412,8 +395,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Task Coordination: Strategies for Collaborative Goal Achievement](wiki/agents/multi-agent-task-collaboration-coordination-strategies) — confidence: 1, status: draft
-- [Multi-Agent Task Orchestration — Efficient Collaboration and Dynamic Distribution](wiki/agents/multi-agent-task-distribution-collaboration) — confidence: 1, status: draft
-- [Multi-Agent Systems: Task Distribution & Coordination Patterns](wiki/agents/multi-agent-task-distribution-coordination-patterns) — confidence: 1, status: draft
 - [Multi-hop Reasoning Agents — Designing for Complex Problem Solving](wiki/agents/multi-hop-reasoning-agent-design-patterns) — confidence: 1, status: draft
 - [Multi-LLM Agent Workload Partitioning: Practical Implementation Patterns](wiki/agents/multi-llm-agent-workload-partitioning-patterns) — confidence: 1, status: draft
 - [Multi-Persona LLM Validation — Output Robustness Enhancement](wiki/agents/multi-persona-llm-output-validation-enhancement) — confidence: 1, status: draft
@@ -437,7 +418,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [복잡한 비즈니스 워크플로우를 위한 견고한 다중 에이전트 시스템 설계](wiki/agents/robust-multi-agent-system-design-complex-workflows) — confidence: 1, status: draft
 - [Ruflo Platform — Claude Code 기반 멀티 에이전트 오케스트레이션 강화](wiki/agents/ruflo-multi-agent-orchestration-claude-code-playbooks) — confidence: 1, status: draft
 - [Autonomous Agent Self-Correction — Implementing Adaptive Learning Loops](wiki/agents/self-correction-adaptive-learning-loops-implementation) — confidence: 1, status: draft
-- [자율주행 기업 모델 — AI 에이전트 워크플로우 재정의 및 인간-AI 협업 최적화](wiki/agents/self-driving-company-ai-agent-workflow-redefinition) — confidence: 1, status: draft
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/agents/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/agents/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 
@@ -569,7 +549,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Local Markdown Knowledge Hub: Kuku Concepts for Playbook Integration with AI and Graph View](wiki/frontend-ai/kuku-concepts-playbook-local-markdown-enhancement) — confidence: 1, status: draft
 - [Next.js Security Hardening — Patching Vulnerabilities and Enhancing Defense](wiki/frontend-ai/nextjs-security-patching-defense-logic-reinforcement) — confidence: 1, status: draft
 - [예측 모델 요소 사문화 탐지 — 운영 분석으로 0 기여 팩터 12% 검출](wiki/frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis) — confidence: 2, status: complete
-- [Real-time AI Interaction: Frontend Component Design Patterns](wiki/frontend-ai/realtime-ai-interaction-frontend-patterns) — confidence: 1, status: draft
 - [실시간 AI 스트리밍 응답 프론트엔드 UI/UX 패턴 — 사용자 경험 최적화 가이드라인](wiki/frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns) — confidence: 1, status: draft
 - [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 
@@ -608,6 +587,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 
 ### Data Engineering
 - [bigset: Knowledge Hub Data Automation with Natural Language Web Scraping](wiki/data-engineering/bigset-structured-data-collection-knowledge-hubs) — confidence: 1, status: draft
+- [증분 계산(Incremental Computation) — 시계열 스포츠 분석 엔진 재계산 비용 절감](wiki/data-engineering/incremental-computation-time-series-sports-analytics-engine) — confidence: 1, status: draft
 - [LLM 데이터셋 구축: 고품질 학습 및 파인튜닝 전략](wiki/data-engineering/llm-data-acquisition-high-quality-datasets) — confidence: 1, status: draft
 - [LLM Fine-tuning 데이터셋 준비 – 고품질 데이터 구축 전략](wiki/data-engineering/llm-fine-tuning-dataset-preparation-strategies) — confidence: 1, status: draft
 - [LLM 파인튜닝 데이터셋 — 고품질 데이터 구축 및 관리 전략](wiki/data-engineering/llm-fine-tuning-high-quality-data-construction-management) — confidence: 1, status: draft
@@ -634,7 +614,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
 - [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
 - [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
-- [On-Device LLM Optimization — Strategies for Android AI](wiki/android-ai/on-device-llm-optimization-android-strategies) — confidence: 1, status: draft
 - [Android 온디바이스 LLM 양자화: Gemma 4 QAT 모델 적용 전략](wiki/android-ai/on-device-llm-quantization-gemma-4-qat-application) — confidence: 1, status: draft
 - [On-device LLM 양자화 패턴 — Android 의 GGUF · ONNX · TFLite/LiteRT 선택 기준](wiki/android-ai/on-device-llm-quantization-patterns-android) — confidence: 1, status: draft
 
@@ -643,7 +622,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Model Performance Metrics Dashboard — Design Principles for Effective Visualization](wiki/reports/ai-model-performance-metrics-dashboard-design-guide) — confidence: 1, status: draft
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
 - [AI 프로젝트 가치 측정 — 성과 보고 프레임워크 구축](wiki/reports/ai-project-value-measurement-performance-reporting) — confidence: 1, status: draft
-- [AI 모델 성능 보고서 — 자동화된 지표 생성 및 시각화](wiki/reports/automated-ai-performance-reports) — confidence: 1, status: draft
 - [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: complete
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
@@ -656,7 +634,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
-- agents/advanced-ai-agent-tool-use-patterns ↔ agents/llm-agent-external-tool-integration-control
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/ai-agent-transparent-execution-knowledge-integration
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/autonomous-agent-reasoning-debugging-optimization
 - agents/agent-codebase-exploration-visualization-tool ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
@@ -681,7 +658,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ context-engineering/enriching-local-data-with-description-md-sidecars
 - agents/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ agents/ai-agent-transparent-execution-knowledge-integration
 - agents/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ context-engineering/agentic-explore-idea-topic-discovery-friction-coverage-signal
-- agents/agentic-self-documentation-dual-perspective-knowledge-accumulation ↔ context-engineering/ai-agent-codebase-wiki-contextual-enhancement
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ agents/external-tool-integration-for-ai-agents
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ agents/ai-agent-context-window-optimization-session-longevity
@@ -691,7 +667,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ agents/ai-agent-transparent-execution-knowledge-integration
 - agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ harness-engineering/kimi-k3-1m-context-model-playbook-harness-integration
-- agents/ai-agent-code-knowledge-graph-integration-efficiency ↔ context-engineering/ai-agent-codebase-wiki-contextual-enhancement
+- agents/ai-agent-context-window-optimization-session-longevity ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/ai-agent-context-window-optimization-session-longevity ↔ agents/external-tool-integration-for-ai-agents
 - agents/ai-agent-context-window-optimization-session-longevity ↔ agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi
 - agents/ai-agent-context-window-optimization-session-longevity ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
@@ -703,9 +679,10 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-context-window-optimization-session-longevity ↔ android-ai/android-background-ai-workflow-workmanager
 - agents/ai-agent-context-window-optimization-session-longevity ↔ prompt-engineering/llm-prompt-caching-cost-optimization-patterns
 - agents/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/kimi-k3-1m-context-model-playbook-harness-integration
-- agents/ai-agent-context-window-optimization-session-longevity ↔ context-engineering/claude-5-context-engineering-prompt-optimization
-- agents/ai-agent-context-window-optimization-session-longevity ↔ prompt-engineering/llm-token-waste-detection-cli
+- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-safety-constraint-control-design-patterns
+- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
+- agents/ai-agent-control-validation-mechanisms ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-self-correction-design-principles
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-runaway-cost-prevention-control-systems
@@ -717,14 +694,12 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-validation-supervisee-fatigue-mitigation
 - agents/ai-agent-control-validation-mechanisms ↔ project-ops/streamlined-ai-agent-harness-design
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/agent-human-equivalence-protocol-design
-- agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/llm-output-validation-dark-factory-evolution
-- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-parallel-task-orchestration-and-auto-merge
-- agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-external-tool-integration-control
 - agents/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/code-based-agent-task-patterns-harness-design
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/multi-agent-task-collaboration-coordination-strategies
+- agents/ai-agent-global-context-gc-tree-integration ↔ agents/autonomous-agent-long-term-memory-management
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/external-tool-integration-for-ai-agents
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/ai-agent-safety-constraint-control-design-patterns
@@ -735,7 +710,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/opentag-slack-playbook-worker-automation-poc
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/ai-agent-harness-verticalization-strategy
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ project-ops/streamlined-ai-agent-harness-design
-- agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/ai-agent-harness-verticalization-strategy ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/ai-agent-harness-verticalization-strategy ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
 - agents/ai-agent-harness-verticalization-strategy ↔ project-ops/claude-goal-playbook-worker-automation
@@ -752,14 +726,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ context-engineering/agentic-multi-layer-state-persistence-decision-framework
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ context-engineering/agentic-commit-body-subtype-dispatch-transport
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ agents/ai-agent-self-correction-design-principles
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-collaboration-complex-problem-solving
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ harness-engineering/llm-parallel-processing-harness-design
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-task-distribution-coordination-patterns
-- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-task-distribution-collaboration
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/autonomous-agent-long-term-memory-management
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/claude-code-session-context-persistence-ctx-plugin
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/hub-worker-compounding-pattern
@@ -770,9 +736,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/on-device-vector-db-jit-semantic-search
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/generative-ai-agent-long-term-memory-strategies
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/ai-agent-context-management-project-memory
-- agents/ai-agent-persistent-memory-automated-context-management ↔ agents/ai-human-collaborative-workspace-architecture-buzz
-- agents/ai-agent-persistent-memory-automated-context-management ↔ agents/autonomous-agent-long-term-memory-implementation
-- agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/ai-agent-codebase-wiki-contextual-enhancement
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/ai-agent-persistent-memory-automated-context-management
@@ -783,9 +746,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ data-engineering/vector-database-optimization-llm-rag-performance
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/generative-ai-agent-long-term-memory-strategies
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/multi-hop-reasoning-agent-design-patterns
-- agents/ai-agent-rag-integration-hallucination-reduction ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
-- agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/autonomous-agent-long-term-memory-implementation
-- agents/ai-agent-rag-integration-hallucination-reduction ↔ context-engineering/ai-agent-codebase-wiki-contextual-enhancement
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/advanced-ai-agent-tool-use-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/ai-agent-self-correction-design-principles
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-tool-use-design-patterns
@@ -794,9 +754,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-agent-reliability-stability-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/robust-multi-agent-system-design-complex-workflows
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
-- agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-agent-llm-error-handling-recovery-patterns
-- agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-external-tool-integration-control
-- agents/ai-agent-robust-tool-error-recovery ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
@@ -806,7 +763,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ prompt-engineering/llm-api-cost-optimization-harness-design-patterns
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/multi-stage-agent-task-scheduling-monitoring
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ evaluation/llm-output-validation-automation-failure-prevention
-- agents/ai-agent-runaway-cost-prevention-control-systems ↔ prompt-engineering/llm-token-waste-detection-cli
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/long-term-agent-behavior-anomaly-detection-response
@@ -823,6 +779,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/ai-agent-self-correction-design-principles ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
+- agents/ai-agent-self-correction-design-principles ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
 - agents/ai-agent-self-correction-design-principles ↔ evaluation/llm-judgment-code-verification-separation-architecture
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-agent-reliability-stability-patterns
@@ -830,8 +787,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-agent-complex-decision-logic-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-planning-reflection-autonomous-problem-solving
 - agents/ai-agent-self-correction-design-principles ↔ agents/multi-hop-reasoning-agent-design-patterns
-- agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-agent-llm-error-handling-recovery-patterns
-- agents/ai-agent-self-correction-design-principles ↔ harness-engineering/claude-code-workflow-iteration-optimization
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/ai-agent-persistent-memory-automated-context-management
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/autonomous-agent-long-term-memory-management
@@ -839,7 +794,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/collaborative-agent-workflow-design-orchestration
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ context-engineering/ai-agent-context-management-project-memory
-- agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/ai-human-collaborative-workspace-architecture-buzz
+- agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
@@ -864,11 +819,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-stage-agent-task-scheduling-monitoring
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ project-ops/software-factory-playbook-architecture-enhancement
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ project-ops/playbook-data-perspective-action-framework
-- agents/ai-human-collaborative-workspace-architecture-buzz ↔ agents/multi-agent-collaboration-system-design-patterns
-- agents/ai-human-collaborative-workspace-architecture-buzz ↔ agents/collaborative-agent-workflow-design-orchestration
-- agents/ai-human-collaborative-workspace-architecture-buzz ↔ context-engineering/ai-agent-long-term-memory-system-integration
-- agents/ai-human-collaborative-workspace-architecture-buzz ↔ harness-engineering/large-scale-llm-harness-architecture-patterns
-- agents/ai-human-collaborative-workspace-architecture-buzz ↔ project-ops/software-factory-playbook-architecture-enhancement
 - agents/antigravity-managed-agents-api-integration-review ↔ agents/external-tool-integration-for-ai-agents
 - agents/antigravity-managed-agents-api-integration-review ↔ agents/google-agents-cli-agent-development-acceleration
 - agents/antigravity-managed-agents-api-integration-review ↔ agents/llm-agent-tool-use-design-patterns
@@ -881,7 +831,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/autonomous-agent-feedback-loop-design-patterns
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/inference-chain-design-complex-ai-agents
-- agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/autonomous-ai-agent-task-planning-execution-patterns
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/autonomous-agent-multi-stage-decision-making-patterns
@@ -893,6 +842,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ prompt-engineering/goal-oriented-prompting-llm-harness-strategy
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/llm-agent-planning-reflection-autonomous-problem-solving
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/ai-agent-self-correction-design-principles
+- agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/autonomous-agent-multi-stage-decision-making-patterns
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ harness-engineering/agent-loop-engineering-harness-design-principles
@@ -904,21 +854,11 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/multi-stage-decision-making-agent-design-patterns
 - agents/autonomous-agent-feedback-loop-design-patterns ↔ agents/llm-agent-planning-reflection-autonomous-problem-solving
-- agents/autonomous-agent-feedback-loop-design-patterns ↔ harness-engineering/llm-application-cicd-workflow-design-patterns
-- agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
-- agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ agents/autonomous-agent-reliability-stability-patterns
-- agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ evaluation/llm-api-retry-logic-design-patterns-resilience
-- agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - agents/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-trigger-skip-dual-condition-homeostasis
 - agents/autonomous-agent-long-run-phase-transition-pattern ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-gap-trigger-chain-health-check
 - agents/autonomous-agent-long-run-phase-transition-pattern ↔ context-engineering/agentic-post-saturation-ux-chip-pivot
 - agents/autonomous-agent-long-run-phase-transition-pattern ↔ harness-engineering/agentic-n-batch-predictable-outcome-stable-attractor
-- agents/autonomous-agent-long-term-memory-implementation ↔ agents/autonomous-agent-long-term-memory-management
-- agents/autonomous-agent-long-term-memory-implementation ↔ agents/generative-ai-agent-long-term-memory-strategies
-- agents/autonomous-agent-long-term-memory-implementation ↔ agents/llm-agent-long-term-memory-system-design
-- agents/autonomous-agent-long-term-memory-implementation ↔ context-engineering/ai-agent-context-management-project-memory
-- agents/autonomous-agent-long-term-memory-implementation ↔ data-engineering/vector-database-optimization-llm-rag-performance
 - agents/autonomous-agent-long-term-memory-management ↔ agents/llm-agent-tool-use-design-patterns
 - agents/autonomous-agent-long-term-memory-management ↔ agents/long-term-agent-behavior-anomaly-detection-response
 - agents/autonomous-agent-long-term-memory-management ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
@@ -991,7 +931,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/collaborative-agent-workflow-design-orchestration ↔ agents/optimizing-multi-agent-interaction-collaboration
 - agents/collaborative-agent-workflow-design-orchestration ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/collaborative-agent-workflow-design-orchestration ↔ agents/robust-multi-agent-system-design-complex-workflows
-- agents/collaborative-agent-workflow-design-orchestration ↔ agents/multi-agent-task-distribution-collaboration
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ agents/enterprise-agent-management-patterns-llm-orchestration
 - agents/concurrent-fault-tolerant-ai-workflow-design-patterns ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
@@ -1032,7 +971,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/external-tool-integration-for-ai-agents ↔ agents/mirage-ai-agent-unified-filesystem-integration
 - agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-tool-usage-design
-- agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-external-tool-integration-control
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/google-agents-cli-agent-development-acceleration
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
@@ -1075,6 +1013,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ context-engineering/ephemeral-credentials-session-llm-harness
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ agents/vercel-ai-sdk-adapter-local-external-coding-agents
+- agents/gstack-framework-ai-agent-collaboration-architecture ↔ agents/multi-agent-collaboration-complex-problem-solving
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ agents/multi-agent-collaboration-design-patterns
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns
 - agents/gstack-framework-ai-agent-collaboration-architecture ↔ journal/playbook-journal-017-agent-loop-cron-develop-cycle-skill-manual-trigger
@@ -1112,9 +1051,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/multimodal-ai-agent-realtime-decision-logic
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/multimodal-ai-agent-tool-usage-design
-- agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-external-tool-integration-control
-- agents/llm-agent-external-tool-integration-control ↔ agents/llm-agent-tool-use-design-patterns
-- agents/llm-agent-external-tool-integration-control ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-collaboration-system-design-patterns
@@ -1123,7 +1059,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/goal-oriented-prompting-llm-harness-strategy
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-stage-decision-making-agent-design-patterns
 - agents/llm-agent-goal-achievement-planning-patterns ↔ project-ops/playbook-data-perspective-action-framework
-- agents/llm-agent-goal-achievement-planning-patterns ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/llm-agent-long-term-memory-system-design ↔ agents/ai-agent-persistent-memory-automated-context-management
 - agents/llm-agent-long-term-memory-system-design ↔ agents/autonomous-agent-long-term-memory-management
 - agents/llm-agent-long-term-memory-system-design ↔ agents/llm-agent-long-term-memory-tool-use-patterns
@@ -1157,13 +1092,13 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/llm-agent-stable-tool-use-production-environments ↔ agents/external-tool-integration-for-ai-agents
 - agents/llm-agent-stable-tool-use-production-environments ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/llm-agent-stable-tool-use-production-environments ↔ agents/ai-agent-safety-constraint-control-design-patterns
-- agents/llm-agent-stable-tool-use-production-environments ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ infrastructure/guard-test-pattern
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ evaluation/llm-agent-observability-spanlens-trace-monitoring
+- agents/llm-agent-tool-use-design-patterns ↔ context-engineering/zerostack-rust-agent-harness-extension
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-tool-use-design-patterns ↔ agents/mirage-ai-agent-unified-filesystem-integration
 - agents/llm-agent-tool-use-design-patterns ↔ agents/qwen3-7-max-agent-model-evaluation-integration
@@ -1209,14 +1144,13 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/mirage-ai-agent-unified-filesystem-integration ↔ context-engineering/enriching-local-data-with-description-md-sidecars
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-llm-agent-workload-partitioning-patterns
+- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/paca-ai-agent-project-management-tool-review
-- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-task-distribution-coordination-patterns
-- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-task-distribution-collaboration
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-complex-task-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
@@ -1237,7 +1171,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/multi-agent-collaboration-protocol-design ↔ agents/optimizing-multi-agent-interaction-collaboration
 - agents/multi-agent-collaboration-protocol-design ↔ agents/multi-agent-collaboration-complex-problem-solving
 - agents/multi-agent-collaboration-protocol-design ↔ harness-engineering/agent-human-equivalence-protocol-design
-- agents/multi-agent-collaboration-protocol-design ↔ agents/multi-agent-task-distribution-coordination-patterns
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
@@ -1255,25 +1188,18 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/paca-ai-agent-project-management-tool-review
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ harness-engineering/agent-human-equivalence-protocol-design
-- agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-distribution-coordination-patterns
-- agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-distribution-collaboration
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-stage-agent-task-scheduling-monitoring
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/paca-ai-agent-project-management-tool-review
-- agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-agent-task-distribution-coordination-patterns
-- agents/multi-agent-task-distribution-collaboration ↔ agents/multi-agent-task-distribution-coordination-patterns
-- agents/multi-agent-task-distribution-collaboration ↔ agents/robust-multi-agent-system-design-complex-workflows
-- agents/multi-agent-task-distribution-collaboration ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
-- agents/multi-agent-task-distribution-coordination-patterns ↔ agents/robust-multi-agent-system-design-complex-workflows
-- agents/multi-agent-task-distribution-coordination-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/claude-code-agent-view-worker-management-integration
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/agent-parallel-execution-isolation-git-worktree-patterns
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns
+- agents/multi-persona-llm-output-validation-enhancement ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - agents/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - agents/multi-persona-llm-output-validation-enhancement ↔ project-ops/claude-goal-playbook-worker-automation
 - agents/multi-persona-llm-output-validation-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
@@ -1323,6 +1249,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/opentag-slack-playbook-worker-automation-poc ↔ agents/llm-agent-tool-use-design-patterns
 - agents/opentag-slack-playbook-worker-automation-poc ↔ harness-engineering/agent-loop-engineering-harness-design-principles
 - agents/opentag-slack-playbook-worker-automation-poc ↔ harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness
+- agents/opentag-slack-playbook-worker-automation-poc ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/optimizing-multi-agent-interaction-collaboration ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/optimizing-multi-agent-interaction-collaboration ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/optimizing-multi-agent-interaction-collaboration ↔ agents/multi-agent-collaboration-design-patterns
@@ -1333,7 +1260,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ouroboros-agent-performance-cost-optimization ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - agents/ouroboros-agent-performance-cost-optimization ↔ project-ops/claude-goal-playbook-worker-automation
 - agents/ouroboros-agent-performance-cost-optimization ↔ infrastructure/claude-code-harness-cost-optimization-reassessment
-- agents/ouroboros-agent-performance-cost-optimization ↔ prompt-engineering/llm-token-waste-detection-cli
 - agents/paca-ai-agent-project-management-tool-review ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - agents/paca-ai-agent-project-management-tool-review ↔ project-ops/ai-project-planning-roadmap-initial-strategy
 - agents/qwen3-6-max-preview-llm-agentic-coding-evaluation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
@@ -1362,10 +1288,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/self-correction-adaptive-learning-loops-implementation ↔ agents/ai-agent-self-correction-design-principles
 - agents/self-correction-adaptive-learning-loops-implementation ↔ harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension
 - agents/self-correction-adaptive-learning-loops-implementation ↔ agents/autonomous-agent-long-term-memory-management
-- agents/self-driving-company-ai-agent-workflow-redefinition ↔ evaluation/llm-output-validation-automation-failure-prevention
-- agents/self-driving-company-ai-agent-workflow-redefinition ↔ harness-engineering/hub-worker-automation-loop-resilience-external-control
-- agents/self-driving-company-ai-agent-workflow-redefinition ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
-- agents/self-driving-company-ai-agent-workflow-redefinition ↔ context-engineering/hub-worker-compounding-pattern
 - agents/superagent-harness-architecture-long-running-task-orchestrat ↔ context-engineering/claude-5-fable-llm-worker-harness-compounding-automation
 - agents/superagent-harness-architecture-long-running-task-orchestrat ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - agents/vercel-ai-sdk-adapter-local-external-coding-agents ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
@@ -1388,7 +1310,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/mediapipe
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ evaluation/llm-api-dependency-risk-mitigation-strategy
 - android-ai/android-ai-edge-vs-cloud-decision-framework ↔ prompt-engineering/llm-scalable-service-architecture-patterns
-- android-ai/android-ai-edge-vs-cloud-decision-framework ↔ android-ai/on-device-llm-optimization-android-strategies
 - android-ai/android-background-ai-workflow-workmanager ↔ frontend-ai/ai-inference-visualization-design-patterns
 - android-ai/android-background-ai-workflow-workmanager ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - android-ai/android-background-ai-workflow-workmanager ↔ journal/playbook-journal-031-w20-20-calibration-cycle-308
@@ -1409,7 +1330,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - android-ai/gemini-nano ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - android-ai/gemini-nano ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - android-ai/gemini-nano ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
-- android-ai/gemini-nano ↔ android-ai/on-device-llm-optimization-android-strategies
 - android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - android-ai/genkit-android-backend-genai-framework ↔ android-ai/gomodel-llm-gateway-introduction-strategy
 - android-ai/genkit-android-backend-genai-framework ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
@@ -1430,23 +1350,17 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ context-engineering/ai-agent-remote-management-ux-persistent-web-terminals
 - android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
-- android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns ↔ frontend-ai/realtime-ai-interaction-frontend-patterns
 - android-ai/mediapipe ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - android-ai/mediapipe ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - android-ai/mediapipe ↔ frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 - android-ai/mediapipe ↔ evaluation/llm-input-output-data-pipeline-design-patterns
 - android-ai/mediapipe ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - android-ai/mediapipe ↔ prompt-engineering/llm-scalable-service-architecture-patterns
-- android-ai/mediapipe ↔ android-ai/on-device-llm-optimization-android-strategies
 - android-ai/ml-kit ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - android-ai/ml-kit ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - android-ai/ml-kit ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - android-ai/ml-kit ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - android-ai/ml-kit ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
-- android-ai/on-device-llm-optimization-android-strategies ↔ android-ai/on-device-llm-quantization-gemma-4-qat-application
-- android-ai/on-device-llm-optimization-android-strategies ↔ android-ai/on-device-llm-quantization-patterns-android
-- android-ai/on-device-llm-optimization-android-strategies ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
-- android-ai/on-device-llm-optimization-android-strategies ↔ context-engineering/on-device-vector-db-jit-semantic-search
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/gemini-nano
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/on-device-llm-quantization-patterns-android
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/android-ai-edge-vs-cloud-decision-framework
@@ -1630,7 +1544,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ context-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ context-engineering/wiki-category-health-rebalance-decision-framework
 - context-engineering/agentic-wiki-connection-graph-health-metrics ↔ context-engineering/wiki-category-migration-execution-runbook
-- context-engineering/agentic-wiki-connection-graph-health-metrics ↔ context-engineering/ai-agent-codebase-wiki-contextual-enhancement
 - context-engineering/agentic-wiki-metric-false-positive-yaml-format-assumption ↔ context-engineering/drift-detection-methodology
 - context-engineering/agentic-worker-ambient-context-rule-starvation ↔ infrastructure/agentic-worker-dispatch-filter-registration-gap
 - context-engineering/agentic-worker-ambient-context-rule-starvation ↔ context-engineering/hub-worker-compounding-pattern
@@ -1638,8 +1551,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ infrastructure/worker-lesson-velocity-signal
 - context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ evaluation/llm-api-retry-logic-design-patterns-resilience
 - context-engineering/agentic-worker-incident-triage-transient-vs-structural-ci-failure-classification ↔ infrastructure/operational-resilience-emergency-management-tooling
-- context-engineering/ai-agent-codebase-wiki-contextual-enhancement ↔ context-engineering/ai-agent-context-management-project-memory
-- context-engineering/ai-agent-codebase-wiki-contextual-enhancement ↔ context-engineering/enriching-local-data-with-description-md-sidecars
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ agents/ai-agent-persistent-memory-automated-context-management
 - context-engineering/ai-agent-context-layer-data-warehousing ↔ agents/ai-agent-self-correction-design-principles
@@ -1671,12 +1582,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/ambient-knowledge-injection ↔ infrastructure/cross-fork-feedback-sync
 - context-engineering/batch-session-content-jit-search-coverage-gap ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
 - context-engineering/batch-session-content-jit-search-coverage-gap ↔ harness-engineering/branched-state-local-lint-false-positive-signal-drift
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ context-engineering/claude-5-fable-llm-worker-harness-compounding-automation
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ context-engineering/claude-code-advanced-context-playbook-strategy
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ prompt-engineering/claude-fable-5-safeguards-prompt-engineering-recalibration
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ harness-engineering/claude-code-token-optimization-code-graph-integration
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees
-- context-engineering/claude-5-context-engineering-prompt-optimization ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ project-ops/claude-goal-playbook-worker-automation
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ context-engineering/hub-worker-compounding-pattern
 - context-engineering/claude-5-fable-llm-worker-harness-compounding-automation ↔ evaluation/llm-output-validation-quality-metrics-design
@@ -1687,7 +1592,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/claude-code-advanced-context-playbook-strategy ↔ harness-engineering/developer-role-redefinition-llm-workflow-design
 - context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ agents/ai-agent-persistent-memory-automated-context-management
 - context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ agents/autonomous-agent-long-term-memory-management
-- context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - context-engineering/claude-code-agent-view-worker-management-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - context-engineering/claude-code-agent-view-worker-management-integration ↔ frontend-ai/ai-inference-visualization-design-patterns
 - context-engineering/claude-code-harness-component-visibility-ccinv ↔ infrastructure/claude-code-ctx-plugin-context-persistence
@@ -1699,7 +1603,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ infrastructure/claude-code-harness-multi-llm-strategy-dependency-mitigation
 - context-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ context-engineering/flue-framework-integration-claude-code-harness-reconfigurati
 - context-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ project-ops/streamlined-ai-agent-harness-design
-- context-engineering/claude-code-harness-large-codebase-architecture-patterns ↔ harness-engineering/claude-code-workflow-iteration-optimization
 - context-engineering/claude-code-session-context-persistence-ctx-plugin ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
 - context-engineering/claude-code-session-context-persistence-ctx-plugin ↔ infrastructure/sentry-pii-scrubbing-beforesend
 - context-engineering/claude-code-session-context-persistence-ctx-plugin ↔ infrastructure/claude-code-ctx-plugin-context-persistence
@@ -1748,6 +1651,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/flue-framework-integration-claude-code-harness-reconfigurati ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - context-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ context-engineering/hub-worker-compounding-pattern
 - context-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
+- context-engineering/hub-worker-compounding-pattern ↔ project-ops/question-own-defaults
 - context-engineering/hub-worker-compounding-pattern ↔ harness-engineering/skill-evolution-skip-condition-mode-dependency
 - context-engineering/hub-worker-compounding-pattern ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - context-engineering/hub-worker-compounding-pattern ↔ infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern
@@ -1775,6 +1679,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/on-device-vector-db-jit-semantic-search ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - context-engineering/silent-drift-family-pattern ↔ project-ops/question-own-defaults
 - context-engineering/silent-drift-family-pattern ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
+- context-engineering/silent-drift-family-pattern ↔ evaluation/llm-output-validation-automation-failure-prevention
 - context-engineering/silent-drift-family-pattern ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - context-engineering/silent-drift-family-pattern ↔ harness-engineering/agentic-trigger-permanent-optout-structural-false-positive
 - context-engineering/silent-drift-family-pattern ↔ infrastructure/agentic-claude-md-line-reference-silent-drift
@@ -1807,6 +1712,8 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - data-engineering/bigset-structured-data-collection-knowledge-hubs ↔ data-engineering/llm-data-acquisition-high-quality-datasets
 - data-engineering/bigset-structured-data-collection-knowledge-hubs ↔ agents/llm-agent-tool-use-design-patterns
 - data-engineering/bigset-structured-data-collection-knowledge-hubs ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- data-engineering/incremental-computation-time-series-sports-analytics-engine ↔ context-engineering/jit-embedding-retrieval-context-cost-scale-invariant
+- data-engineering/incremental-computation-time-series-sports-analytics-engine ↔ harness-engineering/agentic-loop-analytical-chain-lite-mode
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - data-engineering/llm-data-acquisition-high-quality-datasets ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -1874,7 +1781,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
-- data-engineering/rag-search-performance-evaluation-metrics-design ↔ reports/automated-ai-performance-reports
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/vector-db-embedding-data-optimization-patterns
@@ -1909,7 +1815,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - evaluation/claude-code-generation-validation-pipeline-extension ↔ project-ops/react-doctor-ai-code-validation-pipeline
-- evaluation/claude-code-generation-validation-pipeline-extension ↔ harness-engineering/claude-code-workflow-iteration-optimization
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - evaluation/claude-extended-thinking-dependency-reassessment ↔ agents/ai-agent-self-correction-design-principles
@@ -1922,7 +1827,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ project-ops/playbook-ai-integrated-logging-system
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ evaluation/llm-inference-reliability-validation-harness
-- evaluation/generative-ai-hallucination-automated-detection-evaluation ↔ harness-engineering/llm-output-validation-dark-factory-evolution
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/ai-project-scope-management-complexity-change
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ evaluation/llm-document-integrity-validation-pipeline-enhancement
@@ -1930,6 +1834,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/bifrost-high-speed-enterprise-ai-gateway-integration
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/prompt-model-version-management-large-scale-ai
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/react-doctor-ai-code-validation-pipeline
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-021-prediction-baseline-7d-30d-brier-0-248-coin-flip-4
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema
@@ -1937,7 +1842,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/ai-model-performance-metrics-dashboard-design-guide
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ prompt-engineering/llm-generated-content-ai-smell-detection-prompt-defense
-- evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ reports/automated-ai-performance-reports
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-code-commit-message-hermes-md-monitoring-remediation
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection
@@ -1974,6 +1878,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ project-ops/claude-code-harness-skillset-reinforcement-agent-playbook
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ evaluation/llm-output-validation-automation-failure-prevention
+- evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/prompt-model-version-management-large-scale-ai
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ evaluation/llm-workload-management-mlops-pipeline-design-patterns
@@ -1982,7 +1887,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/scalable-ai-model-deployment-best-practices
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/multi-llm-external-tool-workflow-orchestration-patterns
-- evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/ai-model-performance-monitoring-automated-rollback
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
@@ -1993,6 +1897,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
+- evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ infrastructure/guard-test-pattern
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
@@ -2003,7 +1908,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ harness-engineering/claude-code-harness-auto-progression-guardrail-strengthening
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-validation-supervisee-fatigue-mitigation
-- evaluation/llm-output-safety-reliability-validation-enhancement ↔ harness-engineering/llm-output-validation-dark-factory-evolution
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ infrastructure/zero-touch-develop-cycle-session-management
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ project-ops/react-doctor-ai-code-validation-pipeline
@@ -2015,7 +1919,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-output-validation-supervisee-fatigue-mitigation
 - evaluation/llm-output-validation-automation-failure-prevention ↔ project-ops/playbook-data-perspective-action-framework
 - evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/gemini-flash-model-upgrade-optimization
-- evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/llm-output-validation-dark-factory-evolution
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ agents/ai-agent-self-correction-design-principles
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471
@@ -2034,14 +1937,14 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/llm-ux-evaluation-metrics-design-measurement
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ frontend-ai/nextjs-security-patching-defense-logic-reinforcement
-- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ reports/automated-ai-performance-reports
-- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ harness-engineering/llm-application-cicd-workflow-design-patterns
+- evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/ai-personalized-ux-frontend-design-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
@@ -2069,7 +1972,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ frontend-ai/nextjs-security-patching-defense-logic-reinforcement
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ project-ops/bifrost-high-speed-enterprise-ai-gateway-integration
 - evaluation/rag-application-evaluation-retrieval-generation-quality ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
-- evaluation/rag-application-evaluation-retrieval-generation-quality ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
@@ -2097,7 +1999,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/claude-code-html-output-ux-enhancement
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
-- frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/realtime-ai-interaction-frontend-patterns
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ infrastructure/claude-code-ctx-plugin-context-persistence
@@ -2110,7 +2011,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
-- frontend-ai/generative-ai-ui-ux-design-patterns ↔ frontend-ai/realtime-ai-interaction-frontend-patterns
 - frontend-ai/hardcoded-baseline-accuracy-threshold-staleness ↔ project-ops/question-own-defaults
 - frontend-ai/hardcoded-baseline-accuracy-threshold-staleness ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - frontend-ai/kuku-concepts-playbook-local-markdown-enhancement ↔ infrastructure/nextjs-instrumentation-location
@@ -2124,9 +2024,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ frontend-ai/hardcoded-baseline-accuracy-threshold-staleness
 - frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - frontend-ai/prediction-model-factor-deadweight-detection-operational-analysis ↔ project-ops/question-own-defaults
-- frontend-ai/realtime-ai-interaction-frontend-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
-- frontend-ai/realtime-ai-interaction-frontend-patterns ↔ frontend-ai/user-behavior-prediction-ai-model-integration
-- frontend-ai/realtime-ai-interaction-frontend-patterns ↔ infrastructure/react-useoptimistic-optimistic-ui-update-pattern
 - frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - harness-engineering/agent-harness-code-execution-feedback-principles ↔ evaluation/claude-code-generation-validation-pipeline-extension
@@ -2143,7 +2040,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/agent-loop-engineering-harness-design-principles ↔ evaluation/llm-output-validation-automation-failure-prevention
 - harness-engineering/agent-loop-engineering-harness-design-principles ↔ harness-engineering/agent-loop-patterns-autonomous-task-completion
 - harness-engineering/agent-loop-engineering-harness-design-principles ↔ prompt-engineering/goal-oriented-prompting-llm-harness-strategy
-- harness-engineering/agent-loop-engineering-harness-design-principles ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - harness-engineering/agent-loop-patterns-autonomous-task-completion ↔ agents/llm-agent-autonomy-complex-problem-solving
 - harness-engineering/agent-loop-patterns-autonomous-task-completion ↔ agents/ai-agent-self-correction-design-principles
 - harness-engineering/agent-loop-patterns-autonomous-task-completion ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
@@ -2232,12 +2128,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/distributed-ai-model-versioning-ab-testing-harness
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/production-llm-service-harness-system-design-patterns
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/scalable-ai-model-deployment-best-practices
-- harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/ai-model-performance-monitoring-automated-rollback
-- harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/monitoring-alert-triage-sop
-- harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/realtime-large-scale-ai-model-serving-harness-patterns
-- harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
-- harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/efficient-large-scale-llm-deployment-mlops
-- harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/distributed-ai-model-versioning-ab-testing-harness
 - harness-engineering/ai-model-router-cost-performance-optimization ↔ harness-engineering/dynamic-ai-model-routing-cost-performance
 - harness-engineering/ai-model-router-cost-performance-optimization ↔ harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving
 - harness-engineering/ai-model-router-cost-performance-optimization ↔ harness-engineering/multi-llm-api-integration-harness-patterns
@@ -2277,7 +2167,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/claude-autonomous-vulnerability-harness-architecture ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - harness-engineering/claude-autonomous-vulnerability-harness-architecture ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - harness-engineering/claude-autonomous-vulnerability-harness-architecture ↔ prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense
-- harness-engineering/claude-autonomous-vulnerability-harness-architecture ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
 - harness-engineering/claude-code-dynamic-workflows-harness-extension ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - harness-engineering/claude-code-dynamic-workflows-harness-extension ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - harness-engineering/claude-code-dynamic-workflows-harness-extension ↔ harness-engineering/flutter-flame-game-launch-harness-claude-code-optimization
@@ -2286,7 +2175,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement
 - harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/kimi-k3-1m-context-model-playbook-harness-integration
 - harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ prompt-engineering/goal-oriented-prompting-llm-harness-strategy
-- harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/claude-code-workflow-iteration-optimization
 - harness-engineering/claude-code-harness-auto-progression-guardrail-strengthening ↔ harness-engineering/claude-code-harness-containment-risk-mitigation
 - harness-engineering/claude-code-harness-auto-progression-guardrail-strengthening ↔ infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection
 - harness-engineering/claude-code-harness-auto-progression-guardrail-strengthening ↔ project-ops/production-db-ai-agent-guardrails
@@ -2299,16 +2187,12 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/claude-code-harness-containment-risk-mitigation ↔ harness-engineering/claude-code-harness-session-cache-leakage-prevention
 - harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ harness-engineering/claude-code-token-optimization-code-graph-integration
 - harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ harness-engineering/large-scale-llm-harness-architecture-patterns
-- harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ prompt-engineering/llm-token-waste-detection-cli
 - harness-engineering/claude-code-harness-session-cache-leakage-prevention ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - harness-engineering/claude-code-harness-session-cache-leakage-prevention ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees ↔ harness-engineering/flutter-flame-game-launch-harness-claude-code-optimization
 - harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees ↔ harness-engineering/claude-code-token-optimization-code-graph-integration
 - harness-engineering/claude-code-token-optimization-code-graph-integration ↔ prompt-engineering/claude-api-cost-optimization-context-hub
 - harness-engineering/claude-code-token-optimization-code-graph-integration ↔ agents/ai-agent-transparent-execution-knowledge-integration
-- harness-engineering/claude-code-workflow-iteration-optimization ↔ prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows
-- harness-engineering/claude-code-workflow-iteration-optimization ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
-- harness-engineering/claude-code-workflow-iteration-optimization ↔ harness-engineering/hermes-style-self-improving-agents-claude-code-harness
 - harness-engineering/claude-extended-thinking-harness-reassessment ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - harness-engineering/claude-extended-thinking-harness-reassessment ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension ↔ harness-engineering/llm-agent-observability-spanlens-trace-monitoring
@@ -2327,6 +2211,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ infrastructure/worker-lesson-velocity-signal
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ journal/playbook-journal-035-setstate-in-effect-lesson-pending-false-positive-1
 - harness-engineering/develop-cycle-positive-streak-recognition ↔ harness-engineering/review-code-chain-retro-only-mature-codebase-signal
+- harness-engineering/developer-role-redefinition-llm-workflow-design ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/developer-role-redefinition-llm-workflow-design ↔ evaluation/claude-code-generation-validation-pipeline-extension
 - harness-engineering/developer-role-redefinition-llm-workflow-design ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - harness-engineering/distributed-agent-executor-harness-integration ↔ agents/multi-agent-collaboration-design-patterns
@@ -2353,8 +2238,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-app-deployment-scaling-design-patterns
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/scalable-ai-model-deployment-best-practices
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/realtime-large-scale-ai-model-serving-harness-patterns
-- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-inference-distributed-load-balancing-architecture
-- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-application-cicd-workflow-design-patterns
 - harness-engineering/gemini-flash-model-upgrade-optimization ↔ harness-engineering/llm-api-performance-optimization-patterns
 - harness-engineering/gemini-flash-model-upgrade-optimization ↔ prompt-engineering/llm-api-cost-optimization-harness-design-patterns
 - harness-engineering/gemini-flash-model-upgrade-optimization ↔ infrastructure/gemini-api-http-status-key-health-classification
@@ -2377,6 +2260,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env
 - harness-engineering/github-actions-workflow-zero-second-failure-diagnosis ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
 - harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement ↔ agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi
+- harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement ↔ agents/multi-agent-collaboration-design-patterns
 - harness-engineering/glm52-zcode-multi-agent-harness-playbook-enhancement ↔ agents/external-tool-integration-for-ai-agents
 - harness-engineering/gpu-resource-optimization-large-scale-ai-serving ↔ harness-engineering/llm-parallel-processing-harness-design
@@ -2399,7 +2283,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/large-scale-llm-harness-deployment-operation-patterns
 - harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling
 - harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/llm-app-deployment-scaling-design-patterns
-- harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/llm-inference-distributed-load-balancing-architecture
 - harness-engineering/kimi-k3-1m-context-model-playbook-harness-integration ↔ harness-engineering/llm-engine-integration-harness-design-patterns
 - harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling ↔ harness-engineering/realtime-large-scale-ai-model-serving-harness-patterns
 - harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/llm-parallel-processing-harness-design
@@ -2408,37 +2291,27 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/llm-engine-integration-harness-design-patterns
 - harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/multi-llm-external-api-harness-integration-patterns
 - harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/multimodal-ai-workflow-harness-integration-patterns
-- harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/llm-inference-distributed-load-balancing-architecture
 - harness-engineering/large-scale-llm-harness-deployment-operation-patterns ↔ harness-engineering/production-llm-service-harness-system-design-patterns
 - harness-engineering/large-scale-llm-harness-deployment-operation-patterns ↔ harness-engineering/scalable-ai-model-deployment-best-practices
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ agents/llm-agent-autonomy-complex-problem-solving
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ evaluation/claude-code-generation-validation-pipeline-extension
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ project-ops/streamlined-ai-agent-harness-design
-- harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ harness-engineering/llm-output-validation-dark-factory-evolution
 - harness-engineering/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-api-dependency-reassessment-model-diversification ↔ harness-engineering/multi-llm-api-integration-harness-patterns
 - harness-engineering/llm-api-dependency-reassessment-model-diversification ↔ agents/qwen3-6-max-preview-llm-agentic-coding-evaluation
 - harness-engineering/llm-api-dependency-reassessment-model-diversification ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - harness-engineering/llm-api-performance-optimization-patterns ↔ harness-engineering/realtime-llm-inference-deployment-monitoring-patterns
+- harness-engineering/llm-app-deployment-scaling-design-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/llm-app-deployment-scaling-design-patterns ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - harness-engineering/llm-app-deployment-scaling-design-patterns ↔ harness-engineering/microservice-harness-architecture-large-scale-ai
-- harness-engineering/llm-app-deployment-scaling-design-patterns ↔ harness-engineering/llm-inference-distributed-load-balancing-architecture
-- harness-engineering/llm-application-cicd-workflow-design-patterns ↔ prompt-engineering/prompt-versioning-and-testing
-- harness-engineering/llm-application-cicd-workflow-design-patterns ↔ project-ops/ai-model-serving-mlops-pipeline-design-patterns
-- harness-engineering/llm-application-cicd-workflow-design-patterns ↔ harness-engineering/realtime-llm-inference-deployment-monitoring-patterns
-- harness-engineering/llm-application-cicd-workflow-design-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/multi-llm-api-integration-harness-patterns
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/multi-llm-external-api-harness-integration-patterns
-- harness-engineering/llm-inference-distributed-load-balancing-architecture ↔ harness-engineering/multi-llm-inference-load-balancing-failover-design
-- harness-engineering/llm-inference-distributed-load-balancing-architecture ↔ infrastructure/realtime-ai-service-load-balancing-api-gateway-design
-- harness-engineering/llm-inference-distributed-load-balancing-architecture ↔ project-ops/large-scale-ai-deployment-harness-system-design
-- harness-engineering/llm-output-validation-dark-factory-evolution ↔ project-ops/software-factory-playbook-architecture-enhancement
-- harness-engineering/llm-output-validation-dark-factory-evolution ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ project-ops/software-factory-playbook-architecture-enhancement
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/multi-llm-external-api-harness-integration-patterns
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/multimodal-ai-workflow-harness-integration-patterns
@@ -2447,7 +2320,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/automated-incident-closure-grace-period-design
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
-- harness-engineering/monitoring-alert-triage-sop ↔ reports/automated-ai-performance-reports
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
@@ -2696,7 +2568,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - journal/playbook-journal-064-war-data-gap-post-break-compound-effect-fancy-stat ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-065-ce-fallback-post-break-confidence-floor-compound-e ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-066-ce-fallback-post-break-confidence-floor-compound-e ↔ journal/playbook-journal-000-bootstrap
-- journal/playbook-journal-067-r7-auto-merge-auto-flag-repo-graphql-enablepullreq ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
@@ -2749,7 +2620,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - project-ops/large-scale-ai-serving-harness-caching-strategies ↔ prompt-engineering/multimodal-harness-design-complex-llm-workflows
 - project-ops/llm-generated-code-dependency-management-policy ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - project-ops/mlops-pipeline-design-ai-model-deployment-monitoring ↔ reports/ai-model-performance-metrics-dashboard-design-guide
-- project-ops/mlops-pipeline-design-ai-model-deployment-monitoring ↔ reports/automated-ai-performance-reports
 - project-ops/playbook-ai-integrated-logging-system ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - project-ops/playbook-ai-integrated-logging-system ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
 - project-ops/playbook-data-perspective-action-framework ↔ project-ops/software-factory-playbook-architecture-enhancement
@@ -2784,7 +2654,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - prompt-engineering/llm-api-cost-optimization-harness-design-patterns ↔ prompt-engineering/llm-prompt-caching-cost-optimization-patterns
 - prompt-engineering/llm-api-cost-optimization-harness-design-patterns ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - prompt-engineering/llm-api-cost-optimization-harness-design-patterns ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
-- prompt-engineering/llm-api-cost-optimization-harness-design-patterns ↔ prompt-engineering/llm-token-waste-detection-cli
 - prompt-engineering/llm-call-orchestration-reliability-enhancement ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - prompt-engineering/llm-call-orchestration-reliability-enhancement ↔ prompt-engineering/llm-prompt-caching-cost-optimization-patterns
 - prompt-engineering/llm-interactive-ui-frontend-implementation ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
@@ -2805,10 +2674,8 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/closed-loop-health
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/ai-project-value-measurement-performance-reporting
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/ai-model-performance-metrics-dashboard-design-guide
-- reports/ai-model-performance-cost-efficiency-reporting ↔ reports/automated-ai-performance-reports
 - reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/ai-project-kpi-dashboard-building-strategy
 - reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/ai-project-value-measurement-performance-reporting
-- reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/automated-ai-performance-reports
 - reports/ai-project-value-measurement-performance-reporting ↔ reports/ai-project-kpi-dashboard-building-strategy
 - reports/ai-project-value-measurement-performance-reporting ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - reports/ai-project-value-measurement-performance-reporting ↔ project-ops/ai-project-planning-roadmap-initial-strategy
@@ -2837,6 +2704,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/claude-code-dynamic-workflows-harness-integration ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
+- harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/microservice-harness-architecture-large-scale-ai ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
 - harness-engineering/multi-llm-api-integration-harness-patterns ↔ harness-engineering/llm-workflow-orchestration-business-logic-patterns
@@ -2959,6 +2827,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/rag-agent-performance-reliability-optimization ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/large-scale-llm-harness-deployment-operation-patterns ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-agent-full-automation-development-pipeline-expansion ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ harness-engineering/llm-ops-pipeline-design-patterns-production-strategy
@@ -3063,6 +2932,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/gpu-resource-optimization-large-scale-ai-serving ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
 - harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling ↔ harness-engineering/large-scale-ai-deployment-harness-system-design
@@ -3104,6 +2974,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - harness-engineering/developer-role-redefinition-llm-workflow-design ↔ agents/llm-judgment-code-verification-separation-architecture
 - harness-engineering/distributed-agent-executor-harness-integration ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/llm-scalable-service-architecture-patterns
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/gpu-resource-optimization-large-scale-ai-serving ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/intelligent-traffic-routing-load-balancing-llm-serving ↔ harness-engineering/llm-scalable-service-architecture-patterns
 - harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling ↔ harness-engineering/llm-scalable-service-architecture-patterns
@@ -3143,14 +3014,15 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - prompt-engineering/claude-api-cost-optimization-context-hub ↔ harness-engineering/dynamic-prompt-routing-multi-llm-cost-performance
 - harness-engineering/hermes-style-self-improving-agents-claude-code-harness ↔ harness-engineering/agentic-skill-evolution-convergence-maturity-signal
 - harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling ↔ harness-engineering/realtime-ai-service-load-balancing-api-gateway-design
+- harness-engineering/large-scale-llm-harness-architecture-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
+- harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
+- harness-engineering/multimodal-llm-workflow-harness-integration-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/llm-api-performance-optimization-patterns ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
 - prompt-engineering/claude-api-cost-optimization-context-hub ↔ infrastructure/llm-prompt-caching-cost-optimization-patterns
 - harness-engineering/multi-llm-api-integration-harness-patterns ↔ harness-engineering/api-harness-large-scale-ai-service-integration
 - harness-engineering/multi-llm-inference-load-balancing-failover-design ↔ infrastructure/bifrost-high-speed-enterprise-ai-gateway-integration
 - harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
 - harness-engineering/multimodal-llm-workflow-harness-integration-patterns ↔ harness-engineering/multimodal-ai-model-serving-architecture-patterns
-- harness-engineering/multimodal-ai-orchestration-complex-user-request-processing ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
-- harness-engineering/multimodal-llm-workflow-harness-integration-patterns ↔ harness-engineering/multimodal-harness-design-complex-llm-workflows
 - harness-engineering/wiki-category-health-rebalance-decision-framework ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - harness-engineering/wiki-jit-search-blind-spot-diagnosis ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
 - reports/ai-project-value-measurement-performance-reporting ↔ harness-engineering/wiki-knowledge-roi-3axis-measurement
