@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-23T21:05:33.938Z
+Updated: 2026-07-24T21:05:10.295Z
 
-## 엔트리 (602개)
+## 엔트리 (606개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -331,6 +331,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - [AI Agent Harness Verticalization: 핵심 가치 사슬 통합 전략](wiki/agents/ai-agent-harness-verticalization-strategy) — confidence: 1, status: draft
 - [AI 에이전트 기반 개발 워크플로 자동화 — 이슈 감지부터 PR 생성까지](wiki/agents/ai-agent-issue-pr-workflow-automation) — confidence: 1, status: draft
 - [AI Agent Output Versioning: Advanced Management with DeltaDB Concepts](wiki/agents/ai-agent-output-versioning-deltadb-concepts) — confidence: 1, status: draft
+- [AI Agent Orchestration - Playbook의 병렬 작업 관제 및 자동 병합 전략](wiki/agents/ai-agent-parallel-task-orchestration-and-auto-merge) — confidence: 1, status: draft
 - [AI Agent Persistent Memory: Bridging Session Gaps with Automated Context Management](wiki/agents/ai-agent-persistent-memory-automated-context-management) — confidence: 1, status: draft
 - [AI Agent Development — RAG Integration for Enhanced Knowledge and Reduced Hallucinations](wiki/agents/ai-agent-rag-integration-hallucination-reduction) — confidence: 1, status: draft
 - [AI 에이전트 견고성 — 도구 활용 오류 처리 및 자가 복구 구현](wiki/agents/ai-agent-robust-tool-error-recovery) — confidence: 1, status: draft
@@ -374,6 +375,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - [LLM 에이전트 자율성 — 복잡한 문제 해결을 위한 설계](wiki/agents/llm-agent-autonomy-complex-problem-solving) — confidence: 1, status: draft
 - [LLM Agents: 제어 흐름 강화를 통한 프롬프트 의존도 감소 전략](wiki/agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti) — confidence: 1, status: draft
 - [LLM Agent 동적 툴 선택 — 복잡한 작업 자동화를 위한 최적화 전략](wiki/agents/llm-agent-dynamic-tool-selection-optimization) — confidence: 1, status: draft
+- [LLM Agent Tooling - 외부 툴 연동 및 제어 패턴](wiki/agents/llm-agent-external-tool-integration-control) — confidence: 1, status: draft
 - [LLM Agents: Goal Achievement Planning Patterns - Strategies for Robust Autonomous Task Execution](wiki/agents/llm-agent-goal-achievement-planning-patterns) — confidence: 1, status: draft
 - [LLM 에이전트 장기 기억 시스템 디자인 — 지속적인 학습과 복잡한 작업 수행 전략](wiki/agents/llm-agent-long-term-memory-system-design) — confidence: 1, status: draft
 - [LLM Agent 장기기억 및 도구 사용 패턴 — 복잡한 태스크 수행을 위한 핵심 전략](wiki/agents/llm-agent-long-term-memory-tool-use-patterns) — confidence: 1, status: draft
@@ -423,6 +425,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - [복잡한 비즈니스 워크플로우를 위한 견고한 다중 에이전트 시스템 설계](wiki/agents/robust-multi-agent-system-design-complex-workflows) — confidence: 1, status: draft
 - [Ruflo Platform — Claude Code 기반 멀티 에이전트 오케스트레이션 강화](wiki/agents/ruflo-multi-agent-orchestration-claude-code-playbooks) — confidence: 1, status: draft
 - [Autonomous Agent Self-Correction — Implementing Adaptive Learning Loops](wiki/agents/self-correction-adaptive-learning-loops-implementation) — confidence: 1, status: draft
+- [자율주행 기업 모델 — AI 에이전트 워크플로우 재정의 및 인간-AI 협업 최적화](wiki/agents/self-driving-company-ai-agent-workflow-redefinition) — confidence: 1, status: draft
 - [SuperAgent Harness Architecture — Long-Running Task Orchestration with Sub-Agents](wiki/agents/superagent-harness-architecture-long-running-task-orchestrat) — confidence: 1, status: draft
 - [Vercel AI SDK 에이전트 어댑터 — 로컬 및 외부 코딩 에이전트 통합](wiki/agents/vercel-ai-sdk-adapter-local-external-coding-agents) — confidence: 1, status: draft
 
@@ -626,6 +629,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - [AI Model Performance Metrics Dashboard — Design Principles for Effective Visualization](wiki/reports/ai-model-performance-metrics-dashboard-design-guide) — confidence: 1, status: draft
 - [AI Project KPI Dashboard: Objective Performance Measurement and Strategic Reporting](wiki/reports/ai-project-kpi-dashboard-building-strategy) — confidence: 1, status: draft
 - [AI 프로젝트 가치 측정 — 성과 보고 프레임워크 구축](wiki/reports/ai-project-value-measurement-performance-reporting) — confidence: 1, status: draft
+- [AI 모델 성능 보고서 — 자동화된 지표 생성 및 시각화](wiki/reports/automated-ai-performance-reports) — confidence: 1, status: draft
 - [Closed-Loop Health Dashboard — 허브 자가 organism 건강도](wiki/reports/closed-loop-health) — confidence: 4, status: complete
 - [Mid-Review 2026-04-28 — Phase 4 Closed Loop 진입](wiki/reports/mid-review-2026-04-28) — confidence: 4, status: complete
 - [2026년 18주차 학습 리포트](wiki/reports/week-2026-18) — confidence: 5, status: complete
@@ -638,6 +642,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
+- agents/advanced-ai-agent-tool-use-patterns ↔ agents/llm-agent-external-tool-integration-control
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/ai-agent-transparent-execution-knowledge-integration
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/autonomous-agent-reasoning-debugging-optimization
 - agents/agent-codebase-exploration-visualization-tool ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
@@ -683,8 +688,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-context-window-optimization-session-longevity ↔ android-ai/android-background-ai-workflow-workmanager
 - agents/ai-agent-context-window-optimization-session-longevity ↔ prompt-engineering/llm-prompt-caching-cost-optimization-patterns
 - agents/ai-agent-context-window-optimization-session-longevity ↔ harness-engineering/kimi-k3-1m-context-model-playbook-harness-integration
-- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-safety-constraint-control-design-patterns
-- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-self-correction-design-principles
@@ -698,6 +701,8 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-control-validation-mechanisms ↔ project-ops/streamlined-ai-agent-harness-design
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/agent-human-equivalence-protocol-design
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/llm-output-validation-dark-factory-evolution
+- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-parallel-task-orchestration-and-auto-merge
+- agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-external-tool-integration-control
 - agents/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
@@ -714,6 +719,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/opentag-slack-playbook-worker-automation-poc
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/ai-agent-harness-verticalization-strategy
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ project-ops/streamlined-ai-agent-harness-design
+- agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/ai-agent-harness-verticalization-strategy ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/ai-agent-harness-verticalization-strategy ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
 - agents/ai-agent-harness-verticalization-strategy ↔ project-ops/claude-goal-playbook-worker-automation
@@ -730,6 +736,12 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ context-engineering/agentic-multi-layer-state-persistence-decision-framework
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ context-engineering/agentic-commit-body-subtype-dispatch-transport
 - agents/ai-agent-output-versioning-deltadb-concepts ↔ agents/ai-agent-self-correction-design-principles
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-collaboration-complex-problem-solving
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ harness-engineering/llm-parallel-processing-harness-design
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/autonomous-agent-long-term-memory-management
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/claude-code-session-context-persistence-ctx-plugin
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/hub-worker-compounding-pattern
@@ -760,6 +772,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/robust-multi-agent-system-design-complex-workflows
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-agent-llm-error-handling-recovery-patterns
+- agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-external-tool-integration-control
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
@@ -802,7 +815,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/collaborative-agent-workflow-design-orchestration
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ context-engineering/ai-agent-context-management-project-memory
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/ai-human-collaborative-workspace-architecture-buzz
-- agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/ai-agent-superpowers-guardrails-intent-alignment ↔ frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
@@ -844,6 +856,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/autonomous-agent-feedback-loop-design-patterns
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/inference-chain-design-complex-ai-agents
+- agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/autonomous-ai-agent-task-planning-execution-patterns
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/autonomous-agent-dynamic-planning-goal-strategies ↔ agents/autonomous-agent-multi-stage-decision-making-patterns
@@ -988,6 +1001,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/external-tool-integration-for-ai-agents ↔ agents/mirage-ai-agent-unified-filesystem-integration
 - agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/external-tool-integration-for-ai-agents ↔ agents/multimodal-ai-agent-tool-usage-design
+- agents/external-tool-integration-for-ai-agents ↔ agents/llm-agent-external-tool-integration-control
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ agents/google-agents-cli-agent-development-acceleration
 - agents/gemini-3-5-flash-agentic-coding-evaluation-integration ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
@@ -1068,6 +1082,9 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/multimodal-ai-agent-realtime-decision-logic
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/multimodal-ai-agent-tool-usage-design
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-external-tool-integration-control
+- agents/llm-agent-external-tool-integration-control ↔ agents/llm-agent-tool-use-design-patterns
+- agents/llm-agent-external-tool-integration-control ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-decision-making-patterns
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-agent-collaboration-system-design-patterns
@@ -1076,6 +1093,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/llm-agent-goal-achievement-planning-patterns ↔ prompt-engineering/goal-oriented-prompting-llm-harness-strategy
 - agents/llm-agent-goal-achievement-planning-patterns ↔ agents/multi-stage-decision-making-agent-design-patterns
 - agents/llm-agent-goal-achievement-planning-patterns ↔ project-ops/playbook-data-perspective-action-framework
+- agents/llm-agent-goal-achievement-planning-patterns ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/llm-agent-long-term-memory-system-design ↔ agents/ai-agent-persistent-memory-automated-context-management
 - agents/llm-agent-long-term-memory-system-design ↔ agents/autonomous-agent-long-term-memory-management
 - agents/llm-agent-long-term-memory-system-design ↔ agents/llm-agent-long-term-memory-tool-use-patterns
@@ -1115,7 +1133,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ evaluation/llm-agent-observability-spanlens-trace-monitoring
-- agents/llm-agent-tool-use-design-patterns ↔ context-engineering/zerostack-rust-agent-harness-extension
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
 - agents/llm-agent-tool-use-design-patterns ↔ agents/mirage-ai-agent-unified-filesystem-integration
 - agents/llm-agent-tool-use-design-patterns ↔ agents/qwen3-7-max-agent-model-evaluation-integration
@@ -1161,7 +1178,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/mirage-ai-agent-unified-filesystem-integration ↔ context-engineering/enriching-local-data-with-description-md-sidecars
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-llm-agent-workload-partitioning-patterns
-- agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multi-agent-collaboration-design-patterns
 - agents/multi-agent-collaboration-complex-problem-solving ↔ agents/multimodal-ai-agent-effective-tool-integration
@@ -1305,6 +1321,10 @@ Updated: 2026-07-23T21:05:33.938Z
 - agents/self-correction-adaptive-learning-loops-implementation ↔ agents/ai-agent-self-correction-design-principles
 - agents/self-correction-adaptive-learning-loops-implementation ↔ harness-engineering/closed-loop-automation-design-philosophy-feedback-dimension
 - agents/self-correction-adaptive-learning-loops-implementation ↔ agents/autonomous-agent-long-term-memory-management
+- agents/self-driving-company-ai-agent-workflow-redefinition ↔ evaluation/llm-output-validation-automation-failure-prevention
+- agents/self-driving-company-ai-agent-workflow-redefinition ↔ harness-engineering/hub-worker-automation-loop-resilience-external-control
+- agents/self-driving-company-ai-agent-workflow-redefinition ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
+- agents/self-driving-company-ai-agent-workflow-redefinition ↔ context-engineering/hub-worker-compounding-pattern
 - agents/superagent-harness-architecture-long-running-task-orchestrat ↔ context-engineering/claude-5-fable-llm-worker-harness-compounding-automation
 - agents/superagent-harness-architecture-long-running-task-orchestrat ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - agents/vercel-ai-sdk-adapter-local-external-coding-agents ↔ context-engineering/claude-code-session-web-mobile-monitoring-implementation
@@ -1668,7 +1688,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - context-engineering/flue-framework-integration-claude-code-harness-reconfigurati ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - context-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ context-engineering/hub-worker-compounding-pattern
 - context-engineering/hub-pull-evidence-tracking-from-hub-convention ↔ infrastructure/wiki-knowledge-roi-3axis-measurement
-- context-engineering/hub-worker-compounding-pattern ↔ project-ops/question-own-defaults
 - context-engineering/hub-worker-compounding-pattern ↔ harness-engineering/skill-evolution-skip-condition-mode-dependency
 - context-engineering/hub-worker-compounding-pattern ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - context-engineering/hub-worker-compounding-pattern ↔ infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern
@@ -1795,6 +1814,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ data-engineering/vector-db-embedding-data-optimization-patterns
 - data-engineering/rag-search-performance-evaluation-metrics-design ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
+- data-engineering/rag-search-performance-evaluation-metrics-design ↔ reports/automated-ai-performance-reports
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - data-engineering/rag-system-embedding-dataset-optimization-patterns ↔ data-engineering/vector-db-embedding-data-optimization-patterns
@@ -1857,6 +1877,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/ai-model-performance-metrics-dashboard-design-guide
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ prompt-engineering/llm-generated-content-ai-smell-detection-prompt-defense
+- evaluation/llm-agent-observability-spanlens-trace-monitoring ↔ reports/automated-ai-performance-reports
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-code-commit-message-hermes-md-monitoring-remediation
 - evaluation/llm-api-dependency-risk-mitigation-strategy ↔ infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection
@@ -1912,7 +1933,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
-- evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ infrastructure/guard-test-pattern
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
@@ -1954,13 +1974,13 @@ Updated: 2026-07-23T21:05:33.938Z
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
-- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/llm-ux-evaluation-metrics-design-measurement
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ reports/ai-project-kpi-dashboard-building-strategy
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ evaluation/prediction-model-calibration-inversion-detection
 - evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ frontend-ai/nextjs-security-patching-defense-logic-reinforcement
+- evaluation/llm-response-quality-automated-evaluation-metrics-design-str ↔ reports/automated-ai-performance-reports
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/ai-personalized-ux-frontend-design-patterns
@@ -2338,7 +2358,6 @@ Updated: 2026-07-23T21:05:33.938Z
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ evaluation/llm-output-validation-quality-metrics-design
 - harness-engineering/llm-response-quality-automated-harness-testing ↔ prompt-engineering/prompt-versioning-and-testing
-- harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ project-ops/software-factory-playbook-architecture-enhancement
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/multi-llm-external-api-harness-integration-patterns
 - harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications ↔ harness-engineering/multimodal-ai-workflow-harness-integration-patterns
@@ -2347,6 +2366,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/inbound-incident-branch-type-triage-matrix
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/automated-incident-closure-grace-period-design
 - harness-engineering/monitoring-alert-triage-sop ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
+- harness-engineering/monitoring-alert-triage-sop ↔ reports/automated-ai-performance-reports
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - harness-engineering/monitoring-window-lag-false-positive-detection ↔ infrastructure/github-actions-monitoring-smoke-alert-isolation
@@ -2648,6 +2668,7 @@ Updated: 2026-07-23T21:05:33.938Z
 - project-ops/large-scale-ai-serving-harness-caching-strategies ↔ prompt-engineering/multimodal-harness-design-complex-llm-workflows
 - project-ops/llm-generated-code-dependency-management-policy ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - project-ops/mlops-pipeline-design-ai-model-deployment-monitoring ↔ reports/ai-model-performance-metrics-dashboard-design-guide
+- project-ops/mlops-pipeline-design-ai-model-deployment-monitoring ↔ reports/automated-ai-performance-reports
 - project-ops/playbook-ai-integrated-logging-system ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - project-ops/playbook-ai-integrated-logging-system ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
 - project-ops/playbook-data-perspective-action-framework ↔ project-ops/software-factory-playbook-architecture-enhancement
@@ -2702,8 +2723,10 @@ Updated: 2026-07-23T21:05:33.938Z
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/closed-loop-health
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/ai-project-value-measurement-performance-reporting
 - reports/ai-model-performance-cost-efficiency-reporting ↔ reports/ai-model-performance-metrics-dashboard-design-guide
+- reports/ai-model-performance-cost-efficiency-reporting ↔ reports/automated-ai-performance-reports
 - reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/ai-project-kpi-dashboard-building-strategy
 - reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/ai-project-value-measurement-performance-reporting
+- reports/ai-model-performance-metrics-dashboard-design-guide ↔ reports/automated-ai-performance-reports
 - reports/ai-project-value-measurement-performance-reporting ↔ reports/ai-project-kpi-dashboard-building-strategy
 - reports/ai-project-value-measurement-performance-reporting ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - reports/ai-project-value-measurement-performance-reporting ↔ project-ops/ai-project-planning-roadmap-initial-strategy
