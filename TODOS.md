@@ -6,11 +6,17 @@
 **해소 경위**: git pull --ff-only origin main 적용. b34922da 언급된 phantom hash (존재하지 않음). 실 MDX fix = 0d78ca73 (이미 origin에 포함). TODOS P0 stale 확정.
 **결론**: BRANCHED steady-state — 사용자 batch 머지 시 자연 해소. P0 항목 종료.
 
-## [P2] moneyball deploy drift — 재발 (2026-07-22 cycle 1462, "silent drift family 9/10" 자체 경보)
+## [DONE 2026-07-28 cycle 1464] moneyball deploy drift — 재발 (2026-07-22 cycle 1462, "silent drift family 9/10" 자체 경보)
 
-**What**: production `0b4d4b6` vs main HEAD `4042151a` (cycle 1995 lockfile fix), gap 11h. moneyball `deploy-drift-alert` 워크플로 자체가 3회 연속 (18:19 / 20:19 / 22:14 / 23:15 UTC) 실패 경보 — 알림 메시지가 직접 "사례 9/10 silent drift family 재발 의심" 명시.
-**Why**: cycle 1460 (2026-07-21) 과 동일 패턴 재발 — Vercel deploy 트리거 누락 반복. cycle 1460 당시 "다음 push 시 자동 해소 예상" 가정이 틀림 (해소 안 되고 새 drift 로 재발).
-**Action (사용자 결정 영역 — Vercel 배포 트리거는 moneyball 워커 자체 인프라)**: moneyball 세션에서 `vercel --prod` manual trigger 또는 deploy-drift-alert 워크플로 자체 조사 필요 (자동 해소 가정 재검증). 허브 쪽은 triage + carry-over 만 (cycle 1462).
+**상태**: ✅ DONE — cycle 1464 진단 시 moneyball `deploy-drift-alert` 워크플로 07-27 23:20 UTC 이후 연속 success 확인 (자동 해소, 사용자 개입 기록 없음 — Vercel 측 배포 트리거가 뒤늦게 정상 작동한 것으로 추정).
+**과거 What**: production `0b4d4b6` vs main HEAD `4042151a` (cycle 1995 lockfile fix), gap 11h. 3회 연속 (18:19 / 20:19 / 22:14 / 23:15 UTC) 실패 경보 — "silent drift family 9/10 재발 의심" 자체 경보.
+**결론**: 9/10 재발 스트릭은 10번째에서 자연 해소. 재발 시 새 항목으로 재오픈.
+
+## [P1] dependabot 브랜치 CI 노이즈 — lint-format group (2026-07-28 cycle 1464, #3067/#2842 close)
+
+**What**: moneyball dependabot 브랜치들 (`dependabot/npm_and_yarn/lint-format-*`, `dependabot/github_actions/*` 등) 이 2026-06-11 부터 미머지 누적 (8개+ open PR, gh pr list 확인). 각 브랜치 자체 CI 실패가 매번 hub inbound incident 로 전파 — main 브랜치와 무관한 구조적 노이즈.
+**Why**: ws/vite 취약점 항목(위)과 동일 계열이나 별도 그룹(lint-format). #3067, #2842 (cycle 1464) triage 시 발견 — 근본 해결 없이는 계속 재발.
+**Action (사용자 영역 — moneyball repo)**: dependabot PR 일괄 리뷰 후 머지/close. 8개+ 누적 (types, sentry/nextjs, supabase/ssr, lucide-react, actions/checkout, actions/setup-node, pnpm/action-setup 등).
 
 ## [DONE 2026-07-22 cycle 1461] Vercel 인바운드 이슈 abbreviated SHA → incident-auto-close 자동 skip
 

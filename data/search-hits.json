@@ -1,11 +1,11 @@
 {
   "legacyQueries": 44,
-  "totalInvocations": 1135,
+  "totalInvocations": 1137,
   "skipped": 29,
-  "searched": 1106,
-  "hit": 505,
+  "searched": 1108,
+  "hit": 507,
   "noMatch": 601,
-  "lastUpdated": "2026-07-23T23:26:02.110Z",
+  "lastUpdated": "2026-07-27T23:23:09.794Z",
   "hits": {
     "context-engineering/hub-worker-compounding-pattern": 15,
     "context-engineering/ambient-knowledge-injection": 3,
@@ -41,7 +41,7 @@
     "context-engineering/silent-drift-family-pattern": 1,
     "retros/2026-05-12-cycles-293-298": 2,
     "evaluation/prediction-model-calibration-inversion-detection": 5,
-    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 13,
+    "solutions/ci-github-actions/2026-05-08-moneyball-silent-drift-mockresult-type": 14,
     "harness-engineering/develop-cycle-positive-streak-recognition": 4,
     "retros/2026-05-12-cycles-308-311": 5,
     "journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema": 1,
@@ -168,7 +168,7 @@
     "harness-engineering/claude-max-subscription-github-actions-self-hosted-runner-pattern": 1,
     "agents/autonomous-ai-agent-decision-logic-implementation-patterns": 3,
     "agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti": 1,
-    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 7,
+    "solutions/ci-github-actions/2026-05-13-knip-cleanup-lockfile-drift": 8,
     "evaluation/llm-output-hallucination-detection-pipeline-enhancement": 1,
     "solutions/blog-autopilot/2026-06-02-silent-fail-cron-cancelled": 4,
     "context-engineering/agentic-branched-state-jit-search-accuracy-degradation": 10,
@@ -214,7 +214,7 @@
     "journal/playbook-journal-004-drift-half-working": 1,
     "journal/playbook-journal-003-drift-silent-bugs": 1,
     "context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix": 4,
-    "infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern": 5,
+    "infrastructure/claude-max-subscription-github-actions-self-hosted-runner-pattern": 6,
     "infrastructure/vercel-deploy-rate-limit-auto-merge-blocked": 3,
     "infrastructure/github-actions-monitoring-smoke-alert-isolation": 3,
     "journal/playbook-journal-048-lesson-pending-86-batch-hub-d5-cron-cycle-669-958": 2,
@@ -295,7 +295,8 @@
     "context-engineering/agentic-feature-page-incremental-layer-decomposition": 1,
     "prompt-engineering/llm-interactive-ui-frontend-implementation": 1,
     "project-ops/react-doctor-ai-code-validation-pipeline": 2,
-    "infrastructure/agentic-worker-dispatch-filter-registration-gap": 1
+    "infrastructure/agentic-worker-dispatch-filter-registration-gap": 1,
+    "journal/playbook-journal-015-self-develop-yml-push-step-fire-1-10-9035f22": 1
   },
   "noMatchQueries": [
     {
@@ -1255,5 +1256,5 @@
     "CSS Container Queries responsive component design": 1,
     "Web Vitals INP Interaction Next Paint optimization": 1
   },
-  "totalQueries": 1179
+  "totalQueries": 1181
 }
