@@ -1,0 +1,43 @@
+---
+title: "Playbook Journal 068 — 사례 18 — retro 완료형 서술 vs 실제 미실행 (PR 5일 open 방치)"
+category: harness-engineering
+date: "2026-07-28"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 18 — retro 완료형 서술 vs 실제 미실행 (PR 5일 open 방치) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260728-18-retro-vs-pr-5-open-07f20732564fdd34ec25f33bb38664.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2001
+
+cycle 2000 retro 가 "CI green 확인 후 수동 --squash merge 진행"이라 과거형으로
+적었지만 실제 gh pr merge 명령 미실행 → PR #2856 CI green 상태로 5일 open 방치.
+cycle 2001 진단 중 cycle 2000 json 주장을 gh pr view 로 실측 대조해 발견,
+즉시 머지 완료. SKILL.md "commit + PR" 섹션에 머지 완료형 서술 전 실측 확인
+의무 mitigation 추가 (별도 파일, 이 리포 밖).
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
