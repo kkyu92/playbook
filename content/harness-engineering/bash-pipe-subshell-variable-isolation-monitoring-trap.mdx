@@ -1,5 +1,5 @@
 ---
-title: "Bash Pipe 서브셸 변수 격리 — 모니터링 카운터 무음 오염 패턴"
+title: Bash Pipe 서브셸 변수 격리 — 모니터링 카운터 무음 오염 패턴
 category: harness-engineering
 date: "2026-06-25"
 tags:
@@ -16,12 +16,9 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-06-25"
-connections:
-  - harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure
-  - harness-engineering/cross-fork-ci-failure-fix-propagation-boundary
-  - harness-engineering/zero-touch-develop-cycle-session-management
+connections: [harness-engineering/agentic-pnpm-builtin-collision-script-shadow-silent-failure, harness-engineering/cross-fork-ci-failure-fix-propagation-boundary, harness-engineering/zero-touch-develop-cycle-session-management, evaluation/llm-shell-safety-isolation-pipeline]
 status: complete
-description: "bash 파이프라인 우측 while loop 는 서브셸에서 실행 — 내부 변수 할당이 부모 셸에 전파되지 않아 카운터가 항상 0을 표시. 실제 사이드이펙트(gh issue close 등)는 정상 실행. 진단 어려운 '동작은 정상, 보고는 오류' 패턴. process substitution 으로 수정."
+description: bash 파이프라인 우측 while loop 는 서브셸에서 실행 — 내부 변수 할당이 부모 셸에 전파되지 않아 카운터가 항상 0을 표시. 실제 사이드이펙트(gh issue close 등)는 정상 실행. 진단 어려운 '동작은 정상, 보고는 오류' 패턴. process substitution 으로 수정.
 type: entry
 source: explore-idea
 ---
