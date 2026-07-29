@@ -1,0 +1,61 @@
+---
+title: 대규모 LLM 추론 클라우드 인프라 — 성능 및 비용 최적화 전략
+category: harness-engineering
+date: "2026-07-29"
+tags:
+  - LLM
+  - Inference
+  - Cloud
+  - Optimization
+  - GPU
+  - MLOps
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/llm-gpu-resource-optimization-inference-acceleration, harness-engineering/efficient-large-scale-llm-deployment-mlops, harness-engineering/llm-inference-distributed-load-balancing-architecture, infrastructure/high-availability-llm-disaster-recovery-retry-patterns, project-ops/large-scale-ai-serving-harness-caching-strategies, prompt-engineering/llm-scalable-service-architecture-patterns, harness-engineering/large-scale-ai-service-traffic-surge-harness-scaling]
+status: draft
+description: 대규모 언어 모델(LLM) 추론 워크로드를 위한 클라우드 인프라의 성능과 비용 효율성을 극대화하는 실전 전략을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+대규모 언어 모델(LLM)의 급속한 발전과 활용 증가는 클라우드 인프라 운영에 있어 새로운 도전 과제를 제시합니다. 특히, LLM 추론(Inference) 워크로드는 높은 GPU 리소스 요구사항과 가변적인 트래픽 패턴으로 인해 비용 효율적이고 안정적인 서비스 제공이 어렵습니다. 고성능 LLM 서비스를 안정적이고 경제적으로 운영하기 위해서는 인프라 레벨에서의 심층적인 최적화 지식이 필수적입니다. 이 문서는 대규모 LLM 추론을 위한 클라우드 인프라 최적화의 핵심 전략들을 다룹니다.
+
+### LLM 추론 최적화의 중요성
+LLM 추론은 모델 크기가 페타바이트(PB)를 넘어서는 경우도 많아, 단일 요청 처리에도 막대한 컴퓨팅 자원, 특히 GPU 메모리와 연산 능력을 요구합니다. 사용자 수가 증가하거나 요청이 복잡해질수록 필요한 리소스는 기하급수적으로 늘어나며, 이는 곧 엄청난 클라우드 비용으로 이어질 수 있습니다. 따라서 응답 시간(Latency)을 최소화하고 처리량(Throughput)을 극대화하면서도 비용을 절감하는 것이 핵심 과제입니다.
+
+### 핵심 최적화 전략
+
+#### 1. GPU 하드웨어 및 소프트웨어 스택 선택
+
+*   **GPU 인스턴스 최적화**: NVIDIA H100, A100과 같은 고성능 GPU는 LLM 추론에 필수적입니다. 클라우드 제공자(AWS, GCP, Azure)별로 다양한 인스턴스 타입이 존재하며, 워크로드 특성(모델 크기, 배치 크기, 레이턴시 요구사항)에 맞춰 적절한 인스턴스를 선택해야 합니다. 예를 들어, Batch 추론에는 대용량 메모리를 가진 인스턴스가 유리하며, 실시간 대화형 서비스에는 저지연성(Low-latency)이 중요합니다.
+*   **인ference 엔진 활용**: `vLLM`, `TensorRT-LLM`과 같은 전용 LLM 인ference 엔진은 커스텀 커널과 최적화된 스케줄링 기법을 통해 GPU 활용률을 극대화합니다. 특히 `vLLM`의 Continuous Batching, PagedAttention과 `TensorRT-LLM`의 높은 최적화 수준은 2026년 현재 대규모 LLM 서빙의 표준으로 자리 잡고 있습니다.
+
+#### 2. 모델 최적화 기법
+
+*   **양자화(Quantization)**: 모델의 가중치를 FP16/BF16에서 INT8, INT4 등으로 낮춰 GPU 메모리 사용량을 줄이고 추론 속도를 높입니다. `AWQ`, `GPTQ` 등의 기법은 모델의 성능 저하를 최소화하면서 양자화를 수행합니다.
+*   **희소성(Sparsity)**: 모델의 특정 가중치를 0으로 만들어 연산량을 줄이는 기법입니다. 추론 시 희소성 활용을 지원하는 하드웨어(예: NVIDIA Ada Lovelace 아키텍처)와 소프트웨어 스택이 중요합니다.
+
+#### 3. 효율적인 배치 처리 및 캐싱
+
+*   **동적 배치(Dynamic Batching) 및 연속 배치(Continuous Batching)**: 들어오는 요청을 동적으로 묶어 GPU 활용률을 높이는 기법입니다. `vLLM`의 PagedAttention은 KV Cache를 효율적으로 관리하여 Continuous Batching의 성능을 극대화합니다.
+*   **KV 캐시(KV Cache) 최적화**: LLM의 Attention 메커니즘에서 발생하는 Key와 Value 행렬을 캐시하여 중복 계산을 방지합니다. PagedAttention과 같은 기술은 KV 캐시의 파편화(Fragmentation)를 줄이고 메모리 사용을 최적화합니다.
+*   **프롬프트 캐싱(Prompt Caching)**: 동일하거나 유사한 프롬프트에 대한 반복적인 추론 요청 시, 초기 프롬프트 처리 결과를 캐시하여 재사용합니다. 특히 RAG(Retrieval Augmented Generation) 시스템에서 효과적입니다.
+
+#### 4. 클라우드 리소스 관리 및 확장성
+
+*   **자동 스케일링(Auto-scaling)**: 예측 불가능한 트래픽 변화에 대응하기 위해 요청 수, GPU 사용률, 레이턴시 등의 메트릭을 기반으로 자동으로 인스턴스를 확장/축소합니다.
+*   **스팟 인스턴스(Spot Instances) 활용**: 비용 절감을 위해 온디맨드(On-Demand) 인스턴스보다 저렴한 스팟 인스턴스를 적극 활용합니다. 단, 스팟 인스턴스는 언제든지 회수될 수 있으므로, 장애 내성(Fault Tolerance) 설계와 함께 사용해야 합니다.
+*   **로드 밸런싱(Load Balancing)**: 여러 추론 엔드포인트(Inference Endpoint) 간에 트래픽을 분산하여 단일 지점의 과부하를 방지하고 고가용성을 확보합니다. 지역별(Regional) 또는 가용 영역별(Availability Zone) 로드 밸런싱을 고려해야 합니다.
+
+### LLM 추론 인프라 아키텍처 예시
+
+아래 Mermaid 다이어그램은 대규모 LLM 추론을 위한 클라우드 인프라의 일반적인 흐름을 보여줍니다.
+
+```mermaid
+graph TD
+    A[Client Request] --> B(API Gateway);
+    B --> C{Load Balancer};
+    C --> D[Inference Endpoint 1];
+    C --> E[Inference Endpoint 2];
+
+    subgraph 
