@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-07-29T21:08:40.746Z
+Updated: 2026-07-30T21:04:59.175Z
 
-## 엔트리 (649개)
+## 엔트리 (653개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -18,6 +18,7 @@ Updated: 2026-07-29T21:08:40.746Z
 - [LLM 생성 콘텐츠 AI Smell 패턴 — 감지, 프롬프트 방어, 결정적 문구 치환](wiki/prompt-engineering/llm-generated-content-ai-smell-detection-prompt-defense) — confidence: 1, status: draft
 - [LLM 기반 인터랙티브 UI 개발: 프론트엔드 전략 및 구현](wiki/prompt-engineering/llm-interactive-ui-frontend-implementation) — confidence: 1, status: draft
 - [LLM Output Validation: Enhancing Pipeline Robustness with Prompt Constraints](wiki/prompt-engineering/llm-output-validation-prompt-constraints-robustness) — confidence: 1, status: draft
+- [LLM 출력 검증 파이프라인 — XPIA 방어 로직 강화 및 숨겨진 명령 탐지](wiki/prompt-engineering/llm-output-xpia-defense-pipeline-strengthening) — confidence: 1, status: draft
 - [LLM Prompting: Boolean Logic Integration for Enhanced Control and Precision](wiki/prompt-engineering/llm-prompt-boolean-logic-control-precision-validation) — confidence: 1, status: draft
 - [LLM Prompt Caching: 비용 최적화 및 구현 패턴](wiki/prompt-engineering/llm-prompt-caching-cost-optimization-patterns) — confidence: 2, status: draft
 - [LLM Prompt Injection Defense – Robust Guardrails Implementation](wiki/prompt-engineering/llm-prompt-injection-defense-rules-implementation) — confidence: 1, status: draft
@@ -430,6 +431,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Multi-Agent Collaboration Patterns — Efficient System Design for Complex Tasks](wiki/agents/multi-agent-collaboration-system-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
 - [멀티 에이전트 시스템 상호작용 패턴 — 협업 AI 설계를 위한 방법론](wiki/agents/multi-agent-interaction-patterns-design-methodologies) — confidence: 1, status: draft
+- [멀티 에이전트 시스템: 복잡한 AI 문제 해결을 위한 협업 및 조정 패턴](wiki/agents/multi-agent-system-collaboration-coordination-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Task Coordination: Strategies for Collaborative Goal Achievement](wiki/agents/multi-agent-task-collaboration-coordination-strategies) — confidence: 1, status: draft
 - [Multi-Agent Systems: Task Decomposition and Dynamic Role Assignment Strategies](wiki/agents/multi-agent-task-decomposition-role-assignment) — confidence: 1, status: draft
@@ -468,6 +470,8 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [OOS D-Day 도달 시 예측 평가 프로토콜](wiki/evaluation/agentic-oos-dday-arrival-evaluation-protocol) — confidence: 2, status: draft
 - [Agentic Pre-commit Prediction — OOS Track Record 구축 프로토콜](wiki/evaluation/agentic-precommit-prediction-oos-track-record) — confidence: 2, status: complete
 - [AI Agent Prompt Injection — GitLost 취약점 대응 강화 전략](wiki/evaluation/ai-agent-prompt-injection-gitlost-defense-strategy) — confidence: 1, status: draft
+- [AI Agent Security 
+Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-sandbox-escape-security-hardening) — confidence: 1, status: draft
 - [AI-Driven Vulnerability Management — Enhancing Guard Tests with Autonomous Discovery and Remediation](wiki/evaluation/ai-vulnerability-guard-test-enhancement) — confidence: 1, status: draft
 - [Claude Code Generation Reliability — Enhanced Validation Pipeline](wiki/evaluation/claude-code-generation-validation-pipeline-extension) — confidence: 1, status: draft
 - [Claude Code Extended Thinking — 불투명한 추론 의존도 재평가](wiki/evaluation/claude-extended-thinking-dependency-reassessment) — confidence: 1, status: draft
@@ -588,6 +592,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI-Driven Personalized User Experiences — Frontend Design Patterns](wiki/frontend-ai/ai-personalized-ux-frontend-design-patterns) — confidence: 1, status: draft
 - [AI-Powered UX: Frontend Design Patterns for Enhanced User Interaction](wiki/frontend-ai/ai-powered-ux-frontend-design-patterns) — confidence: 1, status: draft
 - [Claude Code HTML Output – Enhancing UX with Rich Visualizations and Interactivity](wiki/frontend-ai/claude-code-html-output-ux-enhancement) — confidence: 1, status: draft
+- [Client-side Small LLM Optimization — Web Environment Utilization Strategies](wiki/frontend-ai/client-side-small-llm-optimization-web-utilization) — confidence: 1, status: draft
 - [AI 응답 안전망 구축 — 프론트엔드 환경에서의 검증, 적응 및 피드백 루프](wiki/frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop) — confidence: 1, status: draft
 - [Generative AI UI/UX Patterns — Crafting Adaptive Frontend Experiences](wiki/frontend-ai/generative-ai-ui-ux-design-patterns) — confidence: 1, status: draft
 - [하드코딩 기준선 정확도 임계값 사문화 — 모델 개선 시 동적화 필요](wiki/frontend-ai/hardcoded-baseline-accuracy-threshold-staleness) — confidence: 2, status: complete
@@ -760,7 +765,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - agents/ai-agent-control-validation-mechanisms ↔ context-engineering/drift-detection-methodology
-- agents/ai-agent-control-validation-mechanisms ↔ infrastructure/guard-test-pattern
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-self-correction-design-principles
@@ -770,6 +774,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-control-validation-mechanisms ↔ agents/autonomous-agent-reliability-stability-patterns
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/agent-duplicate-execution-detection-prevention
+- agents/ai-agent-control-validation-mechanisms ↔ evaluation/ai-agent-sandbox-escape-security-hardening
 - agents/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
@@ -811,6 +816,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-task-distribution-coordination-patterns
 - agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-task-distribution-collaboration
+- agents/ai-agent-parallel-task-orchestration-and-auto-merge ↔ agents/multi-agent-system-collaboration-coordination-patterns
 - agents/ai-agent-persistent-memory-automated-context-management ↔ agents/autonomous-agent-long-term-memory-management
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/claude-code-session-context-persistence-ctx-plugin
 - agents/ai-agent-persistent-memory-automated-context-management ↔ context-engineering/hub-worker-compounding-pattern
@@ -855,7 +861,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ harness-engineering/agent-duplicate-execution-detection-prevention
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/concurrent-fault-tolerant-ai-workflow-design-patterns
-- agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/long-term-agent-behavior-anomaly-detection-response
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
@@ -866,6 +871,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/llm-shell-safety-isolation-pipeline
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ context-engineering/llm-agent-context-sensitive-data-leakage-prevention
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/ai-agent-sandbox-escape-security-hardening
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
@@ -1138,7 +1144,6 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/lao-workflow-llm-agent-design-enhancement ↔ agents/multi-persona-llm-output-validation-enhancement
-- agents/lao-workflow-llm-agent-design-enhancement ↔ infrastructure/guard-test-pattern
 - agents/lao-workflow-llm-agent-design-enhancement ↔ journal/playbook-journal-009-claude-cli-hang-paperclip-4-step
 - agents/lao-workflow-llm-agent-design-enhancement ↔ context-engineering/agentic-coding-claude-harness-playbook-strategy
 - agents/lao-workflow-llm-agent-design-enhancement ↔ agents/llm-agent-dynamic-tool-selection-optimization
@@ -1303,6 +1308,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/multi-agent-collaboration-design-patterns ↔ prompt-engineering/llm-prompt-caching-cost-optimization-patterns
 - agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-interaction-patterns-design-methodologies
 - agents/multi-agent-collaboration-design-patterns ↔ agents/reliable-multi-agent-interaction-patterns
+- agents/multi-agent-collaboration-design-patterns ↔ agents/multi-agent-system-collaboration-coordination-patterns
 - agents/multi-agent-collaboration-protocol-design ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/multi-agent-collaboration-protocol-design ↔ agents/multi-agent-system-efficient-interaction-design-patterns
 - agents/multi-agent-collaboration-protocol-design ↔ agents/multi-agent-task-collaboration-coordination-strategies
@@ -1324,13 +1330,17 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/collaborative-agent-workflow-design-orchestration
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/reliable-multi-agent-interaction-patterns
+- agents/multi-agent-system-collaboration-coordination-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
+- agents/multi-agent-system-collaboration-coordination-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
+- agents/multi-agent-system-collaboration-coordination-patterns ↔ agents/optimizing-multi-agent-interaction-collaboration
+- agents/multi-agent-system-collaboration-coordination-patterns ↔ agents/robust-multi-agent-system-design-complex-workflows
+- agents/multi-agent-system-collaboration-coordination-patterns ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ context-engineering/agentic-multi-agent-chain-pool-ecosystem-specialization
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/paca-ai-agent-project-management-tool-review
 - agents/multi-agent-system-efficient-interaction-design-patterns ↔ agents/reliable-multi-agent-interaction-patterns
-- agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
 - agents/multi-agent-task-collaboration-coordination-strategies ↔ agents/superagent-harness-architecture-long-running-task-orchestrat
@@ -1551,10 +1561,12 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - android-ai/on-device-llm-optimization-android-strategies ↔ android-ai/on-device-llm-quantization-patterns-android
 - android-ai/on-device-llm-optimization-android-strategies ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - android-ai/on-device-llm-optimization-android-strategies ↔ context-engineering/on-device-vector-db-jit-semantic-search
+- android-ai/on-device-llm-optimization-android-strategies ↔ frontend-ai/client-side-small-llm-optimization-web-utilization
 - android-ai/on-device-llm-quantization-android-benchmarking ↔ android-ai/on-device-llm-quantization-gemma-4-qat-application
 - android-ai/on-device-llm-quantization-android-benchmarking ↔ android-ai/on-device-llm-quantization-patterns-android
 - android-ai/on-device-llm-quantization-android-benchmarking ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - android-ai/on-device-llm-quantization-android-benchmarking ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
+- android-ai/on-device-llm-quantization-android-benchmarking ↔ frontend-ai/client-side-small-llm-optimization-web-utilization
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/gemini-nano
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/on-device-llm-quantization-patterns-android
 - android-ai/on-device-llm-quantization-gemma-4-qat-application ↔ android-ai/android-ai-edge-vs-cloud-decision-framework
@@ -1898,6 +1910,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - context-engineering/on-device-vector-db-jit-semantic-search ↔ data-engineering/vector-database-optimization-llm-rag-performance
 - context-engineering/on-device-vector-db-jit-semantic-search ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - context-engineering/on-device-vector-db-jit-semantic-search ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
+- context-engineering/on-device-vector-db-jit-semantic-search ↔ frontend-ai/client-side-small-llm-optimization-web-utilization
 - context-engineering/silent-drift-family-pattern ↔ project-ops/question-own-defaults
 - context-engineering/silent-drift-family-pattern ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
 - context-engineering/silent-drift-family-pattern ↔ evaluation/llm-output-validation-automation-failure-prevention
@@ -2040,6 +2053,12 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/ai-agent-prompt-injection-gitlost-defense-strategy ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - evaluation/ai-agent-prompt-injection-gitlost-defense-strategy ↔ harness-engineering/claude-autonomous-vulnerability-harness-architecture
 - evaluation/ai-agent-prompt-injection-gitlost-defense-strategy ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
+- evaluation/ai-agent-prompt-injection-gitlost-defense-strategy ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
+- evaluation/ai-agent-prompt-injection-gitlost-defense-strategy ↔ evaluation/ai-agent-sandbox-escape-security-hardening
+- evaluation/ai-agent-sandbox-escape-security-hardening ↔ harness-engineering/claude-autonomous-vulnerability-harness-architecture
+- evaluation/ai-agent-sandbox-escape-security-hardening ↔ evaluation/llm-output-safety-reliability-validation-enhancement
+- evaluation/ai-agent-sandbox-escape-security-hardening ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
+- evaluation/ai-agent-sandbox-escape-security-hardening ↔ project-ops/ai-code-accountability-platform-regulation-guardrails
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ agents/llm-agent-autonomy-complex-problem-solving
@@ -2103,6 +2122,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ harness-engineering/llm-agent-observability-spanlens-trace-monitoring
 - evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ project-ops/llm-generated-code-dependency-management-policy
+- evaluation/llm-generated-content-ai-smell-detection-prompt-defense ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-safety-reliability-validation-enhancement
@@ -2146,12 +2166,14 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-shell-safety-isolation-pipeline
+- evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ infrastructure/zero-touch-develop-cycle-session-management
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ project-ops/react-doctor-ai-code-validation-pipeline
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ evaluation/llm-shell-safety-isolation-pipeline
+- evaluation/llm-output-system-boundary-sanitization-pipeline ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
 - evaluation/llm-output-validation-automation-failure-prevention ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-output-validation-automation-failure-prevention ↔ project-ops/software-factory-playbook-architecture-enhancement
@@ -2235,6 +2257,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - frontend-ai/ai-inference-visualization-design-patterns ↔ project-ops/bifrost-high-speed-enterprise-ai-gateway-integration
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ reports/ai-model-performance-metrics-dashboard-design-guide
+- frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/client-side-small-llm-optimization-web-utilization
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
@@ -2252,6 +2275,9 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ infrastructure/claude-code-ctx-plugin-context-persistence
+- frontend-ai/client-side-small-llm-optimization-web-utilization ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
+- frontend-ai/client-side-small-llm-optimization-web-utilization ↔ frontend-ai/realtime-ai-interaction-frontend-patterns
+- frontend-ai/client-side-small-llm-optimization-web-utilization ↔ harness-engineering/llm-gpu-resource-optimization-inference-acceleration
 - frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop ↔ project-ops/react-doctor-ai-code-validation-pipeline
 - frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop ↔ reports/closed-loop-health
 - frontend-ai/generative-ai-ui-ux-design-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
@@ -2785,6 +2811,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - infrastructure/guard-test-pattern ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
 - infrastructure/guard-test-pattern ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - infrastructure/guard-test-pattern ↔ infrastructure/llm-agent-artifact-first-diagnosis
+- infrastructure/guard-test-pattern ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/production-db-ai-agent-guardrails
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/large-scale-ai-serving-harness-caching-strategies
@@ -2993,6 +3020,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense ↔ infrastructure/guard-test-pattern
 - prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense ↔ harness-engineering/claude-autonomous-vulnerability-harness-architecture
+- prompt-engineering/claude-api-guard-test-data-leakage-prompt-injection-defense ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
 - prompt-engineering/claude-fable-5-safeguards-prompt-engineering-recalibration ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - prompt-engineering/claude-fable-5-safeguards-prompt-engineering-recalibration ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - prompt-engineering/claude-fable-5-safeguards-prompt-engineering-recalibration ↔ evaluation/llm-output-safety-reliability-validation-enhancement
@@ -3032,6 +3060,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - prompt-engineering/llm-code-gen-comparison-model-selection-prompt-refinement ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - prompt-engineering/llm-interactive-ui-frontend-implementation ↔ prompt-engineering/multi-turn-conversation-prompt-design-patterns
 - prompt-engineering/llm-output-validation-prompt-constraints-robustness ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
+- prompt-engineering/llm-output-xpia-defense-pipeline-strengthening ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - prompt-engineering/llm-prompt-boolean-logic-control-precision-validation ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
 - prompt-engineering/llm-prompt-caching-cost-optimization-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
