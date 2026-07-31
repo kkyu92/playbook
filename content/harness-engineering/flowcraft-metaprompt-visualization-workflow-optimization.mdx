@@ -1,0 +1,52 @@
+---
+title: "FlowCraft: 메타프롬프트 시각화 및 에이전트 워크플로우 최적화"
+category: harness-engineering
+date: "2026-07-31"
+tags:
+  - FlowCraft
+  - Metaprompt
+  - AIAgents
+  - WorkflowOrchestration
+  - Visualization
+  - PromptEngineering
+  - harness-engineering
+confidence: 1
+connections: [agents/ai-agent-parallel-task-orchestration-and-auto-merge, agents/multi-agent-task-distribution-collaboration, harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications, prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows, context-engineering/claude-code-advanced-context-playbook-strategy, harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems, frontend-ai/ai-inference-visualization-design-patterns]
+status: draft
+description: FlowCraft를 활용하여 복잡한 메타프롬프트를 그래프로 시각화하고, AI 에이전트의 작업 흐름, 병렬 처리 및 서브 에이전트 분배를 효율적으로 관리하는 방법론.
+type: entry
+source: scout
+---
+
+AI 에이전트 시스템이 고도화됨에 따라, 에이전트의 복잡한 동작을 정의하는 메타프롬프트의 길이는 점차 증가하고 있습니다. 특히 Claude Code나 Codex의 Plan 모드와 같이 다단계 계획을 수립하는 경우, 이러한 메타프롬프트는 가독성이 떨어지고, 어떤 작업이 선행되어야 하며 무엇을 병렬로 처리할 수 있는지 파악하기 어렵게 만듭니다. FlowCraft는 이러한 문제를 해결하기 위해 메타프롬프트를 시각적인 그래프 형태로 변환하고 관리하는 혁신적인 도구입니다. 이 접근 방식은 에이전트 작업 흐름의 투명성을 극대화하고, 최적화 기회를 명확히 제시합니다.
+
+## 핵심 개념: 메타프롬프트의 그래프 변환
+
+FlowCraft Task Studio는 개발자가 작성한 긴 메타프롬프트를 입력받아, 이를 유향 비순환 그래프(Directed Acyclic Graph, DAG) 구조로 변환합니다. 이 그래프에서 각 노드는 특정 작업(Task), 서브태스크(Subtask), 또는 에이전트 간의 상호작용을 나타내며, 엣지(Edge)는 작업 간의 의존성 및 흐름을 정의합니다. 이러한 시각적 변환은 다음과 같은 이점을 제공합니다:
+
+*   **가시성 향상**: 복잡한 작업 흐름을 한눈에 파악하여, 메타프롬프트 텍스트만으로는 인지하기 어려웠던 로직의 비효율성이나 잠재적 오류를 쉽게 발견할 수 있습니다.
+*   **최적화 기회 식별**: 병렬로 실행 가능한 작업들을 시각적으로 명확히 구분하여, 전체 워크플로우의 실행 시간을 단축할 수 있는 최적화 포인트를 찾아냅니다.
+*   **에이전트 워크로드 분산**: 특정 서브 에이전트에게 작업이 과도하게 집중되는 현상을 파악하고, 작업을 효율적으로 분배하여 에이전트 시스템 전체의 균형과 안정성을 확보합니다.
+
+### FlowCraft를 통한 워크플로우 최적화 과정
+
+FlowCraft는 단순한 시각화를 넘어, 그래프 기반의 실행 프롬프트로의 변환을 지원합니다. 이는 에이전트가 최적화된 워크플로우를 기반으로 동작하도록 지시하는 핵심적인 기능입니다. 예를 들어, 코드를 생성하고 테스트하는 에이전트 워크플로우에서 FlowCraft는 테스트 실패 시 디버깅 및 재시도를 위한 루프를 명확히 정의하고, 이 과정에서 발생할 수 있는 병렬 처리 가능성을 식별합니다.
+
+```plaintext
+### 원본 메타프롬프트 예시 (간소화)
+
+Plan:
+1. 사용자 요청을 분석하여 핵심 문제 식별.
+2. 코드베이스에서 관련 파일 및 함수 검색.
+3. 분석 및 검색 결과 기반으로 초기 코드 수정 생성.
+4. 생성된 코드 수정 테스트.
+5. 테스트 통과 시, Pull Request 준비.
+6. 테스트 실패 시, 수정 사항 디버깅, 반복, 재테스트 (최대 3회).
+7. 변경 사항 및 결과 요약.
+```
+
+위와 같은 텍스트 기반의 메타프롬프트는 FlowCraft를 통해 다음과 같은 구조화된 그래프 기반 실행 명령으로 전환될 수 있습니다:
+
+```json
+{
+  
