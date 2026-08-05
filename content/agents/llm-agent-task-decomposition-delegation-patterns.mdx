@@ -1,0 +1,58 @@
+---
+title: LLM Agent 태스크 분해 및 위임 — 복잡한 문제 해결을 위한 패턴
+category: agents
+date: "2026-08-05"
+tags:
+  - LLM
+  - AI Agents
+  - Task Orchestration
+  - Delegation
+  - Multi-agent Systems
+  - Workflow Automation
+  - agents
+confidence: 1
+connections: [agents/multi-agent-task-decomposition-role-assignment, agents/llm-autonomous-agents-goal-attainment-task-decomposition, agents/llm-multi-agent-system-design-orchestration-patterns, agents/multi-agent-workflow-design-business-automation, agents/autonomous-agent-dynamic-planning-goal-strategies, agents/ai-agent-parallel-task-orchestration-and-auto-merge, harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications]
+status: draft
+description: LLM 에이전트가 복잡한 태스크를 효율적으로 처리하고 실제 비즈니스 문제에 적용되기 위한 태스크 분해 및 위임 패턴을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+LLM(Large Language Model) 에이전트가 실제 비즈니스 문제 해결에 성공적으로 적용되기 위해서는 단순한 질의응답을 넘어 복잡하고 다단계적인 태스크를 효율적으로 처리하는 능력이 필수적입니다. 단일 LLM은 컨텍스트 윈도우의 한계, 일관성 유지의 어려움, 그리고 복잡한 추론 과정에서의 오류 발생 가능성 등으로 인해 이러한 복합 태스크를 직접 처리하는 데 제약이 따릅니다. 이러한 한계를 극복하고 LLM 에이전트의 스케일업 및 견고성을 확보하기 위한 핵심 방법론이 바로 '태스크 분해 (Task Decomposition)' 및 '위임 (Delegation)' 패턴입니다. 이 패턴은 거대한 문제를 작고 관리 가능한 단위로 쪼개고, 각 단위를 전문성을 가진 다른 에이전트나 도구에 할당함으로써 전체 시스템의 효율성과 신뢰성을 크게 향상시킵니다.
+
+## 핵심 개념
+
+### 태스크 분해 (Task Decomposition)
+태스크 분해는 크고 복잡한 최종 목표를 더 작고, 명확하며, 독립적으로 실행 가능한 서브 태스크(Sub-tasks)로 나누는 과정입니다. 이는 주로 하향식(Top-Down) 접근 방식으로 이루어지며, LLM이 한 번에 처리할 수 있는 정보의 양과 추론 깊이의 제한을 극복하는 데 필수적입니다. 잘 분해된 태스크는 각 서브 태스크의 목적이 명확하고, 필요한 입력과 기대하는 출력이 명확하게 정의되어야 합니다.
+
+### 위임 (Delegation)
+위임은 분해된 서브 태스크들을 해당 태스크를 가장 잘 수행할 수 있는 전문 에이전트, 특정 도구(Tool), 또는 모듈에 할당하는 과정입니다. 이는 병렬 처리를 가능하게 하고, 각 에이전트가 자신의 전문 분야에 집중함으로써 전체 시스템의 효율성과 정확도를 높입니다. 예를 들어, 데이터 분석 서브 태스크는 데이터 전문 에이전트에, 코드 생성은 코딩 전문 에이전트에 위임할 수 있습니다.
+
+### 감독 에이전트와 워커 에이전트 (Supervisor and Worker Agents)
+*   **감독 에이전트 (Supervisor Agent)**: 전체 태스크의 흐름을 관리하고, 초기 목표를 서브 태스크로 분해하며, 각 서브 태스크를 적절한 워커 에이전트에 위임합니다. 또한, 워커 에이전트로부터 전달받은 결과를 통합하고, 발생 가능한 에러를 처리하며, 최종 결과를 생성하는 역할을 담당합니다.
+*   **워커 에이전트 (Worker Agent)**: 감독 에이전트로부터 할당받은 특정 서브 태스크를 실행하는 데 특화된 에이전트입니다. 워커 에이전트는 자체적으로 필요한 도구를 사용하거나, 추가적인 추론을 수행하여 서브 태스크를 완료한 후 그 결과를 감독 에이전트에 보고합니다.
+
+## 주요 패턴
+
+### 계층적 분해 (Hierarchical Decomposition)
+가장 일반적인 패턴으로, 최상위 감독 에이전트가 전체 목표를 1차적으로 분해하고, 이를 워커 에이전트들에게 위임합니다. 이때 위임받은 워커 에이전트 역시 복잡한 서브 태스크를 받은 경우, 다시 내부적으로 이를 더 작은 단위로 분해하여 하위 워커 에이전트들에게 재위임하는 계층적 구조를 형성할 수 있습니다. 이는 복잡도가 높은 태스크에 적합하며, 각 계층의 에이전트는 자신의 역할 범위 내에서만 추론과 행동을 수행합니다.
+
+### 블랙보드 아키텍처 (Blackboard Architecture)
+이 패턴에서는 에이전트들이 정보를 공유하고 협업하기 위한 중앙 집중식 공유 메모리(블랙보드)를 사용합니다. 각 에이전트는 블랙보드에 태스크, 부분적인 해결책, 중간 결과 등을 게시하고, 다른 에이전트가 필요한 정보를 블랙보드에서 찾아 자신의 태스크를 진행합니다. 에이전트 간의 상호작용 순서가 유연하며, 명시적인 감독 없이도 복잡한 문제 해결이 가능합니다.
+
+### 민주적/협업적 멀티 에이전트 시스템 (Democratic/Collaborative Multi-Agent Systems)
+이 패턴에서는 특정 중앙 감독 에이전트 없이 여러 에이전트가 동등한 지위에서 태스크를 직접 협상하고 분배합니다. 에이전트들은 서로의 능력과 작업 부하를 고려하여 태스크를 자율적으로 할당하고, 컨센서스 메커니즘을 통해 다음 단계를 결정하거나 충돌을 해결합니다. 이는 분산된 지능을 활용하고 단일 실패 지점(Single Point of Failure)을 줄이는 데 효과적입니다.
+
+## 코드 예시: 감독-워커 패턴 구현 (Python-like Pseudocode)
+
+아래는 LLM 에이전트의 감독-워커 태스크 분해 및 위임 패턴을 간략하게 보여주는 유사 코드입니다.
+
+```python
+class LLMAgent:
+    def __init__(self, name, role):
+        self.name = name
+        self.role = role
+
+    def invoke_llm(self, prompt):
+        # LLM API 호출을 시뮬레이션합니다.
+        print(f
