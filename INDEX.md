@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-08-05T21:07:13.946Z
+Updated: 2026-08-07T21:04:57.702Z
 
-## 엔트리 (678개)
+## 엔트리 (682개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -228,6 +228,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [LLM 애플리케이션 CI/CD 워크플로우 설계 — 안정적인 운영을 위한 지속적 통합 및 배포](wiki/harness-engineering/llm-application-cicd-workflow-design-patterns) — confidence: 1, status: draft
 - [LLM 애플리케이션 MLOps 파이프라인 구축 — 안정적인 운영 및 지속 가능한 개선](wiki/harness-engineering/llm-application-mlops-pipeline-build-strategy) — confidence: 1, status: draft
 - [LLM 애플리케이션 CI/CD — 신뢰성 높은 배포 파이프라인 구축](wiki/harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines) — confidence: 1, status: draft
+- [LLM 애플리케이션 배포 — 안정성 강화를 위한 CI/CD 파이프라인 구축](wiki/harness-engineering/llm-application-stable-deployment-cicd-pipeline) — confidence: 1, status: draft
 - [LLM Engine Integration Harness — Multi-Model Orchestration Patterns](wiki/harness-engineering/llm-engine-integration-harness-design-patterns) — confidence: 1, status: draft
 - [LLM GPU Resource Optimization — Accelerating Inference for Large-Scale Serving](wiki/harness-engineering/llm-gpu-resource-optimization-inference-acceleration) — confidence: 1, status: draft
 - [대규모 LLM 추론 클라우드 인프라 — 성능 및 비용 최적화 전략](wiki/harness-engineering/llm-inference-cloud-infra-optimization-strategies) — confidence: 1, status: draft
@@ -380,6 +381,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Collaboration 5 Principles — Playbook Agent Workflow Optimization](wiki/agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi) — confidence: 1, status: draft
 - [AI Agent & Human Collaboration — Unified Workspace Architecture via Buzz](wiki/agents/ai-human-collaborative-workspace-architecture-buzz) — confidence: 1, status: draft
 - [Antigravity 2.0 & Managed Agents API — AI 에이전트 개발 및 오케스트레이션 가이드](wiki/agents/antigravity-managed-agents-api-integration-review) — confidence: 1, status: draft
+- [AI Agent Command Approval – Automated Threat Detection Reinforcement](wiki/agents/automated-threat-detection-ai-agent-commands) — confidence: 1, status: draft
 - [자율 에이전트 — 복잡한 의사결정 로직 구현 패턴](wiki/agents/autonomous-agent-complex-decision-logic-patterns) — confidence: 1, status: draft
 - [자율 AI 에이전트 — 동적 계획 및 목표 달성 전략 구현 패턴](wiki/agents/autonomous-agent-dynamic-planning-goal-strategies) — confidence: 1, status: draft
 - [Autonomous Agent Feedback Loops — Design Patterns for Stability and Performance](wiki/agents/autonomous-agent-feedback-loop-design-patterns) — confidence: 1, status: draft
@@ -466,6 +468,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Multimodal AI Agent Tool Use Design - Enhancing Capabilities through Strategic Integration](wiki/agents/multimodal-ai-agent-tool-usage-design) — confidence: 1, status: draft
 - [Multimodal AI Serving Architectures — Efficient Deployment Patterns](wiki/agents/multimodal-ai-model-serving-architecture-patterns) — confidence: 1, status: draft
 - [Multimodal AI Orchestration — Bridging Diverse AI Components](wiki/agents/multimodal-ai-orchestration-design-patterns) — confidence: 1, status: draft
+- [Multimodal Prompt Design Patterns — Agent 추론 능력 향상 전략](wiki/agents/multimodal-prompt-design-patterns-agent-reasoning) — confidence: 1, status: draft
 - [Muse Spark 1.1: 멀티모달 에이전트 통합 전략 및 복잡 워크플로우 적용](wiki/agents/muse-spark-multimodal-agent-harness-integration) — confidence: 1, status: draft
 - [OpenTag-Slack 연동: Playbook 워커 자동화 및 상태 조회 PoC](wiki/agents/opentag-slack-playbook-worker-automation-poc) — confidence: 1, status: draft
 - [다중 에이전트 시스템: 상호작용 및 협업 최적화 전략](wiki/agents/optimizing-multi-agent-interaction-collaboration) — confidence: 1, status: draft
@@ -515,6 +518,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - [LLM 출력 검증 파이프라인 강화 — AI 드리프트 방지 및 운영 규율 재정립](wiki/evaluation/llm-output-validation-operational-discipline-enhancement) — confidence: 1, status: draft
 - [LLM Output Validation Metrics — Designing Robust Evaluation Frameworks](wiki/evaluation/llm-output-validation-quality-metrics-design) — confidence: 1, status: draft
 - [LLM 출력 검증 파이프라인 — 감독 피로 완화 전략](wiki/evaluation/llm-output-validation-supervisee-fatigue-mitigation) — confidence: 1, status: draft
+- [LLM Pipeline Validator Self-Verification — Enhancing Robustness and Trust](wiki/evaluation/llm-pipeline-validator-self-verification-enhancement) — confidence: 1, status: draft
 - [LLM Prompt-Validator 대칭성 드리프트 — 구조화 출력 일관성 보장](wiki/evaluation/llm-prompt-validator-symmetry-drift) — confidence: 2, status: complete
 - [LLM 응답 품질 — 자동 평가 지표 설계 및 구현 전략](wiki/evaluation/llm-response-quality-automated-evaluation-metrics-design-str) — confidence: 1, status: draft
 - [LLM Output Validation - Shell Environment Safety & Isolation](wiki/evaluation/llm-shell-safety-isolation-pipeline) — confidence: 1, status: draft
@@ -793,7 +797,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - agents/ai-agent-control-validation-mechanisms ↔ agents/llm-agent-persistent-goal-management-long-term-tasks
-- agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-self-correction-design-principles
 - agents/ai-agent-control-validation-mechanisms ↔ agents/ai-agent-runaway-cost-prevention-control-systems
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-inference-reliability-validation-harness
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/llm-output-validation-automation-failure-prevention
@@ -803,6 +806,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-control-validation-mechanisms ↔ evaluation/ai-agent-sandbox-escape-security-hardening
 - agents/ai-agent-control-validation-mechanisms ↔ harness-engineering/ai-agent-authentication-authorization-hardening
 - agents/ai-agent-control-validation-mechanisms ↔ android-ai/agent-control-cli-integration
+- agents/ai-agent-control-validation-mechanisms ↔ agents/automated-threat-detection-ai-agent-commands
 - agents/ai-agent-global-context-gc-tree-integration ↔ context-engineering/ambient-knowledge-injection
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
@@ -898,7 +902,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ evaluation/llm-output-validation-automation-failure-prevention
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ prompt-engineering/llm-token-waste-detection-cli
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ harness-engineering/agent-duplicate-execution-detection-prevention
-- agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/long-term-agent-behavior-anomaly-detection-response
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
@@ -911,6 +914,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/ai-agent-sandbox-escape-security-hardening
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ evaluation/llm-agent-autonomy-guardrail-enhancement
 - agents/ai-agent-safety-constraint-control-design-patterns ↔ harness-engineering/ai-agent-authentication-authorization-hardening
+- agents/ai-agent-safety-constraint-control-design-patterns ↔ agents/automated-threat-detection-ai-agent-commands
 - agents/ai-agent-self-correction-design-principles ↔ evaluation/llm-judgment-code-verification-separation-architecture
 - agents/ai-agent-self-correction-design-principles ↔ agents/autonomous-agent-reliability-stability-patterns
 - agents/ai-agent-self-correction-design-principles ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
@@ -923,6 +927,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-self-correction-design-principles ↔ agents/self-evolving-llm-qwen3-8-max-agent-harness-enhancement
 - agents/ai-agent-self-correction-design-principles ↔ agents/llm-agent-self-correction-error-recovery
 - agents/ai-agent-self-correction-design-principles ↔ harness-engineering/recursive-self-improvement-harness-enhancement
+- agents/ai-agent-self-correction-design-principles ↔ evaluation/llm-pipeline-validator-self-verification-enhancement
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/ai-agent-persistent-memory-automated-context-management
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/ai-agent-shared-brain-system-context-persistence-collaborati ↔ agents/autonomous-agent-long-term-memory-management
@@ -965,6 +970,11 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/antigravity-managed-agents-api-integration-review ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - agents/antigravity-managed-agents-api-integration-review ↔ agents/enterprise-agent-management-patterns-llm-orchestration
 - agents/antigravity-managed-agents-api-integration-review ↔ prompt-engineering/llm-workflow-orchestration-business-logic-patterns
+- agents/automated-threat-detection-ai-agent-commands ↔ evaluation/ai-agent-sandbox-escape-security-hardening
+- agents/automated-threat-detection-ai-agent-commands ↔ harness-engineering/generative-ai-guardrails-secure-deployment-patterns
+- agents/automated-threat-detection-ai-agent-commands ↔ project-ops/ai-code-accountability-platform-regulation-guardrails
+- agents/automated-threat-detection-ai-agent-commands ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
+- agents/automated-threat-detection-ai-agent-commands ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/autonomous-agent-multi-stage-decision-making-patterns
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/autonomous-agent-dynamic-planning-goal-strategies
 - agents/autonomous-agent-complex-decision-logic-patterns ↔ agents/llm-agent-goal-achievement-planning-patterns
@@ -1041,6 +1051,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ evaluation/spanlens-llm-observability-agent-trace-monitoring
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ harness-engineering/agent-loop-engineering-harness-design-principles
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
+- agents/autonomous-agent-reasoning-debugging-optimization ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
 - agents/autonomous-agent-reliability-stability-patterns ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - agents/autonomous-agent-reliability-stability-patterns ↔ agents/concurrent-fault-tolerant-ai-workflow-design-patterns
 - agents/autonomous-agent-reliability-stability-patterns ↔ harness-engineering/agent-loop-engineering-harness-design-principles
@@ -1313,6 +1324,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/llm-agent-goal-achievement-planning-patterns
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
+- agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
 - agents/llm-autonomous-agent-self-reflection-tool-use-patterns ↔ agents/ai-agent-self-correction-design-principles
 - agents/llm-autonomous-agent-self-reflection-tool-use-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-autonomous-agent-self-reflection-tool-use-patterns ↔ agents/llm-agent-long-term-memory-tool-use-patterns
@@ -1454,6 +1466,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/multi-agent-workflow-design-business-automation ↔ agents/self-driving-company-ai-agent-workflow-redefinition
 - agents/multi-hop-reasoning-agent-design-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/multi-hop-reasoning-agent-design-patterns ↔ agents/ai-agent-rag-integration-hallucination-reduction
+- agents/multi-hop-reasoning-agent-design-patterns ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ context-engineering/claude-code-agent-view-worker-management-integration
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - agents/multi-llm-agent-workload-partitioning-patterns ↔ agents/ruflo-multi-agent-orchestration-claude-code-playbooks
@@ -1488,12 +1501,14 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/multimodal-agent-design-patterns ↔ agents/ai-agent-self-correction-design-principles
 - agents/multimodal-agent-design-patterns ↔ agents/muse-spark-multimodal-agent-harness-integration
 - agents/multimodal-agent-design-patterns ↔ context-engineering/kimi-k3-context-engineering-knowledge-processing
+- agents/multimodal-agent-design-patterns ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
 - agents/multimodal-ai-agent-effective-tool-integration ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-ai-orchestration-design-patterns
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-ai-agent-realtime-decision-logic
 - agents/multimodal-ai-agent-effective-tool-integration ↔ prompt-engineering/multimodal-harness-design-complex-llm-workflows
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/multimodal-ai-agent-effective-tool-integration ↔ agents/muse-spark-multimodal-agent-harness-integration
+- agents/multimodal-ai-agent-effective-tool-integration ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ agents/multimodal-ai-orchestration-design-patterns
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ agents/multimodal-ai-model-serving-architecture-patterns
 - agents/multimodal-ai-agent-realtime-decision-logic ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
@@ -1512,6 +1527,8 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/multimodal-ai-orchestration-design-patterns ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
 - agents/multimodal-ai-orchestration-design-patterns ↔ prompt-engineering/multimodal-harness-design-complex-llm-workflows
 - agents/multimodal-ai-orchestration-design-patterns ↔ harness-engineering/multimodal-ai-workflow-harness-integration-patterns
+- agents/multimodal-prompt-design-patterns-agent-reasoning ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
+- agents/multimodal-prompt-design-patterns-agent-reasoning ↔ prompt-engineering/llm-prompt-optimization-role-definition-constraint-design
 - agents/muse-spark-multimodal-agent-harness-integration ↔ harness-engineering/large-scale-llm-harness-architecture-patterns
 - agents/muse-spark-multimodal-agent-harness-integration ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/muse-spark-multimodal-agent-harness-integration ↔ prompt-engineering/multimodal-prompt-engineering-complex-problem-solving
@@ -2091,6 +2108,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ evaluation/llm-response-quality-automated-evaluation-metrics-design-str
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ data-engineering/rag-embedding-update-pipeline-realtime-strategies
 - data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
+- data-engineering/llm-fine-tuning-high-quality-data-construction-management ↔ evaluation/llm-pipeline-validator-self-verification-enhancement
 - data-engineering/llm-fine-tuning-high-quality-data-construction ↔ data-engineering/llm-fine-tuning-high-quality-data-preprocessing-refinement
 - data-engineering/llm-fine-tuning-high-quality-data-construction ↔ project-ops/production-db-ai-agent-guardrails
 - data-engineering/llm-fine-tuning-high-quality-data-construction ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
@@ -2249,6 +2267,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-ops-pipeline-design-patterns-production-strategy
 - evaluation/llm-inference-reliability-validation-harness ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
+- evaluation/llm-inference-reliability-validation-harness ↔ evaluation/llm-pipeline-validator-self-verification-enhancement
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-input-output-data-pipeline-design-patterns ↔ project-ops/playbook-ai-integrated-logging-system
@@ -2259,7 +2278,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ project-ops/claude-code-harness-skillset-reinforcement-agent-playbook
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - evaluation/llm-judgment-code-verification-separation-architecture ↔ evaluation/llm-output-validation-automation-failure-prevention
-- evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/prompt-model-version-management-large-scale-ai
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ evaluation/llm-workload-management-mlops-pipeline-design-patterns
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/large-scale-ai-deployment-harness-system-design
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ project-ops/ai-model-serving-mlops-pipeline-design-patterns
@@ -2269,6 +2287,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/ai-model-performance-monitoring-automated-rollback
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/llm-application-mlops-pipeline-build-strategy
 - evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines
+- evaluation/llm-ops-pipeline-design-patterns-production-strategy ↔ harness-engineering/llm-application-stable-deployment-cicd-pipeline
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - evaluation/llm-output-evaluation-anthropomorphic-bias-objectivity ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
@@ -2280,7 +2299,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-hallucination-detection-pipeline-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
-- evaluation/llm-output-safety-reliability-validation-enhancement ↔ infrastructure/guard-test-pattern
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-system-boundary-sanitization-pipeline
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ infrastructure/nextjs-dynamic-route-param-validation-bot-literal-url-guard
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-call-orchestration-reliability-enhancement
@@ -2288,6 +2306,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-shell-safety-isolation-pipeline
 - evaluation/llm-output-safety-reliability-validation-enhancement ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
+- evaluation/llm-output-safety-reliability-validation-enhancement ↔ evaluation/llm-pipeline-validator-self-verification-enhancement
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ infrastructure/zero-touch-develop-cycle-session-management
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-system-boundary-sanitization-pipeline ↔ project-ops/react-doctor-ai-code-validation-pipeline
@@ -2299,6 +2318,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-output-validation-automation-failure-prevention ↔ project-ops/software-factory-playbook-architecture-enhancement
 - evaluation/llm-output-validation-automation-failure-prevention ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
+- evaluation/llm-output-validation-automation-failure-prevention ↔ evaluation/llm-pipeline-validator-self-verification-enhancement
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ evaluation/llm-output-hallucination-detection-pipeline-enhancement
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ agents/ai-agent-self-correction-design-principles
 - evaluation/llm-output-validation-operational-discipline-enhancement ↔ journal/playbook-journal-041-silent-drift-family-prevention-spec-cycle-471
@@ -2316,6 +2336,8 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-output-validation-supervisee-fatigue-mitigation ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - evaluation/llm-output-validation-supervisee-fatigue-mitigation ↔ prompt-engineering/llm-output-validation-prompt-constraints-robustness
 - evaluation/llm-output-validation-supervisee-fatigue-mitigation ↔ infrastructure/zod-v4-runtime-schema-validation-nextjs-api
+- evaluation/llm-pipeline-validator-self-verification-enhancement ↔ evaluation/llm-prompt-validator-symmetry-drift
+- evaluation/llm-pipeline-validator-self-verification-enhancement ↔ harness-engineering/llm-response-quality-automated-harness-testing
 - evaluation/llm-prompt-validator-symmetry-drift ↔ frontend-ai/frontend-ai-response-safety-net-validation-adaptation-feedback-loop
 - evaluation/llm-prompt-validator-symmetry-drift ↔ project-ops/prompt-model-version-management-large-scale-ai
 - evaluation/llm-prompt-validator-symmetry-drift ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
@@ -2669,7 +2691,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/distributed-ai-model-versioning-ab-testing-harness ↔ reports/ai-model-performance-cost-efficiency-reporting
 - harness-engineering/distributed-ai-model-versioning-ab-testing-harness ↔ prompt-engineering/gpt-5-6-model-evaluation-ab-testing-strategy
 - harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/production-llm-service-harness-system-design-patterns
-- harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/efficient-large-scale-llm-deployment-mlops
 - harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - harness-engineering/distributed-ai-workload-processing-harness-patterns ↔ harness-engineering/multimodal-ai-workflow-harness-integration-patterns
 - harness-engineering/distributed-harness-patterns-for-llm-applications ↔ harness-engineering/llm-parallel-processing-harness-design
@@ -2691,6 +2712,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-inference-cloud-infra-optimization-strategies
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-application-mlops-pipeline-build-strategy
 - harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines
+- harness-engineering/efficient-large-scale-llm-deployment-mlops ↔ harness-engineering/llm-application-stable-deployment-cicd-pipeline
 - harness-engineering/flowcraft-metaprompt-visualization-workflow-optimization ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/flowcraft-metaprompt-visualization-workflow-optimization ↔ prompt-engineering/dynamic-prompt-management-large-scale-llm-workflows
 - harness-engineering/flowcraft-metaprompt-visualization-workflow-optimization ↔ harness-engineering/prompt-orchestration-patterns-large-scale-ai-systems
@@ -2784,9 +2806,14 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/llm-application-mlops-pipeline-build-strategy ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/llm-application-mlops-pipeline-build-strategy ↔ harness-engineering/realtime-llm-inference-deployment-monitoring-patterns
 - harness-engineering/llm-application-mlops-pipeline-build-strategy ↔ prompt-engineering/prompt-versioning-and-testing
+- harness-engineering/llm-application-mlops-pipeline-build-strategy ↔ harness-engineering/llm-application-stable-deployment-cicd-pipeline
 - harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines ↔ harness-engineering/realtime-llm-inference-deployment-monitoring-patterns
 - harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
+- harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines ↔ harness-engineering/llm-application-stable-deployment-cicd-pipeline
+- harness-engineering/llm-application-stable-deployment-cicd-pipeline ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
+- harness-engineering/llm-application-stable-deployment-cicd-pipeline ↔ harness-engineering/realtime-llm-inference-deployment-monitoring-patterns
+- harness-engineering/llm-application-stable-deployment-cicd-pipeline ↔ infrastructure/high-availability-llm-disaster-recovery-retry-patterns
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/multi-llm-api-integration-harness-patterns
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - harness-engineering/llm-engine-integration-harness-design-patterns ↔ harness-engineering/llm-tooling-harness-complex-api-integration
@@ -2968,7 +2995,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - infrastructure/guard-test-pattern ↔ prompt-engineering/llm-prompt-boolean-logic-control-precision-validation
 - infrastructure/guard-test-pattern ↔ infrastructure/llm-agent-artifact-first-diagnosis
 - infrastructure/guard-test-pattern ↔ prompt-engineering/llm-output-xpia-defense-pipeline-strengthening
-- infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/production-db-ai-agent-guardrails
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ project-ops/large-scale-ai-serving-harness-caching-strategies
 - infrastructure/high-availability-llm-disaster-recovery-retry-patterns ↔ infrastructure/operational-resilience-emergency-management-tooling
