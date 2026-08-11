@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-08-10T21:05:17.836Z
+Updated: 2026-08-11T21:05:32.665Z
 
-## 엔트리 (691개)
+## 엔트리 (695개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -160,6 +160,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Agent Harness: 결정론적 제어로 신뢰할 수 있는 출력 보장](wiki/harness-engineering/ai-agent-harness-deterministic-control-enhancement) — confidence: 1, status: draft
 - [AI 에이전트 프롬프트 하네스 표준화: oh-my-harness CLI 활용 전략](wiki/harness-engineering/ai-agent-prompt-harness-standardization-oh-my-harness) — confidence: 1, status: draft
 - [Harness 기반 AI 모델 배포 자동화: 대규모 애플리케이션 업데이트 전략](wiki/harness-engineering/ai-model-deployment-automation-with-harness) — confidence: 1, status: draft
+- [AI 모델 성능 모니터링 및 A/B 테스트 Harness — 지속적인 검증과 최적화](wiki/harness-engineering/ai-model-performance-monitoring-ab-testing-harness) — confidence: 1, status: draft
 - [AI 모델 성능 모니터링 및 자동 롤백 시스템 - 프로덕션 안정성 확보](wiki/harness-engineering/ai-model-performance-monitoring-automated-rollback) — confidence: 1, status: draft
 - [AI Model Router — 동적 LLM 라우팅으로 비용 및 성능 최적화](wiki/harness-engineering/ai-model-router-cost-performance-optimization) — confidence: 1, status: draft
 - [AI 팀 관리 시스템: Chief Agent Operator 원칙과 구현](wiki/harness-engineering/ai-team-management-chief-agent-operator-principles) — confidence: 1, status: draft
@@ -454,6 +455,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Multi-Agent Collaboration Patterns — Efficient System Design for Complex Tasks](wiki/agents/multi-agent-collaboration-system-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent Systems: Decision-Making Design Patterns](wiki/agents/multi-agent-decision-making-patterns) — confidence: 1, status: draft
 - [멀티 에이전트 시스템 상호작용 패턴 — 협업 AI 설계를 위한 방법론](wiki/agents/multi-agent-interaction-patterns-design-methodologies) — confidence: 1, status: draft
+- [다중 에이전트 시스템: 효과적인 역할 부여 및 협업 패턴 디자인](wiki/agents/multi-agent-role-collaboration-design-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Design — Role Assignment and Collaboration Patterns](wiki/agents/multi-agent-role-collaboration-patterns) — confidence: 1, status: draft
 - [멀티 에이전트 시스템: 복잡한 AI 문제 해결을 위한 협업 및 조정 패턴](wiki/agents/multi-agent-system-collaboration-coordination-patterns) — confidence: 1, status: draft
 - [Multi-Agent System Interaction: Efficient Design Patterns for Coordination and Communication](wiki/agents/multi-agent-system-efficient-interaction-design-patterns) — confidence: 1, status: draft
@@ -582,6 +584,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - [GitHub Actions — checkout 없는 job 에서 gh CLI 실패 (GH_REPO env 해결)](wiki/infrastructure/github-actions-gh-cli-checkout-missing-gh-repo-env) — confidence: 2, status: complete
 - [GH Actions 인라인 스크립트 안전 패턴 — Python/bash 언어 경계 가이드](wiki/infrastructure/github-actions-inline-script-safe-patterns) — confidence: 3, status: complete
 - [GitHub Actions 모니터링 job 설계 — smoke test / alert step 격리](wiki/infrastructure/github-actions-monitoring-smoke-alert-isolation) — confidence: 2, status: complete
+- [GitHub Actions OIDC Audience Restriction – Enhancing CI/CD Security](wiki/infrastructure/github-actions-oidc-audience-restriction-security) — confidence: 1, status: draft
 - [GITHUB_TOKEN Anti-Recursion — Workflow Trigger Gap](wiki/infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger) — confidence: 4, status: complete
 - [Guard Test Pattern — 의도적 검증 테스트가 N건 근본 버그 동시 폭로](wiki/infrastructure/guard-test-pattern) — confidence: 3, status: complete
 - [LLM 애플리케이션 고가용성 — 장애 복구 및 재시도 패턴](wiki/infrastructure/high-availability-llm-disaster-recovery-retry-patterns) — confidence: 1, status: draft
@@ -702,6 +705,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - [Jetpack Compose + AI 통합 패턴 — 스트리밍 UI 와 A2UI 기반 에이전트 UX](wiki/android-ai/jetpack-compose-ai-streaming-agentic-ux-patterns) — confidence: 1, status: draft
 - [MediaPipe — 크로스플랫폼 온디바이스 ML 파이프라인](wiki/android-ai/mediapipe) — confidence: 1, status: draft
 - [ML Kit — Android/iOS 무료 온디바이스 ML SDK](wiki/android-ai/ml-kit) — confidence: 1, status: draft
+- [Needle 2 LLM — 온디바이스 에이전틱 AI의 Android 적용 및 활용](wiki/android-ai/needle-2-on-device-agentic-llm-android-application) — confidence: 1, status: draft
 - [On-Device LLM Inference: Efficient Memory Management for Edge Devices](wiki/android-ai/on-device-llm-memory-optimization-inference) — confidence: 1, status: draft
 - [On-Device LLM Optimization — Strategies for Android AI](wiki/android-ai/on-device-llm-optimization-android-strategies) — confidence: 1, status: draft
 - [On-Device LLM Quantization — Android Eco-system Benchmarking and Implementation](wiki/android-ai/on-device-llm-quantization-android-benchmarking) — confidence: 1, status: draft
@@ -731,6 +735,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/muse-spark-multimodal-agent-harness-integration
 - agents/advanced-ai-agent-tool-use-patterns ↔ agents/llm-autonomous-agents-strategic-tool-orchestration
+- agents/advanced-ai-agent-tool-use-patterns ↔ android-ai/needle-2-on-device-agentic-llm-android-application
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/ai-agent-transparent-execution-knowledge-integration
 - agents/agent-codebase-exploration-visualization-tool ↔ agents/autonomous-agent-reasoning-debugging-optimization
 - agents/agent-codebase-exploration-visualization-tool ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
@@ -970,6 +975,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/antigravity-managed-agents-api-integration-review
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-stage-agent-task-scheduling-monitoring
 - agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-agent-interaction-patterns-design-methodologies
+- agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi ↔ agents/multi-agent-role-collaboration-design-patterns
 - agents/ai-human-collaborative-workspace-architecture-buzz ↔ agents/multi-agent-collaboration-system-design-patterns
 - agents/ai-human-collaborative-workspace-architecture-buzz ↔ agents/collaborative-agent-workflow-design-orchestration
 - agents/ai-human-collaborative-workspace-architecture-buzz ↔ context-engineering/ai-agent-long-term-memory-system-integration
@@ -1098,6 +1104,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ agents/llm-autonomous-agent-self-reflection-tool-use-patterns
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ harness-engineering/agent-loop-patterns-autonomous-task-completion
 - agents/autonomous-ai-agent-task-planning-execution-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
+- agents/autonomous-ai-agent-task-planning-execution-patterns ↔ android-ai/needle-2-on-device-agentic-llm-android-application
 - agents/code-based-agent-task-patterns-harness-design ↔ infrastructure/guard-test-pattern
 - agents/code-based-agent-task-patterns-harness-design ↔ evaluation/llm-api-dependency-risk-mitigation-strategy
 - agents/code-based-agent-task-patterns-harness-design ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -1330,6 +1337,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ agents/multimodal-ai-agent-tool-usage-design
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ evaluation/llm-agent-observability-spanlens-trace-monitoring
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ harness-engineering/agent-duplicate-execution-detection-prevention
+- agents/llm-agent-tool-call-reliability-forge-guardrails ↔ android-ai/needle-2-on-device-agentic-llm-android-application
 - agents/llm-agent-tool-integration-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-tool-integration-patterns ↔ agents/llm-autonomous-agents-strategic-tool-orchestration
 - agents/llm-agent-tool-use-design-patterns ↔ agents/multimodal-ai-agent-effective-tool-integration
@@ -1378,6 +1386,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-multi-agent-system-design-orchestration-patterns ↔ agents/multi-agent-collaboration-decision-logic-design-patterns
 - agents/llm-multi-agent-system-design-orchestration-patterns ↔ harness-engineering/multi-ai-coding-agent-orchestration-paseo-enhancement
 - agents/llm-multi-agent-system-design-orchestration-patterns ↔ agents/multi-agent-role-collaboration-patterns
+- agents/llm-multi-agent-system-design-orchestration-patterns ↔ agents/multi-agent-role-collaboration-design-patterns
 - agents/long-term-agent-behavior-anomaly-detection-response ↔ evaluation/llm-output-validation-quality-metrics-design
 - agents/long-term-agent-behavior-anomaly-detection-response ↔ infrastructure/guard-test-pattern
 - agents/long-term-agent-behavior-anomaly-detection-response ↔ context-engineering/silent-drift-family-pattern
@@ -1439,6 +1448,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/ai-team-management-chief-agent-operator-principles
 - agents/multi-agent-collaboration-system-design-patterns ↔ harness-engineering/multi-ai-coding-agent-orchestration-paseo-enhancement
+- agents/multi-agent-collaboration-system-design-patterns ↔ agents/multi-agent-role-collaboration-design-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-llm-agent-workload-partitioning-patterns
 - agents/multi-agent-decision-making-patterns ↔ agents/multi-agent-system-efficient-interaction-design-patterns
@@ -1450,6 +1460,10 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/multi-agent-task-collaboration-coordination-strategies
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/collaborative-agent-workflow-design-orchestration
 - agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/reliable-multi-agent-interaction-patterns
+- agents/multi-agent-interaction-patterns-design-methodologies ↔ agents/multi-agent-role-collaboration-design-patterns
+- agents/multi-agent-role-collaboration-design-patterns ↔ agents/multi-agent-role-collaboration-patterns
+- agents/multi-agent-role-collaboration-design-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
+- agents/multi-agent-role-collaboration-design-patterns ↔ agents/multi-agent-task-distribution-collaboration
 - agents/multi-agent-role-collaboration-patterns ↔ agents/multi-agent-task-decomposition-role-assignment
 - agents/multi-agent-role-collaboration-patterns ↔ agents/multi-agent-system-collaboration-coordination-patterns
 - agents/multi-agent-role-collaboration-patterns ↔ agents/multi-agent-task-distribution-collaboration
@@ -1664,6 +1678,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - android-ai/gemini-nano ↔ evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth
 - android-ai/gemini-nano ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - android-ai/gemini-nano ↔ android-ai/on-device-llm-quantization-android-benchmarking
+- android-ai/gemini-nano ↔ android-ai/needle-2-on-device-agentic-llm-android-application
 - android-ai/genkit-android-backend-genai-framework ↔ frontend-ai/user-behavior-prediction-ai-model-integration
 - android-ai/genkit-android-backend-genai-framework ↔ android-ai/gomodel-llm-gateway-introduction-strategy
 - android-ai/genkit-android-backend-genai-framework ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
@@ -1696,6 +1711,9 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - android-ai/ml-kit ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - android-ai/ml-kit ↔ project-ops/realtime-ai-model-deployment-monitoring-patterns
 - android-ai/ml-kit ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
+- android-ai/needle-2-on-device-agentic-llm-android-application ↔ android-ai/on-device-llm-memory-optimization-inference
+- android-ai/needle-2-on-device-agentic-llm-android-application ↔ android-ai/on-device-llm-optimization-android-strategies
+- android-ai/needle-2-on-device-agentic-llm-android-application ↔ context-engineering/on-device-vector-db-jit-semantic-search
 - android-ai/on-device-llm-memory-optimization-inference ↔ android-ai/on-device-llm-optimization-android-strategies
 - android-ai/on-device-llm-memory-optimization-inference ↔ android-ai/on-device-llm-quantization-android-benchmarking
 - android-ai/on-device-llm-memory-optimization-inference ↔ android-ai/on-device-llm-quantization-patterns-android
@@ -2217,6 +2235,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/ai-agent-sandbox-escape-security-hardening ↔ harness-engineering/ai-agent-authentication-authorization-hardening
 - evaluation/ai-agent-sandbox-escape-security-hardening ↔ evaluation/claude-code-harness-security-guard-test-hardening
 - evaluation/ai-agent-sandbox-escape-security-hardening ↔ infrastructure/ai-agent-tool-access-gateway-design
+- evaluation/ai-agent-sandbox-escape-security-hardening ↔ infrastructure/github-actions-oidc-audience-restriction-security
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ agents/ai-agent-safety-constraint-control-design-patterns
 - evaluation/ai-vulnerability-guard-test-enhancement ↔ agents/llm-agent-autonomy-complex-problem-solving
@@ -2263,9 +2282,9 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ project-ops/react-doctor-ai-code-validation-pipeline
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-025-cycle-52-30-47-sfr-h2h-systematic-bias-91
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-026-cycle-57-sfr-h2h-v2-1-backtest-validation-94
-- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ journal/playbook-journal-027-cycle-59-sfr-h2h-prod-30-bias-bootstrap-ci-systema
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ reports/ai-roi-business-value-report-generation
+- evaluation/generative-ai-model-evaluation-quantitative-qualitative-meth ↔ harness-engineering/ai-model-performance-monitoring-ab-testing-harness
 - evaluation/llm-agent-autonomy-guardrail-enhancement ↔ evaluation/llm-output-validation-automation-failure-prevention
 - evaluation/llm-agent-autonomy-guardrail-enhancement ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - evaluation/llm-agent-autonomy-guardrail-enhancement ↔ harness-engineering/generative-ai-guardrails-secure-deployment-patterns
@@ -2588,6 +2607,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/ai-agent-authentication-authorization-hardening ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - harness-engineering/ai-agent-authentication-authorization-hardening ↔ infrastructure/vercel-breach-third-party-ai-oauth-supply-chain-security
 - harness-engineering/ai-agent-authentication-authorization-hardening ↔ infrastructure/ai-agent-tool-access-gateway-design
+- harness-engineering/ai-agent-authentication-authorization-hardening ↔ infrastructure/github-actions-oidc-audience-restriction-security
 - harness-engineering/ai-agent-external-version-confidence-calibration ↔ harness-engineering/github-actions-cross-workflow-version-consistency-audit
 - harness-engineering/ai-agent-external-version-confidence-calibration ↔ harness-engineering/github-actions-fix-stacking-anti-pattern
 - harness-engineering/ai-agent-external-version-confidence-calibration ↔ context-engineering/agentic-branched-state-production-content-lag
@@ -2609,6 +2629,11 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/scalable-ai-model-deployment-best-practices
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/ai-model-performance-monitoring-automated-rollback
 - harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/llm-application-reliable-ci-cd-deployment-pipelines
+- harness-engineering/ai-model-deployment-automation-with-harness ↔ harness-engineering/ai-model-performance-monitoring-ab-testing-harness
+- harness-engineering/ai-model-performance-monitoring-ab-testing-harness ↔ harness-engineering/ai-model-performance-monitoring-automated-rollback
+- harness-engineering/ai-model-performance-monitoring-ab-testing-harness ↔ harness-engineering/distributed-ai-model-versioning-ab-testing-harness
+- harness-engineering/ai-model-performance-monitoring-ab-testing-harness ↔ reports/ai-model-performance-metrics-dashboard-design-guide
+- harness-engineering/ai-model-performance-monitoring-ab-testing-harness ↔ project-ops/mlops-pipeline-design-ai-model-deployment-monitoring
 - harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/monitoring-alert-triage-sop
 - harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ harness-engineering/realtime-large-scale-ai-model-serving-harness-patterns
 - harness-engineering/ai-model-performance-monitoring-automated-rollback ↔ project-ops/ai-sre-principles-project-control-tower-enhancement
@@ -2769,6 +2794,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/generative-ai-guardrails-secure-deployment-patterns ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - harness-engineering/generative-ai-guardrails-secure-deployment-patterns ↔ harness-engineering/claude-autonomous-vulnerability-harness-architecture
 - harness-engineering/generative-ai-guardrails-secure-deployment-patterns ↔ infrastructure/guard-test-pattern
+- harness-engineering/generative-ai-guardrails-secure-deployment-patterns ↔ infrastructure/github-actions-oidc-audience-restriction-security
 - harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
 - harness-engineering/github-actions-0s-failure-self-report-blind-spot ↔ infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture
@@ -3034,6 +3060,9 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/github-actions-workflow-zero-second-failure-diagnosis
 - infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/github-actions-0s-failure-self-report-blind-spot
 - infrastructure/github-actions-inline-script-safe-patterns ↔ harness-engineering/branched-state-origin-main-targeted-fix-bypass
+- infrastructure/github-actions-inline-script-safe-patterns ↔ infrastructure/github-actions-oidc-audience-restriction-security
+- infrastructure/github-actions-oidc-audience-restriction-security ↔ infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger
+- infrastructure/github-actions-oidc-audience-restriction-security ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/github-token-anti-recursion-ghat-pat-workflow-trigger ↔ project-ops/open-source-supply-chain-security-llm-tools-hardening
 - infrastructure/guard-test-pattern ↔ project-ops/agile-sprint-planning-execution-ai-projects
 - infrastructure/guard-test-pattern ↔ prompt-engineering/rag-prompt-optimization-retrieval-augmented-generation
