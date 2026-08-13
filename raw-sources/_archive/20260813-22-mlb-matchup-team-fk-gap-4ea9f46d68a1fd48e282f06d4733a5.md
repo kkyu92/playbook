@@ -1,0 +1,46 @@
+---
+date: "2026-08-13"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "4ea9f46d68a1fd48e282f06d4733a55d05d7c624"
+---
+
+
+subtype: lesson
+
+## 사례
+plan #24 Phase 1(cycle 2054)~3b(cycle 2063)까지 4개 cycle 동안 "완료"로
+박제된 /mlb/matchup·/mlb/team 페이지가 실제 프로덕션에서는 항상 0경기로
+렌더링되고 있었음 — cycle 2065 fix-incident 가 별개 버그(predict_final
+breakdown 컬럼 미저장)를 조사하다 우연히 curl 실측으로 발견.
+
+## 원인
+buildMlbMatchupProfile.ts/buildMlbTeamProfile.ts 가 KBO 패턴(teams 테이블
+FK: teams.code → teams.id → games.home_team_id)을 그대로 복제. 하지만
+teams 테이블에 MLB 팀 row 가 0건(전체 10건=KBO 10팀뿐)이고 games 테이블에도
+MLB 경기 row 가 0건 — MLB 파이프라인은 애초에 mlb_schedule+
+predictions.external_game_id 라는 완전히 다른 모델로 기록. 매 cycle 마다
+"pnpm test 전량 통과" + "실 스크립트로 검증" 을 확인했지만, 테스트는
+supabase 클라이언트를 mock 하고 검증 스크립트도 로컬 fixture 기반이라
+"teams 테이블에 MLB row 가 실제로 있는지" 자체는 아무도 실제 prod DB에
+curl 하지 않는 한 드러나지 않는 가정이었음.
+
+## 대응
+- 즉시 fix 범위 밖 판단(Tier 3, teams+games 마이그레이션 또는 빌더 재작성
+  필요) → TODOS.md 최상단 + plan #24.md "CRITICAL" 섹션에 carry-over 박제
+- 이번 cycle 자체 fix(predict_final breakdown 컬럼)는 정확했지만 이 gap
+  때문에 사용자 눈에는 아직 아무 변화 없음 — "코드 fix 완료" ≠ "사용자
+  가시 효과 있음" 을 별도로 명시해야 함(retro 에서도 구분 서술)
+
+## 일반화 — 프로세스 개선 제안
+"신규 라우트/빌더 shipped" 를 success 로 박제하기 전, 최소 1회는
+`curl <prod-url>` 로 실제 렌더 결과를 눈으로 확인하는 단계를 review-code
+또는 explore-idea chain 의 stop 조건에 추가 검토 (mock 기반 테스트 통과가
+FK 모델 자체의 존재를 보장하지 않음 — cycle 2065 가 4 cycle 만에 발견했지만
+운 좋은 우연이었고, 구조적으로는 이보다 훨씬 오래 방치될 수 있었음).
+memory/drift-cases.md 사례 1(그린필드 가정) family 의 새 변종 — "관련
+테이블/컬럼이 존재한다"는 가정이 mock 테스트 안에서만 성립하고 실제 DB
+스키마와 괴리된 경우.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
