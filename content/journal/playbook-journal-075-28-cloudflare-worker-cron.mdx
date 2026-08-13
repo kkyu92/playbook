@@ -1,0 +1,41 @@
+---
+title: "Playbook Journal 075 — 사례 28 — Cloudflare Worker cron 문자열 이중 하드코딩 배포 전 자체 발견+예방"
+category: harness-engineering
+date: "2026-08-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 28 — Cloudflare Worker cron 문자열 이중 하드코딩 배포 전 자체 발견+예방 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260813-28-cloudflare-worker-cron-b651a3cc40a4f7f7ae0c1afc3f66db.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+
+wrangler.toml cron 표현식과 worker.ts 의 cronExpr === '...' dispatch 조건이 같은
+문자열을 별도로 하드코딩 — plan #25 Phase 2 cron 슬롯 확장(UTC 22 추가) 중 한쪽만
+바꾸고 배포했으면 MLB pipeline 전체가 silent 미발화됐을 뻔함. 사례 20/27 family와
+유사 구조지만 배포 전 자체 발견으로 예방한 최초 사례.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
