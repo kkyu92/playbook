@@ -1,0 +1,46 @@
+---
+title: "Playbook Journal 076 — 사례 29 — Vercel 배포 일일 100건 quota 소진으로 main push 3건 배포 누락"
+category: harness-engineering
+date: "2026-08-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 29 — Vercel 배포 일일 100건 quota 소진으로 main push 3건 배포 누락 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260813-29-vercel-100-quota-main-push-3-9347b0039feaac88c2069ecac0b664.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2083
+
+develop-cycle 의 1 cycle=1 PR+merge 구조(R4/R7)가 누적돼 Vercel free tier 일일
+배포 100건 cap 을 실제로 소진 — cycle 2082 이후 push 3건이 배포 레코드 자체
+없이 누락, production 이 이전 commit 에 고정. `vercel deploy --prod` 시도로
+"api-deployments-free-per-day" 에러 확정(GH 웹훅 문제 아님). Elo history
+backfill 은 Supabase 직접 스크립트로 우회 완료. 상세 = memory/drift-cases.md
+사례 29, carry-over = TODOS.md 최상단.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
