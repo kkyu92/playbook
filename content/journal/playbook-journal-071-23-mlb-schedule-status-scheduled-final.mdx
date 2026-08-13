@@ -1,0 +1,80 @@
+---
+title: "Playbook Journal 071 — 사례 23 — mlb_schedule.status 가 전량 'scheduled', 'final' 로 전환된 적 없음"
+category: harness-engineering
+date: "2026-08-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 23 — mlb_schedule.status 가 전량 'scheduled', 'final' 로 전환된 적 없음 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260813-23-mlb-schedule-status-scheduled-final-4e2f491d6bcf5808946f309ea5f0bb.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2066
+
+## 사례
+
+cycle 2066 이 사례 22(plan #24 CRITICAL, `teams`/`games` FK 0건) 를 fix(#2922)
+하고 실측 재검증(curl)했으나 `/mlb/matchup/NYM/PHI` 가 여전히 "아직 올 시즌
+완료된 경기가 없습니다" 를 렌더. 원인 재조사 결과 fix 자체는 정상 동작하지만
+DB 실측: `mlb_schedule` 759 rows 전체가 `status='scheduled'` — `final` 이 단
+1건도 없음(2026-08-13 기준, 시즌 시작부터 지금까지). NYM/PHI 대전 5경기도
+전부 6월 날짜인데 `scheduled` 로 남아있음.
+
+## 원인
+
+`mlb_statsapi_scrape` (packages/kbo-data/src/pipeline/mlb-pipeline.ts
+runStatsApiScrape) 가 `mlb_schedule` 의 유일한 writer인데, 항상
+`date=todayKST()` 기본값으로만 호출됨(apps/moneyball/src/app/api/mlb/pipeline/
+route.ts `todayKST()` fallback). Cloudflare Worker cron(`17 18-21,10 * * *`,
+.github/workflows/mlb-pipeline.yml 주석)이 `date` 파라미터를 명시 전달하는지
+불명이나, 매 실행이 "오늘" 하루치만 갱신하고 지나간 날짜를 다시 스크랩해
+`scheduled`→`final` 전환 + 스코어 반영하는 backfill 경로가 코드베이스에
+전혀 없음(KBO 의 `postview-daily.ts` 같은 대응 패턴이 MLB 에는 부재).
+즉 어떤 날짜든 그날 스크랩 시점에 경기가 안 끝나 있으면(대부분의 경우 —
+MLB 저녁 경기는 한국시간 새벽~오전에 끝남) 그 상태로 영구 고정.
+
+## 대응
+
+이번 cycle 은 사례 22 fix 만 완료(#2922 머지) — 본 사례는 별개 root cause 로
+다음 fix-incident 후보로 carry-over. 다음 fix 방향(3-step):
+1. `mlb_statsapi_scrape` 를 "최근 N일"(예: D-3~D-1) 에 대해서도 재실행하는
+   backfill 모드 추가 또는 Cloudflare Worker cron 자체에 어제 날짜 explicit
+   호출 추가
+2. 실행 후 DB 실측 재확인 (`mlb_schedule` status='final' count > 0 확인 —
+   사례 22 와 동일하게 "테스트 통과 ≠ 실제 데이터 채워짐" 원칙 적용)
+3. `/mlb/matchup/*`, `/mlb/team/*` curl 재검증 — finalGames > 0 렌더 확인
+
+## 관련 family
+
+- 사례 22 (동일 "/mlb/matchup, /mlb/team 항상 빈 화면" 증상의 두 번째 독립
+  root cause — FK gap 은 고쳤지만 데이터 자체가 안 채워짐)
+- 사례 8/11/20 (cron 이 success 로 보이는데 핵심 동작 — 여기선 "과거 날짜
+  재스크랩" — 이 애초에 코드 경로에 없음, silent skip 보다 한 단계 더 이른
+  "설계 자체에 backfill 부재")
+
+plan #24 다음 fire 체크리스트에 본 사례 추가 필요(carry-over).
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
