@@ -1,0 +1,42 @@
+---
+title: "Playbook Journal 069 — 사례 20 — op-analysis-weekly cron 라벨 부재 silent swallow 9주 방치"
+category: harness-engineering
+date: "2026-08-13"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 20 — op-analysis-weekly cron 라벨 부재 silent swallow 9주 방치 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260813-20-op-analysis-weekly-cron-silent-swallow-9-8675a74dcba1d5b3a86c79f062526b.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2061
+
+gh pr create --label 대상 라벨이 리포에 없어 항상 실패하는데
+2>/dev/null || echo "" 가 흡수해 워크플로는 계속 success. GH Actions UI
+초록 체크만으로는 못 잡는 한 단계 더 깊은 cron silent skip 변종.
+상세 = memory/drift-cases.md 사례 20.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
