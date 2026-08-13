@@ -1,0 +1,65 @@
+---
+date: "2026-08-13"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "b26a2acdd2955e8bb0430eaa57ea291239088832"
+---
+
+
+subtype: lesson
+cycle: 2067
+
+## 사례
+
+cycle 2067 이 사례 23(mlb_statsapi_scrape backfill 부재) 를 fix 하고(cloudflare-worker
+최근 3일 재스크랩 + 57개 stuck 날짜 일괄 backfill script 실행, service role key
+로 mlb_schedule.status='final' count 0→748 확인) 나서도 curl 재검증 시
+/mlb/matchup/NYM/PHI 가 여전히 "아직 완료된 경기 없음" 렌더. ISR 캐시 의심 →
+/api/revalidate 로 강제 재검증해도 동일 — 응답 헤더가 x-vercel-cache: MISS 라
+캐시 문제가 아님을 확인.
+
+## 원인
+
+anon key(앱 서버 컴포넌트가 실제 쓰는 키) 로 mlb_schedule SELECT 시 항상 0 rows
+(에러 없이 조용히 필터링). service role key 로는 759 rows 전부 보임. 원인 =
+038_mlb_schedule.sql 이 RLS 활성화 + anon read policy 추가를 빠뜨림
+(044_mlb_team_stats.sql 은 동일 상황에서 `ALTER TABLE ... ENABLE ROW LEVEL
+SECURITY` + `CREATE POLICY ... USING (true)` 를 명시적으로 넣었음 — 038 만
+예외). games/predictions/mlb_team_stats 는 anon count == service count 로
+정상, mlb_schedule 만 anon=0 으로 불일치 — 다른 테이블과 대조해서 발견.
+
+사례 22(FK gap)와 사례 23(backfill 부재)를 둘 다 완벽히 고쳐도 이 RLS 락이
+남아있으면 화면은 계속 빈 상태로 남았을 것. 이전 cycle 들의 "DB 실측 확인"이
+전부 service role key 스크립트였기 때문에 이 락을 못 잡음 — Artifact-First
+진단 원칙("실제 렌더 경로") 을 서비스키가 아닌 **anon key로** 재현해야
+완전하다는 정정.
+
+## 대응
+
+045_mlb_schedule_rls.sql 로 RLS enable + `USING (true)` anon read policy
+추가. 실측 재검증(anon key 직접 쿼리 + curl 프로덕션 페이지): count 0→759,
+페이지 렌더 "아직 완료된 경기 없음" → "올 시즌 상대전적 4승 5패, AI 예측
+44%" 정상 확인.
+
+## 관련 family
+
+- 사례 22/23 (동일 증상의 앞선 두 root cause — FK gap, backfill 부재)
+- Supabase silent 패턴 family (VARCHAR overflow silent 등) — 이번엔 "RLS
+  SELECT 필터"가 새 하위 변종. try/catch 도 error도 없이 조용히 빈 배열만
+  반환하는 게 공통점.
+- 신규 진단 습관 후보: 신규 MLB 테이블 migration 작성 시 044 패턴(ENABLE RLS
+  + anon read policy) 체크리스트화 — 038 처럼 빠뜨리면 이후 몇 사이클이 표면
+  증상(FK gap, backfill)만 고치고 진짜 원인을 놓칠 수 있음.
+
+## 미해결 carry-over
+
+cloudflare-worker/src/worker.ts 의 mlb_statsapi_scrape 최근 3일 backfill fix
+(cycle 2067 커밋 643dba4e) 는 로컬 wrangler 툴체인 깨짐(node_modules/.pnpm 에
+wrangler@4.108.0 실제 미설치 — package.json 버전과 lockfile 불일치, 근본
+원인 미조사, cloudflare-worker/ 가 pnpm workspace 밖에 있어 root install 이
+안 건드림) 으로 `wrangler deploy` 실행 못함 — 코드는 main 에 push 됐지만
+Cloudflare Worker 런타임에는 아직 미반영. 다음 fix-incident 후보: 로컬
+wrangler 설치 복구 또는 CI 기반 배포 경로 추가.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
