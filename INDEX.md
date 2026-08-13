@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-08-13T08:51:09.759Z
+Updated: 2026-08-13T09:40:12.404Z
 
-## 엔트리 (700개)
+## 엔트리 (701개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -342,6 +342,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 067 — R7 auto-merge --auto flag 실패 — repo GraphQL enablePullRequestAutoMerge 비활성](wiki/journal/playbook-journal-067-r7-auto-merge-auto-flag-repo-graphql-enablepullreq) — confidence: 3, status: in-progress
 - [Playbook Journal 068 — 사례 18 — retro 완료형 서술 vs 실제 미실행 (PR 5일 open 방치)](wiki/journal/playbook-journal-068-18-retro-vs-pr-5-open) — confidence: 3, status: in-progress
 - [Playbook Journal 069 — 사례 20 — op-analysis-weekly cron 라벨 부재 silent swallow 9주 방치](wiki/journal/playbook-journal-069-20-op-analysis-weekly-cron-silent-swallow-9) — confidence: 3, status: in-progress
+- [Playbook Journal 070 — 사례 22 — MLB matchup/team FK 모델 gap, 테스트 통과 ≠ 프로덕션 렌더 검증](wiki/journal/playbook-journal-070-22-mlb-matchup-team-fk-gap) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -3222,6 +3223,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-067-r7-auto-merge-auto-flag-repo-graphql-enablepullreq ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-068-18-retro-vs-pr-5-open ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-069-20-op-analysis-weekly-cron-silent-swallow-9 ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-070-22-mlb-matchup-team-fk-gap ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
