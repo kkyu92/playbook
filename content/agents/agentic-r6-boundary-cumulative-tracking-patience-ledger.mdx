@@ -1,5 +1,5 @@
 ---
-title: "자율 에이전트 R6 경계 누적 추적 — 해소 불가 이슈의 patience ledger 패턴"
+title: 자율 에이전트 R6 경계 누적 추적 — 해소 불가 이슈의 patience ledger 패턴
 category: agents
 date: "2026-05-20"
 tags:
@@ -15,13 +15,9 @@ workers:
   - all
 confidence: 3
 last_verified: "2026-05-20"
-connections:
-  - agents/agentic-long-running-carryover-human-checkpoint-boundary
-  - context-engineering/agentic-push-defer-divergence-concurrent-writes
-  - context-engineering/drift-detection-methodology
-  - context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt
+connections: [agents/agentic-long-running-carryover-human-checkpoint-boundary, context-engineering/agentic-push-defer-divergence-concurrent-writes, context-engineering/agentic-hub-worker-diverged-commit-flow-design-signal-vs-debt]
 status: complete
-description: "자율 에이전트가 R6 경계(사용자 결정 필요) 이슈를 발견했을 때, '반복 알람' / '무시' / '중단' 세 가지 안티패턴 대신 매 사이클 상태를 정밀 누적하는 'patience ledger' 패턴이 최적이다. TODOS.md의 BRANCHED 카운터(cycle 782→895, 113 사이클)가 이 패턴의 실증 사례다."
+description: 자율 에이전트가 R6 경계(사용자 결정 필요) 이슈를 발견했을 때, '반복 알람' / '무시' / '중단' 세 가지 안티패턴 대신 매 사이클 상태를 정밀 누적하는 'patience ledger' 패턴이 최적이다. TODOS.md의 BRANCHED 카운터(cycle 782→895, 113 사이클)가 이 패턴의 실증 사례다.
 type: entry
 source: explore-idea
 ---
