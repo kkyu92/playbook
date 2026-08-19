@@ -1,0 +1,81 @@
+---
+title: "Playbook Journal 079 — single shared filter constant silently drifted from its own documented spec, frozen flagship page 7+ weeks"
+category: harness-engineering
+date: "2026-08-19"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: single shared filter constant silently drifted from its own documented spec, frozen flagship page 7+ weeks (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260819-single-shared-filter-constant-silently-drifted-fro-049c584e637ae56f8bd489e7d0db3f.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2209
+
+## 사례
+
+`CURRENT_MODEL_FILTER`(apps/moneyball/src/config/model.ts) 는 14개 파일
+(/accuracy, /dashboard, /reviews, leaderboard, players, standings, teams)이
+공유하는 "현재 운영 모델만 추출" 필터 상수. 구현이 `{ debate_version:
+CURRENT_DEBATE_VERSION }` (등가 매칭) 이었는데, decideModelVersion 은 LLM
+debate 성공/실패(=CREDIT_EXHAUSTED fallback) 양쪽 분기 모두 scoring_rule 은
+CURRENT_SCORING_RULE 로 동일하게 박제하지만 debate_version 은 실패 시
+null 로 박제. CE 가 2026-06-06 부터 사실상 100% 지속되면서, 이 필터가
+7주 넘게 신규 검증 결과를 전부 조용히 배제 — /accuracy(플래그십 "AI 예측
+적중 기록" 페이지) 헤드라인 지표(n/정확도/Brier/캘리브레이션/rolling
+추세 등 전부)가 2026-07-01 데이터에 고정된 채 "실시간 자동 집계" 라고
+표방하는 상태로 방치됨. DB 실측: 필터 통과 143/316건, 최신 verified_at
+2026-07-01 vs 실제 최신 2026-08-18.
+
+## 근본원인
+
+이미 존재하던 문서(shared/model-version-labels.ts, "baseline 분석은
+CURRENT_SCORING_RULE 만 사용")와 실제 구현(CURRENT_MODEL_FILTER 의
+debate_version 매칭)이 어긋나 있었음 — 스펙과 구현의 divergence. 게다가
+`buildEloTrend.ts`(wave-241)가 정확히 동일 클래스 버그를 이미 한 곳에서
+scoring_rule 기준으로 고쳤지만(전용 회귀 테스트까지 존재) 그 fix 가
+공유 상수 `CURRENT_MODEL_FILTER` 자체엔 전파되지 않아 나머지 13개
+소비처는 계속 버그를 안고 있었음.
+
+## 대응
+
+`CURRENT_MODEL_FILTER` 를 `{ scoring_rule: CURRENT_SCORING_RULE }` 로
+정정(단일 source 변경 → 14개 파일 자동 전파). DB 실측 291/316건 +
+최신 2026-08-18 회복 확인. 관련 테스트 2건 정정 + 회귀 테스트 1건 신규.
+상세: `TODOS.md` cycle 2209 항목, 커밋 `70613e68`.
+
+## 일반화 가능한 패턴 (silent drift family 신규 파생)
+
+"단일 source 상수" 아키텍처(이 프로젝트의 핵심 원칙)는 값 변경 전파는
+잘 막지만, **상수의 의미(semantics) 자체가 스펙과 어긋나면 그 오류도
+똑같이 전 소비처로 자동 전파**된다는 반대 급부가 있음. 같은 버그 클래스가
+이미 한 곳(buildEloTrend)에서 발견/수정됐다면, 그 fix 가 "이 프로젝트
+전체에서 같은 상수/패턴을 쓰는 다른 소비처"에도 전파됐는지 review-code
+(heavy) 감사 시 확인하는 것이 향후 동일 사례 조기 발견에 유효할 것으로
+판단.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
