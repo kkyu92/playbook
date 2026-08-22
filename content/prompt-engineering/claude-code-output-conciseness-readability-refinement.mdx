@@ -1,0 +1,63 @@
+---
+title: "Claude Code 출력 간결성 및 가독성 정제: 후처리 기법 활용"
+category: prompt-engineering
+date: "2026-08-22"
+tags:
+  - Claude
+  - LLMOutput
+  - Refinement
+  - Readability
+  - PostProcessing
+  - PromptEngineering
+  - prompt-engineering
+confidence: 1
+connections: [evaluation/llm-output-validation-pipeline-enhancement, agents/multi-persona-llm-output-validation-enhancement, prompt-engineering/llm-output-validation-prompt-constraints-robustness, harness-engineering/llm-output-validation-dark-factory-evolution, evaluation/llm-generated-content-ai-smell-detection-prompt-defense, prompt-engineering/llm-prompt-optimization-role-definition-constraint-design, context-engineering/claude-code-advanced-context-playbook-strategy]
+status: draft
+description: Claude Code의 장황한 출력을 평범하고 간결한 기술 문서로 변환하여 가독성과 효율성을 극대화하는 후처리 파이프라인 통합 전략을 제시합니다.
+type: entry
+source: scout
+---
+
+Claude Code를 비롯한 대규모 언어 모델(LLM)은 뛰어난 콘텐츠 생성 능력을 제공하지만, 때로는 그 결과물이 과도하게 장황하거나 구어체적인 경향을 보입니다. 이러한 'BuzzFeed식 말투'는 특히 기술 문서, 보고서, 코드 주석 등 간결함과 명확성이 중요한 영역에서 비효율성과 가독성 저하를 초래합니다. 고품질의 기술 콘텐츠는 핵심 정보를 빠르게 전달하고, 오해의 소지를 최소화하며, 특정 형식과 스타일 가이드라인을 준수해야 합니다. 따라서 LLM이 생성한 초기 출력을 목적에 맞게 정제하는 후처리(post-processing) 파이프라인의 필요성이 대두됩니다.
+
+## LLM 출력 후처리 파이프라인 설계
+
+Claude Code의 출력 간결성과 가독성을 개선하기 위한 핵심 전략은 생성된 텍스트에 대한 지능형 후처리를 통합하는 것입니다. 이 과정은 다음과 같은 목표를 가집니다.
+
+1.  **장황함 제거**: 불필요한 수식어, 반복적인 표현, 비격식적인 문구를 제거하여 정보 밀도를 높입니다.
+2.  **명확성 증대**: 모호한 표현을 구체적이고 명확한 용어로 대체하고, 문장 구조를 단순화합니다.
+3.  **스타일 정제**: 기술 문서에 적합한 객관적이고 중립적인 어조를 유지하며, 특정 조직의 스타일 가이드를 준수합니다.
+
+이식 계획(scout 분석)에 따르면, Claudette 프로젝트의 아이디어를 차용하여 LLM 출력 검증 파이프라인에 통합할 수 있습니다. 이는 Claude의 장황한 출력을 평범하고 간결한 영어로 변환하는 메커니즘을 의미합니다. Antigravity CLI 또는 유사한 로컬 LLM 기반 후처리 스킬을 활용하여 Claude Code가 생성하는 문서, 보고서 등의 내용을 자동 정제하고 가독성을 높이는 것이 핵심입니다.
+
+가장 중요한 점은 후처리된 결과를 다시 Claude에게 넘겨 다듬게 하지 않는 것입니다. 이 경우 Claude는 자신의 고유한 말투를 되살릴 가능성이 높으므로, Antigravity CLI나 로컬 LLM의 출력을 최종 결과물로 간주하고 추가적인 LLM 개입 없이 그대로 표시해야 합니다.
+
+### 후처리 워크플로우 시각화
+
+다음 Mermaid 다이어그램은 제안하는 후처리 파이프라인의 흐름을 보여줍니다.
+
+```mermaid
+graph TD
+    A[프롬프트 입력] --> B(Claude Code 생성)
+    B --> C{초기 LLM 출력 (장황한 스타일)}
+    C --> D[로컬 LLM/Antigravity CLI 후처리 엔진]
+    D --> E{정제된 간결한 출력}
+    E --> F[최종 콘텐츠/애플리케이션]
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bfb,stroke:#333,stroke-width:2px
+    style D fill:#ddf,stroke:#333,stroke-width:2px
+    style F fill:#fff,stroke:#333,stroke-width:2px
+```
+
+### 코드 예제: 로컬 LLM을 활용한 출력 정제 시뮬레이션
+
+다음 Python 코드 예제는 Claude Code의 초기 출력을 가상의 '로컬 LLM 후처리 엔진'을 사용하여 정제하는 과정을 시뮬레이션합니다. 실제 환경에서는 `Antigravity CLI`와 같은 전용 도구나 `Ollama`, `LocalGPT` 등으로 구동되는 경량 LLM이 이 역할을 수행할 수 있습니다.
+
+```python
+import os
+
+class ClaudeOutputSimulator:
+    def generate_verbose_output(self, topic: str) -> str:
+        # Claude Code의 장황한 스타일을 시뮬레이션합니다.
+        return (
+            f
