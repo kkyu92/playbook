@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-08-22T21:03:38.794Z
+Updated: 2026-08-23T03:25:05.701Z
 
-## 엔트리 (750개)
+## 엔트리 (751개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -372,6 +372,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 077 — 사례 30 — Cloudflare Worker CI(사례 25 fix) 자체가 node 버전+secret 미검증으로 첫 실행부터 2연속 failure](wiki/journal/playbook-journal-077-30-cloudflare-worker-ci-25-fix-node-secret-2-failu) — confidence: 3, status: in-progress
 - [Playbook Journal 078 — 사례 33 — local develop-cycle working dir vs origin divergence (cycle 2197) (#2965)](wiki/journal/playbook-journal-078-33-local-develop-cycle-working-dir-vs-origin-diver) — confidence: 3, status: in-progress
 - [Playbook Journal 079 — single shared filter constant silently drifted from its own documented spec, frozen flagship page 7+ weeks](wiki/journal/playbook-journal-079-single-shared-filter-constant-silently-drifted-fro) — confidence: 3, status: in-progress
+- [Playbook Journal 080 — 허브 lesson-pending reminder 18건 백로그 — version-sync-guard race 원인 규명 후 close](wiki/journal/playbook-journal-080-lesson-pending-reminder-18-version-sync-guard-race) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -3491,6 +3492,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-077-30-cloudflare-worker-ci-25-fix-node-secret-2-failu ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-078-33-local-develop-cycle-working-dir-vs-origin-diver ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-079-single-shared-filter-constant-silently-drifted-fro ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-080-lesson-pending-reminder-18-version-sync-guard-race ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
