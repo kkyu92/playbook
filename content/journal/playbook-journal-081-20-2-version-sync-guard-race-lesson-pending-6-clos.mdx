@@ -1,0 +1,50 @@
+---
+title: "Playbook Journal 081 — 사례 20 2차 재발 — version-sync-guard race lesson-pending 6건 close (cycle 2464)"
+category: harness-engineering
+date: "2026-08-24"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: 사례 20 2차 재발 — version-sync-guard race lesson-pending 6건 close (cycle 2464) (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20260824-20-2-version-sync-guard-race-lesson-pending-6-clos-a7e10b6295e2f5efdf52d3bb5723e6.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 2464
+
+hub incident #3483~3514 (2026-08-20 커밋 872f4de9/7c58ab68/2c2b6c11/
+1a58198a/7ab993d8/2bc43556) 의 lesson-pending reminder 6건(#3055~3060)이
+2026-08-23 21:00 신규 생성. gh run --log-failed 로 6건 전부
+version-sync-guard.test.ts 동일 assertion 실패(root/apps package.json
+버전 1틱 mismatch) 확인 — 사례 20(cycle 2350, lesson 0f102bac)이 이미
+규명한 원인의 2차 배치(다른 hub incident 번호, 같은 2026-08-20 race
+구간). cycle 2437/2445/2452 bump-version.sh 원자적 bump + pre-push
+hook 도입 이후 CI 전량 green 실측 확인. 코드 수정 불필요 — 원인 코멘트와
+함께 6건 close. carry-over #1(lesson-pending 라벨 진단 스캔) 미반영
+지속.
+
+Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
