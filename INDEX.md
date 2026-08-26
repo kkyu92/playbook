@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-08-25T21:05:37.044Z
+Updated: 2026-08-26T10:24:52.131Z
 
-## 엔트리 (765개)
+## 엔트리 (766개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -380,6 +380,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 080 — 허브 lesson-pending reminder 18건 백로그 — version-sync-guard race 원인 규명 후 close](wiki/journal/playbook-journal-080-lesson-pending-reminder-18-version-sync-guard-race) — confidence: 3, status: in-progress
 - [Playbook Journal 081 — 사례 20 2차 재발 — version-sync-guard race lesson-pending 6건 close (cycle 2464)](wiki/journal/playbook-journal-081-20-2-version-sync-guard-race-lesson-pending-6-clos) — confidence: 3, status: in-progress
 - [Playbook Journal 082 — live.ts updateGameScore 동점 경기 winner_team_id 오설정 — computeWinnerTeamId 미적용](wiki/journal/playbook-journal-082-live-ts-updategamescore-winner-team-id-computewinn) — confidence: 3, status: in-progress
+- [Playbook Journal 083 — cycle-retro 자기검증 룰의 세션-중단 사각지대 — 사례 15 family 재발 (cycle 2647)](wiki/journal/playbook-journal-083-cycle-retro-15-family-cycle-2647) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -3566,6 +3567,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-080-lesson-pending-reminder-18-version-sync-guard-race ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-081-20-2-version-sync-guard-race-lesson-pending-6-clos ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-082-live-ts-updategamescore-winner-team-id-computewinn ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-083-cycle-retro-15-family-cycle-2647 ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ evaluation/llm-output-validation-quality-metrics-design
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ project-ops/generative-ai-mlops-pipeline-design-patterns
 - project-ops/ai-code-accountability-platform-regulation-guardrails ↔ agents/ai-agent-safety-constraint-control-design-patterns
