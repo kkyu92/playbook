@@ -1,0 +1,53 @@
+---
+title: 다중 에이전트 협업 패턴 — 장기 R&D 및 엔지니어링 프로토타이핑
+category: agents
+date: "2026-08-28"
+tags:
+  - multi-agent
+  - collaboration
+  - ai-agents
+  - antigravity
+  - engineering
+  - prototyping
+  - agents
+confidence: 1
+connections: [agents/multi-agent-collaboration-design-patterns, agents/llm-multi-agent-system-design-orchestration-patterns, agents/autonomous-agent-long-run-phase-transition-pattern, agents/ai-agent-self-correction-design-principles, agents/agentic-self-documentation-dual-perspective-knowledge-accumulation, agents/multi-agent-collaboration-complex-problem-solving, agents/multi-agent-task-decomposition-role-assignment]
+status: draft
+description: 구글 Antigravity 팀워크에서 영감을 받아 복잡하고 장기적인 연구 및 엔지니어링 과제를 해결하기 위한 다중 에이전트 협업 패턴을 연구하고 프로토타이핑하는 전략을 다룹니다.
+type: entry
+source: scout
+---
+
+복잡하고 장기적인 연구 및 개발(R&D) 과제는 단일 AI 에이전트의 한계를 넘어섭니다. 제한된 컨텍스트 윈도우, 일관성 유지의 어려움, 그리고 지속적인 피드백 루프의 부재는 복합적인 문제 해결에 있어 주요 걸림돌로 작용합니다. 구글의 Antigravity 프로젝트는 이러한 도전 과제를 극복하기 위해 여러 AI 에이전트가 수 시간에서 수 일 동안 협력하여 문제 해법을 제안하고, 서로 비판하며, 검증하고, 개선하는 다중 에이전트 협업 모델을 제시합니다. 이 엔트리는 Antigravity에서 영감을 받은 다중 에이전트 협업 패턴을 연구하고 프로토타이핑하는 전략에 대해 탐구합니다.
+
+## 핵심 개념: 다중 에이전트 협업의 필요성
+단일 LLM 에이전트는 특정 태스크에 특화될 수 있지만, 광범위하고 깊이 있는 지식이 요구되는 장기 프로젝트에서는 지식의 누적, 오류의 전파, 그리고 지속적인 개선 메커니즘이 부족합니다. 다중 에이전트 시스템은 각 에이전트가 특정 역할을 수행하고, 상호작용을 통해 집단 지성을 형성하여 복잡성을 관리하고 해결책의 견고성을 높입니다. Antigravity의 핵심은 '코딩-증명-자체 검증-문서 검토'와 같은 명확한 패턴을 통해 에이전트들이 구조화된 방식으로 협력하도록 유도하는 것입니다.
+
+### 역할 기반 협업 모델
+다중 에이전트 시스템의 효율성은 명확하게 정의된 역할 분담에서 시작됩니다. 일반적으로 다음과 같은 역할 에이전트가 고려될 수 있습니다.
+
+*   **Architect Agent**: 전체 시스템 설계 및 태스크 분해. 높은 수준의 전략을 수립합니다.
+*   **Coder Agent**: 특정 기능 구현 및 코드 작성. 실제 코드 로직을 담당합니다.
+*   **Tester/Verifier Agent**: Coder Agent가 작성한 코드의 유효성 검증 및 버그 탐색. 테스트 케이스를 생성하고 실행하여 피드백을 제공합니다.
+*   **Critic Agent**: 다른 에이전트의 결과물을 비판적으로 검토하고 개선 제안. 다양한 관점에서 문제점을 지적하고 더 나은 방향을 제시합니다.
+*   **Documenter Agent**: 프로젝트 진행 상황, 코드, 결정 사항 등을 문서화. 지식 축적 및 공유를 담당합니다.
+*   **Reflector Agent**: 전체 진행 상황을 회고하고, 학습 포인트를 추출하여 다음 이터레이션에 반영. 메타 학습을 수행합니다.
+
+이러한 역할들은 유연하게 조정될 수 있으며, 프로젝트의 특성과 진행 단계에 따라 에이전트의 수와 팀 구조를 동적으로 변경하는 것이 중요합니다.
+
+## 프로토타이핑 아키텍처
+다중 에이전트 협업 패턴을 프로토타이핑하기 위한 아키텍처는 에이전트 간의 효율적인 통신, 태스크 조정, 그리고 컨텍스트 관리를 중심으로 설계되어야 합니다.
+
+```mermaid
+graph TD
+    A[Human Operator] --> B{Task Request}
+    B --> C[Orchestrator Agent]
+    C --> D1{Architect Agent}
+    C --> D2{Project Manager Agent}
+
+    D1 --> E1[Task Decomposition]
+    D2 --> E2[Resource & Role Assignment]
+
+    E1 & E2 --> F[Collaboration Loop]
+
+    subgraph 
