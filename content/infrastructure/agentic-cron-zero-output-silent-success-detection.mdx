@@ -14,7 +14,7 @@ workers:
   - moneyball
 confidence: 3
 last_verified: "2026-05-21"
-connections: [context-engineering/silent-drift-family-pattern, context-engineering/drift-detection-methodology, evaluation/prediction-model-calibration-inversion-detection, context-engineering/agentic-numeric-threshold-semantic-aliasing-drift, evaluation/agentic-precommit-prediction-oos-track-record, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture, infrastructure/cron-natural-fire-production-validation-pattern]
+connections: [context-engineering/silent-drift-family-pattern, evaluation/prediction-model-calibration-inversion-detection, context-engineering/agentic-numeric-threshold-semantic-aliasing-drift, evaluation/agentic-precommit-prediction-oos-track-record, infrastructure/agentic-worker-3layer-silent-drift-alert-coverage-architecture, infrastructure/cron-natural-fire-production-validation-pattern]
 status: complete
 description: cron job이 exit code 0으로 성공 보고하지만 predictions_generated=0 / rows_inserted=0 으로 실제 의미 있는 출력이 없는 패턴. 코드 레벨 silent catch (silent-drift-family) 와 직교하는 파이프라인 레벨 silent failure. moneyball predict 2일간 preds=0 (사례 11 후보, cycles 775~812). 탐지 gate = success boolean X, output count.
 type: entry
