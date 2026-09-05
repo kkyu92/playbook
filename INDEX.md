@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-09-04T21:07:36.055Z
+Updated: 2026-09-05T21:05:19.258Z
 
-## 엔트리 (806개)
+## 엔트리 (810개)
 
 ### Prompt Engineering
 - [Claude API Cost Optimization: `claude-ns-hub` for Efficient Context Management](wiki/prompt-engineering/claude-api-cost-optimization-context-hub) — confidence: 1, status: draft
@@ -198,6 +198,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Claude Code Harness 자동 진행 — 의도치 않은 실행 방지를 위한 가드레일 강화](wiki/harness-engineering/claude-code-harness-auto-progression-guardrail-strengthening) — confidence: 1, status: draft
 - [Claude Code Harness Containment: Mitigating AI Agent Risks](wiki/harness-engineering/claude-code-harness-containment-risk-mitigation) — confidence: 1, status: draft
 - [Claude Code Harness Cost Optimization — Image Tokenization with pxpipe](wiki/harness-engineering/claude-code-harness-cost-optimization-via-pxpipe) — confidence: 1, status: draft
+- [Claude Code Harness 최적화 — 정보 탐색 및 자체 구현 효율 증대](wiki/harness-engineering/claude-code-harness-performance-optimization-info-seeking) — confidence: 1, status: draft
 - [Claude Code Harness: 컨텍스트 격리 및 세션/캐시 누출 방지 강화](wiki/harness-engineering/claude-code-harness-session-cache-leakage-prevention) — confidence: 1, status: draft
 - [Claude Code 하네스 워크플로 최적화 — 병렬 에이전트 개발을 위한 Git Worktree 활용 전략](wiki/harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees) — confidence: 1, status: draft
 - [Claude Code Harness: Token Optimization via Code Graph Integration](wiki/harness-engineering/claude-code-token-optimization-code-graph-integration) — confidence: 1, status: draft
@@ -448,6 +449,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [AI Agent Guardrails: Superpowers Pattern으로 의도 정렬 구현](wiki/agents/ai-agent-superpowers-guardrails-intent-alignment) — confidence: 1, status: draft
 - [AI Agent Execution & Knowledge Integration — 투명한 작업 진행 및 결과 공유](wiki/agents/ai-agent-transparent-execution-knowledge-integration) — confidence: 1, status: draft
 - [AI 에이전트 VM 격리 — 보안 강화 및 제어 플레인 분리 전략](wiki/agents/ai-agent-vm-isolation-security-hardening) — confidence: 1, status: draft
+- [AI Agent 웹 검색 강화: 로컬 우선 데이터 수집 및 재정렬 전략](wiki/agents/ai-agent-web-search-data-collection-re-ranking) — confidence: 1, status: draft
 - [AI 에이전트 워크플로 루프 엔지니어링 — 자율성 제어 및 안정성 확보](wiki/agents/ai-agent-workflow-loop-engineering) — confidence: 1, status: draft
 - [AI Collaboration 5 Principles — Playbook Agent Workflow Optimization](wiki/agents/ai-collaboration-5-principles-playbook-agent-workflow-optimi) — confidence: 1, status: draft
 - [AI Agent & Human Collaboration — Unified Workspace Architecture via Buzz](wiki/agents/ai-human-collaborative-workspace-architecture-buzz) — confidence: 1, status: draft
@@ -514,6 +516,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [LLM 에이전트: 도구 활용 및 통합 패턴](wiki/agents/llm-agent-tool-integration-patterns) — confidence: 1, status: draft
 - [LLM Agent Tool Use — Design Patterns for Enhanced Functionality](wiki/agents/llm-agent-tool-use-design-patterns) — confidence: 1, status: draft
 - [LLM Agent Tool Use: Advanced Prompt Design Patterns for Enhanced Capability](wiki/agents/llm-agent-tool-use-prompt-design-patterns) — confidence: 1, status: draft
+- [LLM Agent Tool Utilization Optimization — Enhancing Efficiency and Reliability](wiki/agents/llm-agent-tool-utilization-optimization) — confidence: 1, status: draft
 - [LLM 자율 에이전트: 자기 성찰 및 도구 사용 패턴 구현](wiki/agents/llm-autonomous-agent-self-reflection-tool-use-patterns) — confidence: 1, status: draft
 - [LLM Autonomous Agents — Goal Attainment Strategies and Task Decomposition Patterns](wiki/agents/llm-autonomous-agents-goal-attainment-task-decomposition) — confidence: 1, status: draft
 - [LLM 자율 에이전트: 전략적 도구 오케스트레이션 및 관리](wiki/agents/llm-autonomous-agents-strategic-tool-orchestration) — confidence: 1, status: draft
@@ -739,6 +742,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - [Real-time AI Interaction: Frontend Component Design Patterns](wiki/frontend-ai/realtime-ai-interaction-frontend-patterns) — confidence: 1, status: draft
 - [Real-time AI Streaming: Frontend Interface Implementation for Enhanced User Experience](wiki/frontend-ai/realtime-ai-response-streaming-frontend-implementation) — confidence: 1, status: draft
 - [실시간 AI 스트리밍 응답 프론트엔드 UI/UX 패턴 — 사용자 경험 최적화 가이드라인](wiki/frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns) — confidence: 1, status: draft
+- [Realtime LLM Output Frontend — Dynamic UI/UX Design Patterns](wiki/frontend-ai/realtime-llm-output-frontend-ux-design) — confidence: 1, status: draft
 - [사용자 행동 예측을 위한 프론트엔드 AI 모델 통합 — 실시간 개인화 UX 구현 전략](wiki/frontend-ai/user-behavior-prediction-ai-model-integration) — confidence: 1, status: draft
 
 ### Project Ops
@@ -961,8 +965,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-global-context-gc-tree-integration ↔ infrastructure/claude-code-ctx-plugin-context-persistence
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/enterprise-agent-management-patterns-llm-orchestration
 - agents/ai-agent-global-context-gc-tree-integration ↔ agents/code-based-agent-task-patterns-harness-design
-- agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/opentag-slack-playbook-worker-automation-poc
-- agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/muse-spark-multimodal-agent-harness-integration
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ android-ai/agent-control-cli-integration
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/self-evolving-llm-qwen3-8-max-agent-harness-enhancement
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/ai-team-management-chief-agent-operator-principles
@@ -974,6 +976,8 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/trueforge-llm-agent-harness-evaluation-integration
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/claude-commerce-agent-blueprint-harness-extension
 - agents/ai-agent-harness-feature-extension-integration-strategy ↔ context-engineering/sovereign-ai-open-weight-models-strategy
+- agents/ai-agent-harness-feature-extension-integration-strategy ↔ harness-engineering/claude-code-harness-performance-optimization-info-seeking
+- agents/ai-agent-harness-feature-extension-integration-strategy ↔ agents/ai-agent-web-search-data-collection-re-ranking
 - agents/ai-agent-harness-verticalization-strategy ↔ agents/ai-agent-harness-feature-extension-integration-strategy
 - agents/ai-agent-harness-verticalization-strategy ↔ harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications
 - agents/ai-agent-harness-verticalization-strategy ↔ context-engineering/claude-code-harness-large-codebase-architecture-patterns
@@ -1036,6 +1040,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ context-engineering/llm-data-bias-context-engineering-knowledge-graph-enhancemen
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/llm-agent-long-term-memory-management-strategies
 - agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/datalog-persistent-memory-llm-agents-state
+- agents/ai-agent-rag-integration-hallucination-reduction ↔ agents/ai-agent-web-search-data-collection-re-ranking
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/ai-agent-self-correction-design-principles
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/self-correction-adaptive-learning-loops-implementation
 - agents/ai-agent-robust-tool-error-recovery ↔ harness-engineering/ai-agent-harness-deterministic-control-enhancement
@@ -1050,6 +1055,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-tool-integration-management-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/autonomous-agent-uncertainty-decision-patterns
 - agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-external-tool-plugin-integration
+- agents/ai-agent-robust-tool-error-recovery ↔ agents/llm-agent-tool-utilization-optimization
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/ai-agent-superpowers-guardrails-intent-alignment
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/ai-agent-runaway-cost-prevention-control-systems ↔ infrastructure/claude-code-cost-optimization-strategies
@@ -1117,6 +1123,10 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/ai-agent-vm-isolation-security-hardening ↔ evaluation/llm-shell-safety-isolation-pipeline
 - agents/ai-agent-vm-isolation-security-hardening ↔ project-ops/ai-agent-secret-exposure-prevention-key-amnesia
 - agents/ai-agent-vm-isolation-security-hardening ↔ harness-engineering/claude-opus-auto-mode-security-hardening
+- agents/ai-agent-web-search-data-collection-re-ranking ↔ agents/llm-agent-external-tool-integration-control
+- agents/ai-agent-web-search-data-collection-re-ranking ↔ context-engineering/on-device-vector-db-jit-semantic-search
+- agents/ai-agent-web-search-data-collection-re-ranking ↔ data-engineering/rag-data-preprocessing-embedding-optimization-strategies
+- agents/ai-agent-web-search-data-collection-re-ranking ↔ evaluation/rag-application-evaluation-retrieval-generation-quality
 - agents/ai-agent-workflow-loop-engineering ↔ agents/autonomous-agent-feedback-loop-design-patterns
 - agents/ai-agent-workflow-loop-engineering ↔ agents/autonomous-agent-reliability-stability-patterns
 - agents/ai-agent-workflow-loop-engineering ↔ harness-engineering/agent-loop-engineering-harness-design-principles
@@ -1201,6 +1211,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ agents/llm-agent-self-correction-error-recovery
 - agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ evaluation/llm-output-validation-retry-limits-optimization
 - agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ agents/autonomous-agent-reliable-tool-use-patterns
+- agents/autonomous-agent-llm-error-handling-recovery-patterns ↔ agents/llm-agent-tool-utilization-optimization
 - agents/autonomous-agent-llm-workflow-design-patterns ↔ agents/llm-agent-complex-task-planning-orchestration
 - agents/autonomous-agent-llm-workflow-design-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/autonomous-agent-llm-workflow-design-patterns ↔ agents/multi-agent-collaboration-design-patterns
@@ -1258,6 +1269,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ harness-engineering/agent-loop-engineering-harness-design-principles
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
 - agents/autonomous-agent-reasoning-debugging-optimization ↔ agents/multimodal-prompt-design-patterns-agent-reasoning
+- agents/autonomous-agent-reasoning-debugging-optimization ↔ harness-engineering/claude-code-harness-performance-optimization-info-seeking
 - agents/autonomous-agent-reliability-stability-patterns ↔ harness-engineering/agent-loop-engineering-harness-design-principles
 - agents/autonomous-agent-reliability-stability-patterns ↔ agents/robust-multi-agent-system-design-complex-workflows
 - agents/autonomous-agent-reliability-stability-patterns ↔ agents/generative-ai-agent-error-debugging-recovery-patterns
@@ -1274,6 +1286,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/autonomous-agent-reliable-tool-use-patterns ↔ agents/llm-agent-tool-call-reliability-forge-guardrails
 - agents/autonomous-agent-reliable-tool-use-patterns ↔ agents/llm-agent-tool-integration-patterns
 - agents/autonomous-agent-reliable-tool-use-patterns ↔ agents/multi-tool-ai-agent-design-patterns-orchestration
+- agents/autonomous-agent-reliable-tool-use-patterns ↔ agents/llm-agent-tool-utilization-optimization
 - agents/autonomous-agent-uncertainty-decision-patterns ↔ agents/llm-agent-planning-reflection-autonomous-problem-solving
 - agents/autonomous-agent-uncertainty-decision-patterns ↔ agents/multi-stage-decision-making-agent-design-patterns
 - agents/autonomous-ai-agent-decision-logic-implementation-patterns ↔ agents/llm-agent-goal-achievement-planning-patterns
@@ -1441,11 +1454,9 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/headlong-micro-harness-persistent-agents-design ↔ harness-engineering/agent-loop-engineering-harness-design-principles
 - agents/headlong-micro-harness-persistent-agents-design ↔ harness-engineering/hub-worker-automation-loop-resilience-external-control
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-goal-achievement-planning-patterns
-- agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-tool-use-design-patterns
 - agents/inference-chain-design-complex-ai-agents ↔ agents/multi-agent-collaboration-complex-problem-solving
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-control-flow-enhancement-prompt-dependency-reducti
 - agents/inference-chain-design-complex-ai-agents ↔ agents/lao-workflow-llm-agent-design-enhancement
-- agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/inference-chain-design-complex-ai-agents ↔ agents/llm-agent-autonomy-complex-problem-solving
 - agents/lao-workflow-llm-agent-design-enhancement ↔ agents/multi-persona-llm-output-validation-enhancement
 - agents/lao-workflow-llm-agent-design-enhancement ↔ journal/playbook-journal-009-claude-cli-hang-paperclip-4-step
@@ -1482,6 +1493,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ harness-engineering/multi-llm-external-tool-harness-architecture-design
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-tool-integration-management-patterns
 - agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-external-tool-plugin-integration
+- agents/llm-agent-dynamic-tool-selection-optimization ↔ agents/llm-agent-tool-utilization-optimization
 - agents/llm-agent-external-tool-integration-control ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-external-tool-integration-control ↔ agents/external-tool-integration-for-ai-agents
 - agents/llm-agent-external-tool-integration-control ↔ agents/ai-agent-robust-tool-error-recovery
@@ -1573,10 +1585,12 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ evaluation/llm-agent-observability-spanlens-trace-monitoring
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ harness-engineering/agent-duplicate-execution-detection-prevention
 - agents/llm-agent-tool-call-reliability-forge-guardrails ↔ android-ai/needle-2-on-device-agentic-llm-android-application
+- agents/llm-agent-tool-call-reliability-forge-guardrails ↔ agents/llm-agent-tool-utilization-optimization
 - agents/llm-agent-tool-integration-management-patterns ↔ agents/llm-agent-tool-integration-patterns
 - agents/llm-agent-tool-integration-management-patterns ↔ agents/llm-autonomous-agents-strategic-tool-orchestration
 - agents/llm-agent-tool-integration-management-patterns ↔ harness-engineering/llm-tooling-harness-complex-api-integration
 - agents/llm-agent-tool-integration-management-patterns ↔ harness-engineering/trueforge-llm-agent-harness-evaluation-integration
+- agents/llm-agent-tool-integration-management-patterns ↔ agents/llm-agent-tool-utilization-optimization
 - agents/llm-agent-tool-integration-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-tool-integration-patterns ↔ agents/llm-autonomous-agents-strategic-tool-orchestration
 - agents/llm-agent-tool-integration-patterns ↔ agents/munder-difflin-agent-harness-context-management
@@ -1586,6 +1600,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/recursive-self-improvement-harness-enhancement
 - agents/llm-agent-tool-use-design-patterns ↔ harness-engineering/glm-5-3-code-generation-agent-harness-enhancement
 - agents/llm-agent-tool-use-design-patterns ↔ agents/prime-agent-rlm-continual-harness-playbook-advancement
+- agents/llm-agent-tool-use-design-patterns ↔ agents/llm-agent-tool-utilization-optimization
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/llm-agent-tool-use-design-patterns
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/llm-agent-dynamic-tool-selection-optimization
 - agents/llm-agent-tool-use-prompt-design-patterns ↔ agents/external-tool-integration-for-ai-agents
@@ -2301,6 +2316,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - context-engineering/claude-code-advanced-context-playbook-strategy ↔ prompt-engineering/claude-code-session-context-optimization
 - context-engineering/claude-code-advanced-context-playbook-strategy ↔ harness-engineering/claude-system-prompt-explicit-control-optimization
 - context-engineering/claude-code-advanced-context-playbook-strategy ↔ prompt-engineering/claude-code-output-conciseness-readability-refinement
+- context-engineering/claude-code-advanced-context-playbook-strategy ↔ harness-engineering/claude-code-harness-performance-optimization-info-seeking
 - context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ agents/ai-agent-persistent-memory-automated-context-management
 - context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ agents/autonomous-agent-long-term-memory-management
 - context-engineering/claude-code-agent-persistent-memory-ctx-integration ↔ harness-engineering/claude-cookbook-agent-rag-harness-patterns
@@ -2324,7 +2340,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - context-engineering/claude-code-session-context-persistence-ctx-plugin ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - context-engineering/claude-code-session-context-persistence-ctx-plugin ↔ infrastructure/claude-cli-persistent-multi-session-web-terminal
 - context-engineering/claude-code-session-web-mobile-monitoring-implementation ↔ context-engineering/ephemeral-credentials-session-llm-harness
-- context-engineering/claude-code-session-web-mobile-monitoring-implementation ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - context-engineering/claude-code-session-web-mobile-monitoring-implementation ↔ infrastructure/claude-code-commit-message-hermes-md-monitoring-remediation
 - context-engineering/claude-code-session-web-mobile-monitoring-implementation ↔ infrastructure/claude-api-openclaw-keyword-guard-behavior-drift-detection
 - context-engineering/claude-code-session-web-mobile-monitoring-implementation ↔ infrastructure/claude-code-cost-optimization-strategies
@@ -2830,6 +2845,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/claude-code-html-output-ux-enhancement
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ reports/llm-service-ux-data-performance-reporting-patterns
 - evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/ai-powered-personalized-ux-implementation
+- evaluation/llm-ux-evaluation-metrics-design-measurement ↔ frontend-ai/realtime-llm-output-frontend-ux-design
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ project-ops/ai-model-serving-harness-enterprise-deployment-management
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ prompt-engineering/llm-scalable-service-architecture-patterns
 - evaluation/llm-workload-management-mlops-pipeline-design-patterns ↔ prompt-engineering/multi-llm-routing-design-patterns-cost-performance
@@ -2857,7 +2873,6 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ evaluation/llm-output-validation-quality-metrics-design
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ evaluation/generative-ai-hallucination-automated-detection-evaluation
 - evaluation/spanlens-llm-observability-agent-trace-monitoring ↔ agents/autonomous-ai-agent-decision-logic-implementation-patterns
-- frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ reports/ai-project-kpi-dashboard-building-strategy
 - frontend-ai/ai-inference-visualization-design-patterns ↔ prompt-engineering/on-device-llm-inference-efficiency-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/user-behavior-prediction-ai-model-integration
@@ -2869,6 +2884,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - frontend-ai/ai-inference-visualization-design-patterns ↔ harness-engineering/flowcraft-metaprompt-visualization-workflow-optimization
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/llm-dynamic-ui-ux-frontend-implementation-patterns
 - frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/realtime-ai-response-streaming-frontend-implementation
+- frontend-ai/ai-inference-visualization-design-patterns ↔ frontend-ai/realtime-llm-output-frontend-ux-design
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ frontend-ai/ai-powered-ux-frontend-design-patterns
 - frontend-ai/ai-personalized-ux-frontend-design-patterns ↔ prompt-engineering/multi-turn-prompt-design-complex-intent-clarification
@@ -2889,6 +2905,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ infrastructure/nextjs-segment-level-notfound-trust-signal-systematic-coverage
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
 - frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/realtime-ai-interaction-frontend-patterns
+- frontend-ai/ai-powered-ux-frontend-design-patterns ↔ frontend-ai/realtime-llm-output-frontend-ux-design
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ frontend-ai/generative-ai-ui-ux-design-patterns
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/claude-code-html-output-ux-enhancement ↔ infrastructure/claude-code-ctx-plugin-context-persistence
@@ -2928,13 +2945,17 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - frontend-ai/realtime-ai-interaction-frontend-patterns ↔ infrastructure/react-useoptimistic-optimistic-ui-update-pattern
 - frontend-ai/realtime-ai-interaction-frontend-patterns ↔ harness-engineering/oh-my-portal-browser-ai-agent-remote-control
 - frontend-ai/realtime-ai-interaction-frontend-patterns ↔ frontend-ai/realtime-ai-response-streaming-frontend-implementation
+- frontend-ai/realtime-ai-interaction-frontend-patterns ↔ frontend-ai/realtime-llm-output-frontend-ux-design
 - frontend-ai/realtime-ai-response-streaming-frontend-implementation ↔ frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns
 - frontend-ai/realtime-ai-response-streaming-frontend-implementation ↔ harness-engineering/realtime-data-stream-ai-harness-design-patterns
 - frontend-ai/realtime-ai-response-streaming-frontend-implementation ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
 - frontend-ai/realtime-ai-response-streaming-frontend-implementation ↔ harness-engineering/prompt-chaining-caching-for-realtime-llm-workflows
+- frontend-ai/realtime-ai-response-streaming-frontend-implementation ↔ frontend-ai/realtime-llm-output-frontend-ux-design
 - frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ frontend-ai/ai-personalized-ux-frontend-design-patterns
 - frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ infrastructure/nextjs-react-suspense-streaming-ssr-loading-boundary
+- frontend-ai/realtime-ai-streaming-frontend-ux-design-patterns ↔ frontend-ai/realtime-llm-output-frontend-ux-design
+- frontend-ai/realtime-llm-output-frontend-ux-design ↔ prompt-engineering/llm-interactive-ui-frontend-implementation
 - harness-engineering/agent-duplicate-execution-detection-prevention ↔ harness-engineering/llm-agent-observability-spanlens-trace-monitoring
 - harness-engineering/agent-duplicate-execution-detection-prevention ↔ harness-engineering/claude-code-harness-session-cache-leakage-prevention
 - harness-engineering/agent-harness-code-execution-feedback-principles ↔ evaluation/claude-code-generation-validation-pipeline-extension
@@ -3169,6 +3190,10 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ prompt-engineering/claude-code-session-context-optimization
 - harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ project-ops/claude-code-session-cost-optimization-strategies
 - harness-engineering/claude-code-harness-cost-optimization-via-pxpipe ↔ harness-engineering/claude-fable-5-1-upgrade-cost-performance-efficiency
+- harness-engineering/claude-code-harness-performance-optimization-info-seeking ↔ harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees
+- harness-engineering/claude-code-harness-performance-optimization-info-seeking ↔ prompt-engineering/claude-code-session-context-optimization
+- harness-engineering/claude-code-harness-performance-optimization-info-seeking ↔ harness-engineering/llm-api-performance-optimization-patterns
+- harness-engineering/claude-code-harness-performance-optimization-info-seeking ↔ harness-engineering/claude-code-token-optimization-code-graph-integration
 - harness-engineering/claude-code-harness-session-cache-leakage-prevention ↔ evaluation/llm-output-safety-reliability-validation-enhancement
 - harness-engineering/claude-code-harness-session-cache-leakage-prevention ↔ infrastructure/claude-interaction-security-guidelines-endpoint-protection
 - harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees ↔ harness-engineering/flutter-flame-game-launch-harness-claude-code-optimization
