@@ -1,0 +1,21 @@
+---
+title: LLM Autonomous Agent Error Recovery — Robustness by Design
+category: agents
+date: "2026-09-09"
+tags:
+  - LLM
+  - Agents
+  - ErrorHandling
+  - FaultTolerance
+  - AutonomousSystems
+  - Reliability
+  - agents
+confidence: 1
+connections: [agents/ai-agent-robust-tool-error-recovery, agents/ai-agent-self-correction-design-principles, agents/autonomous-agent-llm-error-handling-recovery-patterns, agents/llm-agent-self-correction-error-recovery, agents/autonomous-agent-reliability-stability-patterns, evaluation/llm-output-validation-retry-limits-optimization, harness-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix]
+status: draft
+description: LLM 기반 자율 에이전트의 안정성과 신뢰성을 높이기 위한 오류 복구 전략과 설계 패턴을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+LLM(Large Language Model) 기반 자율 에이전트의 실제 적용은 단순한 기능 구현을 넘어, 안정성과 신뢰성 확보라는 중요한 과제에 직면합니다. 특히 복잡한 작업을 수행하는 과정에서 발생하는 다양한 오류를 효과적으로 감지하고 복구하는 전략은 에이전트 시스템의 실용적 가치를 결정하는 핵심 요소입니다. 이 엔트리에서는 LLM 에이전트의 오류 복구 전략 설계 방법을 상세히 다룹니다. 우리는 에이전트가 예측 불가능한 상황에 강건하게 대응하고, 지속적으로 목표를 달성할 수 있도록 하는 견고한(robust) 복구 메커니즘을 탐구합니다. 이는 2026년 이후 LLM 기반 시스템이 직면할 주요 도전 과제를 해결하는 데 필수적인 지식입니다.## LLM 에이전트 오류의 본질LLM 에이전트는 본질적으로 비결정적(non-deterministic)이며, 외부 환경과의 상호작용이 복잡하기 때문에 다양한 유형의 오류에 노출됩니다.### 일반적인 오류 유형*   **환각(Hallucinations)**: LLM이 사실과 다른 정보를 생성하여 잘못된 판단이나 행동으로 이어지는 경우.*   **도구 오용 및 실패(Tool Misuse/Failure)**: 에이전트가 의도치 않게 도구를 잘못 사용하거나, 호출한 외부 도구(API)가 예외를 발생시키거나 실패하는 경우.*   **추론 오류 및 반복(Reasoning Gaps/Loops)**: 목표 달성을 위한 계획 과정에서 논리적 결함이 발생하거나, 동일한 실패 패턴을 반복하며 무한 루프에 빠지는 경우.*   **맥락 상실(Context Loss)**: 대화나 작업의 긴 맥락을 유지하지 못해 이전 단계를 망각하거나 오해하는 경우.*   **외부 시스템 실패(External System Failures)**: 데이터베이스 연결 끊김, 네트워크 지연, 외부 서비스의 일시적 오류 등 에이전트 제어 밖의 문제들.## 핵심 오류 복구 전략효과적인 오류 복구는 단순히 예외를 잡는 것을 넘어, 에이전트가 실패로부터 학습하고 적응하는 능력을 포함합니다.### 자기 수정 및 반성(Self-Correction & Reflection)에이전트가 자신의 행동이나 출력 결과를 평가하고, 문제가 발생했을 때 스스로 수정 계획을 수립하는 메커니즘입니다. 이는 주로 메타 인지(meta-cognition) 프롬프트 엔지니어링을 통해 구현됩니다. 에이전트는 실패 메시지, 현재 상태, 목표를 검토하여 새로운 접근 방식을 추론합니다.```python# Python pseudo-code for self-correctiondef execute_task_with_reflection(agent, task, max_attempts=3):    for attempt in range(max_attempts):        try:            result = agent.plan_and_execute(task)            if agent.validate_output(result, task.goal):                return result            else:                raise ValueError(
