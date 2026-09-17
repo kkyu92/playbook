@@ -1,0 +1,85 @@
+---
+title: "실시간 LLM 서비스 오류 복구: 예측 불가능성에 대응하는 견고한 시스템 설계"
+category: harness-engineering
+date: "2026-09-17"
+tags:
+  - LLM
+  - ErrorRecovery
+  - Resilience
+  - Realtime
+  - SystemDesign
+  - HarnessEngineering
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/large-scale-llm-harness-architecture-patterns, harness-engineering/multi-llm-inference-load-balancing-failover-design, evaluation/llm-api-retry-logic-design-patterns-resilience, infrastructure/high-availability-llm-disaster-recovery-retry-patterns, project-ops/ai-service-high-availability-fallback-retry-strategies, agents/autonomous-agent-llm-error-handling-recovery-patterns, harness-engineering/realtime-llm-inference-deployment-monitoring-patterns]
+status: draft
+description: 복잡한 LLM 서비스의 안정적인 운영을 위해 예측 불가능한 오류 상황에 대응하는 구체적인 오류 복구 시스템 설계 방안을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+실시간 LLM(Large Language Model) 서비스는 놀라운 유연성과 성능을 제공하지만, 동시에 예측 불가능한 복잡성을 내포하고 있습니다. 외부 API 의존성, 모델의 비결정성, 입력 데이터의 다양성, 그리고 급변하는 트래픽 패턴 등은 서비스 운영의 안정성을 위협하는 주요 요소입니다. 이러한 환경에서 견고한 오류 복구 시스템(Error Recovery System)은 사용자 경험을 유지하고 비즈니스 연속성을 보장하기 위한 필수적인 구성 요소입니다. 특히 2026년 현재, LLM은 단순 텍스트 생성에서 벗어나 복잡한 에이전트(Agent) 워크플로우, 멀티모달(Multimodal) 상호작용, RAG(Retrieval-Augmented Generation) 시스템 등으로 진화하며 오류 발생 시 파급 효과가 더욱 커지고 있습니다. 효과적인 오류 복구 시스템은 이러한 복잡한 서비스 환경에서 안정성을 극대화하는 데 중점을 둡니다.
+
+## LLM 서비스 오류의 특성과 복구 전략
+
+LLM 서비스에서 발생하는 오류는 크게 몇 가지 유형으로 나눌 수 있습니다:
+
+*   **외부 API 오류**: LLM 제공업체의 응답 지연, 타임아웃, 속도 제한(Rate Limiting), 서비스 중단 등.
+*   **모델 자체의 오류**: 할루시네이션(Hallucination), 부적절한 응답(Off-topic), 형식 불일치, 토큰 한도 초과 등.
+*   **내부 시스템 오류**: 입력 처리 파이프라인 오류, 데이터베이스 문제, 인프라 장애 등.
+*   **컨텍스트 관리 오류**: 컨텍스트 윈도우(Context Window) 오버플로우, 잘못된 컨텍스트 주입 등.
+
+이러한 오류에 대응하기 위한 핵심 전략은 다음과 같습니다.
+
+### 1. 지능형 재시도(Intelligent Retries)
+
+일시적인 네트워크 문제나 LLM API의 일시적인 과부하로 인한 오류는 재시도만으로도 해결될 수 있습니다. 단순 재시도보다는 지수 백오프(Exponential Backoff)를 적용하여 요청 폭주를 방지하고, 특정 유형의 오류(예: 429 Too Many Requests)에만 재시도를 적용하는 등 지능적인 접근이 필요합니다.
+
+### 2. 대체(Fallback) 전략
+
+재시도에도 불구하고 오류가 지속되거나, 재시도가 적절하지 않은 경우(예: LLM 모델 자체의 심각한 오류)에는 대체 전략이 중요합니다. 몇 가지 예시는 다음과 같습니다.
+
+*   **소형 모델 또는 규칙 기반 시스템으로 전환**: 저렴하거나 빠른 로컬 모델, 혹은 미리 정의된 규칙 기반 응답으로 전환하여 서비스 가용성을 유지합니다.
+*   **캐시된 응답 제공**: 이전에 성공적으로 처리된 유사한 요청의 응답을 제공합니다.
+*   **정적 오류 메시지**: 사용자에게 오류가 발생했음을 알리고, 가능한 경우 대체 경로를 안내합니다.
+
+### 3. 서킷 브레이커(Circuit Breaker) 패턴
+
+반복적으로 실패하는 외부 서비스 호출을 격리하여 시스템 전체의 연쇄 장애를 방지합니다. 특정 서비스의 오류율이 임계값을 초과하면 해당 서비스로의 요청을 일시적으로 차단하고, 일정 시간 후 다시 호출을 시도하여 서비스의 복구를 확인합니다.
+
+### 4. 멱등성(Idempotency) 보장
+
+LLM 호출을 포함한 모든 외부 시스템과의 상호작용은 멱등성을 보장해야 합니다. 이는 동일한 요청을 여러 번 보내도 시스템의 상태가 동일하게 유지되어, 재시도로 인한 부작용(예: 중복 데이터 생성, 불필요한 비용 발생)을 방지합니다.
+
+### 5. 사람의 개입(Human-in-the-Loop) 및 관측 가능성(Observability)
+
+완전히 자동화된 복구가 불가능한 복잡한 오류의 경우, 신속한 사람의 개입이 필수적입니다. 이를 위해 강력한 로깅, 모니터링, 추적 시스템이 필요합니다. 실시간 대시보드는 LLM 호출 성공률, 지연 시간, 오류 유형 및 빈도를 시각화하여 운영팀이 빠르게 문제를 감지하고 대응할 수 있도록 돕습니다.
+
+## 시스템 아키텍처 및 구현 예시
+
+다음 Mermaid 다이어그램은 실시간 LLM 서비스의 오류 복구 시스템 아키텍처를 보여줍니다.
+
+```mermaid
+graph TD
+    UserRequest[사용자 요청] --> APIGateway(API Gateway/Load Balancer)
+    APIGateway --> InputValidation(입력 유효성 검사)
+    InputValidation --> RateLimiter(속도 제한)
+    RateLimiter --> Cache(캐시/응답 캐싱)
+    Cache --> LLMProxy(LLM 프록시/오케스트레이터)
+
+    LLMProxy --> CircuitBreaker(서킷 브레이커)
+    CircuitBreaker -- OPEN --> FallbackService(대체 서비스/정적 응답)
+    CircuitBreaker -- CLOSED --> LLMAPI(LLM API Provider)
+    CircuitBreaker -- HALF-OPEN --> LLMAPI
+
+    LLMAPI -- Timeout/Error --> RetryMechanism(재시도 메커니즘)
+    RetryMechanism -- Max Retries Exceeded --> FallbackService
+    RetryMechanism -- Success --> ResponseProcessor(응답 처리)
+
+    FallbackService --> LoggingMonitoring{로깅 & 모니터링}
+    LLMAPI --> LoggingMonitoring
+    ResponseProcessor --> LoggingMonitoring
+
+    ResponseProcessor --> UserResponse[사용자 응답]
+
+    subgraph Error Handling & Observability [
