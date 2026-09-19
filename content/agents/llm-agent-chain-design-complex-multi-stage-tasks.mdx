@@ -1,0 +1,130 @@
+---
+title: LLM 에이전트 체인 설계 — 복잡한 다단계 작업 자동화 패턴
+category: agents
+date: "2026-09-19"
+tags:
+  - LLMAgents
+  - AgentChains
+  - WorkflowAutomation
+  - TaskOrchestration
+  - MultiStageTasks
+  - AIWorkflows
+  - agents
+confidence: 1
+connections: [agents/llm-agent-complex-task-planning-orchestration, agents/multi-agent-collaboration-complex-problem-solving, agents/llm-agent-task-decomposition-delegation-patterns, agents/multi-stage-agent-task-planning-execution-patterns, harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications, agents/ai-agent-workflow-loop-engineering, agents/ai-agent-self-correction-design-principles]
+status: draft
+description: 복잡한 다단계 작업을 효과적으로 처리하기 위한 LLM 에이전트 체인 설계 원칙과 실전 패턴을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+대규모 언어 모델(LLM)은 단일 프롬프트에서 놀라운 능력을 보여주지만, 복잡하고 장기적인 목표를 달성하기 위해서는 여러 단계의 의사결정과 실행이 필요합니다. 이러한 다단계 작업을 효과적으로 처리하기 위한 핵심 방법론이 바로 'LLM 에이전트 체인(LLM Agent Chain)' 설계입니다. 에이전트 체인은 개별 LLM 호출을 단순한 스텝이 아니라, 자율적으로 사고하고 행동하며 도구를 사용하는 에이전트들의 연속적인 워크플로우로 구성합니다. 이는 2026년 AI 시스템의 자율성과 신뢰성을 높이는 데 필수적인 접근 방식입니다.
+
+## 에이전트 체인의 필요성
+
+단일 LLM 프롬프트는 컨텍스트 윈도우 한계, 일관성 유지의 어려움, 복잡한 로직 처리 불가 등의 제약을 가집니다. 반면, 에이전트 체인은 이러한 한계를 극복하며 다음과 같은 이점을 제공합니다.
+
+*   **복잡한 문제 해결 능력**: 문제를 작은 하위 작업으로 분해하고, 각 작업에 특화된 에이전트가 순차적으로 또는 병렬적으로 처리함으로써 전체적인 문제 해결 능력을 향상합니다.
+*   **견고성(Robustness) 및 오류 처리**: 각 에이전트 단계에서 중간 결과물을 검증하고 오류를 감지하여 자체 수정(self-correction) 메커니즘을 통합할 수 있습니다.
+*   **지속적인 학습 및 개선**: 에이전트의 실행 기록과 피드백을 활용하여 장기 기억(long-term memory)을 구축하고, 미래의 의사결정을 개선하는 데 활용할 수 있습니다.
+*   **효율적인 자원 관리**: 필요한 시점에만 LLM 호출 및 도구 사용을 수행하여 비용을 최적화하고 응답 시간을 단축합니다.
+
+## 핵심 설계 원칙
+
+LLM 에이전트 체인을 설계할 때는 몇 가지 핵심 원칙을 고려해야 합니다.
+
+### 1. 명확한 목표 및 작업 분해(Task Decomposition)
+
+전체 목표를 명확히 정의하고, 이를 달성하기 위한 논리적인 하위 작업(sub-tasks)으로 분해합니다. 각 하위 작업은 특정 에이전트의 역할과 책임을 명확히 규정할 수 있도록 충분히 작고 독립적이어야 합니다. 이는 'LLM 에이전트의 태스크 분해 및 위임 패턴(llm-agent-task-decomposition-delegation-patterns)'과 밀접하게 관련됩니다.
+
+### 2. 에이전트 역할 및 책임 정의
+
+각 하위 작업에 대해 전담 에이전트 또는 에이전트 그룹을 할당하고, 그들의 역할(Role), 도구(Tools) 사용 능력, 그리고 출력 형식(Output Format)을 명확히 정의합니다. 예를 들어, '리서처' 에이전트는 웹 검색 도구를, '코드 생성기' 에이전트는 코드 편집 도구를 사용하도록 합니다.
+
+### 3. 상태 관리 및 컨텍스트 전달(State Management & Context Propagation)
+
+다단계 작업에서 에이전트 간에 정보와 진행 상태를 효과적으로 전달하고 관리하는 것이 중요합니다. 이는 `agents/ai-agent-persistent-memory-automated-context-management` 엔트리에서 다루는 영구 메모리(persistent memory) 시스템과 연동될 수 있습니다. 각 에이전트는 이전 단계의 결과를 현재 컨텍스트로 활용하여 다음 행동을 결정합니다.
+
+### 4. 도구 사용(Tool Use) 및 통합
+
+LLM 에이전트의 핵심 역량 중 하나는 외부 도구(APIs, databases, code interpreters 등)를 사용하여 정보를 검색하고, 복잡한 계산을 수행하며, 환경과 상호작용하는 것입니다. `agents/llm-agent-stable-tool-use-production-environments`와 같이 안정적이고 예측 가능한 도구 사용 패턴을 구축해야 합니다.
+
+### 5. 자율적인 계획 및 리플렉션(Autonomous Planning & Reflection)
+
+에이전트가 정적인 스크립트에 갇히지 않고, 동적으로 계획을 수립하고, 실행 결과를 평가하며, 필요에 따라 계획을 수정하는 능력을 갖추도록 설계합니다. 이는 `agents/ai-agent-self-correction-design-principles`의 핵심 개념입니다.
+
+## 에이전트 체인 설계 패턴
+
+### 1. 순차 체인(Sequential Chain)
+
+가장 기본적인 형태로, 에이전트들이 정해진 순서대로 작업을 수행하며, 이전 에이전트의 출력이 다음 에이전트의 입력이 됩니다. 간단한 워크플로우에 적합합니다.
+
+```python
+from typing import List, Dict, Any
+
+class BaseAgent:
+    def __init__(self, name: str):
+        self.name = name
+
+    def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        raise NotImplementedError
+
+class ResearcherAgent(BaseAgent):
+    def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        query = context.get("query", "")
+        print(f"{self.name}: Researching '{query}'...")
+        # Simulate tool use (e.g., web search API call)
+        research_results = {"data": f"Found detailed info on {query}"}
+        return {"research_results": research_results}
+
+class SummarizerAgent(BaseAgent):
+    def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        research_results = context.get("research_results", {}).get("data", "")
+        print(f"{self.name}: Summarizing research...")
+        # Simulate LLM call for summarization
+        summary = f"Summary of: {research_results[:50]}..."
+        return {"summary": summary}
+
+class ReporterAgent(BaseAgent):
+    def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
+        summary = context.get("summary", "")
+        print(f"{self.name}: Generating report...")
+        report = f"Final Report:\n{summary}"
+        return {"final_report": report}
+
+def execute_sequential_chain(agents: List[BaseAgent], initial_context: Dict[str, Any]) -> Dict[str, Any]:
+    current_context = initial_context
+    for agent in agents:
+        current_context.update(agent.run(current_context))
+    return current_context
+
+if __name__ == "__main__":
+    agents = [
+        ResearcherAgent("Researcher"),
+        SummarizerAgent("Summarizer"),
+        ReporterAgent("Reporter")
+    ]
+    initial_task = {"query": "LLM Agent Chain Design Best Practices"}
+    final_output = execute_sequential_chain(agents, initial_task)
+    print("\n--- Final Output ---")
+    print(final_output.get("final_report"))
+```
+
+### 2. 계층적 체인(Hierarchical Chain) / Supervisor-Worker 패턴
+
+'감독(Supervisor)' 에이전트가 전체적인 목표를 관리하고, 이를 하위 작업으로 분해하여 '작업자(Worker)' 에이전트들에게 위임합니다. 작업자 에이전트들은 할당된 작업을 수행하고 결과를 감독 에이전트에게 보고합니다. 이는 `agents/multi-agent-collaboration-complex-problem-solving`과 같은 다중 에이전트 시스템에서 흔히 사용됩니다.
+
+```mermaid
+graph TD
+    A[사용자 요청] --> B{Supervisor Agent}
+    B --> C{Task Decomposition}
+    C --> D[Worker Agent 1: Data Retrieval]
+    C --> E[Worker Agent 2: Analysis]
+    C --> F[Worker Agent 3: Report Generation]
+    D --> G{Sub-task Result}
+    E --> H{Sub-task Result}
+    F --> I{Sub-task Result}
+    G & H & I --> J{Result Aggregation}
+    J --> K[Supervisor Agent: Final Review]
+    K --> L[최종 결과]
+    subgraph 
