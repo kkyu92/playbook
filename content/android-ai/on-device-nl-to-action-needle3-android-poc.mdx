@@ -1,0 +1,39 @@
+---
+title: "Android On-Device NL-to-Action: Needle 3 모델을 활용한 AI Worker PoC"
+category: android-ai
+date: "2026-09-19"
+tags:
+  - OnDeviceAI
+  - NL2Action
+  - Android
+  - Needle3
+  - EdgeAI
+  - FunctionCalling
+  - android-ai
+confidence: 1
+connections: [android-ai/aicore, android-ai/gemini-nano, android-ai/android-local-ai-model-integration-stack, android-ai/on-device-llm-optimization-android-strategies, android-ai/needle-2-on-device-agentic-llm-android-application, agents/llm-agent-tool-use-design-patterns, harness-engineering/lightweight-llm-on-device-app-development-strategies]
+status: draft
+description: Needle 3 모델을 이용해 Android 기기에서 자연어 명령을 온디바이스 AI 워커 함수 호출로 변환하고, Gemini Nano/AICore 연동 가능성을 탐색하는 PoC입니다.
+type: entry
+source: scout
+---
+
+온디바이스 AI(On-Device AI)는 클라우드 기반 모델의 한계를 극복하며 모바일 환경에서의 사용자 경험을 혁신하는 핵심 기술로 부상하고 있습니다. 특히 자연어 명령(Natural Language to Action, NL-to-Action) 모델은 '침실 조명을 어둡게 하고 문을 잠가'와 같은 일상적인 요청을 앱이 실행할 수 있는 특정 함수 호출 및 인자로 변환하여, 스마트홈 자동화, 음성 비서, 접근성 기능 등 다양한 모바일 및 에지 기기 애플리케이션에 적용될 수 있습니다. 이러한 모델들은 프라이버시 보호, 낮은 지연 시간, 오프라인 기능 제공 등 온디바이스 환경의 이점을 극대화합니다.
+
+## Needle 3 모델의 등장과 온디바이스 NL-to-Action
+Needle 3는 초소형 언어 모델(Small Language Model, SLM)로서 8MB에서 29MB에 이르는 경량화된 크기로 작은 기기에서 자연어 명령을 효율적으로 처리하도록 설계되었습니다. 이 모델은 범용 대화보다는 도구 호출(Tool Calling)과 정보 추출(Information Extraction)에 특화되어 있습니다. 예를 들어, 청구서나 알림에서 필요한 항목을 JSON 형태로 정확하게 추출하거나, 사용자 명령을 기반으로 특정 앱 기능을 실행하는 데 탁월한 성능을 보입니다.
+
+Android 환경에서 Needle 3와 같은 NL-to-Action 모델을 활용하는 것은 다음과 같은 이점을 제공합니다:
+
+*   **프라이버시 강화**: 사용자 데이터가 기기 외부로 전송되지 않으므로 개인 정보 보호에 유리합니다.
+*   **저지연성(Low Latency)**: 네트워크 연결 없이 기기 내부에서 직접 처리되므로 즉각적인 응답이 가능합니다.
+*   **오프라인 기능**: 인터넷 연결이 불안정하거나 없는 환경에서도 AI 기능을 사용할 수 있습니다.
+*   **비용 절감**: 클라우드 API 호출에 따른 비용 부담을 줄일 수 있습니다.
+
+## Android AI Worker 연동 PoC 설계
+이 PoC(Proof of Concept)는 Needle 3 모델을 Android AI 워커와 연동하여 온디바이스 자연어 명령을 함수 호출로 변환하는 시스템을 구축하는 것을 목표로 합니다. Android AI 워커는 백그라운드에서 AI 추론 작업을 수행하고, 그 결과를 앱의 다른 구성 요소에 전달하는 역할을 합니다. 여기에 Gemini Nano 또는 AICore와 같은 최신 Android 온디바이스 AI 플랫폼과의 연동 가능성을 탐색하여 성능 및 효율성을 더욱 극대화합니다.
+
+### 아키텍처 다이어그램
+```mermaid
+graph TD
+    User[사용자 입력: 
