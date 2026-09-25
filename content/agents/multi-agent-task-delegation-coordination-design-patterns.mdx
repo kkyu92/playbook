@@ -1,0 +1,21 @@
+---
+title: "Multi-Agent Systems: Task Delegation & Coordination Design Patterns"
+category: agents
+date: "2026-09-25"
+tags:
+  - multi-agent-systems
+  - task-delegation
+  - agent-orchestration
+  - coordination-patterns
+  - llm-agents
+  - distributed-ai
+  - agents
+confidence: 1
+connections: [agents/multi-agent-task-delegation-coordination-patterns, agents/llm-multi-agent-system-design-orchestration-patterns, agents/multi-agent-task-decomposition-role-assignment, agents/autonomous-agent-complex-decision-logic-patterns, agents/multi-agent-system-efficient-communication-collaboration, agents/llm-agent-task-decomposition-delegation-patterns]
+status: draft
+description: 멀티 에이전트 시스템에서 복잡한 태스크를 효율적으로 해결하기 위한 태스크 위임 및 조정 패턴 설계 전략을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+멀티 에이전트 시스템(Multi-Agent Systems, MAS)은 복잡한 문제 해결을 위해 여러 에이전트가 협력하는 패러다임입니다. 2026년 현재, 대규모 언어 모델(LLM) 기반의 에이전트들이 등장하면서 MAS의 중요성은 더욱 증대되고 있으며, 특히 태스크 위임(Task Delegation)과 조정(Coordination) 전략은 시스템의 효율성과 견고성을 결정하는 핵심 요소가 되었습니다. 효과적인 위임 및 조정 패턴 설계는 에이전트 간의 시너지를 극대화하고, 자원 활용을 최적화하며, 최종적으로 복잡한 목표를 달성하는 데 필수적입니다.## 태스크 위임 패턴 (Task Delegation Patterns)태스크 위임은 상위 에이전트(Supervisor Agent)가 하위 에이전트(Worker Agent)에게 특정 작업을 할당하는 과정을 의미합니다. 이는 복잡한 태스크를 작은 단위로 분해하고, 전문성을 가진 에이전트에게 맡김으로써 전체 시스템의 처리 능력을 향상시킵니다.### 1. 계층적 위임 (Hierarchical Delegation)가장 일반적인 형태의 위임 패턴으로, 관리자(Manager) 또는 리더(Leader) 에이전트가 전체 태스크를 분해하고, 이를 하위 에이전트들에게 할당합니다. 하위 에이전트는 할당받은 서브태스크를 수행한 후 결과를 상위 에이전트에게 보고합니다. 이 구조는 명확한 책임 분배와 제어 흐름을 제공합니다.장점: 중앙 집중식 제어, 명확한 책임, 시스템 복잡성 관리 용이.단점: 병목 현상 발생 가능성, 단일 실패 지점(Single Point of Failure), 유연성 부족.### 2. 마켓 기반 위임 (Market-Based Delegation)에이전트들이 태스크를 놓고 경쟁하거나 협상하여 위임을 결정하는 패턴입니다. 예를 들어, 계약망 프로토콜(Contract Net Protocol)에서 관리자 에이전트가 태스크를 브로드캐스트하면, 관심 있는 워커 에이전트들이 입찰(Bid)을 제출하고, 관리자는 최적의 워커를 선택하여 계약을 맺습니다.장점: 자율성과 유연성 증대, 자원 활용 최적화, 동적 로드 밸런싱.단점: 통신 오버헤드 증가, 복잡한 협상 메커니즘 필요, 비효율적인 입찰 과정 가능성.## 태스크 조정 패턴 (Task Coordination Patterns)조정은 여러 에이전트가 공동 목표를 달성하기 위해 상호작용하고 행동을 조율하는 방식입니다. 효과적인 조정 없이는 위임된 태스크들이 파편화되거나 충돌하여 시스템 전체의 실패로 이어질 수 있습니다.### 1. 공유 블랙보드 (Shared Blackboard)에이전트들이 정보를 기록하고 읽을 수 있는 중앙 집중식 공유 메모리(Shared Memory) 공간을 활용합니다. 에이전트들은 블랙보드에 태스크 상태, 중간 결과, 필요한 정보 등을 게시하고, 다른 에이전트들은 이 정보를 참조하여 자신의 행동을 결정합니다.장점: 에이전트 간 결합도(Coupling) 낮음, 새로운 에이전트 추가 용이, 비동기적 상호작용 지원.단점: 블랙보드 병목 현상, 일관성 유지의 어려움, 보안 문제.### 2. 메시지 패싱 (Message Passing)에이전트들이 서로 직접 메시지를 주고받으며 정보를 교환하고 행동을 조율합니다. 이는 동기적 또는 비동기적으로 이루어질 수 있으며, 특정 에이전트에게 직접 지시하거나 상태 업데이트를 요청하는 데 사용됩니다.장점: 높은 병렬성, 유연한 통신 경로, 에이전트 간 직접적인 상호작용.단점: 복잡한 시스템에서 통신 관리의 어려움, 메시지 충돌 및 순서 문제, 에이전트 간 높은 결합도.### 3. 컨센서스 메커니즘 (Consensus Mechanisms)여러 에이전트가 특정 결정이나 행동에 대해 합의(Agreement)를 도출해야 할 때 사용됩니다. 투표, 가중치 부여, 우선순위 기반 결정 등 다양한 방법이 있으며, 분산 시스템에서 데이터 일관성이나 공동 결정에 주로 활용됩니다.장점: 시스템 전체의 일관성 및 신뢰성 증대, 분산 환경에서의 견고성.단점: 합의 과정의 복잡성 및 시간 소모, 통신 비용 증대, 합의 실패 시 시스템 정체 가능성.## 코드 예제: 계층적 위임과 메시지 패싱 (Conceptual Python)다음은 간단한 계층적 에이전트 시스템에서 태스크 위임과 메시지 패싱을 통해 조정을 수행하는 개념적인 Python 코드 예제입니다. 이 예제에서는 관리자 에이전트가 개발자 및 QA 에이전트에게 태스크를 위임하고, 에이전트들은 메시지를 주고받으며 진행 상황을 업데이트합니다.```pythonclass Agent:    def __init__(self, name, role):        self.name = name        self.role = role        self.tasks = []        self.sub_agents = []        self.messages = []    def assign_task(self, task):        self.tasks.append(task)        print(f
