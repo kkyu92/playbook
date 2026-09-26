@@ -1,0 +1,40 @@
+---
+title: Production Multi-AI Agent Collaboration — Architecting for Reliability and Complex Interactions
+category: agents
+date: "2026-09-26"
+tags:
+  - multi-agent
+  - collaboration
+  - production-ready
+  - reliability
+  - orchestration
+  - agentic-systems
+  - agents
+confidence: 1
+connections: [agents/agent-collaboration-pattern-design, agents/multi-agent-collaboration-protocol-design-principles, agents/multi-agent-reliability-conflict-resolution-patterns, agents/multi-agent-collaboration-system-design-patterns, agents/llm-multi-agent-system-design-orchestration-patterns, agents/robust-multi-agent-system-design-complex-workflows, harness-engineering/llm-workflow-orchestration-patterns-complex-ai-applications]
+status: draft
+description: 생산 환경에서 다중 AI 에이전트 시스템의 복잡한 상호작용과 신뢰성을 보장하기 위한 아키텍처 및 디자인 패턴을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+다중 AI 에이전트 협업 시스템은 복잡한 문제를 해결하는 데 강력한 잠재력을 지니지만, 생산 환경에 배포될 때 복잡한 상호작용과 신뢰성 문제는 핵심적인 과제로 부상합니다. 각 에이전트가 자율적으로 동작하면서도 전체 시스템의 목표를 일관성 있게 달성하도록 조율하는 것은 섬세한 디자인이 요구됩니다. 이 엔트리에서는 이러한 시스템을 견고하고 확장 가능하며, 운영 가능한 형태로 설계하기 위한 핵심 원칙과 패턴을 다룹니다.
+
+## 핵심 원칙 (Core Principles)
+
+### 1. 명확한 역할 정의 및 전문화 (Clear Role Definition & Specialization)
+각 에이전트가 고유하고 명확한 역할을 수행하도록 정의합니다. 예를 들어, Plan Agent는 문제 분해 및 계획 수립, Execute Agent는 실제 작업 실행, Review Agent는 결과 검증을 담당할 수 있습니다. 이는 에이전트 간의 책임 분리를 명확히 하여 상호작용의 복잡도를 줄이고, 각 에이전트의 개발 및 유지보수를 용이하게 합니다.
+
+### 2. 표준화된 통신 프로토콜 및 메시지 큐 (Standardized Communication Protocols & Message Queues)
+에이전트 간의 비동기적이고 안정적인 통신을 위해 표준화된 메시지 형식과 메시지 큐(예: Kafka, RabbitMQ)를 활용합니다. 이는 에이전트들이 서로의 가용성에 영향을 받지 않고 작업을 처리할 수 있게 하며, 메시지 손실 없이 순서 보장을 가능하게 합니다.
+
+```python
+# 예시: 표준화된 메시지 구조
+{
+    "task_id": "uuid-1234",
+    "sender_agent": "plan_agent",
+    "receiver_agent": "execute_agent",
+    "message_type": "request_execution",
+    "payload": {
+        "step_id": "step-001",
+        "instructions": "Create a new file 'main.py' with 'print(\\
