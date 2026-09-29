@@ -1,0 +1,43 @@
+---
+title: LLM Function Calling 인터페이스 설계 — 외부 도구 연동 및 활용 전략
+category: harness-engineering
+date: "2026-09-29"
+tags:
+  - LLM
+  - FunctionCalling
+  - ToolUse
+  - APIIntegration
+  - InterfaceDesign
+  - AgenticAI
+  - harness-engineering
+confidence: 1
+connections: [agents/external-tool-integration-for-ai-agents, agents/llm-agent-external-tool-integration-control, agents/llm-agent-tool-use-design-patterns, harness-engineering/llm-tooling-harness-complex-api-integration, harness-engineering/multi-llm-external-tool-orchestration-patterns, agents/ai-agent-robust-tool-error-recovery, agents/llm-agent-stable-tool-use-production-environments]
+status: draft
+description: LLM의 외부 도구 활용도를 극대화하기 위한 Function Calling 인터페이스의 핵심 설계 원칙과 구현 방법을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+LLM(Large Language Model)이 단순한 텍스트 생성기를 넘어 실제 세계와 상호작용하는 지능형 에이전트(Intelligent Agent)로 기능하려면 외부 시스템 및 도구와의 효율적인 연동이 필수적입니다. 이 연동의 핵심 메커니즘이 바로 Function Calling(함수 호출)입니다. Function Calling은 LLM이 사용자 요청을 분석하여 적절한 외부 함수나 API를 식별하고, 필요한 인자를 추출하여 호출하도록 돕는 인터페이스 설계 패턴입니다. 이 엔트리에서는 LLM의 외부 도구 사용을 위한 Function Calling 인터페이스를 어떻게 설계해야 하는지 구체적인 원칙과 실전 가이드를 제공합니다.
+
+## Function Calling의 기본 원리
+
+Function Calling의 기본 원리는 LLM에게 외부 도구의 기능과 사용법을 JSON Schema(JSON 스키마)와 같은 구조화된 형식으로 제공하는 데서 시작합니다. LLM은 이 정보를 바탕으로 다음과 같은 단계를 거쳐 도구를 활용합니다:
+
+1.  **사용자 의도 파악**: 사용자의 프롬프트(Prompt)를 분석하여 어떤 작업을 수행하고자 하는지 이해합니다.
+2.  **도구 선택**: LLM이 제공된 도구 정의(Function Definition) 목록에서 사용자 의도에 가장 적합한 도구를 선택합니다.
+3.  **인자 추출**: 선택된 도구를 실행하는 데 필요한 인자(Arguments)를 사용자 프롬프트에서 추출하여 JSON 형식으로 구조화합니다.
+4.  **도구 호출**: 추출된 인자와 함께 해당 도구를 호출하는 코드(Tool Call)를 생성합니다. 이 코드는 실제 애플리케이션 백엔드에서 실행됩니다.
+5.  **결과 반영**: 도구 실행 결과가 LLM에게 다시 전달되면, LLM은 이 결과를 바탕으로 최종 사용자 응답을 생성합니다.
+
+이 과정에서 인터페이스의 명확성과 견고성은 LLM의 도구 활용 정확성과 신뢰성에 직접적인 영향을 미칩니다.
+
+## 효율적인 인터페이스 설계 원칙
+
+### 1. 명확하고 간결한 스키마 (Clear and Concise Schema)
+
+각 도구의 JSON Schema는 LLM이 기능과 인자를 쉽게 파악할 수 있도록 명확하고 간결하게 정의되어야 합니다. 필수 인자(`required` 필드)와 선택 인자(Optional Argument)를 명확히 구분하고, 각 인자의 목적을 설명하는 `description`을 반드시 포함해야 합니다.
+
+```python
+{
+    

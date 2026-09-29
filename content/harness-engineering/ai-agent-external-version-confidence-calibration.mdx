@@ -11,10 +11,7 @@ tags:
   - agentic
 confidence: 3
 last_verified: "2026-07-07"
-connections:
-  - harness-engineering/github-actions-cross-workflow-version-consistency-audit
-  - harness-engineering/github-actions-fix-stacking-anti-pattern
-  - context-engineering/agentic-branched-state-production-content-lag
+connections: [harness-engineering/github-actions-cross-workflow-version-consistency-audit, harness-engineering/github-actions-fix-stacking-anti-pattern, context-engineering/agentic-branched-state-production-content-lag, context-engineering/rag-agent-memory-version-control-lambdadb]
 status: complete
 description: AI 에이전트가 외부 패키지/액션 버전을 추천할 때 학습 컷오프 이후 릴리즈 가능성을 인식하고 신뢰도를 명시해야 하는 패턴. 특히 GH Actions action 버전, npm 패키지, Python 라이브러리 등. cycle 1350 checkout@v5 사례.
 type: entry
