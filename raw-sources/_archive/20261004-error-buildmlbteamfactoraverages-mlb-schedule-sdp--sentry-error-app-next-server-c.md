@@ -5,9 +5,9 @@ type: "worker-error"
 payload_type: "error-log"
 severity: "error"
 fingerprint: "sentry-error-app-next-server-chunks-ssr-root-of-the-server-0"
-first_seen: "2026-10-04T02:14:42.604Z"
+first_seen: "2026-10-04T02:22:25.668Z"
 environment: "production"
-run_url: "https://sentry.io/organizations/kyu-au/issues/7771730221/events/e878910a081b4ba691550dc07689f0af/"
+run_url: "https://sentry.io/organizations/kyu-au/issues/7771736197/events/0eaa794ce0294800aad57a0c82e0de7e/"
 ---
 
 ## Error
@@ -19,17 +19,20 @@ run_url: "https://sentry.io/organizations/kyu-au/issues/7771730221/events/e87891
   at n (app:///_next/server/chunks/ssr/apps_moneyball_src_0xlnw3s._.js:2)
   at process.processTicksAndRejections (node:internal/process/task_queues:104)
   at Promise.all (index 2:?)
-  at B (app:///_next/server/chunks/ssr/apps_moneyball_src_app_en_mlb_matchup_[teamA]_[teamB]_page_tsx_0cb23we._.js:2)
 ```
 
 ## Context
 - Environment: `production`
 - Release: `[hex]`
-- URL: (none)
-- Culprit: `?([root-of-the-server]__0qduvi_._)`
-- Timestamp: 1791080082.604
+- URL: https://moneyballscore.vercel.app/en/mlb/matchup/MIL/SDP
+- Culprit: `GET /en/mlb/matchup/MIL/SDP`
+- Timestamp: 1791080545.668
 
 ## Tags
+- `browser`: `Chrome 154`
+- `browser.name`: `Chrome`
+- `client_os`: `Android`
+- `client_os.name`: `Android`
 - `environment`: `production`
 - `handled`: `yes`
 - `interface_type`: `exception`
@@ -44,10 +47,12 @@ run_url: "https://sentry.io/organizations/kyu-au/issues/7771730221/events/e87891
 - `release`: `[hex]`
 - `server_name`: `169.254.84.93`
 - `source`: `buildMlbTeamFactorAverages.codeB`
+- `transaction`: `GET /en/mlb/matchup/MIL/SDP`
 - `turbopack`: `True`
+- `url`: `https://moneyballscore.vercel.app/en/mlb/matchup/MIL/SDP`
 
 ## Triggered rule
 `[hub] L3 production errors`
 
 ## Links
-- Sentry: https://sentry.io/organizations/kyu-au/issues/7771730221/events/[hex]/
+- Sentry: https://sentry.io/organizations/kyu-au/issues/7771736197/events/[hex]/
