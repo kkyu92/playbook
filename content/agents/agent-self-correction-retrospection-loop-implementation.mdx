@@ -1,0 +1,20 @@
+---
+title: "Agent Self-Correction and Retrospection: Implementing Robust Learning Loops"
+category: agents
+date: "2026-10-04"
+tags:
+  - Agents
+  - SelfCorrection
+  - Retrospection
+  - FeedbackLoops
+  - AutonomousAI
+  - agents
+confidence: 1
+connections: [agents/ai-agent-self-correction-design-principles, agents/autonomous-agent-feedback-loop-design-patterns, agents/autonomous-agent-long-term-memory-reflection-design, agents/llm-agent-self-correction-error-recovery, agents/llm-agent-planning-reflection-autonomous-problem-solving, agents/self-correction-adaptive-learning-loops-implementation, context-engineering/agentic-closed-loop-self-repair-workflow-bug-discovery-fix]
+status: draft
+description: 에이전트의 신뢰성과 성능을 높이기 위한 자기 수정 및 회고 루프의 구현 전략과 핵심 디자인 패턴을 설명합니다.
+type: entry
+source: gap-pull
+---
+
+에이전트 시스템에서 신뢰성과 성능은 지속적인 자기 개선 메커니즘 없이는 달성하기 어렵습니다. 특히 복잡한 작업을 수행하는 자율 에이전트에게는 실행 중 발생하는 오류를 즉각적으로 수정하고, 과거 경험을 통해 장기적인 학습을 수행하는 `Self-Correction` (자기 수정) 및 `Retrospection Loop` (회고 루프)가 필수적입니다. 이 메커니즘은 에이전트의 `Gap Analysis`를 통해 스스로의 한계를 인지하고 보완하는 핵심적인 방법론입니다.## 자기 수정 (Self-Correction)메커니즘자기 수정은 에이전트가 현재 진행 중인 작업에서 오류나 예상치 못한 상황을 감지했을 때 즉각적으로 대응하여 행동을 조정하는 과정입니다. 이는 주로 단일 `Action` 또는 `Thought` 스텝 내에서 발생하며, 빠른 문제 해결을 목표로 합니다.### 즉각적인 오류 감지 및 재시도에이전트가 외부 도구 호출(Tool Use) 또는 내부 추론(Reasoning) 과정에서 오류를 발견하면, 해당 오류 메시지를 분석하여 `Re-prompting`을 통해 다음 행동을 수정합니다. 예를 들어, API 호출 실패 시 에러 코드를 파싱하여 인자 값을 재조정하거나, 잘못된 형식의 출력을 내보냈을 경우 올바른 형식으로 다시 생성하도록 지시할 수 있습니다.### 출력 유효성 검사 (Output Validation)에이전트가 생성한 출력(예: 코드, JSON, 자연어 텍스트)이 미리 정의된 스키마, 제약 조건 또는 특정 규칙을 따르는지 검사합니다. 유효성 검사에 실패하면 에이전트는 피드백을 받아 다시 출력을 생성합니다. 이는 `Pydantic`과 같은 라이브러리를 활용한 `Structured Output` 검사나 `Regex` 기반의 패턴 매칭을 통해 구현될 수 있습니다.### 내부 일관성 검사에이전트의 여러 추론 단계 또는 도구 사용 결과 사이에 논리적 일관성이 있는지 확인합니다. 예를 들어, 코드를 생성한 후 해당 코드가 요구사항을 충족하는지 테스트 케이스를 실행하여 검증하는 과정이 여기에 해당합니다. 실패 시에는 테스트 결과에 기반하여 코드를 수정합니다.## 회고 루프 (Retrospection Loop) 구현회고 루프는 에이전트가 완료된 작업 또는 장기간의 상호작용 기록을 분석하여 더 깊은 수준의 학습과 전략 개선을 도모하는 메커니즘입니다. 이는 단기적인 자기 수정으로는 해결하기 어려운 근본적인 문제나 비효율성을 개선하는 데 초점을 맞춥니다.### 경험 저장 및 재연 (Experience Replay & Memory)에이전트의 모든 행동, 관찰, 결정, 결과(성공/실패)를 구조화된 형태로 `Persistent Memory` (영속 메모리)에 저장합니다. 이는 `Vector Database`, `Knowledge Graph`, 또는 일반적인 데이터베이스에 저장될 수 있습니다. 특히 실패 사례는 더욱 상세하게 기록하여 향후 분석에 활용합니다.### 회고 및 통찰 추출 (Reflection & Insight Extraction)일정 주기 또는 특정 조건(예: 누적된 실패, 주요 성공) 발생 시, 에이전트는 저장된 경험들을 회고합니다. 이 과정에서 `LLM`은 자신의 과거 행동을 분석하고, 어떤 전략이 효과적이었는지, 왜 실패했는지, 어떤 점을 개선해야 하는지 등의 `Insight` (통찰)를 추출합니다. 이 통찰은 일반적인 패턴, 근본 원인 분석, 새로운 접근 방식 제안 등으로 나타날 수 있습니다.### 지식 및 전략 업데이트 (Knowledge & Strategy Update)회고를 통해 얻은 통찰은 에이전트의 `Knowledge Base` (지식 기반)나 `Internal Prompt` (내부 프롬프트), `Tool Use Strategy` (도구 사용 전략)를 업데이트하는 데 사용됩니다. 예를 들어, 특정 유형의 문제에서 반복적으로 실패했다면, 해당 문제에 대한 새로운 `Pre-computation` 단계나 보조 도구를 활용하는 지침을 프롬프트에 추가할 수 있습니다.### 메타 학습 (Meta-Learning)회고 루프는 단순히 작업을 개선하는 것을 넘어, 에이전트가 '어떻게 학습해야 하는가'에 대한 학습, 즉 `Meta-Learning`으로 이어질 수 있습니다. 이는 에이전트가 스스로의 학습 방법을 최적화하고, 더 효율적인 자기 개선 전략을 개발하도록 돕습니다.## 아키텍처 패턴### 관찰-계획-실행-회고 (Observe-Plan-Act-Reflect) 사이클에이전트는 환경을 `Observe`하고, 이에 기반하여 `Plan`을 세우고, `Act`을 실행한 뒤, 그 결과를 `Reflect`하여 다음 사이클의 `Plan`을 개선합니다. 이러한 반복적인 사이클을 통해 에이전트는 점진적으로 발전합니다.```mermaidgantt    title Agent Self-Correction & Retrospection Loop    dateFormat YYYY-MM-DD    section Execution Cycle    Observe :2026-07-01, 1d    Plan :2026-07-02, 1d    Act :2026-07-03, 2d    Self-Correct :2026-07-05, 1d    section Retrospection Cycle    Log Experience :2026-07-06, 1d    Analyze Failures [
