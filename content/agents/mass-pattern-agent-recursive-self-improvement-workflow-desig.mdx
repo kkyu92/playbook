@@ -1,0 +1,42 @@
+---
+title: "MASS 패턴: 에이전트 재귀적 자기개선 워크플로 설계 및 구현"
+category: agents
+date: "2026-10-12"
+tags:
+  - MultiAgentSystems
+  - SelfImprovement
+  - WorkflowAutomation
+  - LLMAgents
+  - Metacognition
+  - ReinforcementLearning
+  - agents
+confidence: 1
+connections: [agents/agent-self-correction-retrospection-loop-implementation, agents/multi-agent-collaboration-system-design-patterns, agents/ai-agent-workflow-loop-engineering, agents/autonomous-agent-feedback-loop-design-patterns, harness-engineering/recursive-self-improvement-harness-enhancement, agents/llm-autonomous-agents-long-term-memory-learning-system, agents/llm-agent-self-correction-error-recovery]
+status: draft
+description: MASS(Multi-Agent Self-Supervision) 패턴을 통해 에이전트가 자체적으로 워크플로를 최적화하고 재학습하는 재귀적 자기개선 시스템 구현 전략을 탐구한다.
+type: entry
+source: scout
+---
+
+## MASS 패턴 기반 에이전트 재귀적 자기개선 워크플로 개요
+
+MASS(Multi-Agent Self-Supervision) 패턴은 인공지능 에이전트 시스템이 스스로의 성능을 재귀적으로 개선하도록 설계된 강력한 프레임워크입니다. 이 패턴의 핵심은 단일 또는 다중 에이전트가 작업 실행자, 워크플로 최적화기, 그리고 평가자의 역할을 모두 수행하며, 이 과정에서 축적된 실행 기록(execution logs)을 활용하여 자신의 가중치(weights) 또는 워크플로 로직을 업데이트하는 데 있습니다. 2026년 에이전트 시스템은 단순한 도구 사용을 넘어, 복잡한 환경 변화에 능동적으로 적응하고 지속적으로 학습하는 자기 개선 능력이 필수적이며, MASS 패턴은 이러한 요구사항에 대한 효과적인 해결책을 제시합니다.
+
+MASS의 내부 루프(inner loop)는 모델 가중치를 고정한 채 에이전트 간의 협업 방식과 작업 처리 방식을 개선하는 데 초점을 맞춥니다. 이 과정에서 에이전트 팀은 특정 작업을 수행하고, 그 결과를 평가하며, 개선할 수 있는 부분을 식별합니다. 식별된 개선 사항은 워크플로에 즉시 반영되어 다음 작업에 적용됩니다. 외부 루프(outer loop)는 이러한 내부 루프의 실행 기록 중 가장 성공적이고 효율적인 사례들을 선별하여 에이전트의 기반 모델(foundation model) 자체를 재학습(fine-tuning)하는 데 사용됩니다. 이는 에이전트의 행동 전략과 문제 해결 능력을 근본적으로 향상시키는 심층적인 자기 개선 메커니즘을 제공합니다.
+
+이러한 재귀적 자기개선 워크플로는 특히 동적으로 변화하는 비즈니스 환경이나 끊임없이 새로운 문제에 직면하는 개발 프로세스에서 에이전트의 적응성과 효율성을 극대화합니다. `playbook`의 '허브-워커 복리 자동화' 맥락에서 MASS 패턴을 도입하면, 에이전트가 스스로 작업 실행, 워크플로 최적화, 평가를 수행하는 내부 루프를 설계하고, 선별된 팀 실행 기록으로 자신을 재학습하는 재귀적 자기 개선 메커니즘을 프로토타이핑할 수 있습니다.
+
+### MASS 패턴의 핵심 구성 요소
+
+1.  **실행자(Executor)**: 실제 작업을 수행하는 에이전트입니다. 이들은 외부 도구(external tools)를 사용하거나 내부 로직에 따라 연산을 수행합니다.
+2.  **워크플로 최적화기(Workflow Optimizer)**: 실행자의 작업 흐름과 협업 방식을 분석하고 개선점을 제안하는 에이전트입니다. 이는 휴리스틱 기반일 수도 있고, 더 복잡한 메타 학습(meta-learning) 알고리즘을 사용할 수도 있습니다.
+3.  **평가자(Evaluator)**: 실행된 작업의 결과를 측정하고, 설정된 목표 대비 성능을 평가하는 에이전트입니다. 피드백 루프의 핵심 요소이며, 성공적인 실행 기록 선별의 기준을 제시합니다.
+4.  **기록 저장소(Execution Log Store)**: 모든 에이전트의 상호작용, 작업 실행, 평가 결과 등이 기록되는 저장소입니다. 이는 재학습 데이터셋의 소스가 됩니다.
+5.  **재학습 모듈(Retraining Module)**: 선별된 실행 기록을 사용하여 에이전트의 기반 모델을 업데이트하거나, 워크플로 최적화기의 전략을 개선하는 모듈입니다.
+
+```python
+# Python pseudo-code for a simplified MASS inner loop
+
+class AgentExecutor:
+    def execute_task(self, task_description, tools):
+        print(f
