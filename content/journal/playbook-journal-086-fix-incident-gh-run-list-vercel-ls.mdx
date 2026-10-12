@@ -1,0 +1,43 @@
+---
+title: "Playbook Journal 086 — fix-incident 진단 시 gh run list 만으론 불충분, vercel ls 직접 조회 필요"
+category: harness-engineering
+date: "2026-10-12"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: fix-incident 진단 시 gh run list 만으론 불충분, vercel ls 직접 조회 필요 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20261012-fix-incident-gh-run-list-vercel-ls-943f9582eb7859028663aded5b3109.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 3104
+
+GitHub Actions CI 가 전부 green 이어도 Vercel 프로덕션 배포 자체는 별도로 실패할 수 있음 (readyState ERROR, 빌드 자체는 READY인 드문 불일치 포함). cycle 3090/3093/3097/3099 의 fix-incident gap 재점검은 `gh run list` + Supabase DNS 확인만 하고 Vercel 배포 상태는 한번도 직접 조회하지 않아 cycle 3097 push 로 생성된 고립 Error 배포 1건이 cycle 3104 까지 미발견 상태로 남아있었음(사용자 가시 영향은 없었음 — 다음 push 가 바로 Ready 로 덮어씀).
+
+대응: fix-incident 체인 진단 시 `vercel ls --yes --limit 20` (또는 `vercel inspect <url>`) 을 gh run list 와 함께 1차 체크리스트에 포함 권장. develop-cycle SKILL.md 의 fix-incident 진단 source 테이블 갱신은 다음 skill-evolution 발화 시 반영 후보로 carry-over.
+
+박제 위치: TODOS.md cycle 3104 entry, moneyballscore repo.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
