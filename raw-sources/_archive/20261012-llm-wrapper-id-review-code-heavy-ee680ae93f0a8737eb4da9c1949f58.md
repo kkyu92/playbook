@@ -1,0 +1,42 @@
+---
+date: "2026-10-12"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "ee680ae93f0a8737eb4da9c1949f58d221e3868f"
+---
+
+
+subtype: lesson
+cycle: 3088
+
+## 사례
+
+packages/kbo-data/src/agents/llm.ts의 getModelId()가 Sonnet 모델 ID를
+'claude-sonnet-4-6'로 pinned — 2026-04-15(#6)에 실제 API 호출 검증까지 거쳐 당시엔
+유효했던 값. 같은 함수의 Haiku 분기('claude-haiku-4-5-20251001')는 2026-10-12 세션
+환경이 주입하는 현재 공식 모델 ID와 정확히 일치하는데, Sonnet만 6개월간 교체 안 된 채
+방치돼 있었음 — scripts/ 전수 감사(cycle 3082-3087)와 이전 수십 차례 review-code(heavy)
+사이클 동안 아무도 이 파일을 열어보지 않음(trigger가 "big file/monolith/주석-코드
+불일치"였고, llm.ts는 307줄로 "큰 파일" 임계에 안 걸려 스코프 밖이었음).
+
+## 왜 중요한가
+
+Anthropic은 모델을 주기적으로 deprecate/retire함. 하드코딩된 모델 ID는 날짜가 지나면
+자동으로 무효화될 수 있는데, 실패 시 에러가 "model_not_found" 류의 INVALID_REQUEST로
+오지 CREDIT_EXHAUSTED로 오지 않음 — 그런데 이 프로젝트의 CE 측정 방식
+(`scoring_rule`/`debate_version IS NULL` proxy, CLAUDE.md P4 패턴)은 실제 에러 텍스트를
+구분하지 않고 "judge 실패 = debate_version null = CE"로 뭉뚱그림. 즉 모델 ID가 stale해져도
+기존 측정 체계에서는 계속 "CREDIT_EXHAUSTED"로만 보임 — 근본 원인이 바뀌어도 증상이
+똑같아 보이는 silent drift 패턴.
+
+## 대응
+
+1. llm.ts의 getModelId() 를 'claude-sonnet-5'로 교체(본 cycle 3088, fb8938bb).
+2. 미확정 — 실제로 이게 수개월간 CE로 오인된 원인의 일부였는지는 크레딧 충전 +
+   Supabase 복구 후 실제 judge 호출 성공 여부로만 검증 가능. 섣불리 "CE 원인이 모델
+   ID였다"고 단정하지 않음(data-only-claims 원칙).
+3. 향후 review-code(heavy) 진단 시 "큰 파일/복잡도" 기준뿐 아니라, 외부 서비스(LLM API,
+   DB, 서드파티 API) 모델/버전 문자열을 하드코딩한 작은 파일도 주기적 점검 대상에 포함
+   권장 — 파일 크기가 작아도 silent breakage 반경이 클 수 있음(이 경우 전체 judge
+   pipeline).
