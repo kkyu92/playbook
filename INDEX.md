@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-10-12T11:01:21.387Z
+Updated: 2026-10-12T13:16:07.502Z
 
-## 엔트리 (955개)
+## 엔트리 (956개)
 
 ### Prompt Engineering
 - [Agent Autonomy Enhancement - Moving Beyond Plan Mode with Goal-Based Directives](wiki/prompt-engineering/agent-goal-based-directives-autonomy) — confidence: 1, status: draft
@@ -462,6 +462,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 083 — cycle-retro 자기검증 룰의 세션-중단 사각지대 — 사례 15 family 재발 (cycle 2647)](wiki/journal/playbook-journal-083-cycle-retro-15-family-cycle-2647) — confidence: 3, status: in-progress
 - [Playbook Journal 084 — degrade 패턴 파일 내 부분 적용 = silent drift 신규 subtype](wiki/journal/playbook-journal-084-degrade-silent-drift-subtype) — confidence: 3, status: in-progress
 - [Playbook Journal 085 — LLM wrapper 하드코딩 모델 ID는 review-code(heavy) 정기 점검 대상이어야 함](wiki/journal/playbook-journal-085-llm-wrapper-id-review-code-heavy) — confidence: 3, status: in-progress
+- [Playbook Journal 086 — fix-incident 진단 시 gh run list 만으론 불충분, vercel ls 직접 조회 필요](wiki/journal/playbook-journal-086-fix-incident-gh-run-list-vercel-ls) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -4613,6 +4614,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-083-cycle-retro-15-family-cycle-2647 ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-084-degrade-silent-drift-subtype ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-085-llm-wrapper-id-review-code-heavy ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-086-fix-incident-gh-run-list-vercel-ls ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/llm-privacy-setting-drift-detection-monitoring
