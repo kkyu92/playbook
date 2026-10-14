@@ -1,0 +1,20 @@
+---
+date: "2026-10-14"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "dcb22ab1321fb612285cd7d7d4e5d5355e2b2a59"
+---
+
+
+subtype: lesson
+cycle: 3190
+
+허브 incident-followup.yml(D5)이 3+일 무응답 incident에 reminder issue를 매일 열어 쌓였으나 (#3081/3082/3095/3120/3123/3145, 최대 39일 체류) 워커 쪽에서 lesson: commit 전환도 close도 안 돼 누적됐다. 6건 전수 조사 결과:
+
+- #3095 (ci-dependabot-npm-and-yarn-typ, 9/21): @types/node 20→26 bump PR #1942가 URL 타입 비호환으로 type-check 실패 → PR 자체가 merge 안 되고 closed. 코드 영향 없음, dependabot 자동 close 대상.
+- #3082 (ci-main-94a8e3e, 9/2): `actions/setup-node` 스텝 자체가 실패 — GitHub Actions 러너 인프라 플레이크, 코드/설정 원인 아님.
+- #3081 (ci-main-b871fd07, 9/2): version-sync-guard 테스트가 CHANGELOG(0.5.62.192) vs package.json(0.5.62.193) 불일치로 1건 fail — 연속 커밋 사이 반영 순서 race, 다음 커밋에서 자가 해소(현재 CHANGELOG/package.json 양쪽 0.5.62.339 일치 확인). 코드 버그 아님.
+- #3120/#3123/#3145 (vercel-deploy-c771776/d06ab81/29717e2, 9/29~10/6): 모두 `State: failure`(Canceled 아님) 진짜 배포 실패지만, `vercel inspect <dpl_id> --logs`로 재조회 시 Vercel 배포 보존 기간 만료로 "Can't find the deployment" — 로그 완전 소실, 근본원인 사후 복구 불가능. 3건 모두 평범한 cron/retro 커밋(코드 변경 없음)에서 발생 + 재발 없음(현재 `vercel ls` 전체 Ready) → 코드측 조치 불가능한 external/transient로 결론.
+
+**교훈**: incident-followup reminder는 열린 즉시(3일 룰 전에) 처리하는 게 유리 — Vercel 배포 로그가 수일~수주 내 만료돼 사후 조사 시 근본원인 복구가 구조적으로 불가능해진다. 로그 만료 전 조사 못 하면 "external/unrecoverable" close 외엔 선택지가 없다는 걸 본 사이클이 실측 확인.
