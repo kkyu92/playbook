@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-10-15T21:05:47.405Z
+Updated: 2026-10-16T12:04:48.369Z
 
-## 엔트리 (973개)
+## 엔트리 (974개)
 
 ### Prompt Engineering
 - [Agent Autonomy Enhancement - Moving Beyond Plan Mode with Goal-Based Directives](wiki/prompt-engineering/agent-goal-based-directives-autonomy) — confidence: 1, status: draft
@@ -471,6 +471,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 085 — LLM wrapper 하드코딩 모델 ID는 review-code(heavy) 정기 점검 대상이어야 함](wiki/journal/playbook-journal-085-llm-wrapper-id-review-code-heavy) — confidence: 3, status: in-progress
 - [Playbook Journal 086 — fix-incident 진단 시 gh run list 만으론 불충분, vercel ls 직접 조회 필요](wiki/journal/playbook-journal-086-fix-incident-gh-run-list-vercel-ls) — confidence: 3, status: in-progress
 - [Playbook Journal 087 — incident-followup reminder 6건 적체 — 대부분 external/self-resolved, Vercel 로그 소실 시 근본원인 복구 불가](wiki/journal/playbook-journal-087-incident-followup-reminder-6-external-self-resolve) — confidence: 3, status: in-progress
+- [Playbook Journal 088 — develop-cycle 브랜치명 충돌 시 multi-line bash 가 silent 하게 main 에 커밋](wiki/journal/playbook-journal-088-develop-cycle-multi-line-bash-silent-main) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -4704,6 +4705,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-085-llm-wrapper-id-review-code-heavy ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-086-fix-incident-gh-run-list-vercel-ls ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-087-incident-followup-reminder-6-external-self-resolve ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-088-develop-cycle-multi-line-bash-silent-main ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/llm-privacy-setting-drift-detection-monitoring
