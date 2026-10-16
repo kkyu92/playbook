@@ -1,0 +1,44 @@
+---
+title: Self-Evolving Agent Harness — Execution Feedback-Driven Prompt, Memory, Tool Refinement
+category: harness-engineering
+date: "2026-10-16"
+tags:
+  - AgentHarness
+  - SelfEvolution
+  - FeedbackLoop
+  - LLMAgents
+  - PromptEngineering
+  - ToolUse
+  - harness-engineering
+confidence: 1
+connections: [agents/agent-self-correction-retrospection-loop-implementation, agents/autonomous-agent-feedback-loop-design-patterns, harness-engineering/agent-harness-code-execution-feedback-principles, harness-engineering/recursive-self-improvement-harness-enhancement, harness-engineering/llm-output-validation-dark-factory-evolution, agents/ai-agent-robust-tool-error-recovery, harness-engineering/realtime-feedback-ai-deployment-harness]
+status: draft
+description: Implement a self-evolving agent harness to automatically refine prompts, memory, and tool code based on execution feedback, integrating lesson/error dispatch with cross-update logic.
+type: entry
+source: scout
+---
+
+Large Language Model (LLM) 기반 에이전트의 견고성과 자율성을 강화하는 핵심 전략 중 하나는 바로 '자기 진화 (Self-Evolving)' 메커니즘 구축이다. 에이전트의 모델 가중치는 고정하더라도, 에이전트의 행동을 정의하는 하네스 구성 요소, 즉 프롬프트(Prompts), 기억(Memory), 그리고 도구 코드(Tool Code)를 실행 피드백에 기반하여 지속적으로 수정하고 개선하는 방식이다. 이는 시스템의 유지보수 비용을 절감하고, 예측 불가능한 운영 환경 변화에 유연하게 대응할 수 있는 능력을 부여한다.
+
+### 자기 진화 하네스의 핵심 메커니즘
+
+자기 진화 에이전트 하네스는 크게 세 가지 순환 단계로 작동한다.
+
+1.  **실행 및 피드백 수집 (Execution & Feedback Collection)**: 에이전트가 특정 작업을 실행하고 그 결과에 대한 피드백을 수집한다. 이 피드백은 LLM 출력 검증 실패, 워커(Worker) 오류, 예상치 못한 동작, 성능 저하 등 다양한 형태로 나타날 수 있다. `playbook`의 Claude Code 하네스에서는 워커의 `lesson/error dispatch` 로직이 이 피드백을 중앙 허브로 전달하는 중요한 역할을 한다.
+
+2.  **수정 제안 생성 (Correction Proposal Generation)**: 수집된 피드백을 바탕으로, 에이전트 자체 또는 상위 관리 에이전트가 현재의 하네스 구성(프롬프트, 기억 관리 전략, 도구 구현)에서 개선이 필요한 부분을 식별하고, 이에 대한 수정 제안을 생성한다. 이 과정에서 LLM의 추론 능력이 활용되어 문제의 원인을 진단하고 최적의 수정 방안을 도출한다.
+
+3.  **수정 적용 및 검증 (Correction Application & Validation)**: 생성된 수정 제안은 즉시 적용되거나, 특정 기준(예: 독립 검증 데이터셋에서의 성능 향상)을 충족할 때 적용된다. `playbook`에서는 허브의 `cross-update` 로직이 이러한 수정 사항을 하네스 전체에 반영하고, 다음 실행 사이클에서 그 효과를 검증하는 역할을 수행한다. 이 순환 고리를 통해 에이전트 하네스는 지속적으로 학습하고 진화한다.
+
+### Playbook Claude Code 하네스 연동
+
+`playbook` 환경에서 Claude Code 하네스는 에이전트의 지능적 행동을 제어하는 핵심 레이어다. 이 하네스 내에서 자기 진화 메커니즘을 구현하려면, `worker`의 `lesson/error dispatch` 이벤트와 `hub`의 `cross-update` 로직을 긴밀하게 연동해야 한다. 예를 들어, 특정 `worker`가 예상치 못한 결과를 반환하거나 오류를 발생시키면, 이 정보가 `lesson/error dispatch`를 통해 `hub`로 전송된다. `hub`는 이 정보를 기반으로 에이전트의 프롬프트, 기억 저장 방식, 또는 도구 호출 로직에 대한 수정 제안을 LLM에게 요청하고, LLM이 제안한 변경 사항을 `cross-update`를 통해 하네스에 반영한다.
+
+```python
+# Simplified Python example for prompt self-evolution
+
+import json
+
+def execute_agent_with_prompt(prompt: str, task: str) -> dict:
+    # Simulate agent execution and get output
+    print(f
