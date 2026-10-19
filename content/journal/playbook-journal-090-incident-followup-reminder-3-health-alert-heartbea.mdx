@@ -1,0 +1,49 @@
+---
+title: "Playbook Journal 090 — incident-followup reminder 3건(health-alert/heartbeat-stale/deploy-drift-alert) 전부 기 해소된 Supabase INACTIVE 재발 — fingerprint 매칭 누락만 잔존"
+category: harness-engineering
+date: "2026-10-19"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: incident-followup reminder 3건(health-alert/heartbeat-stale/deploy-drift-alert) 전부 기 해소된 Supabase INACTIVE 재발 — fingerprint 매칭 누락만 잔존 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20261019-incident-followup-reminder-3-health-alert-heartbea-9fb262fefb073835cbd805e9f1d39b.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 3305
+
+허브 incident-followup.yml(D5)이 2026-10-14 발화한 reminder 3건(#3157 deploy-drift-alert-failure, #3158 heartbeat-stale-failure, #3159 health-alert-failure, 전부 2026-10-17 생성 후 3일+ 체류) 조사 결과 3건 모두 동일 근본원인:
+
+- `gh run list` 로 각 workflow 전체 실패 구간 대조 → health-alert 2026-10-11~10-16, heartbeat-stale 2026-10-07~10-16(장기), deploy-drift-alert 2026-10-11~10-17 반복 failure.
+- 실패 로그 직접 확인(health-alert run 38901215084): `/api/health` 응답 `overall=fail`, `supabase: TypeError: fetch failed` — Supabase 프로젝트 status=INACTIVE 로 인한 fetch 실패.
+- 이미 cycle 3261 fix-incident 가 동일 incident 해소(lesson 6f790440) — restore API 재시도 HTTP 200, billing 조치 불필요, ACTIVE_HEALTHY 복구. 이후 세 workflow 전부 최근 1.5~2일 연속 success.
+
+3건의 hub incident(playbook #4617/#4626/#4632, 2026-10-14 생성)는 cycle 3261 lesson(2026-10-16 이전 발생)보다 늦게 박힌 동일 사건의 late-arriving duplicate — fingerprint 문자열(`health-alert-failure` 등)이 기존 lesson commit 제목과 달라 허브 자동 매칭이 안 돼 reminder 가 누적된 것. 코드/설정 조치 불필요, 신규 lesson 아님 — 기존 lesson 재확인 + manual close 대상.
+
+교훈: incident-followup reminder 의 fingerprint 가 기존 해소 lesson 과 자연어로 안 겹치면 허브 auto-match 가 실패해 "이미 해결된 사건"도 reminder 로 재부상할 수 있다 — reminder 처리 시 항상 날짜 겹침으로 기존 lesson 대조부터 먼저 하고, 매칭되면 중복 lesson 작성 대신 본 커밋처럼 cross-reference 만 남기고 바로 close.
+
+박제 위치: 기존 lesson 6f790440 / project_supabase_inactive_incident_2026_10_11.md 와 cross-reference. 신규 action 없음.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
