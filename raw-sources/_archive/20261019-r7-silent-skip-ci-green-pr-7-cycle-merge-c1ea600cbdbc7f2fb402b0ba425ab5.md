@@ -1,0 +1,20 @@
+---
+date: "2026-10-19"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "c1ea600cbdbc7f2fb402b0ba425ab5a7bbdcaca7"
+---
+
+
+subtype: lesson
+
+사례: PR #3165 (cycle 3296 review-code(heavy) 산출, lib/accuracy·teams 실drift fix — FACTOR_KEYS 중복 + CURRENT_MODEL_FILTER 오사용)가 CI green(check/GitGuardian/Vercel 전부 pass) 상태로 cycle 3296→3303 (7 cycle, ~13시간) open 방치. R7 정책(CI green 즉시 --squash merge)이 해당 cycle 세션에서 실행되지 않은 채 다음 cycle으로 넘어감 — 이후 cycle(3297-3302) retro 어디서도 "unmerged own PR 존재" 체크가 없어 발견되지 못함.
+
+원인: 기존 2-layer 방어선(1차=자기 cycle retro commit 자기검증, 2차=직전 cycle retro commit 결손감지)은 "retro commit 누락"만 감지. "PR은 생성했지만 merge 커맨드 자체를 안 실행하고 세션 종료"하는 실패모드는 둘 다 못 잡음 — retro commit은 정상 기록됐을 수도 있고(세션이 merge 생략하고 바로 회고로 넘어간 경우), 아예 세션이 merge 전에 죽었을 수도 있음(본 cycle 3303처럼 active-cycle 파일 dead pid로 확인된 경우).
+
+발견 경로: cycle 3303 진단 중 `~/.develop-cycle/active-cycle`이 dead pid(50355) 가리킴 확인 → 직전 세션이 review-code(heavy) 작업 완료 후 PR #3167 생성까지 하고 중단 → `gh pr list --state open`으로 전체 open PR 스캔하다 자신과 무관한 cycle 3296발 PR #3165도 함께 발견.
+
+대응: 본 cycle에서 PR #3165(merge 6677814e) + PR #3167(merge a36e25b2) 둘 다 CI 재확인 후 수동 merge.
+
+제안 (다음 skill-evolution 반영 후보): 진단 단계 첫 step에 `gh pr list --state open --json headRefName,number` 로 `develop-cycle/*` prefix 브랜치 전수 스캔 추가 — CI green인데 merge 안 된 PR 발견 시 그 자리에서 즉시 merge (fix-incident 승격 불필요, 진단 단계 routine cleanup으로 처리). 기존 2-layer 방어선은 retro-commit 결손만 커버하므로 이 3번째 실패모드(PR merge 누락)는 별도 체크 필요.
