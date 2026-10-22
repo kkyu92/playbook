@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-10-21T21:04:32.990Z
+Updated: 2026-10-22T07:37:53.428Z
 
-## 엔트리 (1001개)
+## 엔트리 (1002개)
 
 ### Prompt Engineering
 - [Agent Autonomy Enhancement - Moving Beyond Plan Mode with Goal-Based Directives](wiki/prompt-engineering/agent-goal-based-directives-autonomy) — confidence: 1, status: draft
@@ -484,6 +484,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 088 — develop-cycle 브랜치명 충돌 시 multi-line bash 가 silent 하게 main 에 커밋](wiki/journal/playbook-journal-088-develop-cycle-multi-line-bash-silent-main) — confidence: 3, status: in-progress
 - [Playbook Journal 089 — R7 자동머지 silent skip — CI green PR이 7 cycle 미merge 방치](wiki/journal/playbook-journal-089-r7-silent-skip-ci-green-pr-7-cycle-merge) — confidence: 3, status: in-progress
 - [Playbook Journal 090 — incident-followup reminder 3건(health-alert/heartbeat-stale/deploy-drift-alert) 전부 기 해소된 Supabase INACTIVE 재발 — fingerprint 매칭 누락만 잔존](wiki/journal/playbook-journal-090-incident-followup-reminder-3-health-alert-heartbea) — confidence: 3, status: in-progress
+- [Playbook Journal 091 — 2-chain lock step3 fallback(polish-ui 강제)이 잠긴 chain 자체가 polish-ui일 때 모순](wiki/journal/playbook-journal-091-2-chain-lock-step3-fallback-polish-ui-chain-polish) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -4841,6 +4842,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-088-develop-cycle-multi-line-bash-silent-main ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-089-r7-silent-skip-ci-green-pr-7-cycle-merge ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-090-incident-followup-reminder-3-health-alert-heartbea ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-091-2-chain-lock-step3-fallback-polish-ui-chain-polish ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/llm-privacy-setting-drift-detection-monitoring
