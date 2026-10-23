@@ -1,0 +1,53 @@
+---
+title: Multi-Agent System Collaboration — 효율적인 조정 및 태스크 관리 패턴 디자인
+category: agents
+date: "2026-10-23"
+tags:
+  - Multi-Agent Systems
+  - Collaboration
+  - Coordination
+  - Design Patterns
+  - Agent Orchestration
+  - Task Management
+  - agents
+confidence: 1
+connections: [agents/agent-collaboration-pattern-design, agents/multi-agent-collaboration-coordination-design, agents/multi-agent-collaboration-coordination-patterns, agents/multi-agent-system-collaboration-coordination-patterns, agents/llm-multi-agent-system-design-orchestration-patterns, agents/multi-agent-task-orchestration-delegation-patterns, agents/multi-agent-decision-coordination-pattern-design]
+status: draft
+description: 멀티 에이전트 시스템에서 에이전트 간의 효율적인 협업 및 조정을 위한 핵심 디자인 패턴과 구현 전략을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+멀티 에이전트 시스템(Multi-Agent Systems, MAS)은 복잡한 문제를 해결하기 위해 여러 개의 독립적인 에이전트가 상호작용하는 분산형 시스템입니다. 이러한 시스템의 효율성과 견고성은 에이전트 간의 효과적인 협업(Collaboration) 및 조정(Coordination) 모델에 달려 있습니다. 특히 2026년 현재, 대규모 언어 모델(LLM) 기반의 에이전트 도입이 가속화되면서, 개별 에이전트의 능력만큼이나 이들 에이전트가 어떻게 협력하고 자원을 공유하며 복잡한 태스크를 완수하는지가 핵심적인 고려사항이 되고 있습니다.
+
+## 멀티 에이전트 시스템의 핵심 협업 및 조정 개념
+
+### 커뮤니케이션 (Communication)
+에이전트 간 정보 교환은 협업의 기본입니다. 효율적인 커뮤니케이션 메커니즘은 메시지 형식, 프로토콜, 그리고 전송 방식(동기/비동기)을 포함합니다. 이는 공유 메모리, 메시지 큐, API 호출 등 다양한 형태로 구현될 수 있습니다.
+
+### 조정 (Coordination)
+조정은 에이전트의 행동이 전체 시스템 목표에 부합하도록 정렬하는 과정입니다. 이는 태스크 할당, 자원 관리, 순서 제어 등을 포함하며, 중앙 집중식(Orchestration) 또는 분산형(Choreography) 방식으로 이루어질 수 있습니다.
+
+### 협력 (Cooperation)
+협력은 에이전트들이 공동의 목표를 달성하기 위해 함께 노력하는 것을 의미합니다. 경쟁과 달리, 협력은 상호 이익을 위해 정보를 공유하고, 보완적인 역할을 수행하며, 충돌을 해결하는 과정입니다.
+
+## 주요 협업 및 조정 패턴
+
+### 1. 오케스트레이터 패턴 (Orchestrator Pattern)
+중앙 집중식 컨트롤러인 오케스트레이터(Orchestrator)가 전체 워크플로우를 관리하고, 각 에이전트에게 태스크를 할당하며, 결과를 통합합니다. LLM 기반의 에이전트 시스템에서 Supervisor 또는 Planner 역할을 하는 에이전트가 이 패턴의 좋은 예시입니다.
+
+```mermaid
+graph TD
+    A[사용자 요청] --> B{Orchestrator Agent}
+    B --> C(Task Decomposition)
+    C --> D[Agent A: 데이터 수집]
+    C --> E[Agent B: 데이터 처리]
+    C --> F[Agent C: 보고서 생성]
+    D --> G{결과 1: 원천 데이터}
+    E --> H{결과 2: 처리된 데이터}
+    F --> I{결과 3: 최종 보고서}
+    G & H & I --> J(결과 통합)
+    J --> B
+    B --> K[최종 응답]
+
+    subgraph Agents [
