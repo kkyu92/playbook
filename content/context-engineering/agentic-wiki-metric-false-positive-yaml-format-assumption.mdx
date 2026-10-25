@@ -1,5 +1,5 @@
 ---
-title: "Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive"
+title: Agentic Wiki 건강도 지표 오보 — YAML Format Assumption Silent False Positive
 category: context-engineering
 date: "2026-05-23"
 tags:
@@ -13,12 +13,9 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-23"
-connections:
-  - context-engineering/agentic-wiki-connection-graph-health-metrics
-  - context-engineering/drift-detection-methodology
-  - context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch
+connections: [context-engineering/agentic-wiki-connection-graph-health-metrics, context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch]
 source: explore-idea
-description: "wiki connections 측정 스크립트가 YAML list format만 인식 → array format 누락 → 78% zero connections 오보 (실제 0%). cycle 1015 직접 evidence. MDX frontmatter 다중 형식 병존 시 health metric 스크립트는 양쪽 형식 모두 처리 필수."
+description: wiki connections 측정 스크립트가 YAML list format만 인식 → array format 누락 → 78% zero connections 오보 (실제 0%). cycle 1015 직접 evidence. MDX frontmatter 다중 형식 병존 시 health metric 스크립트는 양쪽 형식 모두 처리 필수.
 ---
 
 ## 사건 원인 (cycle 1015, 2026-05-23)
