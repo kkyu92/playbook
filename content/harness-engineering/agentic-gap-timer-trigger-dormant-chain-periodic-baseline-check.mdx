@@ -1,5 +1,5 @@
 ---
-title: "자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검"
+title: 자율 에이전트 갭 타이머 트리거 — 이벤트 부재 체인 주기적 베이스라인 점검
 category: harness-engineering
 date: "2026-05-20"
 tags:
@@ -14,13 +14,9 @@ workers:
   - all
 confidence: 2
 last_verified: "2026-05-20"
-connections:
-  - infrastructure/agentic-lite-first-scan-gate-execution-pattern
-  - context-engineering/agentic-chain-dormancy-phase-map
-  - harness-engineering/agentic-chain-saturation-detection
-  - harness-engineering/agentic-loop-analytical-chain-lite-mode
+connections: [infrastructure/agentic-lite-first-scan-gate-execution-pattern, context-engineering/agentic-chain-dormancy-phase-map, harness-engineering/agentic-chain-saturation-detection, harness-engineering/agentic-loop-analytical-chain-lite-mode, project-ops/ai-worker-silent-failure-detection-alerting-system]
 status: complete
-description: "이벤트 기반 chain 선택만으로는 일부 chain이 무기한 휴면할 수 있다. 갭 타이머 트리거는 각 chain의 마지막 발화 이후 경과 사이클 수(gap)를 추적하고, 임계값 초과 시 lite 모드로 주기적 베이스라인 점검을 강제한다. 이벤트가 없어도 chain이 정기적으로 '살아있음'을 확인하는 메커니즘."
+description: 이벤트 기반 chain 선택만으로는 일부 chain이 무기한 휴면할 수 있다. 갭 타이머 트리거는 각 chain의 마지막 발화 이후 경과 사이클 수(gap)를 추적하고, 임계값 초과 시 lite 모드로 주기적 베이스라인 점검을 강제한다. 이벤트가 없어도 chain이 정기적으로 '살아있음'을 확인하는 메커니즘.
 type: entry
 source: explore-idea
 ---
