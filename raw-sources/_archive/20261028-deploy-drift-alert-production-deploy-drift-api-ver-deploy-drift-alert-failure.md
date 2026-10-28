@@ -6,11 +6,11 @@ payload_type: "incident"
 severity: "error"
 fingerprint: "deploy-drift-alert-failure"
 environment: "production"
-run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/40748669967"
+run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/40785503792"
 ---
 
 **Workflow**: deploy-drift-alert
-**Run**: https://github.com/kkyu92/moneyballscore/actions/runs/40748669967
+**Run**: https://github.com/kkyu92/moneyballscore/actions/runs/40785503792
 
 production /api/version 응답 비정상 또는 main HEAD 대비 장기 drift 감지. 기존 ::error:: annotation 은 GH Actions 탭에서만 보여 사용자가 놓치기 쉬움 — 허브로 명시 dispatch.
 
