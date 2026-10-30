@@ -6,11 +6,11 @@ payload_type: "incident"
 severity: "error"
 fingerprint: "runtime-error-alert-failure"
 environment: "production"
-run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/41115735065"
+run_url: "https://github.com/kkyu92/moneyballscore/actions/runs/41147171659"
 ---
 
 **Workflow**: runtime-error-alert
-**Run**: https://github.com/kkyu92/moneyballscore/actions/runs/41115735065
+**Run**: https://github.com/kkyu92/moneyballscore/actions/runs/41147171659
 
 핵심 production route smoke 가 1개 이상 non-200 응답. 기존 ::error:: annotation 은 GH Actions 탭에서만 보여 사용자가 놓치기 쉬움 — 허브로 명시 dispatch.
 
