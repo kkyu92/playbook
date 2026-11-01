@@ -1,0 +1,61 @@
+---
+title: Multi-stage Autonomous Agent Workflows - Design Patterns for Robust Orchestration
+category: agents
+date: "2026-11-01"
+tags:
+  - autonomous-agents
+  - workflow-design
+  - orchestration
+  - multi-agent-systems
+  - agent-architecture
+  - agents
+confidence: 1
+connections: [agents/autonomous-agent-llm-workflow-design-patterns, agents/multi-stage-decision-making-agent-design-patterns, agents/llm-agent-multi-stage-task-orchestration-patterns, agents/autonomous-agent-error-recovery-resilient-design, agents/collaborative-agent-workflow-design-orchestration, agents/ai-agent-workflow-loop-engineering, agents/multi-step-ai-agent-design-implementation-patterns]
+status: draft
+description: 복잡한 문제 해결을 위한 다단계 자율 에이전트 시스템의 안정적이고 효율적인 워크플로우 설계 전략을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+복잡성이 증대되는 AI 에이전트 시스템에서 안정적이고 효율적인 워크플로우 설계는 필수적입니다. 다단계 자율 에이전트 워크플로우는 복잡한 목표를 달성하기 위해 여러 단계의 작업을 유기적으로 연결하고, 각 단계에서 에이전트의 자율적인 판단과 행동을 최적화하는 접근 방식입니다. 이는 단일 에이전트로는 처리하기 어려운 거대한 문제를 구조화하고, 에이전트의 오작동 및 비용 초과를 방지하며, 전반적인 시스템의 신뢰성과 효율성을 향상시키는 핵심 전략입니다.
+
+## 다단계 워크플로우의 핵심 원칙
+다단계 워크플로우는 단순히 작업을 순서대로 나열하는 것을 넘어, 각 단계가 독립적인 목표를 가지면서도 전체 시스템의 최종 목표에 기여하도록 설계되어야 합니다. 주요 원칙은 다음과 같습니다.
+
+### 1. 명확한 단계 분할 (Clear Stage Decomposition)
+전체 작업을 논리적으로 구분되는 작은 단계들로 나눕니다. 각 단계는 명확한 입력, 처리 로직, 그리고 출력 결과물을 가져야 합니다. 이는 에이전트의 역할을 명확히 하고, 디버깅 및 유지보수를 용이하게 합니다.
+
+### 2. 강력한 상태 관리 (Robust State Management)
+각 단계에서 생성된 중간 결과 (Intermediate Artifacts)와 현재 시스템의 상태 (System State)는 다음 단계로 정확하게 전달되어야 합니다. 이는 에이전트가 `context`를 유지하고, 일관된 의사결정을 내릴 수 있도록 합니다. 지속적인 메모리 (Persistent Memory) 및 `Knowledge Graph` 통합이 중요합니다.
+
+### 3. 유연한 제어 흐름 및 오케스트레이션 (Flexible Control Flow & Orchestration)
+선형적인 흐름뿐만 아니라, 조건부 분기 (Conditional Branching), 병렬 처리 (Parallel Execution), 반복 루프 (Iterative Loops) 등 복잡한 제어 흐름을 지원해야 합니다. 오케스트레이터 (Orchestrator)는 각 에이전트의 실행을 조정하고, 단계 간 전환을 관리하며, 시스템 전반의 목표 달성을 감독합니다.
+
+### 4. 강력한 오류 처리 및 복구 (Resilient Error Handling & Recovery)
+각 단계에서 발생할 수 있는 오류를 예측하고, 이에 대한 자동 복구 메커니즘을 설계해야 합니다. `Self-correction` 및 `Retrospection Loop`를 통해 에이전트가 자체적으로 오류를 감지하고 수정할 수 있도록 합니다.
+
+### 5. 투명한 실행 및 피드백 루프 (Transparent Execution & Feedback Loops)
+에이전트의 행동, 의사결정 과정, 그리고 중간 결과물은 추적 가능해야 합니다. `Rationale Storage` 및 `Observability` 시스템을 통해 시스템의 동작을 이해하고, 지속적인 개선을 위한 피드백 루프를 구축합니다.
+
+## 다단계 에이전트 워크플로우 패턴
+
+### 1. 파이프라인 패턴 (Pipeline Pattern)
+가장 기본적인 형태로, 각 에이전트가 이전 에이전트의 출력을 입력으로 받아 순차적으로 작업을 처리합니다. 단순하고 예측 가능하지만, 초기 단계의 오류가 전체 워크플로우에 큰 영향을 미칠 수 있습니다.
+
+### 2. 계층적 패턴 (Hierarchical Pattern)
+상위 관리자 에이전트 (Manager Agent)가 전체 목표를 하위 작업으로 분해하여 여러 하위 작업자 에이전트 (Worker Agents)에게 위임합니다. 하위 에이전트들은 독립적으로 작업을 수행하고, 그 결과를 관리자에게 보고합니다. 이는 복잡한 문제를 분산 처리하고, `Agent Collaboration`을 촉진합니다.
+
+```mermaid
+graph TD
+    A[Manager Agent] --> B{Task Decomposition}
+    B --> C[Worker Agent 1 (Planning)]
+    B --> D[Worker Agent 2 (Execution)]
+    B --> E[Worker Agent 3 (Verification)]
+    C --> F{Plan Result}
+    D --> G{Execution Result}
+    E --> H{Verification Report}
+    F --> A
+    G --> A
+    H --> A
+    A --> I[Final Output]
+    subgraph 
