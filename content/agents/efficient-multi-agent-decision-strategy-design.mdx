@@ -1,0 +1,66 @@
+---
+title: "Multi-Agent Systems: Efficient Decision Strategy Design for Complex Problem Solving"
+category: agents
+date: "2026-11-09"
+tags:
+  - DecisionMaking
+  - MultiAgent
+  - AI
+  - Orchestration
+  - Coordination
+  - DistributedSystems
+  - agents
+confidence: 1
+connections: [agents/multi-agent-decision-making-patterns, agents/multi-agent-collaboration-coordination-design, agents/llm-multi-agent-system-design-orchestration-patterns, agents/collaboration-conflict-resolution-multi-agent-systems, agents/autonomous-agent-complex-decision-logic-patterns, agents/multi-agent-task-distribution-coordination-strategies, agents/multi-agent-system-efficient-interaction-design-patterns]
+status: draft
+description: 복잡한 문제를 해결하는 멀티 에이전트 시스템에서 에이전트 간의 효율적인 의사결정 전략을 설계하는 방법을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+멀티 에이전트 시스템 (Multi-Agent Systems, MAS)은 복잡한 문제 해결을 위해 여러 AI 에이전트가 협력하는 구조입니다. 이러한 시스템의 성능을 극대화하려면 에이전트 간의 효율적인 의사결정 전략 설계가 필수적입니다. 비효율적인 의사결정은 리소스 낭비, 충돌 발생, 목표 달성 실패로 이어질 수 있습니다.
+
+## 핵심 의사결정 전략 설계 원칙
+
+### 1. 분산 및 중앙 집중형 의사결정 (Decentralized vs. Centralized Decision Making)
+
+의사결정 구조는 시스템의 복잡성과 요구사항에 따라 달라집니다. 중앙 집중형 의사결정은 모든 정보가 하나의 코디네이터 에이전트에 집중되어 통제력이 높지만, 단일 실패 지점 (Single Point of Failure)이 될 수 있고 확장성에 한계가 있습니다. 반면, 분산형 의사결정은 에이전트들이 자율적으로 판단하여 유연성과 확장성이 높지만, 전역적인 최적화가 어렵고 충돌 가능성이 증가합니다.
+
+*   **중앙 집중형**: 코디네이터 에이전트가 모든 정보를 수집하고 최적의 실행 계획을 수립하여 각 에이전트에게 지시합니다. 대규모 LLM 기반 코디네이터가 복잡한 시나리오를 분석하고 전체 시스템의 거시적인 방향을 설정하는 2026년 트렌드가 주목받고 있습니다.
+*   **분산형**: 각 에이전트가 로컬 정보와 목표에 기반하여 독립적으로 의사결정합니다. P2P 통신이나 공유 메모리 (Shared Memory) 패턴을 통해 부분적인 정보를 교환하며 협력합니다.
+
+### 2. 합의 및 조정 메커니즘 (Consensus and Coordination Mechanisms)
+
+에이전트 간의 의사결정은 종종 자원의 할당, 작업의 분배, 목표의 우선순위 설정 등 조정이 필요합니다. 주요 메커니즘은 다음과 같습니다.
+
+*   **경매 및 입찰 (Auction and Bidding)**: 특정 작업을 가장 효율적으로 수행할 수 있는 에이전트가 입찰을 통해 작업을 할당받는 방식입니다. 경제학 이론을 기반으로 하며, 자율 에이전트 간의 동적 작업 할당에 효과적입니다.
+*   **블랙보드 시스템 (Blackboard System)**: 공유 데이터 구조인 블랙보드에 문제의 부분 해답이나 정보가 게시되고, 관심 있는 에이전트가 이를 읽고 자신의 지식을 추가하여 문제 해결에 기여합니다. 2026년에는 RAG (Retrieval Augmented Generation) 패턴을 활용한 에이전트들이 블랙보드를 통해 외부 지식과 내부 추론 결과를 통합하는 방식이 발전하고 있습니다.
+*   **협상 (Negotiation)**: 에이전트들이 직접 대화하여 목표나 자원 충돌을 해결하고 합의점을 찾습니다. LLM의 고급 추론 능력을 활용하여 복잡한 협상 프로토콜을 구현하는 것이 가능해졌습니다.
+
+### 3. 동적 계획 및 적응 전략 (Dynamic Planning and Adaptive Strategies)
+
+현대 멀티 에이전트 시스템은 예측 불가능한 환경에서 운영되는 경우가 많습니다. 2026년에는 LLM 기반의 에이전트가 실시간으로 환경 변화를 감지하고, 목표를 재정의하며, 기존 계획을 동적으로 수정하는 `Self-Correction` 및 `Reflection Loop` 패턴이 중요해졌습니다.
+
+*   **Re-planning**: 에이전트 또는 시스템 전체가 현재 계획이 유효하지 않거나 비효율적이라고 판단될 때, 새로운 계획을 수립합니다.
+*   **학습 및 개선 (Learning and Improvement)**: 과거 의사결정의 성공과 실패를 통해 학습하여 미래 의사결정의 품질을 향상시킵니다. `Agent Rationale Storage`와 `Decision Learning System`은 이러한 학습 프로세스의 핵심 구성 요소입니다.
+
+## 의사결정 흐름 예시 (Mermaid Diagram)
+
+아래 Mermaid 다이어그램은 중앙 코디네이터가 있는 멀티 에이전트 시스템의 의사결정 흐름을 보여줍니다.
+
+```mermaid
+graph TD
+    A[문제 감지 및 목표 설정] --> B{코디네이터 에이전트};
+    B --> C[작업 분해 및 할당];
+    C --> D(에이전트 1: 작업 실행);
+    C --> E(에이전트 2: 작업 실행);
+    C --> F(에이전트 N: 작업 실행);
+    D --> G{결과 보고 및 상태 업데이트};
+    E --> G;
+    F --> G;
+    G --> H{충돌 감지 및 해결};
+    H --> I{다음 의사결정 필요?};
+    I -- Yes --> B;
+    I -- No --> J[목표 달성 및 시스템 종료];
+    
+    subgraph Legend [
