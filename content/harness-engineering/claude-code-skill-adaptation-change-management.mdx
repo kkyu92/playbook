@@ -1,0 +1,229 @@
+---
+title: Claude Code Skill Adaptation & Change Management – LLM Harness를 위한 도구 및 프로세스
+category: harness-engineering
+date: "2026-11-10"
+tags:
+  - ClaudeCode
+  - SkillAdaptation
+  - ChangeManagement
+  - LLMHarness
+  - VersionControl
+  - AgenticWorkflow
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees, harness-engineering/llm-harness-external-model-dynamic-integration, context-engineering/agentic-auto-update-contract-drift-frontmatter-skill-mismatch, agents/ai-agent-tool-use-architecture-design, evaluation/llm-output-validation-automation-failure-prevention, agents/ai-agent-output-versioning-deltadb-concepts, agents/llm-agent-tool-integration-management-patterns]
+status: draft
+description: 외부 Claude Code/Codex 스킬을 내부 프로젝트 컨텍스트에 맞게 조정하고, 변경 사항 및 그 근거를 체계적으로 추적/관리하는 도구 및 프로세스 도입 전략을 다룹니다.
+type: entry
+source: scout
+---
+
+Claude Code와 같은 대규모 언어 모델(LLM) 에이전트 스킬은 특정 문제 해결을 위해 사전 학습되거나 외부에서 개발되어 배포됩니다. 이러한 스킬들을 프로덕션 LLM 하네스에 통합할 때, 종종 우리 프로젝트의 고유한 환경, 도구셋, 테스트 프로시저, 그리고 전반적인 에이전트 규칙과 충돌하는 불일치 문제가 발생합니다. 외부 스킬은 다른 프로젝트의 컨텍스트에 맞춰 설계되었기 때문에, 내재된 가정이 현재 시스템과 맞지 않을 때 예상치 못한 동작이나 오류를 유발할 수 있습니다. 수동으로 스킬 코드를 수정하는 것은 단기적인 해결책이 될 수 있지만, 시간이 지남에 따라 프로젝트 환경이 변화하면 이전에 수정한 라인이 다시 문제가 되거나, 어떤 변경이 어떤 근거로 이루어졌는지 추적하기 어려워지는 관리상의 복잡성을 야기합니다.
+
+## Claude Code 스킬 불일치 문제 해결 및 변경 이력 관리 시스템
+
+이러한 문제를 해결하고 LLM 에이전트 스킬의 안정적인 통합 및 유지보수를 위해, `skilladopt`와 유사한 개념의 스킬 적응 및 변경 이력 관리 시스템 또는 프로세스를 도입하는 것이 필수적입니다. 이 시스템은 외부 Claude Code 스킬을 내부 프로젝트 컨텍스트에 맞춰 효율적으로 조정하고, 발생한 모든 변경사항과 그 근거를 체계적으로 기록하여 향후 유지보수 비용을 절감하는 것을 목표로 합니다. 이는 특히 Karpathy LLM Wiki 패턴과 같이 지식 그래프 기반의 에이전트 중심 개발 환경에서 스킬의 신뢰성과 재사용성을 높이는 핵심 전략입니다.
+
+### 핵심 개념 및 동작 원리
+
+스킬 적응 및 변경 이력 관리 시스템은 다음과 같은 핵심 단계로 구성됩니다.
+
+1.  **스킬 인제션 및 초기 분석 (Skill Ingestion & Initial Analysis)**:
+    *   외부 Claude Code 스킬을 시스템으로 가져옵니다.
+    *   초기 자동 분석을 통해 스킬 내 도구 호출, 명령어, 규칙 등을 식별하고, 현재 프로젝트의 환경 설정(등록된 도구, 테스트 스크립트, 에이전트 정책)과 비교하여 잠재적인 불일치 지점을 도출합니다.
+    *   이는 코드 AST(Abstract Syntax Tree) 분석, 정규 표현식 매칭, 또는 LLM 자체를 활용한 의미론적 분석을 통해 이루어질 수 있습니다.
+
+2.  **적응 계층 (Adaptation Layer)**:
+    *   식별된 불일치 지점에 대해 개발자 또는 에이전트가 `skilladopt`의 판단 기준(Keep, Bind, Rewrite, Drop, Review)과 유사한 결정 가이드라인에 따라 적응 작업을 수행합니다.
+        *   **Keep**: 현재 프로젝트에서 변경 없이 그대로 사용할 수 있는 부분.
+        *   **Bind**: 프로젝트의 기존 도구/명령어에 매핑하여 사용하는 부분. (예: `npm test` -> `yarn test`)
+        *   **Rewrite**: 프로젝트의 로직이나 규칙에 맞춰 코드 내용을 수정해야 하는 부분. (예: 특정 라이브러리 함수 호출 변경)
+        *   **Drop**: 현재 프로젝트에서 전혀 필요 없거나 충돌을 일으켜 제거해야 하는 부분.
+        *   **Review**: 자동 분석만으로는 판단하기 어렵거나, 인간의 심층적인 검토가 필요한 부분.
+    *   각 결정은 해당 코드 라인 또는 블록과 연결되며, **결정의 근거(Rationale)**가 함께 기록됩니다. 이 근거는 향후 변경 이력을 검토하거나 스킬 업데이트 시 중요한 참고 자료가 됩니다.
+
+3.  **변경 이력 및 근거 추적 (Change History & Rationale Tracking)**:
+    *   모든 적응 작업은 시스템 내부에 버전 관리됩니다. Git과 유사한 방식으로 변경사항을 추적하며, 각 커밋(변경 단위)에는 어떤 스킬의 어느 부분이 어떻게 변경되었는지, 그리고 그 근거(Rationale)가 명확하게 기록됩니다.
+    *   이는 스킬 코드 옆에 사이드카 파일(`skill.md.meta` 또는 인라인 주석)로 저장되거나, 별도의 데이터베이스에 구조화된 형태로 저장될 수 있습니다. 중요한 것은 변경된 라인과 근거의 직접적인 연결성입니다.
+    *   **예시 메타데이터 형식**:
+        ```json
+        {
+          "skill_name": "claude-test-runner",
+          "original_hash": "abcdef123",
+          "adaptations": [
+            {
+              "line_range": "L10-L15",
+              "action": "rewrite",
+              "rationale": "기존 'mocha' 대신 'jest' 프레임워크 사용을 위해 테스트 명령어 변경. 'test-command-mapping' 정책 참조.",
+              "timestamp": "2026-07-20T10:00:00Z",
+              "author": "engineer@example.com"
+            },
+            {
+              "line_range": "L30",
+              "action": "drop",
+              "rationale": "레거시 로깅 라이브러리 'log4js' 호출 제거. 현재 시스템은 'winston' 사용.",
+              "timestamp": "2026-07-20T10:15:00Z",
+              "author": "engineer@example.com"
+            }
+          ]
+        }
+        ```
+
+4.  **영향 분석 및 재평가 (Impact Analysis & Re-evaluation)**:
+    *   외부 스킬의 원본이 업데이트되거나, 내부 프로젝트의 환경/규칙이 변경될 경우, 시스템은 기록된 변경 이력과 근거를 바탕으로 어떤 적응 라인이 영향을 받는지 자동으로 식별합니다.
+    *   영향을 받는 라인에 대해서만 재검토(`Review` 상태로 전환) 또는 자동 재적용 프로세스를 트리거하여, 유지보수 오버헤드를 최소화하고 시스템의 일관성을 유지합니다.
+
+### 실제 코드 예시: Go 언어 기반 하네스 내 스킬 어댑터
+
+Go 언어로 구현된 LLM 하네스에서 Claude Code 스킬을 적응하고 관리하는 예시를 가정합니다. 여기서는 스킬 코드 자체를 Go 언어로 추상화하고, 변경 이력은 YAML 파일로 관리하는 형태를 보여줍니다.
+
+```go
+package skilladapter
+
+import (
+	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+
+	"gopkg.in/yaml.v2"
+)
+
+// SkillAdaptationRecord는 특정 라인에 대한 변경 이력을 나타냅니다.
+type SkillAdaptationRecord struct {
+	LineRange string `yaml:"line_range"` // "L10-L15"
+	Action    string `yaml:"action"`     // "rewrite", "bind", "drop", "keep", "review"
+	Rationale string `yaml:"rationale"`  // 변경 근거
+	Timestamp string `yaml:"timestamp"`
+	Author    string `yaml:"author"`
+}
+
+// SkillMetadata는 스킬의 변경 이력을 포함합니다.
+type SkillMetadata struct {
+	SkillName    string                  `yaml:"skill_name"`
+	OriginalHash string                  `yaml:"original_hash"`
+	Adaptations  []SkillAdaptationRecord `yaml:"adaptations"`
+}
+
+// LoadSkillMetadata는 지정된 스킬의 메타데이터를 로드합니다.
+func LoadSkillMetadata(skillPath string) (*SkillMetadata, error) {
+	metaFilePath := filepath.Join(skillPath, "skill_meta.yaml")
+	data, err := ioutil.ReadFile(metaFilePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return &SkillMetadata{SkillName: filepath.Base(skillPath)}, nil // 새 스킬인 경우 빈 메타데이터 반환
+		}
+		return nil, fmt.Errorf("failed to read skill metadata: %w", err)
+	}
+
+	var metadata SkillMetadata
+	if err := yaml.Unmarshal(data, &metadata); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal skill metadata: %w", err)
+	}
+	return &metadata, nil
+}
+
+// SaveSkillMetadata는 스킬 메타데이터를 파일에 저장합니다.
+func SaveSkillMetadata(skillPath string, metadata *SkillMetadata) error {
+	metaFilePath := filepath.Join(skillPath, "skill_meta.yaml")
+	data, err := yaml.Marshal(metadata)
+	if err != nil {
+		return fmt.Errorf("failed to marshal skill metadata: %w", err)
+	}
+	if err := ioutil.WriteFile(metaFilePath, data, 0644); err != nil {
+		return fmt.Errorf("failed to write skill metadata: %w", err)
+	}
+	return nil
+}
+
+// ApplyAdaptationRecord는 스킬 코드에 실제 변경을 적용하는 로직 (예시)
+func ApplyAdaptationRecord(skillCode []byte, record SkillAdaptationRecord) ([]byte, error) {
+	// 실제 스킬 코드 수정 로직은 복잡하며, AST 파싱 및 조작이 필요할 수 있습니다.
+	// 여기서는 단순히 라인 범위에 대한 주석 추가/삭제 등의 추상적인 로직을 가정합니다.
+	fmt.Printf("Applying %s action to lines %s with rationale: %s\n", record.Action, record.LineRange, record.Rationale)
+	// 실제 구현에서는 skillCode를 파싱하고, record.LineRange에 따라 특정 라인을 수정하거나 제거하는 작업이 들어갑니다.
+	// 예를 들어, Go AST parser를 사용하거나, 간단한 텍스트 기반 수정 로직을 구현할 수 있습니다.
+	return skillCode, nil // 변경된 코드 반환
+}
+
+// CheckForDrift는 원본 스킬 또는 프로젝트 환경 변경 시 드리프트를 감지합니다.
+func CheckForDrift(currentSkillCode []byte, originalSkillCode []byte, metadata *SkillMetadata) []SkillAdaptationRecord {
+	// 원본 스킬 코드와 현재 스킬 코드, 그리고 메타데이터를 비교하여
+	// 기존 적응 내용이 더 이상 유효하지 않거나 충돌하는 지점을 식별합니다.
+	// 예를 들어, originalSkillCode의 특정 라인이 변경되었는데, metadata에 해당 라인에 대한 'keep' 또는 'rewrite' 기록이 있다면 드리프트로 간주.
+	fmt.Println("Checking for drift...")
+	// 실제 구현에서는 텍스트 diff 유틸리티(e.g., go-diff)와
+	// 메타데이터의 LineRange 정보를 결합하여 변경 영향도를 분석합니다.
+	var affectedRecords []SkillAdaptationRecord
+	// 예시: 첫 번째 적응 기록이 원본과 달라진 경우를 가정
+	if len(metadata.Adaptations) > 0 {
+		fmt.Printf("Detected potential drift for record: %+v\n", metadata.Adaptations[0])
+		affectedRecords = append(affectedRecords, metadata.Adaptations[0])
+	}
+	return affectedRecords
+}
+```
+
+```mermaid
+graph TD
+    A[외부 Claude Code Skill] --> B{스킬 인제션 및 초기 분석};
+    B --> C{불일치 지점 식별};
+    C --> D{적응 계층 (Adaptation Layer)};
+    D -- (Keep, Bind, Rewrite, Drop, Review) + Rationale --> E["변경 이력 및 근거 추적 (DB / Sidecar)"];
+    E --> F["적응된 Claude Code Skill (내부 프로젝트)"];
+    subgraph "Maintenance & Evolution"
+        F -- 프로젝트 환경 변경 / 원본 스킬 업데이트 --> G{영향 분석 및 재평가};
+        G -- 영향을 받는 라인 --> H[재검토 / 자동 재적용];
+        H --> E;
+    end
+    F --> I[LLM 하네스 배포 및 활용];
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style F fill:#bfb,stroke:#333,stroke-width:2px;
+    style I fill:#ccf,stroke:#333,stroke-width:2px;
+    style G fill:#ffa,stroke:#333,stroke-width:2px;
+```
+
+### 2026년 최신 트렌드 반영: AI 기반 자동화 및 드리프트 탐지
+
+2026년에는 이러한 스킬 적응 및 관리 프로세스에 AI의 역할이 더욱 강화될 것입니다.
+
+*   **LLM 기반 초기 분석 및 권고**: 초기 불일치 분석 단계에서 LLM이 코드의 의미론적 유사성 및 프로젝트 컨텍스트를 이해하여, 적절한 `Bind`, `Rewrite`, `Drop` 등의 액션을 자동으로 제안하고 심지어 초안(draft) 코드를 생성할 수 있습니다.
+*   **지속적인 드리프트 탐지 (Continuous Drift Detection)**: Git Hooks, CI/CD 파이프라인과 통합하여, 원본 스킬 저장소의 변경 또는 내부 프로젝트의 코드베이스 변경이 발생할 때마다 자동으로 영향 분석을 실행합니다. 이 때 LLM이 변경된 코드 라인과 기존 적응 근거를 비교하여, `Review`가 필요한 특정 라인과 그 이유를 정확히 짚어줄 수 있습니다.
+*   **자기 수정 에이전트 (Self-Correcting Agents)**: 반복적으로 발생하는 경미한 불일치에 대해서는 사람이 개입하기 전에 에이전트가 자체적으로 `Bind` 또는 `Rewrite`를 시도하고, 그 결과를 검증한 후 변경 이력을 업데이트하는 자율 적응 메커니즘이 발전할 것입니다.
+
+---
+
+## 트레이드오프
+
+이러한 스킬 적응 및 변경 이력 관리 시스템은 여러 장점을 제공하지만, 동시에 고려해야 할 트레이드오프도 존재합니다.
+
+*   **초기 설정 및 복잡도 vs. 장기 유지보수성**:
+    *   **좋은 경우**: 복잡한 스킬이 많고, 외부 스킬의 업데이트 빈도가 높으며, 팀 내 스킬 커스터마이징 요구가 많을 때 탁월합니다. 초기 설정 비용이 높지만, 장기적으로 스킬 관리와 업그레이드에 소요되는 시간을 획기적으로 줄여줍니다.
+    *   **나쁜 경우**: 스킬의 수가 적고 변경이 거의 없거나, 스킬 코드가 매우 단순하여 직접 수정하는 것이 더 빠를 때는 과도한 오버헤드가 될 수 있습니다.
+
+*   **자동화 수준 vs. 인간의 검토 필요성**:
+    *   **좋은 경우**: LLM 기반의 초기 분석 및 권고 시스템이 잘 작동하고, 명확한 정책과 규칙이 정의된 환경에서는 자동화된 적응이 효율성을 극대화합니다. 인간은 복잡하거나 중요한 `Review` 케이스에만 집중할 수 있습니다.
+    *   **나쁜 경우**: LLM의 분석 정확도가 낮거나, 스킬의 수정이 고도로 창의적이거나 도메인 특화된 지식을 요구할 때는 자동화가 오히려 잘못된 변경을 유발하고 디버깅 비용을 증가시킬 수 있습니다.
+
+*   **스킬 유연성 vs. 스탠더드 준수**:
+    *   **좋은 경우**: 각 프로젝트의 특수성에 맞춰 스킬을 유연하게 조정할 수 있는 동시에, 모든 변경에 대한 근거를 명확히 남김으로써 스탠더드에서 벗어난 이유를 추적할 수 있습니다. 이는 다양한 프로젝트에서 스킬을 재활용할 때 유용합니다.
+    *   **나쁜 경우**: 지나치게 많은 `Rewrite`나 `Drop`이 발생하면, 이는 스킬의 재사용성 자체에 문제가 있음을 시사할 수 있습니다. 스킬의 원본 의도와 너무 멀어져 스탠더드에서 이탈하는 위험이 있습니다.
+
+*   **성능 오버헤드 vs. 투명성 및 감사 가능성**:
+    *   **좋은 경우**: 모든 변경 이력과 근거를 기록하므로, 스킬의 동작 방식과 변경 과정을 완벽하게 추적하고 감사할 수 있습니다. 이는 규제 준수나 보안 감사에 매우 유리합니다.
+    *   **나쁜 경우**: 상세한 변경 이력 관리 및 버전 관리는 추가적인 스토리지 및 처리 오버헤드를 발생시킬 수 있습니다. 특히 실시간 스킬 로딩 및 실행 시 약간의 성능 저하로 이어질 수 있습니다.
+
+---
+
+## 실전 체크리스트
+
+이 스킬 적응 및 변경 이력 관리 프로세스를 프로젝트에 성공적으로 도입하기 위한 체크리스트입니다.
+
+- [ ] **스킬 초기 분석 기준 정의**: 외부 스킬의 도구, 명령어, 규칙을 자동으로 식별하고 내부 프로젝트 환경과 비교할 명확한 기준(정규 표현식, AST 패턴, LLM 프롬프트)이 정의되었는가?
+- [ ] **적응 액션 및 근거 기록 표준화**: `Keep`, `Bind`, `Rewrite`, `Drop`, `Review` 각 액션에 대한 구체적인 정의와, 각 액션 시 기록해야 할 근거(Rationale)의 최소 요건(예: 변경 목적, 관련 정책/문서 링크)이 표준화되었는가?
+- [ ] **변경 이력 저장 및 버전 관리 시스템 구축**: 스킬 변경 이력과 근거를 Git, DB, 또는 사이드카 파일 형태로 저장하고, 변경 사항을 버전 관리할 수 있는 메커니즘이 구현되었는가?
+- [ ] **자동 드리프트 탐지 파이프라인 통합**: 원본 스킬 업데이트 또는 내부 코드베이스 변경 시, 자동으로 영향을 받는 적응 라인을 식별하고 알림을 발생시키는 CI/CD 파이프라인 또는 Git Hook이 설정되었는가?
+- [ ] **스킬 적응 전담 역할 및 책임 명확화**: 스킬 적응 및 변경 이력 관리 시스템을 운영하고 스킬 충돌을 해결할 전담 팀 또는 역할(예: Skill Custodian)이 지정되었으며, 책임 범위가 명확한가?
+- [ ] **변경 이력 기반 재평가 프로세스 정의**: 영향을 받은 적응 라인에 대한 재검토 또는 재적용 절차가 명확히 문서화되었으며, 재평가 결과가 다시 시스템에 반영되는 피드백 루프가 구축되었는가?
+- [ ] **성능 및 스토리지 오버헤드 모니터링 계획**: 스킬 이력 관리 시스템 도입으로 인한 성능 저하(스킬 로딩 시간 등) 및 스토리지 사용량 증가를 모니터링하고 최적화할 계획이 수립되었는가?
