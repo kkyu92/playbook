@@ -1,0 +1,60 @@
+---
+title: 대규모 AI 에이전트 협업 아키텍처 — 분산형 문제 해결을 위한 설계 및 워크플로우 모델링
+category: agents
+date: "2026-11-11"
+tags:
+  - AI Agents
+  - Collaboration
+  - Architecture
+  - Distributed AI
+  - Workflow
+  - Orchestration
+  - agents
+confidence: 1
+connections: [agents/agent-collaboration-pattern-design, agents/ai-agent-parallel-task-orchestration-and-auto-merge, agents/designing-multi-agent-systems-complex-problem-solving, agents/multi-agent-collaboration-coordination-design, agents/multi-agent-task-orchestration-delegation-patterns, harness-engineering/large-scale-llm-harness-architecture-patterns, agents/ai-agent-workflow-loop-engineering]
+status: draft
+description: 대규모 AI 에이전트의 효율적인 협업 아키텍처를 설계하고, NASA 라이다 데이터 분석 사례를 통해 워크플로우를 모델링하는 기술 위키입니다.
+type: entry
+source: scout
+---
+
+복잡하고 방대한 문제를 해결하기 위해 대규모 AI 에이전트(Large-scale AI Agent)의 협업 아키텍처는 필수적인 요소입니다. 단일 에이전트가 처리하기 어려운 과제는 다수의 에이전트가 각자의 전문성을 활용하여 분산 처리함으로써, 효율성과 문제 해결 속도를 극대화할 수 있습니다. NASA 라이다(LiDAR) 데이터를 48개의 AI 에이전트가 단 72시간 만에 분석하여 미지의 마야 유적 후보지를 찾아낸 사례는 이러한 대규모 협업 아키텍처의 강력한 잠재력을 보여줍니다.
+
+## 대규모 AI 에이전트 협업의 필요성
+
+AI 에이전트가 복잡한 실세계 문제를 해결하기 위해서는 다음의 능력들이 중요합니다.
+
+*   **복잡한 작업 분해 (Complex Task Decomposition)**: 거대한 목표를 작은 단위의 관리 가능한 서브태스크(subtask)로 나누고, 각 서브태스크를 전문 에이전트에게 위임해야 합니다.
+*   **병렬 처리 및 확장성 (Parallel Processing & Scalability)**: 여러 작업을 동시에 처리하여 전체 워크플로우(workflow)의 시간을 단축하고, 필요에 따라 에이전트 수를 유연하게 조절하여 확장할 수 있어야 합니다.
+*   **전문성 활용 (Leveraging Specialization)**: 특정 도메인이나 작업 유형에 특화된 에이전트들을 활용하여 각 단계의 정확도와 효율성을 높입니다.
+*   **동적 조정 및 적응 (Dynamic Coordination & Adaptation)**: 예측 불가능한 상황에 대응하고, 실시간으로 태스크를 재분배하거나 협업 전략을 조정할 수 있는 능력이 필요합니다.
+
+NASA 라이다 데이터 분석 사례에서 AI 에이전트들은 지형 이미지 분석, 피라미드, 기단, 광장 등 특정 패턴 탐지 등의 작업을 분담했습니다. 이는 '아이디어 탐색'에서 '결과 도출'에 이르는 전체 워크플로우를 에이전트 간의 정교한 협업과 조정을 통해 모델링한 결과입니다.
+
+## 협업 아키텍처 모델링
+
+대규모 AI 에이전트 협업 아키텍처는 크게 세 가지 계층으로 구성될 수 있습니다.
+
+1.  **오케스트레이션 레이어 (Orchestration Layer)**: 전체 워크플로우를 관리하고 에이전트 간의 상호작용을 조정합니다. 태스크 분배, 결과 병합, 에러 처리, 진행 상황 모니터링 등의 역할을 수행합니다.
+2.  **에이전트 레이어 (Agent Layer)**: 실제 작업을 수행하는 개별 AI 에이전트들의 집합입니다. 각 에이전트는 특정 역할(예: 데이터 수집, 분석, 필터링, 합성)을 맡고 필요한 툴(tool)을 활용합니다.
+3.  **공유 지식 및 메모리 레이어 (Shared Knowledge & Memory Layer)**: 에이전트들이 공통으로 접근하고 업데이트할 수 있는 중앙 집중식 또는 분산식 지식 저장소입니다. 이는 에이전트 간의 컨텍스트(context) 공유, 장기 기억, 학습에 활용됩니다.
+
+### 워크플로우 다이어그램 (예시)
+
+NASA 라이다 분석 사례를 기반으로 한 일반적인 대규모 에이전트 협업 워크플로우는 다음과 같이 모델링할 수 있습니다.
+
+```mermaid
+graph TD
+    A[문제 정의 및 초기 아이디어] --> B{오케스트레이터}; 
+    B --> C[태스크 분해];
+    C --> D1(에이전트 그룹 1: 데이터 수집/전처리);
+    C --> D2(에이전트 그룹 2: 핵심 패턴 분석);
+    C --> D3(에이전트 그룹 3: 결과 검증/정제);
+    D1 --> E{공유 지식 베이스}; 
+    D2 --> E;
+    D3 --> E;
+    E --> B;
+    B --> F[결과 종합 및 보고];
+    F --> G[인간 검토/피드백];
+    G --> B;
+    subgraph Agent Task Flow [
