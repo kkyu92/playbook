@@ -1,0 +1,58 @@
+---
+title: LLM 에이전트 자기 수정 루프 디자인 패턴 — 자율성 및 신뢰성 강화
+category: agents
+date: "2026-11-12"
+tags:
+  - LLMAgents
+  - SelfCorrection
+  - DesignPatterns
+  - AutonomousSystems
+  - ErrorRecovery
+  - AgenticWorkflow
+  - agents
+confidence: 1
+connections: [agents/agent-self-correction-retrospection-loop-implementation, agents/ai-agent-self-correction-design-principles, agents/autonomous-agent-feedback-loop-design-patterns, agents/autonomous-agent-error-recovery-resilient-design, agents/llm-agent-self-correction-error-recovery, agents/autonomous-agent-llm-error-handling-recovery-patterns, harness-engineering/claude-code-harness-self-improvement-feedback-loop]
+status: draft
+description: LLM 기반 에이전트의 오류를 줄이고 자율성을 높여 실용적 가치를 극대화하는 자기 수정 루프 디자인 패턴을 탐색합니다.
+type: entry
+source: gap-pull
+---
+
+LLM(Large Language Model) 기반 에이전트의 실용적 가치를 극대화하기 위해서는 오류를 최소화하고 자율성을 높이는 것이 필수적입니다. 이를 위한 핵심 디자인 패턴 중 하나가 바로 자기 수정 루프(Self-Correction Loop)입니다. 에이전트가 자신의 행동 결과를 평가하고, 문제점을 식별하며, 이를 바탕으로 스스로 계획이나 실행 방식을 개선하는 메커니즘은 단순한 태스크 자동화를 넘어 복잡하고 동적인 환경에서의 적응성을 크게 향상시킵니다.
+
+## 핵심 개념
+
+자기 수정 루프는 일반적으로 다음 세 가지 핵심 단계로 구성됩니다.
+
+### 1. 관찰 및 평가 (Observation & Evaluation)
+에이전트가 태스크를 실행한 후, 그 결과와 외부 환경의 피드백을 수집하여 현재 상태를 관찰합니다. 이 단계에서는 목표 달성 여부, 예상치 못한 결과 발생 여부, 시스템 오류 등을 종합적으로 평가하여 문제점이나 개선이 필요한 부분을 식별합니다. 예를 들어, 특정 API 호출이 실패했거나, 생성된 코드가 컴파일되지 않는 경우 등이 해당됩니다.
+
+### 2. 반성 및 추론 (Reflection & Reasoning)
+식별된 문제의 원인을 분석하고, 이를 해결하기 위한 전략을 추론하는 단계입니다. 에이전트는 자체적인 지식 베이스, 과거의 성공 및 실패 경험, 또는 추가적인 LLM 호출을 통해 심층적인 '생각의 사슬(Chain-of-Thought)'이나 '생각의 나무(Tree-of-Thought)' 과정을 수행할 수 있습니다. 예를 들어, API 실패의 원인이 잘못된 매개변수 때문인지, 아니면 네트워크 문제 때문인지를 판단합니다.
+
+### 3. 수정 및 재실행 (Correction & Re-execution)
+반성 및 추론을 통해 도출된 전략에 따라 에이전트의 행동 계획, 도구 사용 방식, 또는 목표 자체를 수정합니다. 수정된 계획은 새로운 실행 루프로 다시 전달되어 태스크를 재실행합니다. 이 과정은 문제가 해결될 때까지 반복될 수 있으며, 특정 조건(예: 최대 재시도 횟수 초과)에서는 종료될 수 있습니다.
+
+## 자기 수정 루프 디자인 패턴
+
+### 단순 반성 루프 (Simple Reflection Loop)
+가장 기본적인 형태로, 에이전트가 태스크를 수행한 후 결과를 평가하고, 실패 시 LLM에 실패 원인 분석 및 새로운 행동 계획을 요청하여 재시도하는 패턴입니다. 구현이 비교적 간단하며, 경미하거나 예측 가능한 오류에 효과적입니다.
+
+### 다단계 자기 수정 (Multi-stage Self-Correction)
+오류의 심각성이나 유형에 따라 다른 수정 전략을 적용하는 패턴입니다. 예를 들어, 간단한 구문 오류나 오타는 즉시 LLM을 통해 수정하고 재시도하지만, 복잡한 논리 오류나 비즈니스 규칙 위반의 경우에는 더 심층적인 반성(예: 관련 문서 검색, 전문가 시스템 질의)을 거쳐 수정하거나, 다음 패턴인 인간 개입 루프로 전환할 수 있습니다.
+
+### 인간 개입 루프 (Human-in-the-Loop Correction)
+특정 임계치(예: 연속 실패 횟수, 중요도 높은 태스크의 실패, 비용 임계치 초과)를 초과하는 오류가 발생하거나, 에이전트가 스스로 해결하기 어려운 복잡한 문제에 직면했을 때 인간의 개입을 요청하도록 설계하는 패턴입니다. 이는 에이전트의 자율성과 안전성 사이의 균형을 맞추는 데 중요하며, 특히 프로덕션 환경에서 예측 불가능한 상황에 대비하는 데 필수적입니다.
+
+## 코드 예제: 파이썬 기반 자기 수정 에이전트 스켈레톤
+
+다음은 `langchain`과 같은 프레임워크를 사용하여 자기 수정 루프를 구현하는 가상의 스켈레톤 코드입니다. `llm`은 대규모 언어 모델 인터페이스를 의미합니다.
+
+```python
+import json
+from typing import Dict, Any
+
+def call_llm(prompt: str) -> str:
+    # 실제 LLM API 호출 로직 (예: OpenAI, Anthropic, Gemini API)
+    # 여기서는 가상의 응답을 반환합니다.
+    if 
