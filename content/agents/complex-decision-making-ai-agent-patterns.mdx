@@ -1,0 +1,246 @@
+---
+title: AI Agent Design Patterns — Navigating Complex Decision-Making Scenarios
+category: agents
+date: "2026-11-14"
+tags:
+  - ai-agents
+  - decision-making
+  - design-patterns
+  - complex-systems
+  - agentic-workflows
+  - orchestration
+  - agents
+confidence: 1
+connections: [agents/autonomous-agent-complex-decision-logic-patterns, agents/autonomous-agent-multi-stage-decision-making-patterns, agents/llm-agent-planning-reflection-autonomous-problem-solving, agents/multi-agent-decision-making-patterns, agents/agent-rationale-storage-decision-learning-system, agents/autonomous-agent-uncertainty-decision-patterns, agents/autonomous-agent-behavioral-planning-reasoning-system-design]
+status: draft
+description: AI 에이전트가 다단계 목표, 불확실성, 동적 환경에서 복잡한 의사결정을 수행하기 위한 설계 패턴을 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+복잡한 의사결정 시나리오를 위한 AI 에이전트 설계는 현대 인공지능 애플리케이션의 핵심 과제입니다. 단순 반복 작업이나 명확하게 정의된 문제 해결을 넘어, AI 에이전트가 현실 세계의 동적이고 불확실하며 다면적인 환경에서 효과적으로 작동하려면 고도화된 의사결정 능력이 필수적입니다. 본 위키 엔트리는 이러한 복잡한 상황을 처리하기 위한 AI 에이전트의 주요 설계 패턴을 제시합니다.
+
+## 핵심 개념: 복잡한 의사결정 시나리오의 이해
+
+복잡한 의사결정 시나리오(complex decision-making scenarios)는 단순히 많은 변수를 포함하는 것을 넘어, 다음과 같은 특징을 가집니다:
+
+*   **동적 환경 (Dynamic Environments)**: 환경이 지속적으로 변화하며, 에이전트의 행동이 환경에 영향을 미치고, 환경의 변화가 에이전트의 다음 의사결정에 피드백됩니다.
+*   **불확실성 (Uncertainty)**: 완전한 정보 없이 결정을 내려야 하며, 미래 결과에 대한 예측 불가능성이 존재합니다.
+*   **다단계 목표 및 제약 조건 (Multi-stage Goals & Constraints)**: 단일 목표가 아닌 여러 상호 연결된 목표를 동시에 추구해야 하며, 자원, 시간, 안전 등의 다양한 제약 조건을 고려해야 합니다.
+*   **장기적 결과 (Long-term Consequences)**: 단기적인 최적화가 아닌, 장기적인 관점에서 파급 효과를 고려한 의사결정이 중요합니다.
+*   **부분 관찰 가능성 (Partial Observability)**: 에이전트가 환경의 모든 상태를 직접적으로 알 수 없는 경우가 많습니다.
+
+이러한 시나리오에서 AI 에이전트는 단순히 규칙 기반 시스템을 넘어, 추론(reasoning), 계획(planning), 학습(learning), 성찰(reflection) 능력을 통합해야 합니다.
+
+## 주요 설계 패턴 (Key Design Patterns)
+
+### 1. 계층적 계획 및 실행 (Hierarchical Planning and Execution)
+
+이 패턴은 복잡한 문제를 상위 수준의 추상적인 목표와 하위 수준의 구체적인 실행 계획으로 분해하여 처리합니다. 상위 계층 에이전트는 장기적인 전략적 목표를 설정하고, 이를 달성하기 위한 중간 목표 또는 큰 그림의 계획을 수립합니다. 하위 계층 에이전트는 이 중간 목표를 받아 더 세부적인 태스크로 분해하고, 구체적인 액션(action)을 실행합니다. 문제가 발생하면 하위 계층은 상위 계층에 피드백을 제공하여 계획을 수정하거나 새로운 전략을 수립하도록 요청할 수 있습니다.
+
+*   **장점**: 복잡성 관리 용이, 추상화 수준을 통한 재사용성 증대, 장기 목표 달성 효율성 향상.
+*   **적용**: 자율 주행(high-level navigation vs. low-level control), 소프트웨어 개발 프로젝트(epic-story-task 분해), 복잡한 비즈니스 프로세스 자동화.
+
+### 2. 다중 에이전트 협업 및 조정 (Multi-Agent Collaboration and Coordination)
+
+하나의 에이전트가 모든 복잡성을 처리하는 대신, 여러 전문 에이전트(expert agents)가 각자의 역할과 지식을 가지고 협력하여 문제를 해결하는 방식입니다. 각 에이전트는 특정 도메인 지식, 도구 사용 능력, 또는 의사결정 전략에 특화될 수 있습니다. 이들 간의 효과적인 통신(communication) 및 조정(coordination) 메커니즘이 핵심입니다.
+
+*   **패턴**:
+    *   **브로커(Broker)**: 중앙 에이전트가 태스크를 분배하고 결과를 통합합니다.
+    *   **합의(Consensus)**: 여러 에이전트가 독립적으로 결정을 내리고, 투표나 가중치 부여를 통해 최종 결정을 도출합니다.
+    *   **전문성 기반 라우팅(Expertise-based Routing)**: 특정 문제에 가장 적합한 에이전트에게 태스크를 동적으로 할당합니다.
+*   **장점**: 처리량 증대, 다양한 전문성 통합, 단일 에이전트 실패에 대한 강건성.
+*   **적용**: 복잡한 시스템 진단, 고객 지원 챗봇(여러 LLM 모델 사용), 금융 시장 분석.
+
+### 3. 적응형 학습 및 성찰 (Adaptive Learning and Reflection)
+
+에이전트가 과거의 의사결정과 그 결과를 통해 지속적으로 학습하고, 자신의 전략을 성찰하며 개선하는 패턴입니다. 의사결정 과정, 중간 결과, 최종 결과, 그리고 환경의 변화를 기록하고 분석하는 메커니즘이 포함됩니다. 이러한 데이터를 바탕으로 의사결정 모델을 업데이트하거나, 추론 방식을 개선하고, 실패 원인을 분석하여 미래의 유사한 상황에서 더 나은 결정을 내리도록 합니다.
+
+*   **메커니즘**:
+    *   **Replay Buffer**: 경험 데이터를 저장하고, 이를 샘플링하여 학습 데이터로 활용합니다.
+    *   **Self-Correction Loop**: 에이전트가 자신의 출력을 평가하고 오류를 감지하면 수정하는 반복적인 과정입니다.
+    *   **Meta-Learning**: 학습 방법을 학습하여 새로운 환경이나 태스크에 빠르게 적응하는 능력입니다.
+*   **장점**: 장기적인 성능 향상, 예상치 못한 상황에 대한 적응력, 자율적인 진화.
+*   **적용**: 강화 학습(Reinforcement Learning) 에이전트, LLM 기반 에이전트의 지속적인 성능 개선, 게임 AI.
+
+### 4. 불확실성 처리 (Uncertainty Handling)
+
+불확실한 정보나 예측 불가능한 상황에서 견고한 의사결정을 내릴 수 있도록 설계하는 패턴입니다. 확률론적 추론(probabilistic reasoning), 베이지안 네트워크(Bayesian Networks), 퍼지 로직(Fuzzy Logic), 몬테카를로 트리 탐색(Monte Carlo Tree Search, MCTS)과 같은 기법들이 활용될 수 있습니다. 여러 가능한 시나리오를 고려하고, 각 시나리오의 확률과 예상되는 결과를 평가하여 가장 위험이 적거나 보상이 높은 경로를 선택합니다.
+
+*   **장점**: 예측 불가능한 환경에 대한 견고성, 위험 관리, 다양한 가능성 탐색.
+*   **적용**: 금융 투자 결정, 의료 진단, 로봇의 경로 계획, 자율 시스템의 안전 제어.
+
+## 코드 예제: 복잡한 의사결정 흐름 시뮬레이션
+
+Python으로 구현된 간단한 다단계 의사결정 에이전트의 예시입니다. `Tool`을 사용하여 외부 액션을 시뮬레이션하고, 조건부 로직으로 의사결정 흐름을 제어합니다. 실제 LLM 에이전트에서는 `AgentExecutor`와 `Tools`를 사용하여 이보다 훨씬 복잡한 상호작용이 가능합니다.
+
+```python
+from typing import List, Dict, Any
+
+class Tool:
+    def __init__(self, name: str, description: str, func):
+        self.name = name
+        self.description = description
+        self.func = func
+
+    def run(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
+def search_knowledge_base(query: str) -> str:
+    if "재고" in query:
+        return "상품 A 재고: 100개. 상품 B 재고: 50개."
+    if "가격" in query:
+        return "상품 A 가격: 10,000원. 상품 B 가격: 12,000원."
+    return "관련 정보를 찾을 수 없습니다."
+
+def check_supplier_status(product_id: str) -> str:
+    if product_id == "상품 A":
+        return "상품 A 공급처: 원활 (납기 2일)"
+    elif product_id == "상품 B":
+        return "상품 B 공급처: 지연 (납기 5일)"
+    return "알 수 없는 상품 ID"
+
+def process_order(product_id: str, quantity: int) -> str:
+    if product_id == "상품 A" and quantity <= 100:
+        return f"{product_id} {quantity}개 주문 처리 완료."
+    elif product_id == "상품 B" and quantity <= 50:
+        return f"{product_id} {quantity}개 주문 처리 완료 (공급 지연 가능성)."
+    return "주문 실패: 재고 부족 또는 유효하지 않은 상품."
+
+class ComplexDecisionAgent:
+    def __init__(self, tools: List[Tool]):
+        self.tools = {tool.name: tool for tool in tools}
+        self.memory: Dict[str, Any] = {}
+
+    def decide_and_act(self, user_request: str) -> str:
+        self.memory = {"user_request": user_request}
+        response = []
+
+        # Phase 1: Initial Information Gathering
+        if "재고" in user_request or "가격" in user_request:
+            search_result = self.tools["KnowledgeSearch"].run(user_request)
+            response.append(f"정보 탐색: {search_result}")
+            self.memory["search_result"] = search_result
+        else:
+            response.append("초기 정보 탐색 필요 없음.")
+
+        # Phase 2: Analyze Request and Identify Core Problem
+        if "주문" in user_request:
+            product_id = "상품 A" if "상품 A" in user_request else "상품 B"
+            quantity = int(''.join(filter(str.isdigit, user_request))) if any(char.isdigit() for char in user_request) else 1
+
+            response.append(f"주문 요청 감지: {product_id}, {quantity}개.")
+            self.memory["product_id"] = product_id
+            self.memory["quantity"] = quantity
+
+            # Phase 3: Check Feasibility and Constraints
+            supplier_status = self.tools["SupplierCheck"].run(product_id)
+            response.append(f"공급처 상태 확인: {supplier_status}")
+            self.memory["supplier_status"] = supplier_status
+
+            if "지연" in supplier_status:
+                response.append("공급 지연 가능성 있음. 사용자에게 확인 필요.")
+                # Hierarchical Decision: Ask user for confirmation or suggest alternative
+                return "처리 지연 가능성이 있습니다. 주문을 계속 진행할까요?"
+            else:
+                # Phase 4: Execute Core Action
+                order_result = self.tools["ProcessOrder"].run(product_id, quantity)
+                response.append(f"주문 처리: {order_result}")
+                return "\n".join(response + [order_result])
+        
+        return "\n".join(response + ["요청을 이해하지 못했습니다. 더 구체적으로 말씀해주세요."])
+
+# Initialize tools
+tools = [
+    Tool("KnowledgeSearch", "Performs a search on the internal knowledge base.", search_knowledge_base),
+    Tool("SupplierCheck", "Checks the status of a product's supplier.", check_supplier_status),
+    Tool("ProcessOrder", "Processes a customer order.", process_order)
+]
+
+agent = ComplexDecisionAgent(tools)
+
+# Scenario 1: Simple order
+print("--- Scenario 1: Simple Order ---")
+print(agent.decide_and_act("상품 A 10개 주문해줘"))
+
+# Scenario 2: Order with potential delay
+print("\n--- Scenario 2: Order with Potential Delay ---")
+print(agent.decide_and_act("상품 B 5개 주문하고 싶어"))
+
+# Scenario 3: Information gathering
+print("\n--- Scenario 3: Information Gathering ---")
+print(agent.decide_and_act("상품 A 재고는 얼마나 되니?"))
+
+```
+
+## Mermaid 다이어그램: 복합 의사결정 흐름
+
+```mermaid
+graph TD
+    A[사용자 요청 수신] --> B{초기 요청 분석 및 목표 식별};
+    B --> C{필수 정보 부족?};
+    C -- Yes --> D["정보 수집 및 강화 (RAG)"];
+    D --> B;
+    C -- No --> E{다단계 목표 설정 및 계획 수립 (Hierarchical Planning)};
+    E --> F{계획 실행 및 태스크 위임 (Multi-Agent Collaboration)};
+    F --> G{실행 결과 분석 및 평가};
+    G -- 오류/예외 발생 --> H["자가 수정 및 재계획 (Adaptive Learning & Reflection)"];
+    H --> F;
+    G -- 불확실성 감지 --> I{불확실성 처리 및 대안 탐색 (Uncertainty Handling)};
+    I --> J{최적 대안 선택 및 실행};
+    J --> G;
+    G -- 성공 --> K[최종 결과 생성 및 전달];
+
+    subgraph "Feedback Loop for Learning"
+        K --> L[의사결정 데이터 축적];
+        L --> M[전략 및 모델 업데이트];
+        M --> B;
+    end
+
+    subgraph "Agent Components"
+        subgraph "Planner Agent"
+            E
+        end
+        subgraph "Executor Agents"
+            F, H, J
+        end
+        subgraph "Knowledge Agent"
+            D, L
+        end
+        subgraph "Reflector Agent"
+            H, M
+        end
+    end
+```
+
+## 트레이드오프 (Trade-offs)
+
+복잡한 의사결정 시나리오를 위한 AI 에이전트 설계 패턴은 강력하지만, 각각의 트레이드오프를 가집니다.
+
+*   **계층적 계획 및 실행 (Hierarchical Planning and Execution)**
+    *   **언제 좋은가**: 장기적인 목표를 가지고 있으며, 태스크를 명확하게 분해할 수 있는 경우. 시스템의 복잡성을 관리하고 디버깅하기 용이합니다.
+    *   **언제 나쁜가**: 예측 불가능한 변화가 매우 빠르거나, 하위 태스크가 상위 계획에 예기치 않은 방식으로 영향을 미치는 경우. 계층 간의 통신 오버헤드가 발생할 수 있습니다.
+
+*   **다중 에이전트 협업 및 조정 (Multi-Agent Collaboration and Coordination)**
+    *   **언제 좋은가**: 문제 도메인이 다양한 전문 지식을 요구하거나, 병렬 처리를 통해 효율성을 높일 수 있는 경우. 단일 에이전트의 실패에 대한 시스템의 견고성을 높일 수 있습니다.
+    *   **언제 나쁜가**: 에이전트 간의 통신 및 조정 비용이 높거나, 책임 소재가 불분명해질 수 있는 경우. 에이전트 간의 갈등(conflict) 해결 메커니즘이 복잡해질 수 있습니다.
+
+*   **적응형 학습 및 성찰 (Adaptive Learning and Reflection)**
+    *   **언제 좋은가**: 장기적으로 에이전트의 성능을 최적화하고 싶거나, 예상치 못한 상황에 유연하게 대응해야 하는 경우. 데이터가 풍부하고 피드백 루프를 명확하게 설계할 수 있을 때 유리합니다.
+    *   **언제 나쁜가**: 학습 데이터 수집이 어렵거나, 학습 과정이 너무 느려 실시간 대응이 중요한 경우. 잘못된 피드백으로 인해 에이전트의 행동이 왜곡될 위험이 있습니다.
+
+*   **불확실성 처리 (Uncertainty Handling)**
+    *   **언제 좋은가**: 정보가 불완전하거나, 미래 결과가 확률적인 상황에서 의사결정의 견고성과 신뢰성을 높여야 하는 경우. 위험 관리가 중요한 애플리케이션에 필수적입니다.
+    *   **언제 나쁜가**: 불확실성 모델링 및 추론 자체가 계산 비용이 매우 높거나, 필요한 확률 분포를 정확하게 알기 어려운 경우. 과도한 모델링은 비효율을 초래할 수 있습니다.
+
+## 실전 체크리스트 (Practical Checklist)
+
+복잡한 의사결정 시나리오에 맞는 AI 에이전트를 설계할 때 다음 체크리스트를 활용하세요.
+
+*   [ ] **환경 동적 분석**: 에이전트가 작동할 환경의 동적 변화(dynamic changes), 불확실성(uncertainty), 관찰 가능성(observability) 수준을 명확히 정의했는가?
+*   [ ] **다단계 목표 매핑**: 주요 목표(high-level goals)를 달성하기 위한 중간 목표(intermediate objectives)와 세부 태스크(fine-grained tasks)가 논리적으로 계층화되어 있는가?
+*   [ ] **통신 및 조정 프로토콜**: 다중 에이전트 시스템에서 에이전트 간의 정보 교환 및 결정 통합을 위한 통신 프로토콜과 조정 메커니즘이 명확하게 정의되어 있는가?
+*   [ ] **학습 피드백 루프 설계**: 의사결정 결과와 환경 반응을 수집하고, 이를 바탕으로 에이전트의 전략을 개선하는 학습 및 성찰(reflection) 메커니즘이 구현되어 있는가?
+*   [ ] **불확실성 모델링 선택**: 시나리오의 불확실성 수준에 적합한 확률론적 또는 휴리스틱 기반 불확실성 처리 기법이 적용되었는가?
+*   [ ] **안전 및 제약 조건 통합**: 의사결정 과정에서 중요한 안전(safety) 및 비즈니스 제약 조건(business constraints)이 모든 계층에서 적절히 고려되고 강제되는가?
+*   [ ] **재현성 및 테스트 가능성**: 복잡한 의사결정 과정이 재현 가능하며, 다양한 시나리오에 대한 테스트 및 검증(validation) 절차가 마련되어 있는가?
