@@ -1,0 +1,41 @@
+---
+title: LLM Safety Gates & Control Rooms – Agent Behavior Oversight & Emergency Halt Patterns
+category: harness-engineering
+date: "2026-11-21"
+tags:
+  - LLMSafety
+  - ControlRoom
+  - AgentGuardrails
+  - SecurityPatterns
+  - DriftDetection
+  - HarnessEngineering
+  - harness-engineering
+confidence: 1
+connections: [agents/ai-agent-safety-constraint-control-design-patterns, harness-engineering/llm-production-safety-security-harness-patterns, agents/ai-agent-harness-security-sandboxing-external-control, evaluation/llm-agent-autonomy-guardrail-enhancement, harness-engineering/realtime-ai-model-safety-validation-stream-harness, context-engineering/drift-detection-methodology, agents/agent-malfunction-cost-overrun-prevention-guard-test]
+status: draft
+description: LLM 에이전트의 예측 불가능한 행동을 방지하고 비정상적인 작동을 즉시 중단하기 위한 모델 안전 게이트와 컨트롤 룸 패턴 구현 및 연동 전략.
+type: entry
+source: scout
+---
+
+고도화된 LLM 에이전트의 확산은 전례 없는 기회를 제공하지만, 동시에 상당한 운영 리스크를 수반합니다. 내부 연구 모델이 DNS 설정 오류로 의도치 않게 인터넷에 접근한 OpenAI의 사례와 같이, 잠재적 위험을 방지하기 위한 강력한 안전 메커니즘의 필요성이 강조됩니다. 본 엔트리는 LLM 에이전트 파이프라인 내에 모델 안전 게이트 (Model Safety Gates) 및 컨트롤 룸 (Control Room) 패턴을 구현하여 무단 행동을 방지하고, 드리프트를 완화하며, 안전하고 신뢰할 수 있는 에이전트 운영을 보장하는 전략을 다룹니다.
+
+## 모델 안전 게이트 (Model Safety Gates)
+모델 안전 게이트는 에이전트의 행동을 정의된 안전 운영 범위(Safe Operating Envelope, SOE) 내에서 유지하기 위해 설계된 사전 및 사후 실행 검증 계층입니다. 이 게이트는 에이전트의 동작이나 출력이 승인된 안전 매개변수에서 벗어나는 것을 필터링, 모니터링, 그리고 필요한 경우 차단하는 보호 경계 역할을 합니다.
+
+### 주요 기능 (Key Functions)
+*   **입력 검증 (Input Validation)**: 에이전트에게 전달되는 모든 입력이 허용된 형식과 내용을 따르는지 확인하여 프롬프트 인젝션(Prompt Injection)이나 악성 데이터 주입을 방지합니다.
+*   **도구 사용 권한 검증 (Tool Use Authorization)**: 에이전트가 호출하려는 외부 도구(API, Shell 등)가 사전에 승인된 목록에 포함되어 있는지, 그리고 현재 컨텍스트에서 사용이 적절한지 검증합니다.
+*   **출력 필터링 및 정제 (Output Filtering & Sanitization)**: LLM의 응답이나 에이전트의 최종 행동 계획이 보안 정책, 개인정보 보호 규정, 윤리적 가이드라인을 위반하지 않는지 실시간으로 검토합니다. 민감 정보 유출이나 유해 콘텐츠 생성을 방지합니다.
+*   **환경 샌드박싱 (Environment Sandboxing)**: 에이전트가 실행되는 환경 자체를 격리하여, 예상치 못한 행동이 시스템 전체에 미치는 영향을 최소화합니다. 컨테이너화 또는 가상 머신(VM)을 활용할 수 있습니다.
+
+```python
+# Python Example: Simplified SafetyGate
+class SafetyGate:
+    def __init__(self, allowed_tools: list[str], sensitive_keywords: list[str]):
+        self.allowed_tools = allowed_tools
+        self.sensitive_keywords = sensitive_keywords
+
+    def validate_input(self, agent_input: str) -> bool:
+        # Placeholder for complex input validation (e.g., prompt injection detection)
+        if 
