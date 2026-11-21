@@ -1,0 +1,55 @@
+---
+title: "Playbook Journal 094 — mlb-schedule-status-backfill 일일 실패 8건(10/26~) = 기존 prod 402 family 5번째 증상, 신규 incident 아님"
+category: harness-engineering
+date: "2026-11-03"
+tags: [playbook-journal, auto-ingest, lesson, moneyball]
+confidence: 3
+connections: [journal/playbook-journal-000-bootstrap]
+status: in-progress
+description: "자동 수집: mlb-schedule-status-backfill 일일 실패 8건(10/26~) = 기존 prod 402 family 5번째 증상, 신규 incident 아님 (from kkyu92/moneyballscore)"
+type: entry
+series: playbook-journal
+raw_source: "raw-sources/_archive/20261103-mlb-schedule-status-backfill-8-10-26-prod-402-fami-2134396977d0c6224c202894294481.md"
+---
+
+> 이 엔트리는 워커 프로젝트에서 자동 수집되었습니다.
+> Source: `kkyu92/moneyballscore`
+> Type: `worker-lesson`
+
+## 원본
+
+~~~
+
+subtype: lesson
+cycle: 3922
+
+진단: gh run list 에서 cycle 3906 lesson(636f1ac2) 이 다루지 않은 신규 failure 패턴 발견 —
+mlb-schedule-status-backfill 워크플로우가 2026-10-26 부터 매일(8 run 연속) failure.
+
+- 실측: gh run view 41523141251 --log-failed → "status=402 body=Payment required / DEPLOYMENT_DISABLED"
+  → mlb_statsapi_scrape 호출이 prod 402 로 막혀 실패. 코드 결함 아님.
+- 근본원인 동일: 2026-10-26 Vercel DEPLOYMENT_DISABLED (project_vercel_402_deployment_disabled_2026_10_26).
+  cycle 3906 lesson 이 묶은 4개(health-alert/runtime-error-alert/deploy-drift-alert/heartbeat-stale) 에
+  5번째로 합류 — 범위만 다를 뿐(이쪽은 playbook 측 worker-error dispatch, reminder 아직 미생성)
+  기존 "단일 외부 장애 → N개 alert workflow 동시 실패" 패턴 그대로.
+- 조치 불가: 비용 가드상 자율 Vercel 결제 금지, 사용자 조치 대기 지속. 코드 변경 0.
+
+교훈: cycle 3906 lesson 의 "4개 alert" 는 당시 열려있던 reminder 기준 스냅샷이라 전수가 아니었음 —
+동일 근본원인에 묶인 symptom workflow 는 reminder 생성 전에도 gh run list 직접 스캔으로
+선제 식별 가능. 다음 cycle 이 이 fingerprint(mlb-schedule-status-backfill-failure) 의
+lesson-pending reminder 를 받으면 본 commit cross-reference 후 즉시 close.
+
+박제 위치: memory project_vercel_402_deployment_disabled_2026_10_26 와 cross-reference.
+~~~
+
+## 분석
+
+_TODO: 수동으로 분석 추가 또는 다음 세션에서 /ingest 로 보강_
+
+## 교훈
+
+_TODO: 교훈 정리_
+
+## 적용
+
+_TODO: 다음 액션_
