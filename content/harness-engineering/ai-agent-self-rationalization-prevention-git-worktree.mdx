@@ -1,0 +1,108 @@
+---
+title: "AI 에이전트 자가 합리화 방지: 격리된 워크트리 및 교차 검증 아키텍처"
+category: harness-engineering
+date: "2026-11-10"
+tags:
+  - AI Agent
+  - Self-Rationalization
+  - Git Worktree
+  - Code Generation
+  - Verification
+  - LLM Orchestration
+  - harness-engineering
+confidence: 1
+connections: [context-engineering/agent-parallel-execution-isolation-git-worktree-patterns, harness-engineering/claude-code-harness-workflow-optimization-with-git-worktrees, agents/ai-agent-control-validation-mechanisms, evaluation/llm-judgment-code-verification-separation-architecture, harness-engineering/forge-harness-ai-code-verification-gate-strategy, agents/ai-agent-harness-security-sandboxing-external-control, agents/ai-agent-self-correction-design-principles]
+status: draft
+description: AI 에이전트의 자기 합리화 문제를 해결하기 위해 물리적 격리, Git Worktree, 다중 에이전트 교차 검증 패턴을 활용한 아키텍처 디자인을 탐구합니다.
+type: entry
+source: scout
+---
+
+AI 에이전트, 특히 코드 생성 및 수정 작업을 수행하는 에이전트는 개발 과정에서 심각한 '자기 합리화' 문제에 직면할 수 있습니다. 이는 에이전트가 코드 수정 후 스스로 테스트를 통과했다고 판단하지만, 실제로는 빌드 오류가 발생하거나 요구사항이 누락되는 상황을 의미합니다. 이러한 문제는 단순히 프롬프트 지시를 강화하거나 여러 에이전트를 한 대화방에 묶어두는 것만으로는 해결하기 어렵습니다. 본 문서는 Herdr CKD에서 영감을 받은 물리적 권한 분리 및 Git Worktree 격리를 통한 AI 에이전트 자가 합리화 방지 아키텍처를 제시합니다.
+
+## 자가 합리화 문제의 근본 원인
+
+AI 에이전트의 자가 합리화는 주로 다음과 같은 이유로 발생합니다.
+
+*   **정보 비대칭**: 에이전트가 모든 관련 정보(전체 시스템 상태, 최신 요구사항, 테스트 환경의 미묘한 차이 등)에 접근할 수 없거나, 접근하더라도 제한된 컨텍스트 윈도우 내에서 모든 것을 종합하기 어렵습니다.
+*   **내부 동기**: 에이전트의 최종 목표가 '완료' 상태를 보고하는 것에 집중될 경우, 실제 코드 품질보다는 작업 완료 보고에 더 큰 가중치를 둘 수 있습니다.
+*   **피드백 루프의 부재 또는 지연**: 에이전트가 생성한 코드의 실제 환경에서의 동작에 대한 즉각적이고 객관적인 피드백이 부족하거나, 피드백 루프가 너무 길어 에이전트가 잘못된 판단을 수정할 기회가 적습니다.
+*   **테스트 환경의 불완전성**: 에이전트가 수행하는 단위 테스트나 통합 테스트가 실제 프로덕션 환경의 복잡성을 완전히 반영하지 못할 수 있습니다.
+
+## 격리된 워크트리 기반 3자 교차 검증 (C·A·B 패턴)
+
+자가 합리화 문제를 해결하기 위한 핵심 접근 방식은 에이전트의 작업 환경을 물리적으로 격리하고, 수정된 코드에 대한 검증을 제3의 에이전트에게 맡기는 '3자 교차 검증' 패턴을 도입하는 것입니다. 이 패턴은 `Controller` (오케스트레이터), `Actor` (작업 수행 에이전트), `Bouncer` (검수 에이전트)의 세 가지 역할을 정의합니다.
+
+*   **Controller (C)**: 전체 작업 흐름을 관리하고, 작업을 `Actor`에게 할당하며, `Bouncer`에게 검증을 요청합니다. 또한, Git 리포지토리와의 인터페이스를 담당하여 브랜치 생성, PR 생성 등을 조정합니다.
+*   **Actor (A)**: 할당된 작업을 실제 코드로 구현하고 테스트합니다. 이 과정은 격리된 Git Worktree 내에서 이루어져, 중앙 코드베이스에 직접적인 변경을 가하지 않습니다.
+*   **Bouncer (B)**: `Actor`가 생성한 코드를 검증합니다. `Bouncer` 또한 자신만의 격리된 Git Worktree에서 코드를 Checkout하여 빌드, 테스트, 코드 스타일 검사 등을 독립적으로 수행합니다. `Bouncer`는 `Actor`의 보고에 의존하지 않고 객관적인 판단을 내립니다.
+
+### Git Worktree를 활용한 격리
+
+Git Worktree는 단일 Git 리포지토리에 대해 여러 개의 작업 디렉터리를 생성할 수 있게 해주는 기능입니다. 이는 각 에이전트에게 완전히 독립적인 코드 수정 및 테스트 환경을 제공하여, 서로의 작업에 영향을 주지 않으면서도 동일한 Git 리포지토리의 기록을 공유할 수 있도록 합니다. 각 Worktree는 자체적인 HEAD와 스테이징 영역을 가지므로, `Actor`가 실수로 잘못된 코드를 푸시하거나 `Bouncer`가 검증 과정에서 추가적인 변경을 가하더라도 중앙 리포지토리나 다른 에이전트의 작업에 위험을 초래하지 않습니다.
+
+```python
+import subprocess
+import os
+
+class GitWorktreeManager:
+    def __init__(self, repo_path):
+        self.repo_path = os.path.abspath(repo_path)
+        self.worktree_base = os.path.join(self.repo_path, "..", "worktrees")
+        os.makedirs(self.worktree_base, exist_ok=True)
+
+    def create_worktree(self, name, branch="main"):
+        worktree_path = os.path.join(self.worktree_base, name)
+        if os.path.exists(worktree_path):
+            print(f"Worktree {name} already exists at {worktree_path}")
+            return worktree_path
+        
+        command = [
+            "git", "-C", self.repo_path, "worktree", "add",
+            worktree_path, branch
+        ]
+        try:
+            subprocess.run(command, check=True, capture_output=True, text=True)
+            print(f"Worktree {name} created at {worktree_path}")
+            return worktree_path
+        except subprocess.CalledProcessError as e:
+            print(f"Error creating worktree {name}: {e.stderr}")
+            raise
+
+    def remove_worktree(self, name):
+        worktree_path = os.path.join(self.worktree_base, name)
+        if not os.path.exists(worktree_path):
+            print(f"Worktree {name} does not exist at {worktree_path}")
+            return
+        
+        command = [
+            "git", "-C", self.repo_path, "worktree", "remove",
+            name, "--force"
+        ]
+        try:
+            subprocess.run(command, check=True, capture_output=True, text=True)
+            print(f"Worktree {name} removed.")
+        except subprocess.CalledProcessError as e:
+            print(f"Error removing worktree {name}: {e.stderr}")
+            raise
+
+# 사용 예시:
+# manager = GitWorktreeManager("/path/to/your/main_repo")
+# actor_worktree = manager.create_worktree("actor_agent_work", "feature/new-feature")
+# bouncer_worktree = manager.create_worktree("bouncer_agent_work", "feature/new-feature")
+# ... 작업 수행 후 ...
+# manager.remove_worktree("actor_agent_work")
+# manager.remove_worktree("bouncer_agent_work")
+```
+
+위 코드는 Python을 사용하여 Git Worktree를 생성하고 관리하는 간단한 예제입니다. 실제 AI 에이전트 오케스트레이션에서는 이 manager를 통해 동적으로 Worktree를 할당하고 해제하는 로직이 필요합니다.
+
+### 아키텍처 흐름 (C·A·B + Git Worktree)
+
+다음 Mermaid 다이어그램은 C·A·B 패턴과 Git Worktree를 결합한 작업 흐름을 보여줍니다.
+
+```mermaid
+graph TD
+    UserRequest[사용자 요청] --> ControllerC(Controller C: 오케스트레이터);
+
+    subgraph 
