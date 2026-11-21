@@ -1,7 +1,7 @@
 # Playbook Wiki Index
-Updated: 2026-10-31T21:04:34.821Z
+Updated: 2026-11-02T09:03:14.449Z
 
-## 엔트리 (1038개)
+## 엔트리 (1040개)
 
 ### Prompt Engineering
 - [Agent Autonomy Enhancement - Moving Beyond Plan Mode with Goal-Based Directives](wiki/prompt-engineering/agent-goal-based-directives-autonomy) — confidence: 1, status: draft
@@ -500,6 +500,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [Playbook Journal 089 — R7 자동머지 silent skip — CI green PR이 7 cycle 미merge 방치](wiki/journal/playbook-journal-089-r7-silent-skip-ci-green-pr-7-cycle-merge) — confidence: 3, status: in-progress
 - [Playbook Journal 090 — incident-followup reminder 3건(health-alert/heartbeat-stale/deploy-drift-alert) 전부 기 해소된 Supabase INACTIVE 재발 — fingerprint 매칭 누락만 잔존](wiki/journal/playbook-journal-090-incident-followup-reminder-3-health-alert-heartbea) — confidence: 3, status: in-progress
 - [Playbook Journal 091 — 2-chain lock step3 fallback(polish-ui 강제)이 잠긴 chain 자체가 polish-ui일 때 모순](wiki/journal/playbook-journal-091-2-chain-lock-step3-fallback-polish-ui-chain-polish) — confidence: 3, status: in-progress
+- [Playbook Journal 093 — ci-main 3 incident = combo-check-data 5s timeout flake (fix 8906d3b3)](wiki/journal/playbook-journal-093-ci-main-3-incident-combo-check-data-5s-timeout-fla) — confidence: 3, status: in-progress
 - [2026년 19주차 학습 리포트](wiki/reports/week-2026-19) — confidence: 5, status: complete
 - [2026년 20주차 학습 리포트](wiki/reports/week-2026-20) — confidence: 5, status: complete
 - [2026년 21주차 학습 리포트](wiki/reports/week-2026-21) — confidence: 5, status: complete
@@ -525,6 +526,7 @@ Detecting Redundant Operations with clew-custos CLI](wiki/prompt-engineering/llm
 - [2026년 42주차 학습 리포트](wiki/reports/week-2026-42) — confidence: 5, status: complete
 - [2026년 43주차 학습 리포트](wiki/reports/week-2026-43) — confidence: 5, status: complete
 - [2026년 44주차 학습 리포트](wiki/reports/week-2026-44) — confidence: 5, status: complete
+- [2026년 45주차 학습 리포트](wiki/reports/week-2026-45) — confidence: 5, status: complete
 
 ### Agents
 - [AI Agent 고급 도구 사용 패턴 — 복잡성 관리와 신뢰성 확보](wiki/agents/advanced-ai-agent-tool-use-patterns) — confidence: 1, status: draft
@@ -5032,6 +5034,7 @@ Sandbox Escape and Environment Penetration Hardening](wiki/evaluation/ai-agent-s
 - journal/playbook-journal-090-incident-followup-reminder-3-health-alert-heartbea ↔ journal/playbook-journal-000-bootstrap
 - journal/playbook-journal-090-incident-followup-reminder-3-health-alert-heartbea ↔ project-ops/ai-worker-silent-failure-detection-alerting-system
 - journal/playbook-journal-091-2-chain-lock-step3-fallback-polish-ui-chain-polish ↔ journal/playbook-journal-000-bootstrap
+- journal/playbook-journal-093-ci-main-3-incident-combo-check-data-5s-timeout-fla ↔ journal/playbook-journal-000-bootstrap
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/claude-api-key-security-audit-usage-pattern-validation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ prompt-engineering/llm-prompt-injection-defense-rules-implementation
 - project-ops/ai-agent-secret-exposure-prevention-key-amnesia ↔ project-ops/llm-privacy-setting-drift-detection-monitoring
