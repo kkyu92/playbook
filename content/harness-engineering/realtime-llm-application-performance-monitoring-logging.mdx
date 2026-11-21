@@ -1,0 +1,74 @@
+---
+title: LLM 애플리케이션 — 실시간 성능 모니터링 및 고급 로깅 전략
+category: harness-engineering
+date: "2026-11-17"
+tags:
+  - LLM
+  - Monitoring
+  - Logging
+  - Observability
+  - Performance
+  - Realtime
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/llm-app-performance-monitoring-system, harness-engineering/llm-realtime-performance-monitoring-troubleshooting, harness-engineering/realtime-llm-app-performance-monitoring-optimization, harness-engineering/llm-service-realtime-monitoring-auto-scaling, evaluation/llm-agent-observability-spanlens-trace-monitoring, project-ops/mlops-pipeline-design-ai-model-deployment-monitoring, reports/ai-model-performance-metrics-dashboard-design-guide]
+status: draft
+description: 프로덕션 LLM 애플리케이션의 안정적인 운영을 위한 실시간 성능 지표 수집, 행동 로깅 및 분석 시스템 구축 방안을 다룹니다.
+type: entry
+source: gap-pull
+---
+
+LLM 기반 애플리케이션의 프로덕션 환경 운영에서 안정성과 효율성을 보장하기 위해서는 실시간 성능 모니터링(Real-time Performance Monitoring)과 체계적인 로깅(Logging)이 필수적입니다. 전통적인 소프트웨어와 달리, LLM 애플리케이션은 비결정적(non-deterministic) 행동, 높은 컴퓨팅 리소스 소모, 프롬프트 엔지니어링의 민감성 등 고유한 특성을 가지므로, 이에 최적화된 모니터링 및 로깅 전략이 필요합니다.
+
+## LLM 애플리케이션의 핵심 모니터링 지표
+LLM 애플리케이션의 건강 상태를 파악하기 위해 다음 지표들을 실시간으로 추적해야 합니다.
+
+### 1. 지연 시간 (Latency)
+사용자 요청부터 응답까지의 총 시간. LLM API 호출 자체의 지연, Retrieval-Augmented Generation (RAG) 스텝의 지연, 후처리 로직 지연 등을 세분화하여 측정합니다. 특히 P95, P99와 같은 꼬리 지연 시간(tail latency)이 중요합니다.
+
+### 2. 비용 (Cost)
+주로 토큰 사용량에 비례합니다. 프롬프트 토큰, 응답 토큰, 총 토큰 수를 기록하고 이를 통해 API 비용을 예측 및 추적합니다. 예상치 못한 비용 급증은 잠재적인 문제(예: 무한 루프, 불필요한 장문 생성)를 나타낼 수 있습니다.
+
+### 3. 처리량 (Throughput)
+초당 처리되는 요청 수 (Requests Per Second, RPS). 애플리케이션의 확장성 및 서비스 가능 용량을 나타냅니다.
+
+### 4. 정확도 및 품질 (Accuracy & Quality)
+가장 측정하기 어려운 지표 중 하나입니다. 사용자 피드백, 휴먼 평가(human-in-the-loop), LLM 자체 평가(LLM-as-a-judge) 등을 통해 응답의 관련성, 일관성, 유용성, 안전성 등을 평가합니다. 이는 실시간 지표라기보다는 배치(batch) 평가에 가깝지만, 이상 징후 감지 시 실시간으로 대응해야 합니다.
+
+### 5. 에러율 (Error Rate)
+LLM API 오류, 외부 시스템(DB, 벡터 DB 등) 오류, 애플리케이션 내부 로직 오류 등을 포함합니다. 특히 LLM 응답이 특정 스키마를 따르지 않거나 안전 가이드라인을 위반하는 경우도 에러로 간주할 수 있습니다.
+
+### 6. 가드레일 위반 (Guardrail Violations)
+LLM의 응답이 설정된 안전 및 보안 가이드라인(예: 유해 콘텐츠, PII 노출)을 위반하는 횟수 및 유형입니다.
+
+## LLM 애플리케이션 로깅 전략
+정교한 모니터링을 위해서는 풍부한 로깅 데이터가 필요합니다.
+
+### 1. 상세 요청/응답 로깅
+모든 사용자 요청과 LLM 응답을 기록합니다. 여기에는 다음이 포함됩니다:
+*   사용자 ID, 세션 ID
+*   원문 사용자 입력 (Raw User Input)
+*   전처리된 사용자 입력 (Processed User Input)
+*   최종 프롬프트 (Final Prompt) - RAG 컨텍스트, 시스템 프롬프트 등 포함
+*   LLM 응답 (Raw LLM Response)
+*   후처리된 최종 응답 (Processed Final Response)
+*   API 호출 메타데이터 (모델명, 버전, `temperature`, `top_p` 등 파라미터)
+*   토큰 사용량 (프롬프트, 응답, 총계)
+*   지연 시간 (각 단계별, 총계)
+*   에러 코드 및 메시지
+
+### 2. 중간 단계 로깅 (Agent Tracing)
+LangChain, LlamaIndex와 같은 LLM 프레임워크를 사용하는 경우, 복잡한 체인(chain) 또는 에이전트(agent)의 각 단계별 실행을 추적하는 것이 중요합니다. 이는 문제 발생 시 디버깅을 용이하게 합니다.
+*   RAG: 검색 쿼리, 검색된 문서 청크, 재랭킹 결과
+*   Agent: Tool 사용 결정, Tool 입력/출력, Rationale, Thought 스텝
+*   Chain: 각 LLM 호출의 프롬프트 및 응답
+
+### 3. PII (개인 식별 정보) 및 민감 데이터 처리
+로깅 과정에서 PII나 민감 데이터가 유출되지 않도록 마스킹(masking) 또는 암호화(encryption) 처리를 적용합니다. 프로덕션 환경에서는 민감 정보가 포함된 원문 로깅은 지양해야 합니다.
+
+## 모니터링 및 로깅 시스템 아키텍처
+일반적인 LLM 애플리케이션의 모니터링 및 로깅 아키텍처는 다음과 같습니다.
+
+```mermaid
+graph TD
+    subgraph LLM_Application[
