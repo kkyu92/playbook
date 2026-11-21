@@ -1,0 +1,243 @@
+---
+title: "Model Context Protocol (MCP): AI 워커 통신 표준화 및 도구 통합 전략"
+category: harness-engineering
+date: "2026-11-05"
+tags:
+  - model-context-protocol
+  - ai-worker-communication
+  - tool-orchestration
+  - json-rpc
+  - protocol-standardization
+  - harness-engineering
+confidence: 1
+connections: [agents/ai-agent-external-tool-integration-patterns, agents/llm-agent-tool-integration-patterns, agents/multi-agent-collaboration-protocol-design, harness-engineering/llm-api-unified-interface-design-multi-llm-orchestration, harness-engineering/multi-llm-external-tool-orchestration-patterns, harness-engineering/codemode-llm-tool-orchestration-workflow-refinement, harness-engineering/ai-agent-harness-architecture-go-micro-patterns]
+status: draft
+description: MCP(Model Context Protocol)를 활용하여 AI 워커 간 JSON-RPC 기반 통신을 표준화하고, 새로운 도구 통합을 용이하게 하는 방안을 모색한다.
+type: entry
+source: scout
+---
+
+Model Context Protocol (MCP)은 AI 애플리케이션(앱)이 다양한 도구 및 데이터 소스와 효율적으로 통신할 수 있도록 설계된 개방형 표준입니다. 기존의 복잡하고 파편화된 AI 워커(Worker) 통신 방식을 표준화하여 상호 운용성을 극대화하는 데 중점을 둡니다. 이는 특히 `playbook-hub`, `moneyballscore`, `blog-autopilot`과 같은 AI 워커들이 다양한 기능을 수행하고 데이터를 교환하는 환경에서 필수적인 요소입니다.
+
+## MCP의 핵심 아키텍처 및 동작 원리
+
+MCP는 AI 앱(Host)이 직접 모델과 도구 서버(Server)를 연결하는 것이 아니라, 앱이 도구 서버와 통신하고 그 결과를 모델에 전달하는 간접적인 통신 방식을 채택합니다. 모델은 사용할 도구를 결정하고 앱에 지시하며, 앱은 해당 도구 서버를 호출한 후 그 실행 결과를 다시 모델에 제공합니다.
+
+이 통신 프로토콜의 핵심은 JSON-RPC입니다. JSON-RPC는 경량의 원격 프로시저 호출(RPC) 프로토콜로, 표준 입력/출력(stdin/stdout) 또는 단일 HTTP 엔드포인트를 통해 메시지를 주고받습니다. 이는 REST API와 달리 서버가 앱에 메시지를 보낼 수 있는 양방향 통신이 가능하다는 특징이 있습니다. 이 양방향성은 AI 에이전트와 도구 간의 복잡한 상호작용, 예를 들어 장기 실행 작업의 상태 업데이트나 비동기 이벤트 처리에 유리합니다.
+
+### 주요 구성 요소:
+
+*   **Host (AI Application)**: Claude, Cursor, ChatGPT와 같은 AI 앱입니다. 모델이 필요로 하는 도구를 결정하고, 도구 서버와 통신을 중개합니다.
+*   **Server (Tool/Data Provider)**: 특정 기능을 제공하거나 데이터에 접근하는 작은 프로그램입니다. `moneyballscore`의 통계 분석 기능, `blog-autopilot`의 콘텐츠 생성 기능 등이 이에 해당합니다.
+*   **Model**: 실제 AI 추론을 수행하는 대규모 언어 모델(LLM)입니다. 직접 서버와 통신하지 않고, Host를 통해 도구 사용을 지시받고 결과를 전달받습니다.
+
+## 워커 통신 표준화에 MCP 적용
+
+현재 `playbook-hub`와 다양한 워커(예: `moneyballscore`, `blog-autopilot`) 간의 통신은 특정 패턴이나 프레임워크에 의존할 수 있습니다. MCP를 도입하면 다음과 같은 이점을 얻을 수 있습니다.
+
+1.  **명확한 인터페이스 정의**: 모든 워커가 JSON-RPC 기반의 표준화된 인터페이스를 통해 기능을 노출하고 데이터를 교환하게 됩니다. 이는 워커 간의 결합도를 낮추고 유지보수성을 향상시킵니다.
+2.  **쉬운 신규 도구 통합**: 새로운 AI 도구 워커를 시스템에 추가할 때, MCP 표준만 준수하면 기존 시스템에 쉽게 통합할 수 있습니다. 이는 개발 및 배포 시간을 단축시킵니다.
+3.  **향상된 에러 처리 및 관측 가능성**: JSON-RPC는 요청/응답 구조가 명확하여 에러 코드와 메시지를 표준화하기 용이합니다. 이를 통해 워커 간 에러 발생 시 진단 및 복구 프로세스를 간소화할 수 있습니다.
+4.  **확장성 및 유연성**: 양방향 통신이 가능하므로, 비동기 작업, 스트리밍 데이터 처리 등 복잡한 워크플로우를 유연하게 구성할 수 있습니다.
+
+예를 들어, `playbook-hub`의 LLM 에이전트가 `moneyballscore` 워커에게 특정 스포츠 데이터 분석을 요청하고, 그 결과를 `blog-autopilot` 워커에게 전달하여 분석 보고서를 작성하도록 지시하는 일련의 과정이 MCP를 통해 매끄럽게 이루어질 수 있습니다.
+
+### JSON-RPC 기반 워커 통신 구현 예제 (Go)
+
+다음은 Go 언어를 사용하여 MCP의 JSON-RPC 통신 원리를 간단히 구현한 예제입니다. `ToolServer`는 도구의 기능을 제공하고, `ToolClient`는 Host(AI 앱)의 역할을 수행합니다.
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/rpc"
+	"net/rpc/jsonrpc"
+	"os"
+	"time"
+)
+
+// Tool represents a simple tool that can perform an action.
+type Tool struct{}
+
+// Args represents the arguments for a tool call.
+type Args struct {
+	Method string `json:"method"`
+	Params []interface{} `json:"params"`
+}
+
+// Reply represents the result of a tool call.
+type Reply struct {
+	Result interface{} `json:"result"`	
+	Error  string `json:"error,omitempty"`
+}
+
+// Execute is a method that mimics a tool's functionality.
+func (t *Tool) Execute(args Args, reply *Reply) error {
+	log.Printf("ToolServer received call for method: %s with params: %v\n", args.Method, args.Params)
+
+	switch args.Method {
+	case "analyzeData":
+		if len(args.Params) < 1 || fmt.Sprintf("%v", args.Params[0]) != "sales_report" {
+			reply.Error = "Invalid data source for analyzeData"
+			return nil
+		}
+		reply.Result = map[string]interface{}{"status": "success", "analysis": "Quarterly sales up 15%"}
+	case "generateSummary":
+		if len(args.Params) < 1 || fmt.Sprintf("%v", args.Params[0]) == "" {
+			reply.Error = "Content for summary cannot be empty"
+			return nil
+		}
+		reply.Result = map[string]interface{}{"status": "success", "summary": fmt.Sprintf("Summary of: %s", args.Params[0])}
+	default:
+		reply.Error = fmt.Sprintf("Unknown method: %s", args.Method)
+		return nil
+	}
+
+	return nil
+}
+
+func startToolServer(ctx context.Context, addr string) {
+	rpc.Register(new(Tool))
+	// In a real scenario, this would be a network listener (e.g., HTTP).
+	// For simplicity, we use stdin/stdout for demonstration.
+
+	log.Println("ToolServer starting...")
+	go func() {
+		<-ctx.Done()
+		log.Println("ToolServer shutting down.")
+	}()
+	// Simulate a server handling requests from an external client via JSON-RPC over stdin/stdout
+	// This part is illustrative; actual implementation would use net.Listen().
+}
+
+func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	serverAddr := ":1234"
+	startToolServer(ctx, serverAddr)
+
+	// --- Simulate Host (AI App) making a tool call ---
+
+	// A real client would connect to a network address.
+	// Here, we simulate a direct call for simplicity, demonstrating the JSON-RPC message structure.
+	fmt.Println("\n--- Simulating AI App (Host) making tool calls ---")
+
+	// Simulate an AI App's internal client for tool calls
+	simulatedClient := new(Tool)
+
+	// Tool Call 1: analyzeData
+	callArgs1 := Args{
+		Method: "analyzeData",
+		Params: []interface{}{"sales_report", 2026},
+	}
+	reply1 := Reply{}
+	err := simulatedClient.Execute(callArgs1, &reply1)
+	if err != nil {
+		log.Fatalf("Tool call failed: %v", err)
+	}
+	fmt.Printf("Tool Call 1 Result: %+v\n", reply1)
+
+	// Tool Call 2: generateSummary
+	callArgs2 := Args{
+		Method: "generateSummary",
+		Params: []interface{}{"Quarterly sales report for Q1 2026 showing significant growth."}, 
+	}
+	reply2 := Reply{}
+	err = simulatedClient.Execute(callArgs2, &reply2)
+	if err != nil {
+		log.Fatalf("Tool call failed: %v", err)
+	}
+	fmt.Printf("Tool Call 2 Result: %+v\n", reply2)
+
+	// Tool Call 3: Unknown Method
+	callArgs3 := Args{
+		Method: "nonExistentMethod",
+		Params: []interface{}{},
+	}
+	reply3 := Reply{}
+	err = simulatedClient.Execute(callArgs3, &reply3)
+	if err != nil {
+		log.Fatalf("Tool call failed: %v", err)
+	}
+	fmt.Printf("Tool Call 3 Result (Error): %+v\n", reply3)
+
+	time.Sleep(1 * time.Second) // Give server a moment to log
+}
+```
+
+위 코드는 `ToolServer`가 `Execute` 메서드를 통해 `analyzeData` 및 `generateSummary`와 같은 가상 도구 호출을 처리하는 방식을 보여줍니다. `Args` 구조체는 메서드 이름과 매개변수를 포함하며, `Reply`는 결과 또는 에러를 반환합니다. 실제 MCP 구현에서는 `net/rpc/jsonrpc` 패키지를 사용하여 HTTP 또는 표준 스트림을 통한 실제 JSON-RPC 통신을 설정해야 합니다. Go의 `net/rpc`는 이를 위한 강력한 기반을 제공합니다.
+
+## MCP 기반 워커 통신 흐름 시각화
+
+```mermaid
+graph TD
+    subgraph "Playbook Hub"
+        A[LLM Agent] --> B{Tool Selection & Plan Execution};
+        B --> C{MCP Client (Host)};
+    end
+
+    subgraph "Worker Ecosystem (MCP Servers)"
+        C --> D["moneyballscore (Data Analysis Tool)"];
+        C --> E["blog-autopilot (Content Generation Tool)"];
+        C --> F["New Tool Integration (e.g., Image Processor)"];
+    end
+
+    D -- JSON-RPC Tool Call --> G[External Data Service/API];
+    E -- JSON-RPC Tool Call --> H[External Content Service/API];
+    F -- JSON-RPC Tool Call --> I[Specialized Service/GPU];
+
+    G -- Raw Data/Results --> D;
+    H -- Generated Text --> E;
+    I -- Processed Output --> F;
+
+    D -- Tool Result --> C;
+    E -- Tool Result --> C;
+    F -- Tool Result --> C;
+
+    C --> A;
+
+    classDef hubStyle fill:#bbf,stroke:#33f,stroke-width:2px;
+    classDef workerStyle fill:#cfc,stroke:#3c3,stroke-width:2px;
+    class A,B,C hubStyle;
+    class D,E,F workerStyle;
+```
+
+## 2026년 AI 생태계에서의 MCP 역할
+
+2026년 AI 생태계는 더욱 복잡하고 상호 연결된 에이전트 시스템으로 진화하고 있습니다. 다양한 AI 모델과 전문화된 도구들이 유기적으로 협력하여 복합적인 작업을 수행하는 것이 중요해졌습니다. MCP는 이러한 환경에서 AI 에이전트가 외부 도구를 안정적이고 예측 가능하게 호출하고, 그 결과를 다시 에이전트의 컨텍스트로 통합하는 표준 메커니즘을 제공합니다.
+
+특히 멀티모달 에이전트나 장기 실행 워크플로우에서는 도구 사용의 일관성과 신뢰성이 필수적입니다. MCP의 JSON-RPC 기반 양방향 통신은 도구 호출의 상태를 실시간으로 추적하고, 복잡한 에러 상황에 유연하게 대응할 수 있는 기반을 마련하여, 미래의 AI 시스템이 더욱 견고하고 자율적으로 작동하는 데 기여할 것입니다.
+
+## 트레이드오프
+
+MCP 기반 워커 통신 표준화를 도입하는 것은 여러 트레이드오프를 수반합니다.
+
+*   **상호 운용성 및 통합 용이성 (Good: 복잡한 AI 생태계, Bad: 단일 앱/도구)**:
+    *   **언제 좋고**: 다양한 LLM과 수많은 외부 도구를 통합해야 하는 복잡한 AI 에이전트 시스템에서 빛을 발합니다. 명확한 규약 덕분에 새로운 도구를 빠르게 온보딩하고, 기존 워커들을 교체하거나 확장하기 용이합니다.
+    *   **언제 나쁜지**: 단일 AI 앱이 소수의 내부 도구와만 통신하는 매우 단순한 시스템에서는 JSON-RPC의 추가적인 오버헤드와 학습 곡선이 불필요하게 느껴질 수 있습니다. REST나 경량 메시징 큐가 더 효율적일 수 있습니다.
+*   **표준화된 계약 및 예측 가능성 (Good: 대규모 팀, Bad: 빠른 프로토타이핑)**:
+    *   **언제 좋고**: 여러 팀이나 개발자가 협업하여 다양한 워커를 개발할 때, 명확한 JSON-RPC 스키마는 통신 계약을 투명하게 만들고 예측 가능한 동작을 보장합니다. 에러 발생 시 디버깅이 쉬워집니다.
+    *   **언제 나쁜지**: 초기 단계의 빠른 프로토타이핑이나 실험적인 기능 개발 시에는 엄격한 표준화가 오히려 개발 속도를 저해할 수 있습니다. 유연한 스키마리스(schema-less) 접근 방식이 더 적합할 수 있습니다.
+*   **양방향 통신 지원 (Good: 비동기 작업, Bad: 단순 요청-응답)**:
+    *   **언제 좋고**: 장기 실행 도구 작업의 상태 업데이트, 비동기 이벤트 푸시, 또는 에이전트에게 경고를 보내는 등 서버(도구)가 앱(호스트)에 메시지를 보내야 하는 시나리오에 매우 효과적입니다.
+    *   **언제 나쁜지**: 클라이언트가 요청하고 서버가 응답하는 전형적인 RESTful API 패턴만으로 충분한 단순 요청-응답 작업에서는 양방향 통신의 복잡성이 불필요할 수 있습니다.
+*   **성능 오버헤드 (Good: 기능적 복잡성, Bad: 극단적 고성능/저지연)**:
+    *   **언제 좋고**: 도구 호출의 기능적 복잡성, 즉 데이터 처리나 외부 API 호출에 드는 시간이 네트워크 통신 지연보다 훨씬 길 때, JSON-RPC의 추가적인 파싱 오버헤드는 미미합니다.
+    *   **언제 나쁜지**: 밀리초 단위의 극단적인 저지연이 요구되거나, 매우 작은 메시지를 초당 수천 번 교환해야 하는 고성능 시스템에서는 JSON-RPC의 텍스트 기반 포맷이 바이너리 프로토콜 대비 비효율적일 수 있습니다.
+
+## 실전 체크리스트
+
+MCP 기반 워커 통신 표준화를 프로젝트에 적용할 때 다음 항목들을 검증하여 성공적인 도입을 계획할 수 있습니다.
+
+- [ ] **워커별 JSON-RPC 스키마 정의 검토**: 각 워커(`moneyballscore`, `blog-autopilot` 등)가 제공할 기능(메서드)과 입출력 매개변수(스키마)를 JSON-RPC 표준에 따라 명확하게 정의했는가?
+- [ ] **기존 워커의 MCP 클라이언트/서버 마이그레이션 계획 수립**: 현재 사용 중인 통신 방식을 MCP 기반 JSON-RPC로 전환하기 위한 단계별 로드맵(개발, 테스트, 배포)이 마련되어 있는가?
+- [ ] **중앙 집중식 도구 레지스트리 또는 디스커버리 서비스 구축**: `playbook-hub`가 사용 가능한 모든 워커 도구와 그 기능을 동적으로 탐색하고 호출할 수 있는 메커니즘(예: 서비스 디스커버리)이 있는가?
+- [ ] **표준화된 에러 처리 및 로깅 정책 구현**: 워커 간 통신에서 발생하는 모든 에러에 대해 일관된 에러 코드, 메시지 형식을 사용하고, 이를 중앙 로깅 시스템에서 효과적으로 수집 및 분석할 수 있는가?
+- [ ] **신규 도구 통합 시 MCP 준수 여부 자동 검증**: 새로운 워커 도구가 추가될 때, MCP 표준 및 정의된 스키마를 자동으로 검증하는 CI/CD 파이프라인이 구축되어 있는가?
+- [ ] **종단 간(End-to-End) 워커 통신 성능 벤치마킹 및 모니터링**: MCP 도입 전후의 지연 시간, 처리량, 자원 사용량 등을 측정하여 성능 회귀가 없는지 확인하고, 지속적으로 모니터링하는 시스템을 갖추었는가?
+- [ ] **보안 측면(인증/인가, 데이터 암호화) 강화**: MCP 통신 채널(HTTP 또는 내부 스트림)에 대한 적절한 인증, 인가 메커니즘(예: JWT, API Key)과 데이터 전송 암호화(TLS)가 적용되어 있는가?
