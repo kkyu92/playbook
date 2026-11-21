@@ -1,0 +1,24 @@
+---
+date: "2026-11-02"
+source: "kkyu92/moneyballscore"
+type: "worker-lesson"
+payload_type: "lesson"
+fingerprint: "636f1ac206b71f218b6063715b82e6640ea72ce9"
+---
+
+
+subtype: lesson
+cycle: 3906
+
+허브 D5 reminder #3209~#3212 (hub incident playbook #5292 heartbeat-stale / health-alert / runtime-error-alert / deploy-drift-alert, 2026-10-28 생성, 3+일 체류) 조사.
+
+- 실측: health-alert / runtime-error-alert / deploy-drift-alert workflow 최근 3 run 전부 failure (2026-11-01~11-02). prod `https://moneyballscore.vercel.app/` HTTP 402.
+- 근본원인: 2026-10-26 ~13:00Z 부터 Vercel DEPLOYMENT_DISABLED (결제/한도). 4개 alert 는 모두 prod 헬스 프로브 실패의 증상이며 코드 결함 아님.
+- 코드/설정 조치 불가: 비용 가드상 자율 결제 금지, 사용자 Vercel 조치 대기 (cycle 3815~3905 fix-incident 재확인 누적).
+- 선례 9fb262fe(Supabase INACTIVE reminder) 와 달리 incident 가 아직 live — "기 해소" 가 아니라 "외부 요인 회수 불가" 사유로 reminder close (reminder 본문 옵션 2).
+
+교훈: 단일 외부 장애가 N개 alert workflow 를 동시에 울리면 허브는 fingerprint 별 incident/reminder N개를 만든다. 개별 조사 대신 근본원인 1개를 lesson 1건에 묶고 reminder 는 cross-reference 후 일괄 close. ci-main 3건(#3206~#3208)은 원인 미검증 → 본 lesson 범위 외.
+
+박제 위치: memory project_vercel_402_deployment_disabled_2026_10_26 와 cross-reference.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
