@@ -1,0 +1,141 @@
+---
+title: "AI Agent Security: Docker Sandboxes for Enhanced Isolation and Governance"
+category: harness-engineering
+date: "2026-11-23"
+tags:
+  - Docker
+  - AI Agents
+  - Security
+  - Sandboxing
+  - MicroVM
+  - Isolation
+  - harness-engineering
+confidence: 1
+connections: [agents/ai-agent-security-privacy-hardening, agents/ai-agent-harness-security-sandboxing-external-control, agents/ai-agent-vm-isolation-security-hardening, harness-engineering/ai-agent-sandbox-evasion-data-exfiltration-prevention, harness-engineering/ai-agent-sandbox-evasion-data-leakage-prevention, evaluation/ai-agent-sandbox-escape-security-hardening, harness-engineering/opensandbox-ai-agent-runtime-security-isolation]
+status: draft
+description: Explores the adoption of Docker Sandboxes and microVMs to bolster security, isolation, and governance for AI agents like Moneyballscore and Blog-Autopilot workers.
+type: entry
+source: scout
+---
+
+AI 에이전트의 자율성이 증대됨에 따라, 이들의 보안 및 격리 문제는 단순한 워크로드 관리 이상의 중요성을 갖게 됩니다. Docker가 최근 발표한 AI 에이전트 보안을 위한 확장 전략은 이러한 변화의 핵심을 정확히 짚어냅니다. 기존 컨테이너 기반의 격리를 넘어, AI 에이전트라는 '행위자'의 특성을 고려한 전용 솔루션, 즉 Docker Sandboxes와 Docker AI Governance를 도입하는 것은 자율성을 허용하면서도 통제력을 유지하는 데 필수적입니다. 이 위키 엔트리는 Docker Sandboxes 기반 microVM 환경으로 기존 `moneyballscore`와 `blog-autopilot` 워커(에이전트)들의 실행 환경을 전환하는 방안을 탐색하고, 관련 PoC 계획을 위한 기반 지식을 제공합니다.
+
+## AI 에이전트 보안 패러다임의 변화: 행위자로서의 에이전트
+
+전통적인 워크로드(Workload)는 정해진 명령을 실행하는 수동적인 주체였습니다. 이들의 보안은 주로 코드 취약점, 의존성 관리, 그리고 실행 환경의 격리에 초점을 맞췄습니다. 그러나 AI 에이전트는 다릅니다. 이들은 주어진 목표를 달성하기 위해 스스로 작업 흐름을 결정하고, 외부 도구와 상호작용하며, 파일 시스템에 접근하고, 네트워크 통신을 수행하며, 심지어 코드 변경까지 시도할 수 있는 '행위자(Actor)'입니다. 이러한 자율성은 엄청난 잠재력을 제공하지만, 동시에 통제되지 않을 경우 심각한 보안 위험으로 이어질 수 있습니다.
+
+예를 들어, 악의적인 프롬프트 인젝션이나 예상치 못한 오류로 인해 에이전트가 민감한 데이터에 접근하거나, 외부 시스템에 비정상적인 변경을 가할 가능성이 항상 존재합니다. 기존 컨테이너 기술은 프로세스 격리에는 효과적이지만, 동일한 커널을 공유하며 발생하는 잠재적인 커널 익스플로잇이나 리소스 고갈 공격에 대한 방어는 제한적입니다. AI 에이전트의 '행위자' 특성을 고려할 때, 더 강력한 수준의 격리가 요구됩니다.
+
+## Docker Sandboxes: MicroVM 기반의 심층 격리
+
+Docker Sandboxes는 AI 에이전트를 독립적인 커널을 갖는 microVM에서 실행함으로써, 기존 컨테이너보다 훨씬 강력한 격리(Isolation)를 제공합니다. microVM은 경량 가상 머신으로, 각 에이전트 인스턴스가 완전히 분리된 OS 커널 환경에서 동작하도록 보장합니다. 이는 다음과 같은 이점을 제공합니다:
+
+*   **커널 수준의 격리**: 호스트 OS 커널로부터 완전히 분리되어, 한 에이전트의 커널 취약점이 다른 에이전트나 호스트 시스템에 영향을 미칠 위험을 최소화합니다.
+*   **강화된 자원 격리**: CPU, 메모리, 네트워크, 스토리지와 같은 자원이 각 microVM에 할당되어, 한 에이전트의 자원 고갈이 다른 에이전트의 성능에 영향을 주지 않습니다.
+*   **파일 시스템 및 네트워크 접근 제어**: Docker AI Governance와 연동하여 에이전트가 접근할 수 있는 파일 시스템 경로와 네트워크 엔드포인트를 세밀하게 제어할 수 있습니다. 이는 데이터 유출(Data Exfiltration) 및 무단 접근을 방지하는 데 필수적입니다.
+
+## Docker AI Governance: 정책 기반의 통제
+
+Docker AI Governance는 조직 차원에서 AI 에이전트의 행동을 제어하는 정책을 중앙 집중식으로 관리하는 도구입니다. 이는 단순한 접근 제어를 넘어, 에이전트의 실행 환경, 사용 가능한 도구, 네트워크 통신 규칙 등을 정의하고 강제할 수 있습니다. 예를 들어, `moneyballscore` 에이전트가 특정 금융 데이터베이스에만 접근하고 외부 API는 사용하지 못하도록 하거나, `blog-autopilot` 에이전트가 특정 CMS 디렉터리에만 쓰기 권한을 갖도록 설정할 수 있습니다.
+
+이러한 거버넌스 프레임워크는 에이전트의 자율성을 보장하면서도, 기업의 보안 정책 및 컴플라이언스 요구사항을 충족시키는 데 중요한 역할을 합니다. 특히, 멀티-에이전트 시스템에서 각 에이전트의 역할을 명확히 하고, 잠재적인 충돌이나 오용을 방지하는 데 효과적입니다.
+
+## PoC 검토: Playbook 워커 환경 전환
+
+현재 `playbook`에 연결된 `moneyballscore`와 `blog-autopilot` 워커들은 중요한 자동화 작업을 수행하고 있습니다. 이들의 실행 환경을 Docker Sandboxes 기반 microVM으로 전환하는 PoC는 다음과 같은 단계로 진행될 수 있습니다.
+
+### 1. 초기 환경 분석 및 에이전트 프로파일링
+*   현재 워커들의 자원 사용량, 외부 의존성, 접근하는 파일/네트워크 리소스 목록을 상세히 파악합니다.
+*   각 워커의 '행위자'로서의 잠재적 위험(e.g., 민감 데이터 접근, 외부 API 호출, 파일 시스템 쓰기)을 식별하고 우선순위를 매깁니다.
+
+### 2. Docker Sandboxes 환경 구축
+*   Docker Enterprise (또는 Docker Desktop for Business) 환경에 Docker Sandboxes 기능을 활성화하고, microVM 런타임을 구성합니다.
+*   테스트용 `moneyballscore` 및 `blog-autopilot` 에이전트의 이미지 빌드 및 Docker Sandboxes 최적화 설정을 적용합니다.
+
+### 3. AI Governance 정책 정의 및 적용
+*   각 에이전트의 프로파일에 기반하여 최소 권한(Least Privilege) 원칙에 따른 네트워크, 파일 시스템, 도구 접근 정책을 YAML 형태로 정의합니다.
+*   정의된 정책을 Docker AI Governance를 통해 Sandboxes 환경에 배포하고 강제합니다.
+
+### 4. 기능 및 성능 검증
+*   Sandboxes 환경에서 에이전트의 핵심 기능이 정상적으로 동작하는지 E2E 테스트를 수행합니다.
+*   microVM 전환 전후의 성능(Latency, Throughput, Resource usage)을 비교 분석하여 오버헤드를 측정합니다.
+*   정책이 올바르게 적용되어 무단 접근이 차단되는지 보안 테스트를 진행합니다.
+
+## 아키텍처 다이어그램
+
+```mermaid
+graph LR
+    subgraph "User Interaction"
+        A[Developer/Operator] --> B[Playbook Orchestrator]
+    end
+
+    subgraph "AI Agent Workloads"
+        B --> C{Agent Task Queue}
+        C --> D["AI Agent: Moneyballscore"]
+        C --> E["AI Agent: Blog-Autopilot"]
+    end
+
+    subgraph "Docker Sandbox Environment"
+        D --> F(Docker Sandbox 1)
+        E --> G(Docker Sandbox 2)
+        F --> H["MicroVM 1(\"Moneyballscore Agent\")"]
+        G --> I["MicroVM 2(\"Blog-Autopilot Agent\")"]
+        H -- Isolated Kernel --> J[Host Kernel]
+        I -- Isolated Kernel --> J
+        F -- Resource Control --> K(Docker AI Governance)
+        G -- Resource Control --> K
+    end
+
+    subgraph "External Resources"
+        K --> L[External Database/API]
+        K --> M["Version Control System (VCS)"]
+        K --> N[CMS/Deployment Target]
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#ccf,stroke:#333,stroke-width:2px
+    style D fill:#ddf,stroke:#333,stroke-width:2px
+    style E fill:#ddf,stroke:#333,stroke-width:2px
+    style F fill:#eef,stroke:#333,stroke-width:2px
+    style G fill:#eef,stroke:#333,stroke-width:2px
+    style H fill:#fef,stroke:#333,stroke-width:2px
+    style I fill:#fef,stroke:#333,stroke-width:2px
+    style J fill:#fcf,stroke:#333,stroke-width:2px
+    style K fill:#cfc,stroke:#333,stroke-width:2px
+    style L fill:#eee,stroke:#333,stroke-width:2px
+    style M fill:#eee,stroke:#333,stroke-width:2px
+    style N fill:#eee,stroke:#333,stroke-width:2px
+```
+
+## 트레이드오프
+
+Docker Sandboxes를 활용한 AI 에이전트 보안 강화는 명확한 이점을 제공하지만, 동시에 몇 가지 트레이드오프를 수반합니다. 프로젝트 적용 시 이러한 균형점을 고려해야 합니다.
+
+1.  **강력한 보안 격리 vs. 성능 오버헤드**: MicroVM은 매우 강력한 격리 기능을 제공하지만, 기존 컨테이너나 호스트 프로세스 실행에 비해 가상화로 인한 약간의 성능 오버헤드가 발생할 수 있습니다.
+    *   **언제 좋은가**: 높은 수준의 보안(e.g., 민감 정보 처리, 외부 API 호출, 파일 시스템 변경)이 필수적이거나, 잠재적 공격 노출 면적이 넓은 에이전트에 적합합니다.
+    *   **언제 나쁜가**: 초저지연(ultra-low latency) 및 최고 처리량(maximum throughput)이 요구되는 에이전트, 또는 보안 위험이 매우 낮은 단순 작업 에이전트에는 과도한 오버헤드가 될 수 있습니다.
+
+2.  **중앙 집중식 거버넌스 vs. 운영 복잡성 증가**: Docker AI Governance를 통해 에이전트의 행동을 중앙에서 통제할 수 있으나, microVM 환경의 배포, 모니터링, 관리 등 운영 복잡도가 상승할 수 있습니다.
+    *   **언제 좋은가**: 다수의 에이전트가 다양한 역할과 권한으로 복잡하게 상호작용하는 대규모 시스템에서 일관된 보안 정책을 유지하고 컴플라이언스를 준수해야 할 때 유용합니다.
+    *   **언제 나쁜가**: 소규모의 단순한 에이전트 시스템이나, 개발 팀의 운영 역량이 제한적일 경우 초기 도입 및 유지보수 부담이 커질 수 있습니다.
+
+3.  **리소스 효율성 저하 vs. 안정성 향상**: 각 microVM은 독립적인 커널과 최소한의 OS 리소스를 필요로 하므로, 동일한 수의 에이전트를 컨테이너로 실행하는 것보다 더 많은 호스트 자원을 소모할 수 있습니다. 그러나 이는 곧 시스템 전반의 안정성 향상으로 이어집니다.
+    *   **언제 좋은가**: 에이전트 간의 완벽한 격리를 통해 시스템의 안정성과 복원력을 극대화하고자 할 때, 특히 에이전트의 오작동이 전체 서비스에 치명적인 영향을 줄 수 있는 경우 효과적입니다.
+    *   **언제 나쁜가**: 클라우드 자원 비용 효율성이 최우선 목표이거나, 에이전트 밀집도가 매우 높아 호스트 리소스 사용량을 극도로 최적화해야 하는 환경에서는 불리할 수 있습니다.
+
+4.  **강화된 통제 vs. 개발 유연성 제한**: 엄격한 거버넌스 정책은 에이전트의 개발 및 테스트 과정에서 유연성을 저해할 수 있습니다. 새로운 도구나 API 통합 시 정책 업데이트 및 승인 과정이 추가될 수 있습니다.
+    *   **언제 좋은가**: 에이전트가 프로덕션 환경에 배포되어 예측 가능하고 통제된 방식으로 동작해야 할 때, 또는 민감한 기능을 수행하는 에이전트의 행동을 엄격히 제한해야 할 때 중요합니다.
+    *   **언제 나쁜가**: 빠른 프로토타이핑, 실험적 기능 개발, 또는 에이전트가 예측 불가능한 다양한 시나리오에 대응해야 하는 초기 개발 단계에서는 정책의 제약이 방해가 될 수 있습니다.
+
+## 실전 체크리스트
+
+AI 에이전트의 보안 강화를 위해 Docker Sandboxes를 도입할 때 다음 체크리스트를 활용하여 준비 및 검증 단계를 체계적으로 진행합니다.
+
+*   [ ] 각 `AI Agent`의 최소 필수 권한(Least Privilege)을 정의하고, 접근 가능한 네트워크 엔드포인트 및 파일 시스템 경로를 명확히 지정하였는가?
+*   [ ] `microVM` 환경으로 전환하기 전과 후의 `AI Agent` 성능(응답 시간, 처리량, 자원 사용량) `baseline`을 측정하고, 허용 가능한 `성능 오버헤드` 범위를 설정하였는가?
+*   [ ] `Docker Sandboxes`에서 실행되는 `AI Agent`의 모든 활동(e.g., 도구 호출, 외부 통신, 파일 접근)에 대한 상세 `로깅` 및 `모니터링` 시스템을 구축하고, 이상 탐지(`Anomaly Detection`) 알림 체계를 갖추었는가?
+*   [ ] `Docker AI Governance` 정책의 자동 배포 및 업데이트를 위한 `CI/CD 파이프라인`을 구성하고, 정책 변경에 따른 `에이전트 재시작/재배포` 전략을 수립하였는가?
+*   [ ] `Docker Sandboxes` 환경에 대한 `모의 침투 테스트(Penetration Testing)`를 수행하여 `sandbox escape` 취약점 및 `정책 우회` 가능성을 적극적으로 식별하고 개선 계획을 수립하였는가?
+*   [ ] 기존 `AI Agent`의 `toolchain` 및 `dependency`가 `microVM` 환경과 완벽하게 호환되는지 사전 검증하고, 필요한 경우 대체 또는 수정 계획을 마련하였는가?
+*   [ ] `Docker AI Governance` 정책에 `데이터 유출(Data Exfiltration)` 방지 메커니즘을 포함하여, `AI Agent`가 승인되지 않은 방식으로 민감 데이터를 외부로 전송하는 것을 차단하도록 설정하였는가?
