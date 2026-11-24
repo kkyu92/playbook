@@ -1,0 +1,105 @@
+---
+title: "LLM Inference Cost Optimization \b Dynamic Batching Strategies"
+category: harness-engineering
+date: "2026-11-24"
+tags:
+  - LLM
+  - Inference
+  - CostOptimization
+  - DynamicBatching
+  - GPU
+  - Latency
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/llm-gpu-inference-optimization-cost-management, harness-engineering/llm-inference-cost-optimization-production-infra, harness-engineering/gpu-resource-optimization-large-scale-ai-serving, harness-engineering/llm-serving-cost-efficient-infrastructure-patterns, harness-engineering/llm-inference-distributed-load-balancing-architecture, harness-engineering/realtime-llm-inference-deployment-monitoring-patterns, harness-engineering/dynamic-llm-routing-system-implementation-patterns]
+status: draft
+description: LLM 추론 비용 효율화를 위한 동적 배치(Dynamic Batching) 기술을 탐색하고, 운영 환경에서 GPU 활용률과 처리량을 극대화하는 방법을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+대규모 언어 모델(LLM)의 추론(Inference) 비용은 프로덕션 환경에서 주요 운영 장벽으로 작용합니다. 특히 GPU 자원은 고가이며, 비효율적인 활용은 막대한 비용 지출로 이어집니다. LLM 추론 시 발생하는 비효율의 핵심은 요청의 가변적인 길이와 불규칙한 도착 패턴입니다. 단일 요청을 처리하기 위해 GPU 자원을 온전히 할당하면, GPU가 대부분의 시간 동안 유휴(Idle) 상태에 놓이게 되어 활용률이 현저히 떨어집니다. 이러한 문제를 해결하기 위한 강력한 기법 중 하나가 바로 동적 배치(Dynamic Batching)입니다.
+
+## 동적 배치(Dynamic Batching)의 핵심 원리
+동적 배치(Dynamic Batching)는 여러 개의 추론 요청을 하나로 묶어 동시에 처리함으로써 GPU 활용률을 극대화하는 기법입니다. 전통적인 정적 배치(Static Batching)는 고정된 크기의 배치로만 요청을 처리하지만, LLM과 같이 입력 시퀀스 길이가 가변적인 경우 비효율적입니다. 짧은 시퀀스가 긴 시퀀스와 함께 배치될 경우, 짧은 시퀀스는 긴 시퀀스에 맞춰 패딩(Padding)되어 불필요한 연산을 유발하고 메모리를 낭비하게 됩니다. 동적 배치는 이러한 문제를 완화하며, 시스템에 들어오는 요청의 특성을 실시간으로 파악하여 가장 효율적인 배치 크기와 구성을 동적으로 결정합니다.
+
+## 동적 배치 작동 방식
+동적 배치는 기본적으로 서버에 도착하는 추론 요청을 일시적으로 큐(Queue)에 보관합니다. 그리고 특정 조건(예: 최대 대기 시간 초과, 큐에 쌓인 요청의 총 토큰 수가 특정 임계치 초과, 배치 크기가 최대치에 도달)이 충족되면, 큐에 있는 요청들을 하나의 배치로 묶어 LLM에 전달합니다. 이 과정에서 가변 길이 입력 문제를 해결하기 위해 Continuous Batching (연속 배치) 기법이 주로 사용됩니다. Continuous Batching은 서로 다른 길이의 요청들을 패딩 없이 병렬로 처리하며, 특히 vLLM의 PagedAttention과 같은 기술은 LLM의 Key-Value Cache (KV Cache)를 효율적으로 관리하여 메모리 오버헤드를 줄이고 처리량을 크게 향상시킵니다.
+
+### 코드 예제: 동적 배치 처리 흐름 (개념적 Python)
+다음은 FastAPI 웹 서버 환경에서 동적 배치를 개념적으로 구현한 Python 스케치입니다. 실제 프로덕션 환경에서는 vLLM, TensorRT-LLM과 같은 전용 프레임워크를 사용합니다.
+
+```python
+import asyncio
+import time
+from collections import deque
+from typing import List, Dict, Any
+
+class LLMService:
+    def __init__(self, max_batch_size: int = 8, max_wait_time: float = 0.05):
+        self.request_queue = deque()
+        self.batch_processing_task = None
+        self.max_batch_size = max_batch_size
+        self.max_wait_time = max_wait_time
+        self.last_batch_time = time.time()
+
+    async def process_request(self, prompt: str) -> str:
+        future = asyncio.Future()
+        self.request_queue.append({'prompt': prompt, 'future': future})
+        if not self.batch_processing_task or self.batch_processing_task.done():
+            self.batch_processing_task = asyncio.create_task(self._batch_processor())
+        return await future
+
+    async def _batch_processor(self):
+        while True:
+            current_time = time.time()
+            if not self.request_queue:
+                await asyncio.sleep(0.001) # Small sleep to prevent busy-waiting
+                continue
+
+            # Collect requests based on max_batch_size or max_wait_time
+            if len(self.request_queue) >= self.max_batch_size or \n               (current_time - self.last_batch_time >= self.max_wait_time and len(self.request_queue) > 0):
+                batch = []
+                for _ in range(min(len(self.request_queue), self.max_batch_size)):
+                    batch.append(self.request_queue.popleft())
+
+                if batch:
+                    prompts = [item['prompt'] for item in batch]
+                    print(f"Processing batch of {len(prompts)} prompts...")
+                    # Simulate LLM inference
+                    await asyncio.sleep(0.1)
+                    results = [f"Response to '{p[:20]}...'" for p in prompts]
+
+                    for i, item in enumerate(batch):
+                        item['future'].set_result(results[i])
+                    self.last_batch_time = time.time()
+            else:
+                await asyncio.sleep(0.001)
+
+# Example usage in a web framework (e.g., FastAPI)
+llm_service = LLMService()
+
+async def call_llm(prompt: str):
+    return await llm_service.process_request(prompt)
+
+# In a real FastAPI app, you'd integrate `call_llm` into an API endpoint.
+# For demonstration:
+# async def main():
+#     tasks = [call_llm(f"Hello, world! This is prompt {i}") for i in range(10)]
+#     results = await asyncio.gather(*tasks)
+#     for r in results: print(r)
+# asyncio.run(main())
+```
+
+### Mermaid 다이어그램: 동적 추론 배치 파이프라인
+
+```mermaid
+graph TD
+    A[클라이언트 요청] --> B{요청 큐};;
+    B --> C[배치 스케줄러];;
+    C -- 요청 수 or 대기 시간 임계치 초과 --> D{동적 배치 생성};;
+    D --> E[LLM 추론 엔진(GPU)];;
+    E -- 처리 결과 --> F[결과 반환];;
+    F --> A;;
+
+    subgraph 배치 스케줄러[
