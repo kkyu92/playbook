@@ -1,0 +1,54 @@
+---
+title: LLM 서비스 성능 — 실시간 모니터링 및 최적화 전략
+category: harness-engineering
+date: "2026-11-16"
+tags:
+  - LLM
+  - Monitoring
+  - PerformanceOptimization
+  - Realtime
+  - MLOps
+  - HarnessEngineering
+  - harness-engineering
+confidence: 1
+connections: [harness-engineering/llm-realtime-performance-monitoring-troubleshooting, harness-engineering/llm-service-realtime-monitoring-auto-scaling, harness-engineering/llm-inference-latency-optimization-realtime-strategies, harness-engineering/llm-deployment-caching-strategies-inference-optimization, harness-engineering/llm-cost-optimization-design-patterns, evaluation/llm-agent-observability-spanlens-trace-monitoring, harness-engineering/realtime-llm-app-performance-monitoring-optimization]
+status: draft
+description: LLM 기반 서비스의 안정적이고 효율적인 운영을 위한 실시간 성능 관리 및 최적화 기법에 대한 구체적인 방법론을 제시합니다.
+type: entry
+source: gap-pull
+---
+
+LLM(Large Language Model) 기반 서비스는 사용자에게 혁신적인 경험을 제공하지만, 높은 연산 비용, 예측 불가능한 응답 시간, 그리고 출력 품질의 비결정론적 특성으로 인해 안정적인 운영이 복잡합니다. 따라서 실시간 성능 모니터링 및 최적화는 서비스의 신뢰성, 비용 효율성, 사용자 경험을 보장하는 핵심 요소입니다. 2026년에는 LLM 서비스가 더욱 고도화된 에이전트(Agentic) 워크플로우와 멀티모달(Multi-modal) 기능을 통합하며, 비용 효율성과 QoS(Quality of Service) 보장에 대한 요구사항이 더욱 커질 것입니다. 이 엔트리는 LLM 기반 서비스의 실시간 성능을 효과적으로 관리하고 최적화하는 전략들을 다룹니다.
+
+## LLM 서비스 성능 지표
+
+LLM 서비스의 성능을 측정하는 주요 지표들은 다음과 같습니다:
+
+### 1. 지연 시간 (Latency)
+*   **TTFT (Time To First Token)**: 첫 토큰이 생성되기까지의 시간. 사용자 경험에 매우 중요합니다.
+*   **TTVR (Time To Viewable Response)**: 전체 응답이 사용자에게 도달하기까지의 시간. 스트리밍(Streaming) 방식의 LLM 응답에서는 TTFT와 TTVR 간의 지연이 다르게 측정됩니다.
+*   **E2E Latency (End-to-End Latency)**: 사용자 요청부터 최종 응답까지의 전체 시간.
+
+### 2. 처리량 (Throughput)
+*   **RPS (Requests Per Second)**: 초당 처리할 수 있는 요청 수.
+*   **TPM (Tokens Per Minute)**: 분당 처리할 수 있는 토큰 수. LLM의 특성을 고려한 중요한 지표입니다.
+
+### 3. 오류율 (Error Rates)
+*   **API Error Rate**: LLM API 호출 실패율.
+*   **Application Error Rate**: 서비스 로직 내부의 오류율.
+*   **Quality Error Rate**: 할루시네이션(Hallucination), 비논리적 응답 등 LLM 자체의 품질 문제 발생률.
+
+### 4. 비용 (Cost)
+*   **Token Usage Cost**: 입력 및 출력 토큰 사용량에 따른 API 비용. LLM 서비스의 직접적인 운영 비용과 직결됩니다.
+*   **Infrastructure Cost**: GPU 사용량 등 인프라 비용.
+
+## 실시간 모니터링 아키텍처
+
+효과적인 실시간 모니터링을 위해서는 분산 추적(Distributed Tracing), 로그 관리(Logging), 메트릭 수집(Metrics Collection)이 통합된 옵저버빌리티(Observability) 스택이 필수적입니다.
+
+```mermaid
+graph TD
+    Client --> API_Gateway
+    API_Gateway -->|Request| LLM_Router
+    LLM_Router -->|Route Request| LLM_Cache[LLM Cache]
+    LLM_Cache -- 
