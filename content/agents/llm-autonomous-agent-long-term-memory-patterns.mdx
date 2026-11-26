@@ -1,0 +1,69 @@
+---
+title: "LLM 자율 에이전트: 장기 기억 관리 아키텍처 및 패턴"
+category: agents
+date: "2026-11-26"
+tags:
+  - LLMAgents
+  - AutonomousAI
+  - LongTermMemory
+  - MemoryManagement
+  - AgentArchitecture
+  - KnowledgeGraph
+  - agents
+confidence: 1
+connections: [agents/autonomous-agent-long-term-memory-management, agents/llm-agent-long-term-memory-system-design, agents/autonomous-agent-long-term-memory-reflection-design, agents/ai-agent-persistent-memory-automated-context-management, agents/llm-autonomous-agents-long-term-memory-learning-system, context-engineering/ai-agent-long-term-memory-system-integration, agents/datalog-persistent-memory-llm-agents-state]
+status: draft
+description: LLM 기반 자율 에이전트가 복잡한 의사결정과 지속적인 학습을 수행하기 위한 핵심 장기 기억 관리 패턴과 아키텍처를 탐구합니다.
+type: entry
+source: gap-pull
+---
+
+대규모 언어 모델(LLM) 기반의 자율 에이전트는 복잡한 환경에서 지속적으로 학습하고 진화하며 목표를 달성해야 한다. 그러나 LLM의 고정된 컨텍스트 윈도우 한계와 실시간 정보 업데이트의 어려움은 에이전트의 '지속성(persistence)'과 '학습 능력(learning capability)'에 치명적인 제약으로 작용한다. 이러한 문제를 극복하고 에이전트가 진정한 자율성을 갖추도록 하는 핵심 요소가 바로 '장기 기억(Long-Term Memory)' 관리 전략이다.
+
+이 문서는 LLM 자율 에이전트를 위한 장기 기억 관리 패턴들을 소개하고, 2026년 현재 가장 효과적인 접근 방식들을 분석한다.
+
+## 장기 기억의 구성 요소
+
+에이전트의 장기 기억은 인간의 기억 체계와 유사하게 여러 유형으로 분류될 수 있으며, 각 유형은 에이전트의 특정 요구사항을 충족한다.
+
+### 1. 일화 기억 (Episodic Memory)
+
+에이전트가 경험한 특정 이벤트, 관찰, 행동, 생각 등을 시간 순서대로 기록한 로그이다. 이는 에이전트의 '경험'을 구성하며, 과거 상황을 재구성하고 특정 시점의 맥락을 파악하는 데 사용된다. 주로 비정형 텍스트 형태로 저장되며, 벡터 임베딩을 통해 검색된다.
+
+### 2. 의미 기억 (Semantic Memory)
+
+일반적인 사실, 개념, 규칙, 관계 등 세계에 대한 지식이다. 에이전트가 학습하거나 외부 소스로부터 얻은 구조화된 지식을 포함한다. 일화 기억의 반영(reflection) 과정을 통해 추상화되고 일반화된 정보가 의미 기억으로 통합될 수 있다. 지식 그래프(Knowledge Graph) 형태로 구성되는 경우가 많다.
+
+### 3. 절차 기억 (Procedural Memory)
+
+특정 작업을 수행하는 '방법'에 대한 지식이다. 도구 사용 방법, API 호출 패턴, 복잡한 태스크 분해 전략 등 에이전트의 '기술(skill)'과 관련된다. 이는 코드 스니펫, 스키마 정의, 툴 매뉴얼 등으로 표현될 수 있다.
+
+## 주요 장기 기억 관리 패턴
+
+### 1. 고급 RAG (Retrieval-Augmented Generation) 아키텍처
+
+가장 보편적이고 효과적인 패턴 중 하나는 RAG를 사용하여 외부 지식 저장소에서 관련 정보를 검색하고 이를 LLM의 컨텍스트에 추가하는 것이다. 2026년에는 단순한 벡터 검색을 넘어선 고급 RAG 아키텍처가 중요하게 부각된다.
+
+*   **계층적 RAG (Hierarchical RAG)**: 다양한 granularities의 정보를 저장하고 검색하여, 개괄적인 정보부터 세부적인 내용까지 효율적으로 접근한다.
+*   **그래프 증강 RAG (Graph-Augmented RAG)**: 지식 그래프와 벡터 데이터베이스를 결합하여, 단순한 유사성 검색을 넘어 엔티티 간의 관계를 활용한 추론적 검색을 가능하게 한다.
+*   **하이브리드 검색 (Hybrid Retrieval)**: 키워드 검색, 벡터 유사도 검색, 지식 그래프 쿼리를 조합하여 검색의 정확성과 재현율을 동시에 높인다.
+
+```python
+# Python 코드 예제: 에이전트의 장기 기억 저장 및 검색 (개념적)
+import uuid
+from datetime import datetime
+
+class AgentMemory:
+    def __init__(self):
+        # 일화 기억 저장을 위한 리스트 (실제는 벡터 DB)
+        self.episodic_db = []  # [{id, timestamp, embedding, content}]
+        # 의미 기억 저장을 위한 딕셔너리 (실제는 지식 그래프)
+        self.semantic_db = {}  # {concept_name: concept_description_embedding}
+
+    def _get_embedding(self, text: str) -> list:
+        # 실제 환경에서는 임베딩 모델(예: OpenAI, Sentence-Transformers)을 사용
+        # 여기서는 설명을 위한 더미 임베딩을 생성
+        return [hash(c) % 100 for c in text] # 더미 임베딩
+
+    def add_episodic_memory(self, observation: str, action: str, thought: str):
+        memory_content = f
